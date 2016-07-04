@@ -1,0 +1,52 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.ozguryazilim.tekir.entities;
+
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
+/**
+ * Sosyal ağ ve web adresleri
+ * 
+ * NETWORK üzerinde gerekli tip tutulur. 
+ * 
+ * @author Hakan Uygun
+ */
+@Entity
+@DiscriminatorValue(value = "NETWORK")
+public class ContactSocialAccount extends ContactInformation{
+    
+    
+    /**
+     * FB, TW, LinkedIn v.b. 
+     * 
+     * aslında entegrasyon açısından bu tiplerin kontrollü olması lazım sanırım.
+     * 
+     * web sayfasıo da buraya girse ? 
+     */
+    @Column(name="NETWORK")
+    private String network;
+    
+    public String getCaption(){
+        return getNetwork() + "://" + getAddress();
+    }
+
+    public String getNetwork() {
+        return network;
+    }
+
+    public void setNetwork(String network) {
+        this.network = network;
+    }
+
+    @Override
+    public String getIcon() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+}

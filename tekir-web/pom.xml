@@ -50,6 +50,12 @@
             <artifactId>tekir-core</artifactId>
             <version>${version.tekir}</version>
         </dependency>
+        
+        <dependency>
+            <groupId>com.ozguryazilim.mutfak</groupId>
+            <artifactId>tekir-contact</artifactId>
+            <version>${version.tekir}</version>
+        </dependency>
                 
         <dependency>
             <groupId>org.liquibase</groupId>

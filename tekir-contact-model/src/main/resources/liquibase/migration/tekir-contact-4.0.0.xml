@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="oyas (generated)" id="1467649436683-1">
+        <createTable tableName="TCC_ACCOUNT">
+            <column autoIncrement="true" name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TCC_ACCOUNTPK"/>
+            </column>
+            <column name="CREATE_DATE" type="datetime"/>
+            <column name="UPDATE_DATE" type="datetime"/>
+            <column name="UPDATE_USER" type="VARCHAR(255)"/>
+            <column name="BANK_ACCOUNT" type="VARCHAR(255)"/>
+            <column name="CCY" type="VARCHAR(255)"/>
+            <column name="STATUS" type="VARCHAR(255)"/>
+            <column name="STATUS_REASON" type="VARCHAR(255)"/>
+            <column name="TAX_NUMBER" type="VARCHAR(255)"/>
+            <column name="TAX_OFFICE" type="VARCHAR(255)"/>
+            <column name="CONTACT_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467649436683-2">
+        <createTable tableName="TCC_CONTACT">
+            <column name="CONTACT_TYPE" type="VARCHAR(31)">
+                <constraints nullable="false"/>
+            </column>
+            <column autoIncrement="true" name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TCC_CONTACTPK"/>
+            </column>
+            <column name="CREATE_DATE" type="datetime"/>
+            <column name="UPDATE_DATE" type="datetime"/>
+            <column name="UPDATE_USER" type="VARCHAR(255)"/>
+            <column name="ISACTIVE" type="BOOLEAN"/>
+            <column name="CHANNELS" type="VARCHAR(255)"/>
+            <column name="ROLES" type="VARCHAR(255)"/>
+            <column name="NAME" type="VARCHAR(255)"/>
+            <column name="OWNER_ORG" type="VARCHAR(255)"/>
+            <column name="OWNER" type="VARCHAR(255)"/>
+            <column name="SOURCE" type="VARCHAR(255)"/>
+            <column name="STATUS" type="VARCHAR(255)"/>
+            <column name="STATUS_REASON" type="VARCHAR(255)"/>
+            <column name="OWNER_TEAM" type="VARCHAR(255)"/>
+            <column name="ORG_NAME" type="VARCHAR(255)"/>
+            <column name="COMPANY_TITLE" type="VARCHAR(255)"/>
+            <column name="FIRST_NAME" type="VARCHAR(255)"/>
+            <column name="GENDER" type="CHAR(1)"/>
+            <column name="JOB_TITLE" type="VARCHAR(255)"/>
+            <column name="LAST_NAME" type="VARCHAR(255)"/>
+            <column name="SECOND_NAME" type="VARCHAR(255)"/>
+            <column name="SSN" type="VARCHAR(255)"/>
+            <column name="USE_NAME" type="VARCHAR(255)"/>
+            <column name="CAT_ID" type="BIGINT"/>
+            <column name="INDUSTRY_ID" type="BIGINT"/>
+            <column name="ADDR_ID" type="BIGINT"/>
+            <column name="EMAIL_ID" type="BIGINT"/>
+            <column name="FAX_ID" type="BIGINT"/>
+            <column name="MOBILE_ID" type="BIGINT"/>
+            <column name="PHONE_ID" type="BIGINT"/>
+            <column name="TERRITORY_ID" type="BIGINT"/>
+            <column name="TYPE_ID" type="BIGINT"/>
+            <column name="PARENT_ID" type="BIGINT"/>
+            <column name="CONTACT_ID" type="BIGINT"/>
+            <column name="CORP_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467649436683-3">
+        <createTable tableName="TCC_CONTACT_CAT">
+            <column autoIncrement="true" name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TCC_CONTACT_CATPK"/>
+            </column>
+            <column name="ISACTIVE" type="BOOLEAN"/>
+            <column name="CODE" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PATH" type="VARCHAR(255)"/>
+            <column name="PID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467649436683-4">
+        <createTable tableName="TCC_CONTACT_COMMODITY">
+            <column autoIncrement="true" name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TCC_CONTACT_COMMODITYPK"/>
+            </column>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="COMMODITY_ID" type="BIGINT"/>
+            <column name="CONTACT_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467649436683-5">
+        <createTable tableName="TCC_CONTACT_INFO">
+            <column name="INFO_TYPE" type="VARCHAR(31)">
+                <constraints nullable="false"/>
+            </column>
+            <column autoIncrement="true" name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TCC_CONTACT_INFOPK"/>
+            </column>
+            <column name="ADDRESS" type="VARCHAR(255)"/>
+            <column name="ROLES" type="VARCHAR(255)"/>
+            <column name="NETWORK" type="VARCHAR(255)"/>
+            <column name="LAT" type="DOUBLE precision"/>
+            <column name="LON" type="DOUBLE precision"/>
+            <column name="ZIP" type="VARCHAR(255)"/>
+            <column name="CONTACT_ID" type="BIGINT"/>
+            <column name="LOCATION_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467649436683-6">
+        <createTable tableName="TCC_CONTACT_REL">
+            <column autoIncrement="true" name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TCC_CONTACT_RELPK"/>
+            </column>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="RELEATION_ID" type="BIGINT"/>
+            <column name="SOURCE_ID" type="BIGINT"/>
+            <column name="TARGET_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467649436683-7">
+        <createTable tableName="TCC_CORP_TYPE">
+            <column autoIncrement="true" name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TCC_CORP_TYPEPK"/>
+            </column>
+            <column name="ISACTIVE" type="BOOLEAN"/>
+            <column name="CODE" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="NAME" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467650592995-1">
+        <createTable tableName="TCC_CONTACT_REL_DEF">
+            <column autoIncrement="true" name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TCC_CONTACT_REL_DEFPK"/>
+            </column>
+            <column name="ISACTIVE" type="BOOLEAN"/>
+            <column name="CODE" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="NAME" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ROLES" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467649436683-8">
+        <addForeignKeyConstraint baseColumnNames="CONTACT_ID" baseTableName="TCC_ACCOUNT" constraintName="FK_ACC_CONTACT" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467649436683-9">
+        <addForeignKeyConstraint baseColumnNames="LOCATION_ID" baseTableName="TCC_CONTACT_INFO" constraintName="FK_CONADDR_LOC" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_LOCATION"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467649436683-10">
+        <addForeignKeyConstraint baseColumnNames="COMMODITY_ID" baseTableName="TCC_CONTACT_COMMODITY" constraintName="FK_CONCOMM_COMMODITY" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_COMMOTITY"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467649436683-11">
+        <addForeignKeyConstraint baseColumnNames="CONTACT_ID" baseTableName="TCC_CONTACT_COMMODITY" constraintName="FK_CONCOMM_CONTACT" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467649436683-12">
+        <addForeignKeyConstraint baseColumnNames="CONTACT_ID" baseTableName="TCC_CONTACT_INFO" constraintName="FK_CONINF_CONTACT" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467649436683-13">
+        <addForeignKeyConstraint baseColumnNames="RELEATION_ID" baseTableName="TCC_CONTACT_REL" constraintName="FK_CONREL_REL" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT_REL_DEF"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467649436683-14">
+        <addForeignKeyConstraint baseColumnNames="SOURCE_ID" baseTableName="TCC_CONTACT_REL" constraintName="FK_CONREL_SOURCE" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467649436683-15">
+        <addForeignKeyConstraint baseColumnNames="TARGET_ID" baseTableName="TCC_CONTACT_REL" constraintName="FK_CONREL_TARGET" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467649436683-16">
+        <addForeignKeyConstraint baseColumnNames="ADDR_ID" baseTableName="TCC_CONTACT" constraintName="FK_CON_ADDR" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT_INFO"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467649436683-17">
+        <addForeignKeyConstraint baseColumnNames="CAT_ID" baseTableName="TCC_CONTACT" constraintName="FK_CON_CAT" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT_CAT"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467649436683-18">
+        <addForeignKeyConstraint baseColumnNames="EMAIL_ID" baseTableName="TCC_CONTACT" constraintName="FK_CON_EMAIL" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT_INFO"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467649436683-19">
+        <addForeignKeyConstraint baseColumnNames="FAX_ID" baseTableName="TCC_CONTACT" constraintName="FK_CON_FAX" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT_INFO"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467649436683-20">
+        <addForeignKeyConstraint baseColumnNames="INDUSTRY_ID" baseTableName="TCC_CONTACT" constraintName="FK_CON_INDUSTRY" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_INDUSTRY"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467649436683-21">
+        <addForeignKeyConstraint baseColumnNames="MOBILE_ID" baseTableName="TCC_CONTACT" constraintName="FK_CON_MOBILE" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT_INFO"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467649436683-22">
+        <addForeignKeyConstraint baseColumnNames="PHONE_ID" baseTableName="TCC_CONTACT" constraintName="FK_CON_PHONE" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT_INFO"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467649436683-23">
+        <addForeignKeyConstraint baseColumnNames="TERRITORY_ID" baseTableName="TCC_CONTACT" constraintName="FK_CON_TER" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_TERRITORY"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467649436683-24">
+        <addForeignKeyConstraint baseColumnNames="PARENT_ID" baseTableName="TCC_CONTACT" constraintName="FK_CORP_PARENT" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467649436683-25">
+        <addForeignKeyConstraint baseColumnNames="CONTACT_ID" baseTableName="TCC_CONTACT" constraintName="FK_CORP_PER" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467649436683-26">
+        <addForeignKeyConstraint baseColumnNames="TYPE_ID" baseTableName="TCC_CONTACT" constraintName="FK_CORP_TYPE" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CORP_TYPE"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467649436683-27">
+        <addForeignKeyConstraint baseColumnNames="CORP_ID" baseTableName="TCC_CONTACT" constraintName="FK_PER_CORP" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467649436683-28">
+        <addForeignKeyConstraint baseColumnNames="PID" baseTableName="TCC_CONTACT_CAT" constraintName="FK_sjkf2ep6fcrq182sdjar52ttb" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT_CAT"/>
+    </changeSet>
+</databaseChangeLog>

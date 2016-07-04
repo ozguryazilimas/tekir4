@@ -1,3 +1,5 @@
+mvn clean compile war:exploded -PDevelopment -DskipTests=true
+
 cd target/deployments/tekir.war/
 
 rm -rf WEB-INF/lib/telve-core-4.0.0.Beta3.jar

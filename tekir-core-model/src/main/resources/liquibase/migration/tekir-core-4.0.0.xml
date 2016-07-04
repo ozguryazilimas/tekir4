@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="oyas (generated)" id="1467648713591-1">
+        <createTable tableName="TCO_COMMOTITY">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TCO_COMMOTITYPK"/>
+            </column>
+            <column name="CREATE_DATE" type="datetime"/>
+            <column name="UPDATE_DATE" type="datetime"/>
+            <column name="UPDATE_USER" type="VARCHAR(255)"/>
+            <column name="ISACTIVE" type="BOOLEAN"/>
+            <column name="CODE" type="VARCHAR(255)"/>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="NAME" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467648713591-2">
+        <createTable tableName="TCO_INDUSTRY">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TCO_INDUSTRYPK"/>
+            </column>
+            <column name="ISACTIVE" type="BOOLEAN"/>
+            <column name="CODE" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PATH" type="VARCHAR(255)"/>
+            <column name="PID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467648713591-3">
+        <createTable tableName="TCO_LOCATION">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TCO_LOCATIONPK"/>
+            </column>
+            <column name="ISACTIVE" type="BOOLEAN"/>
+            <column name="CODE" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PATH" type="VARCHAR(255)"/>
+            <column name="LAT" type="DOUBLE precision"/>
+            <column name="LON" type="DOUBLE precision"/>
+            <column name="TYPE" type="INT"/>
+            <column name="PID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467648713591-4">
+        <createTable tableName="TCO_TERRITORY">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TCO_TERRITORYPK"/>
+            </column>
+            <column name="ISACTIVE" type="BOOLEAN"/>
+            <column name="CODE" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="NAME" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467648713591-5">
+        <createTable tableName="TCO_TERRITORY_ITEM">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TCO_TERRITORY_ITEMPK"/>
+            </column>
+            <column name="LOCATION_ID" type="BIGINT"/>
+            <column name="PARENT_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467648713591-6">
+        <addForeignKeyConstraint baseColumnNames="LOCATION_ID" baseTableName="TCO_TERRITORY_ITEM" constraintName="FK_TERIT_LOC" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_LOCATION"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467648713591-7">
+        <addForeignKeyConstraint baseColumnNames="PARENT_ID" baseTableName="TCO_TERRITORY_ITEM" constraintName="FK_TERIT_PARENT" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_TERRITORY"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467648713591-8">
+        <addForeignKeyConstraint baseColumnNames="PID" baseTableName="TCO_INDUSTRY" constraintName="FK_dvnd489u7yfnsbxn5uqna9hyj" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_INDUSTRY"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1467648713591-9">
+        <addForeignKeyConstraint baseColumnNames="PID" baseTableName="TCO_LOCATION" constraintName="FK_lbo9phf3g4punwc3afdq1di4f" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_LOCATION"/>
+    </changeSet>
+</databaseChangeLog>

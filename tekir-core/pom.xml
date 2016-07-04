@@ -57,13 +57,14 @@
             <artifactId>telve-gallery</artifactId>
             <version>${version.telve}</version>
         </dependency>
+        -->
         
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>tekir-core-model</artifactId>
             <version>${project.version}</version>
         </dependency>
-        -->
+        
         
         <!-- Test -->
 
