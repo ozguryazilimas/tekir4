@@ -1,0 +1,37 @@
+<persistence version="2.0"
+             xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+    <persistence-unit name="tekir" transaction-type="JTA">
+        <!-- If you are running in a production environment, add a managed
+        data source, this example data source is just for development and testing! -->
+        <!-- The datasource is deployed as WEB-INF/picketlink-quickstart-ds.xml, you
+        can find it in the source at src/main/webapp/WEB-INF/picketlink-quickstart-ds.xml -->
+        <jta-data-source>java:jboss/datasources/TekirDS</jta-data-source>
+        <shared-cache-mode>DISABLE_SELECTIVE</shared-cache-mode>
+        <jar-file>lib/telve-core-model-${version.telve}.jar</jar-file>
+        <jar-file>lib/telve-idm-model-${version.telve}.jar</jar-file>
+        <jar-file>lib/tekir-core-model-${version.tekir}.jar</jar-file>
+        
+        <properties>
+            <!-- Properties for Hibernate -->
+            
+            <property name="hibernate.dialect" value="${hibernate.dialect}"/>
+            <property name="hibernate.hbm2ddl.auto" value="none"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup"/>
+            <property name="hibernate.connection.release_mode" value="after_statement"/>
+            <!--
+            <property name="jboss.entity.manager.factory.jndi.name" value="java:/openOHSEntityManagerFactory"/>
+            -->
+            <!-- cache config -->
+            <property name="hibernate.cache.use_second_level_cache" value="true" />
+            <property name="hibernate.cache.use_query_cache" value="true" />
+            <!--
+            <property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.infinispan.JndiInfinispanRegionFactory" />
+            <property name="hibernate.cache.infinispan.cachemanager" value="java:CacheManager" /> 
+            -->
+        </properties>
+    </persistence-unit>
+    
+</persistence>

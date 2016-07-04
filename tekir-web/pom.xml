@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>tekir-parent</artifactId>
+        <groupId>com.ozguryazilim.mutfak</groupId>
+        <version>4.0.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.ozguryazilim.mutfak</groupId>
+    <artifactId>Tekir-Web</artifactId>
+    <version>4.0.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+
+    <name>Tekir</name>
+
+    <properties>
+        <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <version.telve>4.0.0.Beta3</version.telve>
+        <version.tekir>4.0.0-SNAPSHOT</version.tekir>
+        <app.title>Tekir</app.title>
+        <project.stage>Test</project.stage>
+        <property name="hibernate.show_sql" value="false"/>
+    </properties>
+    
+    <dependencies>
+        <dependency>
+            <groupId>com.ozguryazilim.mutfak</groupId>
+            <artifactId>telve-web</artifactId>
+            <version>${version.telve}</version>
+            <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>com.ozguryazilim.mutfak</groupId>
+            <artifactId>telve-idm</artifactId>
+            <version>${version.telve}</version>
+            <type>ejb</type>
+        </dependency>
+        <!--
+        <dependency>
+            <groupId>com.ozguryazilim.mutfak</groupId>
+            <artifactId>telve-jcr</artifactId>
+            <version>${version.telve}</version>
+            <type>ejb</type>
+        </dependency>
+        -->
+        <dependency>
+            <groupId>com.ozguryazilim.mutfak</groupId>
+            <artifactId>tekir-core</artifactId>
+            <version>${version.tekir}</version>
+        </dependency>
+                
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
+            
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-cdi</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.mattbertolini</groupId>
+            <artifactId>liquibase-slf4j</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
+    
+    <profiles>
+        <profile>
+            <id>mysql</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <hibernate.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</hibernate.dialect>
+            </properties>
+        </profile>
+        <profile>
+            <id>mssql</id>
+            <properties>
+                <hibernate.dialect>org.hibernate.dialect.SQLServer2008Dialect</hibernate.dialect>
+            </properties>
+        </profile>
+        <profile>
+            <id>Development</id>
+            <properties>
+                <project.stage>Development</project.stage>
+                <hibernate.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</hibernate.dialect>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>2.3</version>
+                        <configuration>
+                            <webappDirectory>${basedir}/target/deployments/tekir.war</webappDirectory>
+                            <failOnMissingWebXml>false</failOnMissingWebXml>
+                            <archive>
+                                <index>true</index>
+                                <manifest>
+                                    <addClasspath>true</addClasspath>
+                                </manifest>
+                            </archive>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>DevelopmentMSSQL</id>
+            <properties>
+                <project.stage>DevelopmentMSSQL</project.stage>
+                <hibernate.dialect>org.hibernate.dialect.SQLServer2008Dialect</hibernate.dialect>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>2.3</version>
+                        <configuration>
+                            <webappDirectory>${basedir}/target/deployments/tekir.war</webappDirectory>
+                            <failOnMissingWebXml>false</failOnMissingWebXml>
+                            <archive>
+                                <index>true</index>
+                                <manifest>
+                                    <addClasspath>true</addClasspath>
+                                </manifest>
+                            </archive>
+                            
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-clean-plugin</artifactId>
+                        <version>2.6.1</version>
+                        <configuration>
+                            <filesets>
+                                <fileset>
+                                    <directory>${basedir}/target/deployments/tekir.war</directory>
+                                    <followSymlinks>false</followSymlinks>
+                                </fileset>                                
+                            </filesets>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        
+    </profiles>
+
+</project>

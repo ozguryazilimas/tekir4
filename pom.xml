@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+	
+    <parent>
+        <groupId>com.ozguryazilim.mutfak</groupId>
+        <artifactId>telve-parent</artifactId>
+        <version>4.0.0.Beta3</version>
+    </parent>
+    <groupId>com.ozguryazilim.mutfak</groupId>
+    <artifactId>tekir-parent</artifactId>
+    <version>4.0.0-SNAPSHOT</version> 
+    <name>${project.groupId} : ${project.artifactId} : ${project.version}</name>
+    <description>Tekir Parent POM</description>
+    <url>http://www.ozguryazilim.com.tr/</url>
+    <packaging>pom</packaging> 
+
+
+    <properties>
+        <version.telve>4.0.0.Beta3</version.telve>
+        <version.tekir>4.0.0-SNAPSHOT</version.tekir>
+    </properties>
+    
+    <issueManagement>
+        <system>Redmine</system>
+        <url>https://islergucler.ozguryazilim.com.tr/projects/mutfak</url>
+    </issueManagement>
+	
+    <scm>
+        <connection>scm:git:ssh://git@lab.ozguryazilim.com.tr/telveng</connection>
+        <developerConnection>scm:git:ssh://git@lab.ozguryazilim.com.tr/telveng</developerConnection>
+        <url>http://cgit.ozguryazilim.com.tr/cezve/</url>
+    </scm>
+	 
+    <organization>
+        <name>Özgür Yazılım A.Ş.</name>
+        <url>http://www.ozguryazilim.com.tr/</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>LGPL 3</name>
+            <url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+
+    <developers>
+        <developer>
+            <id>hakan.uygun@ozguryazilim.com.tr#no</id>
+            <name>Hakan Uygun</name>
+            <email>hakan.uygun@ozguryazilim.com.tr#no</email>
+            <organization>Özgür Yazılım A.Ş.</organization>
+            <organizationUrl>http://www.ozguryazilim.com.tr</organizationUrl>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>GMT +2</timezone>
+        </developer>
+    </developers>
+    
+    
+    <modules>
+        <module>tekir-core</module>
+        <module>tekir-core-model</module>
+        <module>tekir-web</module>
+    </modules>
+    
+    
+    <distributionManagement>
+        <repository>
+            <id>nexus</id>
+            <name>Özgür Yazılım A.Ş. Nexus Reporsiyory</name>
+            <url>http://nexus.ozguryazilim.com.tr/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus</id>
+            <name>Özgür Yazılım A.Ş. Nexus Snapshots Reporsiyory</name>
+            <url>http://nexus.ozguryazilim.com.tr/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+</project>
