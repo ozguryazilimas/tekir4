@@ -39,4 +39,12 @@ public class ContactBrowse extends BrowseBase<Contact, ContactViewModel> {
 	protected RepositoryBase<Contact, ContactViewModel> getRepository() {
 		return repository;
 	}
+        
+        public Contact getContact(){
+            if( getSelectedItem() != null ){
+                return repository.findBy(getSelectedItem().getId());
+            } else {
+                return null;
+            }
+        }
 }

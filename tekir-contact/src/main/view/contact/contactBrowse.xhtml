@@ -4,15 +4,16 @@
                 xmlns:t="http://java.sun.com/jsf/composite/telveComponents"                
                 xmlns:h="http://java.sun.com/jsf/html"
                 template="/layout/browseBase.xhtml">
-    
+
     <ui:param name="bean" value="#{contactBrowse}" />
     <ui:param name="advanceEnabled" value="true" />
     <ui:param name="saveEnabled" value="true" />
     <ui:param name="filterEnabled" value="true" />
     <ui:param name="permission" value="contact" />
     <ui:param name="showQuickSearch" value="true" />
-    
-    
+    <ui:param name="showDetailPanel" value="true" />
+
+
     <ui:define name="beforeColumns">
         <p:column styleClass="actionColumn">
             <ui:fragment rendered="#{item.contactType eq 'Person'}" >
@@ -23,7 +24,48 @@
             </ui:fragment>
         </p:column>
     </ui:define>
-    
+
+    <ui:define name="detailBar">
+        <div class="row">
+            <div class="text-muted col-xs-12">
+                <ui:fragment rendered="#{contactBrowse.selectedItem.contactType eq 'Person'}" >
+                    <i class="fa fa-user" />
+                </ui:fragment>
+
+                <ui:fragment rendered="#{contactBrowse.selectedItem.contactType eq 'Corporation'}" >
+                    <i class="fa fa-building" />
+                </ui:fragment>
+                #{contactBrowse.contact.name}
+            </div>
+        </div>
+
+        <ui:fragment rendered="#{contactBrowse.contact.class.simpleName eq 'Person'}">
+            <div class="row">
+                <t:outputText label="general.label.FirstName" value="#{contactBrowse.contact.firstName}" columnClass="col-xs-12"/>
+                <t:outputText label="general.label.LastName" value="#{contactBrowse.contact.lastName}" columnClass="col-xs-12"/>
+                <t:outputText label="contact.label.JobTitle" value="#{contactBrowse.contact.jobTitle}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.jobTitle}"/>
+                <t:outputText label="contact.label.CorparationName" value="#{contactBrowse.contact.corporationName}" rendered="#{empty contactBrowse.contact.corporation}" columnClass="col-xs-12"/>
+                <t:outputEntityLink label="general.label.Corparation" value="#{contactBrowse.contact.corporation}" view="/contact/contactView.xhtml" rendered="#{not empty contactBrowse.contact.corporation}" columnClass="col-xs-12"/>
+                <t:outputText label="contact.label.SSN" value="#{contactBrowse.contact.ssn}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.ssn}"/>
+            </div>            
+        </ui:fragment>
+
+        <ui:fragment rendered="#{contactBrowse.contact.class.simpleName eq 'Corporation'}">
+            <div class="row">
+                <t:outputText label="general.label.OrganizaitonName" value="#{contactBrowse.contact.organizastionName}" columnClass="col-xs-12"/>
+                <t:outputText label="contact.label.CorparationType" value="#{contactBrowse.contact.corporationType.name}"  columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.corporationType}"/>
+                <t:outputEntityLink label="contact.label.PrimaryContact" value="#{contactBrowse.contact.primaryContact}" view="/contact/contactView.xhtml" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.primaryContact}"/>
+                <t:outputEntityLink label="contact.label.ParentCorparation" value="#{contactBrowse.contact.parentCorporation}" view="/contact/contactView.xhtml" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.parentCorporation}"/>
+            </div>            
+        </ui:fragment>
+
+        <div class="row">
+            <t:outputText label="general.label.Category" value="#{contactBrowse.contact.category.name}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.category}"/>
+            <t:outputText label="general.label.Industry" value="#{contactBrowse.contact.industry.name}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.industry}"/>
+            <t:outputText label="general.label.Territory" value="#{contactBrowse.contact.territory.name}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.territory}"/>
+        </div>
+    </ui:define>
+
     <ui:define name="context-menu">
         <li>
             <p:commandLink action="#{contactHome.newPerson()}" styleClass="context-command" >
@@ -37,7 +79,7 @@
                 <h:outputText value=" #{messages['general.button.AddCorporation']}" />
             </p:commandLink>
         </li>
-        
+
         <li>
             <p:commandLink action="#{newPersonDialog.openDialog()}" styleClass="context-command" >
                 <i class="fa fa-user"></i>
@@ -51,5 +93,5 @@
             </p:commandLink>
         </li>
     </ui:define>
-    
+
 </ui:composition>
