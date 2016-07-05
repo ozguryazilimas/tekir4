@@ -1,0 +1,31 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"               
+                xmlns:ui="http://java.sun.com/jsf/facelets"               
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"                
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/layout/browseBase.xhtml">
+    
+    <ui:param name="bean" value="#{contactBrowse}" />
+    <ui:param name="advanceEnabled" value="true" />
+    <ui:param name="saveEnabled" value="true" />
+    <ui:param name="filterEnabled" value="true" />
+    <ui:param name="permission" value="contact" />
+    <ui:param name="showQuickSearch" value="true" />
+    
+    
+    <ui:define name="context-menu">
+        <li>
+            <p:commandLink action="#{newPersonDialog.openDialog()}" styleClass="context-command" >
+                <i class="fa fa-user"></i>
+                <h:outputText value=" #{messages['general.button.AddPerson']}" />
+            </p:commandLink>
+        </li>
+        <li>
+            <p:commandLink action="#{newCorporationDialog.openDialog()}" styleClass="context-command" >
+                <i class="fa fa-building"></i>
+                <h:outputText value=" #{messages['general.button.AddCorporation']}" />
+            </p:commandLink>
+        </li>
+    </ui:define>
+    
+</ui:composition>

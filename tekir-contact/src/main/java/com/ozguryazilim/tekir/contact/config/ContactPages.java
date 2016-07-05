@@ -30,10 +30,9 @@ public interface ContactPages extends Pages {
 	class CorporationType implements ContactPages {
 	}
 
-	@View
+	@SecuredPage() @View
 	class CorporationTypeLookup
-			implements
-				com.ozguryazilim.tekir.contact.config.ContactPages {
+			implements ContactPages {
 	}
 
 	@View
@@ -42,13 +41,13 @@ public interface ContactPages extends Pages {
 	@Navigation(label = "module.caption.ContactRelation", icon = "fa fa-crosshairs", section = SideNavigationSection.class)
 	class ContactRelation
 			implements
-				com.ozguryazilim.tekir.contact.config.ContactPages {
+				 ContactPages {
 	}
 
-	@View
+	@SecuredPage() @View
 	class ContactRelationLookup
 			implements
-				com.ozguryazilim.tekir.contact.config.ContactPages {
+				ContactPages {
 	}
 
 	@View
@@ -58,10 +57,58 @@ public interface ContactPages extends Pages {
 	class ContactCategory implements ContactPages {
 	}
 
-	@View
+	@SecuredPage() @View
 	class ContactCategoryLookup
 			implements
-				com.ozguryazilim.tekir.contact.config.ContactPages {
+				ContactPages {
+	}
+
+	@View
+	@SecuredPage("contact")
+	@PageTitle("module.caption.ContactBrowse")
+	@Navigation(label = "module.caption.ContactBrowse", icon = "fa fa-book", section = SideNavigationSection.class)
+	class ContactBrowse implements ContactPages {
+	}
+
+	@View
+	@SecuredPage("contact")
+	@PageTitle("module.caption.Contact")
+	class Contact implements ContactPages {
+	}
+
+	@View
+	@SecuredPage("contact")
+	@PageTitle("module.caption.ContactView")
+	class ContactView
+			implements
+				ContactPages {
+	}
+
+	@View
+	@SecuredPage("contact")
+	@PageTitle("module.caption.ContactMasterView")
+	class ContactMasterView
+			implements
+				ContactPages {
+	}
+
+	@SecuredPage() @View
+	class ContactLookup
+			implements
+				ContactPages {
+	}
+
+        
+        @SecuredPage() @View
+	class NewPersonPopup
+			implements
+				ContactPages {
+	}
+        
+        @SecuredPage() @View
+	class NewCorporationPopup
+			implements
+				ContactPages {
 	}
 
 }

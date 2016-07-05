@@ -29,36 +29,36 @@ public interface CorePages extends Pages {
 	class Location implements CorePages {
 	}
 
-	@View
+	@SecuredPage() @View
 	class LocationLookup
 			implements
-				com.ozguryazilim.tekir.core.config.CorePages {
+				CorePages {
 	}
 
 	@View
 	@SecuredPage("industry")
 	@PageTitle("module.caption.Industry")
 	@Navigation(label = "module.caption.Industry", icon = "fa fa-building", section = SideNavigationSection.class)
-	class Industry implements com.ozguryazilim.tekir.core.config.CorePages {
+	class Industry implements CorePages {
 	}
 
-	@View
+	@SecuredPage() @View
 	class IndustryLookup
 			implements
-				com.ozguryazilim.tekir.core.config.CorePages {
+				CorePages {
 	}
 
 	@View
 	@SecuredPage("territory")
 	@PageTitle("module.caption.Territory")
 	@Navigation(label = "module.caption.Territory", icon = "fa fa-arrows", section = SideNavigationSection.class)
-	class Territory implements com.ozguryazilim.tekir.core.config.CorePages {
+	class Territory implements CorePages {
 	}
 
-	@View
+	@SecuredPage() @View
 	class TerritoryLookup
 			implements
-				com.ozguryazilim.tekir.core.config.CorePages {
+				CorePages {
 	}
 
 	@View
@@ -67,19 +67,19 @@ public interface CorePages extends Pages {
 	@Navigation(label = "module.caption.CommodityBrowse", icon = "fa fa-cube", section = SideNavigationSection.class)
 	class CommodityBrowse
 			implements
-				com.ozguryazilim.tekir.core.config.CorePages {
+				CorePages {
 	}
 
 	@View
 	@SecuredPage("commodity")
 	@PageTitle("module.caption.Commodity")
-	class Commodity implements com.ozguryazilim.tekir.core.config.CorePages {
+	class Commodity implements CorePages {
 	}
 
 	@View
 	@SecuredPage("commodity")
 	@PageTitle("module.caption.CommodityView")
-	class CommodityView implements com.ozguryazilim.tekir.core.config.CorePages {
+	class CommodityView implements CorePages {
 	}
 
 	@View
@@ -87,13 +87,13 @@ public interface CorePages extends Pages {
 	@PageTitle("module.caption.CommodityMasterView")
 	class CommodityMasterView
 			implements
-				com.ozguryazilim.tekir.core.config.CorePages {
+				CorePages {
 	}
 
-	@View
+	@SecuredPage() @View
 	class CommodityLookup
 			implements
-				com.ozguryazilim.tekir.core.config.CorePages {
+				CorePages {
 	}
 
 }

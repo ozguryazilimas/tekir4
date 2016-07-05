@@ -31,7 +31,9 @@
             <column name="ISACTIVE" type="BOOLEAN"/>
             <column name="CHANNELS" type="VARCHAR(255)"/>
             <column name="ROLES" type="VARCHAR(255)"/>
+            <column name="CODE" type="VARCHAR(255)"/>
             <column name="NAME" type="VARCHAR(255)"/>
+            <column name="INFO" type="VARCHAR(255)"/>
             <column name="OWNER_ORG" type="VARCHAR(255)"/>
             <column name="OWNER" type="VARCHAR(255)"/>
             <column name="SOURCE" type="VARCHAR(255)"/>

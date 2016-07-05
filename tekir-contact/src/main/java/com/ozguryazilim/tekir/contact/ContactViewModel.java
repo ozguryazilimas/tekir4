@@ -1,4 +1,4 @@
-package com.ozguryazilim.tekir.contact.corporationType;
+package com.ozguryazilim.tekir.contact;
 
 import com.ozguryazilim.telve.entities.ViewModel;
 import java.io.Serializable;
@@ -8,18 +8,24 @@ import java.io.Serializable;
  *
  * @author
  */
-public class CorporationTypeViewModel implements ViewModel, Serializable {
+public class ContactViewModel implements ViewModel, Serializable {
 
     private Long id;
     private String code;
     private String name;
+    private String info;
+    private Boolean active;
 
-    public CorporationTypeViewModel(Long id, String code, String name) {
+    public ContactViewModel(Long id, String code, String name, String info, Boolean active) {
         this.id = id;
         this.code = code;
         this.name = name;
+        this.info = info;
+        this.active = active;
     }
 
+    
+    
     public Long getId() {
         return this.id;
     }
@@ -29,19 +35,35 @@ public class CorporationTypeViewModel implements ViewModel, Serializable {
     }
 
     public String getCode() {
-        return this.code;
+        return code;
     }
 
-    public void setCode(final String code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
-    public void setName(final String name) {
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     @Override
@@ -49,10 +71,10 @@ public class CorporationTypeViewModel implements ViewModel, Serializable {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof CorporationTypeViewModel)) {
+        if (!(obj instanceof ContactViewModel)) {
             return false;
         }
-        CorporationTypeViewModel other = (CorporationTypeViewModel) obj;
+        ContactViewModel other = (ContactViewModel) obj;
         if (id != null) {
             if (!id.equals(other.id)) {
                 return false;

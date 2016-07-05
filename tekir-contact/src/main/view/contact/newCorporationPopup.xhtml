@@ -1,0 +1,47 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"                
+                template="/layout/dialogBase.xhtml">
+
+    <ui:param name="title" value="newCorporationPopup.label.Title" />
+    <ui:param name="bean" value="#{newCorporationDialog}" />
+
+    <ui:define name="form">
+        <h:form id="personForm">
+            <div class="row">
+                <t:inputText label="general.label.Code" value="#{bean.contact.code}" columnClass="col-xs-6" required="true"/>
+                <t:inputLookupDialog label="general.label.Category" value="#{newCorporationDialog.contact.category}" lookupBean="#{contactCategoryLookup}" lookupListener="newCorporationDialog.contact.category" placeholder="#{messages['general.info.Category']}" />
+                <t:inputLookupDialog label="contact.label.CorparationType" value="#{newCorporationDialog.contact.corporationType}" lookupBean="#{corporationTypeLookup}" lookupListener="newCorporationDialog.contact.corporationType" placeholder="#{messages['contact.info.CorporationType']}" />
+                <t:inputLookupDialog label="general.label.Industry" value="#{newCorporationDialog.contact.industry}" lookupBean="#{industryLookup}" lookupListener="newCorporationDialog.contact.industry" placeholder="#{messages['general.info.Industry']}" />
+                <t:inputLookupDialog label="general.label.Territory" value="#{newCorporationDialog.contact.territory}" lookupBean="#{territoryLookup}" lookupListener="newCorporationDialog.contact.territory" placeholder="#{messages['general.info.Territory']}" />
+            </div>
+            <div class="row">
+                <t:inputText label="general.label.Name" value="#{bean.contact.name}" columnClass="col-xs-12" required="true"/>
+                <t:inputText label="general.label.OrganizationName" value="#{bean.contact.organizastionName}" columnClass="col-xs-12" required="true"/>
+                <t:inputLookupDialog label="contact.label.PrimaryContact" value="#{newCorporationDialog.contact.primaryContact}" lookupBean="#{contactLookup}" lookupListener="newCorporationDialog.contact.primaryContact" placeholder="#{messages['contact.info.PrimaryContact']}" lookupProfile="T:Person"/>
+                <t:inputLookupDialog label="contact.label.ParentCorparation" value="#{newCorporationDialog.contact.parentCorporation}" lookupBean="#{contactLookup}" lookupListener="newCorporationDialog.contact.parentCorporation" placeholder="#{messages['contact.info.ParentCorporation']}" lookupProfile="T:Corporation"/>
+                
+                <t:inputTextarea label="general.label.Info" value="#{bean.contact.info}" columnClass="col-xs-12"/>
+            </div>  
+            
+            <h:panelGroup styleClass="row actionButtons" layout="block" >
+                <ui:insert name="actionButtons" />
+                <p:commandButton id="select" 
+                                 value="#{messages['general.button.Ok']}" 
+                                 icon="fa fa-check" 
+                                 action="#{bean.closeDialog()}" 
+                                 validateClient="true"
+                                 styleClass="btn-primary" />
+                <p:commandButton id="close" 
+                                 value="#{messages['general.button.Cancel']}" 
+                                 icon="ui-icon-close" 
+                                 action="#{bean.cancelDialog()}" 
+                                 partialSubmit="true" 
+                                 process="@this"/>
+            </h:panelGroup>
+        </h:form>
+    </ui:define> 
+</ui:composition>

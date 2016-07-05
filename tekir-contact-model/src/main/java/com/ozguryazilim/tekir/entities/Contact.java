@@ -62,6 +62,13 @@ public abstract class Contact extends AuditBase{
     @Column( name = "NAME")
     @NotNull @BizKey
     private String name;
+    
+    @Column( name = "CODE")
+    @NotNull
+    private String code;
+    
+    @Column( name = "INFO")
+    private String info;
             
     /**
      * Bir contact'ın hangi rollerde olduğu. 
@@ -401,8 +408,21 @@ public abstract class Contact extends AuditBase{
     public void setIndustry(Industry industry) {
         this.industry = industry;
     }
-    
-    
-    
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
     
 }
