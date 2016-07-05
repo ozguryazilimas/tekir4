@@ -9,7 +9,6 @@ import com.ozguryazilim.telve.view.Pages;
 import javax.enterprise.context.ApplicationScoped;
 import org.apache.deltaspike.jsf.api.config.view.Folder;
 import com.ozguryazilim.telve.nav.SideNavigationSection;
-import com.ozguryazilim.tekir.contact.config.ContactPages;
 import org.apache.deltaspike.jsf.api.config.view.View;
 import com.ozguryazilim.telve.auth.SecuredPage;
 import com.ozguryazilim.telve.view.PageTitle;
@@ -33,6 +32,21 @@ public interface ContactPages extends Pages {
 
 	@View
 	class CorporationTypeLookup
+			implements
+				com.ozguryazilim.tekir.contact.config.ContactPages {
+	}
+
+	@View
+	@SecuredPage("contactRelation")
+	@PageTitle("module.caption.ContactRelation")
+	@Navigation(label = "module.caption.ContactRelation", icon = "fa fa-crosshairs", section = SideNavigationSection.class)
+	class ContactRelation
+			implements
+				com.ozguryazilim.tekir.contact.config.ContactPages {
+	}
+
+	@View
+	class ContactRelationLookup
 			implements
 				com.ozguryazilim.tekir.contact.config.ContactPages {
 	}
