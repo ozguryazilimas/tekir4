@@ -19,6 +19,8 @@ public class TekirContactModule {
     @PostConstruct
     public void init(){
         ContactRoleRegistery.register("CONTACT");
+        ContactRoleRegistery.register("PERSON");
+        ContactRoleRegistery.register("CORPORATION");
         ContactRoleRegistery.register("ACCOUNT");
         ContactRoleRegistery.register("CUSTOMER");
         ContactRoleRegistery.register("VENDOR");
