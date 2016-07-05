@@ -51,4 +51,17 @@ public interface ContactPages extends Pages {
 				com.ozguryazilim.tekir.contact.config.ContactPages {
 	}
 
+	@View
+	@SecuredPage("contactCategory")
+	@PageTitle("module.caption.ContactCategory")
+	@Navigation(label = "module.caption.ContactCategory", icon = "fa fa-sitemap", section = SideNavigationSection.class)
+	class ContactCategory implements ContactPages {
+	}
+
+	@View
+	class ContactCategoryLookup
+			implements
+				com.ozguryazilim.tekir.contact.config.ContactPages {
+	}
+
 }
