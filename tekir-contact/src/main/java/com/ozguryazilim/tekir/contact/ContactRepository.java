@@ -85,7 +85,7 @@ public abstract class ContactRepository
         CriteriaQuery<ContactViewModel> criteriaQuery = criteriaBuilder.createQuery(ContactViewModel.class);
 
         //From Profile'a göre tip seçiyoruz...
-        Root<? extends Contact> from = null;
+        /*Root<? extends Contact> from = null;
         if( !Strings.isNullOrEmpty(type)){
             switch( type ){
                 case "Person" : 
@@ -101,7 +101,9 @@ public abstract class ContactRepository
             
         } else {
             from = criteriaQuery.from(Contact.class);
-        }
+        }*/
+        
+        Root<? extends Contact> from = criteriaQuery.from(Contact.class);
 
         //Sonuç filtremiz
         buildVieModelSelect(criteriaQuery, from);
@@ -110,6 +112,20 @@ public abstract class ContactRepository
         List<Predicate> predicates = new ArrayList<>();
 
         buildSearchTextControl(searchText, criteriaBuilder, predicates, from);
+        
+        
+        if( !Strings.isNullOrEmpty(type)){
+            switch( type ){
+                case "Person" : 
+                    predicates.add(criteriaBuilder.equal(from.type(), Person.class));
+                    break;
+                case "Corporation" : 
+                    predicates.add(criteriaBuilder.equal(from.type(), Corporation.class));
+                    break;
+                default : 
+                    break;
+            }
+        }
         
         //Oluşan filtreleri sorgumuza ekliyoruz
         criteriaQuery.where(predicates.toArray(new Predicate[]{}));
@@ -137,7 +153,8 @@ public abstract class ContactRepository
                 from.get(Contact_.code),
                 from.get(Contact_.name),
                 from.get(Contact_.info),
-                from.get(Contact_.active)
+                from.get(Contact_.active),
+                from.type()
         );
     }
 

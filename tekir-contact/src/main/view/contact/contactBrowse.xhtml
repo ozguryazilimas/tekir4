@@ -13,7 +13,31 @@
     <ui:param name="showQuickSearch" value="true" />
     
     
+    <ui:define name="beforeColumns">
+        <p:column styleClass="actionColumn">
+            <ui:fragment rendered="#{item.contactType eq 'Person'}" >
+                <i class="fa fa-user" />
+            </ui:fragment>
+            <ui:fragment rendered="#{item.contactType eq 'Corporation'}" >
+                <i class="fa fa-building" />
+            </ui:fragment>
+        </p:column>
+    </ui:define>
+    
     <ui:define name="context-menu">
+        <li>
+            <p:commandLink action="#{contactHome.newPerson()}" styleClass="context-command" >
+                <i class="fa fa-user"></i>
+                <h:outputText value=" #{messages['general.button.AddPerson']}" />
+            </p:commandLink>
+        </li>
+        <li>
+            <p:commandLink action="#{contactHome.newCorporation()}" styleClass="context-command" >
+                <i class="fa fa-building"></i>
+                <h:outputText value=" #{messages['general.button.AddCorporation']}" />
+            </p:commandLink>
+        </li>
+        
         <li>
             <p:commandLink action="#{newPersonDialog.openDialog()}" styleClass="context-command" >
                 <i class="fa fa-user"></i>

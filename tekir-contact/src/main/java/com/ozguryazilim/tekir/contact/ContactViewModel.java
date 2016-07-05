@@ -1,5 +1,8 @@
 package com.ozguryazilim.tekir.contact;
 
+import com.ozguryazilim.tekir.entities.Contact;
+import com.ozguryazilim.tekir.entities.Corporation;
+import com.ozguryazilim.tekir.entities.Person;
 import com.ozguryazilim.telve.entities.ViewModel;
 import java.io.Serializable;
 
@@ -15,13 +18,15 @@ public class ContactViewModel implements ViewModel, Serializable {
     private String name;
     private String info;
     private Boolean active;
+    private Class<? extends Contact> contactClass;
 
-    public ContactViewModel(Long id, String code, String name, String info, Boolean active) {
+    public ContactViewModel(Long id, String code, String name, String info, Boolean active, Class<? extends Contact> type) {
         this.id = id;
         this.code = code;
         this.name = name;
         this.info = info;
         this.active = active;
+        this.contactClass = type;
     }
 
     
@@ -66,6 +71,24 @@ public class ContactViewModel implements ViewModel, Serializable {
         this.active = active;
     }
 
+    public Class<? extends Contact> getContactClass() {
+        return contactClass;
+    }
+
+    public void setContactClass(Class<? extends Contact> contactClass) {
+        this.contactClass = contactClass;
+    }
+
+    public String getContactType(){
+        if( contactClass.equals( Person.class ) ){
+            return "Person";
+        } else if( contactClass.equals( Corporation.class ) ){
+            return "Corporation";
+        } else {
+            return "Contact";
+        }
+    }
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

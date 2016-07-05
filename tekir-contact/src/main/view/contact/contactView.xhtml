@@ -3,6 +3,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"
                 template="/layout/containerViewBase.xhtml">
 
     <ui:param name="bean" value="#{contactHome}" />
@@ -28,6 +29,34 @@
         </div>  
         
         #{contactHome.entity.class.simpleName}
+    </ui:define>
+    
+    <ui:define name="context-menu">
+        <li>
+            <p:commandLink action="#{contactHome.newPerson()}" styleClass="context-command" >
+                <i class="fa fa-user"></i>
+                <h:outputText value=" #{messages['general.button.AddPerson']}" />
+            </p:commandLink>
+        </li>
+        <li>
+            <p:commandLink action="#{contactHome.newCorporation()}" styleClass="context-command" >
+                <i class="fa fa-building"></i>
+                <h:outputText value=" #{messages['general.button.AddCorporation']}" />
+            </p:commandLink>
+        </li>
+        
+        <li>
+            <p:commandLink action="#{newPersonDialog.openDialog()}" styleClass="context-command" >
+                <i class="fa fa-user"></i>
+                <h:outputText value=" #{messages['general.button.AddPerson']}" />
+            </p:commandLink>
+        </li>
+        <li>
+            <p:commandLink action="#{newCorporationDialog.openDialog()}" styleClass="context-command" >
+                <i class="fa fa-building"></i>
+                <h:outputText value=" #{messages['general.button.AddCorporation']}" />
+            </p:commandLink>
+        </li>
     </ui:define>
     
 </ui:composition>
