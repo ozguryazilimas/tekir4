@@ -1,0 +1,22 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"               
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                template="/layout/masterViewBase.xhtml">
+
+    <ui:define name="content">     
+
+        <div class="row">
+            <t:outputText label="general.label.Name" value="#{commodityHome.entity.name}" />
+            <t:outputText label="general.label.Code" value="#{commodityHome.entity.code}" />
+        </div>            
+        <div class="row">        
+            <t:outputText label="general.label.Info" value="#{commodityHome.entity.info}" />
+            <t:outputBoolean label="general.label.Status" itemLabel="general.boolean.active." value="#{commodityHome.entity.active}" />
+        </div>  
+
+    </ui:define>
+
+</ui:composition>

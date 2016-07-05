@@ -26,7 +26,7 @@ public interface CorePages extends Pages {
 	@View
 	@SecuredPage("location")
 	@PageTitle("module.caption.Location")
-	@Navigation(label = "module.caption.Location", icon = "/todo.png", section = SideNavigationSection.class)
+	@Navigation(label = "module.caption.Location", icon = "fa fa-map-marker", section = SideNavigationSection.class)
 	class Location implements CorePages {
 	}
 
@@ -39,7 +39,7 @@ public interface CorePages extends Pages {
 	@View
 	@SecuredPage("industry")
 	@PageTitle("module.caption.Industry")
-	@Navigation(label = "module.caption.Industry", icon = "/todo.png", section = SideNavigationSection.class)
+	@Navigation(label = "module.caption.Industry", icon = "fa fa-building", section = SideNavigationSection.class)
 	class Industry implements com.ozguryazilim.tekir.core.config.CorePages {
 	}
 
@@ -52,12 +52,47 @@ public interface CorePages extends Pages {
 	@View
 	@SecuredPage("territory")
 	@PageTitle("module.caption.Territory")
-	@Navigation(label = "module.caption.Territory", icon = "/todo.png", section = SideNavigationSection.class)
+	@Navigation(label = "module.caption.Territory", icon = "fa fa-arrows", section = SideNavigationSection.class)
 	class Territory implements com.ozguryazilim.tekir.core.config.CorePages {
 	}
 
 	@View
 	class TerritoryLookup
+			implements
+				com.ozguryazilim.tekir.core.config.CorePages {
+	}
+
+	@View
+	@SecuredPage("commodity")
+	@PageTitle("module.caption.CommodityBrowse")
+	@Navigation(label = "module.caption.CommodityBrowse", icon = "fa fa-cube", section = SideNavigationSection.class)
+	class CommodityBrowse
+			implements
+				com.ozguryazilim.tekir.core.config.CorePages {
+	}
+
+	@View
+	@SecuredPage("commodity")
+	@PageTitle("module.caption.Commodity")
+	class Commodity implements com.ozguryazilim.tekir.core.config.CorePages {
+	}
+
+	@View
+	@SecuredPage("commodity")
+	@PageTitle("module.caption.CommodityView")
+	class CommodityView implements com.ozguryazilim.tekir.core.config.CorePages {
+	}
+
+	@View
+	@SecuredPage("commodity")
+	@PageTitle("module.caption.CommodityMasterView")
+	class CommodityMasterView
+			implements
+				com.ozguryazilim.tekir.core.config.CorePages {
+	}
+
+	@View
+	class CommodityLookup
 			implements
 				com.ozguryazilim.tekir.core.config.CorePages {
 	}
