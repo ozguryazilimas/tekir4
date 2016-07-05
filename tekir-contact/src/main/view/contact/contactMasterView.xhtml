@@ -7,7 +7,42 @@
                 template="/layout/masterViewBase.xhtml">
 
     <ui:define name="content">     
-        
+
+
+        <div class="row">
+            <div class="col-xs-6">
+
+                <ui:fragment rendered="#{contactHome.entity.class.simpleName eq 'Person'}">
+                    <div class="row">
+                        <t:outputText label="general.label.FirstName" value="#{contactHome.entity.firstName}" />
+                        <t:outputText label="general.label.LastName" value="#{contactHome.entity.lastName}" />
+                        <t:outputText label="contact.label.JobTitle" value="#{contactHome.entity.jobTitle}" />
+                        <t:outputText label="contact.label.CorparationName" value="#{contactHome.entity.corporationName}" rendered="#{empty contactHome.entity.corporation}"/>
+                        <t:outputEntityLink label="general.label.Corparation" value="#{contactHome.entity.corporation}" view="/contact/contactView.xhtml" rendered="#{not empty contactHome.entity.corporation}"/>
+                        <t:outputText label="contact.label.SSN" value="#{contactHome.entity.ssn}" />
+                    </div>            
+                </ui:fragment>
+
+                <ui:fragment rendered="#{contactHome.entity.class.simpleName eq 'Corporation'}">
+                    <div class="row">
+                        <t:outputText label="general.label.OrganizaitonName" value="#{contactHome.entity.organizastionName}" />
+                        <t:outputText label="contact.label.CorparationType" value="#{contactHome.entity.corporationType.name}"  />
+                        <t:outputEntityLink label="contact.label.PrimaryContact" value="#{contactHome.entity.primaryContact}" view="/contact/contactView.xhtml" />
+                        <t:outputEntityLink label="contact.label.ParentCorparation" value="#{contactHome.entity.parentCorporation}" view="/contact/contactView.xhtml" />
+                    </div>            
+                </ui:fragment>
+
+                <div class="row">
+                    <t:outputText label="general.label.Category" value="#{contactHome.entity.category.name}" />
+                    <t:outputText label="general.label.Industry" value="#{contactHome.entity.industry.name}" />
+                    <t:outputText label="general.label.Territory" value="#{contactHome.entity.territory.name}" />
+                </div>
+
+            </div>
+            <div class="col-xs-6">
+
+            </div>
+        </div>
     </ui:define>
 
 </ui:composition>
