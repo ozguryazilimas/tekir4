@@ -64,4 +64,8 @@ public class ContactInformationController implements Serializable {
     protected AbstractContactInformationEditor getEditor(ContactInformation info) {
         return ContactInformationEditorRegistery.getEditor(info.getClass());
     }
+    
+    public boolean isPrimary( ContactInformation info ){
+        return info.getRoles().contains("PRIMARY");
+    }
 }

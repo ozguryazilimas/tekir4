@@ -34,7 +34,7 @@ public class ContactSocialAccount extends ContactInformation{
     private String network;
     
     public String getCaption(){
-        return getNetwork() + "://" + getAddress();
+        return getAddress();
     }
 
     public String getNetwork() {

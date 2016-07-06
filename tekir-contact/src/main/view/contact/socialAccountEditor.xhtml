@@ -1,0 +1,28 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"                
+                template="/contact/contactInformationEditor.xhtml">
+
+    <ui:param name="title" value="socialAccountEditor.label.Title" />
+    <ui:param name="bean" value="#{socialAccountEditor}" />
+
+    <ui:define name="editorContent">
+        <div class="row">
+            <t:inputCombobox label="contact.label.Network" value="#{bean.entity.network}" >
+                <f:selectItem itemLabel="Web" itemValue="web" />
+                <f:selectItem itemLabel="FaceBook" itemValue="fb" />
+                <f:selectItem itemLabel="Twitter" itemValue="tw" />
+                <f:selectItem itemLabel="Skype" itemValue="skp" />
+                <f:selectItem itemLabel="Google+" itemValue="g+" />
+                <f:selectItem itemLabel="LinkedIn" itemValue="in" />
+                <f:selectItem itemLabel="Slack" itemValue="sl" />
+                <f:selectItem itemLabel="WhatsUp" itemValue="wu" />
+                <f:selectItem itemLabel="Blog" itemValue="bl" />
+            </t:inputCombobox>
+            <t:inputText label="contact.label.Address" value="#{bean.entity.address}" />
+        </div>
+    </ui:define> 
+</ui:composition>

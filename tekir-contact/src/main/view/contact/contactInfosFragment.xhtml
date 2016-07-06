@@ -33,7 +33,7 @@
                             </p:commandLink>
                         </li>
                         <li>
-                            <p:commandLink action="#{phoneEditor.create(contact)}" process="@this">
+                            <p:commandLink action="#{socialAccountEditor.create(contact)}" process="@this">
                                 <i class="fa fa-link" /> #{messages['contact.button.AddSocial']}
                                 <p:ajax event="dialogReturn" update="contactInfos" partialSubmit="true" process="@this" />   
                             </p:commandLink>
@@ -47,7 +47,7 @@
                 <ui:repeat value="#{contactInformations}" var="ci" >
                     <li class="item">
                         <div class="product-img">
-                            <i class="#{contactInformationController.getIcon(ci)}"/>
+                            <i class="#{contactInformationController.getIcon(ci)} #{contactInformationController.isPrimary(ci) ? 'text-yellow' : ''}"/>
                         </div>
                         <div class="product-info">
                             <div class="box-tools pull-right">
@@ -75,45 +75,6 @@
                         </div>
                     </li>
                 </ui:repeat>
-                <li class="item">
-                    <div class="product-img"><i class="fa fa-phone"/><i class="fa fa-star text-yellow"/></div>
-                    <div class="product-info">
-                        <div class="box-tools pull-right">
-                            <a href="#" class="btn btn-box-tool">
-                                <i class="fa fa-pencil"/>
-                            </a>
-                            <a href="#" class="btn btn-box-tool">
-                                <i class="fa fa-trash"/>
-                            </a>
-                        </div>
-                        <span class="product-title">+90 533 288 66 15</span>
-                        <span class="product-description text-sm">Mobile, Personal, Business, Primary</span>
-                    </div>
-                </li>
-
-                <li class="item">
-                    <div class="product-img"><i class="fa  fa-twitter"/><i class="fa fa-star text-yellow"/></div>
-                    <div class="product-info">
-                        <span class="product-title">hakan.uygun@gmail.com
-                            <a href="#" class="label pull-right">
-                                <i class="fa fa-trash text-red"/>
-                            </a>
-                        </span>
-                        <i class="fa fa-mobile"/>
-                        <i class="fa fa-fax"/>
-                        <i class="fa fa-envelope-o"/>
-                        <i class="fa fa-map-o"/>
-                        <i class="fa fa-facebook"/>
-                        <i class="fa  fa-twitter"/>
-                        <i class="fa fa-skype"/>
-                        <i class="fa fa-google-plus"/>
-                        <i class="fa fa-linkedin"/>
-                        <i class="fa fa-slack"/>
-                        <i class="fa fa-whatsapp"/>
-                        <i class="fa fa-link"/>
-                        <span class="text-sm product-description">Mobil, Personal</span>
-                    </div>
-                </li>
             </ul>
         </p:outputPanel>
     </div>
