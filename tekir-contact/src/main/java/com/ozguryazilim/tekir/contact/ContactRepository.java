@@ -6,6 +6,10 @@ import javax.enterprise.context.Dependent;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
 import com.ozguryazilim.tekir.entities.Contact;
+import com.ozguryazilim.tekir.entities.ContactAddress;
+import com.ozguryazilim.tekir.entities.ContactEMail;
+import com.ozguryazilim.tekir.entities.ContactInformation_;
+import com.ozguryazilim.tekir.entities.ContactPhone;
 import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.Person;
@@ -16,6 +20,8 @@ import java.util.List;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -39,9 +45,15 @@ public abstract class ContactRepository
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
         //Geriye PersonViewModel dönecek cq'yu ona göre oluşturuyoruz.
         CriteriaQuery<ContactViewModel> criteriaQuery = criteriaBuilder.createQuery(ContactViewModel.class);
+        
 
         //From Tabii ki User
         Root<Contact> from = criteriaQuery.from(Contact.class);
+        Join<Contact, ContactPhone> pm = from.join(Contact_.primaryMobile, JoinType.LEFT);
+        Join<Contact, ContactPhone> pp = from.join(Contact_.primaryPhone, JoinType.LEFT);
+        Join<Contact, ContactPhone> pf = from.join(Contact_.primaryFax, JoinType.LEFT);
+        Join<Contact, ContactEMail> pe = from.join(Contact_.primaryEmail, JoinType.LEFT);
+        Join<Contact, ContactAddress> pa = from.join(Contact_.primaryAddress, JoinType.LEFT);
 
         //Sonuç filtremiz
         buildVieModelSelect(criteriaQuery, from);
@@ -103,7 +115,12 @@ public abstract class ContactRepository
             from = criteriaQuery.from(Contact.class);
         }*/
         
-        Root<? extends Contact> from = criteriaQuery.from(Contact.class);
+        Root<Contact> from = criteriaQuery.from(Contact.class);
+        Join<Contact, ContactPhone> pm = from.join(Contact_.primaryMobile, JoinType.LEFT);
+        Join<Contact, ContactPhone> pp = from.join(Contact_.primaryPhone, JoinType.LEFT);
+        //Join<Contact, ContactPhone> pf = from.join(Contact_.primaryFax, JoinType.LEFT);
+        Join<Contact, ContactEMail> pe = from.join(Contact_.primaryEmail, JoinType.LEFT);
+        //Join<Contact, ContactAddress> pa = from.join(Contact_.primaryAddress, JoinType.LEFT);
 
         //Sonuç filtremiz
         buildVieModelSelect(criteriaQuery, from);
@@ -154,7 +171,17 @@ public abstract class ContactRepository
                 from.get(Contact_.name),
                 from.get(Contact_.info),
                 from.get(Contact_.active),
-                from.type()
+                from.type(),
+                from.get(Contact_.primaryMobile).get(ContactInformation_.id),
+                from.get(Contact_.primaryMobile).get(ContactInformation_.address),
+                from.get(Contact_.primaryPhone).get(ContactInformation_.id),
+                from.get(Contact_.primaryPhone).get(ContactInformation_.address),
+                //from.get(Contact_.primaryFax).get(ContactInformation_.id),
+                //from.get(Contact_.primaryFax).get(ContactInformation_.address),
+                from.get(Contact_.primaryEmail).get(ContactInformation_.id),
+                from.get(Contact_.primaryEmail).get(ContactInformation_.address)
+                //from.get(Contact_.primaryAddress).get(ContactInformation_.id),
+                //from.get(Contact_.primaryAddress).get(ContactInformation_.address)
         );
     }
 
