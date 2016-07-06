@@ -17,6 +17,12 @@
             <artifactId>tekir-core-model</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <type>jar</type>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
     
     <build>

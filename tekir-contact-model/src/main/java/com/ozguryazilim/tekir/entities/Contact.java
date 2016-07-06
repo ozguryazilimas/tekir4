@@ -23,7 +23,6 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -111,23 +110,23 @@ public abstract class Contact extends AuditBase{
      * 
      * TODO: Bu değerler çekilirken gereksiz bir yığın sorgu da çekilmese iyi olur aslında
      */
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "MOBILE_ID", foreignKey = @ForeignKey(name = "FK_CON_MOBILE"))
     private ContactPhone primaryMobile;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "PHONE_ID", foreignKey = @ForeignKey(name = "FK_CON_PHONE"))
     private ContactPhone primaryPhone;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "EMAIL_ID", foreignKey = @ForeignKey(name = "FK_CON_EMAIL"))
     private ContactEMail primaryEmail;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "FAX_ID", foreignKey = @ForeignKey(name = "FK_CON_FAX"))
     private ContactPhone primaryFax;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "ADDR_ID", foreignKey = @ForeignKey(name = "FK_CON_ADDR"))
     private ContactAddress primaryAddress;
 
@@ -152,10 +151,14 @@ public abstract class Contact extends AuditBase{
     
     /**
      * Bütün iletişim bilgileri buraya toparlansın.
+     * 
+     * Bunun için reletion vermeye gerek yok gerekirse sorgu ile ( Repository ) alabiliriz.
+     * Contact çekerken gereksiz bir yığın sorguya neden oluyor.
+     * 
      */
-    @OneToMany(mappedBy = "contact", cascade = CascadeType.ALL, orphanRemoval = true)
-    //@LazyCollection(LazyCollectionOption.FALSE) FIXME: Bu açılmalı
-    private List<ContactInformation> contactInformations = new ArrayList<>();
+    //@OneToMany(mappedBy = "contact", cascade = CascadeType.ALL, orphanRemoval = true)
+    //@LazyCollection(LazyCollectionOption.FALSE)
+    //private List<ContactInformation> contactInformations = new ArrayList<>();
     
     /**
      * Ek veri giriş alanları için key value bir veri modeli olması iyi olur.
@@ -169,9 +172,9 @@ public abstract class Contact extends AuditBase{
      * 
      * Örneğin bir firmanın bağlantı kişileri.
      */
-    @OneToMany(mappedBy = "sourceContact", cascade = CascadeType.ALL, orphanRemoval = true)
-    //@LazyCollection(LazyCollectionOption.FALSE) FIXME: Bu açılmalı
-    private List<ReleatedContact> reletadContacts = new ArrayList<>();
+    //@OneToMany(mappedBy = "sourceContact", cascade = CascadeType.ALL, orphanRemoval = true)
+    //@LazyCollection(LazyCollectionOption.FALSE)
+    //private List<ReleatedContact> reletadContacts = new ArrayList<>();
     
     /**
      * Tanımlanacak olan bölgelerden hangisine üye olduğu
@@ -214,9 +217,9 @@ public abstract class Contact extends AuditBase{
     /**
      * İlgilendiği ürün/service v.s.
      */
-    @OneToMany(mappedBy = "contact", cascade = CascadeType.ALL, orphanRemoval = true)
-    //@LazyCollection(LazyCollectionOption.FALSE) FIXME: Bu açılmalı
-    private List<ContactInterestedCommodity> interestedCommodities = new ArrayList<>();
+    //@OneToMany(mappedBy = "contact", cascade = CascadeType.ALL, orphanRemoval = true)
+    //@LazyCollection(LazyCollectionOption.FALSE)
+    //private List<ContactInterestedCommodity> interestedCommodities = new ArrayList<>();
     
     /**
      * Ağaç bir model üzerinden category tanımı
@@ -329,22 +332,6 @@ public abstract class Contact extends AuditBase{
         this.communicationChannels = communicationChannels;
     }
 
-    public List<ContactInformation> getContactInformations() {
-        return contactInformations;
-    }
-
-    public void setContactInformations(List<ContactInformation> contactInformations) {
-        this.contactInformations = contactInformations;
-    }
-
-    public List<ReleatedContact> getReletadContacts() {
-        return reletadContacts;
-    }
-
-    public void setReletadContacts(List<ReleatedContact> reletadContacts) {
-        this.reletadContacts = reletadContacts;
-    }
-
     public Territory getTerritory() {
         return territory;
     }
@@ -383,14 +370,6 @@ public abstract class Contact extends AuditBase{
 
     public void setSource(String source) {
         this.source = source;
-    }
-
-    public List<ContactInterestedCommodity> getInterestedCommodities() {
-        return interestedCommodities;
-    }
-
-    public void setInterestedCommodities(List<ContactInterestedCommodity> interestedCommodities) {
-        this.interestedCommodities = interestedCommodities;
     }
 
     public ContactCategory getCategory() {

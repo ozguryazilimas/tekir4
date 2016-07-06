@@ -38,7 +38,7 @@ public interface CorePages extends Pages {
 	@View
 	@SecuredPage("industry")
 	@PageTitle("module.caption.Industry")
-	@Navigation(label = "module.caption.Industry", icon = "fa fa-building", section = SideNavigationSection.class)
+	@Navigation(label = "module.caption.Industry", icon = "fa fa-industry", section = SideNavigationSection.class)
 	class Industry implements CorePages {
 	}
 
@@ -51,7 +51,7 @@ public interface CorePages extends Pages {
 	@View
 	@SecuredPage("territory")
 	@PageTitle("module.caption.Territory")
-	@Navigation(label = "module.caption.Territory", icon = "fa fa-arrows", section = SideNavigationSection.class)
+	@Navigation(label = "module.caption.Territory", icon = "fa fa-map-o", section = SideNavigationSection.class)
 	class Territory implements CorePages {
 	}
 

@@ -64,6 +64,20 @@
             <t:outputText label="general.label.Industry" value="#{contactBrowse.contact.industry.name}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.industry}"/>
             <t:outputText label="general.label.Territory" value="#{contactBrowse.contact.territory.name}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.territory}"/>
         </div>
+
+        <div class="row">
+            <t:outputText label="contact.label.PrimaryMobile" value="#{contactBrowse.contact.primaryMobile.caption}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.primaryMobile}"/>
+            <t:outputText label="contact.label.PrimaryPhone" value="#{contactBrowse.contact.primaryPhone.caption}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.primaryPhone}"/>
+            <t:outputText label="contact.label.PrimaryEmail" value="#{contactBrowse.contact.primaryEmail.caption}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.primaryEmail}"/>
+            <t:outputText label="contact.label.PrimaryAddress" value="#{contactBrowse.contact.primaryAddress.caption}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.primaryAddress}"/>
+            <t:outputText label="contact.label.PrimaryFax" value="#{contactBrowse.contact.primaryFax.caption}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.primaryFax}"/>
+        </div>
+
+        <ui:remove>
+        <ui:include src="/contact/contactInfosFragment.xhtml">
+            <ui:param name="contact" value="#{contactBrowse.contact}" />
+        </ui:include>
+            </ui:remove>
     </ui:define>
 
     <ui:define name="context-menu">

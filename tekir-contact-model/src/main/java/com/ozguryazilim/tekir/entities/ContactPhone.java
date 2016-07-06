@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.tekir.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -36,8 +37,8 @@ public class ContactPhone extends ContactInformation{
     
     
     @Override
-    public List<String> getAcceptedRoles() {
-        List<String> ls = super.getAcceptedRoles(); 
+    public List<String> getAcceptedSubTypes() {
+        List<String> ls = new ArrayList<>();
         
         ls.add("LAND");
         ls.add("MOBILE");

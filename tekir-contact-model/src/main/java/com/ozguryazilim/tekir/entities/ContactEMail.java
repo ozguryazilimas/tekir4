@@ -5,6 +5,8 @@
  */
 package com.ozguryazilim.tekir.entities;
 
+import java.util.Collections;
+import java.util.List;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
@@ -41,5 +43,10 @@ public class ContactEMail extends ContactInformation{
     @Override
     public String getIcon() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<String> getAcceptedSubTypes() {
+        return Collections.emptyList();
     }
 }

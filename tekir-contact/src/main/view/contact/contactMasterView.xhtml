@@ -10,7 +10,7 @@
 
 
         <div class="row">
-            <div class="col-xs-6">
+            <div class="col-md-6 col-xs-12">
 
                 <ui:fragment rendered="#{contactHome.entity.class.simpleName eq 'Person'}">
                     <div class="row">
@@ -39,7 +39,11 @@
                 </div>
 
             </div>
-            <div class="col-xs-6">
+            <div class="col-md-6 col-xs-12">
+
+                <ui:include src="/contact/contactInfosFragment.xhtml">
+                    <ui:param name="contactInformations" value="#{contactHome.contactInformations}" />
+                </ui:include>
 
             </div>
         </div>

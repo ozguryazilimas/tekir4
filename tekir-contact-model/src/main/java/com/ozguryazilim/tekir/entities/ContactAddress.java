@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.tekir.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
@@ -71,8 +72,8 @@ public class ContactAddress extends ContactInformation{
     }
     
     @Override
-    public List<String> getAcceptedRoles() {
-        List<String> ls = super.getAcceptedRoles(); 
+    public List<String> getAcceptedSubTypes() {
+        List<String> ls = new ArrayList<>();
         
         ls.add("INVOICE");
         ls.add("SHIPMENT");

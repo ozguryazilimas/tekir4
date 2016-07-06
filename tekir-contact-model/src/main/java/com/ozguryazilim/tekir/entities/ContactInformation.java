@@ -6,7 +6,7 @@
 package com.ozguryazilim.tekir.entities;
 
 import com.ozguryazilim.tekir.entites.converters.StringListConverter;
-import com.ozguryazilim.telve.entities.EntityBase;
+import com.ozguryazilim.telve.entities.AuditBase;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
@@ -39,7 +39,7 @@ import javax.persistence.Table;
 @Table( name = "TCC_CONTACT_INFO" )
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "INFO_TYPE")
-public abstract class ContactInformation extends EntityBase{
+public abstract class ContactInformation extends AuditBase{
 
     
     @Id 
@@ -56,12 +56,21 @@ public abstract class ContactInformation extends EntityBase{
     
     
     /**
-     * Business, Home, Personal, Mobile, Fax, Invoice, Shipment, Default( primary )
+     * Business, Home, Personal, Default( primary )
      * 
      */
     @Column(name="ROLES")
     @Convert(converter = StringListConverter.class)
     private List<String> roles = new ArrayList<>();
+    
+    /**
+     * Altsınıfların kendi içinde tür ayrımı için : 
+     * 
+     * Mobile, Fax, Invoice, Shipment, 
+     */
+    @Column(name="SUBTYPES")
+    @Convert(converter = StringListConverter.class)
+    private List<String> subTypes = new ArrayList<>();
     
     /**
      * Temel iletişim verisi.
@@ -70,6 +79,9 @@ public abstract class ContactInformation extends EntityBase{
     @Column(name="ADDRESS")
     private String address;
 
+    @Column(name="INFO")
+    private String info;
+    
     @Override
     public Long getId() {
         return id;
@@ -103,19 +115,30 @@ public abstract class ContactInformation extends EntityBase{
     public void setAddress(String address) {
         this.address = address;
     }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    public List<String> getSubTypes() {
+        return subTypes;
+    }
+
+    public void setSubTypes(List<String> subTypes) {
+        this.subTypes = subTypes;
+    }
     
     
     /**
      * Bu tür erişim bilgisi için hangi tiplerin kabul edileceği
      * @return 
      */
-    public List<String> getAcceptedRoles(){
-        List<String>  ls = new ArrayList<>();
-        ls.add("BUSINESS");
-        ls.add("HOME");
-        ls.add("PERSONEL");
-        return ls;
-    }
+    public abstract List<String> getAcceptedSubTypes();
+    
     
     /**
      * UI'de ne nasıl gösterilecek?

@@ -31,8 +31,8 @@
             </div>  
 
             <div class="row">
-                <t:inputText label="contact.label.CorparationName" value="#{contactHome.entity.corporationName}" columnClass="col-xs-6" required="false"/>
-                <t:inputLookupDialog label="general.label.Corparation" value="#{contactHome.entity.corporation}" lookupBean="#{contactLookup}" lookupListener="contactHome.entity.corporation" placeholder="#{messages['general.info.Corparation']}" lookupProfile="T:Corporation"/>
+                <t:inputText label="contact.label.CorporationName" value="#{contactHome.entity.corporationName}" columnClass="col-xs-6" required="false"/>
+                <t:inputLookupDialog label="general.label.Corporation" value="#{contactHome.entity.corporation}" lookupBean="#{contactLookup}" lookupListener="contactHome.entity.corporation" placeholder="#{messages['general.info.Corparation']}" lookupProfile="T:Corporation"/>
             </div>
         </ui:fragment>
 
@@ -42,7 +42,7 @@
                 <t:inputText label="general.label.Name" value="#{contactHome.entity.name}" columnClass="col-xs-12" required="true"/>
                 <t:inputText label="general.label.OrganizationName" value="#{contactHome.entity.organizastionName}" columnClass="col-xs-12" required="true"/>
                 <t:inputLookupDialog label="contact.label.PrimaryContact" value="#{contactHome.entity.primaryContact}" lookupBean="#{contactLookup}" lookupListener="contactHome.entity.primaryContact" placeholder="#{messages['contact.info.PrimaryContact']}" lookupProfile="T:Person"/>
-                <t:inputLookupDialog label="contact.label.ParentCorparation" value="#{contactHome.entity.parentCorporation}" lookupBean="#{contactLookup}" lookupListener="contactHome.entity.parentCorporation" placeholder="#{messages['contact.info.ParentCorporation']}" lookupProfile="T:Corporation"/>
+                <t:inputLookupDialog label="contact.label.ParentCorporation" value="#{contactHome.entity.parentCorporation}" lookupBean="#{contactLookup}" lookupListener="contactHome.entity.parentCorporation" placeholder="#{messages['contact.info.ParentCorporation']}" lookupProfile="T:Corporation"/>
 
             </div>
         </ui:fragment>
@@ -51,5 +51,15 @@
         <div class="row">
             <t:inputTextarea label="general.label.Info" value="#{contactHome.entity.info}" columnClass="col-xs-12"/>
         </div>
+
+        <div class="row">
+            <t:inputDialog label="contact.label.PrimaryMobile" value="#{contactHome.entity.primaryMobile.caption}" action="#{phoneEditor.editPrimaryPhone(contactHome.entity, contactHome.entity.primaryMobile)}" icon="fa fa-mobile"/>
+            <t:inputDialog label="contact.label.PrimaryPhone" value="#{contactHome.entity.primaryPhone.caption}" action="#{phoneEditor.editPrimaryPhone(contactHome.entity, contactHome.entity.primaryPhone)}" icon="fa fa-phone"/>
+            <t:inputDialog label="contact.label.PrimaryFax" value="#{contactHome.entity.primaryFax.caption}" action="#{phoneEditor.editPrimaryFax(contactHome.entity, contactHome.entity.primaryFax)}" icon="fa fa-fax"/>
+            <t:inputDialog label="contact.label.PrimaryEMail" value="#{contactHome.entity.primaryFax.caption}" action="#{phoneEditor.editPrimaryFax(contactHome.entity, contactHome.entity.primaryFax)}" icon="fa fa-envelope-o"/>
+            <t:inputDialog label="contact.label.PrimaryAddress" value="#{contactHome.entity.primaryFax.caption}" action="#{phoneEditor.editPrimaryFax(contactHome.entity, contactHome.entity.primaryFax)}" icon="fa fa-map-o"/>
+        </div>
+
+
     </ui:define> 
 </ui:composition>

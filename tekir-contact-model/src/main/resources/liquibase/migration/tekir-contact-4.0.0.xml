@@ -98,8 +98,13 @@
             <column autoIncrement="true" name="ID" type="BIGINT">
                 <constraints primaryKey="true" primaryKeyName="TCC_CONTACT_INFOPK"/>
             </column>
+            <column name="CREATE_DATE" type="datetime"/>
+            <column name="UPDATE_DATE" type="datetime"/>
+            <column name="UPDATE_USER" type="VARCHAR(255)"/>
             <column name="ADDRESS" type="VARCHAR(255)"/>
             <column name="ROLES" type="VARCHAR(255)"/>
+            <column name="SUBTYPES" type="VARCHAR(255)"/>
+            <column name="INFO" type="VARCHAR(255)"/>
             <column name="NETWORK" type="VARCHAR(255)"/>
             <column name="LAT" type="DOUBLE precision"/>
             <column name="LON" type="DOUBLE precision"/>

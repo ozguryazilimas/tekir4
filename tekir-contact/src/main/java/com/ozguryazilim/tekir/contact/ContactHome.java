@@ -4,9 +4,12 @@ import com.ozguryazilim.telve.forms.FormEdit;
 import com.ozguryazilim.telve.forms.FormBase;
 import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.tekir.contact.config.ContactPages;
+import com.ozguryazilim.tekir.contact.information.ContactInformationRepository;
+import com.ozguryazilim.tekir.entities.ContactInformation;
 import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.Person;
 import com.ozguryazilim.telve.data.RepositoryBase;
+import java.util.List;
 import javax.inject.Inject;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
 
@@ -20,6 +23,9 @@ public class ContactHome extends FormBase<Contact, Long> {
 
     @Inject
     private ContactRepository repository;
+    
+    @Inject
+    private ContactInformationRepository informationRepository;
 
     public Class<? extends ViewConfig> newPerson() {
         Person p = new Person();
@@ -45,5 +51,13 @@ public class ContactHome extends FormBase<Contact, Long> {
     @Override
     protected RepositoryBase<Contact, ContactViewModel> getRepository() {
         return repository;
+    }
+    
+    /**
+     * Geriye ilgili contact'a ait iletişim bilgilerini döndürür.
+     * @return 
+     */
+    public List<ContactInformation> getContactInformations(){
+        return informationRepository.findByContact(getEntity());
     }
 }
