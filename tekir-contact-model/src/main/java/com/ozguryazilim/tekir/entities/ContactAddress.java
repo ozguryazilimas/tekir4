@@ -83,8 +83,18 @@ public class ContactAddress extends ContactInformation{
 
     @Override
     public String getCaption(){
-        //FIXME: location'dan geri nasıl bir şey dönecek?
-        return getAddress() + location.getName() ;
+        //FIXME: Burada satır kırma işini nasıl yaparız?
+        StringBuilder sb = new StringBuilder();
+        sb.append(getAddress());
+        if( getZipCode() != null && getZipCode().length() > 0 ){
+            sb.append(" ").append(getZipCode());
+        }
+        
+        if( getLocation() != null ){
+            sb.append(" ").append(getLocation().getName());
+        }
+        
+        return sb.toString();
     }
 
     @Override
