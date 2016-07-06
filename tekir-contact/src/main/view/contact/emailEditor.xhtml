@@ -1,0 +1,17 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"                
+                template="/contact/contactInformationEditor.xhtml">
+
+    <ui:param name="title" value="emailEditor.label.Title" />
+    <ui:param name="bean" value="#{emailEditor}" />
+
+    <ui:define name="editorContent">
+        <div class="row">
+            <t:inputText label="contact.label.Email" value="#{bean.entity.emailAddress}" />
+        </div>
+    </ui:define> 
+</ui:composition>

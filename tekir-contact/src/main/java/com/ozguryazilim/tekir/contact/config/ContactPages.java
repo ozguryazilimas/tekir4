@@ -116,5 +116,11 @@ public interface ContactPages extends Pages {
 			implements
 				ContactPages {
 	}
+        
+        @SecuredPage() @View
+	class EmailEditor
+			implements
+				ContactPages {
+	}
 
 }

@@ -8,11 +8,10 @@ package com.ozguryazilim.tekir.contact.information;
 import com.ozguryazilim.tekir.contact.ContactRepository;
 import com.ozguryazilim.tekir.contact.config.ContactPages;
 import com.ozguryazilim.tekir.entities.Contact;
+import com.ozguryazilim.tekir.entities.ContactEMail;
 import com.ozguryazilim.tekir.entities.ContactInformation;
 import com.ozguryazilim.tekir.entities.ContactPhone;
 import javax.inject.Inject;
-import org.apache.deltaspike.core.api.config.view.metadata.ViewConfigResolver;
-import org.primefaces.context.RequestContext;
 
 /**
  * Contact Phone Editor.
@@ -25,15 +24,10 @@ import org.primefaces.context.RequestContext;
 public class PhoneEditor extends AbstractContactInformationEditor<ContactPhone> {
 
     @Inject
-    private ViewConfigResolver viewConfigResolver;
-
-    @Inject
     private ContactRepository contactRepository;
 
     @Inject
-    private ContactInformationRepository contactInContactRepository;
-
-    private Contact contact;
+    private ContactInformationRepository contactInformationRepository;
 
     private Boolean primaryMobile = Boolean.FALSE;
     private Boolean primaryPhone = Boolean.FALSE;
@@ -43,11 +37,11 @@ public class PhoneEditor extends AbstractContactInformationEditor<ContactPhone> 
 
         init();
 
-        this.contact = contact;
+        setContact(contact);
         if (phone != null) {
             setEntity(phone);
         } else {
-            setEntity(new ContactPhone());
+            setEntity(createNewModel());
         }
 
         getEntity().setContact(contact);
@@ -66,7 +60,7 @@ public class PhoneEditor extends AbstractContactInformationEditor<ContactPhone> 
         if (phone != null) {
             setEntity(phone);
         } else {
-            setEntity(new ContactPhone());
+            setEntity(createNewModel());
         }
 
         getEntity().setContact(contact);
@@ -82,11 +76,11 @@ public class PhoneEditor extends AbstractContactInformationEditor<ContactPhone> 
     public void editPrimaryFax(Contact contact, ContactPhone phone) {
         init();
 
-        this.contact = contact;
+        setContact(contact);
         if (phone != null) {
             setEntity(phone);
         } else {
-            setEntity(new ContactPhone());
+            setEntity(createNewModel());
         }
 
         getEntity().setContact(contact);
@@ -106,36 +100,28 @@ public class PhoneEditor extends AbstractContactInformationEditor<ContactPhone> 
 
     /**
      * Yeni contact'ı save eder.
+     * @return 
      */
-    public void closeDialog() {
+    @Override
+    public boolean onBeforeClose() {
         //Save edilmemiş bir contact için sadece primaryler eklenebilir.
         if (primaryPhone) {
-            contact.setPrimaryPhone(getEntity());
+            getContact().setPrimaryPhone(getEntity());
         } else if (primaryMobile) {
-            contact.setPrimaryMobile(getEntity());
+            getContact().setPrimaryMobile(getEntity());
         } else if (primaryFax) {
-            contact.setPrimaryFax(getEntity());
+            getContact().setPrimaryFax(getEntity());
         }
 
-        if (contact.isPersisted()) {
+        if (getContact().isPersisted()) {
             //Önce bileşeni save edelim.
-            contactInContactRepository.save(getEntity());
+            contactInformationRepository.save(getEntity());
 
             //Demek ki yeni giriş değiş dolayısı ile verileri saklayalım
-            contactRepository.save(contact);
+            contactRepository.save(getContact());
         }
 
-        RequestContext.getCurrentInstance().closeDialog(null);
-    }
-
-    /**
-     * startPopup dialog adını döndürür.
-     *
-     * @return
-     */
-    public String getDialogName() {
-        String viewId = viewConfigResolver.getViewConfigDescriptor(ContactPages.PhoneEditor.class).getViewId();
-        return viewId.substring(0, viewId.indexOf(".xhtml"));
+        return true;
     }
 
     @Override
@@ -155,35 +141,13 @@ public class PhoneEditor extends AbstractContactInformationEditor<ContactPhone> 
     }
 
     @Override
-    public void create(Contact contact) {
-        init();
-
-        this.contact = contact;
-        setEntity( new ContactPhone());
-        getEntity().setContact(contact);
-
-        openDialogImpl();
-    }
-
-    @Override
-    public void edit(ContactPhone information) {
-        init();
-
-        this.contact = information.getContact();
-        setEntity(information );
-
-        openDialogImpl();
-
-    }
-
-    @Override
-    public void delete(ContactPhone information) {
-        contactInContactRepository.remove(information);
-    }
-
-    @Override
     public boolean acceptType(ContactInformation information) {
-        return information instanceof ContactPhone;
+        return information instanceof ContactEMail;
+    }
+
+    @Override
+    public ContactPhone createNewModel() {
+        return new ContactPhone();
     }
 
 }

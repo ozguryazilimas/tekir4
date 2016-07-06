@@ -13,6 +13,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.inject.Inject;
+import org.apache.deltaspike.core.api.config.view.ViewConfig;
+import org.apache.deltaspike.core.api.config.view.metadata.ViewConfigResolver;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -21,9 +24,15 @@ import org.primefaces.context.RequestContext;
  */
 public abstract class AbstractContactInformationEditor<E extends ContactInformation> implements Serializable{
 
+    @Inject
+    private ViewConfigResolver viewConfigResolver;
+
+    @Inject
+    private ContactInformationRepository contactInformationRepository;
     
     private E entity;
-    
+
+    private Contact contact;
     
     protected void openDialogImpl() {
         Map<String, Object> options = new HashMap<>();
@@ -64,7 +73,11 @@ public abstract class AbstractContactInformationEditor<E extends ContactInformat
      *
      * @return
      */
-    public abstract String getDialogName();
+    public String getDialogName(){
+        Class<? extends ViewConfig> page = this.getClass().getAnnotation(ContactInformationEditor.class).page();
+        String viewId = viewConfigResolver.getViewConfigDescriptor(page).getViewId();
+        return viewId.substring(0, viewId.indexOf(".xhtml"));
+    }
     
     
     public List<String> getAcceptedRoles(){
@@ -79,19 +92,47 @@ public abstract class AbstractContactInformationEditor<E extends ContactInformat
         this.entity = entity;
     }
 
+    public Contact getContact() {
+        return contact;
+    }
 
+    public void setContact(Contact contact) {
+        this.contact = contact;
+    }
+
+
+    protected abstract void init();
     
     public abstract String getIcon(E information);
     
     public abstract String getEditorCaption();
 
     
-    public abstract void create(Contact contact);
+    public abstract E createNewModel();
+    
+    public void create(Contact contact){
+        init();
 
-    public abstract void edit(E information);
+        this.contact = contact;
+        setEntity( createNewModel());
+        getEntity().setContact(contact);
+
+        openDialogImpl();
+    }
+
+    public void edit(E information){
+        init();
+
+        this.contact = information.getContact();
+        setEntity(information );
+
+        openDialogImpl();
+    }
 
     
-    public abstract void delete(E information);
+    public void delete(E information){
+        contactInformationRepository.remove(information);
+    }
 
     
     public abstract boolean acceptType(ContactInformation information);

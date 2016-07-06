@@ -21,7 +21,7 @@
                             </p:commandLink>
                         </li>
                         <li>
-                            <p:commandLink action="#{phoneEditor.create(contact)}" process="@this">
+                            <p:commandLink action="#{emailEditor.create(contact)}" process="@this">
                                 <i class="fa fa-envelope-o" /> #{messages['contact.button.AddEmail']}
                                 <p:ajax event="dialogReturn" update="contactInfos" partialSubmit="true" process="@this" />   
                             </p:commandLink>
