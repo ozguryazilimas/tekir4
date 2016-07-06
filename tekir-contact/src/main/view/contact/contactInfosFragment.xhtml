@@ -15,46 +15,63 @@
                     </button>
                     <ul class="dropdown-menu" arai-labeledby="dropMenu1" style="z-index: 5000">
                         <li>
-                            <p:commandLink action="#{phoneEditor.newPhone(contactHome.entity)}" process="@this">
+                            <p:commandLink action="#{phoneEditor.create(contact)}" process="@this">
                                 <i class="fa fa-phone" /> #{messages['contact.button.AddPhone']}
+                                <p:ajax event="dialogReturn" update="contactInfos" partialSubmit="true" process="@this" />   
                             </p:commandLink>
                         </li>
                         <li>
-                            <p:commandLink action="#{phoneEditor.newPhone(contactHome.entity)}" process="@this">
+                            <p:commandLink action="#{phoneEditor.create(contact)}" process="@this">
                                 <i class="fa fa-envelope-o" /> #{messages['contact.button.AddEmail']}
+                                <p:ajax event="dialogReturn" update="contactInfos" partialSubmit="true" process="@this" />   
                             </p:commandLink>
                         </li>
                         <li>
-                            <p:commandLink action="#{phoneEditor.newPhone(contactHome.entity)}" process="@this">
+                            <p:commandLink action="#{phoneEditor.create(contact)}" process="@this">
                                 <i class="fa fa-map-o" /> #{messages['contact.button.AddAddress']}
+                                <p:ajax event="dialogReturn" update="contactInfos" partialSubmit="true" process="@this" />   
                             </p:commandLink>
                         </li>
                         <li>
-                            <p:commandLink action="#{phoneEditor.newPhone(contactHome.entity)}" process="@this">
+                            <p:commandLink action="#{phoneEditor.create(contact)}" process="@this">
                                 <i class="fa fa-link" /> #{messages['contact.button.AddSocial']}
+                                <p:ajax event="dialogReturn" update="contactInfos" partialSubmit="true" process="@this" />   
                             </p:commandLink>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="box-body">
+        <p:outputPanel id="contactInfos" layout="block" class="box-body">
             <ul class="products-list product-list-in-box">
                 <ui:repeat value="#{contactInformations}" var="ci" >
                     <li class="item">
-                        <div class="product-img"><i class="fa fa-phone"/></div>
+                        <div class="product-img">
+                            <i class="#{contactInformationController.getIcon(ci)}"/>
+                        </div>
                         <div class="product-info">
                             <div class="box-tools pull-right">
-                                <a href="#" class="btn btn-box-tool">
-                                    <i class="fa fa-pencil"/>
-                                </a>
-                                <a href="#" class="btn btn-box-tool">
-                                    <i class="fa fa-trash"/>
-                                </a>
+                                <p:commandLink action="#{contactInformationController.edit(ci)}" process="@this" styleClass="btn btn-box-tool">
+                                    <i class="fa fa-pencil" />
+                                    <p:ajax event="dialogReturn" update="contactInfos" partialSubmit="true" process="@this" />   
+                                </p:commandLink>
+                                <p:commandLink action="#{contactInformationController.delete(ci)}" process="@this" styleClass="btn btn-box-tool" update="contactInfos">
+                                    <i class="fa fa-trash" />
+                                    <p:confirm header="#{messages['general.caption.Confirm']}" message="#{messages['general.message.confirm.Delete']}" icon="fa fa-2x fa-exclamation-triangle btn-delete" />
+                                </p:commandLink>
                             </div>
                             <span class="product-title">#{ci.caption}</span>
                             <span class="product-description text-sm">#{ci.info}</span>
-                            <span class="product-description text-sm">#{ci.roles}#{ci.subTypes}</span>
+                            <span class="product-description text-sm">
+                                <ul class="list-inline">
+                                    <ui:repeat value="#{ci.roles}" var="item" >
+                                        <li><i class="fa fa-tag" /> #{messages['contactInfo.role.'.concat(item)]}</li>
+                                    </ui:repeat>
+                                    <ui:repeat value="#{ci.subTypes}" var="item" >
+                                        <li><i class="fa fa-tag" /> #{messages['contactInfo.role.'.concat(item)]}</li>
+                                    </ui:repeat>
+                                </ul>
+                            </span>
                         </div>
                     </li>
                 </ui:repeat>
@@ -75,7 +92,7 @@
                 </li>
 
                 <li class="item">
-                    <div class="product-img"><i class="fa  fa-twitter"/></div>
+                    <div class="product-img"><i class="fa  fa-twitter"/><i class="fa fa-star text-yellow"/></div>
                     <div class="product-info">
                         <span class="product-title">hakan.uygun@gmail.com
                             <a href="#" class="label pull-right">
@@ -98,6 +115,6 @@
                     </div>
                 </li>
             </ul>
-        </div>
+        </p:outputPanel>
     </div>
 </ui:composition>

@@ -73,11 +73,6 @@
             <t:outputText label="contact.label.PrimaryFax" value="#{contactBrowse.contact.primaryFax.caption}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.primaryFax}"/>
         </div>
 
-        <ui:remove>
-        <ui:include src="/contact/contactInfosFragment.xhtml">
-            <ui:param name="contact" value="#{contactBrowse.contact}" />
-        </ui:include>
-            </ui:remove>
     </ui:define>
 
     <ui:define name="context-menu">
