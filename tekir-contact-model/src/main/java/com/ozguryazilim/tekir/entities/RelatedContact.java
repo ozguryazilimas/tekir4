@@ -24,7 +24,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table( name = "TCC_CONTACT_REL" )
-public class ReleatedContact extends EntityBase{
+public class RelatedContact extends EntityBase{
 
     @Id @GeneratedValue( strategy = GenerationType.AUTO, generator="genericSeq")
     @Column(name="ID")
@@ -43,7 +43,7 @@ public class ReleatedContact extends EntityBase{
     
     @ManyToOne
     @JoinColumn(name = "RELEATION_ID", foreignKey = @ForeignKey(name = "FK_CONREL_REL"))
-    private ContactRelation  releation;
+    private ContactRelation  relation;
     
     @Column(name = "INFO")
     private String info;
@@ -73,12 +73,12 @@ public class ReleatedContact extends EntityBase{
         this.targetContact = targetContact;
     }
 
-    public ContactRelation getReleation() {
-        return releation;
+    public ContactRelation getRelation() {
+        return relation;
     }
 
-    public void setReleation(ContactRelation releation) {
-        this.releation = releation;
+    public void setRelation(ContactRelation relation) {
+        this.relation = relation;
     }
 
     public String getInfo() {

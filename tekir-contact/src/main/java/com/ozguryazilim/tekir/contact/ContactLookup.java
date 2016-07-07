@@ -64,7 +64,7 @@ public class ContactLookup
         
         
         String type = getModel().getProfileProperties().get("T");
-        switch( type ){
+        if(!Strings.isNullOrEmpty(type)) switch( type ){
             case "Person" : result = "personLookup.Title"; break;
             case "Corporation" : result = "corporationLookup.Title"; break;
         }

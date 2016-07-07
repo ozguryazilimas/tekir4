@@ -1,0 +1,79 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                template="/layout/querySubViewBase.xhtml">
+
+    <ui:param name="moduleCaption" value="page.title.RelatedContactSubView" />
+    <ui:param name="bean" value="#{relatedContactSubView}" />
+    <ui:param name="ItemPopupId" value="relatedContactPopup" />
+    <ui:param name="advanceEnabled" value="true" />
+    <ui:param name="saveEnabled" value="true" />
+    <ui:param name="filterEnabled" value="true" />
+    <ui:param name="canFilter" value="false" />
+    <ui:param name="canInsert" value="true" />
+    <ui:param name="canEdit" value="true" />
+    <ui:param name="canDelete" value="true" />
+    <ui:param name="permission" value="relatedContact" />
+
+
+    
+    <ui:define name="content">
+        <p:dialog id="relatedContactPopup" widgetVar="relatedContactPopup" modal="false"
+                  header="#{messages['module.caption.RelatedContact']}" resizable="true" 
+                  width="450">
+            <h:form id="cdForm" rendered="#{bean.entity ne null}">
+                <div class="row">
+                    <t:inputLookupDialog value="#{bean.entity.targetContact}" label="contact.label.Contact"  caption="name" lookupBean="#{contactLookup}" lookupListener="relatedContactSubView.entity.targetContact"  columnClass="col-xs-12" />
+                    <t:inputLookup value="#{bean.entity.relation}" label="contact.label.ContactRelation"  caption="name" lookupBean="#{contactRelationLookup}" lookupListener="bean.entity.relation"  columnClass="col-xs-12"/>
+                    <t:inputTextarea label="general.label.Info" value="#{bean.entity.info}" columnClass="col-xs-12"/>
+                </div>
+
+                <div class="actionButtons">
+                    <p:commandButton id="save"
+                                     value="#{messages['general.button.Save']}" accesskey="s"
+                                     action="#{bean.save()}"
+                                     oncomplete="if (args &amp;&amp; !args.validationFailed){ PF('relatedContactPopup').hide();}"                                     
+                                     update="@([id$=results])"
+                                     icon="fa fa-save" 
+                                     validateClient="true"
+                                     styleClass="btn-primary"
+                                     />
+
+                    <p:commandButton id="done"
+                                     value="#{messages['general.button.Close']}"
+                                     onclick="PF('relatedContactPopup').hide();"
+                                     icon="ui-icon-close"	
+                                     process="@this"
+                                     ajax="true"/>
+
+                </div>
+
+            </h:form>
+        </p:dialog>
+    </ui:define>
+    
+    <ui:remove>
+    <ui:define name="actionColumn">
+        <f:facet name="header">
+            <p:commandLink action="#{roleLookup.openDialog( true, '' )}" style="text-decoration:none;padding:4px;"
+                                   partialSubmit="true" process="@this" styleClass="fa fa-plus-circle btn-add"
+                                   title="#{messages['general.label.Add']}">
+                        <p:ajax event="dialogReturn" listener="#{userRoleSubView.onRoleSelect}" partialSubmit="true" 
+                                process="@this" update="results"/>   
+                    </p:commandLink>
+        </f:facet>
+        <p:commandLink action="#{bean.removeItem( item.id )}" 
+                       update="results" 
+                       title="#{messages['general.label.DeleteLine']}"
+                       partialSubmit="true" process="@this">
+            <i class="fa fa-trash-o btn-delete" ></i>
+            <p:confirm header="#{messages['general.caption.Confirm']}" message="#{messages['general.message.confirm.Delete']}" icon="ui-icon-alert" />
+        </p:commandLink>
+    </ui:define>
+        </ui:remove>
+    
+
+</ui:composition>

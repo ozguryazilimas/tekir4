@@ -98,6 +98,8 @@ public interface ContactPages extends Pages {
 				ContactPages {
 	}
 
+        @SecuredPage("relatedContact") @View 
+        class RelatedContactSubView implements Admin {};
         
         @SecuredPage() @View
 	class NewPersonPopup
