@@ -40,7 +40,15 @@
             <t:outputText label="general.label.Info" value="#{contactHome.entity.info}" />
             <t:outputBoolean label="general.label.Status" itemLabel="general.boolean.active." value="#{contactHome.entity.active}" />
         </div>  
-
+        <div class="row">        
+            <div class="col-md-6 col-xs-12">
+                <ul class="list-inline text-sm text-muted">
+                    <ui:repeat value="#{contactHome.entity.contactRoles}" var="item" >
+                        <li><i class="fa fa-tag" /> #{messages['contact.role.'.concat(item)]}</li>
+                    </ui:repeat>
+                </ul>
+            </div>
+        </div>
 
     </ui:define>
 

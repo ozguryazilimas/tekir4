@@ -18,14 +18,14 @@ public class TekirContactModule {
     
     @PostConstruct
     public void init(){
-        ContactRoleRegistery.register("CONTACT");
-        ContactRoleRegistery.register("PERSON");
-        ContactRoleRegistery.register("CORPORATION");
-        ContactRoleRegistery.register("ACCOUNT");
-        ContactRoleRegistery.register("CUSTOMER");
-        ContactRoleRegistery.register("VENDOR");
-        ContactRoleRegistery.register("PARTNER");
-        ContactRoleRegistery.register("COMPETITOR");
+        ContactRoleRegistery.register("CONTACT", false);
+        ContactRoleRegistery.register("PERSON", false);
+        ContactRoleRegistery.register("CORPORATION", false);
+        ContactRoleRegistery.register("ACCOUNT", false);
+        ContactRoleRegistery.register("CUSTOMER", true);
+        ContactRoleRegistery.register("VENDOR", true);
+        ContactRoleRegistery.register("PARTNER", true);
+        ContactRoleRegistery.register("COMPETITOR", true);
         //ContactRoleRegistery.register("LEAD");
         //ContactRoleRegistery.register("EMPLOYEE");
     }

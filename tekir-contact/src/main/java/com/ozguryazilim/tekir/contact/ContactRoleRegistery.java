@@ -21,16 +21,35 @@ import java.util.List;
  */
 public class ContactRoleRegistery {
     
-    
+    /**
+     * Tüm Roller
+     */
     private static final List<String> contactRoles = new ArrayList<>();
     
+    /**
+     * Kullanıcı tarafından seçilebilir olanlar.
+     */
+    private static final List<String> selectableContactRoles = new ArrayList<>();
     
-    public static void register(String role) {
+    
+    /**
+     * Verilen bağlantı rolünü sisteme register eder.
+     * @param role
+     * @param forUser bu rolün kullanıcı tarafından seçilip seçilemeyeceği
+     */
+    public static void register(String role, boolean forUser) {
         contactRoles.add(role);
+        if( forUser ){
+            selectableContactRoles.add(role);
+        }
     }
 
     public static List<String> getContactRoles() {
         return contactRoles;
+    }
+    
+    public static List<String> getSelectableContactRoles() {
+        return selectableContactRoles;
     }
     
 }

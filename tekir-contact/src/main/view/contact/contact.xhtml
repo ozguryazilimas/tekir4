@@ -31,6 +31,14 @@
             <t:inputLookupDialog label="general.label.Territory" value="#{contactHome.entity.territory}" lookupBean="#{territoryLookup}" lookupListener="contactHome.entity.territory" placeholder="#{messages['general.info.Territory']}" />
         </div>
 
+        <div class="row">
+            <t:inputAny label="contact.label.ContactRoles">
+                <p:selectManyCheckbox id="grid3" value="#{contactHome.selectedRoles}" layout="responsive" columns="4">
+                    <f:selectItems value="#{contactHome.contactRoles}" var="item" itemLabel="#{messages['contact.role.'.concat( item )]}" itemValue="#{item}" />
+                </p:selectManyCheckbox>
+            </t:inputAny>
+        </div>
+        
         <ui:fragment rendered="#{contactHome.entity.class.simpleName eq 'Person'}">
             <div class="row">
                 <t:inputText label="general.label.FirstName" value="#{contactHome.entity.firstName}" columnClass="col-xs-6" required="true"/>

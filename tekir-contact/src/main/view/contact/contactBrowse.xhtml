@@ -36,6 +36,11 @@
                     <i class="fa fa-building" />
                 </ui:fragment>
                 #{contactBrowse.contact.name}
+                <ul class="list-inline text-sm text-muted">
+                    <ui:repeat value="#{contactBrowse.contact.contactRoles}" var="item" >
+                        <li><i class="fa fa-tag" /> #{messages['contact.role.'.concat(item)]}</li>
+                    </ui:repeat>
+                </ul>
             </div>
         </div>
 
