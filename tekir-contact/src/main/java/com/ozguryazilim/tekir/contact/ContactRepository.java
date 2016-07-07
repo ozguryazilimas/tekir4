@@ -1,5 +1,6 @@
 package com.ozguryazilim.tekir.contact;
 
+import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import org.apache.deltaspike.data.api.Repository;
 import javax.enterprise.context.Dependent;
@@ -86,11 +87,24 @@ public abstract class ContactRepository
     
     @Override
     public List<ContactViewModel> lookupQuery(String searchText) {
-        return lookupQuery(searchText, null);
+        return lookupQuery(searchText, null, null);
     }
     
+    public List<ContactViewModel> lookupQuery(String searchText, String type) {
+        return lookupQuery(searchText, type, null);
+    }
     
-    public List<ContactViewModel> lookupQuery(String searchText, String type ) {
+    /**
+     * Contact sorgusu yapar.
+     * 
+     * rol listesini and ile bağlar : Account, Customer verildiyse ikisinin de role lisesinde olmasını kontrol eder.
+     * 
+     * @param searchText code ve ad içerisinde like ile aranır
+     * @param type Person/Corporation değerlerine göre tarama yapar
+     * @param roles virgüllerle ayrılmış olan rollere göre sorgu yapar. farklı değerleri and ile bağlar.
+     * @return 
+     */
+    public List<ContactViewModel> lookupQuery(String searchText, String type, String roles ) {
 
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
         //Geriye PersonViewModel dönecek cq'yu ona göre oluşturuyoruz.
@@ -142,6 +156,15 @@ public abstract class ContactRepository
                 default : 
                     break;
             }
+        }
+     
+        /*
+        Hibernate bug'ı yüzünden isim kullanıyor ve as ile arama yapıyoruz. Converter annotation'ı ile derdi var.
+        https://hibernate.atlassian.net/browse/HHH-10464
+        */
+        if( !Strings.isNullOrEmpty(roles)){
+            List<String> rls = Splitter.on(',').omitEmptyStrings().trimResults().splitToList(roles);
+            rls.forEach(rs -> predicates.add(criteriaBuilder.like(from.get("contactRoles").as(String.class), "%"+ rs +"%")));
         }
         
         //Oluşan filtreleri sorgumuza ekliyoruz

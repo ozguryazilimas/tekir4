@@ -235,6 +235,35 @@ public abstract class Contact extends AuditBase{
     @JoinColumn(name = "INDUSTRY_ID", foreignKey = @ForeignKey(name = "FK_CON_INDUSTRY"))
     private Industry industry;
 
+    //////////////////////////////////////////
+    // Account ile ilgili bilgiler
+    //////////////////////////////////////////
+    
+    /**
+     * Vergi bilgileri. Bireysel kullanıcılar için de lazım olabilir.
+     * Bu bilgiler Account'a mı gitse?
+     * Suggestion
+     */
+    @Column( name = "TAX_OFFICE")
+    private String taxOffice;
+    
+    @Column( name = "TAX_NUMBER")
+    private String taxNumber;
+    
+    
+    /**
+     * Banka hesap bilgisi : aslında birden fazla olabilir. Nasıl yapsak?
+     */
+    @Column( name = "BANK_ACCOUNT")
+    private String bankAccount;
+    
+    /**
+     * Hangi döviz ile çalışıldığı ISO kodu olarak tutulacak.
+     */
+    @Column( name = "CCY")
+    private String currency;
+    
+    
     @Override
     public Long getId() {
         return id;
@@ -403,5 +432,39 @@ public abstract class Contact extends AuditBase{
     public void setInfo(String info) {
         this.info = info;
     }
+
+    public String getTaxOffice() {
+        return taxOffice;
+    }
+
+    public void setTaxOffice(String taxOffice) {
+        this.taxOffice = taxOffice;
+    }
+
+    public String getTaxNumber() {
+        return taxNumber;
+    }
+
+    public void setTaxNumber(String taxNumber) {
+        this.taxNumber = taxNumber;
+    }
+
+    public String getBankAccount() {
+        return bankAccount;
+    }
+
+    public void setBankAccount(String bankAccount) {
+        this.bankAccount = bankAccount;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+    
+    
     
 }

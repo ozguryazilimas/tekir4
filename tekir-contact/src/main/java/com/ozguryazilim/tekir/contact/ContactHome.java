@@ -109,4 +109,16 @@ public class ContactHome extends FormBase<Contact, Long> {
         this.selectedRoles = selectedRoles;
     }
     
+    /**
+     * Seçili olan contact'ı bir account'a çevirmek için accout home'a gönder.
+     */
+    public void convertToAccount(){
+        getEntity().getContactRoles().add("ACCOUNT");
+        repository.save(getEntity());
+    }
+    
+    
+    public Boolean getIsAccount(){
+        return getEntity().getContactRoles().contains("ACCOUNT");
+    }
 }

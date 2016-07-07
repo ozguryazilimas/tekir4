@@ -65,6 +65,12 @@
                 <h:outputText value=" #{messages['general.button.AddCorporation']}" />
             </p:commandLink>
         </li>
+        <li>
+            <p:commandLink action="#{contactHome.convertToAccount()}" styleClass="context-command" >
+                <i class="fa fa-briefcase"></i>
+                <h:outputText value=" #{messages['general.button.ConvertAccount']}" />
+            </p:commandLink>
+        </li>
         <ui:remove>
             <li>
                 <p:commandLink action="#{newPersonDialog.openDialog()}" styleClass="context-command" >

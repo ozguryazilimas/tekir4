@@ -26,7 +26,7 @@ public class StringListConverter implements AttributeConverter<List<String>, Str
     public String convertToDatabaseColumn(List<String> list) {
         return String.join(",", list);
     }
-
+    
     @Override
     public List<String> convertToEntityAttribute(String field) {
         String f = field.trim();

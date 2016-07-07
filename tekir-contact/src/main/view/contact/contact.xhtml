@@ -10,7 +10,7 @@
     <ui:param name="entity" value="#{contactHome.entity}" />
     <ui:param name="dontShowContentHeader" value="true" />
 
-    
+
     <ui:define name="customHeader">
         <section class="content-header">
             <ui:fragment rendered="#{viewState ne ''}" >
@@ -22,7 +22,7 @@
             <h1>#{messages['contact.class.'.concat(contactHome.entity.class.simpleName)]}</h1> 
         </section>
     </ui:define>
-    
+
     <ui:define name="form">
         <div class="row">
             <t:inputText label="general.label.Code" value="#{contactHome.entity.code}" columnClass="col-xs-6" required="true"/>
@@ -38,7 +38,7 @@
                 </p:selectManyCheckbox>
             </t:inputAny>
         </div>
-        
+
         <ui:fragment rendered="#{contactHome.entity.class.simpleName eq 'Person'}">
             <div class="row">
                 <t:inputText label="general.label.FirstName" value="#{contactHome.entity.firstName}" columnClass="col-xs-6" required="true"/>
@@ -81,6 +81,16 @@
             <t:inputDialog label="contact.label.PrimaryEmail" value="#{contactHome.entity.primaryEmail.caption}" action="#{emailEditor.editPrimaryEmail(contactHome.entity, contactHome.entity.primaryEmail)}" icon="fa fa-envelope-o"/>
             <t:inputDialog label="contact.label.PrimaryAddress" value="#{contactHome.entity.primaryAddress.caption}" action="#{addressEditor.editPrimaryAddress(contactHome.entity, contactHome.entity.primaryAddress)}" icon="fa fa-map-o"/>
         </div>
+
+
+        <ui:fragment rendered="#{contactHome.isAccount}">
+            <div class="row">
+                <t:inputText label="contact.label.TaxOffice" value="#{contactHome.entity.taxOffice}" />
+                <t:inputText label="contact.label.TaxNumber" value="#{contactHome.entity.taxNumber}" />
+                <t:inputText label="contact.label.BankAccount" value="#{contactHome.entity.bankAccount}" />
+                <t:inputText label="contact.label.Currency" value="#{contactHome.entity.currency}" />
+            </div>
+        </ui:fragment>
 
 
     </ui:define> 
