@@ -11,9 +11,9 @@
 
     <ui:define name="editorContent">
         <div class="row">
-            <t:inputText label="contact.label.Address" value="#{bean.entity.address}" />
-            <t:inputText label="contact.label.ZipCode" value="#{bean.entity.zipCode}" />
-            <t:inputLookupDialog label="general.label.Location" value="#{addressEditor.entity.location}" lookupBean="#{locationLookup}" lookupListener="addressEditor.entity.location" />
+            <t:inputText label="general.label.Address" value="#{bean.entity.address}" />
+            <t:inputText label="general.label.ZipCode" value="#{bean.entity.zipCode}" />
+            <t:inputLookupDialog label="general.label.Location" value="#{addressEditor.entity.location}" lookupBean="#{locationLookup}" lookupListener="addressEditor.entity.location" columnClass="col-md-6 col-xs-12"/>
         </div>
     </ui:define> 
 </ui:composition>

@@ -78,7 +78,7 @@ public interface CorePages extends Pages {
 
 	@View
 	@SecuredPage("commodity")
-	@PageTitle("module.caption.CommodityView")
+	@PageTitle("module.caption.Commodity")
 	class CommodityView implements CorePages {
 	}
 

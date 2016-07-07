@@ -78,7 +78,7 @@ public interface ContactPages extends Pages {
 
 	@View
 	@SecuredPage("contact")
-	@PageTitle("module.caption.ContactView")
+	@PageTitle("module.caption.Contact")
 	class ContactView
 			implements
 				ContactPages {

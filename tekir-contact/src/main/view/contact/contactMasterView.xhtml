@@ -17,18 +17,18 @@
                         <t:outputText label="general.label.FirstName" value="#{contactHome.entity.firstName}" />
                         <t:outputText label="general.label.LastName" value="#{contactHome.entity.lastName}" />
                         <t:outputText label="contact.label.JobTitle" value="#{contactHome.entity.jobTitle}" />
-                        <t:outputText label="contact.label.CorparationName" value="#{contactHome.entity.corporationName}" rendered="#{empty contactHome.entity.corporation}"/>
-                        <t:outputEntityLink label="general.label.Corparation" value="#{contactHome.entity.corporation}" view="/contact/contactView.xhtml" rendered="#{not empty contactHome.entity.corporation}"/>
+                        <t:outputText label="contact.label.CorporationName" value="#{contactHome.entity.corporationName}" rendered="#{empty contactHome.entity.corporation}"/>
+                        <t:outputEntityLink label="general.label.Corporation" value="#{contactHome.entity.corporation}" view="/contact/contactView.xhtml" rendered="#{not empty contactHome.entity.corporation}"/>
                         <t:outputText label="contact.label.SSN" value="#{contactHome.entity.ssn}" />
                     </div>            
                 </ui:fragment>
 
                 <ui:fragment rendered="#{contactHome.entity.class.simpleName eq 'Corporation'}">
                     <div class="row">
-                        <t:outputText label="general.label.OrganizaitonName" value="#{contactHome.entity.organizastionName}" />
-                        <t:outputText label="contact.label.CorparationType" value="#{contactHome.entity.corporationType.name}"  />
+                        <t:outputText label="general.label.OrganizationName" value="#{contactHome.entity.organizastionName}" />
+                        <t:outputText label="contact.label.CorporationType" value="#{contactHome.entity.corporationType.name}"  />
                         <t:outputEntityLink label="contact.label.PrimaryContact" value="#{contactHome.entity.primaryContact}" view="/contact/contactView.xhtml" />
-                        <t:outputEntityLink label="contact.label.ParentCorparation" value="#{contactHome.entity.parentCorporation}" view="/contact/contactView.xhtml" />
+                        <t:outputEntityLink label="contact.label.ParentCorporation" value="#{contactHome.entity.parentCorporation}" view="/contact/contactView.xhtml" />
                     </div>            
                 </ui:fragment>
 

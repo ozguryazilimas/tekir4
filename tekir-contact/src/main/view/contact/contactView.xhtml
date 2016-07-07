@@ -11,13 +11,26 @@
     <ui:param name="viewIdentifier" value="#{contactHome.entity.name}" />
     <ui:param name="viewState" value="#{contactHome.entity.status} #{contactHome.entity.statusReason}" />
     <ui:param name="showCaption" value="true"/>
+    <ui:param name="dontShowContentHeader" value="true" />
 
     <ui:define name="metadata">
         <f:metadata>
             <f:viewParam name="eid" value="#{contactHome.id}" />
         </f:metadata>
     </ui:define>
-    
+
+    <ui:define name="customHeader">
+        <section class="content-header">
+            <ui:fragment rendered="#{viewState ne ''}" >
+                <div class="pull-right">
+                    #{viewState}
+                </div>
+            </ui:fragment>
+            <small class="text-muted">#{ messages[pageTitleResolver.pageTitle] }</small>
+            <h1>#{messages['contact.class.'.concat(contactHome.entity.class.simpleName)]}  <small>#{ viewIdentifier }</small></h1> 
+        </section>
+    </ui:define>
+
     <ui:define name="caption">
         <div class="row">
             <t:outputText label="general.label.Name" value="#{contactHome.entity.name}" />
@@ -27,10 +40,10 @@
             <t:outputText label="general.label.Info" value="#{contactHome.entity.info}" />
             <t:outputBoolean label="general.label.Status" itemLabel="general.boolean.active." value="#{contactHome.entity.active}" />
         </div>  
-        
-        #{contactHome.entity.class.simpleName}
+
+
     </ui:define>
-    
+
     <ui:define name="context-menu">
         <li>
             <p:commandLink action="#{contactHome.newPerson()}" styleClass="context-command" >
@@ -44,19 +57,20 @@
                 <h:outputText value=" #{messages['general.button.AddCorporation']}" />
             </p:commandLink>
         </li>
-        
-        <li>
-            <p:commandLink action="#{newPersonDialog.openDialog()}" styleClass="context-command" >
-                <i class="fa fa-user"></i>
-                <h:outputText value=" #{messages['general.button.AddPerson']}" />
-            </p:commandLink>
-        </li>
-        <li>
-            <p:commandLink action="#{newCorporationDialog.openDialog()}" styleClass="context-command" >
-                <i class="fa fa-building"></i>
-                <h:outputText value=" #{messages['general.button.AddCorporation']}" />
-            </p:commandLink>
-        </li>
+        <ui:remove>
+            <li>
+                <p:commandLink action="#{newPersonDialog.openDialog()}" styleClass="context-command" >
+                    <i class="fa fa-user"></i>
+                    <h:outputText value=" #{messages['general.button.AddPerson']}" />
+                </p:commandLink>
+            </li>
+            <li>
+                <p:commandLink action="#{newCorporationDialog.openDialog()}" styleClass="context-command" >
+                    <i class="fa fa-building"></i>
+                    <h:outputText value=" #{messages['general.button.AddCorporation']}" />
+                </p:commandLink>
+            </li>
+        </ui:remove>
     </ui:define>
-    
+
 </ui:composition>

@@ -43,19 +43,21 @@
             <div class="row">
                 <t:outputText label="general.label.FirstName" value="#{contactBrowse.contact.firstName}" columnClass="col-xs-12"/>
                 <t:outputText label="general.label.LastName" value="#{contactBrowse.contact.lastName}" columnClass="col-xs-12"/>
+                <t:outputText label="general.label.Info" value="#{contactBrowse.contact.info}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.info}"/>
                 <t:outputText label="contact.label.JobTitle" value="#{contactBrowse.contact.jobTitle}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.jobTitle}"/>
-                <t:outputText label="contact.label.CorparationName" value="#{contactBrowse.contact.corporationName}" rendered="#{empty contactBrowse.contact.corporation}" columnClass="col-xs-12"/>
-                <t:outputEntityLink label="general.label.Corparation" value="#{contactBrowse.contact.corporation}" view="/contact/contactView.xhtml" rendered="#{not empty contactBrowse.contact.corporation}" columnClass="col-xs-12"/>
+                <t:outputText label="contact.label.CorporationName" value="#{contactBrowse.contact.corporationName}" rendered="#{empty contactBrowse.contact.corporation}" columnClass="col-xs-12"/>
+                <t:outputEntityLink label="general.label.Corporation" value="#{contactBrowse.contact.corporation}" view="/contact/contactView.xhtml" rendered="#{not empty contactBrowse.contact.corporation}" columnClass="col-xs-12"/>
                 <t:outputText label="contact.label.SSN" value="#{contactBrowse.contact.ssn}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.ssn}"/>
             </div>            
         </ui:fragment>
 
         <ui:fragment rendered="#{contactBrowse.contact.class.simpleName eq 'Corporation'}">
             <div class="row">
-                <t:outputText label="general.label.OrganizaitonName" value="#{contactBrowse.contact.organizastionName}" columnClass="col-xs-12"/>
-                <t:outputText label="contact.label.CorparationType" value="#{contactBrowse.contact.corporationType.name}"  columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.corporationType}"/>
+                <t:outputText label="general.label.OrganizationName" value="#{contactBrowse.contact.organizastionName}" columnClass="col-xs-12"/>
+                <t:outputText label="general.label.Info" value="#{contactBrowse.contact.info}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.info}"/>
+                <t:outputText label="contact.label.CorporationType" value="#{contactBrowse.contact.corporationType.name}"  columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.corporationType}"/>
                 <t:outputEntityLink label="contact.label.PrimaryContact" value="#{contactBrowse.contact.primaryContact}" view="/contact/contactView.xhtml" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.primaryContact}"/>
-                <t:outputEntityLink label="contact.label.ParentCorparation" value="#{contactBrowse.contact.parentCorporation}" view="/contact/contactView.xhtml" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.parentCorporation}"/>
+                <t:outputEntityLink label="contact.label.ParentCorporation" value="#{contactBrowse.contact.parentCorporation}" view="/contact/contactView.xhtml" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.parentCorporation}"/>
             </div>            
         </ui:fragment>
 
@@ -88,7 +90,7 @@
                 <h:outputText value=" #{messages['general.button.AddCorporation']}" />
             </p:commandLink>
         </li>
-
+        <ui:remove>
         <li>
             <p:commandLink action="#{newPersonDialog.openDialog()}" styleClass="context-command" >
                 <i class="fa fa-user"></i>
@@ -101,6 +103,7 @@
                 <h:outputText value=" #{messages['general.button.AddCorporation']}" />
             </p:commandLink>
         </li>
+        </ui:remove>
     </ui:define>
 
 </ui:composition>

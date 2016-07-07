@@ -12,14 +12,14 @@
             <ui:insert name="editorContent" />
             
             <div class="row">
-                <t:inputAny label="contact.label.ContactRoles" columnClass="col-xs-6">
-                    <p:selectManyCheckbox value="#{bean.entity.roles}" layout="responsive" columns="4">
+                <t:inputAny label="contact.label.ContactRoles" columnClass="col-xs-12">
+                    <p:selectManyCheckbox value="#{bean.entity.roles}" layout="grid" columns="4">
                         <f:selectItems value="#{bean.acceptedRoles}" var="item" itemLabel="#{messages['contactInfo.role.'.concat( item )]}" itemValue="#{item}" />
                     </p:selectManyCheckbox>
                 </t:inputAny>
 
-                <t:inputAny label="contact.label.SubTypes" columnClass="col-xs-6">
-                    <p:selectManyCheckbox value="#{bean.entity.subTypes}" layout="responsive" columns="4">
+                <t:inputAny label="contact.label.SubTypes" columnClass="col-xs-12" rendered="#{not empty bean.entity.acceptedSubTypes}">
+                    <p:selectManyCheckbox value="#{bean.entity.subTypes}" layout="grid" columns="4">
                         <f:selectItems value="#{bean.entity.acceptedSubTypes}" var="item" itemLabel="#{messages['contactInfo.role.'.concat( item )]}" itemValue="#{item}" />
                     </p:selectManyCheckbox>
                 </t:inputAny>
