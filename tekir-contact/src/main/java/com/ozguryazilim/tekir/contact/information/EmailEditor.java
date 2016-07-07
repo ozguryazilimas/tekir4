@@ -44,7 +44,7 @@ public class EmailEditor extends AbstractContactInformationEditor<ContactEMail> 
         }
 
         getEntity().setContact(contact);
-        getEntity().getRoles().add("PRIMARY");
+        getEntity().getRoles().add(ContactInformationConsts.Roles.PRIMARY);
 
         primaryEmail = Boolean.TRUE;
 

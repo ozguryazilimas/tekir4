@@ -30,6 +30,9 @@ public abstract class AbstractContactInformationEditor<E extends ContactInformat
     @Inject
     private ContactInformationRepository contactInformationRepository;
     
+    private List<String> acceptedRoles = new ArrayList<>( Arrays.asList(new String[]{ContactInformationConsts.Roles.PRIMARY, 
+                        ContactInformationConsts.Roles.BUSINESS, ContactInformationConsts.Roles.HOME, ContactInformationConsts.Roles.PERSONAL}));
+    
     private E entity;
 
     private Contact contact;
@@ -81,7 +84,7 @@ public abstract class AbstractContactInformationEditor<E extends ContactInformat
     
     
     public List<String> getAcceptedRoles(){
-        return new ArrayList<>( Arrays.asList(new String[]{"PRIMARY", "BUSINESS", "HOME", "PERSONAL"}));
+        return acceptedRoles;
     }
 
     public E getEntity() {

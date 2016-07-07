@@ -66,6 +66,6 @@ public class ContactInformationController implements Serializable {
     }
     
     public boolean isPrimary( ContactInformation info ){
-        return info.getRoles().contains("PRIMARY");
+        return info.getRoles().contains(ContactInformationConsts.Roles.PRIMARY);
     }
 }

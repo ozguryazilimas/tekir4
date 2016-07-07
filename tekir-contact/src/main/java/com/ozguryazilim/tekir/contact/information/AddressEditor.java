@@ -41,7 +41,7 @@ public class AddressEditor extends AbstractContactInformationEditor<ContactAddre
         }
 
         getEntity().setContact(contact);
-        getEntity().getRoles().add("PRIMARY");
+        getEntity().getRoles().add(ContactInformationConsts.Roles.PRIMARY);
 
         primaryAddress = Boolean.TRUE;
 

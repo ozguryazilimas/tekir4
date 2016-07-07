@@ -45,8 +45,8 @@ public class PhoneEditor extends AbstractContactInformationEditor<ContactPhone> 
         }
 
         getEntity().setContact(contact);
-        getEntity().getSubTypes().add("MOBILE");
-        getEntity().getRoles().add("PRIMARY");
+        getEntity().getSubTypes().add(ContactInformationConsts.PhoneSubTypes.MOBILE);
+        getEntity().getRoles().add(ContactInformationConsts.Roles.PRIMARY);
 
         primaryMobile = Boolean.TRUE;
 
@@ -64,8 +64,8 @@ public class PhoneEditor extends AbstractContactInformationEditor<ContactPhone> 
         }
 
         getEntity().setContact(contact);
-        getEntity().getSubTypes().add("PHONE");
-        getEntity().getRoles().add("PRIMARY");
+        getEntity().getSubTypes().add(ContactInformationConsts.PhoneSubTypes.LAND);
+        getEntity().getRoles().add(ContactInformationConsts.Roles.PRIMARY);
 
 
         primaryPhone = Boolean.TRUE;
@@ -84,8 +84,8 @@ public class PhoneEditor extends AbstractContactInformationEditor<ContactPhone> 
         }
 
         getEntity().setContact(contact);
-        getEntity().getSubTypes().add("FAX");
-        getEntity().getRoles().add("PRIMARY");
+        getEntity().getSubTypes().add(ContactInformationConsts.PhoneSubTypes.FAX);
+        getEntity().getRoles().add(ContactInformationConsts.Roles.PRIMARY);
 
         primaryFax = Boolean.TRUE;
 
@@ -114,6 +114,8 @@ public class PhoneEditor extends AbstractContactInformationEditor<ContactPhone> 
         }
 
         if (getContact().isPersisted()) {
+            //FIXME: Burada başk abir primary var ise onunla yer değiştirmek lazım.
+            
             //Önce bileşeni save edelim.
             contactInformationRepository.save(getEntity());
 
