@@ -8,6 +8,7 @@ import com.ozguryazilim.tekir.contact.information.ContactInformationRepository;
 import com.ozguryazilim.tekir.entities.ContactInformation;
 import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.Person;
+import com.ozguryazilim.tekir.entities.RelatedContact;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,9 @@ public class ContactHome extends FormBase<Contact, Long> {
 
     @Inject
     private ContactInformationRepository informationRepository;
+
+    @Inject
+    private RelatedContactRepository relatedContactRepository;
     
     private List<String> selectedRoles = new ArrayList<>();
 
@@ -97,6 +101,16 @@ public class ContactHome extends FormBase<Contact, Long> {
         return informationRepository.findByContact(getEntity());
     }
 
+    
+    public List<RelatedContact> getRelatedContacts() {
+        return relatedContactRepository.findBySourceContact( getEntity());
+    }
+    
+    //TODO:Method ismini düzeltelim
+    public List<RelatedContact> getRelatedContactsRevers() {
+        return relatedContactRepository.findByTargetContact( getEntity());
+    }
+    
     public List<String> getContactRoles() {
         return ContactRoleRegistery.getSelectableContactRoles();
     }

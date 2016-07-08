@@ -10,43 +10,66 @@
 
 
         <div class="row">
-            <div class="col-md-6 col-xs-12">
+            <div class="col-md-4 col-xs-12">
 
                 <ui:fragment rendered="#{contactHome.entity.class.simpleName eq 'Person'}">
                     <div class="row">
-                        <t:outputText label="general.label.FirstName" value="#{contactHome.entity.firstName}" />
-                        <t:outputText label="general.label.LastName" value="#{contactHome.entity.lastName}" />
-                        <t:outputText label="contact.label.JobTitle" value="#{contactHome.entity.jobTitle}" />
-                        <t:outputText label="contact.label.CorporationName" value="#{contactHome.entity.corporationName}" rendered="#{empty contactHome.entity.corporation}"/>
-                        <t:outputEntityLink label="general.label.Corporation" value="#{contactHome.entity.corporation}" view="/contact/contactView.xhtml" rendered="#{not empty contactHome.entity.corporation}"/>
-                        <t:outputText label="contact.label.SSN" value="#{contactHome.entity.ssn}" />
+                        <t:outputText label="general.label.FirstName" value="#{contactHome.entity.firstName}" columnClass="col-xs-12"/>
+                        <t:outputText label="general.label.LastName" value="#{contactHome.entity.lastName}" columnClass="col-xs-12"/>
+                        <t:outputText label="contact.label.JobTitle" value="#{contactHome.entity.jobTitle}" columnClass="col-xs-12"/>
+                        <t:outputText label="contact.label.CorporationName" value="#{contactHome.entity.corporationName}" rendered="#{empty contactHome.entity.corporation}" columnClass="col-xs-12"/>
+                        <t:outputEntityLink label="general.label.Corporation" value="#{contactHome.entity.corporation}" view="/contact/contactView.xhtml" rendered="#{not empty contactHome.entity.corporation}" columnClass="col-xs-12"/>
+                        <t:outputText label="contact.label.SSN" value="#{contactHome.entity.ssn}" columnClass="col-xs-12"/>
                     </div>            
                 </ui:fragment>
 
                 <ui:fragment rendered="#{contactHome.entity.class.simpleName eq 'Corporation'}">
                     <div class="row">
-                        <t:outputText label="general.label.OrganizationName" value="#{contactHome.entity.organizastionName}" />
-                        <t:outputText label="contact.label.CorporationType" value="#{contactHome.entity.corporationType.name}"  />
-                        <t:outputEntityLink label="contact.label.PrimaryContact" value="#{contactHome.entity.primaryContact}" view="/contact/contactView.xhtml" />
-                        <t:outputEntityLink label="contact.label.ParentCorporation" value="#{contactHome.entity.parentCorporation}" view="/contact/contactView.xhtml" />
+                        <t:outputText label="general.label.OrganizationName" value="#{contactHome.entity.organizastionName}" columnClass="col-xs-12"/>
+                        <t:outputText label="contact.label.CorporationType" value="#{contactHome.entity.corporationType.name}"  columnClass="col-xs-12"/>
+                        <t:outputEntityLink label="contact.label.PrimaryContact" value="#{contactHome.entity.primaryContact}" view="/contact/contactView.xhtml" columnClass="col-xs-12"/>
+                        <t:outputEntityLink label="contact.label.ParentCorporation" value="#{contactHome.entity.parentCorporation}" view="/contact/contactView.xhtml" columnClass="col-xs-12"/>
                     </div>            
                 </ui:fragment>
 
                 <div class="row">
-                    <t:outputText label="general.label.Category" value="#{contactHome.entity.category.name}" />
-                    <t:outputText label="general.label.Industry" value="#{contactHome.entity.industry.name}" />
-                    <t:outputText label="general.label.Territory" value="#{contactHome.entity.territory.name}" />
+                    <t:outputText label="general.label.Category" value="#{contactHome.entity.category.name}" columnClass="col-xs-12"/>
+                    <t:outputText label="general.label.Industry" value="#{contactHome.entity.industry.name}" columnClass="col-xs-12"/>
+                    <t:outputText label="general.label.Territory" value="#{contactHome.entity.territory.name}" columnClass="col-xs-12"/>
                 </div>
 
             </div>
-            <div class="col-md-6 col-xs-12">
 
-                <ui:include src="/contact/contactInfosFragment.xhtml">
-                    <ui:param name="contact" value="#{contactHome.entity}" />
-                    <ui:param name="contactInformations" value="#{contactHome.contactInformations}" />
-                </ui:include>
-
+            <div class="col-md-4 col-xs-12">
+                
+                <t:accordion icon="fa fa-comments" id="ca" label="general.label.Activities" columnClass="col-xs-12">
+                    Activiteler
+                </t:accordion>
+                
+                <t:accordion icon="fa fa-sticky-note" id="cn" label="general.label.Notes" columnClass="col-xs-12">
+                    Notlar
+                </t:accordion>
+                
+                <t:accordion icon="fa fa-archive" id="cs" label="general.label.Stream" columnClass="col-xs-12">
+                    Stream
+                </t:accordion>
             </div>
+
+            <div class="col-md-4 col-xs-12">
+                <div class="row">
+                    <ui:include src="/contact/contactInfosFragment.xhtml">
+                        <ui:param name="contact" value="#{contactHome.entity}" />
+                        <ui:param name="contactInformations" value="#{contactHome.contactInformations}" />
+                    </ui:include>
+
+                    <ui:include src="/contact/relatedContactFragment.xhtml">
+                        <ui:param name="contact" value="#{contactHome.entity}" />
+                        <ui:param name="relatedContacts" value="#{contactHome.relatedContacts}" />
+                        <ui:param name="relatedContactsRevers" value="#{contactHome.relatedContactsRevers}" />
+                    </ui:include>
+                </div>
+            </div>
+
         </div>
     </ui:define>
 

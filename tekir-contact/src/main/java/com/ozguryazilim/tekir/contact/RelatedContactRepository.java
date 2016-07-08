@@ -92,4 +92,7 @@ public abstract class RelatedContactRepository extends RepositoryBase<RelatedCon
 
         return resultList;
     }
+    
+    public abstract List<RelatedContact> findBySourceContact( Contact contact);
+    public abstract List<RelatedContact> findByTargetContact( Contact contact);
 }

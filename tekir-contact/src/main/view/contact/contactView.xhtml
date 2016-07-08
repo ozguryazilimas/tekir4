@@ -4,7 +4,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
                 xmlns:p="http://primefaces.org/ui"
-                template="/layout/containerViewBase.xhtml">
+                template="/layout/containerViewTabBase.xhtml">
 
     <ui:param name="bean" value="#{contactHome}" />
     <ui:param name="entityName" value="contact" />
@@ -68,7 +68,7 @@
         <li>
             <p:commandLink action="#{contactHome.convertToAccount()}" styleClass="context-command" >
                 <i class="fa fa-briefcase"></i>
-                <h:outputText value=" #{messages['general.button.ConvertAccount']}" />
+                <h:outputText value=" #{messages['contact.button.ConvertAccount']}" />
             </p:commandLink>
         </li>
         <ui:remove>
