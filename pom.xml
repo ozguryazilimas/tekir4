@@ -69,6 +69,8 @@
         <module>tekir-contact-model</module>
         <module>tekir-activity-model</module>
         <module>tekir-contact</module>
+        <module>tekir-feed-model</module>
+        <module>tekir-feed</module>
     </modules>
     
     

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="hakan" id="20160714-1">
+        <createTable tableName="TFF_FEED">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TFF_FEEDPK"/>
+            </column>
+            <column name="FEED_TIME" type="datetime"/>
+            <column name="TYPE" type="VARCHAR(255)"/>
+            <column name="FEEDER" type="VARCHAR(255)"/>
+            <column name="USERNAME" type="VARCHAR(255)"/>
+            <column name="FEED_SUBJECT" type="VARCHAR(255)"/>
+            <column name="FEED_BODY" type="VARCHAR(255)"/>
+            <column name="BASE_FP" type="VARCHAR(255)"/>
+            <column name="BASE_BK" type="VARCHAR(255)"/>
+            <column name="BASE_PK" type="BIGINT"/>
+            <column name="REL_FP" type="VARCHAR(255)"/>
+            <column name="REL_BK" type="VARCHAR(255)"/>
+            <column name="REL_PK" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="hakan" id="20160714-2">
+        <createTable tableName="TFF_FEED_FOLLOW">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TFF_FEEDFOLLOWPK"/>
+            </column>
+            <column name="USERNAME" type="VARCHAR(255)"/>
+            <column name="FEATURE" type="VARCHAR(255)"/>
+            <column name="FEATURE_BK" type="VARCHAR(255)"/>
+            <column name="FEATURE_PK" type="BIGINT"/>
+            <column name="FOLLOW_TIME" type="datetime"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

@@ -11,6 +11,7 @@
 
     <include file="liquibase/telve-core.xml" />
     <include file="liquibase/telve-idm.xml" />
+    <include file="liquibase/tekir-feed.xml" />
     <include file="liquibase/tekir-core.xml" />
     <include file="liquibase/tekir-contact.xml" />
     

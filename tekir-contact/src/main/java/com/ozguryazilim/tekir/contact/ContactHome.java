@@ -33,6 +33,9 @@ public class ContactHome extends FormBase<Contact, Long> {
     @Inject
     private RelatedContactRepository relatedContactRepository;
     
+    @Inject
+    private PersonFeeder personFeeder;
+    
     private List<String> selectedRoles = new ArrayList<>();
 
     public Class<? extends ViewConfig> newPerson() {
@@ -74,6 +77,16 @@ public class ContactHome extends FormBase<Contact, Long> {
         
         return super.onBeforeSave(); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public boolean onAfterSave() {
+        if( getEntity() instanceof Person ){
+            personFeeder.feed((Person) getEntity());
+        }
+        return super.onAfterSave(); 
+    }
+    
+    
 
     @Override
     public boolean onAfterLoad() {
