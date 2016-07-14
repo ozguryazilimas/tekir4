@@ -66,6 +66,12 @@
             </p:commandLink>
         </li>
         <li>
+            <p:commandLink action="#{contactHome.edit()}" styleClass="context-command" rendered="#{identity.hasPermission( entityName, 'update') and hideEditBtn ne 'true' }">
+                <i class="fa fa-edit"></i>
+                <h:outputText value=" #{messages['general.button.Edit']}" />
+            </p:commandLink>
+        </li>
+        <li>
             <p:commandLink action="#{contactHome.convertToAccount()}" styleClass="context-command" >
                 <i class="fa fa-briefcase"></i>
                 <h:outputText value=" #{messages['contact.button.ConvertAccount']}" />

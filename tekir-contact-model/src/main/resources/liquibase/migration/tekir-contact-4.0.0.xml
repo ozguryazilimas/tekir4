@@ -48,6 +48,9 @@
             <column name="CCY" type="VARCHAR(255)"/>
             <column name="TAX_NUMBER" type="VARCHAR(255)"/>
             <column name="TAX_OFFICE" type="VARCHAR(255)"/>
+            <column name="SOURCE_FP" type="VARCHAR(255)"/>
+            <column name="SOURCE_BK" type="VARCHAR(255)"/>
+            <column name="SOURCE_PK" type="BIGINT"/>
         </createTable>
     </changeSet>
     <changeSet author="oyas (generated)" id="1467649436683-3">

@@ -8,12 +8,16 @@ package com.ozguryazilim.tekir.entities;
 import com.ozguryazilim.tekir.entites.converters.StringListConverter;
 import com.ozguryazilim.telve.annotations.BizKey;
 import com.ozguryazilim.telve.entities.AuditBase;
+import com.ozguryazilim.telve.entities.FeaturePointer;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
@@ -263,6 +267,17 @@ public abstract class Contact extends AuditBase{
     @Column( name = "CCY")
     private String currency;
     
+    /**
+     * Bu contact'ın üretilmesinde rol oynayan belge.
+     * Genelde bir Lead olacaktır.
+     */
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "feature", column = @Column(name = "SOURCE_FP")),
+        @AttributeOverride(name = "primaryKey", column = @Column(name = "SOURCE_PK")),
+        @AttributeOverride(name = "businessKey", column = @Column(name = "SOURCE_BK")),
+    })
+    private FeaturePointer sourcePointer = new FeaturePointer();
     
     @Override
     public Long getId() {
@@ -463,6 +478,14 @@ public abstract class Contact extends AuditBase{
 
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    public FeaturePointer getSourcePointer() {
+        return sourcePointer;
+    }
+
+    public void setSourcePointer(FeaturePointer sourcePointer) {
+        this.sourcePointer = sourcePointer;
     }
     
     
