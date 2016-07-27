@@ -14,6 +14,7 @@
     <include file="liquibase/tekir-feed.xml" />
     <include file="liquibase/tekir-core.xml" />
     <include file="liquibase/tekir-contact.xml" />
+    <include file="liquibase/tekir-activity.xml" />
     
         
 </databaseChangeLog>

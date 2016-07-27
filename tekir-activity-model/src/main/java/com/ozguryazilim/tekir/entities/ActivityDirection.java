@@ -6,14 +6,18 @@
 package com.ozguryazilim.tekir.entities;
 
 /**
- * Görev activitesi.
- * 
- * Aslında bu activite türü, gerçek bir iletişim şeysi değil. Nasıl yapsak?
- * 
- * TODO: Kavram olarak daha sonra implemente edelim.
+ * Gerçekleşen Activity2nin yön bilgisi
  * 
  * @author Hakan Uygun
  */
-public class TaskActivity extends Activity{
-    
+public enum ActivityDirection {
+   
+    /**
+     * İçeri. Dışarıdan, müşteriden gelen 
+     */
+    INCOMING,
+    /**
+     * Dışarı. İçeriden müşeriye giden
+     */
+    OUTGOING
 }

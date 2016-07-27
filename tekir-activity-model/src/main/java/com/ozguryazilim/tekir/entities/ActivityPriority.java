@@ -6,14 +6,16 @@
 package com.ozguryazilim.tekir.entities;
 
 /**
- * Görev activitesi.
+ * Bir activity'nin öncelik bilgisi.
  * 
- * Aslında bu activite türü, gerçek bir iletişim şeysi değil. Nasıl yapsak?
- * 
- * TODO: Kavram olarak daha sonra implemente edelim.
+ * TODO:Burada sıralama için bunların ordinallarının düzgün ayarlanması lazım.
  * 
  * @author Hakan Uygun
  */
-public class TaskActivity extends Activity{
+public enum ActivityPriority {
+   
+    LOW,
+    MEDIUM,
+    HIGH
     
 }

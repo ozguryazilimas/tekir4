@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="oyas (generated)" id="1469625097267-1">
+        <createTable tableName="TCA_ACTIVITY">
+            <column name="ACTIVITY_TYPE" type="VARCHAR(31)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TCA_ACTIVITYPK"/>
+            </column>
+            <column name="ASSIGNEE" type="VARCHAR(255)"/>
+            <column name="BODY" type="VARCHAR(255)"/>
+            <column name="DUE_DATE" type="datetime"/>
+            <column name="ACT_DATE" type="datetime"/>
+            <column name="DIRECTION" type="VARCHAR(255)"/>
+            <column name="DURATION" type="BIGINT"/>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="PRIORITY" type="INT"/>
+            <column name="FEATURE_BK" type="VARCHAR(255)"/>
+            <column name="FEATURE" type="VARCHAR(255)"/>
+            <column name="FEATURE_PK" type="BIGINT"/>
+            <column name="RESULT_NOTE" type="VARCHAR(255)"/>
+            <column name="STATUS" type="VARCHAR(255)"/>
+            <column name="STATUS_REASON" type="VARCHAR(255)"/>
+            <column name="SUBJECT" type="VARCHAR(255)"/>
+            <column name="NUMBER" type="VARCHAR(255)"/>
+            <column name="ATTENDEES" type="VARCHAR(255)"/>
+            <column name="LOCATION" type="VARCHAR(255)"/>
+            <column name="MEETING_MINUTES" type="VARCHAR(255)"/>
+            <column name="CORPORATION_ID" type="BIGINT"/>
+            <column name="FOLLOWUP_ID" type="BIGINT"/>
+            <column name="PERSON_ID" type="BIGINT"/>
+            <column name="ADDR_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1469625097267-2">
+        <addForeignKeyConstraint baseColumnNames="ADDR_ID" baseTableName="TCA_ACTIVITY" constraintName="FK_ACC_ADDR" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT_INFO"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1469625097267-3">
+        <addForeignKeyConstraint baseColumnNames="CORPORATION_ID" baseTableName="TCA_ACTIVITY" constraintName="FK_ACC_COR" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1469625097267-4">
+        <addForeignKeyConstraint baseColumnNames="FOLLOWUP_ID" baseTableName="TCA_ACTIVITY" constraintName="FK_ACC_FOLL" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCA_ACTIVITY"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1469625097267-5">
+        <addForeignKeyConstraint baseColumnNames="PERSON_ID" baseTableName="TCA_ACTIVITY" constraintName="FK_ACC_PER" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+    </changeSet>
+</databaseChangeLog>

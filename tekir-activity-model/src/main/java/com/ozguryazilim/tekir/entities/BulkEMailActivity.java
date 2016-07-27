@@ -8,6 +8,8 @@ package com.ozguryazilim.tekir.entities;
 /**
  * Toplu e-posta gönderim aktivitesi
  * 
+ * TODO: Bu aslında kampanya modülüne gidecek olan bir aktivite türü.
+ * 
  * @author Hakan Uygun
  */
 public class BulkEMailActivity extends Activity{
