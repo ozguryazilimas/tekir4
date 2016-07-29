@@ -147,11 +147,145 @@ public class Activity extends EntityBase{
     @ManyToOne
     @JoinColumn(name = "FOLLOWUP_ID", foreignKey = @ForeignKey(name = "FK_ACC_FOLL"))
     private Activity followup;
-    
+
     @Override
     public Long getId() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return id;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public Corporation getCorporation() {
+        return corporation;
+    }
+
+    public void setCorporation(Corporation corporation) {
+        this.corporation = corporation;
+    }
+
+    public FeaturePointer getRegarding() {
+        return regarding;
+    }
+
+    public void setRegarding(FeaturePointer regarding) {
+        this.regarding = regarding;
+    }
+
+    public ActivityDirection getDirection() {
+        return direction;
+    }
+
+    public void setDirection(ActivityDirection direction) {
+        this.direction = direction;
+    }
+
+    public ActivityStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ActivityStatus status) {
+        this.status = status;
+    }
+
+    public String getStatusReason() {
+        return statusReason;
+    }
+
+    public void setStatusReason(String statusReason) {
+        this.statusReason = statusReason;
+    }
+
+    public Date getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Long duration) {
+        this.duration = duration;
+    }
+
+    public ActivityPriority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(ActivityPriority priority) {
+        this.priority = priority;
+    }
+
+    public String getAssignee() {
+        return assignee;
+    }
+
+    public void setAssignee(String assignee) {
+        this.assignee = assignee;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    public String getResultNote() {
+        return resultNote;
+    }
+
+    public void setResultNote(String resultNote) {
+        this.resultNote = resultNote;
+    }
+
+    public Activity getFollowup() {
+        return followup;
+    }
+
+    public void setFollowup(Activity followup) {
+        this.followup = followup;
+    }
+    
+    
     
     public List<String> getResultStatus(){
         List<String> ls = new ArrayList<>();

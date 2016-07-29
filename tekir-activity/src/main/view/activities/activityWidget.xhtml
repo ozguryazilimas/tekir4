@@ -1,0 +1,108 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    #{activityWidget.init(person, corporation, null, attached)}
+    
+    <t:accordion icon="fa fa-comments" id="actW" label="general.label.Activities" columnClass="col-xs-12">
+
+        <f:facet name="toolbar">
+                <div class="dropdown pull-right">
+                    <button id="actDropMenu2" class="btn btn-box-tool dropdown-toogle" data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-filter"/>
+                        #{messages['activity.filter.'.concat(activityWidget.filter)]}
+                        <i class="fa fa-caret-down"/>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right" arai-labeledby="actDropMenu2" style="z-index: 5000">
+                        <li>
+                            <p:commandLink action="#{activityWidget.setFilter('ALL')}" process="@this" update=":actW">
+                                #{messages['activity.filter.ALL']}
+                            </p:commandLink>
+                            <p:commandLink action="#{activityWidget.setFilter('MINE')}" process="@this" update=":actW">
+                                #{messages['activity.filter.MINE']}
+                            </p:commandLink>
+                            <p:commandLink action="#{activityWidget.setFilter('SCHEDULED')}" process="@this" update=":actW">
+                                #{messages['activity.filter.SCHEDULED']}
+                            </p:commandLink>
+                            <p:commandLink action="#{activityWidget.setFilter('OVERDUE')}" process="@this" update=":actW">
+                                #{messages['activity.filter.OVERDUE']}
+                            </p:commandLink>
+                            <p:commandLink action="#{activityWidget.setFilter('FAILD')}" process="@this"  update=":actW">
+                                #{messages['activity.filter.FAILD']}
+                            </p:commandLink>
+                            <p:commandLink action="#{activityWidget.setFilter('SUCCESS')}" process="@this" update=":actW">
+                                #{messages['activity.filter.SUCCESS']}
+                            </p:commandLink>
+                            <p:commandLink action="#{activityWidget.setFilter('FOLLOWUP')}" process="@this" update=":actW">
+                                #{messages['activity.filter.FOLLOWUP']}
+                            </p:commandLink>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <div class="dropdown pull-right" >
+                    <button id="actDropMenu1" class="btn btn-box-tool dropdown-toogle" data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-plus"/>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right" arai-labeledby="actDropMenu1" style="z-index: 5000">
+                        <ui:repeat value="#{activityWidget.addableActivities}" var="act">
+                            <li>
+                                <p:commandLink action="#{activityWidget.createNew(act)}" process="@this">
+                                    <i class="#{messages['activity.button.icon.'.concat(act)]}" /> #{messages['activity.button.label.'.concat(act)]}
+                                    <p:ajax event="dialogReturn" update=":actW:actWL" partialSubmit="true" process="@this" />   
+                                </p:commandLink>
+                            </li>
+                        </ui:repeat>
+                    </ul>
+                </div>
+
+        </f:facet>
+
+
+        <p:outputPanel id="actWL" layout="block" class="box-body">
+            <ul class="products-list product-list-in-box">
+                <ui:repeat value="#{activityWidget.activityList}" var="act">
+                    <li class="item">
+                        <div class="product-img" style="vertical-align: top">
+                            <i class="fa fa-2x fa-phone"/> 
+                            <ui:fragment rendered="#{act.direction eq 'INCOMING'}">
+                                <i class="fa fa-arrow-left"/>
+                            </ui:fragment>
+                            <ui:fragment rendered="#{act.direction eq 'OUTGOING'}">
+                                <i class="fa fa-arrow-right"/>
+                            </ui:fragment>
+                        </div>
+                        <div class="product-info">
+                            <div class="box-tools pull-right">
+                                <p:commandLink action="#{activityWidget.edit(act)}" process="@this" styleClass="btn btn-box-tool">
+                                    <i class="fa fa-pencil" />
+                                    <p:ajax event="dialogReturn" update=":actW:actWL" partialSubmit="true" process="@this" />   
+                                </p:commandLink>
+                                <p:commandLink action="#{activityWidget.delete(act)}" process="@this" styleClass="btn btn-box-tool" update=":actW:actWL">
+                                    <i class="fa fa-trash" />
+                                    <p:confirm header="#{messages['general.caption.Confirm']}" message="#{messages['general.message.confirm.Delete']}" icon="fa fa-2x fa-exclamation-triangle btn-delete" />
+                                </p:commandLink>
+                            </div>
+                            <span class="label #{ act.status eq 'SCHEDULED' ? 'label-default' : act.status eq 'SUCCESS' ? 'label-success' : 'label-danger' }  pull-right"><i class="fa #{ act.status eq 'SCHEDULED' ? 'fa-calendar' : act.status eq 'SUCCESS' ? 'fa-check' : 'fa-ban' }" title="#{messages['activity.status.'.concat(act.status)]}"/> </span>
+                            <span class="product-title">#{act.subject}</span>
+                            <span class="product-description">
+                                #{act.body}
+                            </span>
+                            <span class="product-description text-sm">
+                                <i class="fa fa-user"/> #{userLookup.getUserName(act.assignee)} 
+                                <i class="fa  fa-clock-o"/> <t:cellOutputDateTime value="#{act.dueDate}"/></span>
+                        </div>
+                    </li>
+                </ui:repeat>
+            </ul>
+
+        </p:outputPanel>
+
+    </t:accordion>
+
+</ui:composition>

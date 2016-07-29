@@ -41,5 +41,5 @@ public class EMailActivity extends Activity {
     //E-postanın raw halini saklamak nasıl bir fikir?
     @Column(name = "EM_DATA")
     private String raw;
-            
+ 
 }

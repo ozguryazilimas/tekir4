@@ -38,4 +38,30 @@ public class MeetingActivity extends Activity{
      */
     @Column(name = "MEETING_MINUTES")
     private String meetingMinutes;
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getAttendees() {
+        return attendees;
+    }
+
+    public void setAttendees(String attendees) {
+        this.attendees = attendees;
+    }
+
+    public String getMeetingMinutes() {
+        return meetingMinutes;
+    }
+
+    public void setMeetingMinutes(String meetingMinutes) {
+        this.meetingMinutes = meetingMinutes;
+    }
+    
+    
 }

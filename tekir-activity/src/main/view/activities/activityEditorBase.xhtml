@@ -1,0 +1,77 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"                
+                template="/layout/dialogBase.xhtml">
+
+    <ui:define name="form">
+        <h:form id="activityEditor">
+
+            <div class="row">
+                <t:inputEnum value="#{bean.entity.direction}" label="activity.label.Direction" itemLabel="activity.direction." hasNullValue="false" columnClass="col-xs-6"/>
+                <t:inputEnum value="#{bean.entity.priority}" label="activity.label.Priority" itemLabel="activity.priority." hasNullValue="false" columnClass="col-xs-6"/>
+            </div>
+
+            <div class="row">
+                <t:inputText label="activity.label.Subject" value="#{bean.entity.subject}" required="true" columnClass="col-xs-12"/>
+                <t:inputTextarea label="activity.label.Body" value="#{bean.entity.body}" columnClass="col-xs-12"/>
+            </div>
+
+            <ui:insert name="editorContent" />
+
+            <div class="row">
+                <t:inputDateTime label="activity.label.DueDate" value="#{bean.entity.dueDate}" columnClass="col-xs-6"/>
+                <t:inputText label="activity.label.Duration" value="#{bean.entity.duration}" columnClass="col-xs-6"/>
+            </div>
+
+            <ui:insert name="assignment" />
+
+            <ui:remove>
+                <div class="row">
+                    <t:inputTextarea label="general.label.Info" value="#{bean.entity.info}" columnClass="col-xs-12"/>
+                </div>
+
+                <div class="row">
+                    <t:inputTextarea label="general.label.ResultNote" value="#{bean.entity.resultNote}" columnClass="col-xs-12"/>
+                </div>
+            </ui:remove>
+
+
+            <h:panelGroup styleClass="row actionButtons" layout="block" >
+                <ui:insert name="actionButtons" />
+                <p:commandButton id="save" 
+                                 value="#{messages['general.button.Save']}" 
+                                 icon="fa fa-check" 
+                                 action="#{bean.save()}" 
+                                 validateClient="true"
+                                 styleClass="btn-primary" />
+                <p:commandButton id="success" 
+                                 value="#{messages['general.button.Success']}" 
+                                 icon="fa fa-check" 
+                                 action="#{bean.success()}" 
+                                 validateClient="true"
+                                 styleClass="btn-success" />
+                <p:commandButton id="faild" 
+                                 value="#{messages['general.button.Faild']}" 
+                                 icon="fa fa-check" 
+                                 action="#{bean.faild()}" 
+                                 validateClient="true"
+                                 styleClass="btn-error" />
+                <p:commandButton id="followup" 
+                                 value="#{messages['general.button.FollowUp']}" 
+                                 icon="fa fa-check" 
+                                 action="#{bean.followup()}" 
+                                 validateClient="true"
+                                 styleClass="btn-warn" />
+                <p:commandButton id="close" 
+                                 value="#{messages['general.button.Cancel']}" 
+                                 icon="ui-icon-close" 
+                                 action="#{bean.cancel()}" 
+                                 partialSubmit="true" 
+                                 process="@this"/>
+            </h:panelGroup>
+        </h:form>
+    </ui:define> 
+</ui:composition>
