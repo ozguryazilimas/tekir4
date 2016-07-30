@@ -34,7 +34,7 @@ public enum ActivityWidgetFilter {
     /**
      * Başarısız kapanmış işler
      */
-    FAILD,
+    FAILED,
     /**
      * FallowUp yapılmış işler
      */

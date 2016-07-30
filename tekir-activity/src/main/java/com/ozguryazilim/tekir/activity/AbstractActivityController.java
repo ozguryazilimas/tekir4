@@ -100,7 +100,7 @@ public abstract class AbstractActivityController<E extends Activity> implements 
     }
     
     public void faild() {
-        entity.setStatus(ActivityStatus.FAILD);
+        entity.setStatus(ActivityStatus.FAILED);
         repository.save(entity);
         
         RequestContext.getCurrentInstance().closeDialog(null);

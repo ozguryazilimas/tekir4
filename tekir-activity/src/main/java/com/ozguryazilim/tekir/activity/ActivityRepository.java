@@ -131,7 +131,7 @@ public abstract class ActivityRepository extends RepositoryBase<Activity, Activi
             case OVERDUE : crit.gt(Activity_.dueDate, new Date()); break;
             case SCHEDULED : crit.eq( Activity_.status, ActivityStatus.SCHEDULED); break;
             case SUCCESS : crit.eq( Activity_.status, ActivityStatus.SUCCESS); break;
-            case FAILD : crit.eq( Activity_.status, ActivityStatus.FAILD); break;
+            case FAILED : crit.eq( Activity_.status, ActivityStatus.FAILED); break;
             case FOLLOWUP : break; //TODO:
         }
 
@@ -156,7 +156,7 @@ public abstract class ActivityRepository extends RepositoryBase<Activity, Activi
             case OVERDUE : crit.gt(Activity_.dueDate, new Date()); break;
             case SCHEDULED : crit.eq( Activity_.status, ActivityStatus.SCHEDULED); break;
             case SUCCESS : crit.eq( Activity_.status, ActivityStatus.SUCCESS); break;
-            case FAILD : crit.eq( Activity_.status, ActivityStatus.FAILD); break;
+            case FAILED : crit.eq( Activity_.status, ActivityStatus.FAILED); break;
             case FOLLOWUP : break; //TODO:
         }
 

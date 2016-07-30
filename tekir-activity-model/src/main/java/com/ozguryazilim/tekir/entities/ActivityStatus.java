@@ -30,5 +30,5 @@ public enum ActivityStatus {
     /**
      * Başarısız kapandı
      */
-    FAILD
+    FAILED
 }

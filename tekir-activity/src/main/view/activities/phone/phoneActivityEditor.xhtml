@@ -6,7 +6,7 @@
                 xmlns:p="http://primefaces.org/ui"                
                 template="/activities/activityEditorBase.xhtml">
 
-    <ui:param name="title" value="phoneActivityEditor.label.Title - #{'activity.status.'.concat(phoneActivityController.entity.status)}" />
+    <ui:param name="title" value="#{messages['phoneActivityEditor.label.Title']} - #{ messages['activity.status.'.concat(phoneActivityController.entity.status)]}" />
     <ui:param name="bean" value="#{phoneActivityController}" />
 
     <ui:define name="editorContent">
