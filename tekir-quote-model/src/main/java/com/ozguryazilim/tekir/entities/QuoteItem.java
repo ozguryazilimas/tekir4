@@ -5,11 +5,12 @@
  */
 package com.ozguryazilim.tekir.entities;
 
-import com.ozguryazilim.telve.unit.Quantity;
-
 import com.ozguryazilim.telve.entities.EntityBase;
-import javax.money.MonetaryAmount;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
@@ -18,8 +19,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import org.hibernate.annotations.Columns;
-import org.hibernate.annotations.Type;
 
 /**
  * Teklif satırı
@@ -47,26 +46,27 @@ public class QuoteItem extends EntityBase{
     @Column(name = "INFO")
     private String info;
     
-    @Columns( columns = {
-        @Column( name = "QTY_AMT"),
-        @Column( name = "QTY_UNIT")
+    
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "amount", column = @Column(name = "QTY_AMT")),
+        @AttributeOverride(name = "unit", column = @Column(name = "QTY_UNIT")),
     })
-    @Type(type = "com.ozguryazilim.tekir.entities.QuantityType")
     private Quantity quantity;
     
-    @Columns( columns = {
-        @Column( name = "PRICE_AMT"),
-        @Column( name = "PROICE_CCY")
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "amount", column = @Column(name = "PRICE_AMT")),
+        @AttributeOverride(name = "currency", column = @Column(name = "PROICE_CCY")),
     })
-    @Type(type = "com.ozguryazilim.tekir.entities.MoneyType")
-    private MonetaryAmount unitPrice;
+    private Money unitPrice;
     
-    @Columns( columns = {
-        @Column( name = "TOT_AMT"),
-        @Column( name = "TOT_CCY")
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "amount", column = @Column(name = "TOT_AMT")),
+        @AttributeOverride(name = "currency", column = @Column(name = "TOT_CCY")),
     })
-    @Type(type = "com.ozguryazilim.tekir.entities.MoneyType")
-    private MonetaryAmount totalAmount;
+    private Money totalAmount;
 
     @Override
     public Long getId() {
@@ -109,22 +109,22 @@ public class QuoteItem extends EntityBase{
         this.quantity = quantity;
     }
 
-    public MonetaryAmount getUnitPrice() {
+    public Money getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(MonetaryAmount unitPrice) {
+    public void setUnitPrice(Money unitPrice) {
         this.unitPrice = unitPrice;
     }
 
-    public MonetaryAmount getTotalAmount() {
+    public Money getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(MonetaryAmount totalAmount) {
+    public void setTotalAmount(Money totalAmount) {
         this.totalAmount = totalAmount;
     }
-    
+
     
     
 }

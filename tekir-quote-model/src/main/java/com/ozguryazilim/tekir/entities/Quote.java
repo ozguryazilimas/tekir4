@@ -8,9 +8,11 @@ package com.ozguryazilim.tekir.entities;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.money.MonetaryAmount;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
@@ -22,8 +24,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.hibernate.annotations.Columns;
-import org.hibernate.annotations.Type;
 
 /**
  * Teklif Modeli
@@ -65,12 +65,12 @@ public class Quote extends VoucherBase{
 
     //FIXME: Teslimat ve Ödeme kuralları alınmalı
     
-    @Columns( columns = {
-        @Column( name = "TOT_AMT"),
-        @Column( name = "TOT_CCY")
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name="amount",column = @Column(name = "TOT_AMT")),
+        @AttributeOverride(name="currency",column = @Column(name = "TOT_CCY")),
     })
-    @Type(type = "com.ozguryazilim.tekir.entities.MoneyType")
-    private MonetaryAmount totalAmount;
+    private Money totalAmount;
 
     @Override
     public Long getId() {
@@ -113,14 +113,13 @@ public class Quote extends VoucherBase{
         this.items = items;
     }
 
-    public MonetaryAmount getTotalAmount() {
+    public Money getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(MonetaryAmount totalAmount) {
+    public void setTotalAmount(Money totalAmount) {
         this.totalAmount = totalAmount;
     }
-    
-    
+
     
 }

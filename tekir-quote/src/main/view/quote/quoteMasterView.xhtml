@@ -8,11 +8,11 @@
 
     <ui:define name="content">     
         <div class="row">
-            <div class="col-md-4 col-xs-12">
+            <div class="col-md-3 col-xs-12">
                 <t:accordion icon="fa fa-comments" label="general.label.Summary" columnClass="col-xs-12">
                     #{quoteHome.entity.totalAmount}
                 </t:accordion>
-            
+
                 <t:accordion icon="fa fa-comments" label="general.label.Voucher" columnClass="col-xs-12">
                     <t:outputText label="voucher.label.VoucherNo" value="#{quoteHome.entity.voucherNo}"  columnClass="col-xs-12"/>
                     <t:outputText label="voucher.label.ReferenceNo" value="#{quoteHome.entity.referenceNo}" columnClass="col-xs-12"/>
@@ -24,19 +24,49 @@
                 </t:accordion>
             </div>
 
-            <div class="col-md-4 col-xs-12">
+            <div class="col-md-6 col-xs-12">
+
                 <t:accordion icon="fa fa-comments" id="ca1" label="general.label.Details" columnClass="col-xs-12">
-                    İlgilenilen ürünler
+
+                    <p:dataTable id="its" value="#{quoteHome.entity.items}" var="item" >
+                        <p:column headerText="Emtia">
+                            <h:outputText value="#{item.commodity}" />
+                        </p:column>
+                        <p:column headerText="Açıklama">
+                            <h:outputText value="#{item.info}" />
+                        </p:column>
+                        <p:column headerText="Miktar">
+                            <h:outputText value="#{item.quantity.amount}" />
+                        </p:column>
+                        <p:column headerText="Birim Fiyat">
+                            <h:outputText value="#{item.unitPrice}" />
+                        </p:column>
+                        <p:column headerText="Tutar">
+                            <h:outputText value="#{item.totalAmount}" />
+                        </p:column>
+                    </p:dataTable>
+
+                    <table class="table table-bordered" style="margin-top: 5px;">
+                        <tr>
+                            <th>Vergi</th>
+                            <td>#{quoteHome.entity.totalAmount}</td>
+                        </tr>
+                        <tr>
+                            <th>Toplam</th>
+                            <td>#{quoteHome.entity.totalAmount}</td>
+                        </tr>
+                    </table>
+
                 </t:accordion>
-                
+
                 <t:accordion icon="fa fa-users" id="ca2" label="general.label.Stakeholders" columnClass="col-xs-12">
                     Karar Vericiler
                 </t:accordion>
-                
-                    
+
+
             </div>
-            
-            <div class="col-md-4 col-xs-12">
+
+            <div class="col-md-3 col-xs-12">
 
                 <ui:include src="/activities/activityWidget.xhtml">
                     <ui:param name="person" value="#{null}" />
@@ -44,7 +74,7 @@
                     <ui:param name="feature" value="#{null}" />
                     <ui:param name="attached" value="Feature" />
                 </ui:include>
-                
+
                 <t:accordion icon="fa fa-comments" id="ca" label="general.label.Activities" columnClass="col-xs-12">
                     Activiteler
                 </t:accordion>
