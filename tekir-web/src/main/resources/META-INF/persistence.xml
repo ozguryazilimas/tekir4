@@ -14,6 +14,8 @@
         <jar-file>lib/tekir-core-model-${version.tekir}.jar</jar-file>
         <jar-file>lib/tekir-contact-model-${version.tekir}.jar</jar-file>
         <jar-file>lib/tekir-activity-model-${version.tekir}.jar</jar-file>
+        <jar-file>lib/tekir-voucher-model-${version.tekir}.jar</jar-file>
+        <jar-file>lib/tekir-opportunity-model-${version.tekir}.jar</jar-file>
         
         <properties>
             <!-- Properties for Hibernate -->

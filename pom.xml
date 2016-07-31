@@ -72,6 +72,10 @@
         <module>tekir-feed-model</module>
         <module>tekir-feed</module>
         <module>tekir-activity</module>
+        <module>tekir-voucher-model</module>
+        <module>tekir-opportunity-model</module>
+        <module>tekir-voucher</module>
+        <module>tekir-opportunity</module>
     </modules>
     
     

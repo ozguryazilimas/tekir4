@@ -1,0 +1,89 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"               
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                template="/layout/voucherMasterViewBase.xhtml">
+
+    <ui:define name="content">     
+
+        <div class="row">
+            <div class="col-md-4 col-xs-12">
+                <t:accordion icon="fa fa-comments" label="general.label.Summary" columnClass="col-xs-12">
+                    <t:outputText label="opportunity.label.Topic" value="#{opportunityHome.entity.topic}"  columnClass="col-xs-12"/>
+                    <t:outputText label="opportunity.label.Sitiuation" value="#{opportunityHome.entity.situation}" columnClass="col-xs-12"/>
+                    <t:outputText label="opportunity.label.CustomerNeed" value="#{opportunityHome.entity.customerNeed}" columnClass="col-xs-12"/>
+                    <t:outputText label="opportunity.label.Solution" value="#{opportunityHome.entity.solution}" columnClass="col-xs-12"/>
+                </t:accordion>
+            
+                <t:accordion icon="fa fa-comments" label="general.label.Voucher" columnClass="col-xs-12">
+                    <t:outputText label="voucher.label.VoucherNo" value="#{opportunityHome.entity.voucherNo}"  columnClass="col-xs-12"/>
+                    <t:outputText label="voucher.label.ReferenceNo" value="#{opportunityHome.entity.referenceNo}" columnClass="col-xs-12"/>
+                    <t:outputText label="voucher.label.Process" value="#{opportunityHome.entity.processId}" columnClass="col-xs-12"/>
+                    <t:outputText label="voucher.label.Owner" value="#{opportunityHome.entity.owner}" columnClass="col-xs-12"/>
+                    <t:outputText label="general.label.Code" value="#{opportunityHome.entity.code}" columnClass="col-xs-12"/>
+                    <t:outputText label="general.label.Info" value="#{opportunityHome.entity.info}" columnClass="col-xs-12"/>
+                    <t:outputDate label="voucher.label.Date" value="#{opportunityHome.entity.date}" columnClass="col-xs-12"/>
+                </t:accordion>
+            </div>
+
+            <div class="col-md-4 col-xs-12">
+                <t:accordion icon="fa fa-comments" id="ca1" label="general.label.Details" columnClass="col-xs-12">
+                    İlgilenilen ürünler
+                </t:accordion>
+                
+                <t:accordion icon="fa fa-users" id="ca2" label="general.label.Stakeholders" columnClass="col-xs-12">
+                    Karar Vericiler
+                </t:accordion>
+                
+                    
+            </div>
+            
+            <div class="col-md-4 col-xs-12">
+
+                <ui:include src="/activities/activityWidget.xhtml">
+                    <ui:param name="person" value="#{opportinityHome.entity.primaryContact}" />
+                    <ui:param name="corporation" value="#{opportinityHome.entity.account}" />
+                    <ui:param name="feature" value="#{null}" />
+                    <ui:param name="attached" value="Feature" />
+                </ui:include>
+                
+                <t:accordion icon="fa fa-comments" id="ca" label="general.label.Activities" columnClass="col-xs-12">
+                    Activiteler
+                </t:accordion>
+
+                <t:accordion icon="fa fa-sticky-note" id="cn" label="general.label.Notes" columnClass="col-xs-12">
+                    Notlar
+                </t:accordion>
+
+                <t:accordion icon="fa fa-feed" id="cs" label="general.label.Feed" columnClass="col-xs-12">
+                    <ul class="products-list product-list-in-box">
+                        <ui:repeat value="#{feedController.getFeeds('Person')}" var="feed">
+                            <li class="item">
+                                <div class="product-img">
+                                    <i class="fa fa-user fa-2x" />
+                                </div>
+                                <div class="product-info">
+                                    <span class="product-title">#{feed.subject}</span>
+                                    <span class="product-description text-sm">
+                                        <h:outputText value="#{feed.body}" escape="false" />
+                                    </span>
+                                    <span class="product-description text-sm"><t:cellOutputFeatureLink value="#{featureController.getFeatureLink(feed.basePointer)}" /></span>
+                                    <span class="product-description text-sm">
+                                        <i class="fa fa-user"/> #{userLookup.getUserName(feed.user)} 
+                                        <i class="fa  fa-clock-o"/> <t:cellOutputDateTime value="#{feed.date}"/></span>
+                                </div>
+                            </li>
+                        </ui:repeat>
+                    </ul>
+                </t:accordion>
+            </div>
+
+
+
+        </div>
+        
+    </ui:define>
+
+</ui:composition>

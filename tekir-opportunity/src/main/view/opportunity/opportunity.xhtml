@@ -1,0 +1,43 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"                
+                template="/layout/voucherEditBase.xhtml">
+
+    <ui:param name="homeBean" value="#{opportunityHome}" />
+    <ui:param name="entity" value="#{opportunityHome.entity}" />
+    <ui:param name="dontShowContentHeader" value="true" />
+
+
+    <ui:define name="form">
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <t:inputText label="opportunity.label.Topic" value="#{opportunityHome.entity.topic}"  required="true" columnClass="col-xs-12"/>
+                    <t:inputTextarea label="opportunity.label.Sitiuation" value="#{opportunityHome.entity.situation}" columnClass="col-xs-12"/>
+                    <t:inputTextarea label="opportunity.label.CustomerNeed" value="#{opportunityHome.entity.customerNeed}" columnClass="col-xs-12"/>
+                    <t:inputTextarea label="opportunity.label.Solution" value="#{opportunityHome.entity.solution}" columnClass="col-xs-12"/>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <t:inputText label="voucher.label.VoucherNo" value="#{opportunityHome.entity.voucherNo}"  required="true" columnClass="col-xs-12"/>
+                    <t:inputText label="voucher.label.ReferenceNo" value="#{opportunityHome.entity.referenceNo}" columnClass="col-xs-12"/>
+                    <t:inputText label="voucher.label.Process" value="#{opportunityHome.entity.processId}" columnClass="col-xs-12"/>
+                    <t:inputText label="voucher.label.Owner" value="#{opportunityHome.entity.owner}" columnClass="col-xs-12"/>
+                    <t:inputText label="general.label.Code" value="#{opportunityHome.entity.code}" columnClass="col-xs-12"/>
+                    <t:inputTextarea label="general.label.Info" value="#{opportunityHome.entity.info}" columnClass="col-xs-12"/>
+                    <t:inputDate label="voucher.label.Date" value="#{opportunityHome.entity.date}" columnClass="col-xs-12"/>
+                </div>
+            </div>
+
+            
+
+
+        </div>
+    </ui:define>
+
+</ui:composition>
