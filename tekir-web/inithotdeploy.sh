@@ -15,6 +15,7 @@ rm -rf WEB-INF/lib/tekir-contact-4.0.0-SNAPSHOT.jar
 rm -rf WEB-INF/lib/tekir-activity-4.0.0-SNAPSHOT.jar
 rm -rf WEB-INF/lib/tekir-voucher-4.0.0-SNAPSHOT.jar
 rm -rf WEB-INF/lib/tekir-opportunity-4.0.0-SNAPSHOT.jar
+rm -rf WEB-INF/lib/tekir-quote-4.0.0-SNAPSHOT.jar
 
 
 
@@ -31,6 +32,7 @@ ln -s ~/git/tekir4/tekir-contact/target/classes/ WEB-INF/lib/tekir-contact-4.0.0
 ln -s ~/git/tekir4/tekir-activity/target/classes/ WEB-INF/lib/tekir-activity-4.0.0-SNAPSHOT.jar
 ln -s ~/git/tekir4/tekir-voucher/target/classes/ WEB-INF/lib/tekir-voucher-4.0.0-SNAPSHOT.jar
 ln -s ~/git/tekir4/tekir-opportunity/target/classes/ WEB-INF/lib/tekir-opportunity-4.0.0-SNAPSHOT.jar
+ln -s ~/git/tekir4/tekir-quote/target/classes/ WEB-INF/lib/tekir-quote-4.0.0-SNAPSHOT.jar
 
 
 

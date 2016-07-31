@@ -16,6 +16,7 @@
     <include file="liquibase/tekir-contact.xml" />
     <include file="liquibase/tekir-activity.xml" />
     <include file="liquibase/tekir-opportunity.xml" />
+    <include file="liquibase/tekir-quote.xml" />
     
         
 </databaseChangeLog>

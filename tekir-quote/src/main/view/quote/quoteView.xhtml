@@ -1,0 +1,32 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"                
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"               
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/voucherViewBase.xhtml">
+
+    <ui:param name="bean" value="#{quoteHome}" />
+    <ui:param name="entityName" value="quote" />
+    <ui:param name="viewIdentifier" value="#{quoteHome.entity.voucherNo}" />
+    <ui:param name="viewState" value="#{quoteHome.entity.status} #{quoteHome.entity.statusReason}" />
+    <ui:param name="showCaption" value="true"/>
+    <ui:param name="dontShowContentHeader" value="false" />
+
+
+    <ui:define name="caption">
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <t:outputText label="voucher.label.VoucherNo" value="#{quoteHome.entity.voucherNo}"  />
+                <t:outputText label="voucher.label.ReferenceNo" value="#{quoteHome.entity.referenceNo}" />
+                <t:outputText label="voucher.label.Process" value="#{quoteHome.entity.processId}" />
+                <t:outputText label="general.label.Code" value="#{quoteHome.entity.code}" />
+            </div>
+        </div>  
+    </ui:define>
+
+    
+</ui:composition>

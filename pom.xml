@@ -76,6 +76,9 @@
         <module>tekir-opportunity-model</module>
         <module>tekir-voucher</module>
         <module>tekir-opportunity</module>
+        <module>tekir-quote-model</module>
+        <module>tekir-order-model</module>
+        <module>tekir-quote</module>
     </modules>
     
     

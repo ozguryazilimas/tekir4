@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="oyas (generated)" id="1469961995803-1">
+        <createTable tableName="TSQ_QUOTE">
+            <column autoIncrement="true" name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TSQ_QUOTEPK"/>
+            </column>
+            <column name="CREATE_DATE" type="datetime"/>
+            <column name="UPDATE_DATE" type="datetime"/>
+            <column name="UPDATE_USER" type="VARCHAR(255)"/>
+            <column name="CODE" type="VARCHAR(30)"/>
+            <column name="TXNDATE" type="datetime"/>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="OWNER" type="VARCHAR(255)"/>
+            <column name="PROCESS_ID" type="VARCHAR(255)"/>
+            <column name="REFERENCE_NO" type="VARCHAR(30)"/>
+            <column name="FEATURE_BK" type="VARCHAR(255)"/>
+            <column name="FEATURE" type="VARCHAR(255)"/>
+            <column name="FEATURE_PK" type="BIGINT"/>
+            <column name="STATUS" type="VARCHAR(255)"/>
+            <column name="STATUS_REASON" type="VARCHAR(255)"/>
+            <column name="VOUCHER_NO" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="EXP_DATE" type="date"/>
+            <column name="REVISION" type="INT"/>
+            <column name="TOT_AMT" type="DECIMAL(19, 2)"/>
+            <column name="TOT_CCY" type="VARCHAR(255)"/>
+            <column name="ACCOUNT_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1469961995803-2">
+        <createTable tableName="TSQ_QUOTE_ITEM">
+            <column autoIncrement="true" name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TSQ_QUOTE_ITEMPK"/>
+            </column>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="QTY_AMT" type="DECIMAL(19, 2)"/>
+            <column name="QTY_UNIT" type="VARCHAR(255)"/>
+            <column name="TOT_AMT" type="DECIMAL(19, 2)"/>
+            <column name="TOT_CCY" type="VARCHAR(255)"/>
+            <column name="PRICE_AMT" type="DECIMAL(19, 2)"/>
+            <column name="PROICE_CCY" type="VARCHAR(255)"/>
+            <column name="COMMODITY_ID" type="BIGINT"/>
+            <column name="MASTER_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1469961995803-3">
+        <addForeignKeyConstraint baseColumnNames="COMMODITY_ID" baseTableName="TSQ_QUOTE_ITEM" constraintName="FK_QUOTEIT_COMMO" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_COMMOTITY"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1469961995803-4">
+        <addForeignKeyConstraint baseColumnNames="MASTER_ID" baseTableName="TSQ_QUOTE_ITEM" constraintName="FK_QUOTEIT_QUOTE" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TSQ_QUOTE"/>
+    </changeSet>
+</databaseChangeLog>
