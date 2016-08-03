@@ -96,4 +96,11 @@ public interface CorePages extends Pages {
 				CorePages {
 	}
 
+        
+        @View
+	@SecuredPage("currencyDefinition")
+	@PageTitle("module.caption.CurrencyDefinition")
+	@Navigation(label = "module.caption.CurrencyDefinition", icon = "fa fa-industry", section = SideNavigationSection.class)
+	class CurrencyDefinition implements CorePages {
+	}
 }

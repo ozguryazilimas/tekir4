@@ -1,5 +1,6 @@
 package com.ozguryazilim.tekir.quote;
 
+import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.Money;
 import com.ozguryazilim.tekir.entities.Quantity;
 import com.ozguryazilim.telve.forms.FormEdit;
@@ -22,6 +23,9 @@ public class QuoteHome extends VoucherFormBase<Quote> {
     @Inject
     private QuoteRepository repository;
 
+    @Inject
+    private CurrencyService currencyService;
+    
     @Override
     protected RepositoryBase<Quote, QuoteViewModel> getRepository() {
         return repository;
@@ -31,7 +35,7 @@ public class QuoteHome extends VoucherFormBase<Quote> {
     public void createNew() {
         super.createNew();
 
-        getEntity().setTotalAmount(new Money(BigDecimal.ZERO, "TRL"));
+        getEntity().setTotalAmount(new Money(currencyService.getDefaultCurrency()));
     }
 
     

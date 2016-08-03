@@ -1,0 +1,71 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"                   
+                template="/layout/primeTemplate.xhtml">
+
+    <ui:define name="body">
+        <div class="box box-primary">
+            <h:form id="ccyForm" class="editForm">
+
+
+                <div class="box-body">
+                    <div class="row">
+                        <t:inputAny label="general.label.DefaultCurrency" >
+                            <p:selectOneMenu value="#{currencyDefinitionHome.defaultCurrency}" converter="currencyConverter">
+                                <f:selectItems value="#{currencyDefinitionHome.selectedCurrencies}" var="ccy" itemLabel="#{ccy.currencyCode}" itemValue="#{ccy}" />
+                            </p:selectOneMenu>
+                        </t:inputAny>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12" style="margin-top: 8px;">
+                            <p:dataTable value="#{currencyService.availableCurrencies}" var="ccy" 
+                                         selection="#{currencyDefinitionHome.selectedCurrencies}" rowKey="#{ccy.currencyCode}">
+
+                                <p:column selectionMode="multiple" style="width:32px;text-align:center"/>
+
+                                <p:column headerText="Code">
+                                    #{ccy.currencyCode}
+                                </p:column>
+
+
+                                <p:column headerText="Name">
+                                    #{ccy.getDisplayName(localeSelector.locale)} 
+                                    #{localeSelector.locale}
+                                    #{messages['currency.'.concat(ccy.currencyCode)]}
+                                </p:column>
+
+                            </p:dataTable>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <div class="pull-right">
+                        <p:commandButton id="save" 
+                                         value="#{messages['general.button.Save']}" 
+                                         action="#{currencyDefinitionHome.save()}"
+                                         rendered="#{identity.hasPermission( 'currencyDefinition', 'update')}"
+                                         ajax="true"
+                                         process="@form"
+                                         validateClient="true"
+                                         styleClass="btn-success"
+                                         icon="fa fa-save" />  
+
+                        <p:commandButton id="done" 
+                                         value="#{messages['general.button.Close']}"
+                                         action="#{currencyDefinitionHome.close()}"
+                                         icon="ui-icon-close" 
+                                         partialSubmit="true"
+                                         process="@this"
+                                         ajax="true"/>
+                    </div>
+                </div>
+            </h:form>
+        </div>
+    </ui:define>
+
+</ui:composition>

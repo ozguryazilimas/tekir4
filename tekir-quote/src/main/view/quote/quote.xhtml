@@ -60,6 +60,12 @@
                 </p:column>
                 <p:column>
                     <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{item.unitPrice.amount}" /></f:facet>
+                        <f:facet name="input"><p:inputNumber value="#{item.unitPrice.amount}" /></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column>
+                    <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{item.totalAmount}" /></f:facet>
                         <f:facet name="input"><t:inputMoney label="" value="#{item.totalAmount}" /></f:facet>
                     </p:cellEditor>

@@ -7,6 +7,7 @@ package com.ozguryazilim.tekir.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Currency;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -26,12 +27,28 @@ public class Money implements Serializable{
     private String currency;
 
     public Money(){
-        
+        amount = BigDecimal.ZERO;
+        currency = "";
     }
     
     public Money(BigDecimal amount, String currency) {
         this.amount = amount;
         this.currency = currency;
+    }
+    
+    public Money(String currency) {
+        this.amount = BigDecimal.ZERO;
+        this.currency = currency;
+    }
+    
+    public Money(Currency currency) {
+        this.amount = BigDecimal.ZERO;
+        this.currency = currency.getCurrencyCode();
+    }
+    
+    public Money(BigDecimal amount, Currency currency) {
+        this.amount = amount;
+        this.currency = currency.getCurrencyCode();
     }
 
     public BigDecimal getAmount() {
@@ -48,6 +65,10 @@ public class Money implements Serializable{
 
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+    
+    public void setCurrency(Currency currency) {
+        this.currency = currency.getCurrencyCode();
     }
 
     @Override
