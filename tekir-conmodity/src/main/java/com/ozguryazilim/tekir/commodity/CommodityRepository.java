@@ -1,4 +1,4 @@
-package com.ozguryazilim.tekir.core.commodity;
+package com.ozguryazilim.tekir.commodity;
 
 import com.google.common.base.Strings;
 import org.apache.deltaspike.data.api.Repository;

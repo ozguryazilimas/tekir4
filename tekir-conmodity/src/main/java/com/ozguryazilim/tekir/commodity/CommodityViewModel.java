@@ -1,4 +1,4 @@
-package com.ozguryazilim.tekir.core.commodity;
+package com.ozguryazilim.tekir.commodity;
 
 import com.ozguryazilim.telve.entities.ViewModel;
 import java.io.Serializable;

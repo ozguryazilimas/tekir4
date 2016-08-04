@@ -1,8 +1,8 @@
-package com.ozguryazilim.tekir.core.commodity;
+package com.ozguryazilim.tekir.commodity;
 
+import com.ozguryazilim.tekir.commodity.config.CommodityPages;
 import com.ozguryazilim.telve.forms.Browse;
 import com.ozguryazilim.telve.forms.BrowseBase;
-import com.ozguryazilim.tekir.core.config.CorePages;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.tekir.entities.Commodity;
@@ -17,7 +17,7 @@ import javax.inject.Inject;
  * 
  * @author
  */
-@Browse(browsePage = CorePages.CommodityBrowse.class, editPage = CorePages.Commodity.class, viewContainerPage = CorePages.CommodityView.class)
+@Browse(browsePage = CommodityPages.CommodityBrowse.class, editPage = CommodityPages.Commodity.class, viewContainerPage = CommodityPages.CommodityView.class)
 public class CommodityBrowse extends BrowseBase<Commodity, CommodityViewModel> {
 
 	@Inject

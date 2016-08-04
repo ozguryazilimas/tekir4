@@ -7,7 +7,6 @@ package com.ozguryazilim.tekir.entities;
 
 import com.ozguryazilim.telve.entities.EntityBase;
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,7 +20,7 @@ import javax.persistence.Table;
  * 
  * @author Hakan Uygun
  */
-@Entity
+//@Entity
 @Table( name = "TCC_CONTACT_COMMODITY" )
 public class ContactInterestedCommodity extends EntityBase{
 
@@ -34,9 +33,9 @@ public class ContactInterestedCommodity extends EntityBase{
     @JoinColumn(name = "CONTACT_ID", foreignKey = @ForeignKey(name = "FK_CONCOMM_CONTACT"))
     private Contact contact;
     
-    @ManyToOne
-    @JoinColumn(name = "COMMODITY_ID", foreignKey = @ForeignKey(name = "FK_CONCOMM_COMMODITY"))
-    private Commodity commodity;
+    //@ManyToOne
+    //@JoinColumn(name = "COMMODITY_ID", foreignKey = @ForeignKey(name = "FK_CONCOMM_COMMODITY"))
+    //private Commodity commodity;
     
     @Column(name = "INFO")
     private String info;
@@ -59,13 +58,6 @@ public class ContactInterestedCommodity extends EntityBase{
         this.contact = contact;
     }
 
-    public Commodity getCommodity() {
-        return commodity;
-    }
-
-    public void setCommodity(Commodity commodity) {
-        this.commodity = commodity;
-    }
 
     public String getInfo() {
         return info;

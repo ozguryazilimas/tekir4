@@ -1,19 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
-    <changeSet author="oyas (generated)" id="1467648713591-1">
-        <createTable tableName="TCO_COMMOTITY">
-            <column name="ID" type="BIGINT">
-                <constraints primaryKey="true" primaryKeyName="TCO_COMMOTITYPK"/>
-            </column>
-            <column name="CREATE_DATE" type="datetime"/>
-            <column name="UPDATE_DATE" type="datetime"/>
-            <column name="UPDATE_USER" type="VARCHAR(255)"/>
-            <column name="ISACTIVE" type="BOOLEAN"/>
-            <column name="CODE" type="VARCHAR(255)"/>
-            <column name="INFO" type="VARCHAR(255)"/>
-            <column name="NAME" type="VARCHAR(255)"/>
-        </createTable>
-    </changeSet>
     <changeSet author="oyas (generated)" id="1467648713591-2">
         <createTable tableName="TCO_INDUSTRY">
             <column name="ID" type="BIGINT">

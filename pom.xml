@@ -79,6 +79,8 @@
         <module>tekir-quote-model</module>
         <module>tekir-order-model</module>
         <module>tekir-quote</module>
+        <module>tekir-commodity-model</module>
+        <module>tekir-conmodity</module>
     </modules>
     
     

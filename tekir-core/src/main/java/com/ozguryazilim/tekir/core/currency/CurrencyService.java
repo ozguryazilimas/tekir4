@@ -9,6 +9,7 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.ozguryazilim.mutfak.kahve.Kahve;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
@@ -16,7 +17,15 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.money.CurrencyUnit;
+import javax.money.Monetary;
+import javax.money.MonetaryAmount;
+import javax.money.convert.ConversionQuery;
+import javax.money.convert.ConversionQueryBuilder;
+import javax.money.convert.CurrencyConversion;
+import javax.money.convert.MonetaryConversions;
 import org.apache.deltaspike.core.api.config.ConfigResolver;
+import org.javamoney.moneta.Money;
 
 /**
  * Sistemde tanımlı olan currency tanımlarını sunar.
@@ -121,4 +130,13 @@ public class CurrencyService implements Serializable{
         
     }
     
+    
+    public void convert( Money m, Currency ccy ){
+        CurrencyUnit c = Monetary.getCurrency("TRY");
+        ConversionQuery q = ConversionQueryBuilder.of().setTermCurrency(c).set(LocalDate.now()).build();
+        CurrencyConversion cc = MonetaryConversions.getConversion(q);
+        MonetaryAmount a = cc.apply(Money.of(10, "TRY"));
+        
+        //MonetaryConversions.getConversion(ConversionQueryBuilder.of().setRateTypes(RateTypes.))DEFAULT_CURRENCY, "IMF").getExchangeRate(null).
+    }
 }

@@ -61,42 +61,6 @@ public interface CorePages extends Pages {
 				CorePages {
 	}
 
-	@View
-	@SecuredPage("commodity")
-	@PageTitle("module.caption.CommodityBrowse")
-	@Navigation(label = "module.caption.CommodityBrowse", icon = "fa fa-cube", section = SideNavigationSection.class)
-	class CommodityBrowse
-			implements
-				CorePages {
-	}
-
-	@View
-	@SecuredPage("commodity")
-	@PageTitle("module.caption.Commodity")
-	class Commodity implements CorePages {
-	}
-
-	@View
-	@SecuredPage("commodity")
-	@PageTitle("module.caption.Commodity")
-	class CommodityView implements CorePages {
-	}
-
-	@View
-	@SecuredPage("commodity")
-	@PageTitle("module.caption.CommodityMasterView")
-	class CommodityMasterView
-			implements
-				CorePages {
-	}
-
-	@SecuredPage() @View
-	class CommodityLookup
-			implements
-				CorePages {
-	}
-
-        
         @View
 	@SecuredPage("currencyDefinition")
 	@PageTitle("module.caption.CurrencyDefinition")

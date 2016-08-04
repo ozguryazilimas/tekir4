@@ -1,10 +1,10 @@
-package com.ozguryazilim.tekir.core.commodity;
+package com.ozguryazilim.tekir.commodity;
 
+import com.ozguryazilim.tekir.commodity.config.CommodityPages;
 import com.ozguryazilim.telve.lookup.Lookup;
 import com.ozguryazilim.telve.lookup.LookupTableControllerBase;
 import com.ozguryazilim.tekir.entities.Commodity;
 import com.ozguryazilim.tekir.entities.Commodity_;
-import com.ozguryazilim.tekir.core.config.CorePages;
 import com.ozguryazilim.telve.lookup.LookupTableModel;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import javax.inject.Inject;
@@ -14,7 +14,7 @@ import javax.inject.Inject;
  * 
  * @author
  */
-@Lookup(dialogPage = CorePages.CommodityLookup.class)
+@Lookup(dialogPage = CommodityPages.CommodityLookup.class)
 public class CommodityLookup
 		extends
 			LookupTableControllerBase<Commodity, CommodityViewModel> {
