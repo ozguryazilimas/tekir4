@@ -40,15 +40,15 @@ public class Quote extends VoucherBase{
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "genericSeq")
     @Column(name = "ID")
     private Long id;
-    
-    
-    /**
+
+
+        /**
      * Hangi müşteri için
      */
     @ManyToOne
     @JoinColumn(name = "ACCOUNT_ID", foreignKey = @ForeignKey(name = "FK_OPP_ACC"))
     private Contact account;
-    
+
     /**
      * Teklif versioyonu
      */
@@ -65,12 +65,13 @@ public class Quote extends VoucherBase{
 
     //FIXME: Teslimat ve Ödeme kuralları alınmalı
     
-    @Embedded
+        @Embedded
     @AttributeOverrides({
         @AttributeOverride(name="amount",column = @Column(name = "TOT_AMT")),
         @AttributeOverride(name="currency",column = @Column(name = "TOT_CCY")),
     })
-    private Money totalAmount;
+    private Money total;
+
 
     @Override
     public Long getId() {
@@ -79,14 +80,6 @@ public class Quote extends VoucherBase{
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Contact getAccount() {
-        return account;
-    }
-
-    public void setAccount(Contact account) {
-        this.account = account;
     }
 
     public Integer getRevision() {
@@ -113,12 +106,20 @@ public class Quote extends VoucherBase{
         this.items = items;
     }
 
-    public Money getTotalAmount() {
-        return totalAmount;
+    public Contact getAccount() {
+        return account;
     }
 
-    public void setTotalAmount(Money totalAmount) {
-        this.totalAmount = totalAmount;
+    public void setAccount(Contact account) {
+        this.account = account;
+    }
+
+    public Money getTotal() {
+        return total;
+    }
+
+    public void setTotal(Money total) {
+        this.total = total;
     }
 
     

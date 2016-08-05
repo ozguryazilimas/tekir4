@@ -26,6 +26,8 @@ public class QuoteHome extends VoucherFormBase<Quote> {
     @Inject
     private CurrencyService currencyService;
     
+    private QuoteItem selectedItem;
+    
     @Override
     protected RepositoryBase<Quote, QuoteViewModel> getRepository() {
         return repository;
@@ -35,16 +37,38 @@ public class QuoteHome extends VoucherFormBase<Quote> {
     public void createNew() {
         super.createNew();
 
-        getEntity().setTotalAmount(new Money(currencyService.getDefaultCurrency()));
+        getEntity().setTotal(new Money(currencyService.getDefaultCurrency()));
     }
 
     
     public void addItem(){
         QuoteItem item = new QuoteItem();
         item.setQuantity(new Quantity(BigDecimal.ZERO, "ADET"));
-        item.setUnitPrice(new Money(BigDecimal.ZERO, "TRL"));
-        item.setTotalAmount(new Money(BigDecimal.ZERO, "TRL"));
+        item.setPrice(new Money(BigDecimal.ZERO, "TRL"));
+        item.setTotal(new Money(BigDecimal.ZERO, "TRL"));
         item.setMaster(getEntity());
-        getEntity().getItems().add(item);
+        selectedItem = item;
     }
+    
+    public void editItem( QuoteItem item ){
+        selectedItem = item;
+    }
+    
+    public void deleteIten( QuoteItem item ){
+        getEntity().getItems().remove(item);
+    }
+    
+    public void saveItem(){
+        getEntity().getItems().add(selectedItem);
+    }
+
+    public QuoteItem getSelectedItem() {
+        return selectedItem;
+    }
+
+    public void setSelectedItem(QuoteItem selectedItem) {
+        this.selectedItem = selectedItem;
+    }
+    
+    
 }

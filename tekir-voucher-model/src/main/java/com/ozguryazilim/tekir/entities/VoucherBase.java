@@ -43,6 +43,7 @@ public abstract class VoucherBase extends AuditBase{
     @Size(max=30)
     private String code;
     
+    
     /**
      * Fiş açıklama alanı
      */
@@ -101,6 +102,7 @@ public abstract class VoucherBase extends AuditBase{
      */
     @Column(name="STATUS_REASON")
     private String statusReason;
+    
 
     public String getVoucherNo() {
         return voucherNo;
@@ -181,7 +183,7 @@ public abstract class VoucherBase extends AuditBase{
     public void setStatusReason(String statusReason) {
         this.statusReason = statusReason;
     }
-    
-    
+
+
     
 }

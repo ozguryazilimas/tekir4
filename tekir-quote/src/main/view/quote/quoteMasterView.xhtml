@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-md-3 col-xs-12">
                 <t:accordion icon="fa fa-comments" label="general.label.Summary" columnClass="col-xs-12">
-                    #{quoteHome.entity.totalAmount}
+                    #{quoteHome.entity.total}
                 </t:accordion>
 
                 <t:accordion icon="fa fa-comments" label="general.label.Voucher" columnClass="col-xs-12">
@@ -39,21 +39,21 @@
                             <h:outputText value="#{item.quantity.amount}" />
                         </p:column>
                         <p:column headerText="Birim Fiyat">
-                            <h:outputText value="#{item.unitPrice}" />
+                            <h:outputText value="#{item.price}" />
                         </p:column>
                         <p:column headerText="Tutar">
-                            <h:outputText value="#{item.totalAmount}" />
+                            <h:outputText value="#{item.total}" />
                         </p:column>
                     </p:dataTable>
 
                     <table class="table table-bordered" style="margin-top: 5px;">
                         <tr>
                             <th>Vergi</th>
-                            <td>#{quoteHome.entity.totalAmount}</td>
+                            <td>#{quoteHome.entity.total}</td>
                         </tr>
                         <tr>
                             <th>Toplam</th>
-                            <td>#{quoteHome.entity.totalAmount}</td>
+                            <td>#{quoteHome.entity.total}</td>
                         </tr>
                     </table>
 
