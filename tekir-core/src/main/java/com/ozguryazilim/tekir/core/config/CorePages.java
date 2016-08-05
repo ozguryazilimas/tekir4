@@ -13,6 +13,7 @@ import org.apache.deltaspike.jsf.api.config.view.View;
 import com.ozguryazilim.telve.auth.SecuredPage;
 import com.ozguryazilim.telve.view.PageTitle;
 import com.ozguryazilim.telve.nav.Navigation;
+import com.ozguryazilim.tekir.core.config.CorePages;
 
 /**
  *
@@ -29,10 +30,9 @@ public interface CorePages extends Pages {
 	class Location implements CorePages {
 	}
 
-	@SecuredPage() @View
-	class LocationLookup
-			implements
-				CorePages {
+	@SecuredPage()
+	@View
+	class LocationLookup implements CorePages {
 	}
 
 	@View
@@ -42,10 +42,9 @@ public interface CorePages extends Pages {
 	class Industry implements CorePages {
 	}
 
-	@SecuredPage() @View
-	class IndustryLookup
-			implements
-				CorePages {
+	@SecuredPage()
+	@View
+	class IndustryLookup implements CorePages {
 	}
 
 	@View
@@ -55,16 +54,28 @@ public interface CorePages extends Pages {
 	class Territory implements CorePages {
 	}
 
-	@SecuredPage() @View
-	class TerritoryLookup
-			implements
-				CorePages {
+	@SecuredPage()
+	@View
+	class TerritoryLookup implements CorePages {
 	}
 
-        @View
+	@View
 	@SecuredPage("currencyDefinition")
 	@PageTitle("module.caption.CurrencyDefinition")
 	@Navigation(label = "module.caption.CurrencyDefinition", icon = "fa fa-industry", section = SideNavigationSection.class)
 	class CurrencyDefinition implements CorePages {
+	}
+
+	@View
+	@SecuredPage("unitSetDefinition")
+	@PageTitle("module.caption.UnitSetDefinition")
+	@Navigation(label = "module.caption.UnitSetDefinition", icon = "/todo.png", section = SideNavigationSection.class)
+	class UnitSetDefinition implements CorePages {
+	}
+
+	@View @SecuredPage()
+	class UnitSetDefinitionLookup
+			implements
+				com.ozguryazilim.tekir.core.config.CorePages {
 	}
 }

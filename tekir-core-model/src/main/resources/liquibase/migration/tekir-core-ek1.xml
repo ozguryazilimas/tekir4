@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="oyas (generated)" id="1470428884610-1">
+        <createTable tableName="TCO_UNIT_SET">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TCO_UNIT_SETPK"/>
+            </column>
+            <column name="ISACTIVE" type="BOOLEAN"/>
+            <column name="CODE" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="NAME" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="BASE_UNIT" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1470428884610-2">
+        <createTable tableName="TCO_UNIT_SET_ITEM">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TCO_UNIT_SET_ITEMPK"/>
+            </column>
+            <column name="NAME" type="VARCHAR(255)"/>
+            <column name="AMOUNT" type="DECIMAL(19, 2)"/>
+            <column name="UNIT" type="VARCHAR(255)"/>
+            <column name="UNIT_SET_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1470428884610-3">
+        <addForeignKeyConstraint baseColumnNames="UNIT_SET_ID" baseTableName="TCO_UNIT_SET_ITEM" constraintName="FK_UNITIT_US" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_UNIT_SET"/>
+    </changeSet>
+</databaseChangeLog>

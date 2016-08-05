@@ -1,0 +1,68 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"                   
+                template="/layout/paramBase.xhtml">
+
+    <ui:param name="homeBean" value="#{unitSetDefinitionHome}" />
+    <ui:param name="itemList" value="#{unitSetDefinitionHome.entityList}" />
+    <ui:param name="itemCaption" value="caption" />
+    <ui:param name="renderActive" value="true" />
+
+    <ui:define name="form">
+        <div class="row">
+            <t:inputText label="general.label.Name" value="#{unitSetDefinitionHome.entity.name}" required="true" />
+            <t:inputText label="general.label.Code" value="#{unitSetDefinitionHome.entity.code}" required="true" >
+                <p:ajax event="blur" update=":form:dets" />
+            </t:inputText>
+            <t:inputText label="general.label.BaseUnit" value="#{unitSetDefinitionHome.entity.baseUnit}" required="true" >
+                <p:ajax event="blur" update=":form:dets" />
+            </t:inputText>
+        </div>            
+        <div class="row">        
+            <t:inputTextarea label="general.label.Info" value="#{unitSetDefinitionHome.entity.info}" required="false" />                                            
+            <t:inputCheckboxGroup label="general.label.Status">
+                <p:selectBooleanCheckbox value="#{unitSetDefinitionHome.entity.active}" itemLabel="#{messages['general.label.Active']}" />
+            </t:inputCheckboxGroup>
+        </div>  
+        <p:outputPanel id="dets" layout="block" styleClass="row" style="margin-top: 8px;">        
+            <p:dataTable id="its" value="#{unitSetDefinitionHome.entity.items}" var="item" styleClass="col-xs-12" editable="true" editMode="cell" 
+                         rendered="#{ ( not empty unitSetDefinitionHome.entity.code ) and ( not empty unitSetDefinitionHome.entity.baseUnit )}">
+                <p:column headerText="general.label.Unit">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{item.name}" /></f:facet>
+                        <f:facet name="input"><p:inputText value="#{item.name}" /></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="general.label.Unit">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{item.quantity.amount}" /></f:facet>
+                        <f:facet name="input"><p:inputNumber value="#{item.quantity.amount}" /></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="general.label.BaseUnit">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{item.quantity.unit}" /></f:facet>
+                        <f:facet name="input">
+                            <p:selectOneMenu value="#{item.quantity.unit}" >
+                                <f:selectItems value="#{unitSetDefinitionHome.unitList}" var="u" itemLabel="#{u}" itemValue="#{u}" />
+                            </p:selectOneMenu>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                <p:column styleClass="actionColumn">
+                    <f:facet name="header">
+                        <p:commandLink action="#{unitSetDefinitionHome.addItem()}" update="its" >
+                            <i class="fa fa-plus" />
+                        </p:commandLink>
+                    </f:facet>
+                    <i class="fa fa-trash" />
+                </p:column>
+            </p:dataTable>
+        </p:outputPanel>
+    </ui:define> 
+    
+</ui:composition>
