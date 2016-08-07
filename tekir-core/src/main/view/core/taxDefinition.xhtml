@@ -1,0 +1,31 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"                   
+                template="/layout/paramBase.xhtml">
+
+    <ui:param name="homeBean" value="#{taxDefinitionHome}" />
+    <ui:param name="itemList" value="#{taxDefinitionHome.entityList}" />
+    <ui:param name="itemCaption" value="caption" />
+    <ui:param name="renderActive" value="true" />
+
+    <ui:define name="form">
+        <div class="row">
+            <t:inputEnum label="taxDefinition.label.TaxType" value="#{taxDefinitionHome.entity.type}" itemLabel="taxType." required="true" />
+            <t:inputText label="general.label.Name" value="#{taxDefinitionHome.entity.name}" required="true" />
+            <t:inputText label="general.label.Code" value="#{taxDefinitionHome.entity.code}" required="true" />
+            <t:inputNumber label="taxDefinition.label.Rate" value="#{taxDefinitionHome.entity.rate}" required="true" />
+            <t:inputDate label="general.label.StartDate" value="#{taxDefinitionHome.entity.fromDate}" required="true" />
+            <t:inputDate label="general.label.EndDate" value="#{taxDefinitionHome.entity.toDate}" required="true" />
+        </div>            
+        <div class="row">        
+            <t:inputTextarea label="general.label.Info" value="#{taxDefinitionHome.entity.info}" required="false" />                                            
+            <t:inputCheckboxGroup label="general.label.Status">
+                <p:selectBooleanCheckbox value="#{taxDefinitionHome.entity.active}" itemLabel="#{messages['general.label.Active']}" />
+            </t:inputCheckboxGroup>
+        </div>  
+    </ui:define> 
+    
+</ui:composition>

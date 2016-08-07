@@ -1,4 +1,4 @@
-package com.ozguryazilim.tekir.core.unitset;
+package com.ozguryazilim.tekir.core.tax;
 
 import com.ozguryazilim.telve.entities.ViewModel;
 import java.io.Serializable;
@@ -8,13 +8,13 @@ import java.io.Serializable;
  *
  * @author
  */
-public class UnitSetDefinitionViewModel implements ViewModel, Serializable {
+public class TaxDefinitionViewModel implements ViewModel, Serializable {
 
     private Long id;
     private String code;
     private String name;
 
-    public UnitSetDefinitionViewModel(Long id, String code, String name) {
+    public TaxDefinitionViewModel(Long id, String code, String name) {
         this.id = id;
         this.code = code;
         this.name = name;
@@ -49,10 +49,10 @@ public class UnitSetDefinitionViewModel implements ViewModel, Serializable {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof UnitSetDefinitionViewModel)) {
+        if (!(obj instanceof TaxDefinitionViewModel)) {
             return false;
         }
-        UnitSetDefinitionViewModel other = (UnitSetDefinitionViewModel) obj;
+        TaxDefinitionViewModel other = (TaxDefinitionViewModel) obj;
         if (id != null) {
             if (!id.equals(other.id)) {
                 return false;

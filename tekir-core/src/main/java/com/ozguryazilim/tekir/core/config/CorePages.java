@@ -73,8 +73,22 @@ public interface CorePages extends Pages {
 	class UnitSetDefinition implements CorePages {
 	}
 
-	@View @SecuredPage()
+	@View
+	@SecuredPage()
 	class UnitSetDefinitionLookup
+			implements
+				com.ozguryazilim.tekir.core.config.CorePages {
+	}
+
+	@View
+	@SecuredPage("taxDefinition")
+	@PageTitle("module.caption.TaxDefinition")
+	@Navigation(label = "module.caption.TaxDefinition", icon = "/todo.png", section = SideNavigationSection.class)
+	class TaxDefinition implements com.ozguryazilim.tekir.core.config.CorePages {
+	}
+
+	@View @SecuredPage()
+	class TaxDefinitionLookup
 			implements
 				com.ozguryazilim.tekir.core.config.CorePages {
 	}

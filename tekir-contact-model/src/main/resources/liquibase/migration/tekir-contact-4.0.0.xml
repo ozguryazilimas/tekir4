@@ -70,16 +70,6 @@
             <column name="PID" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet author="oyas (generated)" id="1467649436683-4">
-        <createTable tableName="TCC_CONTACT_COMMODITY">
-            <column autoIncrement="true" name="ID" type="BIGINT">
-                <constraints primaryKey="true" primaryKeyName="TCC_CONTACT_COMMODITYPK"/>
-            </column>
-            <column name="INFO" type="VARCHAR(255)"/>
-            <column name="COMMODITY_ID" type="BIGINT"/>
-            <column name="CONTACT_ID" type="BIGINT"/>
-        </createTable>
-    </changeSet>
     <changeSet author="oyas (generated)" id="1467649436683-5">
         <createTable tableName="TCC_CONTACT_INFO">
             <column name="INFO_TYPE" type="VARCHAR(31)">
@@ -148,12 +138,6 @@
     
     <changeSet author="oyas (generated)" id="1467649436683-9">
         <addForeignKeyConstraint baseColumnNames="LOCATION_ID" baseTableName="TCC_CONTACT_INFO" constraintName="FK_CONADDR_LOC" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_LOCATION"/>
-    </changeSet>
-    <changeSet author="oyas (generated)" id="1467649436683-10">
-        <addForeignKeyConstraint baseColumnNames="COMMODITY_ID" baseTableName="TCC_CONTACT_COMMODITY" constraintName="FK_CONCOMM_COMMODITY" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_COMMOTITY"/>
-    </changeSet>
-    <changeSet author="oyas (generated)" id="1467649436683-11">
-        <addForeignKeyConstraint baseColumnNames="CONTACT_ID" baseTableName="TCC_CONTACT_COMMODITY" constraintName="FK_CONCOMM_CONTACT" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
     </changeSet>
     <changeSet author="oyas (generated)" id="1467649436683-12">
         <addForeignKeyConstraint baseColumnNames="CONTACT_ID" baseTableName="TCC_CONTACT_INFO" constraintName="FK_CONINF_CONTACT" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>

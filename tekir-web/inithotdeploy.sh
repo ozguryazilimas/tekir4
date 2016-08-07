@@ -12,6 +12,7 @@ rm -rf WEB-INF/lib/telve-core-4.0.0.Beta4.jar
 #rm -rf WEB-INF/lib/telve-gallery-4.0.0.Beta4.jar
 rm -rf WEB-INF/lib/tekir-core-4.0.0-SNAPSHOT.jar
 rm -rf WEB-INF/lib/tekir-contact-4.0.0-SNAPSHOT.jar
+rm -rf WEB-INF/lib/tekir-commodity-4.0.0-SNAPSHOT.jar
 rm -rf WEB-INF/lib/tekir-activity-4.0.0-SNAPSHOT.jar
 rm -rf WEB-INF/lib/tekir-voucher-4.0.0-SNAPSHOT.jar
 rm -rf WEB-INF/lib/tekir-opportunity-4.0.0-SNAPSHOT.jar
@@ -29,6 +30,7 @@ ln -s ~/git/telve4/telve-core/target/classes/ WEB-INF/lib/telve-core-4.0.0.Beta4
 #ln -s ~/git/telve4/telve-gallery/target/classes/ WEB-INF/lib/telve-gallery-4.0.0.Beta4.jar
 ln -s ~/git/tekir4/tekir-core/target/classes/ WEB-INF/lib/tekir-core-4.0.0-SNAPSHOT.jar
 ln -s ~/git/tekir4/tekir-contact/target/classes/ WEB-INF/lib/tekir-contact-4.0.0-SNAPSHOT.jar
+ln -s ~/git/tekir4/tekir-conmodity/target/classes/ WEB-INF/lib/tekir-commodity-4.0.0-SNAPSHOT.jar
 ln -s ~/git/tekir4/tekir-activity/target/classes/ WEB-INF/lib/tekir-activity-4.0.0-SNAPSHOT.jar
 ln -s ~/git/tekir4/tekir-voucher/target/classes/ WEB-INF/lib/tekir-voucher-4.0.0-SNAPSHOT.jar
 ln -s ~/git/tekir4/tekir-opportunity/target/classes/ WEB-INF/lib/tekir-opportunity-4.0.0-SNAPSHOT.jar

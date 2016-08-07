@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="oyas (generated)" id="1470598444235-1">
+        <createTable tableName="TCO_COMMOTITY_CAT">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TCO_COMMOTITY_CATPK"/>
+            </column>
+            <column name="ISACTIVE" type="BOOLEAN"/>
+            <column name="CODE" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PATH" type="VARCHAR(255)"/>
+            <column name="PID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1470598444235-2">
+        <addColumn tableName="TCO_COMMOTITY">
+            <column name="CATEGORY_ID" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1470598444235-3">
+        <addColumn tableName="TCO_COMMOTITY">
+            <column name="CURRENCY" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1470598444235-4">
+        <addColumn tableName="TCO_COMMOTITY">
+            <column name="PRICE" type="decimal(19, 2)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1470598444235-5">
+        <addColumn tableName="TCO_COMMOTITY">
+            <column name="TAX1_ID" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1470598444235-6">
+        <addColumn tableName="TCO_COMMOTITY">
+            <column name="TAX2_ID" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1470598444235-7">
+        <addColumn tableName="TCO_COMMOTITY">
+            <column name="TAX3_ID" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1470598444235-8">
+        <addColumn tableName="TCO_COMMOTITY">
+            <column name="UNIT_DEFAULT" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1470598444235-9">
+        <addColumn tableName="TCO_COMMOTITY">
+            <column name="UNIT_SET" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1470598444235-10">
+        <addForeignKeyConstraint baseColumnNames="PID" baseTableName="TCO_COMMOTITY_CAT" constraintName="FK_6xdebpq4d9ldt8e4fwyhd0bls" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_COMMOTITY_CAT"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1470598444235-11">
+        <addForeignKeyConstraint baseColumnNames="CATEGORY_ID" baseTableName="TCO_COMMOTITY" constraintName="FK_COMM_CAT" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_COMMOTITY_CAT"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1470598444235-12">
+        <addForeignKeyConstraint baseColumnNames="TAX1_ID" baseTableName="TCO_COMMOTITY" constraintName="FK_COMM_TAX1" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_TAX"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1470598444235-13">
+        <addForeignKeyConstraint baseColumnNames="TAX2_ID" baseTableName="TCO_COMMOTITY" constraintName="FK_COMM_TAX2" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_TAX"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1470598444235-14">
+        <addForeignKeyConstraint baseColumnNames="TAX3_ID" baseTableName="TCO_COMMOTITY" constraintName="FK_COMM_TAX3" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_TAX"/>
+    </changeSet>
+</databaseChangeLog>

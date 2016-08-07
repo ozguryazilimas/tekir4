@@ -4,6 +4,8 @@
     
     <include file="liquibase/migration/tekir-core-4.0.0.xml" /> 
     <include file="liquibase/migration/tekir-core-ek1.xml" /> 
+    <include file="liquibase/migration/tekir-core-ek2.xml" /> 
+    
     
 </databaseChangeLog>
 

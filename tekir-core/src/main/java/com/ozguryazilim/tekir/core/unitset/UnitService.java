@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -22,6 +23,10 @@ import javax.inject.Named;
 @Named
 @ApplicationScoped
 public class UnitService implements Serializable{
+    
+    @Inject
+    private UnitSetDefinitionRepository repository;
+    
     
     /**
      * Geriye ismi verilen unitSet için birim isim listesini döndürür.
@@ -46,4 +51,12 @@ public class UnitService implements Serializable{
         return getUnits( unitName.getUnitSet());
     }
     
+
+    /**
+     * Geriye Sistemde tanımlı UnitSet'lerin ismini döndürür.
+     * @return 
+     */
+    public List<String> getUnitSets( ){
+        return UnitSetRegistery.getUnitSets();
+    }
 }
