@@ -5,6 +5,8 @@
  */
 package com.ozguryazilim.tekir.entities;
 
+import java.math.BigDecimal;
+import java.util.Currency;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -54,8 +56,13 @@ public class Opportunity extends VoucherBase{
     //private List<Person> stakeHolders;
     
     //Money tipinde olacak
-    //@Column(name = "BUDGET")
-    //private String budget;
+    @Column(name = "BUDGET")
+    private BigDecimal budget = BigDecimal.ZERO;
+    
+    
+    @Column( name="CCY")
+    private Currency currency;
+    
     
     /**
      * Tahmini satış zamanı
@@ -169,6 +176,23 @@ public class Opportunity extends VoucherBase{
     public void setSolution(String solution) {
         this.solution = solution;
     }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
+
+    public BigDecimal getBudget() {
+        return budget;
+    }
+
+    public void setBudget(BigDecimal budget) {
+        this.budget = budget;
+    }
+    
     
     /**
      * Fırsat için durum bilgisi : Bilgi Toplama, Stratejik olarak yapılmayacak? : Aslında bunlar statusReason gibi duruyor. Örneğin Open için : Bilgi Toplama, Strateji Kararı Bekleme, Yapılabilirlik Bekleme gibi

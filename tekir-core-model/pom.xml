@@ -19,6 +19,11 @@
             <version>${version.telve}</version>
         </dependency>
         <dependency>
+            <groupId>com.ozguryazilim.mutfak</groupId>
+            <artifactId>telve-unit</artifactId>
+            <version>${version.telve}</version>
+        </dependency>
+        <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>4.3.11.Final</version>

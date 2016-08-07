@@ -43,9 +43,9 @@ public class QuoteHome extends VoucherFormBase<Quote> {
     
     public void addItem(){
         QuoteItem item = new QuoteItem();
-        item.setQuantity(new Quantity(BigDecimal.ZERO, "ADET"));
-        item.setPrice(new Money(BigDecimal.ZERO, "TRL"));
-        item.setTotal(new Money(BigDecimal.ZERO, "TRL"));
+        item.setQuantity(new Quantity(BigDecimal.ZERO, "HDE:Karton"));
+        item.setPrice(new Money(BigDecimal.ZERO, "TRY"));
+        item.setTotal(new Money(BigDecimal.ZERO, "TRY"));
         item.setMaster(getEntity());
         selectedItem = item;
     }

@@ -25,13 +25,13 @@
                     
                     <p:outputPanel id="#{cc.id}_drp" layout="span" styleClass="input-group-btn ">
                         <button class="btn btn-default btn-flat ui-inputfield ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only dropdown-toggle" type="button" data-toggle="dropdown">
-                            #{cc.attrs.value.unit}
+                            #{cc.attrs.value.unitName.name}
                             <i class="fa fa-caret-down"/>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><p:commandLink action="#{cc.attrs.value.setUnit('ADET')}" process="@this" update="#{cc.id}_drp" >ADET</p:commandLink></li>
-                            <li><p:commandLink action="#{cc.attrs.value.setUnit('KILO')}" process="@this" update="#{cc.id}_drp" >KILO</p:commandLink></li>
-                            <li><p:commandLink action="#{cc.attrs.value.setUnit('METRE')}" process="@this" update="#{cc.id}_drp" >METRE</p:commandLink></li>
+                            <ui:repeat id="#{cc.id}_mnl" value="#{unitService.getUnits(cc.attrs.value.unitName)}" var="un">
+                                <li><p:commandLink action="#{cc.attrs.value.setUnitName(un)}" process="@this" update="@([id$=#{cc.id}_drp])" >#{un.name}</p:commandLink></li>
+                            </ui:repeat>
                         </ul>
                     </p:outputPanel>
                 </div>

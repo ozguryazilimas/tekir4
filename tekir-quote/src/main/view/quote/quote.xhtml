@@ -15,7 +15,9 @@
             <div class="col-md-6 col-xs-12">
                 <div class="row">
                     <t:inputLookupDialog label="general.label.Account" value="#{quoteHome.entity.account}" lookupBean="#{contactLookup}" lookupListener="quoteHome.entity.account" placeholder="#{messages['general.info.Account']}" />
-                    <t:inputMoney label="Paralalalala" value="#{quoteHome.entity.total}" required="true"/>
+                    <t:inputMoneyAndCCY label="Paralalalala" value="#{quoteHome.entity.total}" required="true"/>
+                    <t:inputCurrency label="general.label.Currency" value="#{quoteHome.entity.total.currency}" required="true"/>
+                    <t:inputMoney label="qoute.label.Total" value="#{quoteHome.entity.total.amount}" currency="#{quoteHome.entity.total.currency}" required="true"/>
                 </div>
             </div>
 
@@ -34,67 +36,72 @@
 
         <div class="row">
             <p:dataTable id="its" value="#{quoteHome.entity.items}" var="item" editable="true" editMode="cell" styleClass="col-xs-12">
-                <p:column>
+                <p:column headerText="Ürün">
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{item.commodity}" /></f:facet>
                         <f:facet name="input"><p:inputText value="#{item.commodity}" /></f:facet>
                     </p:cellEditor>
                 </p:column>
-                <p:column>
+                <p:column headerText="Açıklama">
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{item.info}" /></f:facet>
                         <f:facet name="input"><p:inputText value="#{item.info}" /></f:facet>
                     </p:cellEditor>
                 </p:column>
-                <p:column>
+                <p:column headerText="Miktar" style="text-align: right; width: 12em;">
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{item.quantity.amount}" /></f:facet>
-                        <f:facet name="input"><t:inputQuantity label="" value="#{item.quantity}" /></f:facet>
+                        <f:facet name="input"><p:inputNumber value="#{item.quantity.amount}" /></f:facet>
                     </p:cellEditor>
 
                 </p:column>
-                <p:column>
+                <p:column headerText="Birim" style="width: 10em;">
                     <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{item.price}" /></f:facet>
-                        <f:facet name="input"><t:inputMoney label="" value="#{item.price}" /></f:facet>
+                        <f:facet name="output"><h:outputText value="#{item.quantity.unitName.name}" /></f:facet>
+                        <f:facet name="input"><t:inputUnit label="" value="#{item.quantity.unitName}" /></f:facet>
+                    </p:cellEditor>
+
+                </p:column>
+                
+                <p:column style="text-align: right; width: 12em;" headerText="Fiyat">
+                     
+                    <p:cellEditor>
+                        <f:facet name="output"><t:cellOutputMoney value="#{item.price.amount}" currency="#{quoteHome.entity.total.currency}" /></f:facet>
+                        <f:facet name="input"><t:cellInputMoney value="#{item.price.amount}" currency="#{quoteHome.entity.total.currency}" /></f:facet>
                     </p:cellEditor>
                 </p:column>
-                <p:column>
+                <p:column style="text-align: right; width: 12em;" headerText="Tutar">
                     <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{item.price.amount}" /></f:facet>
-                        <f:facet name="input"><p:inputNumber value="#{item.price.amount}" /></f:facet>
+                        <f:facet name="output"><t:cellOutputMoney value="#{item.total.amount}" currency="#{quoteHome.entity.total.currency}" /></f:facet>
+                        <f:facet name="input"><t:cellInputMoney value="#{item.total.amount}" currency="#{quoteHome.entity.total.currency}" /></f:facet>
                     </p:cellEditor>
                 </p:column>
-                <p:column>
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{item.total}" /></f:facet>
-                        <f:facet name="input"><t:inputMoney label="" value="#{item.total}" /></f:facet>
-                    </p:cellEditor>
-                </p:column>
-                <p:column>
+                <p:column styleClass="actionColumn">
                     <f:facet name="header">
-                        <p:commandLink action="#{quoteHome.addItem()}" process="@this" update="its" oncomplete="PF('ite').show();">
+                        <p:commandLink action="#{quoteHome.addItem()}" process="@this" update=":form:ite" oncomplete="PF('ite').show();">
                             <i class="fa fa-plus"/>
                         </p:commandLink>
                     </f:facet>
+                    <ui:remove>
                     <p:rowEditor />
+                    </ui:remove>
                     <i class="fa fa-trash" />
                 </p:column>
             </p:dataTable>
         </div>
 
         <p:dialog header="İtem" id="ite" widgetVar="ite" >
-            <div class="row">
+            <p:outputPanel styleClass="row" layout="block" rendered="#{ not empty quoteHome.selectedItem}">
                 <t:inputLookupDialog label="general.label.Commodity" value="#{quoteHome.selectedItem.commodity}" lookupBean="#{commodityLookup}" lookupListener="quoteHome.selectedItem.commodity" placeholder="#{messages['general.info.Commodity']}" />
                 
                 <t:inputText label="general.label.Info" value="#{quoteHome.selectedItem.info}" columnClass="col-xs-12"/>
                 <t:inputQuantity label="general.label.Quantity" value="#{quoteHome.selectedItem.quantity}" columnClass="col-xs-12"/>
-                <t:inputMoney label="general.label.Total" value="#{quoteHome.selectedItem.total}" columnClass="col-xs-12"/>
-                <t:inputMoney label="general.label.Price" value="#{quoteHome.selectedItem.price}" columnClass="col-xs-12"/>
+                <t:inputMoneyAndCCY label="general.label.Total" value="#{quoteHome.selectedItem.total}" columnClass="col-xs-12"/>
+                <t:inputMoneyAndCCY label="general.label.Price" value="#{quoteHome.selectedItem.price}" columnClass="col-xs-12"/>
                 <div class="actionButtons">
                     <p:commandButton action="#{quoteHome.saveItem()}" value="Sakla" oncomplete="PF('ite').hide();" update="its" ajax="true" process="@(ite)"/>
                 </div>
-            </div>
+            </p:outputPanel>
         </p:dialog>
 
     </ui:define> 

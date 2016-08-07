@@ -1,0 +1,33 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:composite="http://java.sun.com/jsf/composite">
+
+
+    <composite:interface>
+        <composite:attribute name="value" required="true"/>
+        <composite:attribute name="currency" required="true"/>
+        <composite:attribute name="placeholder" required="false"/>
+        <composite:attribute name="required" required="false" type="java.lang.Boolean" default="false"/>
+        <composite:attribute name="readonly" required="false" type="java.lang.Boolean" default="false"/>
+        <composite:attribute name="columnClass" required="false" default="col-md-6 col-xs-12"/>
+        <composite:clientBehavior name="blur" event="blur" targets="#{cc.id}_inp" />
+    </composite:interface>
+
+    <composite:implementation>
+
+        <div class="input-group">
+            <p:inputNumber id="#{cc.id}_inp" value="#{cc.attrs.value}" required="#{cc.attrs.required}" />
+
+            <p:outputPanel id="#{cc.id}_drp" layout="span" styleClass="input-group-btn currency">
+                <span class="btn btn-default btn-flat ui-inputfield ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only "
+                      title="#{messages['currency.'.concat(cc.attrs.currency)]}">
+                    <i class="#{messages['currency.symbol.'.concat(cc.attrs.currency)]}" />
+                </span>
+            </p:outputPanel>
+        </div>
+
+    </composite:implementation>
+
+</ui:component>

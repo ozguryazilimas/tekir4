@@ -35,14 +35,15 @@
                         <p:column headerText="Açıklama">
                             <h:outputText value="#{item.info}" />
                         </p:column>
-                        <p:column headerText="Miktar">
+                        <p:column headerText="Miktar" style="text-align: right; width: 8em;">
                             <h:outputText value="#{item.quantity.amount}" />
+                            <h:outputText value="#{item.quantity.unitName.name}" />
                         </p:column>
-                        <p:column headerText="Birim Fiyat">
-                            <h:outputText value="#{item.price}" />
+                        <p:column headerText="Birim Fiyat" style="text-align: right; width: 8em;">
+                            <t:cellOutputMoney value="#{item.price.amount}" currency="#{quoteHome.entity.total.currency}" />
                         </p:column>
-                        <p:column headerText="Tutar">
-                            <h:outputText value="#{item.total}" />
+                        <p:column headerText="Tutar" style="text-align: right; width: 8em;">
+                            <t:cellOutputMoney value="#{item.total.amount}" currency="#{quoteHome.entity.total.currency}" />
                         </p:column>
                     </p:dataTable>
 

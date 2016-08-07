@@ -1,6 +1,7 @@
 package com.ozguryazilim.tekir.core.unitset;
 
 import com.google.common.base.Strings;
+import com.ozguryazilim.tekir.core.config.RefreshUnitSetsEvent;
 import com.ozguryazilim.tekir.entities.Quantity;
 import com.ozguryazilim.telve.forms.ParamEdit;
 import com.ozguryazilim.telve.forms.ParamBase;
@@ -9,6 +10,7 @@ import com.ozguryazilim.tekir.entities.UnitSetItem;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 
 /**
@@ -22,6 +24,9 @@ public class UnitSetDefinitionHome extends ParamBase<UnitSetDefinition, Long> {
 	@Inject
 	private UnitSetDefinitionRepository repository;
 
+        @Inject
+        private Event<RefreshUnitSetsEvent> refreshUnitSetsEvent;
+        
 	public UnitSetDefinitionRepository getRepository() {
 		return this.repository;
 	}
@@ -61,4 +66,19 @@ public class UnitSetDefinitionHome extends ParamBase<UnitSetDefinition, Long> {
             
             return result;
         }
+
+    @Override
+    public boolean onAfterSave() {
+        refreshUnitSetsEvent.fire(new RefreshUnitSetsEvent());
+        return super.onAfterSave(); 
+    }
+
+    @Override
+    public boolean onAfterDelete() {
+        refreshUnitSetsEvent.fire(new RefreshUnitSetsEvent());
+        return super.onAfterDelete();
+    }
+     
+    
+        
 }

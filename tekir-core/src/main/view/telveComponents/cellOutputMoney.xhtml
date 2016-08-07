@@ -1,0 +1,22 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:composite="http://java.sun.com/jsf/composite">
+
+
+    <composite:interface>
+        <composite:attribute name="value" required="true"/>
+        <composite:attribute name="currency" required="true"/>
+    </composite:interface>
+
+    <composite:implementation>
+
+        <p:outputPanel  styleClass="value currency" style="text-align: right">
+            <h:outputText id="#{cc.id}_inp" value="#{cc.attrs.value}" />
+            <i class="#{messages['currency.symbol.'.concat(cc.attrs.currency)]}" title="#{messages['currency.'.concat(cc.attrs.currency)]}"/>
+        </p:outputPanel>
+
+    </composite:implementation>
+
+</ui:component>

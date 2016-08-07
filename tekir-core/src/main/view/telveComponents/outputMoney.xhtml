@@ -1,0 +1,26 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:composite="http://java.sun.com/jsf/composite">
+
+
+    <composite:interface>
+        <composite:attribute name="value" required="true"/>
+        <composite:attribute name="label" required="true"/>
+        <composite:attribute name="currency" required="true"/>
+        <composite:attribute name="columnClass" required="false" default="col-md-6 col-xs-12"/>
+    </composite:interface>
+
+    <composite:implementation>
+        <div id="#{cc.clientId}" class="disprop #{cc.attrs.columnClass}">
+            <p:outputLabel for="#{cc.id}_inp" value="#{messages[cc.attrs.label]} :" styleClass="name" />
+            <span class="value" style="text-align: right">
+                <h:outputText id="#{cc.id}_inp" value="#{cc.attrs.value}" />
+                <i class="#{messages['currency.symbol.'.concat(cc.attrs.currency)]}" title="#{messages['currency.'.concat(cc.attrs.currency)]}"/>
+                <h:outputText value="." style="color: #FFF" rendered="#{cc.attrs.value eq null or cc.attrs.value eq ''}"/>
+            </span>
+        </div>
+    </composite:implementation>
+
+</ui:component>

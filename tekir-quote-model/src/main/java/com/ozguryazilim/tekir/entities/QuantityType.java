@@ -5,7 +5,7 @@
  */
 package com.ozguryazilim.tekir.entities;
 
-import com.ozguryazilim.telve.unit.Quantity;
+import com.ozguryazilim.telve.unit.QuantitativeAmount;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
@@ -33,7 +33,7 @@ public class QuantityType implements UserType {
 
     @Override
     public Class returnedClass() {
-        return Quantity.class;
+        return QuantitativeAmount.class;
     }
 
     @Override
@@ -59,7 +59,7 @@ public class QuantityType implements UserType {
         String unit = StringType.INSTANCE.nullSafeGet(rs, names[1], si);
         return amount == null && unit == null
                 ? null
-                : Quantity.of(amount, unit);
+                : QuantitativeAmount.of(amount, unit);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class QuantityType implements UserType {
             BigDecimalType.INSTANCE.nullSafeSet(ps, null, i, si);
             StringType.INSTANCE.nullSafeSet(ps, null, i + 1, si);
         } else {
-            Quantity q = (Quantity)value;
+            QuantitativeAmount q = (QuantitativeAmount)value;
             BigDecimalType.INSTANCE.nullSafeSet(ps, q.getAmount(), i, si);
             StringType.INSTANCE.nullSafeSet(ps, q.getUnitName().toString(), i + 1, si);
         }
