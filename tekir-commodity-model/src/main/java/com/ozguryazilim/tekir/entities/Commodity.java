@@ -59,8 +59,9 @@ public class Commodity extends AuditBase{
     @Column(name = "ISACTIVE")
     private Boolean active = Boolean.TRUE;
 
-    @Column( name = "UNIT_SET" )
-    private String unitSet;
+    @ManyToOne
+    @JoinColumn(name = "UNITSET_ID", foreignKey = @ForeignKey(name = "FK_COMM_UNITSET"))
+    private UnitSetDefinition unitSet;
     
     @Column( name = "UNIT_DEFAULT" )
     private String defaultUnit;
@@ -137,11 +138,11 @@ public class Commodity extends AuditBase{
         this.active = active;
     }
 
-    public String getUnitSet() {
+    public UnitSetDefinition getUnitSet() {
         return unitSet;
     }
 
-    public void setUnitSet(String unitSet) {
+    public void setUnitSet(UnitSetDefinition unitSet) {
         this.unitSet = unitSet;
     }
 

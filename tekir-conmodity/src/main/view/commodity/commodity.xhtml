@@ -16,23 +16,15 @@
             <t:inputLookupDialog label="general.label.Category" value="#{commodityHome.entity.category}" lookupBean="#{commodityCategoryLookup}" lookupListener="commodityHome.entity.category" placeholder="#{messages['general.info.Category']}" />
             <t:inputCurrency label="general.label.Currency" value="#{commodityHome.entity.defaultCurrency}"  required="false" />
             <t:inputMoney label="general.label.Price" value="#{commodityHome.entity.price}"  currency="#{commodityHome.entity.defaultCurrency}" required="false" />
-            <ui:remove>
-                Kod saklayacak fakat isim gösterecek bir converter'a ihtiyaç var
-            <t:inputAny label="general.label.UnitSet">
-                <p:autoComplete value="#{commodityHome.entity.unitSet}" 
-                                forceSelection="true" 
-                                completeMethod="#{unitSetDefinitionLookup.suggest}"
-                                var="item"
-                                itemLabel="#{item.name}"
-                                itemValue="#{item.code}"
-                                queryDelay="500"
-                                required="true"
-                                dropdown="true">
-                    <p:clientValidator />
-                </p:autoComplete>
-            </t:inputAny> 
-                </ui:remove>
-            <t:inputUnit label="general.label.Unit" value="#{commodityHome.entity.unitName}" />
+            
+            
+            <t:inputLookup label="general.label.UnitSet" value="#{commodityHome.entity.unitSet}" lookupListener="commodityHome.entity.unitSet" lookupBean="#{unitSetDefinitionLookup}" placeholder="#{messages['general.label.UnitSet']}" >
+                <p:ajax event="change" listener="#{commodityHome.onUnitSetChange}" update=":form:baseUnit" process="@this"/>
+            </t:inputLookup>
+            
+            <p:outputPanel id="baseUnit" layout="span">
+                <t:inputUnit label="general.label.Unit" value="#{commodityHome.entity.unitName}" />
+            </p:outputPanel>
         </div>            
         <div class="row">
             <t:inputLookupDialog label="commodity.label.Tax" value="#{commodityHome.entity.tax1}" lookupBean="#{taxDefinitionLookup}" lookupListener="commodityHome.entity.tax1" placeholder="#{messages['commodity.info.Tax1']}" />

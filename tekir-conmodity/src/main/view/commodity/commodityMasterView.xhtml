@@ -16,6 +16,12 @@
             <t:outputText label="general.label.Info" value="#{commodityHome.entity.info}" />
             <t:outputBoolean label="general.label.Status" itemLabel="general.boolean.active." value="#{commodityHome.entity.active}" />
         </div>  
+        
+        <div class="row">        
+            <t:outputText label="general.label.UnitSet" value="#{commodityHome.entity.unitSet.name}" />
+            <t:outputText label="general.label.Unit" value="#{commodityHome.entity.unitName.name}" />
+            
+        </div>  
 
     </ui:define>
 

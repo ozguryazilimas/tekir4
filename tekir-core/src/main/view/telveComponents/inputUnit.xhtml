@@ -21,8 +21,8 @@
 
             <p:outputLabel for="#{cc.id}_inp" value="#{messages[cc.attrs.label]}" styleClass="name #{invalid?'errors':''}" />
             <span class="value">
-                <p:selectOneMenu id="#{cc.id}_inp" value="#{cc.attrs.value}" >
-                    <f:selectItems value="#{unitService.getUnits(cc.attrs.value)}" var="un" itemLabel="#{un.name}" itemValue="#{un.toString()}" />
+                <p:selectOneMenu id="#{cc.id}_inp" value="#{cc.attrs.value}" converter="unitNameConverter">
+                    <f:selectItems value="#{unitService.getUnits(cc.attrs.value)}" var="un" itemLabel="#{un.name}" itemValue="#{un}" />
                 </p:selectOneMenu>
             </span>
             <p:message for="#{cc.id}_inp" display="tooltip"/>

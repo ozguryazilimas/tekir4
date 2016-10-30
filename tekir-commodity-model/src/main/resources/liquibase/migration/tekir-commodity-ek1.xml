@@ -57,6 +57,11 @@
             <column name="UNIT_SET" type="varchar(255)"/>
         </addColumn>
     </changeSet>
+    <changeSet author="oyas (generated)" id="1470598444235-15">
+        <addColumn tableName="TCO_COMMOTITY">
+            <column name="UNITSET_ID" type="bigint"/>
+        </addColumn>
+    </changeSet>
     <changeSet author="oyas (generated)" id="1470598444235-10">
         <addForeignKeyConstraint baseColumnNames="PID" baseTableName="TCO_COMMOTITY_CAT" constraintName="FK_6xdebpq4d9ldt8e4fwyhd0bls" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_COMMOTITY_CAT"/>
     </changeSet>
@@ -71,5 +76,8 @@
     </changeSet>
     <changeSet author="oyas (generated)" id="1470598444235-14">
         <addForeignKeyConstraint baseColumnNames="TAX3_ID" baseTableName="TCO_COMMOTITY" constraintName="FK_COMM_TAX3" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_TAX"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1470598444235-16">
+        <addForeignKeyConstraint baseColumnNames="UNITSET_ID" baseTableName="TCO_COMMOTITY" constraintName="FK_COMM_UNITSET" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_UNIT_SET"/>
     </changeSet>
 </databaseChangeLog>
