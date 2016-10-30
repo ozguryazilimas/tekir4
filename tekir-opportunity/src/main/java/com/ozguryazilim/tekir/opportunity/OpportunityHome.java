@@ -5,13 +5,17 @@
  */
 package com.ozguryazilim.tekir.opportunity;
 
+import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.Opportunity;
+import com.ozguryazilim.tekir.entities.VocuherStatus;
 import com.ozguryazilim.tekir.opportunity.config.OpportunityPages;
+import com.ozguryazilim.tekir.quote.QuoteHome;
 import com.ozguryazilim.tekir.voucher.VoucherFormBase;
 import com.ozguryazilim.telve.data.RepositoryBase;
+import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.forms.FormEdit;
-import java.util.Currency;
 import javax.inject.Inject;
+import org.apache.deltaspike.core.api.config.view.ViewConfig;
 
 /**
  * Opportunity View Conttroller
@@ -23,13 +27,17 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
     @Inject
     private OpportunityRepository repository;
 
+    @Inject
+    private QuoteHome quoteHome;
+
+    @Inject
+    private CurrencyService currencyService;
+    
     @Override
     public void createNew() {
         super.createNew(); //To change body of generated methods, choose Tools | Templates.
         
-        //TODO: Bu değeri configden default currency olarak almak lazım. ( Hatta değer belki custemer, user default'u bile olabilir )
-        //Customer > User > System şeklinde bir öncelik sıralaması nasıl olur?
-        getEntity().setCurrency(Currency.getInstance("TRY"));
+        getEntity().setCurrency(currencyService.getDefaultCurrency());
         
     }
     
@@ -39,5 +47,33 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
     protected RepositoryBase<Opportunity, ?> getRepository() {
         return repository;
     }
+
+    @Override
+    public boolean onBeforeSave() {
+        
+        if( getEntity().getStatus() == VocuherStatus.DRAFT ){
+            getEntity().setStatus(VocuherStatus.OPEN);
+        }
+        
+        return super.onBeforeSave(); //To change body of generated methods, choose Tools | Templates.
+    }
     
+    
+    
+    
+    public Class<? extends ViewConfig> closeWin(){
+        
+        getEntity().setStatus(VocuherStatus.WON);
+        save();
+        
+        //FIXME: FP üretmek için utility lazım. Ama daha önemlisi Voucher'lar otomatik üretebilmeli.
+        FeaturePointer fp = new FeaturePointer();
+        
+        fp.setBusinessKey(getEntity().getVoucherNo());
+        fp.setPrimaryKey(getEntity().getId());
+        fp.setFeature(getEntity().getClass().getSimpleName());
+        
+        return quoteHome.createFromFeature(  fp, getEntity().getAccount(), getEntity().getProcessId());
+        
+    }
 }

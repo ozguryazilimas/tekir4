@@ -2,6 +2,7 @@ package com.ozguryazilim.tekir.quote;
 
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.Commodity;
+import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.tekir.entities.Quantity;
 import com.ozguryazilim.telve.forms.FormEdit;
 import com.ozguryazilim.tekir.entities.Quote;
@@ -11,11 +12,13 @@ import com.ozguryazilim.tekir.entities.TaxDefinition;
 import com.ozguryazilim.tekir.quote.config.QuotePages;
 import com.ozguryazilim.tekir.voucher.VoucherFormBase;
 import com.ozguryazilim.telve.data.RepositoryBase;
+import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.lookup.LookupSelectTuple;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
+import org.apache.deltaspike.core.api.config.view.ViewConfig;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.SelectEvent;
 
@@ -300,4 +303,16 @@ public class QuoteHome extends VoucherFormBase<Quote> {
         
         return result;
     }
+    
+    
+    public Class<? extends ViewConfig> createFromFeature( FeaturePointer featurePointer, Contact contact, String processId ){
+        Class page = create();
+        
+        getEntity().setAccount(contact);
+        getEntity().setStarter(featurePointer);
+        getEntity().setProcessId(processId);
+        
+        return page;
+    }
+    
 }
