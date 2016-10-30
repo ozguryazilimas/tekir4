@@ -6,6 +6,7 @@
 package com.ozguryazilim.tekir.entities;
 
 import com.ozguryazilim.telve.entities.EntityBase;
+import java.math.BigDecimal;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
@@ -49,20 +50,13 @@ public abstract class VoucherItemBase<E extends VoucherBase> extends EntityBase{
     })
     private Quantity quantity;
     
-    @Embedded
-    @AttributeOverrides({
-        @AttributeOverride(name = "amount", column = @Column(name = "PRICE_AMT")),
-        @AttributeOverride(name = "currency", column = @Column(name = "PROICE_CCY")),
-    })
-    private Money price;
+    @Column(name = "PRICE_AMT")
+    private BigDecimal price = BigDecimal.ZERO;
     
-    @Embedded
-    @AttributeOverrides({
-        @AttributeOverride(name = "amount", column = @Column(name = "TOT_AMT")),
-        @AttributeOverride(name = "currency", column = @Column(name = "TOT_CCY")),
-    })
-    private Money total;
+    @Column(name = "TOT_AMT")
+    private BigDecimal total = BigDecimal.ZERO;
 
+    @Override
     public Long getId() {
         return id;
     }
@@ -103,21 +97,20 @@ public abstract class VoucherItemBase<E extends VoucherBase> extends EntityBase{
         this.quantity = quantity;
     }
 
-    public Money getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Money price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public Money getTotal() {
+    public BigDecimal getTotal() {
         return total;
     }
 
-    public void setTotal(Money total) {
+    public void setTotal(BigDecimal total) {
         this.total = total;
     }
-    
-    
+
 }

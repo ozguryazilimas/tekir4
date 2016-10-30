@@ -22,7 +22,7 @@
             <p:outputLabel for="#{cc.id}_inp" value="#{messages[cc.attrs.label]}" styleClass="name #{invalid?'errors':''}" />
             <span class="value">
                 <div class="input-group">
-                    <p:inputNumber id="#{cc.id}_inp" value="#{cc.attrs.value}" required="#{cc.attrs.required}" />
+                    <p:inputNumber id="#{cc.id}_inp" value="#{cc.attrs.value}" required="#{cc.attrs.required}" readonly="#{cc.attrs.readonly}"/>
                     
                     <p:outputPanel id="#{cc.id}_drp" layout="span" styleClass="input-group-btn currency">
                         <span class="btn btn-default btn-flat ui-inputfield ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only "

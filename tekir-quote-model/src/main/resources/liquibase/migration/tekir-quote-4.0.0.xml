@@ -45,10 +45,24 @@
             <column name="MASTER_ID" type="BIGINT"/>
         </createTable>
     </changeSet>
+    <changeSet author="oyas (generated)" id="1469961995803-5">
+        <createTable tableName="TSQ_QUOTE_SUM">
+            <column autoIncrement="true" name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TSQ_QUOTE_SUMPK"/>
+            </column>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="ROW_KEY" type="VARCHAR(255)"/>
+            <column name="AMOUNT" type="DECIMAL(19, 2)"/>
+            <column name="MASTER_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
     <changeSet author="oyas (generated)" id="1469961995803-3">
         <addForeignKeyConstraint baseColumnNames="COMMODITY_ID" baseTableName="TSQ_QUOTE_ITEM" constraintName="FK_QUOTEIT_COMMO" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_COMMOTITY"/>
     </changeSet>
     <changeSet author="oyas (generated)" id="1469961995803-4">
         <addForeignKeyConstraint baseColumnNames="MASTER_ID" baseTableName="TSQ_QUOTE_ITEM" constraintName="FK_QUOTEIT_QUOTE" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TSQ_QUOTE"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1469961995803-6">
+        <addForeignKeyConstraint baseColumnNames="MASTER_ID" baseTableName="TSQ_QUOTE_SUM" constraintName="FK_QUOTESUM_QUOTE" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TSQ_QUOTE"/>
     </changeSet>
 </databaseChangeLog>

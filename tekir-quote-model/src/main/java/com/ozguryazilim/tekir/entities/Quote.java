@@ -5,14 +5,14 @@
  */
 package com.ozguryazilim.tekir.entities;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
+import java.util.Map;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
@@ -20,6 +20,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -62,17 +63,19 @@ public class Quote extends VoucherBase{
     
     @OneToMany(mappedBy = "master", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<QuoteItem> items = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "master", cascade = CascadeType.ALL, orphanRemoval = true)
+    @MapKeyColumn(name = "ROW_KEY")
+    private Map<String, QuoteSummary> summaries = new HashMap<>();
 
     //FIXME: Teslimat ve Ödeme kuralları alınmalı
     
-        @Embedded
-    @AttributeOverrides({
-        @AttributeOverride(name="amount",column = @Column(name = "TOT_AMT")),
-        @AttributeOverride(name="currency",column = @Column(name = "TOT_CCY")),
-    })
-    private Money total;
-
-
+    @Column(name = "TOT_CCY")
+    private String currency;
+    
+    @Column(name = "TOT_AMT")
+    private BigDecimal total = BigDecimal.ZERO;
+    
     @Override
     public Long getId() {
         return id;
@@ -114,12 +117,28 @@ public class Quote extends VoucherBase{
         this.account = account;
     }
 
-    public Money getTotal() {
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public BigDecimal getTotal() {
         return total;
     }
 
-    public void setTotal(Money total) {
+    public void setTotal(BigDecimal total) {
         this.total = total;
+    }
+
+    public Map<String, QuoteSummary> getSummaries() {
+        return summaries;
+    }
+
+    public void setSummaries(Map<String, QuoteSummary> summaries) {
+        this.summaries = summaries;
     }
 
     

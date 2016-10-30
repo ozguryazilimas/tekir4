@@ -28,9 +28,9 @@
 
                 <t:accordion icon="fa fa-comments" id="ca1" label="general.label.Details" columnClass="col-xs-12">
 
-                    <p:dataTable id="its" value="#{quoteHome.entity.items}" var="item" >
+                    <p:dataTable id="its" value="#{quoteHome.entity.items}" var="item" reflow="true">
                         <p:column headerText="Emtia">
-                            <h:outputText value="#{item.commodity}" />
+                            <h:outputText value="#{item.commodity.name}" />
                         </p:column>
                         <p:column headerText="Açıklama">
                             <h:outputText value="#{item.info}" />
@@ -40,21 +40,53 @@
                             <h:outputText value="#{item.quantity.unitName.name}" />
                         </p:column>
                         <p:column headerText="Birim Fiyat" style="text-align: right; width: 8em;">
-                            <t:cellOutputMoney value="#{item.price.amount}" currency="#{quoteHome.entity.total.currency}" />
+                            <t:cellOutputMoney value="#{item.price}" currency="#{quoteHome.entity.currency}" />
                         </p:column>
                         <p:column headerText="Tutar" style="text-align: right; width: 8em;">
-                            <t:cellOutputMoney value="#{item.total.amount}" currency="#{quoteHome.entity.total.currency}" />
+                            <t:cellOutputMoney value="#{item.total}" currency="#{quoteHome.entity.currency}" />
                         </p:column>
                     </p:dataTable>
 
+                    <ui:remove>
+                        <p:dataTable id="sums" value="#{quoteHome.entity.summaries.entrySet()}" var="item" reflow="true">
+                            <p:column>
+                                #{item.value.rowKey}
+                            </p:column>
+                            <p:column>
+                                #{item.value.info}
+                            </p:column>
+                            <p:column>
+                                <t:cellOutputMoney value="#{item.value.amount}" currency="#{quoteHome.entity.currency}" />
+                            </p:column>
+                        </p:dataTable>
+                    </ui:remove>
+
                     <table class="table table-bordered" style="margin-top: 5px;">
                         <tr>
-                            <th>Vergi</th>
-                            <td>#{quoteHome.entity.total}</td>
-                        </tr>
-                        <tr>
                             <th>Toplam</th>
-                            <td>#{quoteHome.entity.total}</td>
+                            <td><t:cellOutputMoney value="#{quoteHome.entity.summaries['BeforeTaxTotal'].amount}" currency="#{quoteHome.entity.currency}" /></td>
+                        </tr>
+                        <ui:fragment rendered="#{not empty quoteHome.entity.summaries['Discount']}">
+                            <tr>
+                                <th>İndirim ( - )</th>
+                                <td><t:cellOutputMoney value="#{quoteHome.entity.summaries['Discount'].amount}" currency="#{quoteHome.entity.currency}" /></td>
+                            </tr>
+                        </ui:fragment>
+
+
+                        <tr>
+                            <th>Vergi ( + )</th>
+                            <td><t:cellOutputMoney value="#{quoteHome.entity.summaries['TaxTotal'].amount}" currency="#{quoteHome.entity.currency}" /></td>
+                        </tr>
+                        <ui:repeat value="#{quoteHome.getTaxes()}" var="ent">
+                            <tr>
+                                <td>#{ent.info}</td>
+                                <td><t:cellOutputMoney value="#{ent.amount}" currency="#{quoteHome.entity.currency}" /></td>
+                            </tr>
+                        </ui:repeat>
+                        <tr>
+                            <th>Genel Toplam</th>
+                            <th><t:cellOutputMoney value="#{quoteHome.entity.summaries['GrandTotal'].amount}" currency="#{quoteHome.entity.currency}" /></th>
                         </tr>
                     </table>
 
@@ -69,12 +101,14 @@
 
             <div class="col-md-3 col-xs-12">
 
-                <ui:include src="/activities/activityWidget.xhtml">
-                    <ui:param name="person" value="#{null}" />
-                    <ui:param name="corporation" value="#{quoteHome.entity.account}" />
-                    <ui:param name="feature" value="#{null}" />
-                    <ui:param name="attached" value="Feature" />
-                </ui:include>
+                <ui:remove>
+                    <ui:include src="/activities/activityWidget.xhtml">
+                        <ui:param name="person" value="#{null}" />
+                        <ui:param name="corporation" value="#{quoteHome.entity.account}" />
+                        <ui:param name="feature" value="#{null}" />
+                        <ui:param name="attached" value="Feature" />
+                    </ui:include>
+                </ui:remove>
 
                 <t:accordion icon="fa fa-comments" id="ca" label="general.label.Activities" columnClass="col-xs-12">
                     Activiteler

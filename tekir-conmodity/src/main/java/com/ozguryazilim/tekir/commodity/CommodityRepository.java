@@ -91,4 +91,42 @@ public abstract class CommodityRepository
                     criteriaBuilder.like(from.get(Commodity_.name), "%" + searchText + "%")));
         }
     }
+
+    @Override
+    public List<CommodityViewModel> lookupQuery(String searchText) {
+        CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
+        //Geriye PersonViewModel dönecek cq'yu ona göre oluşturuyoruz.
+        CriteriaQuery<CommodityViewModel> criteriaQuery = criteriaBuilder.createQuery(CommodityViewModel.class);
+
+        //From Tabii ki User
+        Root<Commodity> from = criteriaQuery.from(Commodity.class);
+
+        //Sonuç filtremiz
+        buildVieModelSelect(criteriaQuery, from );
+
+        //Filtreleri ekleyelim.
+        List<Predicate> predicates = new ArrayList<>();
+        
+        //Sadece aktif olanlar
+        predicates.add(criteriaBuilder.equal(from.get(Commodity_.active), true));
+        
+        buildSearchTextControl(searchText, criteriaBuilder, predicates, from);
+
+        //Oluşan filtreleri sorgumuza ekliyoruz
+        criteriaQuery.where(predicates.toArray(new Predicate[]{}));
+
+        // Öncelikle default sıralama verelim eğer kullanıcı tarafından tanımlı sıralama var ise onu setleyelim
+        criteriaQuery.orderBy(criteriaBuilder.asc(from.get(Commodity_.name)));
+        
+
+        //Haydi bakalım sonuçları alalım
+        TypedQuery<CommodityViewModel> typedQuery = entityManager().createQuery(criteriaQuery);
+        //Lookuplarda daha fazla sonuç gelmesin
+        typedQuery.setMaxResults(50);
+        List<CommodityViewModel> resultList = typedQuery.getResultList();
+
+        return resultList;
+    }
+    
+    
 }
