@@ -13,7 +13,13 @@
     <ui:param name="showCaption" value="true"/>
     <ui:param name="dontShowContentHeader" value="false" />
 
-
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{opportunityHome.id}" />
+        </f:metadata>
+    </ui:define>
+    
+    
     <ui:define name="caption">
         <div class="row">
             <div class="col-md-6 col-xs-12">
