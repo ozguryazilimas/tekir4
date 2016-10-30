@@ -33,4 +33,25 @@
     </ui:define>
 
 
+    <ui:define name="context-menu">
+        <li>
+            <p:commandLink action="#{opportunityHome.create()}" styleClass="context-command" ajax="false">
+                <i class="fa fa-plus-circle"></i>
+                <h:outputText value=" #{messages['general.button.Add']}" />
+            </p:commandLink>
+        </li>
+        <li>
+            <p:commandLink action="#{opportunityHome.closeWin()}" styleClass="context-command" ajax="false" rendered="#{opportunityHome.entity.status eq 'OPEN'}">
+                <i class="fa fa-check"></i>
+                <h:outputText value=" #{messages['general.button.CloseWin']}" />
+            </p:commandLink>
+        </li>
+        <li>
+            <p:commandLink action="#{opportunityHome.closeLoss()}" styleClass="context-command" ajax="false" rendered="#{opportunityHome.entity.status eq 'OPEN'}">
+                <i class="fa fa-close"></i>
+                <h:outputText value=" #{messages['general.button.CloseLoss']}" />
+            </p:commandLink>
+        </li>
+    </ui:define>
+    
 </ui:composition>

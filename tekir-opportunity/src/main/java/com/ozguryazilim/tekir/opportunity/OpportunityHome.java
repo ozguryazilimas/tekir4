@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.tekir.opportunity;
 
+import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.Opportunity;
 import com.ozguryazilim.tekir.entities.VocuherStatus;
@@ -14,6 +15,7 @@ import com.ozguryazilim.tekir.voucher.VoucherFormBase;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.forms.FormEdit;
+import com.ozguryazilim.telve.sequence.SequenceManager;
 import javax.inject.Inject;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
 
@@ -32,6 +34,12 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
 
     @Inject
     private CurrencyService currencyService;
+    
+    @Inject
+    private OpportunityFeeder feeder;
+    
+    @Inject
+    private SequenceManager sequenceManager;
     
     @Override
     public void createNew() {
@@ -55,7 +63,17 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
             getEntity().setStatus(VocuherStatus.OPEN);
         }
         
+        if( Strings.isNullOrEmpty( getEntity().getProcessId() )){
+            getEntity().setProcessId(sequenceManager.getNewSerialNumber("PS", 6));
+        }
+        
         return super.onBeforeSave(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean onAfterSave() {
+        feeder.feed(getEntity());
+        return super.onAfterSave(); //To change body of generated methods, choose Tools | Templates.
     }
     
     

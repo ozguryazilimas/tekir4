@@ -33,4 +33,6 @@ public abstract class FeedRepository extends RepositoryBase<Feed, Feed> implemen
     @Query( "select f from Feed f where f.basePointer.feature = :feature or f.relatedPointer.feature = :feature")
     public abstract List<Feed> findForFeature( @QueryParam("feature") String feature );
     
+    @Query( "select f from Feed f where ( f.basePointer.feature = :feature and f.basePointer.primaryKey = :id ) or ( f.relatedPointer.feature = :feature and f.relatedPointer.primaryKey = :id )")
+    public abstract List<Feed> findForFeature( @QueryParam("feature") String feature, @QueryParam("id") Long id );
 }

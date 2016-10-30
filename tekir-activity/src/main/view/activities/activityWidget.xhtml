@@ -69,13 +69,12 @@
                 <ui:repeat value="#{activityWidget.activityList}" var="act">
                     <li class="item">
                         <div class="product-img" style="vertical-align: top">
-                            <i class="fa fa-2x fa-phone"/> 
-                            <ui:fragment rendered="#{act.direction eq 'INCOMING'}">
-                                <i class="fa fa-arrow-left"/>
-                            </ui:fragment>
-                            <ui:fragment rendered="#{act.direction eq 'OUTGOING'}">
-                                <i class="fa fa-arrow-right"/>
-                            </ui:fragment>
+                            <span class="fa-stack">
+                                <i class="fa fa-2x fa-phone" style="color: #999;"/> 
+                                <i class="fa #{act.direction eq 'INCOMING' ? 'fa-arrow-left' : 'fa-arrow-right'} " style="float: left; color: #{act.direction eq 'INCOMING' ? 'blue' : 'red'}; left: 0px;"/>
+                                <i class="fa #{ act.status eq 'SCHEDULED' ? 'fa-calendar' : act.status eq 'SUCCESS' ? 'fa-check' : 'fa-ban' } " 
+                                   style="float: right; display: inline; color: #{ act.status eq 'SCHEDULED' ? '#999' : act.status eq 'SUCCESS' ? 'green' : 'red' }; right: 0px;" title="#{messages['activity.status.'.concat(act.status)]}"/>
+                            </span>
                         </div>
                         <div class="product-info">
                             <div class="box-tools pull-right">
@@ -88,7 +87,9 @@
                                     <p:confirm header="#{messages['general.caption.Confirm']}" message="#{messages['general.message.confirm.Delete']}" icon="fa fa-2x fa-exclamation-triangle btn-delete" />
                                 </p:commandLink>
                             </div>
+                            <ui:remove>
                             <span class="label #{ act.status eq 'SCHEDULED' ? 'label-default' : act.status eq 'SUCCESS' ? 'label-success' : 'label-danger' }  pull-right"><i class="fa #{ act.status eq 'SCHEDULED' ? 'fa-calendar' : act.status eq 'SUCCESS' ? 'fa-check' : 'fa-ban' }" title="#{messages['activity.status.'.concat(act.status)]}"/> </span>
+                            </ui:remove>
                             <span class="product-title">#{act.subject}</span>
                             <span class="product-description">
                                 #{act.body}
