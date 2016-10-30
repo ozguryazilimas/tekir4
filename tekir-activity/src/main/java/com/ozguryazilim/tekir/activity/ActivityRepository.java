@@ -17,7 +17,6 @@ import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.filters.Filter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.Dependent;
@@ -171,8 +170,24 @@ public abstract class ActivityRepository extends RepositoryBase<Activity, Activi
      * @param featurePointer
      * @return 
      */
-    public List<Activity> findByFeature( FeaturePointer featurePointer ){
-        return Collections.emptyList();
+    public List<Activity> findByFeature( FeaturePointer featurePointer, ActivityWidgetFilter filter ){
+        Criteria<Activity,Activity> crit = criteria()
+                .eq(Activity_.regarding, featurePointer)
+                .orderDesc(Activity_.dueDate);
+                
+        
+        switch( filter ){
+            case MINE : crit.eq(Activity_.assignee, identity.getLoginName()); break;
+            case OVERDUE : crit.gt(Activity_.dueDate, new Date()); break;
+            case SCHEDULED : crit.eq( Activity_.status, ActivityStatus.SCHEDULED); break;
+            case SUCCESS : crit.eq( Activity_.status, ActivityStatus.SUCCESS); break;
+            case FAILED : crit.eq( Activity_.status, ActivityStatus.FAILED); break;
+            case FOLLOWUP : break; //TODO:
+        }
+
+        //Criteria üzerinde pagein limit yok
+        
+        return crit.getResultList();
                 
     }
     

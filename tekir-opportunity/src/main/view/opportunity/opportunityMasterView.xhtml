@@ -49,14 +49,10 @@
                 <ui:include src="/activities/activityWidget.xhtml">
                     <ui:param name="person" value="#{opportunityHome.entity.primaryContact}" />
                     <ui:param name="corporation" value="#{opportunityHome.entity.account}" />
-                    <ui:param name="feature" value="#{null}" />
+                    <ui:param name="feature" value="#{opportunityHome.featurePointer}" />
                     <ui:param name="attached" value="Feature" />
                 </ui:include>
                 
-                <t:accordion icon="fa fa-comments" id="ca" label="general.label.Activities" columnClass="col-xs-12">
-                    Activiteler
-                </t:accordion>
-
                 <t:accordion icon="fa fa-sticky-note" id="cn" label="general.label.Notes" columnClass="col-xs-12">
                     Notlar
                 </t:accordion>

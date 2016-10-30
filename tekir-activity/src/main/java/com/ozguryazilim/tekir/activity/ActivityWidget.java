@@ -60,6 +60,7 @@ public class ActivityWidget implements Serializable {
         switch( attached ){
             case "Person" : return repository.findByPerson(person, filter); 
             case "Corporation" : return repository.findByCorporation(corporation, filter); 
+            case "Feature" : return repository.findByFeature(featurePointer, filter); 
             default: return Collections.emptyList();
         }
     }

@@ -6,7 +6,7 @@
                 xmlns:p="http://primefaces.org/ui">
 
 
-    #{activityWidget.init(person, corporation, null, attached)}
+    #{activityWidget.init(person, corporation, feature, attached)}
     
     <t:accordion icon="fa fa-comments" id="actW" label="general.label.Activities" columnClass="col-xs-12">
 
@@ -93,6 +93,9 @@
                             <span class="product-title">#{act.subject}</span>
                             <span class="product-description">
                                 #{act.body}
+                            </span>
+                            <span class="product-description text-sm">
+                                <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(act.regarding)}" />
                             </span>
                             <span class="product-description text-sm">
                                 <i class="fa fa-user"/> #{userLookup.getUserName(act.assignee)} 
