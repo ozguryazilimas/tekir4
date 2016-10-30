@@ -17,7 +17,11 @@
     <ui:define name="caption">
         <div class="row">
             <div class="col-md-6 col-xs-12">
-                
+                <t:outputEntityLink label="general.label.Account" value="#{quoteHome.entity.account}" view="/contact/contactView.xhtml" />
+                <t:outputMoney label="general.label.TotalAmount" value="#{quoteHome.entity.total}" currency="#{quoteHome.entity.currency}" />
+                <t:outputText label="quote.label.Revision" value="#{quoteHome.entity.revision}"  />
+                <t:outputDate label="general.label.ExpireDate" value="#{quoteHome.entity.expireDate}"  />
+
             </div>
             <div class="col-md-6 col-xs-12">
                 <t:outputText label="voucher.label.VoucherNo" value="#{quoteHome.entity.voucherNo}"  />
@@ -28,5 +32,5 @@
         </div>  
     </ui:define>
 
-    
+
 </ui:composition>

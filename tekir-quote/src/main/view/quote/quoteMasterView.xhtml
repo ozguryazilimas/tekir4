@@ -9,11 +9,18 @@
     <ui:define name="content">     
         <div class="row">
             <div class="col-md-3 col-xs-12">
-                <t:accordion icon="fa fa-comments" label="general.label.Summary" columnClass="col-xs-12">
-                    #{quoteHome.entity.total}
+                <t:accordion icon="fa fa-stack-exchange" label="general.label.Summary" columnClass="col-xs-12">
+                    <ui:remove>
+                        bir output account input account seti mi hazırlasak?
+                    </ui:remove>
+                    <t:outputEntityLink label="general.label.Account" value="#{quoteHome.entity.account}" view="/contact/contactView.xhtml" columnClass="col-xs-12"/>
+                    
+                    <t:outputMoney label="general.label.TotalAmount" value="#{quoteHome.entity.total}" currency="#{quoteHome.entity.currency}" columnClass="col-xs-12"/>
+                    <t:outputText label="quote.label.Revision" value="#{quoteHome.entity.revision}"  columnClass="col-xs-12"/>
+                    <t:outputDate label="general.label.ExpireDate" value="#{quoteHome.entity.expireDate}"  columnClass="col-xs-12"/>
                 </t:accordion>
 
-                <t:accordion icon="fa fa-comments" label="general.label.Voucher" columnClass="col-xs-12">
+                <t:accordion icon="fa fa-file-text" label="general.label.Voucher" columnClass="col-xs-12">
                     <t:outputText label="voucher.label.VoucherNo" value="#{quoteHome.entity.voucherNo}"  columnClass="col-xs-12"/>
                     <t:outputText label="voucher.label.ReferenceNo" value="#{quoteHome.entity.referenceNo}" columnClass="col-xs-12"/>
                     <t:outputText label="voucher.label.Process" value="#{quoteHome.entity.processId}" columnClass="col-xs-12"/>
@@ -26,7 +33,7 @@
 
             <div class="col-md-6 col-xs-12">
 
-                <t:accordion icon="fa fa-comments" id="ca1" label="general.label.Details" columnClass="col-xs-12">
+                <t:accordion icon="fa fa-cube" id="ca1" label="general.label.Commodities" columnClass="col-xs-12">
 
                     <p:dataTable id="its" value="#{quoteHome.entity.items}" var="item" reflow="true">
                         <p:column headerText="Emtia">
@@ -91,11 +98,6 @@
                     </table>
 
                 </t:accordion>
-
-                <t:accordion icon="fa fa-users" id="ca2" label="general.label.Stakeholders" columnClass="col-xs-12">
-                    Karar Vericiler
-                </t:accordion>
-
 
             </div>
 

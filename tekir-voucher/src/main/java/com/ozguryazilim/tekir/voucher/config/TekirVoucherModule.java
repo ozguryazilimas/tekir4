@@ -3,16 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ozguryazilim.tekir.quote.config;
+package com.ozguryazilim.tekir.voucher.config;
 
 import com.ozguryazilim.telve.api.module.TelveModule;
 
 /**
- * Teklif Modülü
- * 
+ * Tekir fiş girişleri için altyapı modülü
  * @author Hakan Uygun
  */
 @TelveModule
-public class TekirQuoteModule {
- 
+public class TekirVoucherModule {
+    
 }
