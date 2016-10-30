@@ -11,7 +11,6 @@ import com.ozguryazilim.telve.forms.FormBase;
 import com.ozguryazilim.telve.sequence.SequenceManager;
 import java.util.Date;
 import javax.inject.Inject;
-import org.apache.deltaspike.core.api.config.view.ViewConfig;
 
 /**
  * Voucher tabanlı formlar için temel kontrol sınıfı
@@ -27,20 +26,18 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
     private SequenceManager sequenceManager;
     
     @Override
-    public Class<? extends ViewConfig> create() {
-        Class<? extends ViewConfig> result = super.create();
+    protected E getNewEntity() {
+        E e = super.getNewEntity(); //To change body of generated methods, choose Tools | Templates.
         
-        getEntity().setDate(new Date());
+        e.setDate(new Date());
         //FIXME: Bunu config'den sınıf adına göre almak en temizi olur.
-        String s = getEntity().getClass().getSimpleName().substring(0, 2);
-        getEntity().setVoucherNo(sequenceManager.getNewSerialNumber(s, 6));
+        String s = e.getClass().getSimpleName().substring(0, 2);
+        e.setVoucherNo(sequenceManager.getNewSerialNumber(s, 6));
         
-        getEntity().setOwner(identity.getLoginName());
+        e.setOwner(identity.getLoginName());
         
-        return  result;
+        return e;
     }
-
-
     
     
 }

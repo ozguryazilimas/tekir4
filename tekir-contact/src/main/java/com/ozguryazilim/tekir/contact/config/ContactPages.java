@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.tekir.contact.config;
 
+import com.ozguryazilim.tekir.core.config.ParamNavigationSection;
 import com.ozguryazilim.telve.view.Pages;
 import javax.enterprise.context.ApplicationScoped;
 import org.apache.deltaspike.jsf.api.config.view.Folder;
@@ -26,7 +27,7 @@ public interface ContactPages extends Pages {
 	@View
 	@SecuredPage("corporationType")
 	@PageTitle("module.caption.CorporationType")
-	@Navigation(label = "module.caption.CorporationType", icon = "fa fa-building-o", section = SideNavigationSection.class)
+	@Navigation(label = "module.caption.CorporationType", icon = "fa fa-building-o", section = ParamNavigationSection.class)
 	class CorporationType implements ContactPages {
 	}
 
@@ -38,7 +39,7 @@ public interface ContactPages extends Pages {
 	@View
 	@SecuredPage("contactRelation")
 	@PageTitle("module.caption.ContactRelation")
-	@Navigation(label = "module.caption.ContactRelation", icon = "fa fa-crosshairs", section = SideNavigationSection.class)
+	@Navigation(label = "module.caption.ContactRelation", icon = "fa fa-crosshairs", section = ParamNavigationSection.class)
 	class ContactRelation
 			implements
 				 ContactPages {
@@ -53,7 +54,7 @@ public interface ContactPages extends Pages {
 	@View
 	@SecuredPage("contactCategory")
 	@PageTitle("module.caption.ContactCategory")
-	@Navigation(label = "module.caption.ContactCategory", icon = "fa fa-sitemap", section = SideNavigationSection.class)
+	@Navigation(label = "module.caption.ContactCategory", icon = "fa fa-sitemap", section = ParamNavigationSection.class)
 	class ContactCategory implements ContactPages {
 	}
 

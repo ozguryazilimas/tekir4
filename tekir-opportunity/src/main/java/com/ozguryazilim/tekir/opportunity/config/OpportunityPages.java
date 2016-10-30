@@ -5,9 +5,9 @@
  */
 package com.ozguryazilim.tekir.opportunity.config;
 
+import com.ozguryazilim.tekir.core.config.SalesNavigationSection;
 import com.ozguryazilim.telve.auth.SecuredPage;
 import com.ozguryazilim.telve.nav.Navigation;
-import com.ozguryazilim.telve.nav.SideNavigationSection;
 import com.ozguryazilim.telve.view.PageTitle;
 import com.ozguryazilim.telve.view.Pages;
 import javax.enterprise.context.ApplicationScoped;
@@ -26,7 +26,7 @@ public interface OpportunityPages extends Pages {
     @View
     @SecuredPage("opportunity")
     @PageTitle("module.caption.OpportunityBrowse")
-    @Navigation(label = "module.caption.OpportunityBrowse", icon = "fa fa-book", section = SideNavigationSection.class)
+    @Navigation(label = "module.caption.OpportunityBrowse", icon = "fa fa-book", section = SalesNavigationSection.class)
     class OpportunityBrowse implements OpportunityPages {
     }
 

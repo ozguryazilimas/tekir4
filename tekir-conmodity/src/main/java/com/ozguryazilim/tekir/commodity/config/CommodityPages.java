@@ -14,6 +14,7 @@ import javax.enterprise.context.ApplicationScoped;
 import org.apache.deltaspike.jsf.api.config.view.Folder;
 import org.apache.deltaspike.jsf.api.config.view.View;
 import com.ozguryazilim.tekir.commodity.config.CommodityPages;
+import com.ozguryazilim.tekir.core.config.ParamNavigationSection;
 
 /**
  *
@@ -56,7 +57,7 @@ public interface CommodityPages extends Pages {
 	@View
 	@SecuredPage("commodityCategory")
 	@PageTitle("module.caption.CommodityCategory")
-	@Navigation(label = "module.caption.CommodityCategory", icon = "/todo.png", section = SideNavigationSection.class)
+	@Navigation(label = "module.caption.CommodityCategory", icon = "fa fa-sitemap", section = ParamNavigationSection.class)
 	class CommodityCategory implements CommodityPages {
 	}
 

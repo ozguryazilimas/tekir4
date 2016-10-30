@@ -5,10 +5,10 @@
  */
 package com.ozguryazilim.tekir.quote.config;
 
+import com.ozguryazilim.tekir.core.config.SalesNavigationSection;
 import com.ozguryazilim.telve.view.Pages;
 import javax.enterprise.context.ApplicationScoped;
 import org.apache.deltaspike.jsf.api.config.view.Folder;
-import com.ozguryazilim.telve.nav.SideNavigationSection;
 import com.ozguryazilim.tekir.quote.config.QuotePages;
 import org.apache.deltaspike.jsf.api.config.view.View;
 import com.ozguryazilim.telve.auth.SecuredPage;
@@ -26,7 +26,7 @@ public interface QuotePages extends Pages {
 	@View
 	@SecuredPage("quote")
 	@PageTitle("module.caption.QuoteBrowse")
-	@Navigation(label = "module.caption.QuoteBrowse", icon = "fa fa-book", section = SideNavigationSection.class)
+	@Navigation(label = "module.caption.QuoteBrowse", icon = "fa fa-book", section = SalesNavigationSection.class)
 	class QuoteBrowse implements QuotePages {
 	}
 
