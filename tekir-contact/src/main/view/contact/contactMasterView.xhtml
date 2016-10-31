@@ -57,30 +57,11 @@
                     Notlar
                 </t:accordion>
 
-                <t:accordion icon="fa fa-feed" id="cs" label="general.label.Feed" columnClass="col-xs-12">
-                    <ul class="products-list product-list-in-box">
-                        <ui:repeat value="#{feedController.getFeeds(contactHome.entity.class.simpleName, contactHome.entity.id)}" var="feed">
-                            <li class="item">
-                                <div class="product-img">
-                                    <span class="fa-stack">
-                                        <i class="fa #{messages['feederIcon.'.concat(feed.feeder)]} fa-2x" style="color: #999;"/>
-                                        <i class="fa #{messages['feederIcon.'.concat(feed.type)]} fa-1x" style="color: green; position: absolute; bottom: -10px; right: 0px;"/>
-                                    </span>
-                                </div>
-                                <div class="product-info">
-                                    <span class="product-title">#{feed.subject}</span>
-                                    <span class="product-description text-sm">
-                                        <h:outputText value="#{feed.body}" escape="false" />
-                                    </span>
-                                    <span class="product-description text-sm"><t:cellOutputFeatureLink value="#{featureController.getFeatureLink(feed.basePointer)}" /></span>
-                                    <span class="product-description text-sm">
-                                        <i class="fa fa-user"/> #{userLookup.getUserName(feed.user)} 
-                                        <i class="fa  fa-clock-o"/> <t:cellOutputDateTime value="#{feed.date}"/></span>
-                                </div>
-                            </li>
-                        </ui:repeat>
-                    </ul>
-                </t:accordion>
+                <ui:include src="/feeds/feedWidget.xhtml">
+                    <ui:param name="feature" value="#{contactHome.entity.class.simpleName}" />
+                    <ui:param name="pk" value="#{contactHome.entity.id}" />
+                </ui:include>
+                
             </div>
 
             <div class="col-md-4 col-xs-12">

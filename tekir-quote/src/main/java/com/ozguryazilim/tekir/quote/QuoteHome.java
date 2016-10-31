@@ -315,4 +315,16 @@ public class QuoteHome extends VoucherFormBase<Quote> {
         return page;
     }
     
+    /**
+     * FIXME: Bu method üst sınıflara taşınmalı. Voucher ve hatta Form seviyelerine.
+     * @return 
+     */
+    public FeaturePointer getFeaturePointer(){
+        FeaturePointer fp = new FeaturePointer();
+        fp.setBusinessKey(getEntity().getVoucherNo());
+        fp.setPrimaryKey(getEntity().getId());
+        fp.setFeature(getEntity().getClass().getSimpleName());
+        return fp;
+    }
+    
 }

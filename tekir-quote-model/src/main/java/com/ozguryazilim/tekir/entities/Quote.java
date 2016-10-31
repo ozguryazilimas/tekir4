@@ -25,6 +25,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  * Teklif Modeli
@@ -62,10 +64,12 @@ public class Quote extends VoucherBase{
     private Date expireDate;
     
     @OneToMany(mappedBy = "master", cascade = CascadeType.ALL, orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<QuoteItem> items = new ArrayList<>();
     
     @OneToMany(mappedBy = "master", cascade = CascadeType.ALL, orphanRemoval = true)
     @MapKeyColumn(name = "ROW_KEY")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private Map<String, QuoteSummary> summaries = new HashMap<>();
 
     //FIXME: Teslimat ve Ödeme kuralları alınmalı

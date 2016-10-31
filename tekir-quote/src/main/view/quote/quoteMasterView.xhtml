@@ -15,7 +15,7 @@
                         bir output account input account seti mi hazırlasak?
                     </ui:remove>
                     <t:outputEntityLink label="general.label.Account" value="#{quoteHome.entity.account}" view="/contact/contactView.xhtml" columnClass="col-xs-12"/>
-                    
+
                     <t:outputMoney label="general.label.TotalAmount" value="#{quoteHome.entity.total}" currency="#{quoteHome.entity.currency}" columnClass="col-xs-12"/>
                     <t:outputText label="quote.label.Revision" value="#{quoteHome.entity.revision}"  columnClass="col-xs-12"/>
                     <t:outputDate label="general.label.ExpireDate" value="#{quoteHome.entity.expireDate}"  columnClass="col-xs-12"/>
@@ -104,44 +104,23 @@
 
             <div class="col-md-3 col-xs-12">
 
-                <ui:remove>
-                    <ui:include src="/activities/activityWidget.xhtml">
-                        <ui:param name="person" value="#{null}" />
-                        <ui:param name="corporation" value="#{quoteHome.entity.account}" />
-                        <ui:param name="feature" value="#{null}" />
-                        <ui:param name="attached" value="Feature" />
-                    </ui:include>
-                </ui:remove>
-
-                <t:accordion icon="fa fa-comments" id="ca" label="general.label.Activities" columnClass="col-xs-12">
-                    Activiteler
-                </t:accordion>
+                <ui:include src="/activities/activityWidget.xhtml">
+                    <ui:param name="person" value="#{quoteHome.entity.account.primaryContact}" />
+                    <ui:param name="corporation" value="#{quoteHome.entity.account}" />
+                    <ui:param name="feature" value="#{quoteHome.featurePointer}" />
+                    <ui:param name="attached" value="Feature" />
+                </ui:include>
+                    
 
                 <t:accordion icon="fa fa-sticky-note" id="cn" label="general.label.Notes" columnClass="col-xs-12">
                     Notlar
                 </t:accordion>
 
-                <t:accordion icon="fa fa-feed" id="cs" label="general.label.Feed" columnClass="col-xs-12">
-                    <ul class="products-list product-list-in-box">
-                        <ui:repeat value="#{feedController.getFeeds('Person')}" var="feed">
-                            <li class="item">
-                                <div class="product-img">
-                                    <i class="fa fa-user fa-2x" />
-                                </div>
-                                <div class="product-info">
-                                    <span class="product-title">#{feed.subject}</span>
-                                    <span class="product-description text-sm">
-                                        <h:outputText value="#{feed.body}" escape="false" />
-                                    </span>
-                                    <span class="product-description text-sm"><t:cellOutputFeatureLink value="#{featureController.getFeatureLink(feed.basePointer)}" /></span>
-                                    <span class="product-description text-sm">
-                                        <i class="fa fa-user"/> #{userLookup.getUserName(feed.user)} 
-                                        <i class="fa  fa-clock-o"/> <t:cellOutputDateTime value="#{feed.date}"/></span>
-                                </div>
-                            </li>
-                        </ui:repeat>
-                    </ul>
-                </t:accordion>
+                <ui:include src="/feeds/feedWidget.xhtml">
+                    <ui:param name="feature" value="#{quoteHome.entity.class.simpleName}" />
+                    <ui:param name="pk" value="#{quoteHome.entity.id}" />
+                </ui:include>
+
             </div>
 
 

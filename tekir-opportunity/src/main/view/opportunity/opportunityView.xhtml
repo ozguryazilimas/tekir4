@@ -23,10 +23,10 @@
     <ui:define name="caption">
         <div class="row">
             <div class="col-md-6 col-xs-12">
-                <t:outputText label="opportinity.label.Topic" value="#{opportunityHome.entity.topic}" />
-                <t:outputText label="opportinity.label.Budget" value="#{opportunityHome.entity.code}" />
-                <t:outputText label="general.label.Account" value="#{opportunityHome.entity.account}" />
-                <t:outputText label="general.label.PrimaryContact" value="#{opportunityHome.entity.primaryContact}" />
+                <t:outputText label="opportunity.label.Topic" value="#{opportunityHome.entity.topic}" />
+                <t:outputText label="opportunity.label.Budget" value="#{opportunityHome.entity.code}" />
+                <t:outputEntityLink label="general.label.Account" value="#{opportunityHome.entity.account}" view="/contact/contactView.xhtml" />
+                <t:outputEntityLink label="contact.label.PrimaryContact" value="#{opportunityHome.entity.primaryContact}" view="/contact/contactView.xhtml" />
                 <t:outputText label="general.label.Info" value="#{opportunityHome.entity.info}" columnClass="col-xs-12"/>
             </div>
             <div class="col-md-6 col-xs-12">

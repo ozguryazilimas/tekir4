@@ -1,0 +1,43 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui">
+
+    <t:accordion icon="fa fa-feed" id="feedW" label="general.label.Feed" columnClass="col-xs-12">
+
+        <f:facet name="toolbar">
+
+        </f:facet>
+
+
+        <p:outputPanel id="feedWL" layout="block" class="box-body">
+            <ul class="products-list product-list-in-box">
+                <ui:repeat value="#{feedController.getFeeds(feature, pk)}" var="feed">
+                    <li class="item">
+                        <div class="product-img">
+                            <span class="fa-stack">
+                                <i class="fa #{messages['feederIcon.'.concat(feed.feeder)]} fa-2x" style="color: #999;"/>
+                                <i class="fa #{messages['feederIcon.'.concat(feed.type)]} fa-1x" style="color: green; position: absolute; bottom: -10px; right: 0px;"/>
+                            </span>
+                        </div>
+                        <div class="product-info">
+                            <span class="product-title">#{feed.subject}</span>
+                            <span class="product-description text-sm">
+                                <h:outputText value="#{feed.body}" escape="false" />
+                            </span>
+                            <span class="product-description text-sm"><t:cellOutputFeatureLink value="#{featureController.getFeatureLink(feed.basePointer)}" /></span>
+                            <span class="product-description text-sm">
+                                <i class="fa fa-user"/> #{userLookup.getUserName(feed.user)} 
+                                <i class="fa  fa-clock-o"/> <t:cellOutputDateTime value="#{feed.date}"/></span>
+                        </div>
+                    </li>
+                </ui:repeat>
+            </ul>
+
+        </p:outputPanel>
+
+    </t:accordion>
+
+</ui:composition>
