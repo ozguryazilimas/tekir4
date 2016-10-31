@@ -6,6 +6,7 @@
 package com.ozguryazilim.tekir.opportunity;
 
 import com.google.common.base.Strings;
+import com.ozguryazilim.tekir.account.AccountTxnService;
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.Opportunity;
 import com.ozguryazilim.tekir.entities.VocuherStatus;
@@ -41,6 +42,9 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
     @Inject
     private SequenceManager sequenceManager;
     
+    @Inject
+    private AccountTxnService accountTxnService;
+    
     @Override
     public void createNew() {
         super.createNew(); //To change body of generated methods, choose Tools | Templates.
@@ -73,6 +77,9 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
     @Override
     public boolean onAfterSave() {
         feeder.feed(getEntity());
+        
+        accountTxnService.saveFeature(getFeaturePointer(), getEntity().getAccount(), getEntity().getCode(), getEntity().getTopic(), Boolean.FALSE, Boolean.TRUE, getEntity().getCurrency(), getEntity().getBudget(), getEntity().getDate(), getEntity().getOwner(), getEntity().getProcessId(), getEntity().getStatus().name(), getEntity().getStatusReason());
+        
         return super.onAfterSave(); //To change body of generated methods, choose Tools | Templates.
     }
     

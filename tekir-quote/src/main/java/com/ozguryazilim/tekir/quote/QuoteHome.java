@@ -1,5 +1,6 @@
 package com.ozguryazilim.tekir.quote;
 
+import com.ozguryazilim.tekir.account.AccountTxnService;
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.Commodity;
 import com.ozguryazilim.tekir.entities.Contact;
@@ -17,6 +18,7 @@ import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.lookup.LookupSelectTuple;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.List;
 import javax.inject.Inject;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
@@ -37,6 +39,9 @@ public class QuoteHome extends VoucherFormBase<Quote> {
     @Inject
     private CurrencyService currencyService;
 
+    @Inject
+    private AccountTxnService accountTxnService;
+    
     private QuoteItem selectedItem;
 
     @Override
@@ -88,6 +93,14 @@ public class QuoteHome extends VoucherFormBase<Quote> {
         //TODO: Burada vergi hesaplama felan da yapmak lazım.
         return super.onBeforeSave();
     }
+
+    @Override
+    public boolean onAfterSave() {
+        accountTxnService.saveFeature(getFeaturePointer(), getEntity().getAccount(), getEntity().getCode(), getEntity().getInfo(), Boolean.FALSE, Boolean.TRUE, Currency.getInstance(getEntity().getCurrency()), getEntity().getTotal(), getEntity().getDate(), getEntity().getOwner(), getEntity().getProcessId(), getEntity().getStatus().name(), getEntity().getStatusReason());
+        return super.onAfterSave(); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
 
     public void onCommoditySelect(SelectEvent event) {
         List<Commodity> ls = getCommodities(event);

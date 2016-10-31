@@ -52,7 +52,7 @@
                     <ui:param name="feature" value="#{null}" />
                     <ui:param name="attached" value="#{contactHome.entity.class.simpleName}" />
                 </ui:include>
-                
+
                 <t:accordion icon="fa fa-sticky-note" id="cn" label="general.label.Notes" columnClass="col-xs-12">
                     Notlar
                 </t:accordion>
@@ -61,7 +61,7 @@
                     <ui:param name="feature" value="#{contactHome.entity.class.simpleName}" />
                     <ui:param name="pk" value="#{contactHome.entity.id}" />
                 </ui:include>
-                
+
             </div>
 
             <div class="col-md-4 col-xs-12">
@@ -76,9 +76,44 @@
                         <ui:param name="relatedContacts" value="#{contactHome.relatedContacts}" />
                         <ui:param name="relatedContactsRevers" value="#{contactHome.relatedContactsRevers}" />
                     </ui:include>
+
+                    <t:accordion icon="fa fa-file" id="cx" label="general.label.ReleatedVouchers" columnClass="col-xs-12">
+                        <ui:remove>
+                            <div class="no-padding">
+                                <table class="table table-bordered">
+                                    <ui:repeat value="#{accountTxnService.getAccountOpenVouchers(contactHome.entity)}" var="ci" >
+                                        <tr>
+                                            <td>
+                                                <t:cellOutputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
+                                            </td>
+                                            <td>
+                                                #{ci.processId}
+                                            </td>
+                                            <td>
+                                                #{ci.info}
+                                            </td>
+                                        </tr>
+                                    </ui:repeat>
+                                </table>
+                            </div>
+                        </ui:remove>
+                        <ul class="products-list product-list-in-box">
+                            <ui:repeat value="#{accountTxnService.getAccountOpenVouchers(contactHome.entity)}" var="ci" >
+                                <li class="item">
+                                    <t:cellOutputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
+
+                                    <span class="text-muted pull-right">#{ci.processId}</span>
+
+                                    <div class="text-sm">
+                                        #{ci.info}
+                                    </div>
+
+                                </li>
+                            </ui:repeat>
+                        </ul>
+                    </t:accordion>
                 </div>
             </div>
-
         </div>
     </ui:define>
 

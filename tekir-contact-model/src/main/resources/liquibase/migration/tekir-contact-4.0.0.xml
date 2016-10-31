@@ -135,7 +135,29 @@
             <column name="ROLES" type="VARCHAR(255)"/>
         </createTable>
     </changeSet>
-    
+    <changeSet author="oyas (generated)" id="1467649436684-1">
+        <createTable tableName="TCC_ACCOUNT_TXN">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TCO_ACCOUNTTXNPK"/>
+            </column>
+            <column name="CODE" type="VARCHAR(30)"/>
+            <column name="TXNDATE" type="datetime"/>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="OWNER" type="VARCHAR(255)"/>
+            <column name="PROCESS_ID" type="VARCHAR(255)"/>
+            <column name="REFERENCE_NO" type="VARCHAR(30)"/>
+            <column name="FEATURE_BK" type="VARCHAR(255)"/>
+            <column name="FEATURE" type="VARCHAR(255)"/>
+            <column name="FEATURE_PK" type="BIGINT"/>
+            <column name="STATUS" type="VARCHAR(255)"/>
+            <column name="STATUS_REASON" type="VARCHAR(255)"/>
+            <column name="ACCOUNT_ID" type="BIGINT"/>
+            <column name="ACCOUNTABLE" type="BOOLEAN"/>
+            <column name="DEBIT" type="BOOLEAN"/>
+            <column name="CCY" type="VARCHAR(3)"/>
+            <column name="AMOUNT" type="decimal(19, 2)"/>
+        </createTable>
+    </changeSet>
     <changeSet author="oyas (generated)" id="1467649436683-9">
         <addForeignKeyConstraint baseColumnNames="LOCATION_ID" baseTableName="TCC_CONTACT_INFO" constraintName="FK_CONADDR_LOC" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_LOCATION"/>
     </changeSet>
