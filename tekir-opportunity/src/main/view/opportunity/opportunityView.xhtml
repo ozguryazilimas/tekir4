@@ -18,8 +18,8 @@
             <f:viewParam name="eid" value="#{opportunityHome.id}" />
         </f:metadata>
     </ui:define>
-    
-    
+
+
     <ui:define name="caption">
         <div class="row">
             <div class="col-md-6 col-xs-12">
@@ -36,6 +36,8 @@
                 <t:outputText label="general.label.Code" value="#{opportunityHome.entity.code}" />
             </div>
         </div>  
+
+
     </ui:define>
 
 
@@ -53,11 +55,50 @@
             </p:commandLink>
         </li>
         <li>
-            <p:commandLink action="#{opportunityHome.closeLoss()}" styleClass="context-command" ajax="false" rendered="#{opportunityHome.entity.status eq 'OPEN'}">
+            <p:commandLink  styleClass="context-command" rendered="#{opportunityHome.entity.status eq 'OPEN'}" update="closeLoss" oncomplete="PF('closeLoss').show()" >
                 <i class="fa fa-close"></i>
                 <h:outputText value=" #{messages['general.button.CloseLoss']}" />
-            </p:commandLink>
+            </p:commandLink >
         </li>
+        <li>
+            <p:commandLink  styleClass="context-command" rendered="#{opportunityHome.entity.status eq 'OPEN'}" update="closeCancel" oncomplete="PF('closeCancel').show()" >
+                <i class="fa fa-ban"></i>
+                <h:outputText value=" #{messages['general.button.CloseCancel']}" />
+            </p:commandLink >
+        </li>
+
     </ui:define>
-    
+
+    <ui:define name="includes">
+        <p:dialog header="#{messages['dialog.caption.Lost']}" id="closeLoss" widgetVar="closeLoss">
+            <h:form id="lossForm" style="width: 250px;">
+                <div class="row">
+                    <t:inputTextarea label="general.label.Reason" value="#{opportunityHome.entity.statusReason}" columnClass="col-xs-12"/>
+                    <t:inputLookupDialog label="general.label.Competitor" value="#{opportunityHome.entity.competitor}" lookupBean="#{contactLookup}" lookupListener="opportunityHome.entity.competitor" placeholder="#{messages['general.info.Competitor']}" columnClass="col-xs-12"/>
+                </div>
+
+                <div class="row actionButtons">
+                    <div class="col-xs-12 pull-right">
+                        <p:commandButton id="select" value="#{messages['general.button.Ok']}" icon="fa fa-check" action="#{opportunityHome.closeLoss()}" styleClass="btn-primary" oncomplete="PF('closeLoss').hide()"/>
+                        <p:commandButton id="close" value="#{messages['general.button.Cancel']}" icon="ui-icon-close" onclick="PF('closeLoss').hide()" />
+                    </div>
+                </div>
+            </h:form>
+        </p:dialog>
+        <p:dialog header="#{messages['dialog.caption.Cancel']}" id="closeCancel" widgetVar="closeCancel">
+            <h:form id="cancelForm" style="width: 250px;">
+                <div class="row">
+                    <t:inputTextarea label="general.label.Reason" value="#{opportunityHome.entity.statusReason}" columnClass="col-xs-12"/>
+                </div>
+
+                <div class="row actionButtons">
+                    <div class="col-xs-12 pull-right">
+                        <p:commandButton id="select" value="#{messages['general.button.Ok']}" icon="fa fa-check" action="#{opportunityHome.closeCancel()}" styleClass="btn-primary" oncomplete="PF('closeCancel').hide()"/>
+                        <p:commandButton id="close" value="#{messages['general.button.Cancel']}" icon="ui-icon-close" onclick="PF('closeCancel').hide()" />
+                    </div>
+                </div>
+            </h:form>
+        </p:dialog>
+    </ui:define>
+
 </ui:composition>

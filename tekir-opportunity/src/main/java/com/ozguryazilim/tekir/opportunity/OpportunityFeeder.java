@@ -35,13 +35,13 @@ public class OpportunityFeeder extends AbstractFeeder<Opportunity>{
         contactPointer.setPrimaryKey(entity.getAccount().getId());
         contactPointer.setFeature(entity.getAccount().getClass().getSimpleName());
         
-        
+        //TODO: Özellikle lost durumu için competitor varsa yazmak ve hatta linklemek lazım.
         String subject;
         switch ( entity.getStatus() ){
             case OPEN : subject = "Opportunity created"; break;
             case WON : subject = "Opportunity Won. Congrats!"; break;
-            case LOST : subject = "Opportunity lost!"; break;
-            case CANCELED : subject = "Opportunity canceled"; break;
+            case LOST : subject = "Opportunity lost! " + entity.getStatusReason(); break;
+            case CANCELED : subject = "Opportunity canceled. " + entity.getStatusReason(); break;
             default:
                 subject = "Opportunity created"; break;
         }

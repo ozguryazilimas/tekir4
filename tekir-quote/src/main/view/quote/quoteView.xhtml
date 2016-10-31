@@ -37,5 +37,77 @@
         </div>  
     </ui:define>
 
+    
+    <ui:define name="context-menu">
+        <li>
+            <p:commandLink action="#{quoteHome.create()}" styleClass="context-command" ajax="false">
+                <i class="fa fa-plus-circle"></i>
+                <h:outputText value=" #{messages['general.button.Add']}" />
+            </p:commandLink>
+        </li>
+        <li>
+            <p:commandLink action="#{quoteHome.publish()}" styleClass="context-command" ajax="false" rendered="#{quoteHome.entity.status eq 'DRAFT'}">
+                <i class="fa fa-check"></i>
+                <h:outputText value=" #{messages['general.button.Publish']}" />
+            </p:commandLink>
+        </li>
+        <li>
+            <p:commandLink action="#{quoteHome.publish()}" styleClass="context-command" ajax="false" rendered="#{quoteHome.entity.status eq 'OPEN'}">
+                <i class="fa fa-check"></i>
+                <h:outputText value=" #{messages['general.button.Revision']}" />
+            </p:commandLink>
+        </li>
+        <li>
+            <p:commandLink action="#{quoteHome.closeWin()}" styleClass="context-command" ajax="false" rendered="#{quoteHome.entity.status eq 'OPEN'}">
+                <i class="fa fa-check"></i>
+                <h:outputText value=" #{messages['general.button.CloseWin']}" />
+            </p:commandLink>
+        </li>
+        <li>
+            <p:commandLink  styleClass="context-command" rendered="#{quoteHome.entity.status eq 'OPEN'}" update="closeLoss" oncomplete="PF('closeLoss').show()" >
+                <i class="fa fa-close"></i>
+                <h:outputText value=" #{messages['general.button.CloseLoss']}" />
+            </p:commandLink >
+        </li>
+        <li>
+            <p:commandLink  styleClass="context-command" rendered="#{quoteHome.entity.status eq 'OPEN'}" update="closeCancel" oncomplete="PF('closeCancel').show()" >
+                <i class="fa fa-ban"></i>
+                <h:outputText value=" #{messages['general.button.CloseCancel']}" />
+            </p:commandLink >
+        </li>
+
+    </ui:define>
+    
+    <ui:define name="includes">
+        <p:dialog header="#{messages['dialog.caption.Lost']}" id="closeLoss" widgetVar="closeLoss">
+            <h:form id="lossForm" style="width: 250px;">
+                <div class="row">
+                    <t:inputTextarea label="general.label.Reason" value="#{quoteHome.entity.statusReason}" columnClass="col-xs-12"/>
+                    <t:inputLookupDialog label="general.label.Competitor" value="#{quoteHome.entity.competitor}" lookupBean="#{contactLookup}" lookupListener="quoteHome.entity.competitor" placeholder="#{messages['general.info.Competitor']}" columnClass="col-xs-12"/>
+                </div>
+
+                <div class="row actionButtons">
+                    <div class="col-xs-12 pull-right">
+                        <p:commandButton id="select" value="#{messages['general.button.Ok']}" icon="fa fa-check" action="#{quoteHome.closeLoss()}" styleClass="btn-primary" oncomplete="PF('closeLoss').hide()"/>
+                        <p:commandButton id="close" value="#{messages['general.button.Cancel']}" icon="ui-icon-close" onclick="PF('closeLoss').hide()" />
+                    </div>
+                </div>
+            </h:form>
+        </p:dialog>
+        <p:dialog header="#{messages['dialog.caption.Cancel']}" id="closeCancel" widgetVar="closeCancel">
+            <h:form id="cancelForm" style="width: 250px;">
+                <div class="row">
+                    <t:inputTextarea label="general.label.Reason" value="#{quoteHome.entity.statusReason}" columnClass="col-xs-12"/>
+                </div>
+
+                <div class="row actionButtons">
+                    <div class="col-xs-12 pull-right">
+                        <p:commandButton id="select" value="#{messages['general.button.Ok']}" icon="fa fa-check" action="#{quoteHome.closeCancel()}" styleClass="btn-primary" oncomplete="PF('closeCancel').hide()"/>
+                        <p:commandButton id="close" value="#{messages['general.button.Cancel']}" icon="ui-icon-close" onclick="PF('closeCancel').hide()" />
+                    </div>
+                </div>
+            </h:form>
+        </p:dialog>
+    </ui:define>
 
 </ui:composition>

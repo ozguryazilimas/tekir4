@@ -56,6 +56,11 @@
             <column name="MASTER_ID" type="BIGINT"/>
         </createTable>
     </changeSet>
+    <changeSet author="oyas (generated)" id="1469889916962-4">
+        <addColumn tableName="TSQ_QUOTE">
+            <column name="COMPETITOR_ID" type="bigint"/>
+        </addColumn>
+    </changeSet>
     <changeSet author="oyas (generated)" id="1469961995803-3">
         <addForeignKeyConstraint baseColumnNames="COMMODITY_ID" baseTableName="TSQ_QUOTE_ITEM" constraintName="FK_QUOTEIT_COMMO" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_COMMOTITY"/>
     </changeSet>

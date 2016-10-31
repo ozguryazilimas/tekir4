@@ -51,6 +51,11 @@ public class Quote extends VoucherBase{
     @ManyToOne
     @JoinColumn(name = "ACCOUNT_ID", foreignKey = @ForeignKey(name = "FK_OPP_ACC"))
     private Contact account;
+    
+    //Kaybedilen rakip bilgisi
+    @ManyToOne
+    @JoinColumn(name = "COMPETITOR_ID", foreignKey = @ForeignKey(name = "FK_OPP_COMP"))
+    private Contact competitor;
 
     /**
      * Teklif versioyonu
@@ -143,6 +148,14 @@ public class Quote extends VoucherBase{
 
     public void setSummaries(Map<String, QuoteSummary> summaries) {
         this.summaries = summaries;
+    }
+
+    public Contact getCompetitor() {
+        return competitor;
+    }
+
+    public void setCompetitor(Contact competitor) {
+        this.competitor = competitor;
     }
 
     

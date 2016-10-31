@@ -95,6 +95,16 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
         
     }
     
+    public Class<? extends ViewConfig> closeLoss(){
+        getEntity().setStatus(VocuherStatus.LOST);
+        return save();
+    }
+    
+    public Class<? extends ViewConfig> closeCancel(){
+        getEntity().setStatus(VocuherStatus.CANCELED);
+        return save();
+    }
+    
     /**
      * FIXME: Bu method üst sınıflara taşınmalı. Voucher ve hatta Form seviyelerine.
      * @return 

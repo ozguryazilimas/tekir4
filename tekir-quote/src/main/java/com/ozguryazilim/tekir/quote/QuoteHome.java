@@ -9,6 +9,7 @@ import com.ozguryazilim.tekir.entities.Quote;
 import com.ozguryazilim.tekir.entities.QuoteItem;
 import com.ozguryazilim.tekir.entities.QuoteSummary;
 import com.ozguryazilim.tekir.entities.TaxDefinition;
+import com.ozguryazilim.tekir.entities.VocuherStatus;
 import com.ozguryazilim.tekir.quote.config.QuotePages;
 import com.ozguryazilim.tekir.voucher.VoucherFormBase;
 import com.ozguryazilim.telve.data.RepositoryBase;
@@ -326,5 +327,27 @@ public class QuoteHome extends VoucherFormBase<Quote> {
         fp.setFeature(getEntity().getClass().getSimpleName());
         return fp;
     }
+
+
+    public Class<? extends ViewConfig> closeWin(){
+        //FIXME: Aslında burada belki iki farklı metod gerekecek : Sipariş, Sözleşme
+        getEntity().setStatus(VocuherStatus.WON);
+        return save();
+    }
     
+    public Class<? extends ViewConfig> closeLoss(){
+        getEntity().setStatus(VocuherStatus.LOST);
+        return save();
+    }
+    
+    public Class<? extends ViewConfig> closeCancel(){
+        getEntity().setStatus(VocuherStatus.CANCELED);
+        return save();
+    }    
+    
+    
+    public Class<? extends ViewConfig> publish(){
+        getEntity().setStatus(VocuherStatus.OPEN);
+        return save();
+    }
 }

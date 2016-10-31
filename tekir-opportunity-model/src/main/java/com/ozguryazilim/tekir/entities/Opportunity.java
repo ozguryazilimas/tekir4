@@ -52,6 +52,11 @@ public class Opportunity extends VoucherBase{
     @JoinColumn(name = "CONTACT_ID", foreignKey = @ForeignKey(name = "FK_OPP_PER"))
     private Person primaryContact;
     
+    //Fırsatın kaptırıldığı rakip bilgisi
+    @ManyToOne
+    @JoinColumn(name = "COMPETITOR_ID", foreignKey = @ForeignKey(name = "FK_OPP_COMP"))
+    private Contact competitor;
+    
     //Burada aslında farklı bir detay olmalı ve roller yazılmalı
     //private List<Person> stakeHolders;
     
@@ -192,6 +197,16 @@ public class Opportunity extends VoucherBase{
     public void setBudget(BigDecimal budget) {
         this.budget = budget;
     }
+
+    public Contact getCompetitor() {
+        return competitor;
+    }
+
+    public void setCompetitor(Contact competitor) {
+        this.competitor = competitor;
+    }
+
+    
     
     
     /**

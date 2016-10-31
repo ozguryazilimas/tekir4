@@ -32,10 +32,18 @@
             <column name="CONTACT_ID" type="BIGINT"/>
         </createTable>
     </changeSet>
+    <changeSet author="oyas (generated)" id="1469889916962-4">
+        <addColumn tableName="TCO_OPPOTUNITY">
+            <column name="COMPETITOR_ID" type="bigint"/>
+        </addColumn>
+    </changeSet>
     <changeSet author="oyas (generated)" id="1469889916962-2">
         <addForeignKeyConstraint baseColumnNames="ACCOUNT_ID" baseTableName="TCO_OPPOTUNITY" constraintName="FK_OPP_ACC" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
     </changeSet>
     <changeSet author="oyas (generated)" id="1469889916962-3">
         <addForeignKeyConstraint baseColumnNames="CONTACT_ID" baseTableName="TCO_OPPOTUNITY" constraintName="FK_OPP_PER" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1469889916962-5">
+        <addForeignKeyConstraint baseColumnNames="COMPETITOR_ID" baseTableName="TCO_OPPOTUNITY" constraintName="FK_OPP_COMP" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
     </changeSet>
 </databaseChangeLog>
