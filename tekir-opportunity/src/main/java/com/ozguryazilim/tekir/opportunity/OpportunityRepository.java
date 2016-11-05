@@ -80,7 +80,7 @@ public abstract class OpportunityRepository extends VoucherRepositoryBase<Opport
                 from.get(VoucherBase_.date),
                 from.get(VoucherBase_.processId),
                 from.get(VoucherBase_.owner),
-                from.get(VoucherBase_.status),
+                from.get(VoucherBase_.state),
                 from.get(Opportunity_.topic)
         );
     }

@@ -9,7 +9,7 @@
     <ui:param name="bean" value="#{quoteHome}" />
     <ui:param name="entityName" value="quote" />
     <ui:param name="viewIdentifier" value="#{quoteHome.entity.voucherNo}" />
-    <ui:param name="viewState" value="#{quoteHome.entity.status} #{quoteHome.entity.statusReason}" />
+    <ui:param name="viewState" value="#{quoteHome.entity.state.name} #{quoteHome.entity.stateReason}" />
     <ui:param name="showCaption" value="true"/>
     <ui:param name="dontShowContentHeader" value="false" />
 
@@ -37,7 +37,15 @@
         </div>  
     </ui:define>
 
+
+    <ui:define name="stateDlgExt">
+        <t:inputLookupDialog label="general.label.Competitor" value="#{quoteHome.entity.competitor}" 
+                             lookupBean="#{contactLookup}" lookupListener="opportunityHome.entity.competitor" 
+                             placeholder="#{messages['general.info.Competitor']}" columnClass="col-xs-12"
+                             rendered="#{quoteHome.dlgStateAction.name ne 'Revise' }"/>
+    </ui:define>
     
+    <ui:remove>
     <ui:define name="context-menu">
         <li>
             <p:commandLink action="#{quoteHome.create()}" styleClass="context-command" ajax="false">
@@ -45,6 +53,7 @@
                 <h:outputText value=" #{messages['general.button.Add']}" />
             </p:commandLink>
         </li>
+        <ui:remove>
         <li>
             <p:commandLink action="#{quoteHome.publish()}" styleClass="context-command" ajax="false" rendered="#{quoteHome.entity.status eq 'DRAFT'}">
                 <i class="fa fa-check"></i>
@@ -75,10 +84,12 @@
                 <h:outputText value=" #{messages['general.button.CloseCancel']}" />
             </p:commandLink >
         </li>
+            </ui:remove>
 
     </ui:define>
     
     <ui:define name="includes">
+        <ui:remove>
         <p:dialog header="#{messages['dialog.caption.Lost']}" id="closeLoss" widgetVar="closeLoss">
             <h:form id="lossForm" style="width: 250px;">
                 <div class="row">
@@ -108,6 +119,8 @@
                 </div>
             </h:form>
         </p:dialog>
+            </ui:remove>
     </ui:define>
+        </ui:remove>    
 
 </ui:composition>

@@ -80,7 +80,7 @@ public abstract class QuoteRepository extends VoucherRepositoryBase<Quote, Quote
                 from.get(VoucherBase_.date),
                 from.get(VoucherBase_.processId),
                 from.get(VoucherBase_.owner),
-                from.get(VoucherBase_.status)
+                from.get(VoucherBase_.state)
         );
     }
 

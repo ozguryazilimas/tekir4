@@ -10,11 +10,14 @@ import com.ozguryazilim.tekir.entities.Quote;
 import com.ozguryazilim.tekir.entities.QuoteItem;
 import com.ozguryazilim.tekir.entities.QuoteSummary;
 import com.ozguryazilim.tekir.entities.TaxDefinition;
-import com.ozguryazilim.tekir.entities.VocuherStatus;
+import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.tekir.quote.config.QuotePages;
 import com.ozguryazilim.tekir.voucher.VoucherFormBase;
+import com.ozguryazilim.tekir.voucher.VoucherStateAction;
+import com.ozguryazilim.tekir.voucher.VoucherStateConfig;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
+import com.ozguryazilim.telve.feature.FeatureHandler;
 import com.ozguryazilim.telve.lookup.LookupSelectTuple;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -96,7 +99,7 @@ public class QuoteHome extends VoucherFormBase<Quote> {
 
     @Override
     public boolean onAfterSave() {
-        accountTxnService.saveFeature(getFeaturePointer(), getEntity().getAccount(), getEntity().getCode(), getEntity().getInfo(), Boolean.FALSE, Boolean.TRUE, Currency.getInstance(getEntity().getCurrency()), getEntity().getTotal(), getEntity().getDate(), getEntity().getOwner(), getEntity().getProcessId(), getEntity().getStatus().name(), getEntity().getStatusReason());
+        accountTxnService.saveFeature(getFeaturePointer(), getEntity().getAccount(), getEntity().getCode(), getEntity().getInfo(), Boolean.FALSE, Boolean.TRUE, Currency.getInstance(getEntity().getCurrency()), getEntity().getTotal(), getEntity().getDate(), getEntity().getOwner(), getEntity().getProcessId(), getEntity().getState().getName(), getEntity().getStateReason());
         return super.onAfterSave(); //To change body of generated methods, choose Tools | Templates.
     }
     
@@ -344,23 +347,39 @@ public class QuoteHome extends VoucherFormBase<Quote> {
 
     public Class<? extends ViewConfig> closeWin(){
         //FIXME: Aslında burada belki iki farklı metod gerekecek : Sipariş, Sözleşme
-        getEntity().setStatus(VocuherStatus.WON);
+        //getEntity().setStatus(VocuherStatus.WON);
         return save();
     }
     
     public Class<? extends ViewConfig> closeLoss(){
-        getEntity().setStatus(VocuherStatus.LOST);
+        //getEntity().setStatus(VocuherStatus.LOST);
         return save();
     }
     
     public Class<? extends ViewConfig> closeCancel(){
-        getEntity().setStatus(VocuherStatus.CANCELED);
+        //getEntity().setStatus(VocuherStatus.CANCELED);
         return save();
     }    
     
     
     public Class<? extends ViewConfig> publish(){
-        getEntity().setStatus(VocuherStatus.OPEN);
+        //getEntity().setStatus(VocuherStatus.OPEN);
         return save();
+    }
+
+    @Override
+    protected VoucherStateConfig buildStateConfig() {
+        VoucherStateConfig config = new VoucherStateConfig();
+        config.addTranstion(VoucherState.DRAFT, new VoucherStateAction("Publish", "fa fa-check", false, ""), VoucherState.OPEN);
+        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("Won", "fa fa-check", false, ""), VoucherState.CLOSE);
+        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("Loss", "fa fa-close", true, ""), VoucherState.CLOSE);
+        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("Cancel", "fa fa-ban", true, ""), VoucherState.CLOSE);
+        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("Revise", "fa fa-close", true, ""), VoucherState.DRAFT);
+        return config;
+    }
+
+    @Override
+    public Class<? extends FeatureHandler> getFeatureClass() {
+        return QuoteFeature.class;
     }
 }

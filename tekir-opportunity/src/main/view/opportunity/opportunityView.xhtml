@@ -9,7 +9,7 @@
     <ui:param name="bean" value="#{opportunityHome}" />
     <ui:param name="entityName" value="opportunity" />
     <ui:param name="viewIdentifier" value="#{opportunityHome.entity.voucherNo}" />
-    <ui:param name="viewState" value="#{opportunityHome.entity.status} #{opportunityHome.entity.statusReason}" />
+    <ui:param name="viewState" value="#{opportunityHome.entity.state.name} #{opportunityHome.entity.stateReason}" />
     <ui:param name="showCaption" value="true"/>
     <ui:param name="dontShowContentHeader" value="false" />
 
@@ -40,7 +40,11 @@
 
     </ui:define>
 
-
+    <ui:define name="stateDlgExt">
+        <t:inputLookupDialog label="general.label.Competitor" value="#{opportunityHome.entity.competitor}" lookupBean="#{contactLookup}" lookupListener="opportunityHome.entity.competitor" placeholder="#{messages['general.info.Competitor']}" columnClass="col-xs-12"/>
+    </ui:define>
+    
+    <ui:remove>
     <ui:define name="context-menu">
         <li>
             <p:commandLink action="#{opportunityHome.create()}" styleClass="context-command" ajax="false">
@@ -48,6 +52,17 @@
                 <h:outputText value=" #{messages['general.button.Add']}" />
             </p:commandLink>
         </li>
+        
+        <ui:repeat value="#{opportunityHome.permittedStateActions}" var="act">
+            <li>
+            <p:commandLink action="#{opportunityHome.trigger(act)}" styleClass="context-command" ajax="false" >
+                <i class="#{act.icon}"></i>
+                <h:outputText value=" #{messages['general.button.'.concat( act.name )]}" />
+            </p:commandLink>
+        </li>
+        </ui:repeat>
+        
+        <ui:remove>
         <li>
             <p:commandLink action="#{opportunityHome.closeWin()}" styleClass="context-command" ajax="false" rendered="#{opportunityHome.entity.status eq 'OPEN'}">
                 <i class="fa fa-check"></i>
@@ -66,10 +81,14 @@
                 <h:outputText value=" #{messages['general.button.CloseCancel']}" />
             </p:commandLink >
         </li>
+            </ui:remove>
 
     </ui:define>
+        </ui:remove>
 
+    <ui:remove>
     <ui:define name="includes">
+        
         <p:dialog header="#{messages['dialog.caption.Lost']}" id="closeLoss" widgetVar="closeLoss">
             <h:form id="lossForm" style="width: 250px;">
                 <div class="row">
@@ -99,6 +118,8 @@
                 </div>
             </h:form>
         </p:dialog>
+            
     </ui:define>
+    </ui:remove>
 
 </ui:composition>

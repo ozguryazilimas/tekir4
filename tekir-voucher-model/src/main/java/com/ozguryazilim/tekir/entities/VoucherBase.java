@@ -11,8 +11,6 @@ import com.ozguryazilim.telve.entities.FeaturePointer;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -91,19 +89,23 @@ public abstract class VoucherBase extends AuditBase{
     private FeaturePointer starter;
  
     /**
-     * Fiş durum bilgisi : açık kapalı v.b.
+     * JPA Converter ile String'e çevrilecek.
      */
-    @Enumerated(EnumType.STRING)
-    @Column(name="STATUS")
-    private VocuherStatus status = VocuherStatus.DRAFT;
+    @Column(name="STATE")
+    private VoucherState state = VoucherState.DRAFT;
     
     /**
-     * Özellikle başarısız kapanışlarda başarısızlık nedeni
+     * Suggestion2dan gelecek
      */
-    @Column(name="STATUS_REASON")
-    private String statusReason;
+    @Column(name="STATE_REASON")
+    private String stateReason;
     
-
+    /**
+     * Durum ile ilgili ek açıklama alanı
+     */
+    @Column(name="STATE_INFO")
+    private String stateInfo;
+    
     public String getVoucherNo() {
         return voucherNo;
     }
@@ -168,22 +170,28 @@ public abstract class VoucherBase extends AuditBase{
         this.starter = starter;
     }
 
-    public VocuherStatus getStatus() {
-        return status;
+    public VoucherState getState() {
+        return state;
     }
 
-    public void setStatus(VocuherStatus status) {
-        this.status = status;
+    public void setState(VoucherState state) {
+        this.state = state;
     }
 
-    public String getStatusReason() {
-        return statusReason;
+    public String getStateReason() {
+        return stateReason;
     }
 
-    public void setStatusReason(String statusReason) {
-        this.statusReason = statusReason;
+    public void setStateReason(String stateReason) {
+        this.stateReason = stateReason;
     }
 
+    public String getStateInfo() {
+        return stateInfo;
+    }
 
-    
+    public void setStateInfo(String stateInfo) {
+        this.stateInfo = stateInfo;
+    }
+
 }

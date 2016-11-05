@@ -4,7 +4,50 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
                 template="/layout/containerViewTabBase.xhtml">
 
-    
+    <ui:define name="context-menu">
+        <li>
+            <p:commandLink action="#{bean.create()}" styleClass="context-command" ajax="false">
+                <i class="fa fa-plus-circle"></i>
+                <h:outputText value=" #{messages['general.button.Add']}" />
+            </p:commandLink>
+        </li>
+
+        <ui:repeat value="#{bean.permittedStateActions}" var="act">
+            <li>
+                <p:commandLink action="#{bean.trigger(act)}" styleClass="context-command" ajax="false" rendered="#{not act.hasDialog()}">
+                    <i class="#{act.icon}"></i>
+                    <h:outputText value=" #{messages['general.button.'.concat( act.name )]}" />
+                </p:commandLink>
+                <p:commandLink action="#{bean.prepareTriggerDlg(act)}" styleClass="context-command" ajax="true" rendered="#{act.hasDialog()}" update="stateDlg" oncomplete="PF('stateDlg').show()">
+                    <i class="#{act.icon}"></i>
+                    <h:outputText value=" #{messages['general.button.'.concat( act.name )]}" />
+                </p:commandLink>
+            </li>
+        </ui:repeat>
+    </ui:define>
+
+    <ui:define name="includes">
+        <p:dialog header="#{messages['dialog.caption.State']}" id="stateDlg" widgetVar="stateDlg" >
+            <h:form id="stateDlgForm" style="width: 250px;">
+                <div class="row">
+                    <t:inputSuggestion label="general.label.Reason" value="#{bean.entity.stateReason}" group="#{bean.entity.class.simpleName}" listener="" columnClass="col-xs-12"/>
+                    <t:inputTextarea label="general.label.Info" value="#{bean.entity.stateInfo}" columnClass="col-xs-12"/>
+                    
+                    <ui:insert name="stateDlgExt" />
+                    
+                </div>
+
+                <div class="row actionButtons">
+                    <div class="col-xs-12 pull-right">
+                        <p:commandButton id="select" value="#{messages['general.button.Ok']}" icon="fa fa-check" action="#{bean.triggerDlgAction()}" styleClass="btn-primary" oncomplete="PF('stateDlg').hide()"/>
+                        <p:commandButton id="close" value="#{messages['general.button.Cancel']}" icon="ui-icon-close" onclick="PF('stateDlg').hide()" />
+                    </div>
+                </div>
+            </h:form>
+        </p:dialog>
+    </ui:define>
+
 </ui:composition>

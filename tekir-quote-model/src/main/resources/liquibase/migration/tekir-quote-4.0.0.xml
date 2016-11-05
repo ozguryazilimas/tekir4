@@ -61,6 +61,21 @@
             <column name="COMPETITOR_ID" type="bigint"/>
         </addColumn>
     </changeSet>
+    <changeSet author="oyas (generated)" id="1469889916962-10">
+        <addColumn tableName="TSQ_QUOTE">
+            <column name="STATE" type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1469889916962-11">
+        <addColumn tableName="TSQ_QUOTE">
+            <column name="STATE_REASON" type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1469889916962-12">
+        <addColumn tableName="TSQ_QUOTE">
+            <column name="STATE_INFO" type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
     <changeSet author="oyas (generated)" id="1469961995803-3">
         <addForeignKeyConstraint baseColumnNames="COMMODITY_ID" baseTableName="TSQ_QUOTE_ITEM" constraintName="FK_QUOTEIT_COMMO" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_COMMOTITY"/>
     </changeSet>

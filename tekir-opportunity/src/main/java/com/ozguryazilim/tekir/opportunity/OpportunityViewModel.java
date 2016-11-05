@@ -6,7 +6,7 @@
 package com.ozguryazilim.tekir.opportunity;
 
 
-import com.ozguryazilim.tekir.entities.VocuherStatus;
+import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.telve.entities.ViewModel;
 import java.io.Serializable;
 import java.util.Date;
@@ -25,10 +25,10 @@ public class OpportunityViewModel implements ViewModel, Serializable{
     private Date date;
     private String processId;
     private String owner;
-    private VocuherStatus status;
+    private VoucherState state;
     private String topic;
 
-    public OpportunityViewModel(Long id, String code, String voucherNo, String info, String referenceNo, Date date, String processId, String owner, VocuherStatus status, String topic) {
+    public OpportunityViewModel(Long id, String code, String voucherNo, String info, String referenceNo, Date date, String processId, String owner, VoucherState state, String topic) {
         this.id = id;
         this.code = code;
         this.voucherNo = voucherNo;
@@ -37,7 +37,7 @@ public class OpportunityViewModel implements ViewModel, Serializable{
         this.date = date;
         this.processId = processId;
         this.owner = owner;
-        this.status = status;
+        this.state = state;
         this.topic = topic;
     }
 
@@ -106,12 +106,12 @@ public class OpportunityViewModel implements ViewModel, Serializable{
         this.owner = owner;
     }
 
-    public VocuherStatus getStatus() {
-        return status;
+    public VoucherState getState() {
+        return state;
     }
 
-    public void setStatus(VocuherStatus status) {
-        this.status = status;
+    public void setState(VoucherState state) {
+        this.state = state;
     }
 
     public String getTopic() {
