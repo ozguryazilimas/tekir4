@@ -10,8 +10,11 @@ import com.ozguryazilim.tekir.entities.Quote;
 import com.ozguryazilim.tekir.entities.QuoteItem;
 import com.ozguryazilim.tekir.entities.QuoteSummary;
 import com.ozguryazilim.tekir.entities.TaxDefinition;
+import com.ozguryazilim.tekir.entities.VoucherCommodityItemBase;
 import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.tekir.quote.config.QuotePages;
+import com.ozguryazilim.tekir.voucher.VoucherCommodityItemEditor;
+import com.ozguryazilim.tekir.voucher.VoucherCommodityItemEditorListener;
 import com.ozguryazilim.tekir.voucher.VoucherFormBase;
 import com.ozguryazilim.tekir.voucher.VoucherStateAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateConfig;
@@ -34,7 +37,7 @@ import org.primefaces.event.SelectEvent;
  * @author
  */
 @FormEdit(browsePage = QuotePages.QuoteBrowse.class, editPage = QuotePages.Quote.class, viewContainerPage = QuotePages.QuoteView.class, masterViewPage = QuotePages.QuoteMasterView.class)
-public class QuoteHome extends VoucherFormBase<Quote> {
+public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodityItemEditorListener{
 
     @Inject
     private QuoteRepository repository;
@@ -44,6 +47,9 @@ public class QuoteHome extends VoucherFormBase<Quote> {
 
     @Inject
     private AccountTxnService accountTxnService;
+    
+    @Inject
+    private VoucherCommodityItemEditor commodityItemEditor;
     
     private QuoteItem selectedItem;
 
@@ -66,6 +72,12 @@ public class QuoteHome extends VoucherFormBase<Quote> {
         //item.setTotal(new Money(BigDecimal.ZERO, "TRY"));
         item.setMaster(getEntity());
         selectedItem = item;
+    }
+    
+    public void addItem2() {
+        QuoteItem item = new QuoteItem();    
+        item.setMaster(getEntity());
+        commodityItemEditor.openDialog(item, Currency.getInstance(getEntity().getCurrency()) , this);
     }
 
     public void editItem(QuoteItem item) {
@@ -104,10 +116,20 @@ public class QuoteHome extends VoucherFormBase<Quote> {
     }
     
     
-
+    /*
     public void onCommoditySelect(SelectEvent event) {
         List<Commodity> ls = getCommodities(event);
         addCommodities(ls);
+    }*/
+    
+    public void onCommoditySelect(SelectEvent event) {
+        List<Commodity> ls = getCommodities(event);
+        if( !ls.isEmpty()){
+            QuoteItem item = new QuoteItem();    
+            item.setMaster(getEntity());
+            item.setCommodity(ls.get(0));
+            commodityItemEditor.openDialog(item, Currency.getInstance("TRY"), this);
+        }
     }
 
     /**
@@ -381,5 +403,11 @@ public class QuoteHome extends VoucherFormBase<Quote> {
     @Override
     public Class<? extends FeatureHandler> getFeatureClass() {
         return QuoteFeature.class;
+    }
+
+    @Override
+    public void saveItem(VoucherCommodityItemBase item) {
+        getEntity().getItems().add((QuoteItem) item);
+        calcSummaries();
     }
 }

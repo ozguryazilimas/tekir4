@@ -43,15 +43,36 @@
                         <p:column headerText="Açıklama">
                             <h:outputText value="#{item.info}" />
                         </p:column>
-                        <p:column headerText="Miktar" style="text-align: right; width: 8em;">
+                        <p:column headerText="Miktar" >
+                            <div style="text-align: right;">
                             <h:outputText value="#{item.quantity.amount}" />
-                            <h:outputText value="#{item.quantity.unitName.name}" />
+                            <h:outputText value=" #{item.quantity.unitName.name}" />
+                            </div>
                         </p:column>
-                        <p:column headerText="Birim Fiyat" style="text-align: right; width: 8em;">
+                        <p:column headerText="Birim Fiyat" >
                             <t:cellOutputMoney value="#{item.price}" currency="#{quoteHome.entity.currency}" />
                         </p:column>
-                        <p:column headerText="Tutar" style="text-align: right; width: 8em;">
+                        <p:column headerText="Tutar" >
                             <t:cellOutputMoney value="#{item.total}" currency="#{quoteHome.entity.currency}" />
+                        </p:column>
+                        <ui:remove>
+                        <p:column headerText="İndirim" style="text-align: right; width: 6em;">
+                            <t:cellOutputMoney value="#{item.total}" currency="#{quoteHome.entity.currency}" />
+                        </p:column>
+                        <p:column headerText="Toplam" style=" width: 6em;">
+                            <t:cellOutputMoney value="#{item.total}" currency="#{quoteHome.entity.currency}" />
+                        </p:column>
+                            </ui:remove>
+                        <p:column styleClass="actionColumnDouble" rendered="#{quoteHome.entity.state.type eq 'DRAFT'}">
+                            <f:facet name="header">
+                                <p:commandLink action="#{quoteHome.addItem2()}" process="@this" >
+                                    <i class="fa fa-plus"/>
+                                    <p:ajax event="dialogReturn" partialSubmit="true" 
+                                            process="@this" update=":ca1:its"/>   
+                                </p:commandLink>
+                            </f:facet>
+                            <i class="fa fa-pencil" />
+                            <i class="fa fa-trash" />
                         </p:column>
                     </p:dataTable>
 

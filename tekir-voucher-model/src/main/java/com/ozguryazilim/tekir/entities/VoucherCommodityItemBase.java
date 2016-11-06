@@ -24,7 +24,7 @@ import javax.persistence.MappedSuperclass;
  * @author Hakan Uygun
  */
 @MappedSuperclass
-public abstract class VoucherItemBase<E extends VoucherBase> extends EntityBase{
+public abstract class VoucherCommodityItemBase<E extends VoucherBase> extends EntityBase{
     
     @Id 
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "genericSeq")

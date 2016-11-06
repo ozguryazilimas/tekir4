@@ -15,6 +15,6 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "TSQ_QUOTE_ITEM")
-public class QuoteItem extends VoucherItemBase<Quote>{
+public class QuoteItem extends VoucherCommodityItemBase<Quote>{
 
 }

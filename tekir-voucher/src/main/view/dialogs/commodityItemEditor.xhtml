@@ -1,0 +1,56 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"                
+                template="/layout/dialogBase.xhtml">
+
+    <ui:param name="title" value="dialog.caption.CommodityLineEditor" />
+    <ui:define name="form">
+        <h:form id="vciEditor">
+            <div class="row">
+                <t:inputLookupDialog label="general.label.Commodity" value="#{voucherCommodityItemEditor.commodity}" lookupBean="#{commodityLookup}" lookupListener="voucherCommodityItemEditor.commodity" placeholder="#{messages['general.info.Commodity']}" columnClass="col-xs-12"/>
+                <t:inputText label="general.label.Info" value="#{voucherCommodityItemEditor.item.info}" columnClass="col-xs-12"/>
+                <p:outputPanel autoUpdate="true">
+                    <ui:fragment rendered="#{not empty voucherCommodityItemEditor.commodity}">
+                        <t:inputNumber label="general.label.Quantity" value="#{voucherCommodityItemEditor.item.quantity.amount}" columnClass="col-xs-8">
+                            <p:ajax event="blur" listener="#{voucherCommodityItemEditor.onAmountChange()}" />
+                        </t:inputNumber>
+                        <t:inputUnit label="general.label.Unit" value="#{voucherCommodityItemEditor.item.quantity.unitName}" columnClass="col-xs-4"/>
+                        <t:inputMoney label="general.label.Price" value="#{voucherCommodityItemEditor.item.price}" currency="#{voucherCommodityItemEditor.currency}" required="true" readonly="false" columnClass="col-xs-12">
+                            <p:ajax event="blur" listener="#{voucherCommodityItemEditor.onPriceChange()}" />
+                        </t:inputMoney>
+                        <t:inputMoney label="general.label.Total" value="#{voucherCommodityItemEditor.item.total}" currency="#{voucherCommodityItemEditor.currency}" required="true" readonly="false" columnClass="col-xs-12" >
+                            <p:ajax event="blur" listener="#{voucherCommodityItemEditor.onTotalChange()}" />
+                        </t:inputMoney>
+                        <ui:remove>
+                        <t:inputMoney label="general.label.Discount" value="#{voucherCommodityItemEditor.item.total}" currency="#{voucherCommodityItemEditor.currency}" required="true" readonly="false" columnClass="col-xs-12"/>
+                        <t:inputMoney label="general.label.LineTotal" value="#{voucherCommodityItemEditor.item.total}" currency="#{voucherCommodityItemEditor.currency}" required="true" readonly="true" columnClass="col-xs-12"/>
+                        </ui:remove>
+                    </ui:fragment>
+                </p:outputPanel>
+            </div>
+
+            <h:panelGroup styleClass="row" layout="block" style="padding-top: 8px;">
+                <div class="col-xs-12">
+                    <div class="pull-right">
+                        <ui:insert name="actionButtons" />
+                        <p:commandButton id="save" 
+                                         value="#{messages['general.button.Save']}" 
+                                         icon="fa fa-save" 
+                                         action="#{voucherCommodityItemEditor.closeDialog()}" 
+                                         validateClient="true"
+                                         styleClass="btn-primary" />
+                        <p:commandButton id="close" 
+                                         value="#{messages['general.button.Cancel']}" 
+                                         icon="ui-icon-close" 
+                                         action="#{voucherCommodityItemEditor.cancelDialog()}" 
+                                         partialSubmit="true" 
+                                         process="@this"/>
+                    </div>
+                </div>
+            </h:panelGroup>
+        </h:form>
+    </ui:define> 
+</ui:composition>
