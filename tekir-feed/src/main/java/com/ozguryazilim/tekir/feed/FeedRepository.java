@@ -35,4 +35,10 @@ public abstract class FeedRepository extends RepositoryBase<Feed, Feed> implemen
     
     @Query( "select f from Feed f where ( f.basePointer.feature = :feature and f.basePointer.primaryKey = :id ) or ( f.relatedPointer.feature = :feature and f.relatedPointer.primaryKey = :id )")
     public abstract List<Feed> findForFeature( @QueryParam("feature") String feature, @QueryParam("id") Long id );
+    
+    @Query( "select f from Feed f where f.user = :user")
+    public abstract List<Feed> findForUser( @QueryParam("user") String username);
+    
+    //FIXME: Aslıdan burada doğrudan feed eden kullanıcı değil parametre olarak verilen kullanıcının grup ve follow bilgilerine göre feed döndürülmeli.
+    public abstract List<Feed> findTop10ByUserOrderByDateDesc( String username);
 }
