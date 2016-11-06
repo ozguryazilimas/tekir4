@@ -14,5 +14,10 @@
     <ui:param name="showDetailPanel" value="false" />
 
 
+    <ui:define name="beforeColumns">
+        <p:column styleClass="actionColumn">
+            <i class="fa #{item.state.type eq 'CLOSE' ? 'fa-lock' : 'fa-unlock-alt' }" />
+        </p:column>
+    </ui:define>
     
 </ui:composition>

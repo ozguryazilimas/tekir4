@@ -8,6 +8,7 @@ package com.ozguryazilim.tekir.account.credit;
 import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.entities.AccountCreditNote;
 import com.ozguryazilim.tekir.entities.AccountCreditNote_;
+import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.tekir.entities.VoucherBase_;
 import com.ozguryazilim.tekir.voucher.VoucherRepositoryBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
@@ -89,8 +90,13 @@ public abstract class AccountCreditNoteRepository extends VoucherRepositoryBase<
 
     private void buildSearchTextControl(String searchText, CriteriaBuilder criteriaBuilder, List<Predicate> predicates, Root<? extends AccountCreditNote> from) {
         if (!Strings.isNullOrEmpty(searchText)) {
-            predicates.add(criteriaBuilder.or(criteriaBuilder.like(from.get(AccountCreditNote_.info), "%" + searchText + "%"),
-                    criteriaBuilder.like(from.get(VoucherBase_.voucherNo), "%" + searchText + "%")));
+            predicates.add(
+                    criteriaBuilder.or(
+                            criteriaBuilder.like(from.get(AccountCreditNote_.info), "%" + searchText + "%"),
+                            criteriaBuilder.like(from.get(VoucherBase_.voucherNo), "%" + searchText + "%"),
+                            criteriaBuilder.like(from.get(AccountCreditNote_.account).get(Contact_.name), "%" + searchText + "%")
+                    )
+            );
         }
     }
 }

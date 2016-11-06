@@ -8,6 +8,7 @@ package com.ozguryazilim.tekir.account.virement;
 import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.entities.AccountVirement;
 import com.ozguryazilim.tekir.entities.AccountVirement_;
+import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.tekir.entities.VoucherBase_;
 import com.ozguryazilim.tekir.voucher.VoucherRepositoryBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
@@ -90,8 +91,14 @@ public abstract class AccountVirementRepository extends VoucherRepositoryBase<Ac
 
     private void buildSearchTextControl(String searchText, CriteriaBuilder criteriaBuilder, List<Predicate> predicates, Root<? extends AccountVirement> from) {
         if (!Strings.isNullOrEmpty(searchText)) {
-            predicates.add(criteriaBuilder.or(criteriaBuilder.like(from.get(AccountVirement_.info), "%" + searchText + "%"),
-                    criteriaBuilder.like(from.get(VoucherBase_.voucherNo), "%" + searchText + "%")));
+            predicates.add(
+                    criteriaBuilder.or(
+                            criteriaBuilder.like(from.get(AccountVirement_.info), "%" + searchText + "%"),
+                            criteriaBuilder.like(from.get(VoucherBase_.voucherNo), "%" + searchText + "%"),
+                            criteriaBuilder.like(from.get(AccountVirement_.fromAccount).get(Contact_.name), "%" + searchText + "%"),
+                            criteriaBuilder.like(from.get(AccountVirement_.toAccount).get(Contact_.name), "%" + searchText + "%")
+                    )
+            );
         }
     }
 }
