@@ -54,6 +54,7 @@ public class AccountVirementBrowse extends VoucherBrowseBase<AccountVirement, Ac
                 .addFilter(new StringFilter<>(VoucherBase_.voucherNo, "voucher.label.VoucherNo"))
                 .addFilter(new StringFilter<>(VoucherBase_.code, "voucher.label.Code"))
                 .addFilter(new StringFilter<>(VoucherBase_.info, "voucher.label.Info"))
+                .addFilter(new StringFilter<>(VoucherBase_.processId, "voucher.label.Process"))
                 .addFilter(new DateFilter<>(VoucherBase_.date, "voucher.label.Date"));
                 
     }

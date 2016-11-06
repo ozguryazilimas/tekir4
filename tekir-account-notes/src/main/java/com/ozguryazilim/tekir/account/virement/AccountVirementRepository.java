@@ -95,6 +95,7 @@ public abstract class AccountVirementRepository extends VoucherRepositoryBase<Ac
                     criteriaBuilder.or(
                             criteriaBuilder.like(from.get(AccountVirement_.info), "%" + searchText + "%"),
                             criteriaBuilder.like(from.get(VoucherBase_.voucherNo), "%" + searchText + "%"),
+                            criteriaBuilder.like(from.get(VoucherBase_.processId), "%" + searchText + "%"),
                             criteriaBuilder.like(from.get(AccountVirement_.fromAccount).get(Contact_.name), "%" + searchText + "%"),
                             criteriaBuilder.like(from.get(AccountVirement_.toAccount).get(Contact_.name), "%" + searchText + "%")
                     )

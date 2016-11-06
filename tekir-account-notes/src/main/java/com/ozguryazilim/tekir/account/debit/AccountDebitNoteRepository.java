@@ -94,6 +94,7 @@ public abstract class AccountDebitNoteRepository extends VoucherRepositoryBase<A
                     criteriaBuilder.or(
                             criteriaBuilder.like(from.get(AccountDebitNote_.info), "%" + searchText + "%"),
                             criteriaBuilder.like(from.get(VoucherBase_.voucherNo), "%" + searchText + "%"),
+                            criteriaBuilder.like(from.get(VoucherBase_.processId), "%" + searchText + "%"),
                             criteriaBuilder.like(from.get(AccountDebitNote_.account).get(Contact_.name), "%" + searchText + "%")
                     )
             );

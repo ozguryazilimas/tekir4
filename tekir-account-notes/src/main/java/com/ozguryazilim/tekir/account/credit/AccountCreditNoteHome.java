@@ -5,7 +5,9 @@
  */
 package com.ozguryazilim.tekir.account.credit;
 
+import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.account.config.AccountNotePages;
+import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.AccountCreditNote;
 import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.tekir.voucher.VoucherFormBase;
@@ -14,6 +16,7 @@ import com.ozguryazilim.tekir.voucher.VoucherStateConfig;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.feature.FeatureHandler;
 import com.ozguryazilim.telve.forms.FormEdit;
+import com.ozguryazilim.telve.sequence.SequenceManager;
 import javax.inject.Inject;
 
 /**
@@ -25,6 +28,28 @@ public class AccountCreditNoteHome extends VoucherFormBase<AccountCreditNote>{
 
     @Inject
     private AccountCreditNoteRepository repository;
+
+    @Inject
+    private CurrencyService currencyService;
+
+    @Inject
+    private SequenceManager sequenceManager;
+    
+    @Override
+    public void createNew() {
+        super.createNew(); 
+        getEntity().setCurrency(currencyService.getDefaultCurrency());
+    }
+
+    @Override
+    public boolean onBeforeSave() {
+        if( Strings.isNullOrEmpty( getEntity().getProcessId() )){
+            getEntity().setProcessId(sequenceManager.getNewSerialNumber("PS", 6));
+        }
+        return super.onBeforeSave();
+    }
+    
+    
     
     @Override
     protected VoucherStateConfig buildStateConfig() {
