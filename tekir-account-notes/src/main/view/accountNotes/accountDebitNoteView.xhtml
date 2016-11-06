@@ -1,0 +1,41 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/voucherViewBase.xhtml">
+
+    <ui:param name="bean" value="#{accountDebitNoteHome}" />
+    <ui:param name="entityName" value="accountDebitNote" />
+    <ui:param name="viewIdentifier" value="#{accountDebitNoteHome.entity.voucherNo}" />
+    <ui:param name="viewState" value="#{accountDebitNoteHome.entity.state.name} #{accountDebitNoteHome.entity.stateReason}" />
+    <ui:param name="showCaption" value="true"/>
+    <ui:param name="dontShowContentHeader" value="false" />
+
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{accountDebitNoteHome.id}" />
+        </f:metadata>
+    </ui:define>
+
+
+    <ui:define name="caption">
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <t:outputEntityLink label="general.label.Account" value="#{accountDebitNoteHome.entity.account}" view="/contact/contactView.xhtml" />
+                <t:outputMoney label="accountDebitNote.label.Amount" value="#{accountDebitNoteHome.entity.amount}" currency="#{accountDebitNoteHome.entity.currency}" />
+                <t:outputText label="general.label.Info" value="#{accountDebitNoteHome.entity.info}" columnClass="col-xs-12"/>
+                
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <t:outputText label="voucher.label.VoucherNo" value="#{accountDebitNoteHome.entity.voucherNo}"  />
+                <t:outputText label="voucher.label.ReferenceNo" value="#{accountDebitNoteHome.entity.referenceNo}" />
+                <t:outputText label="voucher.label.Process" value="#{accountDebitNoteHome.entity.processId}" />
+                <t:outputText label="general.label.Code" value="#{accountDebitNoteHome.entity.code}" />
+            </div>
+        </div>  
+
+    </ui:define>
+
+</ui:composition>

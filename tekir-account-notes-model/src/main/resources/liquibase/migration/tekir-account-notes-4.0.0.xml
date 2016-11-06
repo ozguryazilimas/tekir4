@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="oyas (generated)" id="1478422974382-1">
+        <createTable tableName="TAN_CREDIT_NOTE">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TAN_CREDIT_NOTEPK"/>
+            </column>
+            <column name="CREATE_DATE" type="datetime"/>
+            <column name="UPDATE_DATE" type="datetime"/>
+            <column name="UPDATE_USER" type="VARCHAR(255)"/>
+            <column name="CODE" type="VARCHAR(30)"/>
+            <column name="TXNDATE" type="datetime"/>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="OWNER" type="VARCHAR(255)"/>
+            <column name="PROCESS_ID" type="VARCHAR(255)"/>
+            <column name="REFERENCE_NO" type="VARCHAR(30)"/>
+            <column name="FEATURE_BK" type="VARCHAR(255)"/>
+            <column name="FEATURE" type="VARCHAR(255)"/>
+            <column name="FEATURE_PK" type="BIGINT"/>
+            <column name="STATE" type="VARCHAR(255)"/>
+            <column name="STATE_INFO" type="VARCHAR(255)"/>
+            <column name="STATE_REASON" type="VARCHAR(255)"/>
+            <column name="VOUCHER_NO" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="AMOUNT" type="DECIMAL(19, 2)"/>
+            <column name="CCY" type="VARCHAR(255)"/>
+            <column name="ACCOUNT_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1478422974382-2">
+        <createTable tableName="TAN_DEBIT_NOTE">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TAN_DEBIT_NOTEPK"/>
+            </column>
+            <column name="CREATE_DATE" type="datetime"/>
+            <column name="UPDATE_DATE" type="datetime"/>
+            <column name="UPDATE_USER" type="VARCHAR(255)"/>
+            <column name="CODE" type="VARCHAR(30)"/>
+            <column name="TXNDATE" type="datetime"/>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="OWNER" type="VARCHAR(255)"/>
+            <column name="PROCESS_ID" type="VARCHAR(255)"/>
+            <column name="REFERENCE_NO" type="VARCHAR(30)"/>
+            <column name="FEATURE_BK" type="VARCHAR(255)"/>
+            <column name="FEATURE" type="VARCHAR(255)"/>
+            <column name="FEATURE_PK" type="BIGINT"/>
+            <column name="STATE" type="VARCHAR(255)"/>
+            <column name="STATE_INFO" type="VARCHAR(255)"/>
+            <column name="STATE_REASON" type="VARCHAR(255)"/>
+            <column name="VOUCHER_NO" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="AMOUNT" type="DECIMAL(19, 2)"/>
+            <column name="CCY" type="VARCHAR(255)"/>
+            <column name="ACCOUNT_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1478422974382-3">
+        <createTable tableName="TAN_VIREMENT">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TAN_VIREMENTPK"/>
+            </column>
+            <column name="CREATE_DATE" type="datetime"/>
+            <column name="UPDATE_DATE" type="datetime"/>
+            <column name="UPDATE_USER" type="VARCHAR(255)"/>
+            <column name="CODE" type="VARCHAR(30)"/>
+            <column name="TXNDATE" type="datetime"/>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="OWNER" type="VARCHAR(255)"/>
+            <column name="PROCESS_ID" type="VARCHAR(255)"/>
+            <column name="REFERENCE_NO" type="VARCHAR(30)"/>
+            <column name="FEATURE_BK" type="VARCHAR(255)"/>
+            <column name="FEATURE" type="VARCHAR(255)"/>
+            <column name="FEATURE_PK" type="BIGINT"/>
+            <column name="STATE" type="VARCHAR(255)"/>
+            <column name="STATE_INFO" type="VARCHAR(255)"/>
+            <column name="STATE_REASON" type="VARCHAR(255)"/>
+            <column name="VOUCHER_NO" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="AMOUNT" type="DECIMAL(19, 2)"/>
+            <column name="CCY" type="VARCHAR(255)"/>
+            <column name="FROM_ACCOUNT_ID" type="BIGINT"/>
+            <column name="TO_ACCOUNT_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1478422974382-4">
+        <addForeignKeyConstraint baseColumnNames="ACCOUNT_ID" baseTableName="TAN_DEBIT_NOTE" constraintName="FK_AN_ACC" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1478422974382-5">
+        <addForeignKeyConstraint baseColumnNames="ACCOUNT_ID" baseTableName="TAN_CREDIT_NOTE" constraintName="FK_ACN_ACC" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1478422974382-6">
+        <addForeignKeyConstraint baseColumnNames="FROM_ACCOUNT_ID" baseTableName="TAN_VIREMENT" constraintName="FK_AV_FACC" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1478422974382-7">
+        <addForeignKeyConstraint baseColumnNames="TO_ACCOUNT_ID" baseTableName="TAN_VIREMENT" constraintName="FK_AV_TACC" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+    </changeSet>
+</databaseChangeLog>

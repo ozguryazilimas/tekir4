@@ -1,0 +1,77 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"               
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                template="/layout/voucherMasterViewBase.xhtml">
+
+    <ui:define name="content">     
+
+        <div class="row">
+            <div class="col-md-4 col-xs-12">
+                <t:accordion icon="fa fa-stack-exchange" label="general.label.Summary" columnClass="col-xs-12">
+                    <t:outputText label="general.label.Info" value="#{accountCreditNoteHome.entity.info}" columnClass="col-xs-12"/>
+                    <t:outputMoney label="accountCreditNote.label.Amount" value="#{accountCreditNoteHome.entity.amount}" currency="#{accountCreditNoteHome.entity.currency}" columnClass="col-xs-12"/>
+                </t:accordion>
+
+                <t:accordion icon="fa fa-file-text" label="general.label.Voucher" columnClass="col-xs-12">
+                    <t:outputText label="voucher.label.VoucherNo" value="#{accountCreditNoteHome.entity.voucherNo}"  columnClass="col-xs-12"/>
+                    <t:outputText label="voucher.label.ReferenceNo" value="#{accountCreditNoteHome.entity.referenceNo}" columnClass="col-xs-12"/>
+                    <t:outputText label="voucher.label.Process" value="#{accountCreditNoteHome.entity.processId}" columnClass="col-xs-12"/>
+                    <t:outputText label="voucher.label.Owner" value="#{accountCreditNoteHome.entity.owner}" columnClass="col-xs-12"/>
+                    <t:outputText label="general.label.Code" value="#{accountCreditNoteHome.entity.code}" columnClass="col-xs-12"/>
+                    
+                    <t:outputDate label="voucher.label.Date" value="#{accountCreditNoteHome.entity.date}" columnClass="col-xs-12"/>
+                </t:accordion>
+            </div>
+
+
+            <div class="col-md-4 col-xs-12">
+
+                <ui:remove>
+                <ui:include src="/activities/activityWidget.xhtml">
+                    <ui:param name="person" value="#{accountCreditNoteHome.entity.primaryContact}" />
+                    <ui:param name="corporation" value="#{accountCreditNoteHome.entity.account}" />
+                    <ui:param name="feature" value="#{accountCreditNoteHome.featurePointer}" />
+                    <ui:param name="attached" value="Feature" />
+                </ui:include>
+                    </ui:remove>
+
+                <t:accordion icon="fa fa-sticky-note" id="cn" label="general.label.Notes" columnClass="col-xs-12">
+                    Notlar
+                </t:accordion>
+
+                <ui:include src="/feeds/feedWidget.xhtml">
+                    <ui:param name="feature" value="#{accountCreditNoteHome.entity.class.simpleName}" />
+                    <ui:param name="pk" value="#{accountCreditNoteHome.entity.id}" />
+                </ui:include>
+
+               
+
+            </div>
+
+            <div class="col-md-4 col-xs-12">
+                 <t:accordion icon="fa fa-file" id="cx" label="general.label.ReleatedVouchers" columnClass="col-xs-12">
+                    <ul class="products-list product-list-in-box">
+                        <ui:repeat value="#{accountTxnService.getProcessVouchers(accountCreditNoteHome.entity.processId)}" var="ci" >
+                            <li class="item">
+                                <t:cellOutputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
+
+                                <span class="text-muted pull-right">#{ci.processId}</span>
+
+                                <div class="text-sm">
+                                    #{ci.info}
+                                </div>
+
+                            </li>
+                        </ui:repeat>
+                    </ul>
+                </t:accordion>
+            </div>
+
+        </div>
+
+    </ui:define>
+
+</ui:composition>
