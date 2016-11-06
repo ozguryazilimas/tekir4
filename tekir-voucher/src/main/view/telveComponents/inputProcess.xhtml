@@ -1,0 +1,61 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:composite="http://java.sun.com/jsf/composite"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <composite:interface>
+        <composite:attribute name="value" required="true"/>
+        <composite:attribute name="label" required="false" default="voucher.label.Process"/>
+        <composite:attribute name="caption" required="false" shortDescription="gösterilecek alan adı"/>
+        <composite:attribute name="update" required="false" default=""/>
+        <composite:attribute name="multiSelect" required="false" default="false"/>
+        <composite:attribute name="leafSelect" required="false" default="false"/>
+        <composite:attribute name="fullPath" required="false" default="true"/>
+        <composite:attribute name="lookupListener" required="true"/>
+        <composite:attribute name="lookupProfile" required="false" default=""/>
+        <composite:attribute name="placeholder" required="false"/>
+        <composite:attribute name="required" required="false" type="java.lang.Boolean" default="false"/>
+        <composite:attribute name="columnClass" required="false" default="col-xs-6"/>
+    </composite:interface>
+
+    <composite:implementation>
+        <div id="#{cc.clientId}" class="prop #{cc.attrs.columnClass}">
+
+            <p:outputLabel for="#{cc.id}_inp" value="#{messages[cc.attrs.label]}" styleClass="name #{invalid?'errors':''}" />
+
+            <span class="value">
+
+                <div class="input-group">
+                    <p:autoComplete id="#{cc.id}_inp" value="#{cc.attrs.value}" 
+                                    forceSelection="true" 
+                                    completeMethod="#{processLookup.suggest}"
+                                    var="item"
+                                    itemLabel="#{item[ empty cc.attrs.caption ? processLookup.captionFieldName : cc.attrs.caption]}"
+                                    itemValue="#{item}"
+                                    queryDelay="500"
+                                    converter="entityConverter"
+                                    required="#{cc.attrs.required}"
+                                    disabled="#{cc.attrs.disabled}"
+                                    placeholder="#{messages[cc.attrs.placeholder]}">
+                        <p:clientValidator />
+                        <p:ajax event="itemSelect" update="#{cc.attrs.update}" />
+                        <f:attribute name="leafSelect" value="#{cc.attrs.leafSelect}" />
+                        <f:attribute name="multiSelect" value="#{cc.attrs.multiSelect}" />
+                        <f:attribute name="lookupProfile" value="#{cc.attrs.lookupProfile}" />
+                    </p:autoComplete>
+                    <div class="input-group-btn">
+                    <p:commandButton action="#{processLookup.openDialog( cc.attrs.multiSelect, cc.attrs.leafSelect, cc.attrs.fullPath, cc.attrs.lookupProfile, cc.attrs.lookupListener, cc.attrs.value )}" 
+                                     partialSubmit="true" process="@this" icon="fa fa-search" styleClass="btn btn-default" disabled="#{cc.attrs.disabled}">
+                        <p:ajax event="dialogReturn"  listener="#{processLookup.onSelect}" update="#{cc.id}_inp,#{cc.attrs.update}" partialSubmit="true" process="@this" />   
+                    </p:commandButton>
+                        </div>
+                </div>
+            </span>
+            <p:message for="#{cc.id}_inp" display="tooltip"/>
+        </div>
+    </composite:implementation>
+
+</ui:component>

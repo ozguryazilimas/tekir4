@@ -16,9 +16,11 @@
     <include file="liquibase/tekir-commodity.xml" />
     <include file="liquibase/tekir-contact.xml" />
     <include file="liquibase/tekir-activity.xml" />
+    <include file="liquibase/tekir-voucher.xml" />
     <include file="liquibase/tekir-opportunity.xml" />
     <include file="liquibase/tekir-quote.xml" />
     <include file="liquibase/tekir-account-notes.xml" />
+    
     
         
 </databaseChangeLog>

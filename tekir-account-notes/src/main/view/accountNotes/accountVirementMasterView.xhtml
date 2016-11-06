@@ -11,6 +11,7 @@
         <div class="row">
             <div class="col-md-4 col-xs-12">
                 <t:accordion icon="fa fa-stack-exchange" label="general.label.Summary" columnClass="col-xs-12">
+                    <t:outputText label="voucher.label.Topic" value="#{accountVirementHome.entity.topic}" columnClass="col-xs-12"/>
                     <t:outputText label="general.label.Info" value="#{accountVirementHome.entity.info}" columnClass="col-xs-12"/>
                     <t:outputMoney label="general.label.Amount" value="#{accountVirementHome.entity.amount}" currency="#{accountVirementHome.entity.currency}" columnClass="col-xs-12"/>
                 </t:accordion>
@@ -18,7 +19,7 @@
                 <t:accordion icon="fa fa-file-text" label="general.label.Voucher" columnClass="col-xs-12">
                     <t:outputText label="voucher.label.VoucherNo" value="#{accountVirementHome.entity.voucherNo}"  columnClass="col-xs-12"/>
                     <t:outputText label="voucher.label.ReferenceNo" value="#{accountVirementHome.entity.referenceNo}" columnClass="col-xs-12"/>
-                    <t:outputText label="voucher.label.Process" value="#{accountVirementHome.entity.processId}" columnClass="col-xs-12"/>
+                    <t:outputText label="voucher.label.Group" value="#{accountVirementHome.entity.group.groupNo}"  columnClass="col-xs-12"/>
                     <t:outputText label="voucher.label.Owner" value="#{accountVirementHome.entity.owner}" columnClass="col-xs-12"/>
                     <t:outputText label="general.label.Code" value="#{accountVirementHome.entity.code}" columnClass="col-xs-12"/>
                     
@@ -52,9 +53,10 @@
             </div>
 
             <div class="col-md-4 col-xs-12">
+                <ui:remove>
                  <t:accordion icon="fa fa-file" id="cx" label="general.label.ReleatedVouchers" columnClass="col-xs-12">
                     <ul class="products-list product-list-in-box">
-                        <ui:repeat value="#{accountTxnService.getProcessVouchers(accountVirementHome.entity.processId)}" var="ci" >
+                        <ui:repeat value="#{accountTxnService.getProcessVouchers(accountVirementHome.entity.process.processNo)}" var="ci" >
                             <li class="item">
                                 <t:cellOutputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
 
@@ -68,6 +70,7 @@
                         </ui:repeat>
                     </ul>
                 </t:accordion>
+                    </ui:remove>
             </div>
 
         </div>

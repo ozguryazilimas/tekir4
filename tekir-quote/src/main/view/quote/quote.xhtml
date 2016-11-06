@@ -13,34 +13,36 @@
         <div class="row">
 
             <div class="col-md-6 col-xs-12">
-                <div class="row">
-                    <t:inputLookupDialog label="general.label.Account" value="#{quoteHome.entity.account}" lookupBean="#{contactLookup}" lookupListener="quoteHome.entity.account" placeholder="#{messages['general.info.Account']}" />
-                    <ui:remove>
-                        <t:inputMoneyAndCCY label="Paralalalala" value="#{quoteHome.entity.total}" required="true"/>
-                    </ui:remove>
+                <p:outputPanel id="ddt" styleClass="row" layout="block">
+                    <t:inputLookupDialog label="general.label.Account" value="#{quoteHome.account}" lookupBean="#{contactLookup}" lookupListener="quoteHome.account" placeholder="#{messages['general.info.Account']}" update=":form:prss" columnClass="col-xs-12"/>
+                    
                     <t:inputCurrency label="general.label.Currency" value="#{quoteHome.entity.currency}" required="true"/>
-                    <ui:remove>
-                        <t:inputMoney label="qoute.label.Total" value="#{quoteHome.entity.total}" currency="#{quoteHome.entity.currency}" required="true" readonly="true"/>
-                    </ui:remove>
-                    <t:inputDate label="quote.label.ExpireDate" value="#{quoteHome.entity.expireDate}" columnClass="col-xs-12"/>
-
-                </div>
+                    <t:inputDate label="quote.label.ExpireDate" value="#{quoteHome.entity.expireDate}" />
+                    <t:inputText label="voucher.label.Topic" value="#{quoteHome.entity.topic}"  required="true" columnClass="col-xs-12"/>
+                </p:outputPanel>
             </div>
 
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <t:inputText label="voucher.label.VoucherNo" value="#{quoteHome.entity.voucherNo}"  required="true" columnClass="col-xs-12"/>
-                    <t:inputText label="voucher.label.ReferenceNo" value="#{quoteHome.entity.referenceNo}" columnClass="col-xs-12"/>
-                    <t:inputText label="voucher.label.Process" value="#{quoteHome.entity.processId}" columnClass="col-xs-12"/>
-                    <t:inputText label="voucher.label.Owner" value="#{quoteHome.entity.owner}" columnClass="col-xs-12"/>
-                    <t:inputText label="general.label.Code" value="#{quoteHome.entity.code}" columnClass="col-xs-12"/>
+                    <t:inputDate label="voucher.label.Date" value="#{quoteHome.entity.date}" columnClass="col-md-4"/>
+                    <t:inputText label="voucher.label.VoucherNo" value="#{quoteHome.entity.voucherNo}"  required="true" readonly="true" columnClass="col-md-4"/>
+                    <t:inputText label="voucher.label.ReferenceNo" value="#{quoteHome.entity.referenceNo}" columnClass="col-md-4"/>
+                    
+                    <p:outputPanel id="prss">
+                    <t:inputProcess value="#{quoteHome.process}" lookupListener="quoteHome.process" lookupProfile="A:#{quoteHome.entity.account.id};T:SALES" update=":form:ddt" />
+                    </p:outputPanel>
+                    
+                    <t:inputLookupDialog label="voucher.label.Group" value="#{quoteHome.entity.group}" lookupBean="#{voucherGroupLookup}" lookupListener="quoteHome.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" />
+                    
+                    <t:inputText label="voucher.label.Owner" value="#{quoteHome.entity.owner}" />
+                    <t:inputText label="general.label.Code" value="#{quoteHome.entity.code}" />
                     <t:inputTextarea label="general.label.Info" value="#{quoteHome.entity.info}" columnClass="col-xs-12"/>
-                    <t:inputDate label="voucher.label.Date" value="#{quoteHome.entity.date}" columnClass="col-xs-12"/>
+                    
                 </div>
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" style="padding-top: 8px;">
             <p:dataTable id="its" value="#{quoteHome.entity.items}" var="item" editable="true" editMode="cell" reflow="true" rowIndexVar="rowKey" styleClass="col-xs-12">
 
                 <p:column headerText="Ürün">

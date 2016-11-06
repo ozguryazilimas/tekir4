@@ -9,6 +9,8 @@ import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.entities.Opportunity;
 import com.ozguryazilim.tekir.entities.Opportunity_;
 import com.ozguryazilim.tekir.entities.VoucherBase_;
+import com.ozguryazilim.tekir.entities.VoucherGroup;
+import com.ozguryazilim.tekir.entities.VoucherProcessBase_;
 import com.ozguryazilim.tekir.voucher.VoucherRepositoryBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.filters.Filter;
@@ -18,6 +20,8 @@ import javax.enterprise.context.Dependent;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.apache.deltaspike.data.api.Repository;
@@ -38,9 +42,11 @@ public abstract class OpportunityRepository extends VoucherRepositoryBase<Opport
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
         //Geriye PersonViewModel dönecek cq'yu ona göre oluşturuyoruz.
         CriteriaQuery<OpportunityViewModel> criteriaQuery = criteriaBuilder.createQuery(OpportunityViewModel.class);
+        
 
         //From 
         Root<Opportunity> from = criteriaQuery.from(Opportunity.class);
+        Join<Opportunity, VoucherGroup> joinGroup = from.join(Opportunity_.group, JoinType.LEFT);
 
         //Sonuç filtremiz
         buildVieModelSelect(criteriaQuery, from);
@@ -73,15 +79,19 @@ public abstract class OpportunityRepository extends VoucherRepositoryBase<Opport
     private void buildVieModelSelect(CriteriaQuery<OpportunityViewModel> criteriaQuery, Root<? extends Opportunity> from) {
         criteriaQuery.multiselect(
                 from.get(Opportunity_.id),
+                from.get(VoucherProcessBase_.process),
+                from.get(VoucherProcessBase_.account),
                 from.get(VoucherBase_.code),
                 from.get(VoucherBase_.voucherNo),
                 from.get(VoucherBase_.info),
                 from.get(VoucherBase_.referenceNo),
                 from.get(VoucherBase_.date),
-                from.get(VoucherBase_.processId),
                 from.get(VoucherBase_.owner),
                 from.get(VoucherBase_.state),
-                from.get(Opportunity_.topic)
+                from.get(VoucherBase_.stateReason),
+                from.get(VoucherBase_.stateInfo),
+                from.get(VoucherBase_.group),
+                from.get(VoucherBase_.topic)
         );
     }
 

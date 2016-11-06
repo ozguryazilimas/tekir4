@@ -10,6 +10,7 @@ import com.ozguryazilim.tekir.entities.AccountVirement;
 import com.ozguryazilim.tekir.entities.AccountVirement_;
 import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.tekir.entities.VoucherBase_;
+import com.ozguryazilim.tekir.entities.VoucherGroup;
 import com.ozguryazilim.tekir.voucher.VoucherRepositoryBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.filters.Filter;
@@ -19,6 +20,8 @@ import javax.enterprise.context.Dependent;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.apache.deltaspike.data.api.Repository;
@@ -41,6 +44,7 @@ public abstract class AccountVirementRepository extends VoucherRepositoryBase<Ac
 
         //From 
         Root<AccountVirement> from = criteriaQuery.from(AccountVirement.class);
+        Join<AccountVirement, VoucherGroup> joinGroup = from.join(AccountVirement_.group, JoinType.LEFT);
 
         //Sonuç filtremiz
         buildVieModelSelect(criteriaQuery, from);
@@ -82,9 +86,12 @@ public abstract class AccountVirementRepository extends VoucherRepositoryBase<Ac
                 from.get(VoucherBase_.info),
                 from.get(VoucherBase_.referenceNo),
                 from.get(VoucherBase_.date),
-                from.get(VoucherBase_.processId),
                 from.get(VoucherBase_.owner),
-                from.get(VoucherBase_.state)
+                from.get(VoucherBase_.state),
+                from.get(VoucherBase_.stateReason),
+                from.get(VoucherBase_.stateInfo),
+                from.get(VoucherBase_.group),
+                from.get(VoucherBase_.topic)
                 
         );
     }
@@ -95,7 +102,6 @@ public abstract class AccountVirementRepository extends VoucherRepositoryBase<Ac
                     criteriaBuilder.or(
                             criteriaBuilder.like(from.get(AccountVirement_.info), "%" + searchText + "%"),
                             criteriaBuilder.like(from.get(VoucherBase_.voucherNo), "%" + searchText + "%"),
-                            criteriaBuilder.like(from.get(VoucherBase_.processId), "%" + searchText + "%"),
                             criteriaBuilder.like(from.get(AccountVirement_.fromAccount).get(Contact_.name), "%" + searchText + "%"),
                             criteriaBuilder.like(from.get(AccountVirement_.toAccount).get(Contact_.name), "%" + searchText + "%")
                     )

@@ -17,20 +17,21 @@
                 <div class="row">
                     <t:inputLookupDialog label="general.label.FromAccount" value="#{accountVirementHome.entity.fromAccount}" lookupBean="#{contactLookup}" lookupListener="accountVirementHome.entity.fromAccount" placeholder="#{messages['general.info.Account']}" />
                     <t:inputLookupDialog label="general.label.ToAccount" value="#{accountVirementHome.entity.toAccount}" lookupBean="#{contactLookup}" lookupListener="accountVirementHome.entity.toAccount" placeholder="#{messages['general.info.Account']}" />
+                    <t:inputText label="voucher.label.Topic" value="#{accountVirementHome.entity.topic}"  required="false" columnClass="col-xs-12"/>
                     <t:inputTextarea label="general.label.Info" value="#{accountVirementHome.entity.info}" columnClass="col-xs-12"/>
-                    <t:inputCurrency label="general.label.Currency" value="#{accountVirementHome.entity.currency}"  required="true" columnClass="col-xs-12"/>
-                    <t:inputMoney label="accountVirement.label.Amount" value="#{accountVirementHome.entity.amount}"  currency="#{accountVirementHome.entity.currency}" required="true" columnClass="col-xs-12"/>
+                    <t:inputCurrency label="general.label.Currency" value="#{accountVirementHome.entity.currency}"  required="true" />
+                    <t:inputMoney label="accountVirement.label.Amount" value="#{accountVirementHome.entity.amount}"  currency="#{accountVirementHome.entity.currency}" required="true" />
                 </div>
             </div>
             
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <t:inputText label="voucher.label.VoucherNo" value="#{accountVirementHome.entity.voucherNo}"  required="true" columnClass="col-xs-12"/>
-                    <t:inputText label="voucher.label.ReferenceNo" value="#{accountVirementHome.entity.referenceNo}" columnClass="col-xs-12"/>
-                    <t:inputText label="voucher.label.Process" value="#{accountVirementHome.entity.processId}" columnClass="col-xs-12"/>
-                    <t:inputText label="voucher.label.Owner" value="#{accountVirementHome.entity.owner}" columnClass="col-xs-12"/>
-                    <t:inputText label="general.label.Code" value="#{accountVirementHome.entity.code}" columnClass="col-xs-12"/>
+                    <t:inputText label="voucher.label.VoucherNo" value="#{accountVirementHome.entity.voucherNo}"  required="true" readonly="true" />
+                    <t:inputText label="voucher.label.ReferenceNo" value="#{accountVirementHome.entity.referenceNo}" />
                     
+                    <t:inputText label="voucher.label.Owner" value="#{accountVirementHome.entity.owner}" />
+                    <t:inputText label="general.label.Code" value="#{accountVirementHome.entity.code}" />
+                    <t:inputLookupDialog label="voucher.label.Group" value="#{accountVirementHome.entity.group}" lookupBean="#{voucherGroupLookup}" lookupListener="accountVirementHome.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" />
                     <t:inputDate label="voucher.label.Date" value="#{accountVirementHome.entity.date}" columnClass="col-xs-12"/>
                 </div>
             </div>

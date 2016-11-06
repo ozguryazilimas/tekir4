@@ -44,7 +44,6 @@ public class AccountCreditNoteBrowse extends VoucherBrowseBase<AccountCreditNote
                 .addColumn(new TextColumn<>(VoucherBase_.info, "general.label.Info"), true)
                 .addColumn(new TextColumn<>(VoucherBase_.code, "general.label.Code"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.referenceNo, "general.label.ReferanceNo"), false)
-                .addColumn(new TextColumn<>(VoucherBase_.processId, "general.label.ProcessId"), false)
                 //.addColumn(new TextColumn<>(VoucherBase_.stateReason, "general.label.StateReason"), true)
                 //.addColumn(new TextColumn<>(VoucherBase_.stateInfo, "general.label.StateInfo"), false)
                 .addColumn(new MoneyColumn<>(AccountCreditNote_.amount, AccountCreditNote_.currency, "general.label.Amount"), true);
@@ -53,7 +52,6 @@ public class AccountCreditNoteBrowse extends VoucherBrowseBase<AccountCreditNote
                 .addFilter(new StringFilter<>(VoucherBase_.voucherNo, "voucher.label.VoucherNo"))
                 .addFilter(new StringFilter<>(VoucherBase_.code, "voucher.label.Code"))
                 .addFilter(new StringFilter<>(VoucherBase_.info, "voucher.label.Info"))
-                .addFilter(new StringFilter<>(VoucherBase_.processId, "voucher.label.Process"))
                 .addFilter(new DateFilter<>(VoucherBase_.date, "voucher.label.Date"));
                 
     }

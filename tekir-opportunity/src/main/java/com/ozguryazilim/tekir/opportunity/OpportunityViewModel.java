@@ -6,123 +6,21 @@
 package com.ozguryazilim.tekir.opportunity;
 
 
+import com.ozguryazilim.tekir.entities.Contact;
+import com.ozguryazilim.tekir.entities.Process;
+import com.ozguryazilim.tekir.entities.VoucherGroup;
 import com.ozguryazilim.tekir.entities.VoucherState;
-import com.ozguryazilim.telve.entities.ViewModel;
-import java.io.Serializable;
+import com.ozguryazilim.tekir.voucher.VoucherProcessViewModel;
 import java.util.Date;
 
 /**
  *
  * @author oyas
  */
-public class OpportunityViewModel implements ViewModel, Serializable{
-    
-    private Long id;
-    private String code;
-    private String voucherNo;
-    private String info;
-    private String referenceNo;
-    private Date date;
-    private String processId;
-    private String owner;
-    private VoucherState state;
-    private String topic;
+public class OpportunityViewModel extends VoucherProcessViewModel{
 
-    public OpportunityViewModel(Long id, String code, String voucherNo, String info, String referenceNo, Date date, String processId, String owner, VoucherState state, String topic) {
-        this.id = id;
-        this.code = code;
-        this.voucherNo = voucherNo;
-        this.info = info;
-        this.referenceNo = referenceNo;
-        this.date = date;
-        this.processId = processId;
-        this.owner = owner;
-        this.state = state;
-        this.topic = topic;
+    public OpportunityViewModel(Long id, Process process, Contact account, String code, String voucherNo, String info, String referenceNo, Date date, String owner, VoucherState state, String stateReason, String stateInfo, VoucherGroup group, String topic) {
+        super(id, process, account, code, voucherNo, info, referenceNo, date, owner, state, stateReason, stateInfo, group, topic);
     }
-
-    
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getVoucherNo() {
-        return voucherNo;
-    }
-
-    public void setVoucherNo(String voucherNo) {
-        this.voucherNo = voucherNo;
-    }
-
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
-    }
-
-    public String getReferenceNo() {
-        return referenceNo;
-    }
-
-    public void setReferenceNo(String referenceNo) {
-        this.referenceNo = referenceNo;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public String getProcessId() {
-        return processId;
-    }
-
-    public void setProcessId(String processId) {
-        this.processId = processId;
-    }
-
-    public String getOwner() {
-        return owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
-    }
-
-    public VoucherState getState() {
-        return state;
-    }
-
-    public void setState(VoucherState state) {
-        this.state = state;
-    }
-
-    public String getTopic() {
-        return topic;
-    }
-
-    public void setTopic(String topic) {
-        this.topic = topic;
-    }
-
-    
-    
     
 }

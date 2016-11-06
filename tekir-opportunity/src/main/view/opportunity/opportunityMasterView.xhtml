@@ -16,6 +16,7 @@
                         <t:outputCurrency label="general.label.Currency" value="#{opportunityHome.entity.currency}"  columnClass="col-xs-12"/>
                     </ui:remove>
                     <t:outputMoney label="opportunity.label.Budget" value="#{opportunityHome.entity.budget}" currency="#{opportunityHome.entity.currency}" columnClass="col-xs-12"/>
+                    <t:outputText label="opportunity.label.Probability" value="%#{opportunityHome.entity.probability}" columnClass="col-xs-12"/>
                     <t:outputText label="opportunity.label.Sitiuation" value="#{opportunityHome.entity.situation}" columnClass="col-xs-12"/>
                     <t:outputText label="opportunity.label.CustomerNeed" value="#{opportunityHome.entity.customerNeed}" columnClass="col-xs-12"/>
                     <t:outputText label="opportunity.label.Solution" value="#{opportunityHome.entity.solution}" columnClass="col-xs-12"/>
@@ -24,7 +25,7 @@
                 <t:accordion icon="fa fa-file-text" label="general.label.Voucher" columnClass="col-xs-12">
                     <t:outputText label="voucher.label.VoucherNo" value="#{opportunityHome.entity.voucherNo}"  columnClass="col-xs-12"/>
                     <t:outputText label="voucher.label.ReferenceNo" value="#{opportunityHome.entity.referenceNo}" columnClass="col-xs-12"/>
-                    <t:outputText label="voucher.label.Process" value="#{opportunityHome.entity.processId}" columnClass="col-xs-12"/>
+                    <t:outputText label="voucher.label.Process" value="#{opportunityHome.entity.process.processNo}" columnClass="col-xs-12"/>
                     <t:outputText label="voucher.label.Owner" value="#{opportunityHome.entity.owner}" columnClass="col-xs-12"/>
                     <t:outputText label="general.label.Code" value="#{opportunityHome.entity.code}" columnClass="col-xs-12"/>
                     <t:outputText label="general.label.Info" value="#{opportunityHome.entity.info}" columnClass="col-xs-12"/>
@@ -64,7 +65,7 @@
 
                 <t:accordion icon="fa fa-file" id="cx" label="general.label.ReleatedVouchers" columnClass="col-xs-12">
                     <ul class="products-list product-list-in-box">
-                        <ui:repeat value="#{accountTxnService.getProcessVouchers(opportunityHome.entity.processId)}" var="ci" >
+                        <ui:repeat value="#{accountTxnService.getProcessVouchers(opportunityHome.entity.process.processNo)}" var="ci" >
                             <li class="item">
                                 <t:cellOutputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
 

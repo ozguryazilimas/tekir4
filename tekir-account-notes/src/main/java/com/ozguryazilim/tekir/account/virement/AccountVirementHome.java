@@ -5,7 +5,6 @@
  */
 package com.ozguryazilim.tekir.account.virement;
 
-import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.account.config.AccountNotePages;
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.AccountVirement;
@@ -13,6 +12,7 @@ import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.tekir.voucher.VoucherFormBase;
 import com.ozguryazilim.tekir.voucher.VoucherStateAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateConfig;
+import com.ozguryazilim.tekir.voucher.process.ProcessService;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.feature.FeatureHandler;
 import com.ozguryazilim.telve.forms.FormEdit;
@@ -35,19 +35,15 @@ public class AccountVirementHome extends VoucherFormBase<AccountVirement>{
     @Inject
     private SequenceManager sequenceManager;
     
+    @Inject
+    private ProcessService processService;
+    
     @Override
     public void createNew() {
         super.createNew(); 
         getEntity().setCurrency(currencyService.getDefaultCurrency());
     }
 
-    @Override
-    public boolean onBeforeSave() {
-        if( Strings.isNullOrEmpty( getEntity().getProcessId() )){
-            getEntity().setProcessId(sequenceManager.getNewSerialNumber("PS", 6));
-        }
-        return super.onBeforeSave();
-    }
     
     @Override
     protected VoucherStateConfig buildStateConfig() {

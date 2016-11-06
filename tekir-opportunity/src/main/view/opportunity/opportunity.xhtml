@@ -18,8 +18,16 @@
                     <t:inputLookupDialog label="general.label.Account" value="#{opportunityHome.entity.account}" lookupBean="#{contactLookup}" lookupListener="opportunityHome.entity.account" placeholder="#{messages['general.info.Account']}" />
                     <t:inputLookupDialog label="general.label.PrimaryContact" value="#{opportunityHome.entity.primaryContact}" lookupBean="#{contactLookup}" lookupListener="opportunityHome.entity.primaryContact" placeholder="#{messages['general.info.PrimaryContact']}" />
                     <t:inputText label="opportunity.label.Topic" value="#{opportunityHome.entity.topic}"  required="true" columnClass="col-xs-12"/>
-                    <t:inputCurrency label="general.label.Currency" value="#{opportunityHome.entity.currency}"  required="true" columnClass="col-xs-12"/>
-                    <t:inputMoney label="opportunity.label.Budget" value="#{opportunityHome.entity.budget}"  currency="#{opportunityHome.entity.currency}" required="true" columnClass="col-xs-12"/>
+                    <t:inputCurrency label="general.label.Currency" value="#{opportunityHome.entity.currency}"  required="true" />
+                    <t:inputMoney label="opportunity.label.Budget" value="#{opportunityHome.entity.budget}"  currency="#{opportunityHome.entity.currency}" required="true" />
+                    <t:inputAny label="opportunity.label.Probability" columnClass="col-xs-12">
+                        <h:outputText id="txt3output" value="%#{opportunityHome.entity.probability}" />
+                        <h:inputHidden id="txt3" value="#{opportunityHome.entity.probability}" />
+                        <span style="width: 99%">
+                        <p:slider for="txt3" display="txt3output" step="5" displayTemplate="%{value}" style="background-color: #4A89DC;"/>
+                        </span>
+                        
+                    </t:inputAny>
                     <t:inputTextarea label="opportunity.label.Sitiuation" value="#{opportunityHome.entity.situation}" columnClass="col-xs-12"/>
                     <t:inputTextarea label="opportunity.label.CustomerNeed" value="#{opportunityHome.entity.customerNeed}" columnClass="col-xs-12"/>
                     <t:inputTextarea label="opportunity.label.Solution" value="#{opportunityHome.entity.solution}" columnClass="col-xs-12"/>
@@ -28,13 +36,17 @@
             
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <t:inputText label="voucher.label.VoucherNo" value="#{opportunityHome.entity.voucherNo}"  required="true" columnClass="col-xs-12"/>
-                    <t:inputText label="voucher.label.ReferenceNo" value="#{opportunityHome.entity.referenceNo}" columnClass="col-xs-12"/>
-                    <t:inputText label="voucher.label.Process" value="#{opportunityHome.entity.processId}" columnClass="col-xs-12"/>
-                    <t:inputText label="voucher.label.Owner" value="#{opportunityHome.entity.owner}" columnClass="col-xs-12"/>
-                    <t:inputText label="general.label.Code" value="#{opportunityHome.entity.code}" columnClass="col-xs-12"/>
+                    <t:inputDate label="voucher.label.Date" value="#{opportunityHome.entity.date}" columnClass="col-md-4"/>
+                    <t:inputText label="voucher.label.VoucherNo" value="#{opportunityHome.entity.voucherNo}"  required="true" readonly="true" columnClass="col-md-4"/>
+                    <t:inputText label="voucher.label.ReferenceNo" value="#{opportunityHome.entity.referenceNo}" columnClass="col-md-4"/>
+                    <ui:remove>
+                    <t:inputText label="voucher.label.Process" value="#{opportunityHome.entity.process.processNo}" columnClass="col-xs-12"/>
+                    </ui:remove>
+                    <t:inputLookupDialog label="voucher.label.Group" value="#{opportunityHome.entity.group}" lookupBean="#{voucherGroupLookup}" lookupListener="opportunityHome.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" columnClass="col-xs-12"/>
+                    <t:inputText label="voucher.label.Owner" value="#{opportunityHome.entity.owner}" />
+                    <t:inputText label="general.label.Code" value="#{opportunityHome.entity.code}" />
                     <t:inputTextarea label="general.label.Info" value="#{opportunityHome.entity.info}" columnClass="col-xs-12"/>
-                    <t:inputDate label="voucher.label.Date" value="#{opportunityHome.entity.date}" columnClass="col-xs-12"/>
+                    
                 </div>
             </div>
 

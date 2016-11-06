@@ -190,6 +190,5 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
     public VoucherStateAction getDlgStateAction() {
         return dlgStateAction;
     }
-    
-    
+
 }

@@ -5,7 +5,6 @@
  */
 package com.ozguryazilim.tekir.account.credit;
 
-import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.account.config.AccountNotePages;
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.AccountCreditNote;
@@ -43,9 +42,10 @@ public class AccountCreditNoteHome extends VoucherFormBase<AccountCreditNote>{
 
     @Override
     public boolean onBeforeSave() {
+        /* ProcessService'den alınacak
         if( Strings.isNullOrEmpty( getEntity().getProcessId() )){
             getEntity().setProcessId(sequenceManager.getNewSerialNumber("PS", 6));
-        }
+        }*/
         return super.onBeforeSave();
     }
     

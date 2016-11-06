@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.tekir.voucher;
 
+import com.ozguryazilim.tekir.entities.VoucherGroup;
 import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.telve.entities.ViewModel;
 import java.io.Serializable;
@@ -23,22 +24,29 @@ public class VoucherViewModel implements ViewModel, Serializable{
     private String info;
     private String referenceNo;
     private Date date;
-    private String processId;
     private String owner;
     private VoucherState state;
+    private String stateReason;
+    private String stateInfo;
+    private VoucherGroup group;
+    private String topic;
 
-    public VoucherViewModel(Long id, String code, String voucherNo, String info, String referenceNo, Date date, String processId, String owner, VoucherState state) {
+    public VoucherViewModel(Long id, String code, String voucherNo, String info, String referenceNo, Date date, String owner, VoucherState state, String stateReason, String stateInfo, VoucherGroup group, String topic) {
         this.id = id;
         this.code = code;
         this.voucherNo = voucherNo;
         this.info = info;
         this.referenceNo = referenceNo;
         this.date = date;
-        this.processId = processId;
         this.owner = owner;
         this.state = state;
+        this.stateReason = stateReason;
+        this.stateInfo = stateInfo;
+        this.group = group;
+        this.topic = topic;
     }
 
+    
     
     @Override
     public Long getId() {
@@ -89,14 +97,6 @@ public class VoucherViewModel implements ViewModel, Serializable{
         this.date = date;
     }
 
-    public String getProcessId() {
-        return processId;
-    }
-
-    public void setProcessId(String processId) {
-        this.processId = processId;
-    }
-
     public String getOwner() {
         return owner;
     }
@@ -113,5 +113,38 @@ public class VoucherViewModel implements ViewModel, Serializable{
         this.state = state;
     }
 
+    public String getStateReason() {
+        return stateReason;
+    }
+
+    public void setStateReason(String stateReason) {
+        this.stateReason = stateReason;
+    }
+
+    public String getStateInfo() {
+        return stateInfo;
+    }
+
+    public void setStateInfo(String stateInfo) {
+        this.stateInfo = stateInfo;
+    }
+
+    public VoucherGroup getGroup() {
+        return group;
+    }
+
+    public void setGroup(VoucherGroup group) {
+        this.group = group;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
+
+    
     
 }

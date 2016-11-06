@@ -4,6 +4,7 @@ import com.ozguryazilim.tekir.account.AccountTxnService;
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.Commodity;
 import com.ozguryazilim.tekir.entities.Contact;
+import com.ozguryazilim.tekir.entities.ProcessType;
 import com.ozguryazilim.tekir.entities.Quantity;
 import com.ozguryazilim.telve.forms.FormEdit;
 import com.ozguryazilim.tekir.entities.Quote;
@@ -18,6 +19,7 @@ import com.ozguryazilim.tekir.voucher.VoucherCommodityItemEditorListener;
 import com.ozguryazilim.tekir.voucher.VoucherFormBase;
 import com.ozguryazilim.tekir.voucher.VoucherStateAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateConfig;
+import com.ozguryazilim.tekir.voucher.process.ProcessService;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureHandler;
@@ -30,6 +32,10 @@ import javax.inject.Inject;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.SelectEvent;
+import com.ozguryazilim.tekir.entities.Process;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 
 /**
  * Home Control Class
@@ -50,7 +56,10 @@ public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodit
     
     @Inject
     private VoucherCommodityItemEditor commodityItemEditor;
-    
+
+    @Inject
+    private ProcessService processService;
+
     private QuoteItem selectedItem;
 
     @Override
@@ -62,7 +71,10 @@ public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodit
     public void createNew() {
         super.createNew();
 
-        getEntity().setCurrency(currencyService.getDefaultCurrency().getCurrencyCode());
+        getEntity().setCurrency(currencyService.getDefaultCurrency());
+        //TODO: Bu iş için DateUtils fean yazmak lazım.
+        LocalDateTime dt = LocalDateTime.now();
+        getEntity().setExpireDate( Date.from(dt.plusDays(30).atZone(ZoneId.systemDefault()).toInstant()));
     }
 
     public void addItem() {
@@ -77,7 +89,7 @@ public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodit
     public void addItem2() {
         QuoteItem item = new QuoteItem();    
         item.setMaster(getEntity());
-        commodityItemEditor.openDialog(item, Currency.getInstance(getEntity().getCurrency()) , this);
+        commodityItemEditor.openDialog(item, getEntity().getCurrency(), this);
     }
 
     public void editItem(QuoteItem item) {
@@ -104,6 +116,11 @@ public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodit
     public boolean onBeforeSave() {
 
         calcSummaries();
+
+        //Eğer daha önce bir process alınmamış ise yeni bir tane oluştur.
+        if( getEntity().getProcess() == null ) {
+            getEntity().setProcess(processService.createProcess(getEntity().getAccount(), getEntity().getTopic(), ProcessType.SALES));
+        }
         
         //TODO: Burada vergi hesaplama felan da yapmak lazım.
         return super.onBeforeSave();
@@ -111,7 +128,7 @@ public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodit
 
     @Override
     public boolean onAfterSave() {
-        accountTxnService.saveFeature(getFeaturePointer(), getEntity().getAccount(), getEntity().getCode(), getEntity().getInfo(), Boolean.FALSE, Boolean.TRUE, Currency.getInstance(getEntity().getCurrency()), getEntity().getTotal(), getEntity().getDate(), getEntity().getOwner(), getEntity().getProcessId(), getEntity().getState().getName(), getEntity().getStateReason());
+        accountTxnService.saveFeature(getFeaturePointer(), getEntity().getAccount(), getEntity().getCode(), getEntity().getInfo(), Boolean.FALSE, Boolean.TRUE, getEntity().getCurrency(), getEntity().getTotal(), getEntity().getDate(), getEntity().getOwner(), getEntity().getProcess().getProcessNo(), getEntity().getState().getName(), getEntity().getStateReason());
         return super.onAfterSave(); //To change body of generated methods, choose Tools | Templates.
     }
     
@@ -349,7 +366,8 @@ public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodit
         
         getEntity().setAccount(contact);
         getEntity().setStarter(featurePointer);
-        getEntity().setProcessId(processId);
+        //FIXME: Burası düzeltilecek. Process bilgisi doğru taşınmalı
+        //getEntity().setProcess(processId);
         
         return page;
     }
@@ -409,5 +427,24 @@ public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodit
     public void saveItem(VoucherCommodityItemBase item) {
         getEntity().getItems().add((QuoteItem) item);
         calcSummaries();
+    }
+    
+    public Process getProcess(){
+        return getEntity().getProcess();
+    }
+    
+    public void setProcess( Process process ){
+        getEntity().setProcess(process);
+        getEntity().setAccount(process.getAccount());
+        getEntity().setTopic(process.getTopic());
+    }
+    
+    public Contact getAccount(){
+        return getEntity().getAccount();
+    }
+    
+    public void setAccount( Contact account ){
+        getEntity().setAccount(account);
+        getEntity().setProcess(null);
     }
 }

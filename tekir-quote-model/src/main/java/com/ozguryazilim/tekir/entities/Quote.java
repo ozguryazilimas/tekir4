@@ -7,6 +7,7 @@ package com.ozguryazilim.tekir.entities;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +38,7 @@ import org.hibernate.annotations.LazyCollectionOption;
  */
 @Entity
 @Table(name = "TSQ_QUOTE")
-public class Quote extends VoucherBase{
+public class Quote extends VoucherProcessBase{
     
     @Id 
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "genericSeq")
@@ -45,13 +46,6 @@ public class Quote extends VoucherBase{
     private Long id;
 
 
-        /**
-     * Hangi müşteri için
-     */
-    @ManyToOne
-    @JoinColumn(name = "ACCOUNT_ID", foreignKey = @ForeignKey(name = "FK_OPP_ACC"))
-    private Contact account;
-    
     //Kaybedilen rakip bilgisi
     @ManyToOne
     @JoinColumn(name = "COMPETITOR_ID", foreignKey = @ForeignKey(name = "FK_OPP_COMP"))
@@ -80,7 +74,7 @@ public class Quote extends VoucherBase{
     //FIXME: Teslimat ve Ödeme kuralları alınmalı
     
     @Column(name = "TOT_CCY")
-    private String currency;
+    private Currency currency;
     
     @Column(name = "TOT_AMT")
     private BigDecimal total = BigDecimal.ZERO;
@@ -118,19 +112,11 @@ public class Quote extends VoucherBase{
         this.items = items;
     }
 
-    public Contact getAccount() {
-        return account;
-    }
-
-    public void setAccount(Contact account) {
-        this.account = account;
-    }
-
-    public String getCurrency() {
+    public Currency getCurrency() {
         return currency;
     }
 
-    public void setCurrency(String currency) {
+    public void setCurrency(Currency currency) {
         this.currency = currency;
     }
 

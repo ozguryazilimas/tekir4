@@ -97,7 +97,7 @@
                             <referenceUrl>hibernate:ejb3:tekirCore</referenceUrl>
                             <verbose>true</verbose>
                             <logging>debug</logging>
-                            <diffIncludeObjects>table:TCO_.*</diffIncludeObjects>
+                            <diffIncludeObjects>table:TVO_.*</diffIncludeObjects>
                         </configuration>
                         <dependencies>
                             <dependency>

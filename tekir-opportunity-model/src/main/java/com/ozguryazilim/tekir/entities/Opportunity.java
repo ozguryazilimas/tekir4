@@ -27,26 +27,13 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "TCO_OPPOTUNITY")
-public class Opportunity extends VoucherBase{
+public class Opportunity extends VoucherProcessBase{
 
     
     @Id 
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "genericSeq")
     @Column(name = "ID")
     private Long id;
-    
-    /**
-     * Fırsatın konusu, başlığı
-     */
-    @Column(name = "TOPIC")
-    private String topic;
-    
-    /**
-     * Hangi müşteri için
-     */
-    @ManyToOne
-    @JoinColumn(name = "ACCOUNT_ID", foreignKey = @ForeignKey(name = "FK_OPP_ACC"))
-    private Contact account;
     
     @ManyToOne
     @JoinColumn(name = "CONTACT_ID", foreignKey = @ForeignKey(name = "FK_OPP_PER"))
@@ -116,22 +103,6 @@ public class Opportunity extends VoucherBase{
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getTopic() {
-        return topic;
-    }
-
-    public void setTopic(String topic) {
-        this.topic = topic;
-    }
-
-    public Contact getAccount() {
-        return account;
-    }
-
-    public void setAccount(Contact account) {
-        this.account = account;
     }
 
     public Person getPrimaryContact() {

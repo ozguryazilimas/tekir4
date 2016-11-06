@@ -6,6 +6,8 @@ import javax.enterprise.context.Dependent;
 import com.ozguryazilim.tekir.entities.Quote;
 import com.ozguryazilim.tekir.entities.Quote_;
 import com.ozguryazilim.tekir.entities.VoucherBase_;
+import com.ozguryazilim.tekir.entities.VoucherGroup;
+import com.ozguryazilim.tekir.entities.VoucherProcessBase_;
 import com.ozguryazilim.tekir.voucher.VoucherRepositoryBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.filters.Filter;
@@ -14,6 +16,8 @@ import java.util.List;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -36,6 +40,7 @@ public abstract class QuoteRepository extends VoucherRepositoryBase<Quote, Quote
 
         //From 
         Root<Quote> from = criteriaQuery.from(Quote.class);
+        Join<Quote, VoucherGroup> joinGroup = from.join(Quote_.group, JoinType.LEFT);
 
         //Sonuç filtremiz
         buildVieModelSelect(criteriaQuery, from);
@@ -73,14 +78,19 @@ public abstract class QuoteRepository extends VoucherRepositoryBase<Quote, Quote
     private void buildVieModelSelect(CriteriaQuery<QuoteViewModel> criteriaQuery, Root<? extends Quote> from) {
         criteriaQuery.multiselect(
                 from.get(Quote_.id),
+                from.get(VoucherProcessBase_.process),
+                from.get(VoucherProcessBase_.account),
                 from.get(VoucherBase_.code),
                 from.get(VoucherBase_.voucherNo),
                 from.get(VoucherBase_.info),
                 from.get(VoucherBase_.referenceNo),
                 from.get(VoucherBase_.date),
-                from.get(VoucherBase_.processId),
                 from.get(VoucherBase_.owner),
-                from.get(VoucherBase_.state)
+                from.get(VoucherBase_.state),
+                from.get(VoucherBase_.stateReason),
+                from.get(VoucherBase_.stateInfo),
+                from.get(VoucherBase_.group),
+                from.get(VoucherBase_.topic)
         );
     }
 

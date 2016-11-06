@@ -5,7 +5,6 @@
  */
 package com.ozguryazilim.tekir.account.debit;
 
-import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.account.config.AccountNotePages;
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.AccountDebitNote;
@@ -43,9 +42,11 @@ public class AccountDebitNoteHome extends VoucherFormBase<AccountDebitNote>{
 
     @Override
     public boolean onBeforeSave() {
+        /* FIXME: ProcessService'den alınacak
         if( Strings.isNullOrEmpty( getEntity().getProcessId() )){
             getEntity().setProcessId(sequenceManager.getNewSerialNumber("PS", 6));
         }
+        */
         return super.onBeforeSave();
     }
     

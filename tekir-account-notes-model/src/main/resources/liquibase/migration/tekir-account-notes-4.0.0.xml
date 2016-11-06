@@ -85,6 +85,66 @@
             <column name="TO_ACCOUNT_ID" type="BIGINT"/>
         </createTable>
     </changeSet>
+    <changeSet author="oyas (generated)" id="1478453353504-7">
+        <dropColumn tableName="TAN_CREDIT_NOTE">
+            <column name="PROCESS_ID" />
+        </dropColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1478453353504-8">
+        <dropColumn tableName="TAN_DEBIT_NOTE">
+            <column name="PROCESS_ID" />
+        </dropColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1478453353504-9">
+        <dropColumn tableName="TAN_VIREMENT">
+            <column name="PROCESS_ID" />
+        </dropColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1478453353504-4">
+        <addColumn tableName="TAN_CREDIT_NOTE">
+            <column name="PROCESS_ID" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1478453353504-5">
+        <addColumn tableName="TAN_DEBIT_NOTE">
+            <column name="PROCESS_ID" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1478453353504-6">
+        <addColumn tableName="TAN_VIREMENT">
+            <column name="PROCESS_ID" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1478453353504-1">
+        <addColumn tableName="TAN_CREDIT_NOTE">
+            <column name="GROUP_ID" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1478453353504-2">
+        <addColumn tableName="TAN_DEBIT_NOTE">
+            <column name="GROUP_ID" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1478453353504-3">
+        <addColumn tableName="TAN_VIREMENT">
+            <column name="GROUP_ID" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1478459562366-1">
+        <addColumn tableName="TAN_CREDIT_NOTE">
+            <column name="TOPIC" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1478459562366-2">
+        <addColumn tableName="TAN_DEBIT_NOTE">
+            <column name="TOPIC" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1478459562366-3">
+        <addColumn tableName="TAN_VIREMENT">
+            <column name="TOPIC" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
     <changeSet author="oyas (generated)" id="1478422974382-4">
         <addForeignKeyConstraint baseColumnNames="ACCOUNT_ID" baseTableName="TAN_DEBIT_NOTE" constraintName="FK_AN_ACC" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
     </changeSet>

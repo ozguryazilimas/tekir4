@@ -5,16 +5,17 @@
  */
 package com.ozguryazilim.tekir.opportunity;
 
-import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.account.AccountTxnService;
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.Opportunity;
+import com.ozguryazilim.tekir.entities.ProcessType;
 import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.tekir.opportunity.config.OpportunityPages;
 import com.ozguryazilim.tekir.quote.QuoteHome;
 import com.ozguryazilim.tekir.voucher.VoucherFormBase;
 import com.ozguryazilim.tekir.voucher.VoucherStateAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateConfig;
+import com.ozguryazilim.tekir.voucher.process.ProcessService;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureHandler;
@@ -45,11 +46,15 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
     @Inject
     private AccountTxnService accountTxnService;
     
+    @Inject
+    private ProcessService processService;
+    
     @Override
     public void createNew() {
         super.createNew(); 
         
         getEntity().setCurrency(currencyService.getDefaultCurrency());
+        getEntity().setProbability(50);
         
     }
     
@@ -67,8 +72,10 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
             getEntity().setState(VoucherState.OPEN);
         }
         
-        if( Strings.isNullOrEmpty( getEntity().getProcessId() )){
-            getEntity().setProcessId(sequenceManager.getNewSerialNumber("PS", 6));
+        //Opportunity'de bir process id'si doğal olarak olmayacak. Satış süreci ilk kez buradan başlar :)
+        //Eğer daha önce bir process alınmamış ise yeni bir tane oluştur.
+        if( getEntity().getProcess() == null ) {
+            getEntity().setProcess(processService.createProcess(getEntity().getAccount(), getEntity().getTopic(), ProcessType.SALES));
         }
         
         return super.onBeforeSave(); //To change body of generated methods, choose Tools | Templates.
@@ -76,7 +83,7 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
 
     @Override
     public boolean onAfterSave() {
-        accountTxnService.saveFeature(getFeaturePointer(), getEntity().getAccount(), getEntity().getCode(), getEntity().getTopic(), Boolean.FALSE, Boolean.TRUE, getEntity().getCurrency(), getEntity().getBudget(), getEntity().getDate(), getEntity().getOwner(), getEntity().getProcessId(), getEntity().getState().toString(), getEntity().getStateReason());
+        accountTxnService.saveFeature(getFeaturePointer(), getEntity().getAccount(), getEntity().getCode(), getEntity().getTopic(), Boolean.FALSE, Boolean.TRUE, getEntity().getCurrency(), getEntity().getBudget(), getEntity().getDate(), getEntity().getOwner(), getEntity().getProcess().getProcessNo(), getEntity().getState().toString(), getEntity().getStateReason());
         
         return super.onAfterSave(); //To change body of generated methods, choose Tools | Templates.
     }
@@ -96,7 +103,8 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
         fp.setPrimaryKey(getEntity().getId());
         fp.setFeature(getEntity().getClass().getSimpleName());
         
-        return quoteHome.createFromFeature(  fp, getEntity().getAccount(), getEntity().getProcessId());
+        //FIXME: Buralar düzeltilecek
+        return null; //quoteHome.createFromFeature(  fp, getEntity().getAccount(), getEntity().getProcessId());
         
     }
     

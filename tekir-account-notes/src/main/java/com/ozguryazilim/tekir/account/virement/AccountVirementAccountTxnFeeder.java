@@ -39,8 +39,8 @@ public class AccountVirementAccountTxnFeeder implements Serializable{
             voucherPointer.setFeature(entity.getClass().getSimpleName());
 
             
-            accountTxnService.saveFeature(voucherPointer, entity.getFromAccount(), entity.getCode(), entity.getInfo(), Boolean.TRUE, Boolean.TRUE, entity.getCurrency(), entity.getAmount(), entity.getDate(), entity.getOwner(), entity.getProcessId(), entity.getState().toString(), entity.getStateReason());
-            accountTxnService.saveFeature(voucherPointer, entity.getToAccount(), entity.getCode(), entity.getInfo(), Boolean.TRUE, Boolean.FALSE, entity.getCurrency(), entity.getAmount(), entity.getDate(), entity.getOwner(), entity.getProcessId(), entity.getState().toString(), entity.getStateReason());
+            accountTxnService.saveFeature(voucherPointer, entity.getFromAccount(), entity.getCode(), entity.getInfo(), Boolean.TRUE, Boolean.TRUE, entity.getCurrency(), entity.getAmount(), entity.getDate(), entity.getOwner(), null, entity.getState().toString(), entity.getStateReason());
+            accountTxnService.saveFeature(voucherPointer, entity.getToAccount(), entity.getCode(), entity.getInfo(), Boolean.TRUE, Boolean.FALSE, entity.getCurrency(), entity.getAmount(), entity.getDate(), entity.getOwner(), null, entity.getState().toString(), entity.getStateReason());
         }
         
         //TODO: Delete edildiğinde de gidip txn'den silme yapılmalı.

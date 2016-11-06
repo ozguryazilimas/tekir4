@@ -52,6 +52,33 @@
             <column name="STATE_INFO" type="VARCHAR(255)"/>
         </addColumn>
     </changeSet>
+    <changeSet author="oyas (generated)" id="1478453126259-5">
+        <dropColumn tableName="TCO_OPPOTUNITY">
+            <column name="PROCESS_ID" />
+        </dropColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1478453126259-6">
+        <addColumn tableName="TCO_OPPOTUNITY">
+            <column name="PROCESS_ID" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1478453126259-1">
+        <addColumn tableName="TCO_OPPOTUNITY">
+            <column name="GROUP_ID" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <!--
+     <changeSet author="oyas (generated)" id="1470507539036-1">
+        <addColumn tableName="TCO_OPPOTUNITY">
+            <column name="BUDGET" type="decimal(19, 2)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1470507539036-2">
+        <addColumn tableName="TCO_OPPOTUNITY">
+            <column name="CCY" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    -->
     <changeSet author="oyas (generated)" id="1469889916962-2">
         <addForeignKeyConstraint baseColumnNames="ACCOUNT_ID" baseTableName="TCO_OPPOTUNITY" constraintName="FK_OPP_ACC" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
     </changeSet>

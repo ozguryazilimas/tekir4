@@ -76,6 +76,26 @@
             <column name="STATE_INFO" type="VARCHAR(255)"/>
         </addColumn>
     </changeSet>
+    <changeSet author="oyas (generated)" id="1478453265724-5">
+        <dropColumn tableName="TSQ_QUOTE">
+            <column name="PROCESS_ID" />
+        </dropColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1478453265724-6">
+        <addColumn tableName="TSQ_QUOTE">
+            <column name="PROCESS_ID" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1478453265724-1">
+        <addColumn tableName="TSQ_QUOTE">
+            <column name="GROUP_ID" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1478459604822-1">
+        <addColumn tableName="TSQ_QUOTE">
+            <column name="TOPIC" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
     <changeSet author="oyas (generated)" id="1469961995803-3">
         <addForeignKeyConstraint baseColumnNames="COMMODITY_ID" baseTableName="TSQ_QUOTE_ITEM" constraintName="FK_QUOTEIT_COMMO" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_COMMOTITY"/>
     </changeSet>

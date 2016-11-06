@@ -18,10 +18,9 @@
                 <t:accordion icon="fa fa-file-text" label="general.label.Voucher" columnClass="col-xs-12">
                     <t:outputText label="voucher.label.VoucherNo" value="#{accountCreditNoteHome.entity.voucherNo}"  columnClass="col-xs-12"/>
                     <t:outputText label="voucher.label.ReferenceNo" value="#{accountCreditNoteHome.entity.referenceNo}" columnClass="col-xs-12"/>
-                    <t:outputText label="voucher.label.Process" value="#{accountCreditNoteHome.entity.processId}" columnClass="col-xs-12"/>
                     <t:outputText label="voucher.label.Owner" value="#{accountCreditNoteHome.entity.owner}" columnClass="col-xs-12"/>
                     <t:outputText label="general.label.Code" value="#{accountCreditNoteHome.entity.code}" columnClass="col-xs-12"/>
-                    
+
                     <t:outputDate label="voucher.label.Date" value="#{accountCreditNoteHome.entity.date}" columnClass="col-xs-12"/>
                 </t:accordion>
             </div>
@@ -30,13 +29,13 @@
             <div class="col-md-4 col-xs-12">
 
                 <ui:remove>
-                <ui:include src="/activities/activityWidget.xhtml">
-                    <ui:param name="person" value="#{accountCreditNoteHome.entity.primaryContact}" />
-                    <ui:param name="corporation" value="#{accountCreditNoteHome.entity.account}" />
-                    <ui:param name="feature" value="#{accountCreditNoteHome.featurePointer}" />
-                    <ui:param name="attached" value="Feature" />
-                </ui:include>
-                    </ui:remove>
+                    <ui:include src="/activities/activityWidget.xhtml">
+                        <ui:param name="person" value="#{accountCreditNoteHome.entity.primaryContact}" />
+                        <ui:param name="corporation" value="#{accountCreditNoteHome.entity.account}" />
+                        <ui:param name="feature" value="#{accountCreditNoteHome.featurePointer}" />
+                        <ui:param name="attached" value="Feature" />
+                    </ui:include>
+                </ui:remove>
 
                 <t:accordion icon="fa fa-sticky-note" id="cn" label="general.label.Notes" columnClass="col-xs-12">
                     Notlar
@@ -47,27 +46,30 @@
                     <ui:param name="pk" value="#{accountCreditNoteHome.entity.id}" />
                 </ui:include>
 
-               
+
 
             </div>
 
             <div class="col-md-4 col-xs-12">
-                 <t:accordion icon="fa fa-file" id="cx" label="general.label.ReleatedVouchers" columnClass="col-xs-12">
-                    <ul class="products-list product-list-in-box">
-                        <ui:repeat value="#{accountTxnService.getProcessVouchers(accountCreditNoteHome.entity.processId)}" var="ci" >
-                            <li class="item">
-                                <t:cellOutputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
+                <ui:remove>
+                    TODO: Belki Group'la bağlanabilirler
+                    <t:accordion icon="fa fa-file" id="cx" label="general.label.ReleatedVouchers" columnClass="col-xs-12">
+                        <ul class="products-list product-list-in-box">
+                            <ui:repeat value="#{accountTxnService.getProcessVouchers(accountCreditNoteHome.entity.process.processNo)}" var="ci" >
+                                <li class="item">
+                                    <t:cellOutputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
 
-                                <span class="text-muted pull-right">#{ci.processId}</span>
+                                    <span class="text-muted pull-right">#{ci.processId}</span>
 
-                                <div class="text-sm">
-                                    #{ci.info}
-                                </div>
+                                    <div class="text-sm">
+                                        #{ci.info}
+                                    </div>
 
-                            </li>
-                        </ui:repeat>
-                    </ul>
-                </t:accordion>
+                                </li>
+                            </ui:repeat>
+                        </ul>
+                    </t:accordion>
+                </ui:remove>
             </div>
 
         </div>

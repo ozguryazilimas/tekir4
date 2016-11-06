@@ -18,7 +18,6 @@
                 <t:accordion icon="fa fa-file-text" label="general.label.Voucher" columnClass="col-xs-12">
                     <t:outputText label="voucher.label.VoucherNo" value="#{accountDebitNoteHome.entity.voucherNo}"  columnClass="col-xs-12"/>
                     <t:outputText label="voucher.label.ReferenceNo" value="#{accountDebitNoteHome.entity.referenceNo}" columnClass="col-xs-12"/>
-                    <t:outputText label="voucher.label.Process" value="#{accountDebitNoteHome.entity.processId}" columnClass="col-xs-12"/>
                     <t:outputText label="voucher.label.Owner" value="#{accountDebitNoteHome.entity.owner}" columnClass="col-xs-12"/>
                     <t:outputText label="general.label.Code" value="#{accountDebitNoteHome.entity.code}" columnClass="col-xs-12"/>
                     
@@ -52,9 +51,10 @@
             </div>
 
             <div class="col-md-4 col-xs-12">
+                <ui:remove>
                  <t:accordion icon="fa fa-file" id="cx" label="general.label.ReleatedVouchers" columnClass="col-xs-12">
                     <ul class="products-list product-list-in-box">
-                        <ui:repeat value="#{accountTxnService.getProcessVouchers(accountDebitNoteHome.entity.processId)}" var="ci" >
+                        <ui:repeat value="#{accountTxnService.getProcessVouchers(accountDebitNoteHome.entity.process.processNo)}" var="ci" >
                             <li class="item">
                                 <t:cellOutputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
 
@@ -68,6 +68,7 @@
                         </ui:repeat>
                     </ul>
                 </t:accordion>
+                    </ui:remove>
             </div>
 
         </div>

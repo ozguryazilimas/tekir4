@@ -11,6 +11,9 @@ import com.ozguryazilim.telve.entities.FeaturePointer;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -48,6 +51,11 @@ public abstract class VoucherBase extends AuditBase{
     @Column(name="INFO")
     private String info;
     
+    /**
+     * Fiş konusu. Aslında process'le birlikte ilerliyor.
+     */
+    @Column(name="TOPIC")
+    private String topic;
     
     /**
      * Resmi/Matbuu belge üzerinde bulunan numara.
@@ -63,16 +71,6 @@ public abstract class VoucherBase extends AuditBase{
     @Column(name="TXNDATE")
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date date;
-    
-    /**
-     * Süreç numarası.
-     * Belgeler eğer bir süreç içerisinde yer alıyor ise bu numara farklı belgeler içerisinde aynı olacaktır.
-     * 
-     * Örneğin satış sürecinde Fırsat için alınan numara Teklif, Sipariş, Fatura ve Ödeme belgelerinde de aynı olacaktır.
-     * 
-     */
-    @Column(name="PROCESS_ID")
-    private String processId;
     
     /**
      * Bu belge'nin erişim yetkilisi, sorumlusunun kim olduğu
@@ -105,6 +103,21 @@ public abstract class VoucherBase extends AuditBase{
      */
     @Column(name="STATE_INFO")
     private String stateInfo;
+    
+    
+    /**
+     * Grup numarası.
+     * 
+     * 
+     * Farklı tür belge ve süreci bir araya gruplamak için kullanılır. "İşlem No" "İşlem Grup"
+     * 
+     */
+    @ManyToOne
+    @JoinColumn(name = "GROUP_ID", foreignKey = @ForeignKey(name = "FK_VOG_VOG"))
+    private VoucherGroup group;
+    
+    
+    
     
     public String getVoucherNo() {
         return voucherNo;
@@ -144,14 +157,6 @@ public abstract class VoucherBase extends AuditBase{
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public String getProcessId() {
-        return processId;
-    }
-
-    public void setProcessId(String processId) {
-        this.processId = processId;
     }
 
     public String getOwner() {
@@ -194,4 +199,21 @@ public abstract class VoucherBase extends AuditBase{
         this.stateInfo = stateInfo;
     }
 
+    public VoucherGroup getGroup() {
+        return group;
+    }
+
+    public void setGroup(VoucherGroup group) {
+        this.group = group;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
+    
+    
 }
