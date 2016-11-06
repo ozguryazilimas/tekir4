@@ -102,6 +102,9 @@ public interface ContactPages extends Pages {
         @SecuredPage("relatedContact") @View 
         class RelatedContactSubView implements Admin {};
         
+        @SecuredPage("accountTxn") @View 
+        class AccountTxnSubView implements Admin {};
+        
         @SecuredPage() @View
 	class NewPersonPopup
 			implements
