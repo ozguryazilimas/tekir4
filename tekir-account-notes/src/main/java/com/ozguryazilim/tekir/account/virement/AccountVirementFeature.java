@@ -16,7 +16,7 @@ import com.ozguryazilim.telve.feature.PageType;
  *
  * @author oyas
  */
-@Feature(caption = "feature.caption.AccountVirement", icon = "fa fa-book", permission = "accountCreditNote", forEntity = AccountVirement.class )
+@Feature(caption = "feature.caption.AccountVirement", icon = "fa fa-book", permission = "accountVirement", forEntity = AccountVirement.class )
 @Page( type = PageType.BROWSE, page = AccountNotePages.AccountVirementBrowse.class )
 @Page( type = PageType.VIEW, page = AccountNotePages.AccountVirementView.class )
 @Page( type = PageType.MASTER_VIEW, page = AccountNotePages.AccountVirementMasterView.class )

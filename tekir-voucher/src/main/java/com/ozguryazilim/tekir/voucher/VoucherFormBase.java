@@ -29,123 +29,128 @@ import org.apache.deltaspike.jpa.api.transaction.Transactional;
 
 /**
  * Voucher tabanlı formlar için temel kontrol sınıfı
- * 
+ *
  * @author Hakan Uygun
  */
-public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E, Long>{
+public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E, Long> {
 
-    @Inject 
+    @Inject
     private Identity identity;
 
     @Inject
     private SequenceManager sequenceManager;
-    
+
     @Inject
     private Event<VoucherStateChange> stateChangeEvent;
-    
+
     @Inject
     private ViewNavigationHandler viewNavigationHandler;
-    
+
     private VoucherStateConfig stateConfig;
-    
+
     /**
      * Dialog ihtiyacı olan state'ler için dialog'un hangi action için açıldığı
      */
     private VoucherStateAction dlgStateAction;
-    
+
     @PostConstruct
-    public void init(){
+    public void init() {
         super.init();
         stateConfig = buildStateConfig();
     }
-    
+
     /**
      * Voucher State Machine için transition configürasyonu yapılır.
-     * @return 
+     *
+     * @return
      */
     protected abstract VoucherStateConfig buildStateConfig();
-    
+
     @Override
     protected E getNewEntity() {
         E e = super.getNewEntity();
-        
+
         e.setDate(new Date());
         //FIXME: Bunu config'den sınıf adına göre almak en temizi olur.
         String s = e.getClass().getSimpleName().substring(0, 2);
         e.setVoucherNo(sequenceManager.getNewSerialNumber(s, 6));
-        
+
         e.setOwner(identity.getLoginName());
-        
+
         return e;
     }
-    
+
     /**
      * Mevcut durum bilgisi.
-     * 
-     * 
-     * Entity.state ile de bulunabilir. Ama override edilerek hile yapılması için FSM tarafından bu kullanılır.
-     * 
-     * @return 
+     *
+     *
+     * Entity.state ile de bulunabilir. Ama override edilerek hile yapılması
+     * için FSM tarafından bu kullanılır.
+     *
+     * @return
      */
-    public VoucherState getCurrentState(){
+    public VoucherState getCurrentState() {
         return getEntity().getState();
     }
-    
+
     /**
      * Geriye mevcut state için olası actionların listesi döner.
-     * 
+     *
      * FIXME: yetki kontrolleri yapılmalı.
-     * 
-     * @return 
+     *
+     * @return
      */
-    public List<VoucherStateAction> getPermittedStateActions(){
-        Map<VoucherStateAction,VoucherState> trn = stateConfig.getTransitions().get(getCurrentState());
-        if( trn == null ) return Collections.emptyList();
-        if( trn.isEmpty() ) return Collections.emptyList();
-        return new ArrayList<>( trn.keySet());
+    public List<VoucherStateAction> getPermittedStateActions() {
+        Map<VoucherStateAction, VoucherState> trn = stateConfig.getTransitions().get(getCurrentState());
+        if (trn == null) {
+            return Collections.emptyList();
+        }
+        if (trn.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return new ArrayList<>(trn.keySet());
     }
 
     public abstract Class<? extends FeatureHandler> getFeatureClass();
-    
+
     /**
      * Bir state'den bir başka state'e geçiş için trigger.
-     * 
-     * FIXME: Doğru action kontrolü yapılmalı.
-     * FIXME: NPE kontrolleri yapılmalı
+     *
+     * FIXME: Doğru action kontrolü yapılmalı. FIXME: NPE kontrolleri yapılmalı
      * FIXME: Yetki kontrolleri yapılmalı
-     * 
+     *
      * @param action
-     * @return 
+     * @return
      */
-    @Transactional    
-    public Class<? extends ViewConfig> trigger( VoucherStateAction action ){
+    @Transactional
+    public Class<? extends ViewConfig> trigger(VoucherStateAction action) {
 
         //Önce mevcut State'i alalım
         VoucherState fromState = getCurrentState();
-        
+
         //Şimdi varılacak olan state'i bulalım
-        Map<VoucherStateAction,VoucherState> trn = stateConfig.getTransitions().get(getCurrentState());
+        Map<VoucherStateAction, VoucherState> trn = stateConfig.getTransitions().get(getCurrentState());
         VoucherState toState = trn.get(action);
-        
+
         //Gönderilecek olan event'i hazırlayalım
         VoucherStateChange e = new VoucherStateChange(fromState, action, toState, getEntity());
-        
+
         //Before event'ini gönderelim
         stateChangeEvent
                 .select(new FeatureQualifierLiteral(getFeatureClass()))
                 .select(new BeforeLiteral())
                 .fire(e);
-        
+
         //State değiştirip saklayalım
-        getEntity().setState( toState );
+        getEntity().setState(toState);
         Class<? extends ViewConfig> result = save();
-        
+
         //After event'ini gönderelim
         stateChangeEvent
                 .select(new FeatureQualifierLiteral(getFeatureClass()))
                 .select(new AfterLiteral())
                 .fire(e);
-        
+
         //Ve bitti
         return result;
     }
@@ -153,64 +158,79 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
     @Override
     public boolean onAfterCreate() {
         //Feeder'larda StateChange sırasında kullanılabilmesi için. İlk oluştutulduğunda da bir StateChange eventi fırlatıyoruz.
-        VoucherStateChange e = new VoucherStateChange( VoucherState.CREATE, VoucherStateAction.CREATE, getEntity().getState(), getEntity());
-        
+        VoucherStateChange e = new VoucherStateChange(VoucherState.CREATE, VoucherStateAction.CREATE, getEntity().getState(), getEntity());
+
         stateChangeEvent
                 .select(new FeatureQualifierLiteral(getFeatureClass()))
                 .select(new AfterLiteral())
                 .fire(e);
-        
+
         getEntity().setOwner(identity.getLoginName());
-        
-        return super.onAfterCreate(); 
+
+        return super.onAfterCreate();
     }
-    
-    
+
     @Override
     public boolean onAfterLoad() {
-        
+
         //TODO: AfterLoad yerine başka bir method mu yazsak? 
-        
-        if( !identity.isPermitted( getPermissionDomain() + ":select:" + getEntity().getOwner())){
+        if (!hasViewPermission()) {
             //FIXME: i18n
             FacesMessages.error("Kayda erişim için yetkiniz yok!");
             createNew();
             viewNavigationHandler.navigateTo(getBrowsePage());
             return false;
         }
-        
+
         return super.onAfterLoad();
     }
-    
+
     /**
      * Action name üzerinden trigger tetikler.
-     * 
+     *
      * @param action
-     * @return 
+     * @return
      */
-    public Class<? extends ViewConfig> trigger( String action ){
-       return trigger( stateConfig.getActions().get(action));
+    public Class<? extends ViewConfig> trigger(String action) {
+        return trigger(stateConfig.getActions().get(action));
     }
-    
-    
+
     /**
-     * Dialog açmadan hemen önce dialog kapanırken hangi action2ı tetikleyeceğini bir saklayalım.
-     * @param action 
+     * Dialog açmadan hemen önce dialog kapanırken hangi action2ı
+     * tetikleyeceğini bir saklayalım.
+     *
+     * @param action
      */
-    public void prepareTriggerDlg( VoucherStateAction action){
+    public void prepareTriggerDlg(VoucherStateAction action) {
         dlgStateAction = action;
     }
-    
+
     /**
-     * stateDlg Dialog tarafından çağrıldı. Dolayısı ile önceden alınmış olan action tetiklenecek.
-     * @return 
+     * stateDlg Dialog tarafından çağrıldı. Dolayısı ile önceden alınmış olan
+     * action tetiklenecek.
+     *
+     * @return
      */
-    public Class<? extends ViewConfig> triggerDlgAction(){
+    public Class<? extends ViewConfig> triggerDlgAction() {
         return trigger(dlgStateAction);
     }
 
     public VoucherStateAction getDlgStateAction() {
         return dlgStateAction;
+    }
+
+    public Boolean hasViewPermission() {
+        return identity.isPermitted(getPermissionDomain() + ":select:" + getEntity().getOwner());
+    }
+    
+    @Override
+    public Boolean hasUpdatePermission() {
+        return identity.isPermitted(getPermissionDomain() + ":update:" + getEntity().getOwner());
+    }
+
+    @Override
+    public Boolean hasDeletePermission() {
+        return identity.isPermitted(getPermissionDomain() + ":delete:" + getEntity().getOwner());
     }
 
 }
