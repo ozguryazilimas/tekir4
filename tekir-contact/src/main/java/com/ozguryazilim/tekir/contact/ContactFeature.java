@@ -19,6 +19,7 @@ import com.ozguryazilim.telve.feature.PageType;
 @Feature(caption = "feature.caption.Contact", icon = "fa fa-user", permission = "contact", forEntity = Contact.class )
 @Page( type = PageType.BROWSE, page = ContactPages.ContactBrowse.class )
 @Page( type = PageType.VIEW, page = ContactPages.ContactView.class )
+@Page( type = PageType.MASTER_VIEW, page = ContactPages.ContactMasterView.class )
 @Page( type = PageType.EDIT, page = ContactPages.Contact.class )
 public class ContactFeature extends AbstractFeatureHandler{
     

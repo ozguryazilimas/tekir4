@@ -5,7 +5,6 @@
  */
 package com.ozguryazilim.tekir.account.credit;
 
-import com.ozguryazilim.tekir.account.config.AccountNotePages;
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.AccountCreditNote;
 import com.ozguryazilim.tekir.entities.VoucherState;
@@ -22,7 +21,7 @@ import javax.inject.Inject;
  *
  * @author oyas
  */
-@FormEdit(browsePage = AccountNotePages.AccountCreditNoteBrowse.class, editPage = AccountNotePages.AccountCreditNote.class, viewContainerPage = AccountNotePages.AccountCreditNoteView.class, masterViewPage = AccountNotePages.AccountCreditNoteMasterView.class)
+@FormEdit( feature = AccountCreditNoteFeature.class)
 public class AccountCreditNoteHome extends VoucherFormBase<AccountCreditNote>{
 
     @Inject

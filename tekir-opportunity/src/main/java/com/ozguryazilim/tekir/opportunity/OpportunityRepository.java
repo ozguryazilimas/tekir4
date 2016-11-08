@@ -58,6 +58,9 @@ public abstract class OpportunityRepository extends VoucherRepositoryBase<Opport
 
         buildSearchTextControl(queryDefinition.getSearchText(), criteriaBuilder, predicates, from);
 
+        //RowLevel yetki kontrol filtresi
+        buildOwnerFilter(predicates, from);
+        
         //Oluşan filtreleri sorgumuza ekliyoruz
         criteriaQuery.where(predicates.toArray(new Predicate[]{}));
 

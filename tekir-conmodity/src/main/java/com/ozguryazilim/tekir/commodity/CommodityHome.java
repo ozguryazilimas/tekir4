@@ -1,6 +1,5 @@
 package com.ozguryazilim.tekir.commodity;
 
-import com.ozguryazilim.tekir.commodity.config.CommodityPages;
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.telve.forms.FormEdit;
 import com.ozguryazilim.telve.forms.FormBase;
@@ -14,7 +13,7 @@ import javax.inject.Inject;
  * 
  * @author
  */
-@FormEdit(browsePage = CommodityPages.CommodityBrowse.class, editPage = CommodityPages.Commodity.class, viewContainerPage = CommodityPages.CommodityView.class, masterViewPage = CommodityPages.CommodityMasterView.class)
+@FormEdit( feature = CommodityFeature.class )
 public class CommodityHome extends FormBase<Commodity, Long> {
 
         @Inject

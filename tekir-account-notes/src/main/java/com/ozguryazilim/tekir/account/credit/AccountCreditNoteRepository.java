@@ -56,6 +56,9 @@ public abstract class AccountCreditNoteRepository extends VoucherRepositoryBase<
 
         buildSearchTextControl(queryDefinition.getSearchText(), criteriaBuilder, predicates, from);
 
+        //RowLevel yetki kontrol filtresi
+        buildOwnerFilter(predicates, from);
+        
         //Oluşan filtreleri sorgumuza ekliyoruz
         criteriaQuery.where(predicates.toArray(new Predicate[]{}));
 

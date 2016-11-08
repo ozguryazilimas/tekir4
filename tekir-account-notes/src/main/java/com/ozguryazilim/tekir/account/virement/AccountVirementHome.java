@@ -5,7 +5,6 @@
  */
 package com.ozguryazilim.tekir.account.virement;
 
-import com.ozguryazilim.tekir.account.config.AccountNotePages;
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.AccountVirement;
 import com.ozguryazilim.tekir.entities.VoucherState;
@@ -23,7 +22,7 @@ import javax.inject.Inject;
  *
  * @author oyas
  */
-@FormEdit(browsePage = AccountNotePages.AccountVirementBrowse.class, editPage = AccountNotePages.AccountVirement.class, viewContainerPage = AccountNotePages.AccountVirementView.class, masterViewPage = AccountNotePages.AccountVirementMasterView.class)
+@FormEdit( feature = AccountVirementFeature.class)
 public class AccountVirementHome extends VoucherFormBase<AccountVirement>{
 
     @Inject

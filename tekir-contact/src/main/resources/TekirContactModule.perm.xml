@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<permissions>
+    <permissionGroup name="Contact" order="10">
+        <permission target="contact" order="1">
+            <entityActions scope="owner,group"/>
+        </permission>
+        <permission target="corporationType" >
+            <entityActions />
+        </permission>
+        <permission target="contactRelation" >
+            <entityActions />
+        </permission>
+        <permission target="contactCategory" >
+            <entityActions />
+        </permission>
+        <permission target="relatedContact" order="100">
+            <entityActions />
+        </permission>
+        <permission target="accountTxn" order="100">
+            <entityActions />
+        </permission>
+    </permissionGroup>
+</permissions>

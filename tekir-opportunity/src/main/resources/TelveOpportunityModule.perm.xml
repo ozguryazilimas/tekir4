@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<permissions>
+    <permissionGroup name="Sales" order="12">
+        <permission target="opportunity" order="1">
+            <entityActions scope="owner,group"/>
+            <action name="publish" scope="owner,group"/>
+            <action name="won" scope="owner,group"/>
+            <action name="loss" scope="owner,group"/>
+            <action name="cancel" scope="owner,group"/>
+        </permission>
+    </permissionGroup>
+</permissions>

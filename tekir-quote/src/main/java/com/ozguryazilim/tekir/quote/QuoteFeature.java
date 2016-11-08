@@ -19,6 +19,7 @@ import com.ozguryazilim.telve.feature.PageType;
 @Feature(caption = "feature.caption.Quote", icon = "fa fa-book", permission = "quote", forEntity = Quote.class )
 @Page( type = PageType.BROWSE, page = QuotePages.QuoteBrowse.class )
 @Page( type = PageType.VIEW, page = QuotePages.QuoteView.class )
+@Page( type = PageType.MASTER_VIEW, page = QuotePages.QuoteMasterView.class )
 @Page( type = PageType.EDIT, page = QuotePages.Quote.class )
 public class QuoteFeature extends AbstractFeatureHandler{
     

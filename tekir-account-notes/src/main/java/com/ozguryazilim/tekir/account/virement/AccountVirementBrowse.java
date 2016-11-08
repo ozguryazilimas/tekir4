@@ -5,14 +5,13 @@
  */
 package com.ozguryazilim.tekir.account.virement;
 
-import com.ozguryazilim.tekir.account.config.AccountNotePages;
 import com.ozguryazilim.tekir.entities.AccountVirement;
 import com.ozguryazilim.tekir.entities.AccountVirement_;
 import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.tekir.entities.VoucherBase_;
 import com.ozguryazilim.tekir.voucher.VoucherBrowseBase;
+import com.ozguryazilim.tekir.voucher.VoucherRepositoryBase;
 import com.ozguryazilim.tekir.voucher.columns.VoucherStateColumn;
-import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.forms.Browse;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.columns.DateColumn;
@@ -28,7 +27,7 @@ import javax.inject.Inject;
  *
  * @author oyas
  */
-@Browse(browsePage = AccountNotePages.AccountVirementBrowse.class, editPage = AccountNotePages.AccountVirement.class, viewContainerPage = AccountNotePages.AccountVirementView.class)
+@Browse( feature=AccountVirementFeature.class )
 public class AccountVirementBrowse extends VoucherBrowseBase<AccountVirement, AccountVirementViewModel>{
 
     @Inject
@@ -58,7 +57,7 @@ public class AccountVirementBrowse extends VoucherBrowseBase<AccountVirement, Ac
     }
 
     @Override
-    protected RepositoryBase<AccountVirement, AccountVirementViewModel> getRepository() {
+    public VoucherRepositoryBase<AccountVirement, AccountVirementViewModel> getVoucherRepository() {
         return repository;
     }
     

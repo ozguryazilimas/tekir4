@@ -39,6 +39,8 @@ public abstract class ContactRepository
         implements
         CriteriaSupport<Contact> {
 
+    private List<String> ownerFilter;
+    
     @Override
     public List<ContactViewModel> browseQuery(QueryDefinition queryDefinition) {
         List<Filter<Contact, ?>> filters = queryDefinition.getFilters();
@@ -63,8 +65,19 @@ public abstract class ContactRepository
         List<Predicate> predicates = new ArrayList<>();
 
         decorateFilters(filters, predicates, criteriaBuilder, from);
-
+        
         buildSearchTextControl(queryDefinition.getSearchText(), criteriaBuilder, predicates, from);
+        
+        //Satır bazlı yetki kontrolü
+        //Sorun 1: kullanıcı yetkisi owner, group, all mu nasıl öğreneceğiz?
+        //Sorun 2: kullanıcı bilgisini nasıl alacağız?
+        //Burada contact:select:owner durumu var
+        //predicates.add(criteriaBuilder.equal(from.get(Contact_.owner), identity.getLoginName()));
+        //Burada da contact:select:group durumu var
+        if( ownerFilter != null ){
+            predicates.add(from.get(Contact_.owner).in(ownerFilter));
+        }
+        
 
         //Oluşan filtreleri sorgumuza ekliyoruz
         criteriaQuery.where(predicates.toArray(new Predicate[]{}));
@@ -215,8 +228,12 @@ public abstract class ContactRepository
         }
     }
 
-    
-    
-    
+    public List<String> getOwnerFilter() {
+        return ownerFilter;
+    }
+
+    public void setOwnerFilter(List<String> ownerFilter) {
+        this.ownerFilter = ownerFilter;
+    }
     
 }

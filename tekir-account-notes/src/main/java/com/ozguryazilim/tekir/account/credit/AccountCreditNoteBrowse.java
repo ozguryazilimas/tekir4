@@ -5,14 +5,13 @@
  */
 package com.ozguryazilim.tekir.account.credit;
 
-import com.ozguryazilim.tekir.account.config.AccountNotePages;
 import com.ozguryazilim.tekir.entities.AccountCreditNote;
 import com.ozguryazilim.tekir.entities.AccountCreditNote_;
 import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.tekir.entities.VoucherBase_;
 import com.ozguryazilim.tekir.voucher.VoucherBrowseBase;
+import com.ozguryazilim.tekir.voucher.VoucherRepositoryBase;
 import com.ozguryazilim.tekir.voucher.columns.VoucherStateColumn;
-import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.forms.Browse;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.columns.DateColumn;
@@ -28,7 +27,7 @@ import javax.inject.Inject;
  *
  * @author oyas
  */
-@Browse(browsePage = AccountNotePages.AccountCreditNoteBrowse.class, editPage = AccountNotePages.AccountCreditNote.class, viewContainerPage = AccountNotePages.AccountCreditNoteView.class)
+@Browse( feature=AccountCreditNoteFeature.class )
 public class AccountCreditNoteBrowse extends VoucherBrowseBase<AccountCreditNote, AccountCreditNoteViewModel>{
 
     @Inject
@@ -57,7 +56,7 @@ public class AccountCreditNoteBrowse extends VoucherBrowseBase<AccountCreditNote
     }
 
     @Override
-    protected RepositoryBase<AccountCreditNote, AccountCreditNoteViewModel> getRepository() {
+    public VoucherRepositoryBase<AccountCreditNote, AccountCreditNoteViewModel> getVoucherRepository() {
         return repository;
     }
     

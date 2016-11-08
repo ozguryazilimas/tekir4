@@ -5,14 +5,13 @@
  */
 package com.ozguryazilim.tekir.account.debit;
 
-import com.ozguryazilim.tekir.account.config.AccountNotePages;
 import com.ozguryazilim.tekir.entities.AccountDebitNote;
 import com.ozguryazilim.tekir.entities.AccountDebitNote_;
 import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.tekir.entities.VoucherBase_;
 import com.ozguryazilim.tekir.voucher.VoucherBrowseBase;
+import com.ozguryazilim.tekir.voucher.VoucherRepositoryBase;
 import com.ozguryazilim.tekir.voucher.columns.VoucherStateColumn;
-import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.forms.Browse;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.columns.DateColumn;
@@ -28,7 +27,7 @@ import javax.inject.Inject;
  *
  * @author oyas
  */
-@Browse(browsePage = AccountNotePages.AccountDebitNoteBrowse.class, editPage = AccountNotePages.AccountDebitNote.class, viewContainerPage = AccountNotePages.AccountDebitNoteView.class)
+@Browse( feature=AccountDebitNoteFeature.class)
 public class AccountDebitNoteBrowse extends VoucherBrowseBase<AccountDebitNote, AccountDebitNoteViewModel>{
 
     @Inject
@@ -57,7 +56,7 @@ public class AccountDebitNoteBrowse extends VoucherBrowseBase<AccountDebitNote, 
     }
 
     @Override
-    protected RepositoryBase<AccountDebitNote, AccountDebitNoteViewModel> getRepository() {
+    public VoucherRepositoryBase<AccountDebitNote, AccountDebitNoteViewModel> getVoucherRepository() {
         return repository;
     }
     

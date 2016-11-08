@@ -56,6 +56,9 @@ public abstract class AccountVirementRepository extends VoucherRepositoryBase<Ac
 
         buildSearchTextControl(queryDefinition.getSearchText(), criteriaBuilder, predicates, from);
 
+        //RowLevel yetki kontrol filtresi
+        buildOwnerFilter(predicates, from);
+        
         //Oluşan filtreleri sorgumuza ekliyoruz
         criteriaQuery.where(predicates.toArray(new Predicate[]{}));
 

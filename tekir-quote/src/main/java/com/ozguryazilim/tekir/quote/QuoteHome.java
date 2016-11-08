@@ -13,7 +13,6 @@ import com.ozguryazilim.tekir.entities.QuoteSummary;
 import com.ozguryazilim.tekir.entities.TaxDefinition;
 import com.ozguryazilim.tekir.entities.VoucherCommodityItemBase;
 import com.ozguryazilim.tekir.entities.VoucherState;
-import com.ozguryazilim.tekir.quote.config.QuotePages;
 import com.ozguryazilim.tekir.voucher.VoucherCommodityItemEditor;
 import com.ozguryazilim.tekir.voucher.VoucherCommodityItemEditorListener;
 import com.ozguryazilim.tekir.voucher.VoucherFormBase;
@@ -42,7 +41,7 @@ import java.util.Date;
  *
  * @author
  */
-@FormEdit(browsePage = QuotePages.QuoteBrowse.class, editPage = QuotePages.Quote.class, viewContainerPage = QuotePages.QuoteView.class, masterViewPage = QuotePages.QuoteMasterView.class)
+@FormEdit(feature=QuoteFeature.class)
 public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodityItemEditorListener{
 
     @Inject

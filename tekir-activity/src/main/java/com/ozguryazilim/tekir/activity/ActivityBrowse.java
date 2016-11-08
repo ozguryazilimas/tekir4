@@ -5,7 +5,6 @@
  */
 package com.ozguryazilim.tekir.activity;
 
-import com.ozguryazilim.tekir.activity.config.ActivityPages;
 import com.ozguryazilim.tekir.entities.Activity;
 import com.ozguryazilim.tekir.entities.Activity_;
 import com.ozguryazilim.telve.data.RepositoryBase;
@@ -14,13 +13,12 @@ import com.ozguryazilim.telve.forms.BrowseBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.columns.TextColumn;
 import javax.inject.Inject;
-import org.apache.deltaspike.core.api.config.view.ViewConfig;
 
 /**
  *
  * @author oyas
  */
-@Browse(browsePage = ActivityPages.ActivityBrowse.class, editPage = ViewConfig.class, viewContainerPage = ViewConfig.class)
+@Browse(feature = ActivityFeature.class)
 public class ActivityBrowse extends BrowseBase<Activity, Activity> {
 
     @Inject

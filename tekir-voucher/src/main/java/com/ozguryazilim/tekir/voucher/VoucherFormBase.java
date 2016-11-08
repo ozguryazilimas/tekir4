@@ -11,6 +11,7 @@ import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.feature.FeatureHandler;
 import com.ozguryazilim.telve.feature.FeatureQualifierLiteral;
 import com.ozguryazilim.telve.forms.FormBase;
+import com.ozguryazilim.telve.messages.FacesMessages;
 import com.ozguryazilim.telve.qualifiers.AfterLiteral;
 import com.ozguryazilim.telve.qualifiers.BeforeLiteral;
 import com.ozguryazilim.telve.sequence.SequenceManager;
@@ -23,6 +24,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
+import org.apache.deltaspike.core.api.config.view.navigation.ViewNavigationHandler;
 import org.apache.deltaspike.jpa.api.transaction.Transactional;
 
 /**
@@ -40,6 +42,9 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
     
     @Inject
     private Event<VoucherStateChange> stateChangeEvent;
+    
+    @Inject
+    private ViewNavigationHandler viewNavigationHandler;
     
     private VoucherStateConfig stateConfig;
     
@@ -155,10 +160,27 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
                 .select(new AfterLiteral())
                 .fire(e);
         
+        getEntity().setOwner(identity.getLoginName());
+        
         return super.onAfterCreate(); 
     }
     
     
+    @Override
+    public boolean onAfterLoad() {
+        
+        //TODO: AfterLoad yerine başka bir method mu yazsak? 
+        
+        if( !identity.isPermitted( getPermissionDomain() + ":select:" + getEntity().getOwner())){
+            //FIXME: i18n
+            FacesMessages.error("Kayda erişim için yetkiniz yok!");
+            createNew();
+            viewNavigationHandler.navigateTo(getBrowsePage());
+            return false;
+        }
+        
+        return super.onAfterLoad();
+    }
     
     /**
      * Action name üzerinden trigger tetikler.

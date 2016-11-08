@@ -19,6 +19,7 @@ import com.ozguryazilim.telve.feature.PageType;
 @Feature(caption = "feature.caption.AccountDebitNote", icon = "fa fa-book", permission = "accountCreditNote", forEntity = AccountDebitNote.class )
 @Page( type = PageType.BROWSE, page = AccountNotePages.AccountDebitNoteBrowse.class )
 @Page( type = PageType.VIEW, page = AccountNotePages.AccountDebitNoteView.class )
+@Page( type = PageType.MASTER_VIEW, page = AccountNotePages.AccountDebitNoteMasterView.class )
 @Page( type = PageType.EDIT, page = AccountNotePages.AccountDebitNote.class )
 public class AccountDebitNoteFeature extends AbstractFeatureHandler{
     

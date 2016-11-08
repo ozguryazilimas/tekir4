@@ -2,17 +2,19 @@ package com.ozguryazilim.tekir.contact;
 
 import com.ozguryazilim.telve.forms.Browse;
 import com.ozguryazilim.telve.forms.BrowseBase;
-import com.ozguryazilim.tekir.contact.config.ContactPages;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.tekir.entities.ContactEMail_;
 import com.ozguryazilim.tekir.entities.ContactPhone_;
 import com.ozguryazilim.tekir.entities.Contact_;
+import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.query.columns.LinkColumn;
 import com.ozguryazilim.telve.query.columns.SubTextColumn;
 import com.ozguryazilim.telve.query.columns.TextColumn;
 import com.ozguryazilim.telve.query.filters.StringFilter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Inject;
 
 /**
@@ -20,11 +22,14 @@ import javax.inject.Inject;
  * 
  * @author
  */
-@Browse(browsePage = ContactPages.ContactBrowse.class, editPage = ContactPages.Contact.class, viewContainerPage = ContactPages.ContactView.class)
+@Browse( feature = ContactFeature.class)
 public class ContactBrowse extends BrowseBase<Contact, ContactViewModel> {
 
 	@Inject
 	private ContactRepository repository;
+        
+        @Inject
+        private Identity identity;
 
 	@Override
 	protected void buildQueryDefinition(QueryDefinition<Contact, ContactViewModel> queryDefinition) {
@@ -43,7 +48,27 @@ public class ContactBrowse extends BrowseBase<Contact, ContactViewModel> {
 
 	@Override
 	protected RepositoryBase<Contact, ContactViewModel> getRepository() {
-		return repository;
+            //TODO: Kullanıcı yetki kontrolü yapılacak
+            //owner,group,all durumuna bakılacak
+            //Bu davranışı nasıl generic hale getirebilirim?
+            
+            
+            if( identity.isPermitted("contact:select:*") ){
+                //Her tülü yetkili zaten dolayısı ile group felan ile uğraşmayalım
+            } else 
+                if( identity.isPermitted("contact:select:$group") ){
+                List<String> ls = identity.getGroupsMembers();
+                if( ls.isEmpty() ){
+                    ls.add("NONE");
+                }
+                repository.setOwnerFilter(identity.getGroupsMembers());
+            } else if( identity.isPermitted("contact:select:$owner") ){
+                List<String> ls = new ArrayList<>();
+                ls.add(identity.getLoginName());
+                repository.setOwnerFilter(ls);
+            }
+            
+            return repository;
 	}
         
         public Contact getContact(){

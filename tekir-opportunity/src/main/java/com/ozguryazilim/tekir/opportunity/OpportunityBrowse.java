@@ -9,9 +9,8 @@ import com.ozguryazilim.tekir.entities.Opportunity;
 import com.ozguryazilim.tekir.entities.Opportunity_;
 import com.ozguryazilim.tekir.entities.Process_;
 import com.ozguryazilim.tekir.entities.VoucherBase_;
-import com.ozguryazilim.tekir.opportunity.config.OpportunityPages;
 import com.ozguryazilim.tekir.voucher.VoucherBrowseBase;
-import com.ozguryazilim.telve.data.RepositoryBase;
+import com.ozguryazilim.tekir.voucher.VoucherRepositoryBase;
 import com.ozguryazilim.telve.forms.Browse;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.columns.LinkColumn;
@@ -22,7 +21,7 @@ import javax.inject.Inject;
  *
  * @author oyas
  */
-@Browse(browsePage = OpportunityPages.OpportunityBrowse.class, editPage = OpportunityPages.Opportunity.class, viewContainerPage = OpportunityPages.OpportunityView.class)
+@Browse(feature=OpportunityFeature.class )
 public class OpportunityBrowse extends VoucherBrowseBase<Opportunity, OpportunityViewModel>{
 
     @Inject
@@ -37,7 +36,7 @@ public class OpportunityBrowse extends VoucherBrowseBase<Opportunity, Opportunit
     }
 
     @Override
-    protected RepositoryBase<Opportunity, OpportunityViewModel> getRepository() {
+    public VoucherRepositoryBase<Opportunity, OpportunityViewModel> getVoucherRepository() {
         return repository;
     }
     

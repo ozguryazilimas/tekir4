@@ -10,7 +10,6 @@ import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.Opportunity;
 import com.ozguryazilim.tekir.entities.ProcessType;
 import com.ozguryazilim.tekir.entities.VoucherState;
-import com.ozguryazilim.tekir.opportunity.config.OpportunityPages;
 import com.ozguryazilim.tekir.quote.QuoteHome;
 import com.ozguryazilim.tekir.voucher.VoucherFormBase;
 import com.ozguryazilim.tekir.voucher.VoucherStateAction;
@@ -28,7 +27,7 @@ import org.apache.deltaspike.core.api.config.view.ViewConfig;
  * Opportunity View Conttroller
  * @author Hakan Uygun
  */
-@FormEdit(browsePage = OpportunityPages.OpportunityBrowse.class, editPage = OpportunityPages.Opportunity.class, viewContainerPage = OpportunityPages.OpportunityView.class, masterViewPage = OpportunityPages.OpportunityMasterView.class)
+@FormEdit(feature=OpportunityFeature.class)
 public class OpportunityHome extends VoucherFormBase<Opportunity>{
 
     @Inject

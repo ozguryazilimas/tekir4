@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<permissions>
+    <permissionGroup name="AccountNotes" order="15">
+        <permission target="accountCreditNote" >
+            <entityActions scope="owner,group"/>
+            <action name="publish" scope="owner,group"/>
+            <action name="revise" scope="owner,group"/>
+        </permission>
+        <permission target="accountDebitNote" >
+            <entityActions scope="owner,group"/>
+            <action name="publish" scope="owner,group"/>
+            <action name="revise" scope="owner,group"/>
+        </permission>
+        <permission target="accountVirement" >
+            <entityActions scope="owner,group"/>
+            <action name="publish" scope="owner,group"/>
+            <action name="revise" scope="owner,group"/>
+        </permission>
+    </permissionGroup>
+</permissions>

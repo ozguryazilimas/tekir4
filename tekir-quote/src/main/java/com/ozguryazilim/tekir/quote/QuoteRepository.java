@@ -52,6 +52,9 @@ public abstract class QuoteRepository extends VoucherRepositoryBase<Quote, Quote
 
         buildSearchTextControl(queryDefinition.getSearchText(), criteriaBuilder, predicates, from);
 
+        //RowLevel yetki kontrol filtresi
+        buildOwnerFilter(predicates, from);
+        
         //Oluşan filtreleri sorgumuza ekliyoruz
         criteriaQuery.where(predicates.toArray(new Predicate[]{}));
 

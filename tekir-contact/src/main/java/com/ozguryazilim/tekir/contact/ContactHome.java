@@ -9,21 +9,30 @@ import com.ozguryazilim.tekir.entities.ContactInformation;
 import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.Person;
 import com.ozguryazilim.tekir.entities.RelatedContact;
+import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
+import com.ozguryazilim.telve.messages.FacesMessages;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
+import org.apache.deltaspike.core.api.config.view.navigation.ViewNavigationHandler;
 
 /**
  * Home Control Class
  *
  * @author
  */
-@FormEdit(browsePage = ContactPages.ContactBrowse.class, editPage = ContactPages.Contact.class, viewContainerPage = ContactPages.ContactView.class, masterViewPage = ContactPages.ContactMasterView.class)
+@FormEdit( feature = ContactFeature.class )
 public class ContactHome extends FormBase<Contact, Long> {
 
+    @Inject
+    private Identity identity;
+    
+    @Inject
+    private ViewNavigationHandler viewNavigationHandler;
+    
     @Inject
     private ContactRepository repository;
 
@@ -90,6 +99,14 @@ public class ContactHome extends FormBase<Contact, Long> {
 
     @Override
     public boolean onAfterLoad() {
+        
+        //FIXME: Burayı generic bir hale getirmek lazım                
+        if( !identity.isPermitted("contact:select:" + getEntity().getOwner())){
+            FacesMessages.error("Kayda erişim için yetkiniz yok!");
+            createNew();
+            viewNavigationHandler.navigateTo(ContactPages.ContactBrowse.class);
+            return false;
+        }
         
         selectedRoles = getEntity().getContactRoles().stream()
                             .filter(p -> getContactRoles().contains(p))

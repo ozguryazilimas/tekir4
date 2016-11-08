@@ -19,6 +19,7 @@ import com.ozguryazilim.telve.feature.PageType;
 @Feature(caption = "feature.caption.Opportunity", icon = "fa fa-book", permission = "opportunity", forEntity = Opportunity.class )
 @Page( type = PageType.BROWSE, page = OpportunityPages.OpportunityBrowse.class )
 @Page( type = PageType.VIEW, page = OpportunityPages.OpportunityView.class )
+@Page( type = PageType.MASTER_VIEW, page = OpportunityPages.OpportunityMasterView.class )
 @Page( type = PageType.EDIT, page = OpportunityPages.Opportunity.class )
 public class OpportunityFeature extends AbstractFeatureHandler{
     

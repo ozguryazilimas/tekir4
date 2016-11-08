@@ -1,6 +1,5 @@
 package com.ozguryazilim.tekir.commodity;
 
-import com.ozguryazilim.tekir.commodity.config.CommodityPages;
 import com.ozguryazilim.telve.forms.Browse;
 import com.ozguryazilim.telve.forms.BrowseBase;
 import com.ozguryazilim.telve.data.RepositoryBase;
@@ -17,7 +16,7 @@ import javax.inject.Inject;
  * 
  * @author
  */
-@Browse(browsePage = CommodityPages.CommodityBrowse.class, editPage = CommodityPages.Commodity.class, viewContainerPage = CommodityPages.CommodityView.class)
+@Browse(feature = CommodityFeature.class)
 public class CommodityBrowse extends BrowseBase<Commodity, CommodityViewModel> {
 
 	@Inject
