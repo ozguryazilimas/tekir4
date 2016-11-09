@@ -83,7 +83,8 @@
         <module>tekir-conmodity</module>
         <module>tekir-account-notes-model</module>
         <module>tekir-account-notes</module>
-    </modules>
+    <module>tekir-opportunity-quote-linker</module>
+  </modules>
     
     
     <distributionManagement>

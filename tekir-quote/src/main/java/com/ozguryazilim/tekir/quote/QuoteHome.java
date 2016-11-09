@@ -20,14 +20,12 @@ import com.ozguryazilim.tekir.voucher.VoucherStateAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateConfig;
 import com.ozguryazilim.tekir.voucher.process.ProcessService;
 import com.ozguryazilim.telve.data.RepositoryBase;
-import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.lookup.LookupSelectTuple;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 import javax.inject.Inject;
-import org.apache.deltaspike.core.api.config.view.ViewConfig;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.SelectEvent;
 import com.ozguryazilim.tekir.entities.Process;
@@ -360,39 +358,6 @@ public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodit
     }
     
     
-    public Class<? extends ViewConfig> createFromFeature( FeaturePointer featurePointer, Contact contact, String processId ){
-        Class page = create();
-        
-        getEntity().setAccount(contact);
-        getEntity().setStarter(featurePointer);
-        //FIXME: Burası düzeltilecek. Process bilgisi doğru taşınmalı
-        //getEntity().setProcess(processId);
-        
-        return page;
-    }
-    
-    public Class<? extends ViewConfig> closeWin(){
-        //FIXME: Aslında burada belki iki farklı metod gerekecek : Sipariş, Sözleşme
-        //getEntity().setStatus(VocuherStatus.WON);
-        return save();
-    }
-    
-    public Class<? extends ViewConfig> closeLoss(){
-        //getEntity().setStatus(VocuherStatus.LOST);
-        return save();
-    }
-    
-    public Class<? extends ViewConfig> closeCancel(){
-        //getEntity().setStatus(VocuherStatus.CANCELED);
-        return save();
-    }    
-    
-    
-    public Class<? extends ViewConfig> publish(){
-        //getEntity().setStatus(VocuherStatus.OPEN);
-        return save();
-    }
-
     @Override
     protected VoucherStateConfig buildStateConfig() {
         VoucherStateConfig config = new VoucherStateConfig();

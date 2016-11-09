@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.enterprise.event.Event;
+import javax.enterprise.inject.Any;
+import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
 import org.apache.deltaspike.core.api.config.view.navigation.ViewNavigationHandler;
@@ -49,6 +51,9 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
 
     @Inject
     private ViewNavigationHandler viewNavigationHandler;
+    
+    @Inject @Any
+    private Instance<VoucherRedirectHandler> redirectHandlers;
 
     private VoucherStateConfig stateConfig;
 
@@ -153,6 +158,14 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
                 .select(new AfterLiteral())
                 .fire(e);
 
+        //Burada redirect edilecek bişey var mı diye kontrol edilecek.
+        //BeanProvider.getContextualReferences(result, true)
+        
+        for( VoucherRedirectHandler vrh : redirectHandlers.select(new FeatureQualifierLiteral(getFeatureClass()))){
+            Class<? extends ViewConfig> r = vrh.redirect(e);
+            if( r != null ) return r;
+        }
+        
         //Ve bitti
         return result;
     }
