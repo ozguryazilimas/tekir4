@@ -9,7 +9,7 @@
 
     <ui:define name="context-menu">
         <li>
-            <p:commandLink action="#{bean.create()}" styleClass="context-command" ajax="false">
+            <p:commandLink action="#{bean.create()}" styleClass="context-command" ajax="false" rendered="#{bean.hasInsertPermission()}">
                 <i class="fa fa-plus-circle"></i>
                 <h:outputText value=" #{messages['general.button.Add']}" />
             </p:commandLink>
