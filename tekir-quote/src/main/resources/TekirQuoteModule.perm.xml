@@ -2,9 +2,10 @@
 
 <permissions>
     <permissionGroup name="Sales" order="12">
-        <permission target="opportunity" order="1">
+        <permission target="quote" order="2">
             <entityActions scope="owner,group"/>
             <action name="publish" scope="owner,group" order="10"/>
+            <action name="revise" scope="owner,group" order="15"/>
             <action name="won" scope="owner,group" order="11"/>
             <action name="loss" scope="owner,group" order="12"/>
             <action name="cancel" scope="owner,group" order="13"/>

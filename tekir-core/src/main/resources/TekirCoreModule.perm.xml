@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<permissions>
+    <permissionGroup name="Params" order="100">
+        <permission target="location" order="1">
+            <entityActions />
+        </permission>
+        <permission target="territory" order="2">
+            <entityActions />
+        </permission>
+        <permission target="industry" order="3">
+            <entityActions />
+        </permission>
+        <permission target="currencyDefinition" order="4">
+            <entityActions />
+        </permission>
+        <permission target="unitSetDefinition" order="5">
+            <entityActions />
+        </permission>
+        <permission target="taxDefinition" order="6">
+            <entityActions />
+        </permission>
+    </permissionGroup>
+</permissions>
