@@ -13,7 +13,6 @@ import com.ozguryazilim.tekir.voucher.VoucherStateAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateConfig;
 import com.ozguryazilim.tekir.voucher.process.ProcessService;
 import com.ozguryazilim.telve.data.RepositoryBase;
-import com.ozguryazilim.telve.feature.FeatureHandler;
 import com.ozguryazilim.telve.forms.FormEdit;
 import com.ozguryazilim.telve.sequence.SequenceManager;
 import javax.inject.Inject;
@@ -51,11 +50,6 @@ public class AccountVirementHome extends VoucherFormBase<AccountVirement>{
         config.addTranstion(VoucherState.CLOSE, new VoucherStateAction("Revise", "fa fa-unlock", false, ""), VoucherState.OPEN);
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("Publish", "fa fa-check", true, ""), VoucherState.CLOSE);
         return config;
-    }
-
-    @Override
-    public Class<? extends FeatureHandler> getFeatureClass() {
-        return AccountVirementFeature.class;
     }
 
     @Override

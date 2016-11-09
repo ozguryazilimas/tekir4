@@ -7,8 +7,9 @@ package com.ozguryazilim.tekir.voucher;
 
 import com.ozguryazilim.tekir.entities.VoucherBase;
 import com.ozguryazilim.tekir.entities.VoucherState;
+import com.ozguryazilim.tekir.voucher.number.VoucherSerialService;
 import com.ozguryazilim.telve.auth.Identity;
-import com.ozguryazilim.telve.feature.FeatureHandler;
+import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureQualifierLiteral;
 import com.ozguryazilim.telve.forms.FormBase;
 import com.ozguryazilim.telve.messages.FacesMessages;
@@ -39,6 +40,9 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
 
     @Inject
     private SequenceManager sequenceManager;
+    
+    @Inject
+    private VoucherSerialService voucherSerialService;
 
     @Inject
     private Event<VoucherStateChange> stateChangeEvent;
@@ -73,8 +77,8 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
         e.setDate(new Date());
         //FIXME: Bunu config'den sınıf adına göre almak en temizi olur.
         String s = e.getClass().getSimpleName().substring(0, 2);
-        e.setVoucherNo(sequenceManager.getNewSerialNumber(s, 6));
-
+        e.setVoucherNo(voucherSerialService.getNewSerialNumber(getFeature()));
+        
         e.setOwner(identity.getLoginName());
 
         return e;
@@ -110,8 +114,6 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
         }
         return new ArrayList<>(trn.keySet());
     }
-
-    public abstract Class<? extends FeatureHandler> getFeatureClass();
 
     /**
      * Bir state'den bir başka state'e geçiş için trigger.
@@ -185,6 +187,14 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
         return super.onAfterLoad();
     }
 
+    public FeaturePointer getFeaturePointer(){
+        FeaturePointer fp = new FeaturePointer();
+        fp.setBusinessKey(getEntity().getVoucherNo());
+        fp.setPrimaryKey(getEntity().getId());
+        fp.setFeature(getFeature().getName());
+        return fp;
+    }
+    
     /**
      * Action name üzerinden trigger tetikler.
      *

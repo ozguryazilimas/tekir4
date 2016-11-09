@@ -5,7 +5,9 @@
  */
 package com.ozguryazilim.tekir.voucher.config;
 
+import com.ozguryazilim.tekir.core.config.ParamNavigationSection;
 import com.ozguryazilim.telve.auth.SecuredPage;
+import com.ozguryazilim.telve.nav.Navigation;
 import com.ozguryazilim.telve.view.Pages;
 import javax.enterprise.context.ApplicationScoped;
 import org.apache.deltaspike.jsf.api.config.view.Folder;
@@ -24,4 +26,8 @@ public interface VoucherPages extends Pages {
     
     @SecuredPage() @View
     class VoucherGroupLookup implements VoucherPages {}
+    
+    @SecuredPage("voucherSerial") @View
+    @Navigation(label = "module.caption.VoucherSerial", icon = "fa fa-book", section = ParamNavigationSection.class)
+    class VoucherSerial implements VoucherPages {}
 }

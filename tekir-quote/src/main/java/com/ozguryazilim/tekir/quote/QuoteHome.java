@@ -21,7 +21,6 @@ import com.ozguryazilim.tekir.voucher.VoucherStateConfig;
 import com.ozguryazilim.tekir.voucher.process.ProcessService;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
-import com.ozguryazilim.telve.feature.FeatureHandler;
 import com.ozguryazilim.telve.lookup.LookupSelectTuple;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -74,6 +73,7 @@ public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodit
         //TODO: Bu iş için DateUtils fean yazmak lazım.
         LocalDateTime dt = LocalDateTime.now();
         getEntity().setExpireDate( Date.from(dt.plusDays(30).atZone(ZoneId.systemDefault()).toInstant()));
+        getEntity().setRevision(1);
     }
 
     public void addItem() {
@@ -371,19 +371,6 @@ public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodit
         return page;
     }
     
-    /**
-     * FIXME: Bu method üst sınıflara taşınmalı. Voucher ve hatta Form seviyelerine.
-     * @return 
-     */
-    public FeaturePointer getFeaturePointer(){
-        FeaturePointer fp = new FeaturePointer();
-        fp.setBusinessKey(getEntity().getVoucherNo());
-        fp.setPrimaryKey(getEntity().getId());
-        fp.setFeature(getEntity().getClass().getSimpleName());
-        return fp;
-    }
-
-
     public Class<? extends ViewConfig> closeWin(){
         //FIXME: Aslında burada belki iki farklı metod gerekecek : Sipariş, Sözleşme
         //getEntity().setStatus(VocuherStatus.WON);
@@ -415,11 +402,6 @@ public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodit
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("Cancel", "fa fa-ban", true, ""), VoucherState.CLOSE);
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("Revise", "fa fa-close", true, ""), VoucherState.DRAFT);
         return config;
-    }
-
-    @Override
-    public Class<? extends FeatureHandler> getFeatureClass() {
-        return QuoteFeature.class;
     }
 
     @Override

@@ -17,9 +17,7 @@ import com.ozguryazilim.tekir.voucher.VoucherStateConfig;
 import com.ozguryazilim.tekir.voucher.process.ProcessService;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
-import com.ozguryazilim.telve.feature.FeatureHandler;
 import com.ozguryazilim.telve.forms.FormEdit;
-import com.ozguryazilim.telve.sequence.SequenceManager;
 import javax.inject.Inject;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
 
@@ -38,9 +36,6 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
 
     @Inject
     private CurrencyService currencyService;
-    
-    @Inject
-    private SequenceManager sequenceManager;
     
     @Inject
     private AccountTxnService accountTxnService;
@@ -117,18 +112,6 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
         return save();
     }
     
-    /**
-     * FIXME: Bu method üst sınıflara taşınmalı. Voucher ve hatta Form seviyelerine.
-     * @return 
-     */
-    public FeaturePointer getFeaturePointer(){
-        FeaturePointer fp = new FeaturePointer();
-        fp.setBusinessKey(getEntity().getVoucherNo());
-        fp.setPrimaryKey(getEntity().getId());
-        fp.setFeature(getEntity().getClass().getSimpleName());
-        return fp;
-    }
-
     @Override
     protected VoucherStateConfig buildStateConfig() {
         VoucherStateConfig config = new VoucherStateConfig();
@@ -139,8 +122,4 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
         return config;
     }
 
-    @Override
-    public Class<? extends FeatureHandler> getFeatureClass() {
-        return OpportunityFeature.class;
-    }
 }

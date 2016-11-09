@@ -7,6 +7,7 @@ package com.ozguryazilim.tekir.opportunity;
 
 import com.ozguryazilim.tekir.entities.Opportunity;
 import com.ozguryazilim.tekir.opportunity.config.OpportunityPages;
+import com.ozguryazilim.tekir.voucher.Voucher;
 import com.ozguryazilim.telve.feature.AbstractFeatureHandler;
 import com.ozguryazilim.telve.feature.Feature;
 import com.ozguryazilim.telve.feature.Page;
@@ -21,6 +22,7 @@ import com.ozguryazilim.telve.feature.PageType;
 @Page( type = PageType.VIEW, page = OpportunityPages.OpportunityView.class )
 @Page( type = PageType.MASTER_VIEW, page = OpportunityPages.OpportunityMasterView.class )
 @Page( type = PageType.EDIT, page = OpportunityPages.Opportunity.class )
+@Voucher
 public class OpportunityFeature extends AbstractFeatureHandler{
     
 }

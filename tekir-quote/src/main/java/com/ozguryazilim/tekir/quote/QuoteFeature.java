@@ -7,6 +7,7 @@ package com.ozguryazilim.tekir.quote;
 
 import com.ozguryazilim.tekir.entities.Quote;
 import com.ozguryazilim.tekir.quote.config.QuotePages;
+import com.ozguryazilim.tekir.voucher.Voucher;
 import com.ozguryazilim.telve.feature.AbstractFeatureHandler;
 import com.ozguryazilim.telve.feature.Feature;
 import com.ozguryazilim.telve.feature.Page;
@@ -21,6 +22,7 @@ import com.ozguryazilim.telve.feature.PageType;
 @Page( type = PageType.VIEW, page = QuotePages.QuoteView.class )
 @Page( type = PageType.MASTER_VIEW, page = QuotePages.QuoteMasterView.class )
 @Page( type = PageType.EDIT, page = QuotePages.Quote.class )
+@Voucher
 public class QuoteFeature extends AbstractFeatureHandler{
     
 }
