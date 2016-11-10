@@ -15,6 +15,8 @@ import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureQualifier;
 import com.ozguryazilim.telve.qualifiers.After;
+import java.util.ArrayList;
+import java.util.List;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
@@ -33,17 +35,18 @@ public class AccountVirementFeeder extends AbstractFeeder<AccountVirement>{
         //FIXME: acaba bunun için bir Qualifier yapabilir miyiz?
         if (event.getPayload() instanceof AccountVirement) {
 
+            List<FeaturePointer> mentions = new ArrayList<>();
             AccountVirement entity = (AccountVirement) event.getPayload();
 
             FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
-            FeaturePointer contactPointer = FeatureUtils.getAccountFeaturePointer(entity.getFromAccount());
+            FeaturePointer fromContactPointer = FeatureUtils.getAccountFeaturePointer(entity.getFromAccount());
+            FeaturePointer toContactPointer = FeatureUtils.getAccountFeaturePointer(entity.getToAccount());
+            mentions.add(voucherPointer);
+            mentions.add(fromContactPointer);
+            mentions.add(toContactPointer);
+            
+            sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(), entity.getInfo(), getMessage(event), mentions);
 
-            
-            sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(), entity.getInfo(), getMessage(event), voucherPointer, contactPointer);
-            
-            contactPointer = FeatureUtils.getAccountFeaturePointer(entity.getToAccount());
-            
-            sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(), entity.getInfo(), getMessage(event), voucherPointer, contactPointer);
         }
     }
     

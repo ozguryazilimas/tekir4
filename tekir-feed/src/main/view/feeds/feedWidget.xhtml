@@ -25,9 +25,15 @@
                         <div class="product-info">
                             <span class="product-title">#{feed.subject}</span>
                             <span class="product-description text-sm">
-                                <h:outputText value="#{feed.body}" escape="false" />
+                                <h:outputText value="#{formatedMessage.getMessageFromData(feed.body)}" escape="false" />
                             </span>
-                            <span class="product-description text-sm"><t:cellOutputFeatureLink value="#{featureController.getFeatureLink(feed.basePointer)}" /></span>
+                            <span class="product-description text-sm">
+                                <ul class="list-inline">
+                                    <ui:repeat value="#{feed.mentions}" var="mention" >
+                                        <li><t:cellOutputFeatureLink value="#{featureController.getFeatureLink(mention.featurePointer)}" /></li>
+                                    </ui:repeat>
+                                </ul>
+                            </span>
                             <span class="product-description text-sm">
                                 <i class="fa fa-user"/> #{userLookup.getUserName(feed.user)} 
                                 <i class="fa  fa-clock-o"/> <t:cellOutputDateTime value="#{feed.date}"/></span>

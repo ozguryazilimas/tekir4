@@ -7,6 +7,7 @@ package com.ozguryazilim.tekir.feed;
 
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.messagebus.command.CommandSender;
+import java.util.List;
 import javax.inject.Inject;
 
 /**
@@ -20,8 +21,8 @@ public abstract class AbstractFeeder<E> {
     @Inject
     private CommandSender commandSender;
     
-    protected void sendFeed(String type, String feeder, String user, String subject, String body, FeaturePointer basePointer, FeaturePointer relatedPointer){
-        FeedCommand command = new FeedCommand(type, feeder, user, subject, body, basePointer, relatedPointer);
+    protected void sendFeed(String type, String feeder, String user, String subject, String body, List<FeaturePointer> mentions){
+        FeedCommand command = new FeedCommand(type, feeder, user, subject, body, mentions);
         commandSender.sendCommand(command);
     }
     

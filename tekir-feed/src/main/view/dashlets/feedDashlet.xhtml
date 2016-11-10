@@ -11,8 +11,8 @@
 
     <ui:define name="caption">
         <ui:remove>
-        <t:cellOutputDate value="#{feedDashlet.beginDate}" /> -
-        <t:cellOutputDate value="#{feedDashlet.endDate}" />
+            <t:cellOutputDate value="#{feedDashlet.beginDate}" /> -
+            <t:cellOutputDate value="#{feedDashlet.endDate}" />
         </ui:remove>
     </ui:define>
 
@@ -25,7 +25,7 @@
     </ui:define>
 
     <ui:define name="view">
-        
+
         <p:outputPanel id="feedWL" layout="block" class="box-body">
             <ul class="products-list product-list-in-box">
                 <ui:repeat value="#{feedDashlet.feeds}" var="feed">
@@ -41,10 +41,15 @@
                             <span class="product-description text-sm">
                                 <h:outputText value="#{feed.body}" escape="false" />
                             </span>
+
                             <span class="product-description text-sm">
-                                <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(feed.basePointer)}" />
-                                <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(feed.relatedPointer)}" />
+                                <ul class="list-inline">
+                                    <ui:repeat value="#{feed.mentions}" var="mention" >
+                                        <li><t:cellOutputFeatureLink value="#{featureController.getFeatureLink(mention.featurePointer)}" /></li>
+                                    </ui:repeat>
+                                </ul>
                             </span>
+
                             <span class="product-description text-sm"></span>
                             <span class="product-description text-sm">
                                 <i class="fa fa-user"/> #{userLookup.getUserName(feed.user)} 
@@ -55,6 +60,6 @@
             </ul>
 
         </p:outputPanel>
-        
+
     </ui:define>
 </ui:composition>

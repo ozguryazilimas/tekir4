@@ -15,6 +15,8 @@ import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureQualifier;
 import com.ozguryazilim.telve.qualifiers.After;
+import java.util.ArrayList;
+import java.util.List;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
@@ -33,13 +35,16 @@ public class AccountCreditNoteFeeder extends AbstractFeeder<AccountCreditNote>{
         //FIXME: acaba bunun için bir Qualifier yapabilir miyiz?
         if (event.getPayload() instanceof AccountCreditNote) {
 
+            List<FeaturePointer> mentions = new ArrayList<>();
             AccountCreditNote entity = (AccountCreditNote) event.getPayload();
 
             FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
             FeaturePointer contactPointer = FeatureUtils.getAccountFeaturePointer(entity.getAccount());
+            mentions.add(voucherPointer);
+            mentions.add(contactPointer);
 
             
-            sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(), entity.getInfo(), getMessage(event), voucherPointer, contactPointer);
+            sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(), entity.getInfo(), getMessage(event), mentions);
         }
     }
     

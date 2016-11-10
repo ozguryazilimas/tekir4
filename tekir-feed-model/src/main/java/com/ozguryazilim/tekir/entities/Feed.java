@@ -6,20 +6,22 @@
 package com.ozguryazilim.tekir.entities;
 
 import com.ozguryazilim.telve.entities.EntityBase;
-import com.ozguryazilim.telve.entities.FeaturePointer;
+import java.util.ArrayList;
 import java.util.Date;
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  * Feed Api için Feedleri saklama modeli
@@ -56,22 +58,10 @@ public class Feed extends EntityBase {
     @Column( name="FEED_BODY")
     private String body;
     
-    @Embedded
-    @AttributeOverrides({
-        @AttributeOverride( name = "feature", column = @Column( name="BASE_FP" )),
-        @AttributeOverride( name = "businessKey", column = @Column( name="BASE_BK" )),
-        @AttributeOverride( name = "primaryKey", column = @Column( name="BASE_PK" )),
-    })
-    private FeaturePointer basePointer = new FeaturePointer();
+    @OneToMany(mappedBy = "feed", cascade = CascadeType.ALL, orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<FeedMention> mentions = new ArrayList<>();
     
-    @Embedded
-    @AttributeOverrides({
-        @AttributeOverride( name = "feature", column = @Column( name="REL_FP" )),
-        @AttributeOverride( name = "businessKey", column = @Column( name="REL_BK" )),
-        @AttributeOverride( name = "primaryKey", column = @Column( name="REL_PK" )),
-    })
-    private FeaturePointer relatedPointer = new FeaturePointer();
-
     @Override
     public Long getId() {
         return id;
@@ -129,22 +119,11 @@ public class Feed extends EntityBase {
         this.body = body;
     }
 
-    public FeaturePointer getBasePointer() {
-        return basePointer;
+    public List<FeedMention> getMentions() {
+        return mentions;
     }
 
-    public void setBasePointer(FeaturePointer basePointer) {
-        this.basePointer = basePointer;
+    public void setMentions(List<FeedMention> mentions) {
+        this.mentions = mentions;
     }
-
-    public FeaturePointer getRelatedPointer() {
-        return relatedPointer;
-    }
-
-    public void setRelatedPointer(FeaturePointer relatedPointer) {
-        this.relatedPointer = relatedPointer;
-    }
-
-    
-
 }

@@ -14,6 +14,8 @@ import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureQualifier;
 import com.ozguryazilim.telve.qualifiers.After;
+import java.util.ArrayList;
+import java.util.List;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
@@ -34,10 +36,14 @@ public class OpportunityFeeder extends AbstractFeeder<Opportunity> {
 
             Opportunity entity = (Opportunity) event.getPayload();
 
+            List<FeaturePointer> mentions = new ArrayList<>();
             FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
             FeaturePointer contactPointer = FeatureUtils.getAccountFeaturePointer(entity);
             
-            sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(), entity.getTopic(), getMessage(event), voucherPointer, contactPointer);
+            mentions.add(contactPointer);
+            mentions.add(voucherPointer);
+            
+            sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(), entity.getTopic(), getMessage(event), mentions);
         }
     }
 
@@ -51,15 +57,15 @@ public class OpportunityFeeder extends AbstractFeeder<Opportunity> {
     protected String getMessage( VoucherStateChange event ){
         switch( event.getAction().getName()){
             case "CREATE" :
-                return "Opportunity created";
-            case "Publish" :
+                return "feeder.messages.OpportunityFeeder.CREATE$%&"+identity.getUserName()+"$%&"+ event.getPayload().getVoucherNo();
+            case "publish" :
                 return "Opportunity published";
-            case "Won" :
-                return "Opportunity won! Congrats!";
-            case "Loss" :
-                return "Opportunity Lost" + event.getPayload().getStateReason();
-            case "Cancel":
-                return "Opportunity canceled. " + event.getPayload().getStateReason();
+            case "won" :
+                return "feeder.messages.OpportunityFeeder.WON$%&"+identity.getUserName()+"$%&"+ event.getPayload().getVoucherNo();
+            case "loss" :
+                return "feeder.messages.OpportunityFeeder.LOST$%&"+event.getPayload().getVoucherNo()+"$%&"+event.getPayload().getStateReason();
+            case "cancel":
+                return "feeder.messages.OpportunityFeeder.CANCEL$%&"+identity.getUserName()+"$%&"+ event.getPayload().getVoucherNo()+"$%&"+event.getPayload().getStateReason();
                 
         }
         

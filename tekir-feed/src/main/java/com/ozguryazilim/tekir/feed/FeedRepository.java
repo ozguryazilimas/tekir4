@@ -34,7 +34,7 @@ public abstract class FeedRepository extends RepositoryBase<Feed, Feed> implemen
     @Query( "select f from Feed f where f.basePointer.feature = :feature or f.relatedPointer.feature = :feature")
     public abstract List<Feed> findForFeature( @QueryParam("feature") String feature );
     
-    @Query( "select f from Feed f where ( f.basePointer.feature = :feature and f.basePointer.primaryKey = :id ) or ( f.relatedPointer.feature = :feature and f.relatedPointer.primaryKey = :id ) order by f.date desc")
+    @Query( "select f from Feed f INNER JOIN f.mentions m where ( m.featurePointer.feature = :feature and m.featurePointer.primaryKey = :id ) order by f.date desc")
     public abstract QueryResult<Feed> findForFeature( @QueryParam("feature") String feature, @QueryParam("id") Long id );
     
     public List<Feed> findForFeature( String feature, Long id, Integer limit ){

@@ -8,6 +8,7 @@ package com.ozguryazilim.tekir.feed;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.messagebus.command.AbstractCommand;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Feed gönderme komutu
@@ -22,43 +23,15 @@ public class FeedCommand extends AbstractCommand{
     private Date date;
     private String subject;
     private String body;
-    private FeaturePointer basePointer;
-    private FeaturePointer relatedPointer;
+    private List<FeaturePointer> mentions;
 
-    public FeedCommand(String type, String feeder, String subject, String body, FeaturePointer basePointer) {
-        this.type = type;
-        this.feeder = feeder;
-        this.subject = subject;
-        this.body = body;
-        this.basePointer = basePointer;
-        this.date = new Date();
-        this.user = "SYSTEM";
-    }
-
-    
-    
-    public FeedCommand(String type, String feeder, String subject, String body, FeaturePointer basePointer, FeaturePointer relatedPointer) {
-        this.type = type;
-        this.feeder = feeder;
-        this.subject = subject;
-        this.body = body;
-        this.basePointer = basePointer;
-        this.relatedPointer = relatedPointer;
-        this.date = new Date();
-        this.user = "SYSTEM";
-    }
-
-    
-    
-    public FeedCommand(String type, String feeder, String user, String subject, String body, FeaturePointer basePointer, FeaturePointer relatedPointer) {
+    public FeedCommand(String type, String feeder, String user, String subject, String body, List<FeaturePointer> mentions) {
         this.type = type;
         this.feeder = feeder;
         this.user = user;
-        this.date = date;
         this.subject = subject;
         this.body = body;
-        this.basePointer = basePointer;
-        this.relatedPointer = relatedPointer;
+        this.mentions = mentions;
         this.date = new Date();
     }
 
@@ -112,24 +85,11 @@ public class FeedCommand extends AbstractCommand{
         this.body = body;
     }
 
-    public FeaturePointer getBasePointer() {
-        return basePointer;
+    public List<FeaturePointer> getMentions() {
+        return mentions;
     }
 
-    public void setBasePointer(FeaturePointer basePointer) {
-        this.basePointer = basePointer;
+    public void setMentions(List<FeaturePointer> mentions) {
+        this.mentions = mentions;
     }
-
-    public FeaturePointer getRelatedPointer() {
-        return relatedPointer;
-    }
-
-    public void setRelatedPointer(FeaturePointer relatedPointer) {
-        this.relatedPointer = relatedPointer;
-    }
-
-    
-    
-    
-    
 }

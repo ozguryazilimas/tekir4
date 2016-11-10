@@ -8,25 +8,58 @@ package com.ozguryazilim.tekir.activity;
 import com.ozguryazilim.tekir.entities.Activity;
 import com.ozguryazilim.tekir.feed.AbstractFeeder;
 import com.ozguryazilim.tekir.feed.Feeder;
+import com.ozguryazilim.telve.auth.Identity;
+import com.ozguryazilim.telve.entities.FeaturePointer;
+import com.ozguryazilim.telve.feature.FeatureRegistery;
+import java.util.ArrayList;
+import java.util.List;
+import javax.inject.Inject;
 
 /**
  *
  * @author Hakan Uygun
  */
 @Feeder
-public class ActivityFeeder extends AbstractFeeder<Activity>{
+public class ActivityFeeder extends AbstractFeeder<Activity> {
 
-    /*
-    FIXME: Activity'lerin nereye nasıl feed edeceğini iyi bir düşünelim.
-    @Override
+    @Inject
+    private Identity identity;
+
     public void feed(Activity entity) {
+
+        List<FeaturePointer> mentions = new ArrayList<>();
+
+        if (entity.getCorporation() != null) {
+            FeaturePointer cp = new FeaturePointer();
+            cp.setBusinessKey(entity.getCorporation().getName());
+            cp.setPrimaryKey(entity.getCorporation().getId());
+            cp.setFeature(FeatureRegistery.getFeatureClass(entity.getCorporation().getClass()).getSimpleName());
+            mentions.add(cp);
+        }
+
+        if (entity.getPerson() != null) {
+            FeaturePointer pp = new FeaturePointer();
+            pp.setBusinessKey(entity.getPerson().getName());
+            pp.setPrimaryKey(entity.getPerson().getId());
+            pp.setFeature(FeatureRegistery.getFeatureClass(entity.getPerson().getClass()).getSimpleName());
+            mentions.add(pp);
+        }
+
+        if (entity.getRegarding() != null) {
+            mentions.add(entity.getRegarding());
+        }
+
+        //Activity'nin kendisini de katalım. Netekim activity detayını da görme ihtiyacı olacaktır.
+        FeaturePointer fp = new FeaturePointer();
+        fp.setBusinessKey(entity.getSubject());
+        fp.setPrimaryKey(entity.getId());
+        fp.setFeature(ActivityFeature.class.getSimpleName());
+        mentions.add(fp);
+
+        //TODO: Hatta planlanan bir görüşme ise User'ı da mentiona katmak lazım
         
-        FeaturePointer contactPointer = new FeaturePointer();
-        contactPointer.setBusinessKey(entity.getSubject());
-        contactPointer.setPrimaryKey(entity.getId());
-        contactPointer.setFeature("Activity");
-        
-        sendFeed("ACTIVITY", "ActivityFeeder", entity.getAssignee(), entity.getSubject(), entity.getBody(), contactPointer, null );
+        //TODO: Aslında mesajları activity status'e göre düzenlemek lazım. Mesela başarız görüşme. Şu kişi için görüşme planlaması v.b.
+        sendFeed(entity.getDirection().name(), getClass().getSimpleName() + "." + entity.getClass().getSimpleName(), identity.getLoginName(), entity.getAssignee() + " " + entity.getSubject(), entity.getBody(), mentions);
+
     }
-    */
 }
