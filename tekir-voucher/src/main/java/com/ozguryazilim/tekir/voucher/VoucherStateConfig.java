@@ -41,6 +41,7 @@ public class VoucherStateConfig {
        }
        
        if( !actions.containsKey(action.getName())){
+           action.setOrder(actions.size());
            actions.put(action.getName(), action);
        }
        

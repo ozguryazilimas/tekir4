@@ -27,7 +27,7 @@ public interface CommodityPages extends Pages {
 	@View
 	@SecuredPage("commodity")
 	@PageTitle("module.caption.CommodityBrowse")
-	@Navigation(label = "module.caption.CommodityBrowse", icon = "fa fa-cube", section = SideNavigationSection.class)
+	@Navigation(label = "module.caption.CommodityBrowse", icon = "flaticon-package", section = SideNavigationSection.class)
 	class CommodityBrowse implements CommodityPages {
 	}
 

@@ -25,19 +25,4 @@ public abstract class AbstractFeeder<E> {
         commandSender.sendCommand(command);
     }
     
-    
-    /**
-     * Alt sınıflarda observer ile işaretlenebilir.
-     * @param entity 
-     */
-    public abstract void feed( E entity );
-    
-    
-    /**
-     * Geriye annotaion'da verilmiş default icon'nı döndürür.
-     * @return 
-     */
-    public String getIcon(){
-        return getClass().getAnnotation(Feeder.class).icon();
-    }
 }

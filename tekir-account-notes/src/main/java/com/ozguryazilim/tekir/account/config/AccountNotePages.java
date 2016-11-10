@@ -5,6 +5,9 @@
  */
 package com.ozguryazilim.tekir.account.config;
 
+import com.ozguryazilim.tekir.account.credit.AccountCreditNoteFeature;
+import com.ozguryazilim.tekir.account.debit.AccountDebitNoteFeature;
+import com.ozguryazilim.tekir.account.virement.AccountVirementFeature;
 import com.ozguryazilim.telve.auth.SecuredPage;
 import com.ozguryazilim.telve.nav.Navigation;
 import com.ozguryazilim.telve.view.PageTitle;
@@ -24,7 +27,7 @@ public interface AccountNotePages extends Pages{
     @View
     @SecuredPage("accountCreditNote")
     @PageTitle("module.caption.AccountCreditNoteBrowse")
-    @Navigation(label = "module.caption.AccountCreditNoteBrowse", icon = "fa fa-book", section = AccountNoteNavigationSection.class)
+    @Navigation(label = "module.caption.AccountCreditNoteBrowse", feature = AccountCreditNoteFeature.class, section = AccountNoteNavigationSection.class)
     class AccountCreditNoteBrowse implements AccountNotePages {
     }
 
@@ -52,7 +55,7 @@ public interface AccountNotePages extends Pages{
     @View
     @SecuredPage("accountDebitNote")
     @PageTitle("module.caption.AccountDebitNoteBrowse")
-    @Navigation(label = "module.caption.AccountDebitNoteBrowse", icon = "fa fa-book", section = AccountNoteNavigationSection.class)
+    @Navigation(label = "module.caption.AccountDebitNoteBrowse", feature = AccountDebitNoteFeature.class, section = AccountNoteNavigationSection.class)
     class AccountDebitNoteBrowse implements AccountNotePages {
     }
 
@@ -81,7 +84,7 @@ public interface AccountNotePages extends Pages{
     @View
     @SecuredPage("accountVirement")
     @PageTitle("module.caption.AccountVirementBrowse")
-    @Navigation(label = "module.caption.AccountVirementBrowse", icon = "fa fa-book", section = AccountNoteNavigationSection.class)
+    @Navigation(label = "module.caption.AccountVirementBrowse", feature = AccountVirementFeature.class, section = AccountNoteNavigationSection.class)
     class AccountVirementBrowse implements AccountNotePages {
     }
 

@@ -61,7 +61,7 @@ public interface CorePages extends Pages {
 	@View
 	@SecuredPage("currencyDefinition")
 	@PageTitle("module.caption.CurrencyDefinition")
-	@Navigation(label = "module.caption.CurrencyDefinition", icon = "fa fa-industry", section = ParamNavigationSection.class)
+	@Navigation(label = "module.caption.CurrencyDefinition", icon = "flaticon-exchange-1", section = ParamNavigationSection.class)
 	class CurrencyDefinition implements CorePages {
 	}
 
@@ -82,7 +82,7 @@ public interface CorePages extends Pages {
 	@View
 	@SecuredPage("taxDefinition")
 	@PageTitle("module.caption.TaxDefinition")
-	@Navigation(label = "module.caption.TaxDefinition", icon = "fa fa-sitemap", section = ParamNavigationSection.class)
+	@Navigation(label = "module.caption.TaxDefinition", icon = "flaticon-tax", section = ParamNavigationSection.class)
 	class TaxDefinition implements com.ozguryazilim.tekir.core.config.CorePages {
 	}
 

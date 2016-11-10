@@ -8,15 +8,16 @@ package com.ozguryazilim.tekir.activity;
 import com.ozguryazilim.tekir.entities.Activity;
 import com.ozguryazilim.tekir.feed.AbstractFeeder;
 import com.ozguryazilim.tekir.feed.Feeder;
-import com.ozguryazilim.telve.entities.FeaturePointer;
 
 /**
  *
  * @author Hakan Uygun
  */
-@Feeder(icon = "fa fa-act")
+@Feeder
 public class ActivityFeeder extends AbstractFeeder<Activity>{
 
+    /*
+    FIXME: Activity'lerin nereye nasıl feed edeceğini iyi bir düşünelim.
     @Override
     public void feed(Activity entity) {
         
@@ -27,5 +28,5 @@ public class ActivityFeeder extends AbstractFeeder<Activity>{
         
         sendFeed("ACTIVITY", "ActivityFeeder", entity.getAssignee(), entity.getSubject(), entity.getBody(), contactPointer, null );
     }
-    
+    */
 }

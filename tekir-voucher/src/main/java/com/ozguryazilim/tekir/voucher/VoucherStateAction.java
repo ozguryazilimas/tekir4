@@ -26,12 +26,38 @@ public class VoucherStateAction {
     private final String icon;
     private final Boolean needDialog;
     private final String permission;
+    private Integer order = 50;
 
     public VoucherStateAction(String name, String icon, Boolean needDialog, String permission) {
         this.name = name;
         this.icon = icon;
         this.needDialog = needDialog;
         this.permission = permission;
+    }
+    
+    /**
+     * Permission için action name kullanılacak
+     * @param name
+     * @param icon
+     * @param needDialog 
+     */
+    public VoucherStateAction(String name, String icon, Boolean needDialog) {
+        this.name = name;
+        this.icon = icon;
+        this.needDialog = needDialog;
+        this.permission = name;
+    }
+    
+    /**
+     * Permission için action name kullanılacak. Dialog kullanmayacak
+     * @param name
+     * @param icon
+     */
+    public VoucherStateAction(String name, String icon) {
+        this.name = name;
+        this.icon = icon;
+        this.needDialog = Boolean.FALSE;
+        this.permission = name;
     }
 
     public String getName() {
@@ -50,6 +76,15 @@ public class VoucherStateAction {
         return permission;
     }
 
+    public Integer getOrder() {
+        return order;
+    }
+
+    public void setOrder(Integer order) {
+        this.order = order;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 7;

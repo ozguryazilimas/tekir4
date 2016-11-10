@@ -85,10 +85,11 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
     @Override
     protected VoucherStateConfig buildStateConfig() {
         VoucherStateConfig config = new VoucherStateConfig();
-        config.addTranstion(VoucherState.DRAFT, new VoucherStateAction("Publish", "fa fa-check", false, ""), VoucherState.OPEN);
-        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("Won", "fa fa-check", false, ""), new VoucherState( "WON", VoucherStateType.CLOSE, VoucherStateEffect.POSIVITE));
-        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("Loss", "fa fa-close", true, ""), new VoucherState( "LOSS", VoucherStateType.CLOSE, VoucherStateEffect.NEGATIVE));
-        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("Cancel", "fa fa-ban", true, ""), VoucherState.CLOSE);
+        config.addTranstion(VoucherState.DRAFT, new VoucherStateAction("publish", "fa fa-check" ), VoucherState.OPEN);
+        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("won", "fa fa-check" ), new VoucherState( "WON", VoucherStateType.CLOSE, VoucherStateEffect.POSIVITE));
+        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("loss", "fa fa-close", true ), new VoucherState( "LOSS", VoucherStateType.CLOSE, VoucherStateEffect.NEGATIVE));
+        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("cancel", "fa fa-ban", true ), VoucherState.CLOSE);
+        config.addTranstion(VoucherState.CLOSE, new VoucherStateAction("revise", "fa fa-unlock", true ), VoucherState.OPEN);
         return config;
     }
 

@@ -29,6 +29,8 @@ import javax.inject.Inject;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.SelectEvent;
 import com.ozguryazilim.tekir.entities.Process;
+import com.ozguryazilim.tekir.entities.VoucherStateEffect;
+import com.ozguryazilim.tekir.entities.VoucherStateType;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -361,11 +363,12 @@ public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodit
     @Override
     protected VoucherStateConfig buildStateConfig() {
         VoucherStateConfig config = new VoucherStateConfig();
-        config.addTranstion(VoucherState.DRAFT, new VoucherStateAction("Publish", "fa fa-check", false, ""), VoucherState.OPEN);
-        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("Won", "fa fa-check", false, ""), VoucherState.CLOSE);
-        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("Loss", "fa fa-close", true, ""), VoucherState.CLOSE);
-        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("Cancel", "fa fa-ban", true, ""), VoucherState.CLOSE);
-        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("Revise", "fa fa-close", true, ""), VoucherState.DRAFT);
+        config.addTranstion(VoucherState.DRAFT, new VoucherStateAction("publish", "fa fa-check" ), VoucherState.OPEN);
+        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("won", "fa fa-check", false ), new VoucherState( "WON", VoucherStateType.CLOSE, VoucherStateEffect.POSIVITE));
+        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("loss", "fa fa-close", true ), new VoucherState( "WON", VoucherStateType.CLOSE, VoucherStateEffect.NEGATIVE));
+        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("cancel", "fa fa-ban", true ), VoucherState.CLOSE);
+        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("revise", "fa fa-unlock", true ), VoucherState.DRAFT);
+        //config.addTranstion(VoucherState.CLOSE, new VoucherStateAction("unlock", "fa fa-unlock", true ), VoucherState.DRAFT);
         return config;
     }
 

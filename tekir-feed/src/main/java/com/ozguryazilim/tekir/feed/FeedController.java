@@ -30,7 +30,11 @@ public class FeedController implements Serializable{
     }
     
     public List<Feed> getFeeds( String feature, Long id ){
-        return repository.findForFeature(feature, id);
+        return getFeeds(feature, id, 5);
+    }
+    
+    public List<Feed> getFeeds( String feature, Long id, Integer limit ){
+        return repository.findForFeature(feature, id, limit);
     }
     
 }

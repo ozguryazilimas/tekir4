@@ -7,6 +7,7 @@ package com.ozguryazilim.tekir.voucher;
 
 import com.ozguryazilim.tekir.entities.VoucherBase;
 import com.ozguryazilim.tekir.entities.VoucherState;
+import com.ozguryazilim.tekir.entities.VoucherStateType;
 import com.ozguryazilim.tekir.voucher.number.VoucherSerialService;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.entities.FeaturePointer;
@@ -110,6 +111,9 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
      * @return
      */
     public List<VoucherStateAction> getPermittedStateActions() {
+        
+        List<VoucherStateAction> result = new ArrayList<>();
+        
         Map<VoucherStateAction, VoucherState> trn = stateConfig.getTransitions().get(getCurrentState());
         if (trn == null) {
             return Collections.emptyList();
@@ -117,7 +121,18 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
         if (trn.isEmpty()) {
             return Collections.emptyList();
         }
-        return new ArrayList<>(trn.keySet());
+        
+        trn.keySet().stream()
+                .filter((act) -> ( identity.isPermitted(getPermissionDomain() + ":" +  act.getPermission() +":" + getEntity().getOwner()) ))
+                .forEachOrdered((act) -> {
+                    result.add(act);
+                });
+        
+        result.sort((VoucherStateAction t, VoucherStateAction t1) -> {
+            return t.getOrder().compareTo(t1.getOrder());
+        });
+        
+        return result;
     }
 
     /**
@@ -248,11 +263,20 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
     
     @Override
     public Boolean hasUpdatePermission() {
+        //DRAFT olmayan hiç bir durumda edit yapılamaz gerisine bakmaya gerek yok.
+        if( !getEntity().getState().getType().equals(VoucherStateType.DRAFT)){
+            return false;
+        }
+        
         return identity.isPermitted(getPermissionDomain() + ":update:" + getEntity().getOwner());
     }
 
     @Override
     public Boolean hasDeletePermission() {
+        //TODO: DELETE durumu biraz karışık. DRAFT state'i siler gerisini silemez demek makul mü? Yada close olanları silemez mi demeli? Ya da bunu config'den mi almalı?
+        if( !getEntity().getState().getType().equals(VoucherStateType.DRAFT)){
+            return false;
+        }
         return identity.isPermitted(getPermissionDomain() + ":delete:" + getEntity().getOwner());
     }
 

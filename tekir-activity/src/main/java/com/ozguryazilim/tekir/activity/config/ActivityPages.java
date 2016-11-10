@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.tekir.activity.config;
 
+import com.ozguryazilim.tekir.activity.ActivityFeature;
 import com.ozguryazilim.telve.auth.SecuredPage;
 import com.ozguryazilim.telve.nav.Navigation;
 import com.ozguryazilim.telve.nav.SideNavigationSection;
@@ -28,7 +29,7 @@ public interface ActivityPages extends Pages{
     @View
     @SecuredPage()
     @PageTitle("module.caption.ActivityBrowse")
-    @Navigation(label = "module.caption.ActivityBrowse", icon = "fa fa-book", section = SideNavigationSection.class)
+    @Navigation(label = "module.caption.ActivityBrowse", feature = ActivityFeature.class, section = SideNavigationSection.class)
     class ActivityBrowse implements ActivityPages {}
     
     @SecuredPage()

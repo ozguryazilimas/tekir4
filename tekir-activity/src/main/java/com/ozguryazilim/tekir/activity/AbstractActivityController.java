@@ -92,8 +92,6 @@ public abstract class AbstractActivityController<E extends Activity> implements 
         entity.setStatus(ActivityStatus.SCHEDULED);
         repository.save(entity);
                 
-        feeder.feed(entity);
-        
         RequestContext.getCurrentInstance().closeDialog(null);
     }
     
@@ -101,16 +99,12 @@ public abstract class AbstractActivityController<E extends Activity> implements 
         entity.setStatus(ActivityStatus.SUCCESS);
         repository.save(entity);
         
-        feeder.feed(entity);
-        
         RequestContext.getCurrentInstance().closeDialog(null);
     }
     
     public void faild() {
         entity.setStatus(ActivityStatus.FAILED);
         repository.save(entity);
-        
-        feeder.feed(entity);
         
         RequestContext.getCurrentInstance().closeDialog(null);
     }
@@ -122,8 +116,6 @@ public abstract class AbstractActivityController<E extends Activity> implements 
     public void followup() {
         entity.setStatus(ActivityStatus.SUCCESS);
         repository.save(entity);
-        
-        feeder.feed(entity);
         
         RequestContext.getCurrentInstance().closeDialog(null);
     }

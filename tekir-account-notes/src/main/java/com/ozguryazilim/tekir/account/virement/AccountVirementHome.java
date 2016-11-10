@@ -46,9 +46,8 @@ public class AccountVirementHome extends VoucherFormBase<AccountVirement>{
     @Override
     protected VoucherStateConfig buildStateConfig() {
         VoucherStateConfig config = new VoucherStateConfig();
-        config.addTranstion(VoucherState.DRAFT, new VoucherStateAction("Publish", "fa fa-check", false, ""), VoucherState.CLOSE);
-        config.addTranstion(VoucherState.CLOSE, new VoucherStateAction("Revise", "fa fa-unlock", false, ""), VoucherState.OPEN);
-        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("Publish", "fa fa-check", true, ""), VoucherState.CLOSE);
+        config.addTranstion(VoucherState.DRAFT, new VoucherStateAction("publish", "fa fa-check" ), VoucherState.CLOSE);
+        config.addTranstion(VoucherState.CLOSE, new VoucherStateAction("reopen", "fa fa-unlock", true ), VoucherState.DRAFT);
         return config;
     }
 

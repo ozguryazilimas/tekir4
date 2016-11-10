@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.tekir.contact.config;
 
+import com.ozguryazilim.tekir.contact.ContactFeature;
 import com.ozguryazilim.tekir.core.config.ParamNavigationSection;
 import com.ozguryazilim.telve.view.Pages;
 import javax.enterprise.context.ApplicationScoped;
@@ -67,7 +68,7 @@ public interface ContactPages extends Pages {
 	@View
 	@SecuredPage("contact")
 	@PageTitle("module.caption.ContactBrowse")
-	@Navigation(label = "module.caption.ContactBrowse", icon = "fa fa-book", section = SideNavigationSection.class)
+	@Navigation(label = "module.caption.ContactBrowse", feature = ContactFeature.class, section = SideNavigationSection.class)
 	class ContactBrowse implements ContactPages {
 	}
 

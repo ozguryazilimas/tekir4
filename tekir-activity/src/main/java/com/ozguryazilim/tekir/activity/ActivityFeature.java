@@ -16,7 +16,7 @@ import com.ozguryazilim.telve.feature.PageType;
  *
  * @author oyas
  */
-@Feature(caption = "feature.caption.Activity", icon = "fa fa-user", permission = "activity", forEntity = Activity.class)
+@Feature(permission = "activity", forEntity = Activity.class)
 @Page(type = PageType.BROWSE, page = ActivityPages.ActivityBrowse.class)
 public class ActivityFeature extends AbstractFeatureHandler{
     

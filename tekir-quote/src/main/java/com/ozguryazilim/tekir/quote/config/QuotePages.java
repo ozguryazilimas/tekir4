@@ -26,7 +26,7 @@ public interface QuotePages extends Pages {
 	@View
 	@SecuredPage("quote")
 	@PageTitle("module.caption.QuoteBrowse")
-	@Navigation(label = "module.caption.QuoteBrowse", icon = "fa fa-book", section = SalesNavigationSection.class)
+	@Navigation(label = "module.caption.QuoteBrowse", icon = "flaticon-speech-bubble", section = SalesNavigationSection.class)
 	class QuoteBrowse implements QuotePages {
 	}
 

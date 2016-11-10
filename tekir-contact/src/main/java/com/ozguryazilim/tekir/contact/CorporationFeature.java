@@ -16,7 +16,7 @@ import com.ozguryazilim.telve.feature.PageType;
  *
  * @author oyas
  */
-@Feature(caption = "feature.caption.Corporation", icon = "fa fa-building", permission = "contact", forEntity = Corporation.class )
+@Feature(permission = "contact", forEntity = Corporation.class )
 @Page( type = PageType.BROWSE, page = ContactPages.ContactBrowse.class )
 @Page( type = PageType.VIEW, page = ContactPages.ContactView.class )
 @Page( type = PageType.EDIT, page = ContactPages.Contact.class )

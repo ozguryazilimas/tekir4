@@ -11,6 +11,7 @@ import java.util.List;
 import javax.enterprise.context.Dependent;
 import org.apache.deltaspike.data.api.Query;
 import org.apache.deltaspike.data.api.QueryParam;
+import org.apache.deltaspike.data.api.QueryResult;
 import org.apache.deltaspike.data.api.Repository;
 import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
 
@@ -33,8 +34,12 @@ public abstract class FeedRepository extends RepositoryBase<Feed, Feed> implemen
     @Query( "select f from Feed f where f.basePointer.feature = :feature or f.relatedPointer.feature = :feature")
     public abstract List<Feed> findForFeature( @QueryParam("feature") String feature );
     
-    @Query( "select f from Feed f where ( f.basePointer.feature = :feature and f.basePointer.primaryKey = :id ) or ( f.relatedPointer.feature = :feature and f.relatedPointer.primaryKey = :id )")
-    public abstract List<Feed> findForFeature( @QueryParam("feature") String feature, @QueryParam("id") Long id );
+    @Query( "select f from Feed f where ( f.basePointer.feature = :feature and f.basePointer.primaryKey = :id ) or ( f.relatedPointer.feature = :feature and f.relatedPointer.primaryKey = :id ) order by f.date desc")
+    public abstract QueryResult<Feed> findForFeature( @QueryParam("feature") String feature, @QueryParam("id") Long id );
+    
+    public List<Feed> findForFeature( String feature, Long id, Integer limit ){
+        return findForFeature(feature, id).maxResults(limit).getResultList();
+    }
     
     @Query( "select f from Feed f where f.user = :user")
     public abstract List<Feed> findForUser( @QueryParam("user") String username);

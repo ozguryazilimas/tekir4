@@ -26,7 +26,7 @@ public interface OpportunityPages extends Pages {
     @View
     @SecuredPage("opportunity")
     @PageTitle("module.caption.OpportunityBrowse")
-    @Navigation(label = "module.caption.OpportunityBrowse", icon = "fa fa-book", section = SalesNavigationSection.class)
+    @Navigation(label = "module.caption.OpportunityBrowse", icon = "flaticon-light-bulb", section = SalesNavigationSection.class)
     class OpportunityBrowse implements OpportunityPages {
     }
 

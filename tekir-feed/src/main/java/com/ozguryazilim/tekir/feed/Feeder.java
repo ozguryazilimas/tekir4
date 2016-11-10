@@ -30,12 +30,4 @@ import javax.inject.Named;
 @Documented
 public @interface Feeder {
     
-    /**
-     * Feeder'in UI için kullanacağı icon font
-     * 
-     * Örneğin: "fa fa-user"
-     * 
-     * @return 
-     */
-    String icon();
 }

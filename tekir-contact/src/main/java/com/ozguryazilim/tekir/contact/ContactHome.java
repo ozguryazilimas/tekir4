@@ -11,6 +11,8 @@ import com.ozguryazilim.tekir.entities.Person;
 import com.ozguryazilim.tekir.entities.RelatedContact;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
+import com.ozguryazilim.telve.feature.FeatureHandler;
+import com.ozguryazilim.telve.feature.FeatureRegistery;
 import com.ozguryazilim.telve.messages.FacesMessages;
 import java.util.ArrayList;
 import java.util.List;
@@ -164,5 +166,9 @@ public class ContactHome extends FormBase<Contact, Long> {
     
     public Boolean getIsAccount(){
         return getEntity().getContactRoles().contains("ACCOUNT");
+    }
+    
+    public Class<? extends FeatureHandler> getFeatureClass(){
+        return FeatureRegistery.getFeatureClass(getEntity().getClass());
     }
 }

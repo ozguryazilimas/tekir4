@@ -7,14 +7,7 @@
                 xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
                 template="/layout/containerViewTabBase.xhtml">
 
-    <ui:define name="context-menu">
-        <li>
-            <p:commandLink action="#{bean.create()}" styleClass="context-command" ajax="false" rendered="#{bean.hasInsertPermission()}">
-                <i class="fa fa-plus-circle"></i>
-                <h:outputText value=" #{messages['general.button.Add']}" />
-            </p:commandLink>
-        </li>
-
+    <ui:define name="context-menu-2">
         <ui:repeat value="#{bean.permittedStateActions}" var="act">
             <li>
                 <p:commandLink action="#{bean.trigger(act)}" styleClass="context-command" ajax="false" rendered="#{not act.hasDialog()}">

@@ -10,6 +10,7 @@ import com.ozguryazilim.tekir.entities.AccountCreditNote;
 import com.ozguryazilim.tekir.feed.AbstractFeeder;
 import com.ozguryazilim.tekir.feed.Feeder;
 import com.ozguryazilim.tekir.voucher.VoucherStateChange;
+import com.ozguryazilim.tekir.voucher.utils.FeatureUtils;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureQualifier;
@@ -21,16 +22,11 @@ import javax.inject.Inject;
  *
  * @author oyas
  */
-@Feeder(icon = "fa fa-book")
+@Feeder
 public class AccountCreditNoteFeeder extends AbstractFeeder<AccountCreditNote>{
 
     @Inject
     private Identity identity;
-    
-    @Override
-    public void feed(AccountCreditNote entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
     public void feed(@Observes @FeatureQualifier(feauture = AccountCreditNoteFeature.class) @After VoucherStateChange event) {
 
@@ -39,16 +35,8 @@ public class AccountCreditNoteFeeder extends AbstractFeeder<AccountCreditNote>{
 
             AccountCreditNote entity = (AccountCreditNote) event.getPayload();
 
-            //FIXME: Bu pointer işi için Util'e gitmek lazım ( FeautureUtils )
-            FeaturePointer voucherPointer = new FeaturePointer();
-            voucherPointer.setBusinessKey(entity.getVoucherNo());
-            voucherPointer.setPrimaryKey(entity.getId());
-            voucherPointer.setFeature(entity.getClass().getSimpleName());
-
-            FeaturePointer contactPointer = new FeaturePointer();
-            contactPointer.setBusinessKey(entity.getAccount().getName());
-            contactPointer.setPrimaryKey(entity.getAccount().getId());
-            contactPointer.setFeature(entity.getAccount().getClass().getSimpleName());
+            FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
+            FeaturePointer contactPointer = FeatureUtils.getAccountFeaturePointer(entity.getAccount());
 
             
             sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(), entity.getInfo(), getMessage(event), voucherPointer, contactPointer);

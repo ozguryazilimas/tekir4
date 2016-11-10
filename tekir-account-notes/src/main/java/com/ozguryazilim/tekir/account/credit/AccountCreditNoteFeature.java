@@ -12,17 +12,18 @@ import com.ozguryazilim.tekir.entities.AccountCreditNote;
 import com.ozguryazilim.tekir.voucher.Voucher;
 import com.ozguryazilim.telve.feature.Page;
 import com.ozguryazilim.telve.feature.PageType;
+import javax.enterprise.inject.Default;
 
 /**
  *
  * @author oyas
  */
-@Feature(caption = "feature.caption.AccountCreditNote", icon = "fa fa-book", permission = "accountCreditNote", forEntity = AccountCreditNote.class )
+@Feature(permission = "accountCreditNote", forEntity = AccountCreditNote.class )
 @Page( type = PageType.BROWSE, page = AccountNotePages.AccountCreditNoteBrowse.class )
 @Page( type = PageType.VIEW, page = AccountNotePages.AccountCreditNoteView.class )
 @Page( type = PageType.MASTER_VIEW, page = AccountNotePages.AccountCreditNoteMasterView.class )
 @Page( type = PageType.EDIT, page = AccountNotePages.AccountCreditNote.class )
-@Voucher
+@Voucher @Default
 public class AccountCreditNoteFeature extends AbstractFeatureHandler{
     
 }

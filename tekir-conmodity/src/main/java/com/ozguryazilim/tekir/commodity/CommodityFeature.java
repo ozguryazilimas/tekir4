@@ -16,7 +16,7 @@ import com.ozguryazilim.telve.feature.PageType;
  *
  * @author oyas
  */
-@Feature(caption = "feature.caption.Commodity", icon = "fa fa-user", permission = "commodity", forEntity = Commodity.class)
+@Feature(permission = "commodity", forEntity = Commodity.class)
 @Page(type = PageType.BROWSE, page = CommodityPages.CommodityBrowse.class)
 @Page(type = PageType.EDIT, page = CommodityPages.Commodity.class)
 @Page(type = PageType.VIEW, page = CommodityPages.CommodityView.class)

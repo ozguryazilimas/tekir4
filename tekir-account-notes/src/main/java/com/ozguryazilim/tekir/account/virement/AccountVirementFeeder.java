@@ -10,6 +10,7 @@ import com.ozguryazilim.tekir.entities.AccountVirement;
 import com.ozguryazilim.tekir.feed.AbstractFeeder;
 import com.ozguryazilim.tekir.feed.Feeder;
 import com.ozguryazilim.tekir.voucher.VoucherStateChange;
+import com.ozguryazilim.tekir.voucher.utils.FeatureUtils;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureQualifier;
@@ -21,16 +22,11 @@ import javax.inject.Inject;
  *
  * @author oyas
  */
-@Feeder(icon = "fa fa-book")
+@Feeder
 public class AccountVirementFeeder extends AbstractFeeder<AccountVirement>{
 
     @Inject
     private Identity identity;
-    
-    @Override
-    public void feed(AccountVirement entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
     public void feed(@Observes @FeatureQualifier(feauture = AccountVirementFeature.class) @After VoucherStateChange event) {
 
@@ -39,24 +35,13 @@ public class AccountVirementFeeder extends AbstractFeeder<AccountVirement>{
 
             AccountVirement entity = (AccountVirement) event.getPayload();
 
-            //FIXME: Bu pointer işi için Util'e gitmek lazım ( FeautureUtils )
-            FeaturePointer voucherPointer = new FeaturePointer();
-            voucherPointer.setBusinessKey(entity.getVoucherNo());
-            voucherPointer.setPrimaryKey(entity.getId());
-            voucherPointer.setFeature(entity.getClass().getSimpleName());
-
-            FeaturePointer contactPointer = new FeaturePointer();
-            contactPointer.setBusinessKey(entity.getFromAccount().getName());
-            contactPointer.setPrimaryKey(entity.getFromAccount().getId());
-            contactPointer.setFeature(entity.getFromAccount().getClass().getSimpleName());
+            FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
+            FeaturePointer contactPointer = FeatureUtils.getAccountFeaturePointer(entity.getFromAccount());
 
             
             sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(), entity.getInfo(), getMessage(event), voucherPointer, contactPointer);
             
-            contactPointer = new FeaturePointer();
-            contactPointer.setBusinessKey(entity.getToAccount().getName());
-            contactPointer.setPrimaryKey(entity.getToAccount().getId());
-            contactPointer.setFeature(entity.getToAccount().getClass().getSimpleName());
+            contactPointer = FeatureUtils.getAccountFeaturePointer(entity.getToAccount());
             
             sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(), entity.getInfo(), getMessage(event), voucherPointer, contactPointer);
         }
