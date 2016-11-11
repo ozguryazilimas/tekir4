@@ -1,0 +1,15 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui">
+
+    <li class="pull-right">
+        <p:commandLink action="#{feedFollowMenuAction.toggle(featurePointer)}" styleClass="context-command" update="@this" process="@this">
+            <i class="fa #{feedFollowMenuAction.isFeatureFollowed(featurePointer) ? 'fa-star' : 'fa-star-o' }"></i>
+            <h:outputText value=" #{messages['feed.button.Follow']}" />
+        </p:commandLink>
+    </li>
+    
+</ui:composition>

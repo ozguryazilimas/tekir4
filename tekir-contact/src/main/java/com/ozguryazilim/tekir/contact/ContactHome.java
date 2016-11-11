@@ -11,6 +11,7 @@ import com.ozguryazilim.tekir.entities.Person;
 import com.ozguryazilim.tekir.entities.RelatedContact;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
+import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureHandler;
 import com.ozguryazilim.telve.feature.FeatureRegistery;
 import com.ozguryazilim.telve.messages.FacesMessages;
@@ -170,5 +171,13 @@ public class ContactHome extends FormBase<Contact, Long> {
     
     public Class<? extends FeatureHandler> getFeatureClass(){
         return FeatureRegistery.getFeatureClass(getEntity().getClass());
+    }
+    
+    public FeaturePointer getFeaturePointer(){
+        FeaturePointer result = new FeaturePointer();
+        result.setBusinessKey(getEntity().getName());
+        result.setFeature(getFeatureClass().getSimpleName());
+        result.setPrimaryKey(getEntity().getId());
+        return result;
     }
 }

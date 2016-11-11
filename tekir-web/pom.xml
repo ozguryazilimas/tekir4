@@ -24,6 +24,7 @@
         <app.title>Tekir</app.title>
         <project.stage>Test</project.stage>
         <property name="hibernate.show_sql" value="false"/>
+        <keycloak.version>2.3.0.Final</keycloak.version>
     </properties>
     
     <dependencies>
@@ -36,6 +37,12 @@
         <dependency>
             <groupId>com.ozguryazilim.mutfak</groupId>
             <artifactId>telve-idm</artifactId>
+            <version>${version.telve}</version>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>com.ozguryazilim.mutfak</groupId>
+            <artifactId>telve-keycloak</artifactId>
             <version>${version.telve}</version>
             <type>ejb</type>
         </dependency>
@@ -118,6 +125,22 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <archive>
+                        <index>true</index>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
     
     <profiles>

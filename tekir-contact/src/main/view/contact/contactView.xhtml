@@ -78,6 +78,9 @@
                 <h:outputText value=" #{messages['contact.button.ConvertAccount']}" />
             </p:commandLink>
         </li>
+        <ui:include src="/feeds/feedFollowAction.xhtml">
+            <ui:param name="featurePointer" value="#{contactHome.featurePointer}" />
+        </ui:include>
         <ui:remove>
             <li>
                 <p:commandLink action="#{newPersonDialog.openDialog()}" styleClass="context-command" >

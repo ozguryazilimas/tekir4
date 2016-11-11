@@ -32,7 +32,7 @@ public class FeedFollow extends EntityBase{
     private Long id;
 
     @Embedded
-    private FeaturePointer basePointer = new FeaturePointer();
+    private FeaturePointer featurePointer = new FeaturePointer();
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column( name="FOLLOW_TIME")
@@ -50,12 +50,12 @@ public class FeedFollow extends EntityBase{
         this.id = id;
     }
 
-    public FeaturePointer getBasePointer() {
-        return basePointer;
+    public FeaturePointer getFeaturePointer() {
+        return featurePointer;
     }
 
-    public void setBasePointer(FeaturePointer basePointer) {
-        this.basePointer = basePointer;
+    public void setFeaturePointer(FeaturePointer featurePointer) {
+        this.featurePointer = featurePointer;
     }
 
     public Date getDate() {
