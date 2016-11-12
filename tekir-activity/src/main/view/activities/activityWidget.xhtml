@@ -7,59 +7,59 @@
 
 
     #{activityWidget.init(person, corporation, feature, attached)}
-    
+
     <t:accordion icon="fa fa-comments" id="actW" label="general.label.Activities" columnClass="col-xs-12">
 
         <f:facet name="toolbar">
-                <div class="dropdown pull-right">
-                    <button id="actDropMenu2" class="btn btn-box-tool dropdown-toogle" data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-filter"/>
-                        #{messages['activity.filter.'.concat(activityWidget.filter)]}
-                        <i class="fa fa-caret-down"/>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-right" arai-labeledby="actDropMenu2" style="z-index: 5000">
+            <div class="dropdown pull-right">
+                <button id="actDropMenu2" class="btn btn-box-tool dropdown-toogle" data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-filter"/>
+                    #{messages['activity.filter.'.concat(activityWidget.filter)]}
+                    <i class="fa fa-caret-down"/>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right" arai-labeledby="actDropMenu2" style="z-index: 5000">
+                    <li>
+                        <p:commandLink action="#{activityWidget.setFilter('ALL')}" process="@this" update=":actW">
+                            #{messages['activity.filter.ALL']}
+                        </p:commandLink>
+                        <p:commandLink action="#{activityWidget.setFilter('MINE')}" process="@this" update=":actW">
+                            #{messages['activity.filter.MINE']}
+                        </p:commandLink>
+                        <p:commandLink action="#{activityWidget.setFilter('SCHEDULED')}" process="@this" update=":actW">
+                            #{messages['activity.filter.SCHEDULED']}
+                        </p:commandLink>
+                        <p:commandLink action="#{activityWidget.setFilter('OVERDUE')}" process="@this" update=":actW">
+                            #{messages['activity.filter.OVERDUE']}
+                        </p:commandLink>
+                        <p:commandLink action="#{activityWidget.setFilter('FAILD')}" process="@this"  update=":actW">
+                            #{messages['activity.filter.FAILD']}
+                        </p:commandLink>
+                        <p:commandLink action="#{activityWidget.setFilter('SUCCESS')}" process="@this" update=":actW">
+                            #{messages['activity.filter.SUCCESS']}
+                        </p:commandLink>
+                        <p:commandLink action="#{activityWidget.setFilter('FOLLOWUP')}" process="@this" update=":actW">
+                            #{messages['activity.filter.FOLLOWUP']}
+                        </p:commandLink>
+                    </li>
+
+                </ul>
+            </div>
+
+            <div class="dropdown pull-right" >
+                <button id="actDropMenu1" class="btn btn-box-tool dropdown-toogle" data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-plus"/>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right" arai-labeledby="actDropMenu1" style="z-index: 5000">
+                    <ui:repeat value="#{activityWidget.addableActivities}" var="act">
                         <li>
-                            <p:commandLink action="#{activityWidget.setFilter('ALL')}" process="@this" update=":actW">
-                                #{messages['activity.filter.ALL']}
-                            </p:commandLink>
-                            <p:commandLink action="#{activityWidget.setFilter('MINE')}" process="@this" update=":actW">
-                                #{messages['activity.filter.MINE']}
-                            </p:commandLink>
-                            <p:commandLink action="#{activityWidget.setFilter('SCHEDULED')}" process="@this" update=":actW">
-                                #{messages['activity.filter.SCHEDULED']}
-                            </p:commandLink>
-                            <p:commandLink action="#{activityWidget.setFilter('OVERDUE')}" process="@this" update=":actW">
-                                #{messages['activity.filter.OVERDUE']}
-                            </p:commandLink>
-                            <p:commandLink action="#{activityWidget.setFilter('FAILD')}" process="@this"  update=":actW">
-                                #{messages['activity.filter.FAILD']}
-                            </p:commandLink>
-                            <p:commandLink action="#{activityWidget.setFilter('SUCCESS')}" process="@this" update=":actW">
-                                #{messages['activity.filter.SUCCESS']}
-                            </p:commandLink>
-                            <p:commandLink action="#{activityWidget.setFilter('FOLLOWUP')}" process="@this" update=":actW">
-                                #{messages['activity.filter.FOLLOWUP']}
+                            <p:commandLink action="#{activityWidget.createNew(act)}" process="@this">
+                                <i class="#{messages['activity.button.icon.'.concat(act)]}" /> #{messages['activity.button.label.'.concat(act)]}
+                                <p:ajax event="dialogReturn" update=":actW:actWL" partialSubmit="true" process="@this" />   
                             </p:commandLink>
                         </li>
-
-                    </ul>
-                </div>
-
-                <div class="dropdown pull-right" >
-                    <button id="actDropMenu1" class="btn btn-box-tool dropdown-toogle" data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-plus"/>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-right" arai-labeledby="actDropMenu1" style="z-index: 5000">
-                        <ui:repeat value="#{activityWidget.addableActivities}" var="act">
-                            <li>
-                                <p:commandLink action="#{activityWidget.createNew(act)}" process="@this">
-                                    <i class="#{messages['activity.button.icon.'.concat(act)]}" /> #{messages['activity.button.label.'.concat(act)]}
-                                    <p:ajax event="dialogReturn" update=":actW:actWL" partialSubmit="true" process="@this" />   
-                                </p:commandLink>
-                            </li>
-                        </ui:repeat>
-                    </ul>
-                </div>
+                    </ui:repeat>
+                </ul>
+            </div>
 
         </f:facet>
 
@@ -70,10 +70,11 @@
                     <li class="item">
                         <div class="product-img" style="vertical-align: top">
                             <span class="fa-stack" style="color: #999;">
-                                <i class="#{messages['activity.button.icon.'.concat(act.class.simpleName)]} fa-2x" /> 
-                                <i class="fa #{messages['activity.direction.icon.'.concat(act.direction)]} " style="top: -8px;position: absolute;right: 0px;"/>
-                                <i class="fa #{messages['activity.status.icon.'.concat(act.status)]}" 
-                                    title="#{messages['activity.status.'.concat(act.status)]}"/>
+                                <i class="#{messages['activity.button.icon.'.concat(act.class.simpleName)]} fa-border fa-2x" style="width: 45px;"/> 
+                                <i class="fa fa-circle fa-inverse overlay-base" />
+                                <i class="fa #{messages['activity.direction.icon.'.concat(act.direction)]} overlay-icon" />
+                                <i class="fa #{messages['activity.status.icon.'.concat(act.status)]} overlay-icon2" 
+                                   title="#{messages['activity.status.'.concat(act.status)]}"/>
                             </span>
                         </div>
                         <div class="product-info">
@@ -88,7 +89,7 @@
                                 </p:commandLink>
                             </div>
                             <ui:remove>
-                            <span class="label #{ act.status eq 'SCHEDULED' ? 'label-default' : act.status eq 'SUCCESS' ? 'label-success' : 'label-danger' }  pull-right"><i class="fa #{ act.status eq 'SCHEDULED' ? 'fa-calendar' : act.status eq 'SUCCESS' ? 'fa-check' : 'fa-ban' }" title="#{messages['activity.status.'.concat(act.status)]}"/> </span>
+                                <span class="label #{ act.status eq 'SCHEDULED' ? 'label-default' : act.status eq 'SUCCESS' ? 'label-success' : 'label-danger' }  pull-right"><i class="fa #{ act.status eq 'SCHEDULED' ? 'fa-calendar' : act.status eq 'SUCCESS' ? 'fa-check' : 'fa-ban' }" title="#{messages['activity.status.'.concat(act.status)]}"/> </span>
                             </ui:remove>
                             <span class="product-title">#{act.subject}</span>
                             <span class="product-description">

@@ -5,7 +5,8 @@
  */
 package com.ozguryazilim.tekir.entities;
 
-import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 
 /**
  * E-Posta gönderim activitesi
@@ -20,26 +21,28 @@ import javax.persistence.Column;
  * 
  * @author Hakan Uygun
  */
+@Entity
+@DiscriminatorValue("EMAIL")
 public class EMailActivity extends Activity {
-    
-    /**
-     * İletişim için kullanılan/kullanılacak olan e-posta adresi
-     */
-    @Column(name = "EMAIL")
-    private String email;
-    
-    //E-posta üzerindeki adres bilgileri
-    @Column(name = "EM_FROM")
-    private String from;
-    @Column(name = "EM_TO")
-    private String to;
-    @Column(name = "EM_CC")
-    private String cc;
-    @Column(name = "EM_BCC")
-    private String bcc;
-    
-    //E-postanın raw halini saklamak nasıl bir fikir?
-    @Column(name = "EM_DATA")
-    private String raw;
+   
+//    /**
+//     * İletişim için kullanılan/kullanılacak olan e-posta adresi
+//     */
+//    @Column(name = "EMAIL")
+//    private String email;
+//    
+//    //E-posta üzerindeki adres bilgileri
+//    @Column(name = "EM_FROM")
+//    private String from;
+//    @Column(name = "EM_TO")
+//    private String to;
+//    @Column(name = "EM_CC")
+//    private String cc;
+//    @Column(name = "EM_BCC")
+//    private String bcc;
+//    
+//    //E-postanın raw halini saklamak nasıl bir fikir?
+//    @Column(name = "EM_DATA")
+//    private String raw;
  
 }

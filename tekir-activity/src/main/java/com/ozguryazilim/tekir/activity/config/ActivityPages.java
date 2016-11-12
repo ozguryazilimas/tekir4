@@ -7,8 +7,8 @@ package com.ozguryazilim.tekir.activity.config;
 
 import com.ozguryazilim.tekir.activity.ActivityFeature;
 import com.ozguryazilim.telve.auth.SecuredPage;
+import com.ozguryazilim.telve.nav.MainNavigationSection;
 import com.ozguryazilim.telve.nav.Navigation;
-import com.ozguryazilim.telve.nav.SideNavigationSection;
 import com.ozguryazilim.telve.view.PageTitle;
 import com.ozguryazilim.telve.view.Pages;
 import javax.enterprise.context.ApplicationScoped;
@@ -29,15 +29,36 @@ public interface ActivityPages extends Pages{
     @View
     @SecuredPage()
     @PageTitle("module.caption.ActivityBrowse")
-    @Navigation(label = "module.caption.ActivityBrowse", feature = ActivityFeature.class, section = SideNavigationSection.class)
+    @Navigation(label = "module.caption.ActivityBrowse", feature = ActivityFeature.class, section = MainNavigationSection.class)
     class ActivityBrowse implements ActivityPages {}
     
     @SecuredPage()
     interface Phone extends ActivityPages{
-        @SecuredPage() @View
-        class PhoneActivityEditor implements Phone {}
         
         @SecuredPage() @View
+        class PhoneActivityEditor implements Phone {}
+
+        @SecuredPage() @View
         class PhoneActivityFragment implements Phone {}
+    }
+    
+    @SecuredPage()
+    interface EMail extends ActivityPages{
+        
+        @SecuredPage() @View
+        class EMailActivityEditor implements EMail {}
+
+        @SecuredPage() @View
+        class EMailActivityFragment implements EMail {}
+    }
+    
+    @SecuredPage()
+    interface Meeting extends ActivityPages{
+        
+        @SecuredPage() @View
+        class MeetingActivityEditor implements Meeting {}
+
+        @SecuredPage() @View
+        class MeetingActivityFragment implements Meeting {}
     }
 }

@@ -30,10 +30,10 @@
             <ul class="products-list product-list-in-box">
                 <ui:repeat value="#{feedDashlet.feeds}" var="feed">
                     <li class="item">
-                        <div class="product-img " style="vertical-align: top">
+                        <div class="product-img " >
                             <span class="fa-stack" style="color: #999;">
-                                <i class="#{messages['feeder.icon.'.concat(feed.feeder)]} fa-2x" />
-                                <i class="#{messages['feeder.icon.'.concat(feed.type)]} fa-1x" style="top: -8px;position: absolute;right: 0px;"/>
+                                <i class="fa fa-border #{messages['feeder.icon.'.concat(feed.feeder)]} fa-2x" style="width: 45px;"/>
+                                <i class="#{messages['feeder.icon.'.concat(feed.type)]} overlay-icon2" />
                             </span>
                         </div>
                         <div class="product-info">

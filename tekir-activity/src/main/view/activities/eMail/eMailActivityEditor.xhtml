@@ -1,0 +1,27 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"                
+                template="/activities/activityEditorBase.xhtml">
+
+    <ui:param name="title" value="#{messages['eMailActivityEditor.label.Title']} - #{ messages['activity.status.'.concat(eMailActivityController.entity.status)]}" />
+    <ui:param name="bean" value="#{eMailActivityController}" />
+
+    <ui:define name="editorContent">
+        <div class="row">
+            From / To v.s. gelecek
+        </div>
+    </ui:define> 
+    
+    <ui:define name="assignment">
+        <div class="row">
+                <t:inputUser label="general.label.Assignee" value="#{bean.entity.assignee}" hasNotSelected="true" required="true"  columnClass="col-xs-6"/>
+                <t:inputText label="activity.label.Regarding" value="#{bean.entity.duration}" columnClass="col-xs-6"/>
+                <t:inputLookupDialog label="contact.label.Person" value="#{eMailActivityController.entity.person}" lookupBean="#{contactLookup}" lookupListener="eMailActivityController.entity.person" placeholder="#{messages['contact.info.Person']}" lookupProfile="T:Person" columnClass="col-xs-6"/>
+                <t:inputLookupDialog label="general.label.Corporation" value="#{eMailActivityController.entity.corporation}" lookupBean="#{contactLookup}" lookupListener="eMailActivityController.entity.corporation" placeholder="#{messages['general.info.Corparation']}" lookupProfile="T:Corporation" columnClass="col-xs-6"/>
+            </div>
+    </ui:define>
+    
+</ui:composition>

@@ -17,9 +17,10 @@
                 <ui:repeat value="#{feedController.getFeeds(feature, pk)}" var="feed">
                     <li class="item">
                         <div class="product-img">
-                            <span class="fa-stack">
-                                <i class="#{messages['feeder.icon.'.concat(feed.feeder)]} fa-2x" style="color: #999;"/>
-                                <i class="#{messages['feeder.icon.'.concat(feed.type)]} fa-1x" style="position: absolute; bottom: -10px; right: 0px;"/>
+                            <span class="fa-stack" style="color: #999; ">
+                                <i class="fa #{messages['feeder.icon.'.concat(feed.feeder)]} fa-border fa-2x" style="width: 45px; "/>
+                                
+                                <i class="#{messages['feeder.icon.'.concat(feed.type)]} overlay-icon2" />
                             </span>
                         </div>
                         <div class="product-info">

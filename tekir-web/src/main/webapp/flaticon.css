@@ -24,7 +24,7 @@
 [class^="flaticon-"]:before, [class*=" flaticon-"]:before,
 [class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
   font-family: Flaticon;
-  font-size: 14px;
+  /*font-size: 14px;*/
   font-style: normal;
   /*margin-left: 20px;*/
 }
