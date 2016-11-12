@@ -42,7 +42,7 @@
                 </t:accordion>
 
                 <ui:include src="/feeds/feedWidget.xhtml">
-                    <ui:param name="feature" value="#{accountDebitNoteHome.entity.class.simpleName}" />
+                    <ui:param name="feature" value="#{accountDebitNoteHome.featureClass.simpleName}" />
                     <ui:param name="pk" value="#{accountDebitNoteHome.entity.id}" />
                 </ui:include>
 

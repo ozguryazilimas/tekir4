@@ -34,7 +34,7 @@ public class FeedController implements Serializable{
     }
     
     public List<Feed> getFeeds( String feature, Long id, Integer limit ){
-        return repository.findForFeature(feature, id, limit);
+        return repository.findForFeaturePost(feature, id, limit);
     }
     
 }

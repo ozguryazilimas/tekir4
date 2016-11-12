@@ -136,7 +136,7 @@ public abstract class ActivityRepository extends RepositoryBase<Activity, Activi
 
         //Criteria üzerinde pagein limit yok
         
-        return crit.getResultList();
+        return crit.createQuery().setMaxResults(5).getResultList();
                 
     }
     
@@ -161,7 +161,7 @@ public abstract class ActivityRepository extends RepositoryBase<Activity, Activi
 
         //Criteria üzerinde pagein limit yok
         
-        return crit.getResultList();
+        return crit.createQuery().setMaxResults(5).getResultList();
                 
     }
     
@@ -186,8 +186,7 @@ public abstract class ActivityRepository extends RepositoryBase<Activity, Activi
         }
 
         //Criteria üzerinde pagein limit yok
-        
-        return crit.getResultList();
+        return crit.createQuery().setMaxResults(5).getResultList();
                 
     }
     
