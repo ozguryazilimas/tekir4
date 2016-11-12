@@ -54,9 +54,9 @@
                     <ui:param name="attached" value="Feature" />
                 </ui:include>
 
-                <t:accordion icon="fa fa-sticky-note" id="cn" label="general.label.Notes" columnClass="col-xs-12">
-                    Notlar
-                </t:accordion>
+                <ui:include src="/notes/noteWidget.xhtml">
+                    <ui:param name="featurePointer" value="#{opportunityHome.featurePointer}" />
+                </ui:include>
 
                 <ui:include src="/feeds/feedWidget.xhtml">
                     <ui:param name="feature" value="#{opportunityHome.featureClass.simpleName}" />

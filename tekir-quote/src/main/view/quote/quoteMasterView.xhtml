@@ -125,17 +125,16 @@
 
             <div class="col-md-3 col-xs-12">
 
+                <ui:include src="/notes/noteWidget.xhtml">
+                    <ui:param name="featurePointer" value="#{quoteHome.featurePointer}" />
+                </ui:include>
+                
                 <ui:include src="/activities/activityWidget.xhtml">
                     <ui:param name="person" value="#{quoteHome.entity.account.primaryContact}" />
                     <ui:param name="corporation" value="#{quoteHome.entity.account}" />
                     <ui:param name="feature" value="#{quoteHome.featurePointer}" />
                     <ui:param name="attached" value="Feature" />
                 </ui:include>
-
-
-                <t:accordion icon="fa fa-sticky-note" id="cn" label="general.label.Notes" columnClass="col-xs-12">
-                    Notlar
-                </t:accordion>
 
                 <t:accordion icon="fa fa-file" id="cx" label="general.label.ReleatedVouchers" columnClass="col-xs-12">
                     <ul class="products-list product-list-in-box">

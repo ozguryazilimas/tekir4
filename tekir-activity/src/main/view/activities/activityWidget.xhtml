@@ -64,16 +64,16 @@
         </f:facet>
 
 
-        <p:outputPanel id="actWL" layout="block" class="box-body">
-            <ul class="products-list product-list-in-box">
+        <p:outputPanel id="actWL" layout="block" class="box-body no-padding">
+            <ul class="products-list product-list-in-box ">
                 <ui:repeat value="#{activityWidget.activityList}" var="act">
                     <li class="item">
                         <div class="product-img" style="vertical-align: top">
-                            <span class="fa-stack">
-                                <i class="fa fa-2x fa-phone" style="color: #999;"/> 
-                                <i class="fa #{act.direction eq 'INCOMING' ? 'fa-arrow-left' : 'fa-arrow-right'} " style="float: left; color: #{act.direction eq 'INCOMING' ? 'blue' : 'red'}; left: 0px;"/>
-                                <i class="fa #{ act.status eq 'SCHEDULED' ? 'fa-calendar' : act.status eq 'SUCCESS' ? 'fa-check' : 'fa-ban' } " 
-                                   style="float: right; display: inline; color: #{ act.status eq 'SCHEDULED' ? '#999' : act.status eq 'SUCCESS' ? 'green' : 'red' }; right: 0px;" title="#{messages['activity.status.'.concat(act.status)]}"/>
+                            <span class="fa-stack" style="color: #999;">
+                                <i class="#{messages['activity.button.icon.'.concat(act.class.simpleName)]} fa-2x" /> 
+                                <i class="fa #{messages['activity.direction.icon.'.concat(act.direction)]} " style="top: -8px;position: absolute;right: 0px;"/>
+                                <i class="fa #{messages['activity.status.icon.'.concat(act.status)]}" 
+                                    title="#{messages['activity.status.'.concat(act.status)]}"/>
                             </span>
                         </div>
                         <div class="product-info">
