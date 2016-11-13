@@ -31,8 +31,9 @@ public class FeedDashlet extends AbstractDashlet{
     
     @Override
     public void load() {
-        //FIXME: Aslıdan burada doğrudan feed eden kullanıcı değil parametre olarak verilen kullanıcının grup ve follow bilgilerine göre feed döndürülmeli.
-        feeds = repository.findTop10ByUserOrderByDateDesc( identity.getLoginName());
+        //TODO: Filtre felan yapmak lazım. Kullanıcı hangi tür haberleri görmek istediğini seçebilmeli.
+        List<String> grps = identity.getGroupsMembers();
+        feeds = repository.findForUser(identity.getLoginName(), grps );
     }
 
     @Override

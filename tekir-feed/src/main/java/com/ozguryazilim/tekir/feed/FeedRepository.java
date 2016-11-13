@@ -6,6 +6,7 @@
 package com.ozguryazilim.tekir.feed;
 
 import com.ozguryazilim.tekir.entities.Feed;
+import com.ozguryazilim.tekir.entities.Feed_;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import java.util.List;
 import javax.enterprise.context.Dependent;
@@ -56,4 +57,18 @@ public abstract class FeedRepository extends RepositoryBase<Feed, Feed> implemen
     
     //FIXME: Aslıdan burada doğrudan feed eden kullanıcı değil parametre olarak verilen kullanıcının grup ve follow bilgilerine göre feed döndürülmeli.
     public abstract List<Feed> findTop10ByUserOrderByDateDesc( String username);
+    
+    
+    public List<Feed> findForUser( String username, List<String> groupUsers ){
+        if( groupUsers.isEmpty() ){
+            groupUsers.add( username );
+        }
+        String[] s = groupUsers.toArray(new String[]{});
+        return criteria().in(Feed_.user, s)
+                .orderDesc(Feed_.date)
+                .createQuery()
+                .setMaxResults(10)
+                .getResultList();
+    }
+    
 }
