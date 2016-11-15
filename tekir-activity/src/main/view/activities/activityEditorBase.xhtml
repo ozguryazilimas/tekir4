@@ -10,7 +10,7 @@
         <h:form id="activityEditor">
 
             <div class="row">
-                <t:inputEnum value="#{bean.entity.direction}" label="activity.label.Direction" itemLabel="activity.direction." hasNullValue="false" columnClass="col-xs-6"/>
+                <t:inputEnum value="#{bean.entity.direction}" label="activity.label.Direction" itemLabel="activity.direction." hasNullValue="false" columnClass="col-xs-6" disabled="#{bean.entity.direction eq 'NONE'}"/>
                 <t:inputEnum value="#{bean.entity.priority}" label="activity.label.Priority" itemLabel="activity.priority." hasNullValue="false" columnClass="col-xs-6"/>
             </div>
 
@@ -23,12 +23,22 @@
 
             <div class="row">
                 <t:inputDateTime label="activity.label.DueDate" value="#{bean.entity.dueDate}" columnClass="col-xs-6"/>
-                <t:inputText label="activity.label.Duration" value="#{bean.entity.duration}" columnClass="col-xs-6"/>
+                <t:inputUser label="general.label.Assignee" value="#{bean.entity.assignee}" hasNotSelected="true" required="true"  columnClass="col-xs-6"/>
+                <ui:remove>
+                    <t:inputText label="activity.label.Duration" value="#{bean.entity.duration}" columnClass="col-xs-6"/>
+                </ui:remove>
             </div>
 
             <ui:insert name="assignment" />
 
+            <div class="row">
+                <t:inputLookupDialog label="contact.label.Person" value="#{meetingActivityController.entity.person}" lookupBean="#{contactLookup}" lookupListener="meetingActivityController.entity.person" placeholder="#{messages['contact.info.Person']}" lookupProfile="T:Person" columnClass="col-xs-6"/>
+                <t:inputLookupDialog label="general.label.Corporation" value="#{meetingActivityController.entity.corporation}" lookupBean="#{contactLookup}" lookupListener="meetingActivityController.entity.corporation" placeholder="#{messages['general.info.Corparation']}" lookupProfile="T:Corporation" columnClass="col-xs-6"/>
+            </div>
+
             <ui:remove>
+                <t:inputSuggestion label="general.label.Reason" value="#{bean.entity.statusReason}" group="#{bean.entity.class.simpleName}" listener="" columnClass="col-xs-12"/>
+
                 <div class="row">
                     <t:inputTextarea label="general.label.Info" value="#{bean.entity.info}" columnClass="col-xs-12"/>
                 </div>
@@ -36,42 +46,77 @@
                 <div class="row">
                     <t:inputTextarea label="general.label.ResultNote" value="#{bean.entity.resultNote}" columnClass="col-xs-12"/>
                 </div>
+
             </ui:remove>
 
+            <h:panelGroup styleClass="row" style="padding-top: 8px;" layout="block" >
+                <div class="col-xs-12">
+                    <ui:insert name="actionButtons" />
 
-            <h:panelGroup styleClass="row actionButtons" layout="block" >
-                <ui:insert name="actionButtons" />
-                <p:commandButton id="save" 
-                                 value="#{messages['general.button.Save']}" 
-                                 icon="fa fa-save" 
-                                 action="#{bean.save()}" 
-                                 validateClient="true"
-                                 styleClass="btn-primary" />
-                <p:commandButton id="success" 
-                                 value="#{messages['activity.button.Success']}" 
-                                 icon="fa fa-check" 
-                                 action="#{bean.success()}" 
-                                 validateClient="true"
-                                 styleClass="btn-success" />
-                <p:commandButton id="faild" 
-                                 value="#{messages['activity.button.Faild']}" 
-                                 icon="fa fa-ban" 
-                                 action="#{bean.faild()}" 
-                                 validateClient="true"
-                                 styleClass="btn-danger" />
-                <p:commandButton id="followup" 
-                                 value="#{messages['activity.button.FollowUp']}" 
-                                 icon="fa fa-mail-forward" 
-                                 action="#{bean.followup()}" 
-                                 validateClient="true"
-                                 styleClass="btn-warning" />
-                <p:commandButton id="close" 
-                                 value="#{messages['general.button.Cancel']}" 
-                                 icon="ui-icon-close" 
-                                 action="#{bean.cancel()}" 
-                                 partialSubmit="true" 
-                                 process="@this"/>
+                    <div class="pull-left">
+                        <p:commandButton id="wsws" 
+                                         value="#{messages['general.button.Close']}" 
+                                         icon="fa fa-check" 
+                                         validateClient="true"
+                                         styleClass="btn-warning" 
+                                         onclick="PF('www').show();"
+                                         rendered="#{not bean.followupDlg}"/>
+                    </div>
+
+                    <div class="pull-right">
+
+
+                        <p:commandButton id="save" 
+                                         value="#{messages['general.button.Save']}" 
+                                         icon="fa fa-save" 
+                                         action="#{bean.save()}" 
+                                         validateClient="true"
+                                         styleClass="btn-primary" />
+                        <p:commandButton id="close" 
+                                         value="#{messages['general.button.Cancel']}" 
+                                         icon="ui-icon-close" 
+                                         action="#{bean.cancel()}" 
+                                         partialSubmit="true" 
+                                         process="@this"/>
+                    </div>
+                </div>
             </h:panelGroup>
+
+
+            <p:dialog id="www" widgetVar="www" header="#{messages['general.label.Result']}" modal="true">
+                <div class="row">
+                    <ui:remove>
+                        <t:inputEnum value="#{bean.entity.status}" label="activity.label.Status" itemLabel="activity.status." hasNullValue="false" columnClass="col-xs-6"/>
+                    </ui:remove>
+                    <t:inputCombobox label="general.label.Status" value="#{bean.entity.status}" columnClass="col-xs-12">
+                        <f:selectItem itemLabel="#{messages['activity.status.SCHEDULED']}" itemValue="SCHEDULED" /> 
+                        <f:selectItem itemLabel="#{messages['activity.status.SUCCESS']}" itemValue="SUCCESS" /> 
+                        <f:selectItem itemLabel="#{messages['activity.status.FAILED']}" itemValue="FAILED" /> 
+                    </t:inputCombobox>
+                    <ui:remove>
+                        //TODO: followup için
+                        <t:inputCombobox label="activity.label.FollowUp" value="#{bean.followupActivity}">
+                            <f:selectItem itemLabel="NONE" itemValue="NONE" /> 
+                            <f:selectItems value="#{activityWidget.addableActivities}" var="act" itemLabel="#{messages['activity.button.label.'.concat(act)]}" itemValue="#{act}" />
+                        </t:inputCombobox>
+                    </ui:remove>
+                    <t:inputSuggestion label="general.label.Reason" value="#{bean.entity.statusReason}" group="#{bean.entity.class.simpleName}" listener="" columnClass="col-xs-12"/>
+                    <t:inputTextarea label="general.label.ResultNote" value="#{bean.entity.resultNote}" columnClass="col-xs-12"/>
+                </div>
+                <div class="pull-right">
+                    <p:commandButton id="success" 
+                                     value="#{messages['general.button.Ok']}" 
+                                     icon="fa fa-check" 
+                                     action="#{bean.save()}" 
+                                     validateClient="true"
+                                     styleClass="btn-success" >
+                        <p:ajax event="dialogReturn" listener="#{bean.cancel}" partialSubmit="true" process="@this" />   
+                    </p:commandButton>
+                </div>
+            </p:dialog>
         </h:form>
+
+
+
     </ui:define> 
 </ui:composition>

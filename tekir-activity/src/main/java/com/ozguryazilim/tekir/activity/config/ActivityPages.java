@@ -61,4 +61,14 @@ public interface ActivityPages extends Pages{
         @SecuredPage() @View
         class MeetingActivityFragment implements Meeting {}
     }
+    
+    @SecuredPage()
+    interface Task extends ActivityPages{
+        
+        @SecuredPage() @View
+        class TaskActivityEditor implements Task {}
+
+        @SecuredPage() @View
+        class TaskActivityFragment implements Task {}
+    }
 }

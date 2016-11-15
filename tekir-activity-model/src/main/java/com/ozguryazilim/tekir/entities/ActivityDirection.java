@@ -19,5 +19,9 @@ public enum ActivityDirection {
     /**
      * Dışarı. İçeriden müşeriye giden
      */
-    OUTGOING
+    OUTGOING,
+    /**
+     * Activity'nin bir yönü yok. Mesela Task activitesi.
+     */
+    NONE
 }

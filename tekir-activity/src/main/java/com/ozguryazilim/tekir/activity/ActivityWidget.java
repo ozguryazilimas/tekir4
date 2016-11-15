@@ -86,7 +86,13 @@ public class ActivityWidget implements Serializable {
     public void createNew(String activity) {
         //FIXME: NPE Kontrolü yapılacak
         AbstractActivityController ctrl = ActivityRegistery.getControllerInstance(activity);
-        ctrl.createNew( person, corporation, featurePointer);
+        ctrl.createNew( person, corporation, featurePointer, false);
+    }
+    
+    public void createNewFollowup(String activity) {
+        //FIXME: NPE Kontrolü yapılacak
+        AbstractActivityController ctrl = ActivityRegistery.getControllerInstance(activity);
+        ctrl.createNew( person, corporation, featurePointer, true);
     }
 
     /**
@@ -135,5 +141,5 @@ public class ActivityWidget implements Serializable {
         this.filter = filter;
     }
 
-    
+
 }

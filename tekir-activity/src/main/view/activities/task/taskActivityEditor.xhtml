@@ -6,16 +6,21 @@
                 xmlns:p="http://primefaces.org/ui"                
                 template="/activities/activityEditorBase.xhtml">
 
-    <ui:param name="title" value="#{messages['meetingActivityEditor.label.Title']} - #{ messages['activity.status.'.concat(meetingActivityController.entity.status)]}" />
-    <ui:param name="bean" value="#{meetingActivityController}" />
+    <ui:param name="title" value="#{messages['taskActivityEditor.label.Title']} - #{ messages['activity.status.'.concat(meetingActivityController.entity.status)]}" />
+    <ui:param name="bean" value="#{taskActivityController}" />
 
     <ui:define name="editorContent">
         <div class="row">
-            <t:inputText label="activity.label.Location" value="#{bean.entity.location}" />
-            <t:inputTextarea label="activity.label.Attendees" value="#{bean.entity.attendees}" />
-            <t:inputTextarea label="activity.label.MeetingMinutes" value="#{bean.entity.meetingMinutes}" />
+            
         </div>
     </ui:define> 
     
+    <ui:remove>
+    <ui:define name="assignment">
+        <div class="row">
+                <t:inputUser label="general.label.Assignee" value="#{bean.entity.assignee}" hasNotSelected="true" required="true"  columnClass="col-xs-6"/>
+            </div>
+    </ui:define>
+        </ui:remove>
     
 </ui:composition>

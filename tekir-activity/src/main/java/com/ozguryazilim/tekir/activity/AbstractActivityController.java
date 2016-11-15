@@ -13,6 +13,7 @@ import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import javax.inject.Inject;
@@ -42,30 +43,43 @@ public abstract class AbstractActivityController<E extends Activity> implements 
     @Inject
     private ActivityFeeder feeder;
     
+    @Inject
+    private ActivityWidget activityWidget;
+    
     private E entity;
     
     protected abstract RepositoryBase<E, E> getRepository();
 
     protected abstract E createNewEntity();
     
+    private String followupActivity = "NONE";
+    private Boolean followupDlg = false;
+    
     public void createNew(){
         entity = createNewEntity();
         entity.setAssignee(identity.getLoginName());
+        entity.setDate(new Date());
+        followupDlg = Boolean.FALSE;
+        followupActivity = "NONE";
         openDialog();
     }
     
-    public void createNew( Person person, Corporation corporation, FeaturePointer featurePointer ){
+    public void createNew( Person person, Corporation corporation, FeaturePointer featurePointer, Boolean followUp ){
         entity = createNewEntity();
         entity.setAssignee(identity.getLoginName());
         entity.setPerson(person);
         entity.setCorporation(corporation);
         entity.setRegarding(featurePointer);
+        followupDlg = followUp;
+        followupActivity = "NONE";
         openDialog();
     }
     
     
     public void edit( E entity ){
         this.entity = entity;
+        followupDlg = Boolean.FALSE;
+        followupActivity = "NONE";
         openDialog();
     }
 
@@ -89,34 +103,21 @@ public abstract class AbstractActivityController<E extends Activity> implements 
 
     
     public void save() {
-        entity.setStatus(ActivityStatus.SCHEDULED);
+        //entity.setStatus(ActivityStatus.SCHEDULED);
         repository.save(entity);
         feeder.feed(entity);        
-        RequestContext.getCurrentInstance().closeDialog(null);
-    }
-    
-    public void success() {
-        entity.setStatus(ActivityStatus.SUCCESS);
-        repository.save(entity);
-        feeder.feed(entity);
-        RequestContext.getCurrentInstance().closeDialog(null);
-    }
-    
-    public void faild() {
-        entity.setStatus(ActivityStatus.FAILED);
-        repository.save(entity);
-        feeder.feed(entity);
-        RequestContext.getCurrentInstance().closeDialog(null);
+        
+        if( !"NONE".equals(followupActivity)){
+            activityWidget.createNewFollowup(followupActivity);
+        } else {
+            if( entity.getStatus() == ActivityStatus.DRAFT){
+                entity.setStatus(ActivityStatus.SCHEDULED);
+            }
+            RequestContext.getCurrentInstance().closeDialog(null);
+        }
     }
     
     public void cancel() {
-        RequestContext.getCurrentInstance().closeDialog(null);
-    }
-    
-    public void followup() {
-        entity.setStatus(ActivityStatus.SUCCESS);
-        repository.save(entity);
-        feeder.feed(entity);
         RequestContext.getCurrentInstance().closeDialog(null);
     }
     
@@ -160,4 +161,24 @@ public abstract class AbstractActivityController<E extends Activity> implements 
     public Class<? extends ViewConfig> getViewerPage() {
         return ((ActivityController)(ProxyUtils.getUnproxiedClass(this.getClass()).getAnnotation(ActivityController.class))).viewer();
     }
+
+    public String getFollowupActivity() {
+        return followupActivity;
+    }
+
+    public void setFollowupActivity(String followupActivity) {
+        this.followupActivity = followupActivity;
+    }
+
+    public Boolean getFollowupDlg() {
+        return followupDlg;
+    }
+
+    public void setFollowupDlg(Boolean followupDlg) {
+        this.followupDlg = followupDlg;
+    }
+    
+    
+    
+    
 }
