@@ -5,16 +5,15 @@
  */
 package com.ozguryazilim.tekir.entities;
 
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
- * Alış Siparişi
- * 
- * @author Hakan Uygun
+ *
+ * @author oyas
  */
 @Entity
-@DiscriminatorValue("PURCHASE")
-public class PurchaseOrder extends Order{
+@Table(name = "TOR_ORDER_SUM")
+public class OrderSummary extends VoucherSummaryBase<Order> {
     
 }

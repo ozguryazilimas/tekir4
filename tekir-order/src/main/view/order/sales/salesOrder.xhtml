@@ -1,0 +1,145 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"                
+                template="/layout/editBase.xhtml">
+
+    <ui:param name="homeBean" value="#{salesOrderHome}" />
+    <ui:param name="entity" value="#{salesOrderHome.entity}" />
+
+    <ui:define name="form">
+        <div class="row">
+
+            <div class="col-md-6 col-xs-12">
+                <p:outputPanel id="ddt" styleClass="row" layout="block">
+                    <t:inputLookupDialog label="general.label.Account" value="#{salesOrderHome.account}" lookupBean="#{contactLookup}" lookupListener="salesOrderHome.account" placeholder="#{messages['general.info.Account']}" update=":form:prss" columnClass="col-xs-12"/>
+                    
+                    <t:inputCurrency label="general.label.Currency" value="#{salesOrderHome.entity.currency}" required="true"/>
+                    <ui:remove>
+                    <t:inputDate label="salesOrder.label.ExpireDate" value="#{salesOrderHome.entity.expireDate}" />
+                    </ui:remove>
+                    <t:inputText label="voucher.label.Topic" value="#{salesOrderHome.entity.topic}"  required="true" columnClass="col-xs-12"/>
+                </p:outputPanel>
+            </div>
+
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <t:inputDate label="voucher.label.Date" value="#{salesOrderHome.entity.date}" columnClass="col-md-4"/>
+                    <t:inputText label="voucher.label.VoucherNo" value="#{salesOrderHome.entity.voucherNo}"  required="true" readonly="true" columnClass="col-md-4"/>
+                    <t:inputText label="voucher.label.ReferenceNo" value="#{salesOrderHome.entity.referenceNo}" columnClass="col-md-4"/>
+                    
+                    <p:outputPanel id="prss">
+                    <t:inputProcess value="#{salesOrderHome.process}" lookupListener="salesOrderHome.process" lookupProfile="A:#{salesOrderHome.entity.account.id};T:SALES" update=":form:ddt" />
+                    </p:outputPanel>
+                    
+                    <t:inputLookupDialog label="voucher.label.Group" value="#{salesOrderHome.entity.group}" lookupBean="#{voucherGroupLookup}" lookupListener="salesOrderHome.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" />
+                    
+                    <t:inputText label="voucher.label.Owner" value="#{salesOrderHome.entity.owner}" />
+                    <t:inputText label="general.label.Code" value="#{salesOrderHome.entity.code}" />
+                    <t:inputTextarea label="general.label.Info" value="#{salesOrderHome.entity.info}" columnClass="col-xs-12"/>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="padding-top: 8px;">
+            <p:dataTable id="its" value="#{salesOrderHome.entity.items}" var="item" editable="true" editMode="cell" reflow="true" rowIndexVar="rowKey" styleClass="col-xs-12">
+
+                <p:column headerText="Ürün">
+                    <h:outputText value="#{item.commodity.name}" />
+                </p:column>
+                <p:column headerText="Açıklama">
+                    <h:outputText value="#{item.info}" />
+                </p:column>
+                <p:column id="amount" headerText="Miktar" style="width: 12em;">
+                    <div style="text-align: right;">
+                    <h:outputText value="#{item.quantity.amount}" />
+                    <h:outputText value=" #{item.quantity.unitName.name}" />
+                    </div>
+                </p:column>
+
+                <p:column id="price" style="width: 12em;" headerText="Fiyat">
+                    <t:cellOutputMoney value="#{item.price}" currency="#{salesOrderHome.entity.currency}" />
+                </p:column>
+                <p:column id="total" style="width: 12em;" headerText="Tutar">
+                    <t:cellOutputMoney value="#{item.total}" currency="#{salesOrderHome.entity.currency}" />
+                </p:column>
+                <p:column styleClass="actionColumnDouble">
+                    <f:facet name="header">
+
+                        <p:commandLink action="#{salesOrderHome.addItem2()}" process="@this" >
+                            <i class="fa fa-plus"/>
+                            <p:ajax event="dialogReturn" partialSubmit="true" 
+                                    process="@this" update=":form:its"/>   
+                        </p:commandLink>
+
+                        <ui:remove>
+                            <p:commandLink action="#{commodityLookup.openDialog( false, '' )}" style="text-decoration:none;padding:4px;"
+                                           partialSubmit="true" process="@this" styleClass="fa fa-plus"
+                                           title="#{messages['general.label.Add']}">
+                                <p:ajax event="dialogReturn" listener="#{salesOrderHome.onCommoditySelect}" partialSubmit="true" 
+                                        process="@this" />   
+                            </p:commandLink>
+                        </ui:remove>
+                    </f:facet>
+                    <ui:remove>
+                        <p:rowEditor />
+                    </ui:remove>
+                    <i class="fa fa-pencil" />
+                    <i class="fa fa-trash" />
+                </p:column>
+            </p:dataTable>
+
+            <p:outputPanel autoUpdate="true" layout="block" styleClass="col-md-6 col-xs-12 pull-right">
+                <table class="table table-bordered" style="margin-top: 5px;">
+                    <tr>
+                        <th>Toplam</th>
+                        <td><t:cellOutputMoney value="#{salesOrderHome.entity.summaries['BeforeTaxTotal'].amount}" currency="#{salesOrderHome.entity.currency}" /></td>
+                    </tr>
+                    <ui:fragment rendered="#{not empty salesOrderHome.entity.summaries['Discount']}">
+                        <tr>
+                            <th>İndirim ( - )</th>
+                            <td><t:cellOutputMoney value="#{salesOrderHome.entity.summaries['Discount'].amount}" currency="#{salesOrderHome.entity.currency}" /></td>
+                        </tr>
+                    </ui:fragment>
+
+
+                    <tr>
+                        <th>Vergi ( + )</th>
+                        <td><t:cellOutputMoney value="#{salesOrderHome.entity.summaries['TaxTotal'].amount}" currency="#{salesOrderHome.entity.currency}" /></td>
+                    </tr>
+                    <ui:repeat value="#{salesOrderHome.getTaxes()}" var="ent">
+                        <tr>
+                            <td>#{ent.info}</td>
+                            <td><t:cellOutputMoney value="#{ent.amount}" currency="#{salesOrderHome.entity.currency}" /></td>
+                        </tr>
+                    </ui:repeat>
+                    <tr>
+                        <th>Genel Toplam</th>
+                        <th><t:cellOutputMoney value="#{salesOrderHome.entity.summaries['GrandTotal'].amount}" currency="#{salesOrderHome.entity.currency}" /></th>
+                    </tr>
+                </table>
+            </p:outputPanel>
+        </div>
+        <ui:remove>
+        <p:dialog header="İtem" id="ite" widgetVar="ite" >
+            <p:outputPanel styleClass="row" layout="block" rendered="#{ not empty salesOrderHome.selectedItem}">
+                <t:inputLookupDialog label="general.label.Commodity" value="#{salesOrderHome.selectedItem.commodity}" lookupBean="#{commodityLookup}" lookupListener="salesOrderHome.selectedItem.commodity" placeholder="#{messages['general.info.Commodity']}" />
+
+                <t:inputText label="general.label.Info" value="#{salesOrderHome.selectedItem.info}" columnClass="col-xs-12"/>
+                <t:inputQuantity label="general.label.Quantity" value="#{salesOrderHome.selectedItem.quantity}" columnClass="col-xs-12"/>
+                <ui:remove>
+                    <t:inputMoneyAndCCY label="general.label.Total" value="#{salesOrderHome.selectedItem.total}" columnClass="col-xs-12"/>
+                    <t:inputMoneyAndCCY label="general.label.Price" value="#{salesOrderHome.selectedItem.price}" columnClass="col-xs-12"/>
+                </ui:remove>
+                <div class="actionButtons">
+                    <p:commandButton action="#{salesOrderHome.saveItem()}" value="Sakla" oncomplete="PF('ite').hide();" update="its" ajax="true" process="@(ite)"/>
+                </div>
+            </p:outputPanel>
+        </p:dialog>
+            </ui:remove>
+
+    </ui:define> 
+</ui:composition>

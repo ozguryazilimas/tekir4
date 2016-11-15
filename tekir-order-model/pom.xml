@@ -87,7 +87,7 @@
                             <referenceUrl>hibernate:ejb3:tekirCore</referenceUrl>
                             <verbose>true</verbose>
                             <logging>debug</logging>
-                            <diffIncludeObjects>table:TSO_.*,TPO_.*</diffIncludeObjects>
+                            <diffIncludeObjects>table:TOR_.*</diffIncludeObjects>
                         </configuration>
                         <dependencies>
                             <dependency>

@@ -84,7 +84,9 @@
         <module>tekir-account-notes-model</module>
         <module>tekir-account-notes</module>
     <module>tekir-opportunity-quote-linker</module>
-  </modules>
+        <module>tekir-order</module>
+        <module>tekir-quote-order-linker</module>
+    </modules>
     
     
     <distributionManagement>

@@ -5,8 +5,8 @@
  */
 package com.ozguryazilim.tekir.entities;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 
 /**
  * Satış Siparişi
@@ -14,7 +14,7 @@ import javax.persistence.Table;
  * @author Hakan Uygun
  */
 @Entity
-@Table(name = "TSO_SALES_ORDER")
+@DiscriminatorValue("SALES")
 public class SalesOrder extends Order{
     
 }

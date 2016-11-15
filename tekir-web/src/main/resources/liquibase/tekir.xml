@@ -20,6 +20,7 @@
     <include file="liquibase/tekir-opportunity.xml" />
     <include file="liquibase/tekir-quote.xml" />
     <include file="liquibase/tekir-account-notes.xml" />
+    <include file="liquibase/tekir-order.xml" />
     
     
         

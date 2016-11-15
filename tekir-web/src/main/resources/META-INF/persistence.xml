@@ -19,6 +19,7 @@
         <jar-file>lib/tekir-opportunity-model-${version.tekir}.jar</jar-file>
         <jar-file>lib/tekir-quote-model-${version.tekir}.jar</jar-file>
         <jar-file>lib/tekir-account-notes-model-${version.tekir}.jar</jar-file>
+        <jar-file>lib/tekir-order-model-${version.tekir}.jar</jar-file>
         
         <properties>
             <!-- Properties for Hibernate -->

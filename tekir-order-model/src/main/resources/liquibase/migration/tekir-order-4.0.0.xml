@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="oyas (generated)" id="1479229387723-1">
+        <createTable tableName="TOR_ORDER">
+            <column name="DIRECTION" type="VARCHAR(31)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TOR_ORDERPK"/>
+            </column>
+            <column name="CREATE_DATE" type="datetime"/>
+            <column name="UPDATE_DATE" type="datetime"/>
+            <column name="UPDATE_USER" type="VARCHAR(255)"/>
+            <column name="CODE" type="VARCHAR(30)"/>
+            <column name="TXNDATE" type="datetime"/>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="OWNER" type="VARCHAR(255)"/>
+            <column name="REFERENCE_NO" type="VARCHAR(30)"/>
+            <column name="FEATURE_BK" type="VARCHAR(255)"/>
+            <column name="FEATURE" type="VARCHAR(255)"/>
+            <column name="FEATURE_PK" type="BIGINT"/>
+            <column name="STATE" type="VARCHAR(255)"/>
+            <column name="STATE_INFO" type="VARCHAR(255)"/>
+            <column name="STATE_REASON" type="VARCHAR(255)"/>
+            <column name="TOPIC" type="VARCHAR(255)"/>
+            <column name="VOUCHER_NO" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TOT_CCY" type="VARCHAR(255)"/>
+            <column name="SHIP_DATE" type="date"/>
+            <column name="TOT_AMT" type="DECIMAL(19, 2)"/>
+            <column name="GROUP_ID" type="BIGINT"/>
+            <column name="ACCOUNT_ID" type="BIGINT"/>
+            <column name="PROCESS_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1479229387723-2">
+        <createTable tableName="TOR_ORDER_ITEM">
+            <column autoIncrement="true" name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TOR_ORDER_ITEMPK"/>
+            </column>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="PRICE_AMT" type="DECIMAL(19, 2)"/>
+            <column name="QTY_AMT" type="DECIMAL(19, 2)"/>
+            <column name="QTY_UNIT" type="VARCHAR(255)"/>
+            <column name="TOT_AMT" type="DECIMAL(19, 2)"/>
+            <column name="COMMODITY_ID" type="BIGINT"/>
+            <column name="MASTER_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1479229387723-3">
+        <createTable tableName="TOR_ORDER_SUM">
+            <column autoIncrement="true" name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TOR_ORDER_SUMPK"/>
+            </column>
+            <column name="AMOUNT" type="DECIMAL(19, 2)"/>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="ROW_KEY" type="VARCHAR(255)"/>
+            <column name="MASTER_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1479229387723-4">
+        <addForeignKeyConstraint baseColumnNames="ACCOUNT_ID" baseTableName="TOR_ORDER" constraintName="FK_ORDER_ACC" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+    </changeSet>
+</databaseChangeLog>
