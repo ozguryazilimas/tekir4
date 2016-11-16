@@ -16,11 +16,14 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -40,19 +43,29 @@ import org.hibernate.annotations.LazyCollectionOption;
 @Table(name = "TOR_ORDER")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "DIRECTION")
-public class Order extends VoucherProcessBase {
+public class Order extends VoucherProcessBase{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "genericSeq")
     @Column(name = "ID")
     private Long id;
 
+    
+    @ManyToOne
+    @JoinColumn(name = "PAYMENTPLAN_ID", foreignKey = @ForeignKey(name = "FK_ORD_PP"))
+    private PaymentPlan paymentPlan;
+    
+    
+    
     /**
      * Teslimat tarihi
      */
     @Temporal(TemporalType.DATE)
     @Column(name = "SHIP_DATE")
     private Date shippingDate;
+    
+    @Column(name = "SHIP_NOTE")
+    private String shippingNote;
 
     @Column(name = "TOT_CCY")
     private Currency currency;
@@ -118,4 +131,20 @@ public class Order extends VoucherProcessBase {
         this.summaries = summaries;
     }
 
+    public PaymentPlan getPaymentPlan() {
+        return paymentPlan;
+    }
+
+    public void setPaymentPlan(PaymentPlan paymentPlan) {
+        this.paymentPlan = paymentPlan;
+    }
+
+    public String getShippingNote() {
+        return shippingNote;
+    }
+
+    public void setShippingNote(String shippingNote) {
+        this.shippingNote = shippingNote;
+    }
+    
 }

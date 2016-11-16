@@ -96,6 +96,14 @@
             <column name="TOPIC" type="varchar(255)"/>
         </addColumn>
     </changeSet>
+    <changeSet author="oyas (generated)" id="1479311498719-1">
+        <addColumn tableName="TSQ_QUOTE">
+            <column name="PAYMENTPLAN_ID" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1479311498719-2">
+        <addForeignKeyConstraint baseColumnNames="PAYMENTPLAN_ID" baseTableName="TSQ_QUOTE" constraintName="FK_OPP_PP" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_PAYMENT_PLAN"/>
+    </changeSet>
     <changeSet author="oyas (generated)" id="1469961995803-3">
         <addForeignKeyConstraint baseColumnNames="COMMODITY_ID" baseTableName="TSQ_QUOTE_ITEM" constraintName="FK_QUOTEIT_COMMO" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_COMMOTITY"/>
     </changeSet>

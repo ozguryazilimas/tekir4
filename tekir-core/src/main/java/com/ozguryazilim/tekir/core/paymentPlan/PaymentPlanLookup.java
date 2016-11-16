@@ -20,19 +20,19 @@ import javax.inject.Inject;
  */
 @Lookup(dialogPage = CorePages.PaymentPlanLookup.class)
 public class PaymentPlanLookup extends
-			LookupTableControllerBase<PaymentPlan, PaymentPlan> {
+			LookupTableControllerBase<PaymentPlan, PaymentPlanViewModel> {
 
     @Inject
     private PaymentPlanRepository repository;
     
     @Override
-    protected void buildModel(LookupTableModel<PaymentPlan> model) {
+    protected void buildModel(LookupTableModel<PaymentPlanViewModel> model) {
         model.addColumn("code", "general.label.Code");
         model.addColumn("name", "general.label.Name");
     }
 
     @Override
-    protected RepositoryBase<PaymentPlan, PaymentPlan> getRepository() {
+    protected RepositoryBase<PaymentPlan, PaymentPlanViewModel> getRepository() {
         return repository;
     }
 

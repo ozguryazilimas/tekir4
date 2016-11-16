@@ -62,4 +62,17 @@
     <changeSet author="oyas (generated)" id="1479229387723-4">
         <addForeignKeyConstraint baseColumnNames="ACCOUNT_ID" baseTableName="TOR_ORDER" constraintName="FK_ORDER_ACC" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
     </changeSet>
+    <changeSet author="oyas (generated)" id="1479311713256-1">
+        <addColumn tableName="TOR_ORDER">
+            <column name="PAYMENTPLAN_ID" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1479311713256-2">
+        <addColumn tableName="TOR_ORDER">
+            <column name="SHIP_NOTE" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1479311713256-3">
+        <addForeignKeyConstraint baseColumnNames="PAYMENTPLAN_ID" baseTableName="TOR_ORDER" constraintName="FK_ORD_PP" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_PAYMENT_PLAN"/>
+    </changeSet>
 </databaseChangeLog>

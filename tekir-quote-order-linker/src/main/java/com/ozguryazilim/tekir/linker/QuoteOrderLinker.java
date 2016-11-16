@@ -69,6 +69,7 @@ public class QuoteOrderLinker implements VoucherRedirectHandler, Serializable{
                 salesOrderHome.getEntity().setTopic(entity.getTopic());
                 salesOrderHome.getEntity().setProcess(entity.getProcess());
                 salesOrderHome.getEntity().setGroup(entity.getGroup());
+                salesOrderHome.getEntity().setPaymentPlan(entity.getPaymentPlan());
                 
                 //Detayları dolduralım
                 for( QuoteItem qi : entity.getItems() ){

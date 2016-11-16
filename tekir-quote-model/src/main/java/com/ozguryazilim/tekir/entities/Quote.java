@@ -50,6 +50,10 @@ public class Quote extends VoucherProcessBase{
     @ManyToOne
     @JoinColumn(name = "COMPETITOR_ID", foreignKey = @ForeignKey(name = "FK_OPP_COMP"))
     private Contact competitor;
+    
+    @ManyToOne
+    @JoinColumn(name = "PAYMENTPLAN_ID", foreignKey = @ForeignKey(name = "FK_OPP_PP"))
+    private PaymentPlan paymentPlan;
 
     /**
      * Teklif versioyonu
@@ -144,5 +148,14 @@ public class Quote extends VoucherProcessBase{
         this.competitor = competitor;
     }
 
+    public PaymentPlan getPaymentPlan() {
+        return paymentPlan;
+    }
+
+    public void setPaymentPlan(PaymentPlan paymentPlan) {
+        this.paymentPlan = paymentPlan;
+    }
+
+    
     
 }

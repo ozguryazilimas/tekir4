@@ -20,13 +20,13 @@ import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
 @Repository
 @Dependent
 public abstract class PaymentPlanRepository extends
-        ParamRepositoryBase<PaymentPlan, PaymentPlan>
+        ParamRepositoryBase<PaymentPlan, PaymentPlanViewModel>
         implements
         CriteriaSupport<PaymentPlan> {
 
     @Override
-    protected Class<PaymentPlan> getViewModelClass() {
-        return PaymentPlan.class;
+    protected Class<PaymentPlanViewModel> getViewModelClass() {
+        return PaymentPlanViewModel.class;
     }
 
     @Override

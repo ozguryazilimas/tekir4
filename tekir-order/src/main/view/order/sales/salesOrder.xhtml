@@ -16,11 +16,13 @@
                 <p:outputPanel id="ddt" styleClass="row" layout="block">
                     <t:inputLookupDialog label="general.label.Account" value="#{salesOrderHome.account}" lookupBean="#{contactLookup}" lookupListener="salesOrderHome.account" placeholder="#{messages['general.info.Account']}" update=":form:prss" columnClass="col-xs-12"/>
                     
-                    <t:inputCurrency label="general.label.Currency" value="#{salesOrderHome.entity.currency}" required="true"/>
-                    <ui:remove>
-                    <t:inputDate label="salesOrder.label.ExpireDate" value="#{salesOrderHome.entity.expireDate}" />
-                    </ui:remove>
                     <t:inputText label="voucher.label.Topic" value="#{salesOrderHome.entity.topic}"  required="true" columnClass="col-xs-12"/>
+                    
+                    <t:inputCurrency label="general.label.Currency" value="#{salesOrderHome.entity.currency}" required="true"/>
+                    <t:inputDate label="salesOrder.label.ShippingDate" value="#{salesOrderHome.entity.shippingDate}" />
+                    <t:inputTextarea label="general.label.ShippingNote" value="#{salesOrderHome.entity.shippingNote}" columnClass="col-xs-12"/>
+                    
+                    <t:inputLookupDialog label="general.label.PaymentPlan" value="#{salesOrderHome.entity.paymentPlan}" lookupBean="#{paymentPlanLookup}" lookupListener="salesOrderHome.entity.paymentPlan" placeholder="#{messages['general.info.PaymentPlan']}" columnClass="col-xs-12" required="true"/>
                 </p:outputPanel>
             </div>
 
@@ -69,7 +71,7 @@
                 <p:column styleClass="actionColumnDouble">
                     <f:facet name="header">
 
-                        <p:commandLink action="#{salesOrderHome.addItem2()}" process="@this" >
+                        <p:commandLink action="#{salesOrderHome.addItem()}" process="@this" >
                             <i class="fa fa-plus"/>
                             <p:ajax event="dialogReturn" partialSubmit="true" 
                                     process="@this" update=":form:its"/>   

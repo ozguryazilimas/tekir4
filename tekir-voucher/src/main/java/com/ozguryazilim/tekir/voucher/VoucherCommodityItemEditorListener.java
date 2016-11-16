@@ -6,6 +6,8 @@
 package com.ozguryazilim.tekir.voucher;
 
 import com.ozguryazilim.tekir.entities.VoucherCommodityItemBase;
+import com.ozguryazilim.tekir.entities.VoucherSummaryBase;
+import java.util.List;
 
 /**
  * VoucherCommodityItemEditor çağıran sınıfların geri dönüşü dinlemek için kullanacakları callback arayüzü.
@@ -13,6 +15,11 @@ import com.ozguryazilim.tekir.entities.VoucherCommodityItemBase;
  * @author Hakan Uygun
  */
 public interface VoucherCommodityItemEditorListener {
+
+    /**
+     * Editor için yeni bir satır ekleyip editorü açar.
+     */
+    public void addItem();
     
     /**
      * Editor sonucu editlenen değer.
@@ -21,4 +28,14 @@ public interface VoucherCommodityItemEditorListener {
      */
     void saveItem( VoucherCommodityItemBase item );
     
+    /**
+     * Geriye sadece vergi itemlarının listesini döndürür.
+     * @return 
+     */
+    public List<? extends VoucherSummaryBase> getTaxes();
+    
+    /**
+     * Detaylar üzerinde vergi ve toplamları hesaplar.
+     */
+    public void calculateSummaries();
 }

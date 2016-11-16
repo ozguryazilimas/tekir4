@@ -19,6 +19,7 @@
                     <t:inputCurrency label="general.label.Currency" value="#{quoteHome.entity.currency}" required="true"/>
                     <t:inputDate label="quote.label.ExpireDate" value="#{quoteHome.entity.expireDate}" />
                     <t:inputText label="voucher.label.Topic" value="#{quoteHome.entity.topic}"  required="true" columnClass="col-xs-12"/>
+                    <t:inputLookupDialog label="general.label.PaymentPlan" value="#{quoteHome.entity.paymentPlan}" lookupBean="#{paymentPlanLookup}" lookupListener="quoteHome.entity.paymentPlan" placeholder="#{messages['general.info.PaymentPlan']}" columnClass="col-xs-12" required="true"/>
                 </p:outputPanel>
             </div>
 
