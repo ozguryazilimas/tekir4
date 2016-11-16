@@ -1,0 +1,28 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"                   
+                template="/layout/paramBase.xhtml">
+
+    <ui:param name="homeBean" value="#{paymentPlanHome}" />
+    <ui:param name="itemList" value="#{paymentPlanHome.entityList}" />
+    <ui:param name="itemCaption" value="caption" />
+    <ui:param name="renderActive" value="true" />
+
+    <ui:define name="form">
+        <div class="row">
+            <t:inputText label="general.label.Name" value="#{paymentPlanHome.entity.name}" required="true" />
+            <t:inputText label="general.label.Code" value="#{paymentPlanHome.entity.code}" required="true" />
+            <t:inputNumber label="paymentPlan.label.Term" value="#{paymentPlanHome.entity.term}" required="true" />
+        </div>            
+        <div class="row">        
+            <t:inputTextarea label="general.label.Info" value="#{paymentPlanHome.entity.info}" required="false" />                                            
+            <t:inputCheckboxGroup label="general.label.Status">
+                <p:selectBooleanCheckbox value="#{paymentPlanHome.entity.active}" itemLabel="#{messages['general.label.Active']}" />
+            </t:inputCheckboxGroup>
+        </div>  
+    </ui:define> 
+    
+</ui:composition>

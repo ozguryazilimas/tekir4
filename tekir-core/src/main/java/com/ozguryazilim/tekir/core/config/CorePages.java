@@ -91,4 +91,18 @@ public interface CorePages extends Pages {
 			implements
 				com.ozguryazilim.tekir.core.config.CorePages {
 	}
+        
+        
+        @View
+	@SecuredPage("paymentPlan")
+	@PageTitle("module.caption.PaymentPlan")
+	@Navigation(label = "module.caption.PaymentPlan", icon = "flaticon-tax", section = ParamNavigationSection.class)
+	class PaymentPlan implements com.ozguryazilim.tekir.core.config.CorePages {
+	}
+
+	@View @SecuredPage()
+	class PaymentPlanLookup
+			implements
+				com.ozguryazilim.tekir.core.config.CorePages {
+	}
 }

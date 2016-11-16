@@ -16,11 +16,9 @@ public class TaxDefinitionHome extends ParamBase<TaxDefinition, Long> {
 	@Inject
 	private TaxDefinitionRepository repository;
 
+        @Override
 	public TaxDefinitionRepository getRepository() {
 		return this.repository;
 	}
 
-	public void setRepository(final TaxDefinitionRepository repository) {
-		this.repository = repository;
-	}
 }
