@@ -8,7 +8,6 @@ import com.ozguryazilim.telve.forms.FormEdit;
 import com.ozguryazilim.tekir.entities.Quote;
 import com.ozguryazilim.tekir.entities.QuoteItem;
 import com.ozguryazilim.tekir.entities.QuoteSummary;
-import com.ozguryazilim.tekir.entities.VoucherCommodityItemBase;
 import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.tekir.voucher.VoucherCommodityItemEditor;
 import com.ozguryazilim.tekir.voucher.VoucherCommodityItemEditorListener;
@@ -34,7 +33,7 @@ import java.util.Date;
  * @author
  */
 @FormEdit(feature=QuoteFeature.class)
-public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodityItemEditorListener{
+public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodityItemEditorListener<QuoteItem>{
 
     @Inject
     private QuoteRepository repository;
@@ -75,6 +74,17 @@ public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodit
     }
 
     @Override
+    public void editItem(QuoteItem item) {
+        commodityItemEditor.openDialog(item, getEntity().getCurrency(), this);
+    }
+    
+    @Override
+    public void removeItem(QuoteItem item) {
+        getEntity().getItems().remove(item);
+        calculateSummaries();
+    }
+    
+    @Override
     public boolean onBeforeSave() {
         //TODO: Before Save'de her seferinden yeniden sum hesaplamaya gerek var mı? Arayüze ReCalculate gibi bir düğme mi koysak?
         //calculateSummaries();
@@ -114,8 +124,10 @@ public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodit
     }
 
     @Override
-    public void saveItem(VoucherCommodityItemBase item) {
-        getEntity().getItems().add((QuoteItem) item);
+    public void saveItem(QuoteItem item) {
+        if (!getEntity().getItems().contains(item)) {
+            getEntity().getItems().add(item);
+        }
         calculateSummaries();
     }
     

@@ -9,7 +9,6 @@ import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.tekir.entities.OrderItem;
 import com.ozguryazilim.tekir.entities.OrderSummary;
 import com.ozguryazilim.tekir.entities.SalesOrder;
-import com.ozguryazilim.tekir.entities.VoucherCommodityItemBase;
 import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.tekir.entities.VoucherStateEffect;
 import com.ozguryazilim.tekir.entities.VoucherStateType;
@@ -30,7 +29,7 @@ import javax.inject.Inject;
  * @author oyas
  */
 @FormEdit(feature = SalesOrderFeature.class)
-public class SalesOrderHome extends VoucherFormBase<SalesOrder> implements VoucherCommodityItemEditorListener {
+public class SalesOrderHome extends VoucherFormBase<SalesOrder> implements VoucherCommodityItemEditorListener<OrderItem> {
 
     @Inject
     private SalesOrderRepository repository;
@@ -63,8 +62,10 @@ public class SalesOrderHome extends VoucherFormBase<SalesOrder> implements Vouch
     }
 
     @Override
-    public void saveItem(VoucherCommodityItemBase item) {
-        getEntity().getItems().add((OrderItem) item);
+    public void saveItem(OrderItem item) {
+        if (!getEntity().getItems().contains(item)) {
+            getEntity().getItems().add(item);
+        }
         calculateSummaries();
     }
 
@@ -104,7 +105,18 @@ public class SalesOrderHome extends VoucherFormBase<SalesOrder> implements Vouch
     @Override
     public void calculateSummaries() {
         SummaryCalculator<SalesOrder, OrderItem, OrderSummary> sc = new SummaryCalculator();
-        sc.calcSummaries( this::getEntity, getEntity()::getItems, getEntity()::getSummaries, ()-> new OrderSummary(), getEntity()::setTotal);
+        sc.calcSummaries(this::getEntity, getEntity()::getItems, getEntity()::getSummaries, () -> new OrderSummary(), getEntity()::setTotal);
+    }
+
+    @Override
+    public void editItem(OrderItem item) {
+        commodityItemEditor.openDialog(item, getEntity().getCurrency(), this);
+    }
+
+    @Override
+    public void removeItem(OrderItem item) {
+        getEntity().getItems().remove(item);
+        calculateSummaries();
     }
 
 }

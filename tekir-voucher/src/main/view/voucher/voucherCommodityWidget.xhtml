@@ -8,100 +8,108 @@
 
     <t:accordion icon="fa fa-cube" id="ca1" label="general.label.Commodities" columnClass="col-xs-12">
 
-        <p:dataTable id="its" value="#{bean.entity.items}" var="item" reflow="true">
-            <p:column headerText="Emtia">
-                <h:outputText value="#{item.commodity.name}" />
-            </p:column>
-            <p:column headerText="Açıklama">
-                <h:outputText value="#{item.info}" />
-            </p:column>
-            <p:column headerText="Miktar" >
-                <div style="text-align: right;">
-                    <h:outputText value="#{item.quantity.amount}" />
-                    <h:outputText value=" #{item.quantity.unitName.name}" />
-                </div>
-            </p:column>
-            <p:column headerText="Birim Fiyat" >
-                <t:cellOutputMoney value="#{item.price}" currency="#{bean.entity.currency}" />
-            </p:column>
-            <p:column headerText="Tutar" >
-                <t:cellOutputMoney value="#{item.total}" currency="#{bean.entity.currency}" />
-            </p:column>
-            <p:column headerText="İndirim">
-                <t:cellOutputMoney value="#{item.discount}" currency="#{bean.entity.currency}" />
-            </p:column>
+        <div class="row">
+            <p:dataTable id="its" value="#{bean.entity.items}" var="item" reflow="true" styleClass="col-xs-12">
+                <p:column headerText="Emtia">
+                    <h:outputText value="#{item.commodity.name}" />
+                </p:column>
+                <p:column headerText="Açıklama">
+                    <h:outputText value="#{item.info}" />
+                </p:column>
+                <p:column headerText="Miktar" >
+                    <div style="text-align: right;">
+                        <h:outputText value="#{item.quantity.amount}" />
+                        <h:outputText value=" #{item.quantity.unitName.name}" />
+                    </div>
+                </p:column>
+                <p:column headerText="Birim Fiyat" >
+                    <t:cellOutputMoney value="#{item.price}" currency="#{bean.entity.currency}" />
+                </p:column>
+                <p:column headerText="Tutar" >
+                    <t:cellOutputMoney value="#{item.total}" currency="#{bean.entity.currency}" />
+                </p:column>
+                <p:column headerText="İndirim">
+                    <t:cellOutputMoney value="#{item.discount}" currency="#{bean.entity.currency}" />
+                </p:column>
 
 
-            <p:column headerText="Toplam" >
-                <t:cellOutputMoney value="#{item.lineTotal}" currency="#{bean.entity.currency}" />
-            </p:column>
+                <p:column headerText="Toplam" >
+                    <t:cellOutputMoney value="#{item.lineTotal}" currency="#{bean.entity.currency}" />
+                </p:column>
 
 
-            <p:column styleClass="actionColumnDouble" rendered="#{editable}">
-                <f:facet name="header">
+                <p:column styleClass="actionColumnDouble" rendered="#{editable}">
+                    <f:facet name="header">
 
-                    <p:commandLink action="#{bean.addItem()}" process="@this" >
-                        <i class="fa fa-plus"/>
+                        <p:commandLink action="#{bean.addItem()}" process="@this" >
+                            <i class="fa fa-plus"/>
+                            <p:ajax event="dialogReturn" partialSubmit="true" 
+                                    process="@this" update="@([id$=its]) @([id$=sms])"/>   
+                        </p:commandLink>
+
+                    </f:facet>
+
+                    <p:commandLink action="#{bean.editItem(item)}" process="@this" >
+                        <i class="fa fa-pencil"/>
                         <p:ajax event="dialogReturn" partialSubmit="true" 
                                 process="@this" update="@([id$=its]) @([id$=sms])"/>   
                     </p:commandLink>
-
-                </f:facet>
-
-                <i class="fa fa-pencil" />
-                <i class="fa fa-trash" />
-            </p:column>
-
-        </p:dataTable>
-
-        <ui:remove>
-            <p:dataTable id="sums" value="#{bean.entity.summaries.entrySet()}" var="item" reflow="true">
-                <p:column>
-                    #{item.value.rowKey}
+                    <p:commandLink action="#{bean.removeItem(item)}" process="@this" update="@([id$=its]) @([id$=sms])">
+                        <i class="fa fa-trash"/>
+                    </p:commandLink>
                 </p:column>
-                <p:column>
-                    #{item.value.info}
-                </p:column>
-                <p:column>
-                    <t:cellOutputMoney value="#{item.value.amount}" currency="#{bean.entity.currency}" />
-                </p:column>
+
             </p:dataTable>
-        </ui:remove>
 
-        <p:outputPanel id="sms" layout="block" styleClass="col-md-6 col-xs-12 pull-right">
-            <table class="table table-bordered" style="margin-top: 5px;">
-                <tr>
-                    <th>Toplam</th>
-                    <td><t:cellOutputMoney value="#{bean.entity.summaries['BeforeDiscountTotal'].amount}" currency="#{bean.entity.currency}" /></td>
-                </tr>
-                <ui:fragment rendered="#{not empty bean.entity.summaries['Discount']}">
+            <ui:remove>
+                <p:dataTable id="sums" value="#{bean.entity.summaries.entrySet()}" var="item" reflow="true">
+                    <p:column>
+                        #{item.value.rowKey}
+                    </p:column>
+                    <p:column>
+                        #{item.value.info}
+                    </p:column>
+                    <p:column>
+                        <t:cellOutputMoney value="#{item.value.amount}" currency="#{bean.entity.currency}" />
+                    </p:column>
+                </p:dataTable>
+            </ui:remove>
+
+            <p:outputPanel id="sms" layout="block" styleClass="col-md-12 col-xs-12 pull-right">
+                <table class="table table-bordered" style="margin-top: 5px;">
                     <tr>
-                        <th>İndirim %#{bean.entity.summaries['DiscountRate'].amount} ( - )</th>
-                        <td><t:cellOutputMoney value="#{bean.entity.summaries['Discount'].amount}" currency="#{bean.entity.currency}" /></td>
+                        <th>Toplam</th>
+                        <td><t:cellOutputMoney value="#{bean.entity.summaries['BeforeDiscountTotal'].amount}" currency="#{bean.entity.currency}" /></td>
                     </tr>
-                </ui:fragment>
+                    <ui:fragment rendered="#{not empty bean.entity.summaries['Discount']}">
+                        <tr>
+                            <th>İndirim %#{bean.entity.summaries['DiscountRate'].amount} ( - )</th>
+                            <td><t:cellOutputMoney value="#{bean.entity.summaries['Discount'].amount}" currency="#{bean.entity.currency}" /></td>
+                        </tr>
+                    </ui:fragment>
 
-                <tr>
-                    <th>Vergi Matrah </th>
-                    <td><t:cellOutputMoney value="#{bean.entity.summaries['BeforeTaxTotal'].amount}" currency="#{bean.entity.currency}" /></td>
-                </tr>
-                <tr>
-                    <th>Vergi ( + )</th>
-                    <td><t:cellOutputMoney value="#{bean.entity.summaries['TaxTotal'].amount}" currency="#{bean.entity.currency}" /></td>
-                </tr>
-                <ui:repeat value="#{bean.getTaxes()}" var="ent">
                     <tr>
-                        <td>#{ent.info}</td>
-                        <td><t:cellOutputMoney value="#{ent.amount}" currency="#{bean.entity.currency}" /></td>
+                        <th>Vergi Matrah </th>
+                        <td><t:cellOutputMoney value="#{bean.entity.summaries['BeforeTaxTotal'].amount}" currency="#{bean.entity.currency}" /></td>
                     </tr>
-                </ui:repeat>
-                <tr>
-                    <th>Genel Toplam</th>
-                    <th><t:cellOutputMoney value="#{bean.entity.summaries['GrandTotal'].amount}" currency="#{bean.entity.currency}" /></th>
-                </tr>
-            </table>
-        </p:outputPanel>
+                    <tr>
+                        <th>Vergi ( + )</th>
+                        <td><t:cellOutputMoney value="#{bean.entity.summaries['TaxTotal'].amount}" currency="#{bean.entity.currency}" /></td>
+                    </tr>
+                    <ui:repeat value="#{bean.getTaxes()}" var="ent">
+                        <tr>
+                            <td>#{ent.info}</td>
+                            <td><t:cellOutputMoney value="#{ent.amount}" currency="#{bean.entity.currency}" /></td>
+                        </tr>
+                    </ui:repeat>
+                    <tr>
+                        <th>Genel Toplam</th>
+                        <th><t:cellOutputMoney value="#{bean.entity.summaries['GrandTotal'].amount}" currency="#{bean.entity.currency}" /></th>
+                    </tr>
+                </table>
+            </p:outputPanel>
 
+        </div>
     </t:accordion>
 
 

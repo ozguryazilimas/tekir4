@@ -14,19 +14,23 @@ import java.util.List;
  * 
  * @author Hakan Uygun
  */
-public interface VoucherCommodityItemEditorListener {
+public interface VoucherCommodityItemEditorListener<E extends VoucherCommodityItemBase>{
 
     /**
      * Editor için yeni bir satır ekleyip editorü açar.
      */
     public void addItem();
     
+    public void editItem(E item);
+    
+    public void removeItem(E item);
+    
     /**
      * Editor sonucu editlenen değer.
      * 
      * @param item 
      */
-    void saveItem( VoucherCommodityItemBase item );
+    void saveItem( E item );
     
     /**
      * Geriye sadece vergi itemlarının listesini döndürür.
