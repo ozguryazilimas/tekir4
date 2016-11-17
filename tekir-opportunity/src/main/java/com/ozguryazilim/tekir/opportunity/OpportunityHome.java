@@ -76,13 +76,6 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
     }
 
     @Override
-    public boolean onAfterSave() {
-        accountTxnService.saveFeature(getFeaturePointer(), getEntity().getAccount(), getEntity().getCode(), getEntity().getTopic(), Boolean.FALSE, Boolean.TRUE, getEntity().getCurrency(), getEntity().getBudget(), getEntity().getDate(), getEntity().getOwner(), getEntity().getProcess().getProcessNo(), getEntity().getState().toString(), getEntity().getStateReason());
-        
-        return super.onAfterSave(); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    @Override
     protected VoucherStateConfig buildStateConfig() {
         VoucherStateConfig config = new VoucherStateConfig();
         config.addTranstion(VoucherState.DRAFT, new VoucherStateAction("publish", "fa fa-check" ), VoucherState.OPEN);

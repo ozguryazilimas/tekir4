@@ -83,7 +83,7 @@ public class QuoteOrderLinker implements VoucherRedirectHandler, Serializable{
                     salesOrderHome.getEntity().getItems().add(oi);
                 }
                 
-                salesOrderHome.calcSummaries();
+                salesOrderHome.calculateSummaries();
                 
                 //FIXME: i18n
                 FacesMessages.info("Kutlarız. Teklif Kabul edildi!", "" + entity.getVoucherNo() + " " + entity.getTopic() + " teklif için şipariş hazırlanacak!");

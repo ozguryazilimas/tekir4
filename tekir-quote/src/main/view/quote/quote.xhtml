@@ -44,100 +44,10 @@
         </div>
 
         <div class="row" style="padding-top: 8px;">
-            <p:dataTable id="its" value="#{quoteHome.entity.items}" var="item" editable="true" editMode="cell" reflow="true" rowIndexVar="rowKey" styleClass="col-xs-12">
-
-                <p:column headerText="Ürün">
-                    <h:outputText value="#{item.commodity.name}" />
-                </p:column>
-                <p:column headerText="Açıklama">
-                    <h:outputText value="#{item.info}" />
-                </p:column>
-                <p:column id="amount" headerText="Miktar" style="width: 12em;">
-                    <div style="text-align: right;">
-                    <h:outputText value="#{item.quantity.amount}" />
-                    <h:outputText value=" #{item.quantity.unitName.name}" />
-                    </div>
-                </p:column>
-
-                <p:column id="price" style="width: 12em;" headerText="Fiyat">
-                    <t:cellOutputMoney value="#{item.price}" currency="#{quoteHome.entity.currency}" />
-                </p:column>
-                <p:column id="total" style="width: 12em;" headerText="Tutar">
-                    <t:cellOutputMoney value="#{item.total}" currency="#{quoteHome.entity.currency}" />
-                </p:column>
-                <p:column styleClass="actionColumnDouble">
-                    <f:facet name="header">
-
-                        <p:commandLink action="#{quoteHome.addItem2()}" process="@this" >
-                            <i class="fa fa-plus"/>
-                            <p:ajax event="dialogReturn" partialSubmit="true" 
-                                    process="@this" update=":form:its"/>   
-                        </p:commandLink>
-
-                        <ui:remove>
-                            <p:commandLink action="#{commodityLookup.openDialog( false, '' )}" style="text-decoration:none;padding:4px;"
-                                           partialSubmit="true" process="@this" styleClass="fa fa-plus"
-                                           title="#{messages['general.label.Add']}">
-                                <p:ajax event="dialogReturn" listener="#{quoteHome.onCommoditySelect}" partialSubmit="true" 
-                                        process="@this" />   
-                            </p:commandLink>
-                        </ui:remove>
-                    </f:facet>
-                    <ui:remove>
-                        <p:rowEditor />
-                    </ui:remove>
-                    <i class="fa fa-pencil" />
-                    <i class="fa fa-trash" />
-                </p:column>
-            </p:dataTable>
-
-            <p:outputPanel autoUpdate="true" layout="block" styleClass="col-md-6 col-xs-12 pull-right">
-                <table class="table table-bordered" style="margin-top: 5px;">
-                    <tr>
-                        <th>Toplam</th>
-                        <td><t:cellOutputMoney value="#{quoteHome.entity.summaries['BeforeTaxTotal'].amount}" currency="#{quoteHome.entity.currency}" /></td>
-                    </tr>
-                    <ui:fragment rendered="#{not empty quoteHome.entity.summaries['Discount']}">
-                        <tr>
-                            <th>İndirim ( - )</th>
-                            <td><t:cellOutputMoney value="#{quoteHome.entity.summaries['Discount'].amount}" currency="#{quoteHome.entity.currency}" /></td>
-                        </tr>
-                    </ui:fragment>
-
-
-                    <tr>
-                        <th>Vergi ( + )</th>
-                        <td><t:cellOutputMoney value="#{quoteHome.entity.summaries['TaxTotal'].amount}" currency="#{quoteHome.entity.currency}" /></td>
-                    </tr>
-                    <ui:repeat value="#{quoteHome.getTaxes()}" var="ent">
-                        <tr>
-                            <td>#{ent.info}</td>
-                            <td><t:cellOutputMoney value="#{ent.amount}" currency="#{quoteHome.entity.currency}" /></td>
-                        </tr>
-                    </ui:repeat>
-                    <tr>
-                        <th>Genel Toplam</th>
-                        <th><t:cellOutputMoney value="#{quoteHome.entity.summaries['GrandTotal'].amount}" currency="#{quoteHome.entity.currency}" /></th>
-                    </tr>
-                </table>
-            </p:outputPanel>
+            <ui:include src="/voucher/voucherCommodityWidget.xhtml">
+                <ui:param name="bean" value="#{quoteHome}" />
+                <ui:param name="editable" value="#{true}" />
+            </ui:include>
         </div>
-
-        <p:dialog header="İtem" id="ite" widgetVar="ite" >
-            <p:outputPanel styleClass="row" layout="block" rendered="#{ not empty quoteHome.selectedItem}">
-                <t:inputLookupDialog label="general.label.Commodity" value="#{quoteHome.selectedItem.commodity}" lookupBean="#{commodityLookup}" lookupListener="quoteHome.selectedItem.commodity" placeholder="#{messages['general.info.Commodity']}" />
-
-                <t:inputText label="general.label.Info" value="#{quoteHome.selectedItem.info}" columnClass="col-xs-12"/>
-                <t:inputQuantity label="general.label.Quantity" value="#{quoteHome.selectedItem.quantity}" columnClass="col-xs-12"/>
-                <ui:remove>
-                    <t:inputMoneyAndCCY label="general.label.Total" value="#{quoteHome.selectedItem.total}" columnClass="col-xs-12"/>
-                    <t:inputMoneyAndCCY label="general.label.Price" value="#{quoteHome.selectedItem.price}" columnClass="col-xs-12"/>
-                </ui:remove>
-                <div class="actionButtons">
-                    <p:commandButton action="#{quoteHome.saveItem()}" value="Sakla" oncomplete="PF('ite').hide();" update="its" ajax="true" process="@(ite)"/>
-                </div>
-            </p:outputPanel>
-        </p:dialog>
-
     </ui:define> 
 </ui:composition>

@@ -36,81 +36,9 @@
 
             <div class="col-md-6 col-xs-12">
 
-                <t:accordion icon="fa fa-cube" id="ca1" label="general.label.Commodities" columnClass="col-xs-12">
-
-                    <p:dataTable id="its" value="#{salesOrderHome.entity.items}" var="item" reflow="true">
-                        <p:column headerText="Emtia">
-                            <h:outputText value="#{item.commodity.name}" />
-                        </p:column>
-                        <p:column headerText="Açıklama">
-                            <h:outputText value="#{item.info}" />
-                        </p:column>
-                        <p:column headerText="Miktar" >
-                            <div style="text-align: right;">
-                            <h:outputText value="#{item.quantity.amount}" />
-                            <h:outputText value=" #{item.quantity.unitName.name}" />
-                            </div>
-                        </p:column>
-                        <p:column headerText="Birim Fiyat" >
-                            <t:cellOutputMoney value="#{item.price}" currency="#{salesOrderHome.entity.currency}" />
-                        </p:column>
-                        <p:column headerText="Tutar" >
-                            <t:cellOutputMoney value="#{item.total}" currency="#{salesOrderHome.entity.currency}" />
-                        </p:column>
-                        <ui:remove>
-                        <p:column headerText="İndirim" style="text-align: right; width: 6em;">
-                            <t:cellOutputMoney value="#{item.total}" currency="#{salesOrderHome.entity.currency}" />
-                        </p:column>
-                        <p:column headerText="Toplam" style=" width: 6em;">
-                            <t:cellOutputMoney value="#{item.total}" currency="#{salesOrderHome.entity.currency}" />
-                        </p:column>
-                            </ui:remove>
-                    </p:dataTable>
-
-                    <ui:remove>
-                        <p:dataTable id="sums" value="#{salesOrderHome.entity.summaries.entrySet()}" var="item" reflow="true">
-                            <p:column>
-                                #{item.value.rowKey}
-                            </p:column>
-                            <p:column>
-                                #{item.value.info}
-                            </p:column>
-                            <p:column>
-                                <t:cellOutputMoney value="#{item.value.amount}" currency="#{salesOrderHome.entity.currency}" />
-                            </p:column>
-                        </p:dataTable>
-                    </ui:remove>
-
-                    <table class="table table-bordered" style="margin-top: 5px;">
-                        <tr>
-                            <th>Toplam</th>
-                            <td><t:cellOutputMoney value="#{salesOrderHome.entity.summaries['BeforeTaxTotal'].amount}" currency="#{salesOrderHome.entity.currency}" /></td>
-                        </tr>
-                        <ui:fragment rendered="#{not empty salesOrderHome.entity.summaries['Discount']}">
-                            <tr>
-                                <th>İndirim ( - )</th>
-                                <td><t:cellOutputMoney value="#{salesOrderHome.entity.summaries['Discount'].amount}" currency="#{salesOrderHome.entity.currency}" /></td>
-                            </tr>
-                        </ui:fragment>
-
-
-                        <tr>
-                            <th>Vergi ( + )</th>
-                            <td><t:cellOutputMoney value="#{salesOrderHome.entity.summaries['TaxTotal'].amount}" currency="#{salesOrderHome.entity.currency}" /></td>
-                        </tr>
-                        <ui:repeat value="#{salesOrderHome.getTaxes()}" var="ent">
-                            <tr>
-                                <td>#{ent.info}</td>
-                                <td><t:cellOutputMoney value="#{ent.amount}" currency="#{salesOrderHome.entity.currency}" /></td>
-                            </tr>
-                        </ui:repeat>
-                        <tr>
-                            <th>Genel Toplam</th>
-                            <th><t:cellOutputMoney value="#{salesOrderHome.entity.summaries['GrandTotal'].amount}" currency="#{salesOrderHome.entity.currency}" /></th>
-                        </tr>
-                    </table>
-
-                </t:accordion>
+                <ui:include src="/voucher/voucherCommodityWidget.xhtml">
+                    <ui:param name="bean" value="#{salesOrderHome}" />
+                </ui:include>
 
             </div>
 

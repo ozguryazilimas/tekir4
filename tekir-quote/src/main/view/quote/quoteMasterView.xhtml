@@ -35,6 +35,10 @@
 
             <div class="col-md-6 col-xs-12">
 
+                <ui:include src="/voucher/voucherCommodityWidget.xhtml">
+                    <ui:param name="bean" value="#{quoteHome}" />
+                </ui:include>
+                <ui:remove>
                 <t:accordion icon="fa fa-cube" id="ca1" label="general.label.Commodities" columnClass="col-xs-12">
 
                     <p:dataTable id="its" value="#{quoteHome.entity.items}" var="item" reflow="true">
@@ -64,17 +68,6 @@
                             <t:cellOutputMoney value="#{item.total}" currency="#{quoteHome.entity.currency}" />
                         </p:column>
                             </ui:remove>
-                        <p:column styleClass="actionColumnDouble" rendered="#{quoteHome.entity.state.type eq 'DRAFT'}">
-                            <f:facet name="header">
-                                <p:commandLink action="#{quoteHome.addItem2()}" process="@this" >
-                                    <i class="fa fa-plus"/>
-                                    <p:ajax event="dialogReturn" partialSubmit="true" 
-                                            process="@this" update=":ca1:its"/>   
-                                </p:commandLink>
-                            </f:facet>
-                            <i class="fa fa-pencil" />
-                            <i class="fa fa-trash" />
-                        </p:column>
                     </p:dataTable>
 
                     <ui:remove>
@@ -122,6 +115,7 @@
 
                 </t:accordion>
 
+                    </ui:remove>
             </div>
 
             <div class="col-md-3 col-xs-12">
