@@ -53,9 +53,21 @@ public abstract class VoucherCommodityItemBase<E extends VoucherBase> extends En
     @Column(name = "PRICE_AMT")
     private BigDecimal price = BigDecimal.ZERO;
     
+    /**
+     * Yüzde kaç indirim olduğu integer değer olarak tutuluyor.
+     */
+    @Column(name = "DISC_RATE")
+    private Integer discountRate = 0;
+    
+    @Column(name = "DISC_AMT")
+    private BigDecimal discount = BigDecimal.ZERO;
+    
     @Column(name = "TOT_AMT")
     private BigDecimal total = BigDecimal.ZERO;
 
+    @Column(name = "LİNE_TOT_AMT")
+    private BigDecimal lineTotal = BigDecimal.ZERO;
+    
     @Override
     public Long getId() {
         return id;
@@ -113,4 +125,29 @@ public abstract class VoucherCommodityItemBase<E extends VoucherBase> extends En
         this.total = total;
     }
 
+    public Integer getDiscountRate() {
+        return discountRate;
+    }
+
+    public void setDiscountRate(Integer discountRate) {
+        this.discountRate = discountRate;
+    }
+
+    public BigDecimal getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(BigDecimal discount) {
+        this.discount = discount;
+    }
+
+    public BigDecimal getLineTotal() {
+        return lineTotal;
+    }
+
+    public void setLineTotal(BigDecimal lineTotal) {
+        this.lineTotal = lineTotal;
+    }
+
+    
 }

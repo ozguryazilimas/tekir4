@@ -27,14 +27,15 @@
             <p:column headerText="Tutar" >
                 <t:cellOutputMoney value="#{item.total}" currency="#{bean.entity.currency}" />
             </p:column>
-            <ui:remove>
-                <p:column headerText="İndirim" style="text-align: right; width: 6em;">
-                    <t:cellOutputMoney value="#{item.total}" currency="#{bean.entity.currency}" />
-                </p:column>
-                <p:column headerText="Toplam" style=" width: 6em;">
-                    <t:cellOutputMoney value="#{item.total}" currency="#{bean.entity.currency}" />
-                </p:column>
-            </ui:remove>
+            <p:column headerText="İndirim">
+                <t:cellOutputMoney value="#{item.discount}" currency="#{bean.entity.currency}" />
+            </p:column>
+
+
+            <p:column headerText="Toplam" >
+                <t:cellOutputMoney value="#{item.lineTotal}" currency="#{bean.entity.currency}" />
+            </p:column>
+
 
             <p:column styleClass="actionColumnDouble" rendered="#{editable}">
                 <f:facet name="header">
@@ -68,35 +69,38 @@
         </ui:remove>
 
         <p:outputPanel id="sms" layout="block" styleClass="col-md-6 col-xs-12 pull-right">
-        <table class="table table-bordered" style="margin-top: 5px;">
-            <tr>
-                <th>Toplam</th>
-                <td><t:cellOutputMoney value="#{bean.entity.summaries['BeforeTaxTotal'].amount}" currency="#{bean.entity.currency}" /></td>
-            </tr>
-            <ui:fragment rendered="#{not empty bean.entity.summaries['Discount']}">
+            <table class="table table-bordered" style="margin-top: 5px;">
                 <tr>
-                    <th>İndirim ( - )</th>
-                    <td><t:cellOutputMoney value="#{bean.entity.summaries['Discount'].amount}" currency="#{bean.entity.currency}" /></td>
+                    <th>Toplam</th>
+                    <td><t:cellOutputMoney value="#{bean.entity.summaries['BeforeDiscountTotal'].amount}" currency="#{bean.entity.currency}" /></td>
                 </tr>
-            </ui:fragment>
+                <ui:fragment rendered="#{not empty bean.entity.summaries['Discount']}">
+                    <tr>
+                        <th>İndirim %#{bean.entity.summaries['DiscountRate'].amount} ( - )</th>
+                        <td><t:cellOutputMoney value="#{bean.entity.summaries['Discount'].amount}" currency="#{bean.entity.currency}" /></td>
+                    </tr>
+                </ui:fragment>
 
-
-            <tr>
-                <th>Vergi ( + )</th>
-                <td><t:cellOutputMoney value="#{bean.entity.summaries['TaxTotal'].amount}" currency="#{bean.entity.currency}" /></td>
-            </tr>
-            <ui:repeat value="#{bean.getTaxes()}" var="ent">
                 <tr>
-                    <td>#{ent.info}</td>
-                    <td><t:cellOutputMoney value="#{ent.amount}" currency="#{bean.entity.currency}" /></td>
+                    <th>Vergi Matrah </th>
+                    <td><t:cellOutputMoney value="#{bean.entity.summaries['BeforeTaxTotal'].amount}" currency="#{bean.entity.currency}" /></td>
                 </tr>
-            </ui:repeat>
-            <tr>
-                <th>Genel Toplam</th>
-                <th><t:cellOutputMoney value="#{bean.entity.summaries['GrandTotal'].amount}" currency="#{bean.entity.currency}" /></th>
-            </tr>
-        </table>
-            </p:outputPanel>
+                <tr>
+                    <th>Vergi ( + )</th>
+                    <td><t:cellOutputMoney value="#{bean.entity.summaries['TaxTotal'].amount}" currency="#{bean.entity.currency}" /></td>
+                </tr>
+                <ui:repeat value="#{bean.getTaxes()}" var="ent">
+                    <tr>
+                        <td>#{ent.info}</td>
+                        <td><t:cellOutputMoney value="#{ent.amount}" currency="#{bean.entity.currency}" /></td>
+                    </tr>
+                </ui:repeat>
+                <tr>
+                    <th>Genel Toplam</th>
+                    <th><t:cellOutputMoney value="#{bean.entity.summaries['GrandTotal'].amount}" currency="#{bean.entity.currency}" /></th>
+                </tr>
+            </table>
+        </p:outputPanel>
 
     </t:accordion>
 

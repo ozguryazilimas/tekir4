@@ -10,6 +10,7 @@ import com.ozguryazilim.tekir.entities.VoucherBase;
 import com.ozguryazilim.tekir.entities.VoucherCommodityItemBase;
 import com.ozguryazilim.tekir.entities.VoucherSummaryBase;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -38,11 +39,12 @@ public class SummaryCalculator<E extends VoucherBase, I extends VoucherCommodity
         BigDecimal total = BigDecimal.ZERO;
         BigDecimal totalTax = BigDecimal.ZERO;
 
+        //Tevkifat işini nasıl hesaplayacağız.
         for (VoucherCommodityItemBase it : items ) {
 
             TaxDefinition tax = it.getCommodity().getTax1();
             if (tax != null) {
-                BigDecimal taxAmt = it.getTotal().multiply(tax.getRate());
+                BigDecimal taxAmt = it.getLineTotal().multiply(tax.getRate());
                 totalTax = totalTax.add(taxAmt);
 
                 S sm = summaries.get("Tax." + tax.getCode());
@@ -60,7 +62,7 @@ public class SummaryCalculator<E extends VoucherBase, I extends VoucherCommodity
 
             tax = it.getCommodity().getTax2();
             if (tax != null) {
-                BigDecimal taxAmt = it.getTotal().multiply(tax.getRate());
+                BigDecimal taxAmt = it.getLineTotal().multiply(tax.getRate());
                 totalTax = totalTax.add(taxAmt);
 
                 S sm = summaries.get("Tax." + tax.getCode());
@@ -78,7 +80,7 @@ public class SummaryCalculator<E extends VoucherBase, I extends VoucherCommodity
 
             tax = it.getCommodity().getTax3();
             if (tax != null) {
-                BigDecimal taxAmt = it.getTotal().multiply(tax.getRate());
+                BigDecimal taxAmt = it.getLineTotal().multiply(tax.getRate());
                 totalTax = totalTax.add(taxAmt);
 
                 S sm = summaries.get("Tax." + tax.getCode());
@@ -101,6 +103,12 @@ public class SummaryCalculator<E extends VoucherBase, I extends VoucherCommodity
         Function<I, BigDecimal> totalMapper = item -> item.getTotal();
         total = items.stream().map(totalMapper).reduce(BigDecimal.ZERO, BigDecimal::add);
         
+        Function<I, BigDecimal> discMapper = item -> item.getDiscount();
+        BigDecimal discount = items.stream().map(discMapper).reduce(BigDecimal.ZERO, BigDecimal::add);
+        
+        Function<I, BigDecimal> lineTotMapper = item -> item.getLineTotal();
+        BigDecimal lineTot = items.stream().map(lineTotMapper).reduce(BigDecimal.ZERO, BigDecimal::add);
+        
 
         S sm = newSummarySupplier.get();
         sm.setRowKey("TaxTotal");
@@ -109,20 +117,38 @@ public class SummaryCalculator<E extends VoucherBase, I extends VoucherCommodity
         summaries.put(sm.getRowKey(), sm);
 
         sm = newSummarySupplier.get();
-        sm.setRowKey("BeforeTaxTotal");
+        sm.setRowKey("Discount");
+        sm.setMaster(entity);
+        sm.setAmount(discount);
+        summaries.put(sm.getRowKey(), sm);
+        
+        sm = newSummarySupplier.get();
+        sm.setRowKey("DiscountRate");
+        sm.setMaster(entity);
+        sm.setAmount(discount.multiply(BigDecimal.valueOf(100)).divide(total, MathContext.DECIMAL32));
+        summaries.put(sm.getRowKey(), sm);
+        
+        sm = newSummarySupplier.get();
+        sm.setRowKey("BeforeDiscountTotal");
         sm.setMaster(entity);
         sm.setAmount(total);
+        summaries.put(sm.getRowKey(), sm);
+        
+        sm = newSummarySupplier.get();
+        sm.setRowKey("BeforeTaxTotal");
+        sm.setMaster(entity);
+        sm.setAmount(lineTot);
         summaries.put(sm.getRowKey(), sm);
 
         //Genel Toplam
         sm = newSummarySupplier.get();
         sm.setRowKey("GrandTotal");
         sm.setMaster(entity);
-        sm.setAmount(total.add(totalTax));
+        sm.setAmount(lineTot.add(totalTax));
         summaries.put(sm.getRowKey(), sm);
         
 
         //Sonuç toplamı da geri döndürelim.
-        totalConsumer.accept(total);
+        totalConsumer.accept(lineTot);
     }
 }

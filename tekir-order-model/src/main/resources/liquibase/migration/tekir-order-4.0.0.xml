@@ -72,6 +72,21 @@
             <column name="SHIP_NOTE" type="varchar(255)"/>
         </addColumn>
     </changeSet>
+    <changeSet author="oyas (generated)" id="1479395708232-1">
+        <addColumn tableName="TOR_ORDER_ITEM">
+            <column name="DISC_AMT" type="decimal(19, 2)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1479395708232-2">
+        <addColumn tableName="TOR_ORDER_ITEM">
+            <column name="DISC_RATE" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1479395708232-3">
+        <addColumn tableName="TOR_ORDER_ITEM">
+            <column name="LINE_TOT_AMT" type="decimal(19, 2)"/>
+        </addColumn>
+    </changeSet>
     <changeSet author="oyas (generated)" id="1479311713256-3">
         <addForeignKeyConstraint baseColumnNames="PAYMENTPLAN_ID" baseTableName="TOR_ORDER" constraintName="FK_ORD_PP" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_PAYMENT_PLAN"/>
     </changeSet>

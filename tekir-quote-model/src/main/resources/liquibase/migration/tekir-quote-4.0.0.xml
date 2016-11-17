@@ -101,6 +101,21 @@
             <column name="PAYMENTPLAN_ID" type="bigint"/>
         </addColumn>
     </changeSet>
+    <changeSet author="oyas (generated)" id="1479395667297-1">
+        <addColumn tableName="TSQ_QUOTE_ITEM">
+            <column name="DISC_AMT" type="decimal(19, 2)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1479395667297-2">
+        <addColumn tableName="TSQ_QUOTE_ITEM">
+            <column name="DISC_RATE" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1479395667297-3">
+        <addColumn tableName="TSQ_QUOTE_ITEM">
+            <column name="LINE_TOT_AMT" type="decimal(19, 2)"/>
+        </addColumn>
+    </changeSet>
     <changeSet author="oyas (generated)" id="1479311498719-2">
         <addForeignKeyConstraint baseColumnNames="PAYMENTPLAN_ID" baseTableName="TSQ_QUOTE" constraintName="FK_OPP_PP" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_PAYMENT_PLAN"/>
     </changeSet>

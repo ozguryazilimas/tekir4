@@ -10,6 +10,7 @@ import com.ozguryazilim.tekir.entities.Quantity;
 import com.ozguryazilim.tekir.entities.VoucherCommodityItemBase;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.Currency;
 import java.util.HashMap;
 import java.util.Map;
@@ -100,15 +101,35 @@ public class VoucherCommodityItemEditor implements Serializable{
     
      public void onAmountChange() {
         item.setTotal(item.getQuantity().getAmount().multiply(item.getPrice()));
+        item.setLineTotal( item.getTotal().subtract(item.getDiscount()));
+        item.setDiscountRate(item.getDiscount().multiply(BigDecimal.valueOf(100)).divide(item.getTotal(), MathContext.DECIMAL32).intValue());
     }
     
     public void onPriceChange() {
         item.setTotal(item.getQuantity().getAmount().multiply(item.getPrice()));
+        item.setLineTotal( item.getTotal().subtract(item.getDiscount()));
+        item.setDiscountRate(item.getDiscount().multiply(BigDecimal.valueOf(100)).divide(item.getTotal(), MathContext.DECIMAL32).intValue());
     }
     
     public void onTotalChange() {
         item.setPrice(item.getTotal().divide(item.getQuantity().getAmount()));
+        item.setLineTotal( item.getTotal().subtract(item.getDiscount()));
+        item.setDiscountRate(item.getDiscount().multiply(BigDecimal.valueOf(100)).divide(item.getTotal(), MathContext.DECIMAL32).intValue());
     }
+    
+    public void onDiscountChange() {
+        //item.setPrice(item.getTotal().divide(item.getQuantity().getAmount()));
+        item.setLineTotal( item.getTotal().subtract(item.getDiscount()));
+        item.setDiscountRate(item.getDiscount().multiply(BigDecimal.valueOf(100)).divide(item.getTotal(), MathContext.DECIMAL32).intValue());
+    }
+    
+    public void onDiscountRateChange() {
+        item.setDiscount(item.getTotal().multiply(BigDecimal.valueOf(item.getDiscountRate())).divide(BigDecimal.valueOf(100), MathContext.DECIMAL32));
+        item.setLineTotal( item.getTotal().subtract(item.getDiscount()));
+        
+    }
+    
+    
     
     
 }
