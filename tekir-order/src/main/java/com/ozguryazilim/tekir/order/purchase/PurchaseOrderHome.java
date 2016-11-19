@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ozguryazilim.tekir.order.sales;
+package com.ozguryazilim.tekir.order.purchase;
 
 import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.tekir.entities.Corporation;
@@ -11,7 +11,7 @@ import com.ozguryazilim.tekir.entities.OrderItem;
 import com.ozguryazilim.tekir.entities.OrderSummary;
 import com.ozguryazilim.tekir.entities.Person;
 import com.ozguryazilim.tekir.entities.ProcessType;
-import com.ozguryazilim.tekir.entities.SalesOrder;
+import com.ozguryazilim.tekir.entities.PurchaseOrder;
 import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.tekir.entities.VoucherStateEffect;
 import com.ozguryazilim.tekir.entities.VoucherStateType;
@@ -34,11 +34,11 @@ import javax.inject.Inject;
  *
  * @author oyas
  */
-@FormEdit(feature = SalesOrderFeature.class)
-public class SalesOrderHome extends VoucherFormBase<SalesOrder> implements VoucherCommodityItemEditorListener<OrderItem> {
+@FormEdit(feature = PurchaseOrderFeature.class)
+public class PurchaseOrderHome extends VoucherFormBase<PurchaseOrder> implements VoucherCommodityItemEditorListener<OrderItem> {
 
     @Inject
-    private SalesOrderRepository repository;
+    private PurchaseOrderRepository repository;
 
     @Inject
     private VoucherCommodityItemEditor commodityItemEditor;
@@ -51,23 +51,21 @@ public class SalesOrderHome extends VoucherFormBase<SalesOrder> implements Vouch
         if (!getEntity().getAccount().getContactRoles().contains("ACCOUNT")) {
             FacesMessages.error("Seçtiğiniz bağlantı bir Cari değil!", "Bağlantıyı cariye dönüştürmelisiniz?");
         }
-        if (!getEntity().getAccount().getContactRoles().contains("CUSTOMER")) {
-            FacesMessages.warn("Seçtiğiniz bağlantı bir Müşteri değil.", "Bağlantıyı müşteri olarak işaretlemek ister misiniz?");
+        if (!getEntity().getAccount().getContactRoles().contains("VENDOR")) {
+            FacesMessages.warn("Seçtiğiniz bağlantı bir Tedarikci değil.", "Bağlantıyı tedarikci olarak işaretlemek ister misiniz?");
         }
         return super.onAfterLoad(); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public boolean onBeforeSave() {
         if (getEntity().getProcess() == null) {
-            getEntity().setProcess(processService.createProcess(getEntity().getAccount(), getEntity().getTopic(), ProcessType.SALES));
+            getEntity().setProcess(processService.createProcess(getEntity().getAccount(), getEntity().getTopic(), ProcessType.PURCHASE));
         }
 
         return super.onBeforeSave();
     }
 
-    
-    
     @Override
     protected boolean onBeforeTrigger(VoucherStateChange e) {
         if ("publish".equals(e.getAction().getName())) {
@@ -92,7 +90,7 @@ public class SalesOrderHome extends VoucherFormBase<SalesOrder> implements Vouch
     }
 
     @Override
-    protected RepositoryBase<SalesOrder, ?> getRepository() {
+    protected RepositoryBase<PurchaseOrder, ?> getRepository() {
         return repository;
     }
 
@@ -134,8 +132,8 @@ public class SalesOrderHome extends VoucherFormBase<SalesOrder> implements Vouch
         if (!account.getContactRoles().contains("ACCOUNT")) {
             FacesMessages.error("Seçtiğiniz bağlantı bir Cari değil!", "Bağlantıyı cariye dönüştürmelisiniz?");
         }
-        if (!getEntity().getAccount().getContactRoles().contains("CUSTOMER")) {
-            FacesMessages.warn("Seçtiğiniz bağlantı bir Müşteri değil.", "Bağlantıyı müşteri olarak işaretlemek ister misiniz?");
+        if (!getEntity().getAccount().getContactRoles().contains("VENDOR")) {
+            FacesMessages.warn("Seçtiğiniz bağlantı bir Tedarikci değil.", "Bağlantıyı tedarikci olarak işaretlemek ister misiniz?");
         }
     }
 
@@ -170,7 +168,7 @@ public class SalesOrderHome extends VoucherFormBase<SalesOrder> implements Vouch
 
     @Override
     public void calculateSummaries() {
-        SummaryCalculator<SalesOrder, OrderItem, OrderSummary> sc = new SummaryCalculator();
+        SummaryCalculator<PurchaseOrder, OrderItem, OrderSummary> sc = new SummaryCalculator();
         sc.calcSummaries(this::getEntity, getEntity()::getItems, getEntity()::getSummaries, () -> new OrderSummary(), getEntity()::setTotal);
     }
 

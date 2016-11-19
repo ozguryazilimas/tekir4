@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.tekir.order.config;
 
+import com.ozguryazilim.tekir.core.config.PurchaseNavigationSection;
 import com.ozguryazilim.tekir.core.config.SalesNavigationSection;
 import com.ozguryazilim.telve.auth.SecuredPage;
 import com.ozguryazilim.telve.nav.Navigation;
@@ -53,6 +54,31 @@ public interface OrderPages extends Pages {
     }
     
     interface Purchase extends OrderPages{
-        
+        @View
+	@SecuredPage("purchaseOrder")
+	@PageTitle("module.caption.PurchaseOrderBrowse")
+	@Navigation(label = "module.caption.PurchaseOrderBrowse", icon = "flaticon-speech-bubble", section = PurchaseNavigationSection.class)
+	class PurchaseOrderBrowse implements Purchase {
+	}
+
+	@View
+	@SecuredPage("purchaseOrder")
+	@PageTitle("module.caption.PurchaseOrder")
+	class PurchaseOrder implements Purchase {
+	}
+
+	@View
+	@SecuredPage("purchaseOrder")
+	@PageTitle("module.caption.PurchaseOrderView")
+	class PurchaseOrderView implements Purchase {
+	}
+
+	@View
+	@SecuredPage("purchaseOrder")
+	@PageTitle("module.caption.PurchaseOrderMasterView")
+	class PurchaseOrderMasterView
+			implements
+				Purchase {
+	}
     }
 }

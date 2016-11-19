@@ -1,0 +1,131 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"                
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"               
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/voucherViewBase.xhtml">
+
+    <ui:param name="bean" value="#{purchaseOrderHome}" />
+    <ui:param name="entityName" value="purchaseOrder" />
+    <ui:param name="viewIdentifier" value="#{purchaseOrderHome.entity.voucherNo}" />
+    <ui:param name="viewState" value="#{purchaseOrderHome.entity.state.name} #{purchaseOrderHome.entity.stateReason}" />
+    <ui:param name="showCaption" value="true"/>
+    <ui:param name="dontShowContentHeader" value="false" />
+
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{purchaseOrderHome.id}" />
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="caption">
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <t:outputEntityLink label="general.label.Account" value="#{purchaseOrderHome.entity.account}" view="/contact/contactView.xhtml" />
+                <t:outputMoney label="general.label.TotalAmount" value="#{purchaseOrderHome.entity.total}" currency="#{purchaseOrderHome.entity.currency}" />
+                <ui:remove>
+                <t:outputText label="purchaseOrder.label.Revision" value="#{purchaseOrderHome.entity.revision}"  />
+                
+                <t:outputDate label="general.label.ExpireDate" value="#{purchaseOrderHome.entity.expireDate}"  />
+                </ui:remove>
+
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <t:outputText label="voucher.label.VoucherNo" value="#{purchaseOrderHome.entity.voucherNo}"  />
+                <t:outputText label="voucher.label.ReferenceNo" value="#{purchaseOrderHome.entity.referenceNo}" />
+                <t:outputText label="voucher.label.Process" value="#{purchaseOrderHome.entity.process.processNo}" />
+                <t:outputText label="general.label.Code" value="#{purchaseOrderHome.entity.code}" />
+            </div>
+        </div>  
+    </ui:define>
+
+
+    <ui:remove>
+    <ui:define name="stateDlgExt">
+        <t:inputLookupDialog label="general.label.Competitor" value="#{purchaseOrderHome.entity.competitor}" 
+                             lookupBean="#{contactLookup}" lookupListener="opportunityHome.entity.competitor" 
+                             placeholder="#{messages['general.info.Competitor']}" columnClass="col-xs-12"
+                             rendered="#{purchaseOrderHome.dlgStateAction.name ne 'Revise' }"/>
+    </ui:define>
+        </ui:remove>
+    
+    <ui:remove>
+    <ui:define name="context-menu">
+        <li>
+            <p:commandLink action="#{purchaseOrderHome.create()}" styleClass="context-command" ajax="false">
+                <i class="fa fa-plus-circle"></i>
+                <h:outputText value=" #{messages['general.button.Add']}" />
+            </p:commandLink>
+        </li>
+        <ui:remove>
+        <li>
+            <p:commandLink action="#{purchaseOrderHome.publish()}" styleClass="context-command" ajax="false" rendered="#{purchaseOrderHome.entity.status eq 'DRAFT'}">
+                <i class="fa fa-check"></i>
+                <h:outputText value=" #{messages['general.button.Publish']}" />
+            </p:commandLink>
+        </li>
+        <li>
+            <p:commandLink action="#{purchaseOrderHome.publish()}" styleClass="context-command" ajax="false" rendered="#{purchaseOrderHome.entity.status eq 'OPEN'}">
+                <i class="fa fa-check"></i>
+                <h:outputText value=" #{messages['general.button.Revision']}" />
+            </p:commandLink>
+        </li>
+        <li>
+            <p:commandLink action="#{purchaseOrderHome.closeWin()}" styleClass="context-command" ajax="false" rendered="#{purchaseOrderHome.entity.status eq 'OPEN'}">
+                <i class="fa fa-check"></i>
+                <h:outputText value=" #{messages['general.button.CloseWin']}" />
+            </p:commandLink>
+        </li>
+        <li>
+            <p:commandLink  styleClass="context-command" rendered="#{purchaseOrderHome.entity.status eq 'OPEN'}" update="closeLoss" oncomplete="PF('closeLoss').show()" >
+                <i class="fa fa-close"></i>
+                <h:outputText value=" #{messages['general.button.CloseLoss']}" />
+            </p:commandLink >
+        </li>
+        <li>
+            <p:commandLink  styleClass="context-command" rendered="#{purchaseOrderHome.entity.status eq 'OPEN'}" update="closeCancel" oncomplete="PF('closeCancel').show()" >
+                <i class="fa fa-ban"></i>
+                <h:outputText value=" #{messages['general.button.CloseCancel']}" />
+            </p:commandLink >
+        </li>
+            </ui:remove>
+
+    </ui:define>
+    
+    <ui:define name="includes">
+        <ui:remove>
+        <p:dialog header="#{messages['dialog.caption.Lost']}" id="closeLoss" widgetVar="closeLoss">
+            <h:form id="lossForm" style="width: 250px;">
+                <div class="row">
+                    <t:inputTextarea label="general.label.Reason" value="#{purchaseOrderHome.entity.statusReason}" columnClass="col-xs-12"/>
+                    <t:inputLookupDialog label="general.label.Competitor" value="#{purchaseOrderHome.entity.competitor}" lookupBean="#{contactLookup}" lookupListener="purchaseOrderHome.entity.competitor" placeholder="#{messages['general.info.Competitor']}" columnClass="col-xs-12"/>
+                </div>
+
+                <div class="row actionButtons">
+                    <div class="col-xs-12 pull-right">
+                        <p:commandButton id="select" value="#{messages['general.button.Ok']}" icon="fa fa-check" action="#{purchaseOrderHome.closeLoss()}" styleClass="btn-primary" oncomplete="PF('closeLoss').hide()"/>
+                        <p:commandButton id="close" value="#{messages['general.button.Cancel']}" icon="ui-icon-close" onclick="PF('closeLoss').hide()" />
+                    </div>
+                </div>
+            </h:form>
+        </p:dialog>
+        <p:dialog header="#{messages['dialog.caption.Cancel']}" id="closeCancel" widgetVar="closeCancel">
+            <h:form id="cancelForm" style="width: 250px;">
+                <div class="row">
+                    <t:inputTextarea label="general.label.Reason" value="#{purchaseOrderHome.entity.statusReason}" columnClass="col-xs-12"/>
+                </div>
+
+                <div class="row actionButtons">
+                    <div class="col-xs-12 pull-right">
+                        <p:commandButton id="select" value="#{messages['general.button.Ok']}" icon="fa fa-check" action="#{purchaseOrderHome.closeCancel()}" styleClass="btn-primary" oncomplete="PF('closeCancel').hide()"/>
+                        <p:commandButton id="close" value="#{messages['general.button.Cancel']}" icon="ui-icon-close" onclick="PF('closeCancel').hide()" />
+                    </div>
+                </div>
+            </h:form>
+        </p:dialog>
+            </ui:remove>
+    </ui:define>
+        </ui:remove>    
+
+</ui:composition>
