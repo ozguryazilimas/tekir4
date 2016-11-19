@@ -141,5 +141,8 @@ public class Person extends Contact{
         this.gender = gender;
     }
     
+    public Contact getPrimaryContact(){
+        return this;
+    }
     
 }

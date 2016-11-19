@@ -14,7 +14,10 @@
 
             <div class="col-md-6 col-xs-12">
                 <p:outputPanel id="ddt" styleClass="row" layout="block">
-                    <t:inputLookupDialog label="general.label.Account" value="#{quoteHome.account}" lookupBean="#{contactLookup}" lookupListener="quoteHome.account" placeholder="#{messages['general.info.Account']}" update=":form:prss" columnClass="col-xs-12"/>
+                    <t:inputLookupDialog label="general.label.Account" value="#{quoteHome.account}" 
+                                         lookupBean="#{contactLookup}" lookupListener="quoteHome.account" 
+                                         lookupProfile="S:ACCOUNT,CUSTOMER"
+                                         placeholder="#{messages['general.info.Account']}" update=":form:prss" columnClass="col-xs-12"/>
                     
                     <t:inputCurrency label="general.label.Currency" value="#{quoteHome.entity.currency}" required="true"/>
                     <t:inputDate label="quote.label.ExpireDate" value="#{quoteHome.entity.expireDate}" />

@@ -40,7 +40,10 @@
     </ui:define>
 
     <ui:define name="stateDlgExt">
-        <t:inputLookupDialog label="general.label.Competitor" value="#{opportunityHome.entity.competitor}" lookupBean="#{contactLookup}" lookupListener="opportunityHome.entity.competitor" placeholder="#{messages['general.info.Competitor']}" columnClass="col-xs-12"/>
+        <t:inputLookupDialog label="general.label.Competitor" value="#{opportunityHome.entity.competitor}" 
+                             lookupBean="#{contactLookup}" lookupListener="opportunityHome.entity.competitor" 
+                             lookupProfile="S:COMPETITOR"
+                             placeholder="#{messages['general.info.Competitor']}" columnClass="col-xs-12"/>
     </ui:define>
     
     <ui:remove>

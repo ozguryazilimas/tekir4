@@ -17,6 +17,7 @@ import com.ozguryazilim.tekir.entities.Person;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.filters.Filter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -100,13 +101,22 @@ public abstract class ContactRepository
     
     @Override
     public List<ContactViewModel> lookupQuery(String searchText) {
-        return lookupQuery(searchText, null, null);
+        return lookupQuery(searchText, null, "");
     }
     
     public List<ContactViewModel> lookupQuery(String searchText, String type) {
-        return lookupQuery(searchText, type, null);
+        return lookupQuery(searchText, type, "");
     }
     
+    
+    public List<ContactViewModel> lookupQuery(String searchText, String type, String roles ) {
+        List<String> rls = Collections.emptyList();
+        if( !Strings.isNullOrEmpty(roles)){
+            rls = Splitter.on(',').omitEmptyStrings().trimResults().splitToList(roles);
+        } 
+        
+        return lookupQuery(searchText, type, rls);
+    }
     /**
      * Contact sorgusu yapar.
      * 
@@ -117,7 +127,7 @@ public abstract class ContactRepository
      * @param roles virgüllerle ayrılmış olan rollere göre sorgu yapar. farklı değerleri and ile bağlar.
      * @return 
      */
-    public List<ContactViewModel> lookupQuery(String searchText, String type, String roles ) {
+    public List<ContactViewModel> lookupQuery(String searchText, String type, List<String> roles ) {
 
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
         //Geriye PersonViewModel dönecek cq'yu ona göre oluşturuyoruz.
@@ -175,9 +185,8 @@ public abstract class ContactRepository
         Hibernate bug'ı yüzünden isim kullanıyor ve as ile arama yapıyoruz. Converter annotation'ı ile derdi var.
         https://hibernate.atlassian.net/browse/HHH-10464
         */
-        if( !Strings.isNullOrEmpty(roles)){
-            List<String> rls = Splitter.on(',').omitEmptyStrings().trimResults().splitToList(roles);
-            rls.forEach(rs -> predicates.add(criteriaBuilder.like(from.get("contactRoles").as(String.class), "%"+ rs +"%")));
+        if( !roles.isEmpty()){
+            roles.forEach(rs -> predicates.add(criteriaBuilder.like(from.get("contactRoles").as(String.class), "%"+ rs +"%")));
         }
         
         //Oluşan filtreleri sorgumuza ekliyoruz

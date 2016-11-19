@@ -15,8 +15,14 @@
         <div class="row">
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <t:inputLookupDialog label="general.label.FromAccount" value="#{accountVirementHome.entity.fromAccount}" lookupBean="#{contactLookup}" lookupListener="accountVirementHome.entity.fromAccount" placeholder="#{messages['general.info.Account']}" />
-                    <t:inputLookupDialog label="general.label.ToAccount" value="#{accountVirementHome.entity.toAccount}" lookupBean="#{contactLookup}" lookupListener="accountVirementHome.entity.toAccount" placeholder="#{messages['general.info.Account']}" />
+                    <t:inputLookupDialog label="general.label.FromAccount" value="#{accountVirementHome.entity.fromAccount}" 
+                                         lookupBean="#{contactLookup}" lookupListener="accountVirementHome.entity.fromAccount" 
+                                         lookupProfile="R:ACCOUNT;O:CUSTOMER,VENDOR"
+                                         placeholder="#{messages['general.info.Account']}" />
+                    <t:inputLookupDialog label="general.label.ToAccount" value="#{accountVirementHome.entity.toAccount}" 
+                                         lookupBean="#{contactLookup}" lookupListener="accountVirementHome.entity.toAccount" 
+                                         lookupProfile="R:ACCOUNT;O:CUSTOMER,VENDOR"
+                                         placeholder="#{messages['general.info.Account']}" />
                     <t:inputText label="voucher.label.Topic" value="#{accountVirementHome.entity.topic}"  required="false" columnClass="col-xs-12"/>
                     <t:inputTextarea label="general.label.Info" value="#{accountVirementHome.entity.info}" columnClass="col-xs-12"/>
                     <t:inputCurrency label="general.label.Currency" value="#{accountVirementHome.entity.currency}"  required="true" />

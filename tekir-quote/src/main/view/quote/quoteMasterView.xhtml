@@ -125,8 +125,8 @@
                 </ui:include>
                 
                 <ui:include src="/activities/activityWidget.xhtml">
-                    <ui:param name="person" value="#{quoteHome.entity.account.primaryContact}" />
-                    <ui:param name="corporation" value="#{quoteHome.entity.account}" />
+                    <ui:param name="person" value="#{quoteHome.person}" />
+                    <ui:param name="corporation" value="#{quoteHome.corporation}" />
                     <ui:param name="feature" value="#{quoteHome.featurePointer}" />
                     <ui:param name="attached" value="Feature" />
                 </ui:include>

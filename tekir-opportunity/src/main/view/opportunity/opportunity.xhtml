@@ -15,8 +15,13 @@
         <div class="row">
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <t:inputLookupDialog label="general.label.Account" value="#{opportunityHome.entity.account}" lookupBean="#{contactLookup}" lookupListener="opportunityHome.entity.account" placeholder="#{messages['general.info.Account']}" />
-                    <t:inputLookupDialog label="general.label.PrimaryContact" value="#{opportunityHome.entity.primaryContact}" lookupBean="#{contactLookup}" lookupListener="opportunityHome.entity.primaryContact" placeholder="#{messages['general.info.PrimaryContact']}" />
+                    <t:inputLookupDialog label="general.label.Account" value="#{opportunityHome.entity.account}" 
+                                         lookupBean="#{contactLookup}" lookupListener="opportunityHome.entity.account" 
+                                         lookupProfile="O:ACCOUNT,CUSTOMER,PERSON;S:CORPORATION"
+                                         placeholder="#{messages['general.info.Account']}" />
+                    <t:inputLookupDialog label="general.label.PrimaryContact" value="#{opportunityHome.entity.primaryContact}" lookupBean="#{contactLookup}" 
+                                         lookupProfile="T:Person"
+                                         lookupListener="opportunityHome.entity.primaryContact" placeholder="#{messages['general.info.PrimaryContact']}" />
                     <t:inputText label="opportunity.label.Topic" value="#{opportunityHome.entity.topic}"  required="true" columnClass="col-xs-12"/>
                     <t:inputCurrency label="general.label.Currency" value="#{opportunityHome.entity.currency}"  required="true" />
                     <t:inputMoney label="opportunity.label.Budget" value="#{opportunityHome.entity.budget}"  currency="#{opportunityHome.entity.currency}" required="true" />

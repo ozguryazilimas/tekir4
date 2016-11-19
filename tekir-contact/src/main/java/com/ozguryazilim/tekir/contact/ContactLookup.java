@@ -9,6 +9,8 @@ import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.tekir.contact.config.ContactPages;
 import com.ozguryazilim.telve.lookup.LookupTableModel;
 import com.ozguryazilim.telve.data.RepositoryBase;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -25,6 +27,11 @@ public class ContactLookup
 	@Inject
 	private ContactRepository repository;
 
+        
+        private List<String> requiredRoles;
+        private List<String> optinalRoles;
+        private List<String> selectedOptinalRoles;
+        
 	@Override
 	public void buildModel(LookupTableModel<ContactViewModel> model) {
 		model.addColumn("code", "general.label.Code");
@@ -45,12 +52,44 @@ public class ContactLookup
         @Override
     public void populateData() {
         String type = getModel().getProfileProperties().get("T");
-        String roles = getModel().getProfileProperties().get("R");
         
+        List<String> rls = new ArrayList<>();
+        rls.addAll(requiredRoles);
+        rls.addAll(selectedOptinalRoles);
                 
         //Şimdide Repository'den sorgumuz yapıp datayı dolduruyoruz
-        getModel().setData(repository.lookupQuery(getModel().getSearchText(), type, roles));
+        getModel().setData(repository.lookupQuery(getModel().getSearchText(), type, rls));
     }
+
+    @Override
+    public void initProfile() {
+        super.initProfile(); 
+        
+        //Gereken Roller
+        String roles = getModel().getProfileProperties().get("R");
+        if( !Strings.isNullOrEmpty(roles)){
+            requiredRoles = Splitter.on(',').omitEmptyStrings().trimResults().splitToList(roles);
+        } else {
+            requiredRoles = Collections.emptyList();
+        }
+        //Seçimlik rolles;
+        String optroles = getModel().getProfileProperties().get("O");
+        if( !Strings.isNullOrEmpty(optroles)){
+            optinalRoles = new ArrayList<>(Splitter.on(',').omitEmptyStrings().trimResults().splitToList(optroles));
+        } else {
+            optinalRoles = new ArrayList<>();
+        }
+        
+        String soptroles = getModel().getProfileProperties().get("S");
+        if( !Strings.isNullOrEmpty(soptroles)){
+            selectedOptinalRoles = new ArrayList<>(Splitter.on(',').omitEmptyStrings().trimResults().splitToList(soptroles));
+            optinalRoles.addAll(selectedOptinalRoles);
+        } else {
+            selectedOptinalRoles = new ArrayList<>();
+        }
+    }
+    
+    
     
     /**
      * Lookup Dialog Başlığı
@@ -84,5 +123,26 @@ public class ContactLookup
         }
         
         return result;
+    }
+
+    public List<String> getRequiredRoles() {
+        return requiredRoles;
+    }
+
+    public List<String> getOptinalRoles() {
+        return optinalRoles;
+    }
+    
+    public void toggleRole( String role ){
+        if( selectedOptinalRoles.contains(role) ){
+            selectedOptinalRoles.remove(role);
+        } else {
+            selectedOptinalRoles.add(role);
+        }
+        search();
+    }
+    
+    public Boolean isRoleSelected( String role ){
+        return selectedOptinalRoles.contains(role);
     }
 }

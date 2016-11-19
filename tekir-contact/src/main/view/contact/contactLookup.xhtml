@@ -1,7 +1,24 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="/layout/lookupBase.xhtml">
+                template="/layout/lookupBase.xhtml"
+                xmlns:p="http://primefaces.org/ui">
     <ui:param name="bean" value="#{contactLookup}" />
     <ui:param name="title" value="#{messages[contactLookup.title]}" />
-    <ui:param name="noStandartFilter" value="true" />
+    <ui:param name="noStandartFilter" value="false" />
+
+
+    <ui:define name="filters" >
+        <ul class="list-inline text-sm text-muted">
+            <ui:repeat value="#{contactLookup.requiredRoles}" var="item" >
+                <li><i class="fa fa-check-square" /> #{messages['contact.role.'.concat(item)]}</li>
+            </ui:repeat>
+            <ui:repeat value="#{contactLookup.optinalRoles}" var="item" >
+                <li>
+                    <p:commandLink action="#{contactLookup.toggleRole(item)}" process="@this" update="@this :lookupForm:resultLists">
+                        <i class="fa #{contactLookup.isRoleSelected(item) ? 'fa-check-square' : 'fa-square-o' }" /> #{messages['contact.role.'.concat(item)]}
+                    </p:commandLink>
+                </li>
+            </ui:repeat>
+        </ul>
+    </ui:define>
 </ui:composition>

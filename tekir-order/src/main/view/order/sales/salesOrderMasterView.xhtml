@@ -49,8 +49,8 @@
                 </ui:include>
                 
                 <ui:include src="/activities/activityWidget.xhtml">
-                    <ui:param name="person" value="#{salesOrderHome.entity.account.primaryContact}" />
-                    <ui:param name="corporation" value="#{salesOrderHome.entity.account}" />
+                    <ui:param name="person" value="#{salesOrderHome.person}" />
+                    <ui:param name="corporation" value="#{salesOrderHome.corporation}" />
                     <ui:param name="feature" value="#{salesOrderHome.featurePointer}" />
                     <ui:param name="attached" value="Feature" />
                 </ui:include>

@@ -6,8 +6,10 @@
 package com.ozguryazilim.tekir.order.sales;
 
 import com.ozguryazilim.tekir.entities.Contact;
+import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.OrderItem;
 import com.ozguryazilim.tekir.entities.OrderSummary;
+import com.ozguryazilim.tekir.entities.Person;
 import com.ozguryazilim.tekir.entities.SalesOrder;
 import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.tekir.entities.VoucherStateEffect;
@@ -16,10 +18,12 @@ import com.ozguryazilim.tekir.voucher.VoucherCommodityItemEditor;
 import com.ozguryazilim.tekir.voucher.VoucherCommodityItemEditorListener;
 import com.ozguryazilim.tekir.voucher.VoucherFormBase;
 import com.ozguryazilim.tekir.voucher.VoucherStateAction;
+import com.ozguryazilim.tekir.voucher.VoucherStateChange;
 import com.ozguryazilim.tekir.voucher.VoucherStateConfig;
 import com.ozguryazilim.tekir.voucher.utils.SummaryCalculator;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.forms.FormEdit;
+import com.ozguryazilim.telve.messages.FacesMessages;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -36,6 +40,25 @@ public class SalesOrderHome extends VoucherFormBase<SalesOrder> implements Vouch
 
     @Inject
     private VoucherCommodityItemEditor commodityItemEditor;
+
+    @Override
+    public boolean onAfterLoad() {
+        if (!getEntity().getAccount().getContactRoles().contains("ACCOUNT")) {
+            FacesMessages.error("Seçtiğiniz bağlantı bir Cari değil!", "Bağlantıyı cariye dönüştürmelisiniz?");
+        }
+        return super.onAfterLoad(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    protected boolean onBeforeTrigger(VoucherStateChange e) {
+        if ("publish".equals(e.getAction().getName())) {
+            if (!getEntity().getAccount().getContactRoles().contains("ACCOUNT")) {
+                FacesMessages.error("Seçtiğiniz bağlantı bir Cari değil!", "Bağlantıyı cariye dönüştürmelisiniz?");
+                return false;
+            }
+        }
+        return super.onBeforeTrigger(e);
+    }
 
     @Override
     protected VoucherStateConfig buildStateConfig() {
@@ -76,8 +99,10 @@ public class SalesOrderHome extends VoucherFormBase<SalesOrder> implements Vouch
 
     public void setProcess(com.ozguryazilim.tekir.entities.Process process) {
         getEntity().setProcess(process);
-        getEntity().setAccount(process.getAccount());
-        getEntity().setTopic(process.getTopic());
+        if (process != null) {
+            getEntity().setAccount(process.getAccount());
+            getEntity().setTopic(process.getTopic());
+        }
     }
 
     public Contact getAccount() {
@@ -87,6 +112,25 @@ public class SalesOrderHome extends VoucherFormBase<SalesOrder> implements Vouch
     public void setAccount(Contact account) {
         getEntity().setAccount(account);
         getEntity().setProcess(null);
+        if (!account.getContactRoles().contains("ACCOUNT")) {
+            FacesMessages.error("Seçtiğiniz bağlantı bir Cari değil!", "Bağlantıyı cariye dönüştürmelisiniz?");
+        }
+    }
+
+    public Person getPerson() {
+        if (getAccount() instanceof Person) {
+            return (Person) getAccount();
+        } else {
+            return ((Corporation) getAccount()).getPrimaryContact();
+        }
+    }
+
+    public Corporation getCorporation() {
+        if (getAccount() instanceof Corporation) {
+            return (Corporation) getAccount();
+        } else {
+            return ((Person) getAccount()).getCorporation();
+        }
     }
 
     @Override

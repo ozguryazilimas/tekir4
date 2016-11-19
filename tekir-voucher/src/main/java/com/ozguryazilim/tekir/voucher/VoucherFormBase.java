@@ -157,6 +157,10 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
         //Gönderilecek olan event'i hazırlayalım
         VoucherStateChange e = new VoucherStateChange(fromState, action, toState, getEntity());
 
+        if( !onBeforeTrigger( e )){
+            return null;
+        }
+        
         //Before event'ini gönderelim
         stateChangeEvent
                 .select(new FeatureQualifierLiteral(getFeatureClass()))
@@ -278,6 +282,19 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
             return false;
         }
         return identity.isPermitted(getPermissionDomain() + ":delete:" + getEntity().getOwner());
+    }
+
+    /**
+     * State action tetiklemeden hemen önce çağrılır. 
+     * 
+     * Home sınıf üzerinde iş kuralları ile ilgili ek kontroller için kullanılır.
+     * Geriye false dönerse akış devam etmez.
+     * 
+     * @param e
+     * @return 
+     */
+    protected boolean onBeforeTrigger(VoucherStateChange e) {
+        return true;
     }
 
 }

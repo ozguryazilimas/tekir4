@@ -15,7 +15,10 @@
         <div class="row">
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <t:inputLookupDialog label="general.label.Account" value="#{accountDebitNoteHome.entity.account}" lookupBean="#{contactLookup}" lookupListener="accountDebitNoteHome.entity.account" placeholder="#{messages['general.info.Account']}" />
+                    <t:inputLookupDialog label="general.label.Account" value="#{accountDebitNoteHome.entity.account}" 
+                                         lookupBean="#{contactLookup}" lookupListener="accountDebitNoteHome.entity.account" 
+                                         lookupProfile="R:ACCOUNT;O:CUSTOMER,VENDOR"
+                                         placeholder="#{messages['general.info.Account']}" />
                     <t:inputCurrency label="general.label.Currency" value="#{accountDebitNoteHome.entity.currency}"  required="true" columnClass="col-xs-12"/>
                     <t:inputMoney label="accountDebitNote.label.Amount" value="#{accountDebitNoteHome.entity.amount}"  currency="#{accountDebitNoteHome.entity.currency}" required="true" columnClass="col-xs-12"/>
                 </div>
