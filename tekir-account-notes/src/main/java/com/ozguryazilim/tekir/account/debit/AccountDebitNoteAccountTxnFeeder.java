@@ -7,6 +7,7 @@ package com.ozguryazilim.tekir.account.debit;
 
 import com.ozguryazilim.tekir.account.AccountTxnService;
 import com.ozguryazilim.tekir.entities.AccountDebitNote;
+import com.ozguryazilim.tekir.voucher.utils.FeatureUtils;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.forms.EntityChangeAction;
 import com.ozguryazilim.telve.forms.EntityChangeEvent;
@@ -33,11 +34,7 @@ public class AccountDebitNoteAccountTxnFeeder implements Serializable{
         if( event.getAction() != EntityChangeAction.DELETE   ) {
             AccountDebitNote entity = (AccountDebitNote) event.getEntity();
             
-            FeaturePointer voucherPointer = new FeaturePointer();
-            voucherPointer.setBusinessKey(entity.getVoucherNo());
-            voucherPointer.setPrimaryKey(entity.getId());
-            voucherPointer.setFeature(entity.getClass().getSimpleName());
-
+            FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
             
             accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getCode(), entity.getInfo(), Boolean.TRUE, Boolean.TRUE, entity.getCurrency(), entity.getAmount(), entity.getDate(), entity.getOwner(), "", entity.getState().toString(), entity.getStateReason());
         }
