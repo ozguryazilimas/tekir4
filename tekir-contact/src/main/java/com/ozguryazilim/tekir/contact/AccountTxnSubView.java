@@ -13,7 +13,18 @@ import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.forms.SubView;
 import com.ozguryazilim.telve.forms.SubViewQueryBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
+import com.ozguryazilim.telve.query.columns.BooleanColumn;
+import com.ozguryazilim.telve.query.columns.DateColumn;
+import com.ozguryazilim.telve.query.columns.FeatureColumn;
+import com.ozguryazilim.telve.query.columns.MoneyColumn;
 import com.ozguryazilim.telve.query.columns.TextColumn;
+import com.ozguryazilim.telve.query.columns.UserColumn;
+import com.ozguryazilim.telve.query.filters.BigDecimalFilter;
+import com.ozguryazilim.telve.query.filters.DateFilter;
+import com.ozguryazilim.telve.query.filters.DateValueType;
+import com.ozguryazilim.telve.query.filters.FilterOperand;
+import com.ozguryazilim.telve.query.filters.StringFilter;
+import com.ozguryazilim.telve.query.filters.UserFilter;
 import javax.inject.Inject;
 
 /**
@@ -33,9 +44,29 @@ public class AccountTxnSubView extends SubViewQueryBase<AccountTxn, AccountTxn>{
     protected void buildQueryDefinition(QueryDefinition<AccountTxn, AccountTxn> queryDefinition) {
         queryDefinition
                 //.addColumn(new SubTextColumn<>(RelatedContact_.sourceContact, Contact_.name, "contact.label.Source"), true)
+                .addColumn(new FeatureColumn<>(AccountTxn_.feature, "general.label.Feature"), true)
+                .addColumn(new DateColumn<>(AccountTxn_.date, "general.label.Date"), true)
                 .addColumn(new TextColumn<>(AccountTxn_.info, "general.label.Info"), true)
-                .addColumn(new TextColumn<>(AccountTxn_.owner, "general.label.Info"), true)
-                .addColumn(new TextColumn<>(AccountTxn_.status, "general.label.Info"), true);
+                .addColumn(new BooleanColumn<>(AccountTxn_.debit, "general.label.DebitCredit", "booleanValue.DebitCredit."), true)
+                .addColumn(new MoneyColumn<>(AccountTxn_.amount, AccountTxn_.currency, "general.label.Money"), true)
+                .addColumn(new TextColumn<>(AccountTxn_.code, "general.label.Code"), false)
+                .addColumn(new TextColumn<>(AccountTxn_.processId, "general.label.Process"), false)
+                .addColumn(new TextColumn<>(AccountTxn_.referenceNo, "general.label.ReferenceNo"), false)
+                .addColumn(new TextColumn<>(AccountTxn_.status, "general.label.Status"), true)
+                .addColumn(new TextColumn<>(AccountTxn_.statusReason, "general.label.StatusReason"), false)
+                .addColumn(new UserColumn<>(AccountTxn_.owner, "general.label.Owner"), false);
+        
+        queryDefinition
+                .addFilter(new UserFilter<>(AccountTxn_.owner, "general.label.Owner"))
+                .addFilter(new StringFilter<>(AccountTxn_.code, "voucher.label.Code"))
+                .addFilter(new StringFilter<>(AccountTxn_.info, "voucher.label.Info"))
+                //.addFilter(new StringFilter<>(AccountTxn_.topic, "voucher.label.Topic"))
+                //.addFilter(new StringFilter<>(AccountTxn_.stateReason, "voucher.label.StateReason"))
+                
+                .addFilter(new BigDecimalFilter<>(AccountTxn_.amount, "general.label.Total"))
+                //.addFilter(new SubStringFilter<>(VoucherProcessBase_.account, Contact_.name, "voucher.label.Account"))
+                //.addFilter(new SubStringFilter<>(VoucherProcessBase_.process, Process_.processNo, "voucher.label.Process"))
+                .addFilter(new DateFilter<>(AccountTxn_.date, "voucher.label.Date", FilterOperand.In, DateValueType.LastTenDays));
     }
 
     @Override
