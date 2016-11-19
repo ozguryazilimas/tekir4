@@ -32,7 +32,7 @@ public abstract class CommodityRepository
 
     @Override
     public List<CommodityViewModel> browseQuery(QueryDefinition queryDefinition) {
-        List<Filter<Commodity, ?>> filters = queryDefinition.getFilters();
+        List<Filter<Commodity, ?, ?>> filters = queryDefinition.getFilters();
 
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
         //Geriye PersonViewModel dönecek cq'yu ona göre oluşturuyoruz.

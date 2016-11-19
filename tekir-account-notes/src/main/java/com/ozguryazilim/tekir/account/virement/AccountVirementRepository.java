@@ -36,7 +36,7 @@ public abstract class AccountVirementRepository extends VoucherRepositoryBase<Ac
 
     @Override
     public List<AccountVirementViewModel> browseQuery(QueryDefinition queryDefinition) {
-        List<Filter<AccountVirement, ?>> filters = queryDefinition.getFilters();
+        List<Filter<AccountVirement, ?, ?>> filters = queryDefinition.getFilters();
 
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
         //Geriye PersonViewModel dönecek cq'yu ona göre oluşturuyoruz.

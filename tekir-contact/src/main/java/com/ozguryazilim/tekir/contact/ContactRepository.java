@@ -43,7 +43,7 @@ public abstract class ContactRepository
     
     @Override
     public List<ContactViewModel> browseQuery(QueryDefinition queryDefinition) {
-        List<Filter<Contact, ?>> filters = queryDefinition.getFilters();
+        List<Filter<Contact, ?, ?>> filters = queryDefinition.getFilters();
 
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
         //Geriye PersonViewModel dönecek cq'yu ona göre oluşturuyoruz.

@@ -45,6 +45,23 @@ public class VoucherViewModel implements ViewModel, Serializable{
         this.group = group;
         this.topic = topic;
     }
+    
+    public VoucherViewModel(Long id, String code, String voucherNo, String info, String referenceNo, Date date, String owner, VoucherState state, String stateReason, String stateInfo, Long groupId, String groupNo, String topic) {
+        this.id = id;
+        this.code = code;
+        this.voucherNo = voucherNo;
+        this.info = info;
+        this.referenceNo = referenceNo;
+        this.date = date;
+        this.owner = owner;
+        this.state = state;
+        this.stateReason = stateReason;
+        this.stateInfo = stateInfo;
+        this.group = new VoucherGroup();
+        this.group.setId(groupId);
+        this.group.setGroupNo(groupNo);
+        this.topic = topic;
+    }
 
     
     

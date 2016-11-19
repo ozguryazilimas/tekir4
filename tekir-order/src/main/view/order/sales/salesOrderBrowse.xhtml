@@ -9,5 +9,11 @@
     <ui:param name="saveEnabled" value="true" />
     <ui:param name="filterEnabled" value="true" />
     <ui:param name="permission" value="salesOrder" />
+    <ui:param name="showQuickSearch" value="true" />
     
+    <ui:define name="beforeColumns">
+        <p:column styleClass="actionColumn">
+            <i class="fa #{item.state.type eq 'CLOSE' ? 'fa-lock' : 'fa-unlock-alt' }" />
+        </p:column>
+    </ui:define>
 </ui:composition>

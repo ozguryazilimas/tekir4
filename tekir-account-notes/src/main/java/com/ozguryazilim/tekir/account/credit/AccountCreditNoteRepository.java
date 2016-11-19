@@ -36,7 +36,7 @@ public abstract class AccountCreditNoteRepository extends VoucherRepositoryBase<
 
     @Override
     public List<AccountCreditNoteViewModel> browseQuery(QueryDefinition queryDefinition) {
-        List<Filter<AccountCreditNote, ?>> filters = queryDefinition.getFilters();
+        List<Filter<AccountCreditNote, ?, ?>> filters = queryDefinition.getFilters();
 
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
         //Geriye PersonViewModel dönecek cq'yu ona göre oluşturuyoruz.

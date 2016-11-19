@@ -44,7 +44,7 @@ public abstract class ActivityRepository extends RepositoryBase<Activity, Activi
     
     @Override
     public List<Activity> browseQuery(QueryDefinition queryDefinition) {
-        List<Filter<Activity, ?>> filters = queryDefinition.getFilters();
+        List<Filter<Activity, ?, ?>> filters = queryDefinition.getFilters();
 
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
         //Geriye Activity dönecek cq'yu ona göre oluşturuyoruz.

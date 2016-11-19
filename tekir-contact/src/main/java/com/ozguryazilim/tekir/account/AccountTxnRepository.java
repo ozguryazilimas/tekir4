@@ -49,7 +49,7 @@ public abstract class AccountTxnRepository extends
 
     @Override
     public List<AccountTxn> browseQuery(QueryDefinition queryDefinition) {
-        List<Filter<AccountTxn, ?>> filters = queryDefinition.getFilters();
+        List<Filter<AccountTxn, ?, ?>> filters = queryDefinition.getFilters();
         
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
         //Geriye AccidentAnalysisViewModel dönecek cq'yu ona göre oluşturuyoruz.

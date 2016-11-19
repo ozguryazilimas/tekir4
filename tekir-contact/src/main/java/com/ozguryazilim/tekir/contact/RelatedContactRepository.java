@@ -44,7 +44,7 @@ public abstract class RelatedContactRepository extends RepositoryBase<RelatedCon
     
     @Override
     public List<RelatedContactViewModel> browseQuery(QueryDefinition queryDefinition) {
-        List<Filter<RelatedContact, ?>> filters = queryDefinition.getFilters();
+        List<Filter<RelatedContact, ?, ?>> filters = queryDefinition.getFilters();
         
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
         //Geriye AccidentAnalysisViewModel dönecek cq'yu ona göre oluşturuyoruz.

@@ -1,12 +1,15 @@
 package com.ozguryazilim.tekir.quote;
 
 import com.google.common.base.Strings;
+import com.ozguryazilim.tekir.entities.Contact_;
+import com.ozguryazilim.tekir.entities.Process_;
 import org.apache.deltaspike.data.api.Repository;
 import javax.enterprise.context.Dependent;
 import com.ozguryazilim.tekir.entities.Quote;
 import com.ozguryazilim.tekir.entities.Quote_;
 import com.ozguryazilim.tekir.entities.VoucherBase_;
 import com.ozguryazilim.tekir.entities.VoucherGroup;
+import com.ozguryazilim.tekir.entities.VoucherGroup_;
 import com.ozguryazilim.tekir.entities.VoucherProcessBase_;
 import com.ozguryazilim.tekir.voucher.VoucherRepositoryBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
@@ -32,7 +35,7 @@ public abstract class QuoteRepository extends VoucherRepositoryBase<Quote, Quote
 
     @Override
     public List<QuoteViewModel> browseQuery(QueryDefinition queryDefinition) {
-        List<Filter<Quote, ?>> filters = queryDefinition.getFilters();
+        List<Filter<Quote, ?, ?>> filters = queryDefinition.getFilters();
 
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
         //Geriye PersonViewModel dönecek cq'yu ona göre oluşturuyoruz.
@@ -81,8 +84,11 @@ public abstract class QuoteRepository extends VoucherRepositoryBase<Quote, Quote
     private void buildVieModelSelect(CriteriaQuery<QuoteViewModel> criteriaQuery, Root<? extends Quote> from) {
         criteriaQuery.multiselect(
                 from.get(Quote_.id),
-                from.get(VoucherProcessBase_.process),
-                from.get(VoucherProcessBase_.account),
+                from.get(VoucherProcessBase_.process).get(Process_.id),
+                from.get(VoucherProcessBase_.process).get(Process_.processNo),
+                from.get(VoucherProcessBase_.account).get(Contact_.id),
+                from.get(VoucherProcessBase_.account).get(Contact_.name),
+                from.get(VoucherProcessBase_.account).type(),
                 from.get(VoucherBase_.code),
                 from.get(VoucherBase_.voucherNo),
                 from.get(VoucherBase_.info),
@@ -92,15 +98,23 @@ public abstract class QuoteRepository extends VoucherRepositoryBase<Quote, Quote
                 from.get(VoucherBase_.state),
                 from.get(VoucherBase_.stateReason),
                 from.get(VoucherBase_.stateInfo),
-                from.get(VoucherBase_.group),
-                from.get(VoucherBase_.topic)
+                from.get(VoucherBase_.group).get(VoucherGroup_.id),
+                from.get(VoucherBase_.group).get(VoucherGroup_.groupNo),
+                from.get(VoucherBase_.topic),
+                from.get(Quote_.total),
+                from.get(Quote_.currency)
         );
     }
 
     private void buildSearchTextControl(String searchText, CriteriaBuilder criteriaBuilder, List<Predicate> predicates, Root<? extends Quote> from) {
         if (!Strings.isNullOrEmpty(searchText)) {
-            /*predicates.add(criteriaBuilder.or(criteriaBuilder.like(from.get(Quote_.account), "%" + searchText + "%"),
-                    criteriaBuilder.like(from.get(VoucherBase_.voucherNo), "%" + searchText + "%")));*/
+            predicates.add(
+                    criteriaBuilder.or(
+                            criteriaBuilder.like(from.get(VoucherBase_.topic), "%" + searchText + "%"),
+                            criteriaBuilder.like(from.get(VoucherBase_.voucherNo), "%" + searchText + "%"),
+                            criteriaBuilder.like(from.get(VoucherProcessBase_.account).get(Contact_.name), "%" + searchText + "%")
+                    )
+            );
         }
     }
 }

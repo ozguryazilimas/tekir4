@@ -6,10 +6,13 @@
 package com.ozguryazilim.tekir.order.sales;
 
 import com.google.common.base.Strings;
+import com.ozguryazilim.tekir.entities.Contact_;
+import com.ozguryazilim.tekir.entities.Process_;
 import com.ozguryazilim.tekir.entities.SalesOrder;
 import com.ozguryazilim.tekir.entities.SalesOrder_;
 import com.ozguryazilim.tekir.entities.VoucherBase_;
 import com.ozguryazilim.tekir.entities.VoucherGroup;
+import com.ozguryazilim.tekir.entities.VoucherGroup_;
 import com.ozguryazilim.tekir.entities.VoucherProcessBase_;
 import com.ozguryazilim.tekir.voucher.VoucherRepositoryBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
@@ -36,7 +39,7 @@ public abstract class SalesOrderRepository extends VoucherRepositoryBase<SalesOr
     
     @Override
     public List<SalesOrderViewModel> browseQuery(QueryDefinition queryDefinition) {
-        List<Filter<SalesOrder, ?>> filters = queryDefinition.getFilters();
+        List<Filter<SalesOrder, ?, ?>> filters = queryDefinition.getFilters();
 
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
         //Geriye PersonViewModel dönecek cq'yu ona göre oluşturuyoruz.
@@ -85,8 +88,11 @@ public abstract class SalesOrderRepository extends VoucherRepositoryBase<SalesOr
     private void buildVieModelSelect(CriteriaQuery<SalesOrderViewModel> criteriaQuery, Root<? extends SalesOrder> from) {
         criteriaQuery.multiselect(
                 from.get(SalesOrder_.id),
-                from.get(VoucherProcessBase_.process),
-                from.get(VoucherProcessBase_.account),
+                from.get(VoucherProcessBase_.process).get(Process_.id),
+                from.get(VoucherProcessBase_.process).get(Process_.processNo),
+                from.get(VoucherProcessBase_.account).get(Contact_.id),
+                from.get(VoucherProcessBase_.account).get(Contact_.name),
+                from.get(VoucherProcessBase_.account).type(),
                 from.get(VoucherBase_.code),
                 from.get(VoucherBase_.voucherNo),
                 from.get(VoucherBase_.info),
@@ -96,15 +102,23 @@ public abstract class SalesOrderRepository extends VoucherRepositoryBase<SalesOr
                 from.get(VoucherBase_.state),
                 from.get(VoucherBase_.stateReason),
                 from.get(VoucherBase_.stateInfo),
-                from.get(VoucherBase_.group),
-                from.get(VoucherBase_.topic)
+                from.get(VoucherBase_.group).get(VoucherGroup_.id),
+                from.get(VoucherBase_.group).get(VoucherGroup_.groupNo),
+                from.get(VoucherBase_.topic),
+                from.get(SalesOrder_.total),
+                from.get(SalesOrder_.currency)
         );
     }
 
     private void buildSearchTextControl(String searchText, CriteriaBuilder criteriaBuilder, List<Predicate> predicates, Root<? extends SalesOrder> from) {
         if (!Strings.isNullOrEmpty(searchText)) {
-            /*predicates.add(criteriaBuilder.or(criteriaBuilder.like(from.get(SalesOrder_.account), "%" + searchText + "%"),
-                    criteriaBuilder.like(from.get(VoucherBase_.voucherNo), "%" + searchText + "%")));*/
+            predicates.add(
+                    criteriaBuilder.or(
+                            criteriaBuilder.like(from.get(VoucherBase_.topic), "%" + searchText + "%"),
+                            criteriaBuilder.like(from.get(VoucherBase_.voucherNo), "%" + searchText + "%"),
+                            criteriaBuilder.like(from.get(VoucherProcessBase_.account).get(Contact_.name), "%" + searchText + "%")
+                    )
+            );
         }
     }
 }

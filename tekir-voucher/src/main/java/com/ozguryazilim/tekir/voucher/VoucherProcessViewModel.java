@@ -10,12 +10,17 @@ import com.ozguryazilim.tekir.entities.Process;
 import com.ozguryazilim.tekir.entities.VoucherGroup;
 import com.ozguryazilim.tekir.entities.VoucherState;
 import java.util.Date;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  *
  * @author oyas
  */
 public class VoucherProcessViewModel extends VoucherViewModel{
+    
+    private static final Logger LOG = LoggerFactory.getLogger(VoucherProcessViewModel.class);
     
     private Process process;
     private Contact account;
@@ -24,6 +29,23 @@ public class VoucherProcessViewModel extends VoucherViewModel{
         super(id, code, voucherNo, info, referenceNo, date, owner, state, stateReason, stateInfo, group, topic);
         this.process = process;
         this.account = account;
+    }
+    
+    public VoucherProcessViewModel(Long id, Long processId, String processNo, Long accountId, String accountName, Class<? extends Contact> accountType, String code, String voucherNo, String info, String referenceNo, Date date, String owner, VoucherState state, String stateReason, String stateInfo, Long groupId, String groupNo, String topic) {
+        super(id, code, voucherNo, info, referenceNo, date, owner, state, stateReason, stateInfo, groupId, groupNo, topic);
+        this.process = new Process();
+        this.process.setId(processId);
+        this.process.setProcessNo(processNo);
+        
+        try {
+            this.account = accountType.newInstance();
+            this.account.setId(accountId);
+            this.account.setName(accountName);
+        } catch (InstantiationException | IllegalAccessException ex) {
+            LOG.error("Contact type not found.", ex);
+        }
+        
+        
     }
 
     public Process getProcess() {

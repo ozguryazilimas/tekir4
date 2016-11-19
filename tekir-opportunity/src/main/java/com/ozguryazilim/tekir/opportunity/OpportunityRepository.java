@@ -6,10 +6,13 @@
 package com.ozguryazilim.tekir.opportunity;
 
 import com.google.common.base.Strings;
+import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.tekir.entities.Opportunity;
 import com.ozguryazilim.tekir.entities.Opportunity_;
+import com.ozguryazilim.tekir.entities.Process_;
 import com.ozguryazilim.tekir.entities.VoucherBase_;
 import com.ozguryazilim.tekir.entities.VoucherGroup;
+import com.ozguryazilim.tekir.entities.VoucherGroup_;
 import com.ozguryazilim.tekir.entities.VoucherProcessBase_;
 import com.ozguryazilim.tekir.voucher.VoucherRepositoryBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
@@ -37,7 +40,7 @@ public abstract class OpportunityRepository extends VoucherRepositoryBase<Opport
 
     @Override
     public List<OpportunityViewModel> browseQuery(QueryDefinition queryDefinition) {
-        List<Filter<Opportunity, ?>> filters = queryDefinition.getFilters();
+        List<Filter<Opportunity, ?, ?>> filters = queryDefinition.getFilters();
 
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
         //Geriye PersonViewModel dönecek cq'yu ona göre oluşturuyoruz.
@@ -54,6 +57,8 @@ public abstract class OpportunityRepository extends VoucherRepositoryBase<Opport
         //Filtreleri ekleyelim.
         List<Predicate> predicates = new ArrayList<>();
 
+        //predicates.add(criteriaBuilder.equal( from.get(Opportunity_.account).get(Contact_.name), getValue()));
+        
         decorateFilters(filters, predicates, criteriaBuilder, from);
 
         buildSearchTextControl(queryDefinition.getSearchText(), criteriaBuilder, predicates, from);
@@ -82,8 +87,11 @@ public abstract class OpportunityRepository extends VoucherRepositoryBase<Opport
     private void buildVieModelSelect(CriteriaQuery<OpportunityViewModel> criteriaQuery, Root<? extends Opportunity> from) {
         criteriaQuery.multiselect(
                 from.get(Opportunity_.id),
-                from.get(VoucherProcessBase_.process),
-                from.get(VoucherProcessBase_.account),
+                from.get(VoucherProcessBase_.process).get(Process_.id),
+                from.get(VoucherProcessBase_.process).get(Process_.processNo),
+                from.get(VoucherProcessBase_.account).get(Contact_.id),
+                from.get(VoucherProcessBase_.account).get(Contact_.name),
+                from.get(VoucherProcessBase_.account).type(),
                 from.get(VoucherBase_.code),
                 from.get(VoucherBase_.voucherNo),
                 from.get(VoucherBase_.info),
@@ -93,15 +101,23 @@ public abstract class OpportunityRepository extends VoucherRepositoryBase<Opport
                 from.get(VoucherBase_.state),
                 from.get(VoucherBase_.stateReason),
                 from.get(VoucherBase_.stateInfo),
-                from.get(VoucherBase_.group),
-                from.get(VoucherBase_.topic)
+                from.get(VoucherBase_.group).get(VoucherGroup_.id),
+                from.get(VoucherBase_.group).get(VoucherGroup_.groupNo),
+                from.get(VoucherBase_.topic),
+                from.get(Opportunity_.budget),
+                from.get(Opportunity_.currency)
         );
     }
 
     private void buildSearchTextControl(String searchText, CriteriaBuilder criteriaBuilder, List<Predicate> predicates, Root<? extends Opportunity> from) {
         if (!Strings.isNullOrEmpty(searchText)) {
-            predicates.add(criteriaBuilder.or(criteriaBuilder.like(from.get(Opportunity_.topic), "%" + searchText + "%"),
-                    criteriaBuilder.like(from.get(VoucherBase_.voucherNo), "%" + searchText + "%")));
+            predicates.add(
+                    criteriaBuilder.or(
+                            criteriaBuilder.like(from.get(VoucherBase_.topic), "%" + searchText + "%"),
+                            criteriaBuilder.like(from.get(VoucherBase_.voucherNo), "%" + searchText + "%"),
+                            criteriaBuilder.like(from.get(VoucherProcessBase_.account).get(Contact_.name), "%" + searchText + "%")
+                    )
+            );
         }
     }
 
