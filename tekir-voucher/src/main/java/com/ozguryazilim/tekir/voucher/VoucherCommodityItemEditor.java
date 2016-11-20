@@ -102,25 +102,33 @@ public class VoucherCommodityItemEditor implements Serializable{
      public void onAmountChange() {
         item.setTotal(item.getQuantity().getAmount().multiply(item.getPrice()));
         item.setLineTotal( item.getTotal().subtract(item.getDiscount()));
-        item.setDiscountRate(item.getDiscount().multiply(BigDecimal.valueOf(100)).divide(item.getTotal(), MathContext.DECIMAL32).intValue());
+        if( !item.getTotal().equals(BigDecimal.ZERO)){
+            item.setDiscountRate(item.getDiscount().multiply(BigDecimal.valueOf(100)).divide(item.getTotal(), MathContext.DECIMAL32).intValue());
+        }
     }
     
     public void onPriceChange() {
         item.setTotal(item.getQuantity().getAmount().multiply(item.getPrice()));
         item.setLineTotal( item.getTotal().subtract(item.getDiscount()));
-        item.setDiscountRate(item.getDiscount().multiply(BigDecimal.valueOf(100)).divide(item.getTotal(), MathContext.DECIMAL32).intValue());
+        if( !item.getTotal().equals(BigDecimal.ZERO)){
+            item.setDiscountRate(item.getDiscount().multiply(BigDecimal.valueOf(100)).divide(item.getTotal(), MathContext.DECIMAL32).intValue());
+        }
     }
     
     public void onTotalChange() {
         item.setPrice(item.getTotal().divide(item.getQuantity().getAmount()));
         item.setLineTotal( item.getTotal().subtract(item.getDiscount()));
-        item.setDiscountRate(item.getDiscount().multiply(BigDecimal.valueOf(100)).divide(item.getTotal(), MathContext.DECIMAL32).intValue());
+        if( !item.getTotal().equals(BigDecimal.ZERO)){
+            item.setDiscountRate(item.getDiscount().multiply(BigDecimal.valueOf(100)).divide(item.getTotal(), MathContext.DECIMAL32).intValue());
+        }
     }
     
     public void onDiscountChange() {
         //item.setPrice(item.getTotal().divide(item.getQuantity().getAmount()));
         item.setLineTotal( item.getTotal().subtract(item.getDiscount()));
-        item.setDiscountRate(item.getDiscount().multiply(BigDecimal.valueOf(100)).divide(item.getTotal(), MathContext.DECIMAL32).intValue());
+        if( !item.getTotal().equals(BigDecimal.ZERO)){
+            item.setDiscountRate(item.getDiscount().multiply(BigDecimal.valueOf(100)).divide(item.getTotal(), MathContext.DECIMAL32).intValue());
+        }
     }
     
     public void onDiscountRateChange() {
