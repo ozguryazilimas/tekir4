@@ -159,9 +159,10 @@ public class ContactHome extends FormBase<Contact, Long> {
     /**
      * Seçili olan contact'ı bir account'a çevirmek için accout home'a gönder.
      */
-    public void convertToAccount(){
+    public Class<? extends ViewConfig> convertToAccount(){
         getEntity().getContactRoles().add("ACCOUNT");
-        repository.save(getEntity());
+        //repository.save(getEntity());
+        return getEditPage();
     }
     
     

@@ -24,76 +24,160 @@
     </ui:define>
 
     <ui:define name="form">
-        <div class="row">
-            <t:inputText label="general.label.Code" value="#{contactHome.entity.code}" columnClass="col-xs-6" required="true"/>
-            <t:inputLookupDialog label="general.label.Category" value="#{contactHome.entity.category}" lookupBean="#{contactCategoryLookup}" lookupListener="contactHome.entity.category" placeholder="#{messages['general.info.Category']}" />
-            <t:inputLookupDialog label="general.label.Industry" value="#{contactHome.entity.industry}" lookupBean="#{industryLookup}" lookupListener="contactHome.entity.industry" placeholder="#{messages['general.info.Industry']}" />
-            <t:inputLookupDialog label="general.label.Territory" value="#{contactHome.entity.territory}" lookupBean="#{territoryLookup}" lookupListener="contactHome.entity.territory" placeholder="#{messages['general.info.Territory']}" />
-        </div>
 
         <div class="row">
-            <t:inputAny label="contact.label.ContactRoles">
-                <p:selectManyCheckbox id="grid3" value="#{contactHome.selectedRoles}" layout="responsive" columns="4">
-                    <f:selectItems value="#{contactHome.contactRoles}" var="item" itemLabel="#{messages['contact.role.'.concat( item )]}" itemValue="#{item}" />
-                </p:selectManyCheckbox>
-            </t:inputAny>
-        </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <t:inputText label="general.label.Code" value="#{contactHome.entity.code}" columnClass="col-xs-6" required="true"/>
+                    <t:inputLookupDialog label="general.label.Category" value="#{contactHome.entity.category}" lookupBean="#{contactCategoryLookup}" lookupListener="contactHome.entity.category" placeholder="#{messages['general.info.Category']}" />
+                </div>
+                <ui:fragment rendered="#{contactHome.entity.class.simpleName eq 'Person'}">
+                    <div class="row">
+                        <t:inputText label="general.label.FirstName" value="#{contactHome.entity.firstName}" columnClass="col-xs-6" required="true"/>
+                        <t:inputText label="general.label.LastName" value="#{contactHome.entity.lastName}" columnClass="col-xs-6" required="true"/>
 
-        <ui:fragment rendered="#{contactHome.entity.class.simpleName eq 'Person'}">
-            <div class="row">
-                <t:inputText label="general.label.FirstName" value="#{contactHome.entity.firstName}" columnClass="col-xs-6" required="true"/>
-                <t:inputText label="general.label.LastName" value="#{contactHome.entity.lastName}" columnClass="col-xs-6" required="true"/>
+                    </div>  
 
-            </div>  
+                    <div class="row">
+                        <t:inputText label="contact.label.SSN" value="#{contactHome.entity.ssn}" columnClass="col-xs-6" required="false"/>
+                        <t:inputText label="contact.label.JobTitle" value="#{contactHome.entity.jobTitle}" columnClass="col-xs-6" required="false"/>
 
-            <div class="row">
-                <t:inputText label="contact.label.SSN" value="#{contactHome.entity.ssn}" columnClass="col-xs-6" required="false"/>
-                <t:inputText label="contact.label.JobTitle" value="#{contactHome.entity.jobTitle}" columnClass="col-xs-6" required="false"/>
+                    </div>  
 
-            </div>  
+                    <div class="row">
+                        <t:inputText label="contact.label.CorporationName" value="#{contactHome.entity.corporationName}" columnClass="col-xs-6" required="false"/>
+                        <t:inputLookupDialog label="general.label.Corporation" value="#{contactHome.entity.corporation}" lookupBean="#{contactLookup}" lookupListener="contactHome.entity.corporation" placeholder="#{messages['general.info.Corparation']}" lookupProfile="T:Corporation"/>
+                    </div>
+                </ui:fragment>
 
-            <div class="row">
-                <t:inputText label="contact.label.CorporationName" value="#{contactHome.entity.corporationName}" columnClass="col-xs-6" required="false"/>
-                <t:inputLookupDialog label="general.label.Corporation" value="#{contactHome.entity.corporation}" lookupBean="#{contactLookup}" lookupListener="contactHome.entity.corporation" placeholder="#{messages['general.info.Corparation']}" lookupProfile="T:Corporation"/>
+                <ui:fragment rendered="#{contactHome.entity.class.simpleName eq 'Corporation'}">
+                    <div class="row">
+                        <t:inputLookupDialog label="contact.label.CorparationType" value="#{contactHome.entity.corporationType}" lookupBean="#{corporationTypeLookup}" lookupListener="contactHome.entity.corporationType" placeholder="#{messages['contact.info.CorporationType']}" />
+                        <t:inputText label="general.label.Name" value="#{contactHome.entity.name}" columnClass="col-xs-12" required="true"/>
+                        <t:inputText label="general.label.OrganizationName" value="#{contactHome.entity.organizastionName}" columnClass="col-xs-12" required="true"/>
+                        <t:inputLookupDialog label="contact.label.PrimaryContact" value="#{contactHome.entity.primaryContact}" lookupBean="#{contactLookup}" lookupListener="contactHome.entity.primaryContact" placeholder="#{messages['contact.info.PrimaryContact']}" lookupProfile="T:Person"/>
+                        <t:inputLookupDialog label="contact.label.ParentCorporation" value="#{contactHome.entity.parentCorporation}" lookupBean="#{contactLookup}" lookupListener="contactHome.entity.parentCorporation" placeholder="#{messages['contact.info.ParentCorporation']}" lookupProfile="T:Corporation"/>
+
+                    </div>
+                </ui:fragment>
+
+                <div class="row">
+                    <t:accordion label="contact.label.ContactInformations" >
+                        <div class="row">
+                            <t:inputDialog label="contact.label.PrimaryMobile" value="#{contactHome.entity.primaryMobile.caption}" action="#{phoneEditor.editPrimaryMobile(contactHome.entity, contactHome.entity.primaryMobile)}" icon="fa fa-mobile"/>
+                            <t:inputDialog label="contact.label.PrimaryPhone" value="#{contactHome.entity.primaryPhone.caption}" action="#{phoneEditor.editPrimaryPhone(contactHome.entity, contactHome.entity.primaryPhone)}" icon="fa fa-phone"/>
+                            <t:inputDialog label="contact.label.PrimaryFax" value="#{contactHome.entity.primaryFax.caption}" action="#{phoneEditor.editPrimaryFax(contactHome.entity, contactHome.entity.primaryFax)}" icon="fa fa-fax"/>
+                            <t:inputDialog label="contact.label.PrimaryEmail" value="#{contactHome.entity.primaryEmail.caption}" action="#{emailEditor.editPrimaryEmail(contactHome.entity, contactHome.entity.primaryEmail)}" icon="fa fa-envelope-o"/>
+                            <t:inputDialog label="contact.label.PrimaryAddress" value="#{contactHome.entity.primaryAddress.caption}" action="#{addressEditor.editPrimaryAddress(contactHome.entity, contactHome.entity.primaryAddress)}" icon="fa fa-map-o"/>
+                        </div>
+                    </t:accordion>
+                </div>
             </div>
-        </ui:fragment>
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    
+                    <t:inputLookupDialog label="general.label.Industry" value="#{contactHome.entity.industry}" lookupBean="#{industryLookup}" lookupListener="contactHome.entity.industry" placeholder="#{messages['general.info.Industry']}" />
+                    <t:inputLookupDialog label="general.label.Territory" value="#{contactHome.entity.territory}" lookupBean="#{territoryLookup}" lookupListener="contactHome.entity.territory" placeholder="#{messages['general.info.Territory']}" />
+                </div>
 
-        <ui:fragment rendered="#{contactHome.entity.class.simpleName eq 'Corporation'}">
-            <div class="row">
-                <t:inputLookupDialog label="contact.label.CorparationType" value="#{contactHome.entity.corporationType}" lookupBean="#{corporationTypeLookup}" lookupListener="contactHome.entity.corporationType" placeholder="#{messages['contact.info.CorporationType']}" />
-                <t:inputText label="general.label.Name" value="#{contactHome.entity.name}" columnClass="col-xs-12" required="true"/>
-                <t:inputText label="general.label.OrganizationName" value="#{contactHome.entity.organizastionName}" columnClass="col-xs-12" required="true"/>
-                <t:inputLookupDialog label="contact.label.PrimaryContact" value="#{contactHome.entity.primaryContact}" lookupBean="#{contactLookup}" lookupListener="contactHome.entity.primaryContact" placeholder="#{messages['contact.info.PrimaryContact']}" lookupProfile="T:Person"/>
-                <t:inputLookupDialog label="contact.label.ParentCorporation" value="#{contactHome.entity.parentCorporation}" lookupBean="#{contactLookup}" lookupListener="contactHome.entity.parentCorporation" placeholder="#{messages['contact.info.ParentCorporation']}" lookupProfile="T:Corporation"/>
+                <div class="row">
+                    <t:inputAny label="contact.label.ContactRoles" columnClass="col-xs-12">
+                        <p:selectManyCheckbox id="grid3" value="#{contactHome.selectedRoles}" layout="responsive" columns="4">
+                            <f:selectItems value="#{contactHome.contactRoles}" var="item" itemLabel="#{messages['contact.role.'.concat( item )]}" itemValue="#{item}" />
+                        </p:selectManyCheckbox>
+                    </t:inputAny>
+                </div>
 
+                <div class="row">
+                    <t:inputTextarea label="general.label.Info" value="#{contactHome.entity.info}" columnClass="col-xs-12"/>
+                </div>
+
+                <ui:fragment rendered="#{contactHome.isAccount}">
+                    <div class="row">
+                        <t:accordion label="contact.label.Account" >
+                            <div class="row">
+                                <t:inputText label="contact.label.TaxOffice" value="#{contactHome.entity.taxOffice}" required="true"/>
+                                <t:inputText label="contact.label.TaxNumber" value="#{contactHome.entity.taxNumber}" required="true"/>
+                                <t:inputText label="contact.label.BankAccount" value="#{contactHome.entity.bankAccount}" required="false"/>
+                                <t:inputCurrency label="general.label.Currency" value="#{contactHome.entity.currency}" required="true"/>
+                            </div>
+                        </t:accordion>
+                    </div>
+                </ui:fragment>
             </div>
-        </ui:fragment>
-
-
-        <div class="row">
-            <t:inputTextarea label="general.label.Info" value="#{contactHome.entity.info}" columnClass="col-xs-12"/>
         </div>
-
-        <div class="row">
-            <t:inputDialog label="contact.label.PrimaryMobile" value="#{contactHome.entity.primaryMobile.caption}" action="#{phoneEditor.editPrimaryMobile(contactHome.entity, contactHome.entity.primaryMobile)}" icon="fa fa-mobile"/>
-            <t:inputDialog label="contact.label.PrimaryPhone" value="#{contactHome.entity.primaryPhone.caption}" action="#{phoneEditor.editPrimaryPhone(contactHome.entity, contactHome.entity.primaryPhone)}" icon="fa fa-phone"/>
-            <t:inputDialog label="contact.label.PrimaryFax" value="#{contactHome.entity.primaryFax.caption}" action="#{phoneEditor.editPrimaryFax(contactHome.entity, contactHome.entity.primaryFax)}" icon="fa fa-fax"/>
-            <t:inputDialog label="contact.label.PrimaryEmail" value="#{contactHome.entity.primaryEmail.caption}" action="#{emailEditor.editPrimaryEmail(contactHome.entity, contactHome.entity.primaryEmail)}" icon="fa fa-envelope-o"/>
-            <t:inputDialog label="contact.label.PrimaryAddress" value="#{contactHome.entity.primaryAddress.caption}" action="#{addressEditor.editPrimaryAddress(contactHome.entity, contactHome.entity.primaryAddress)}" icon="fa fa-map-o"/>
-        </div>
-
-
-        <ui:fragment rendered="#{contactHome.isAccount}">
+        <ui:remove>
             <div class="row">
-                <t:inputText label="contact.label.TaxOffice" value="#{contactHome.entity.taxOffice}" />
-                <t:inputText label="contact.label.TaxNumber" value="#{contactHome.entity.taxNumber}" />
-                <t:inputText label="contact.label.BankAccount" value="#{contactHome.entity.bankAccount}" />
-                <t:inputText label="contact.label.Currency" value="#{contactHome.entity.currency}" />
+                <t:inputText label="general.label.Code" value="#{contactHome.entity.code}" columnClass="col-xs-6" required="true"/>
+                <t:inputLookupDialog label="general.label.Category" value="#{contactHome.entity.category}" lookupBean="#{contactCategoryLookup}" lookupListener="contactHome.entity.category" placeholder="#{messages['general.info.Category']}" />
+                <t:inputLookupDialog label="general.label.Industry" value="#{contactHome.entity.industry}" lookupBean="#{industryLookup}" lookupListener="contactHome.entity.industry" placeholder="#{messages['general.info.Industry']}" />
+                <t:inputLookupDialog label="general.label.Territory" value="#{contactHome.entity.territory}" lookupBean="#{territoryLookup}" lookupListener="contactHome.entity.territory" placeholder="#{messages['general.info.Territory']}" />
             </div>
-        </ui:fragment>
 
+            <div class="row">
+                <t:inputAny label="contact.label.ContactRoles">
+                    <p:selectManyCheckbox id="grid3" value="#{contactHome.selectedRoles}" layout="responsive" columns="4">
+                        <f:selectItems value="#{contactHome.contactRoles}" var="item" itemLabel="#{messages['contact.role.'.concat( item )]}" itemValue="#{item}" />
+                    </p:selectManyCheckbox>
+                </t:inputAny>
+            </div>
+
+            <ui:fragment rendered="#{contactHome.entity.class.simpleName eq 'Person'}">
+                <div class="row">
+                    <t:inputText label="general.label.FirstName" value="#{contactHome.entity.firstName}" columnClass="col-xs-6" required="true"/>
+                    <t:inputText label="general.label.LastName" value="#{contactHome.entity.lastName}" columnClass="col-xs-6" required="true"/>
+
+                </div>  
+
+                <div class="row">
+                    <t:inputText label="contact.label.SSN" value="#{contactHome.entity.ssn}" columnClass="col-xs-6" required="false"/>
+                    <t:inputText label="contact.label.JobTitle" value="#{contactHome.entity.jobTitle}" columnClass="col-xs-6" required="false"/>
+
+                </div>  
+
+                <div class="row">
+                    <t:inputText label="contact.label.CorporationName" value="#{contactHome.entity.corporationName}" columnClass="col-xs-6" required="false"/>
+                    <t:inputLookupDialog label="general.label.Corporation" value="#{contactHome.entity.corporation}" lookupBean="#{contactLookup}" lookupListener="contactHome.entity.corporation" placeholder="#{messages['general.info.Corparation']}" lookupProfile="T:Corporation"/>
+                </div>
+            </ui:fragment>
+
+            <ui:fragment rendered="#{contactHome.entity.class.simpleName eq 'Corporation'}">
+                <div class="row">
+                    <t:inputLookupDialog label="contact.label.CorparationType" value="#{contactHome.entity.corporationType}" lookupBean="#{corporationTypeLookup}" lookupListener="contactHome.entity.corporationType" placeholder="#{messages['contact.info.CorporationType']}" />
+                    <t:inputText label="general.label.Name" value="#{contactHome.entity.name}" columnClass="col-xs-12" required="true"/>
+                    <t:inputText label="general.label.OrganizationName" value="#{contactHome.entity.organizastionName}" columnClass="col-xs-12" required="true"/>
+                    <t:inputLookupDialog label="contact.label.PrimaryContact" value="#{contactHome.entity.primaryContact}" lookupBean="#{contactLookup}" lookupListener="contactHome.entity.primaryContact" placeholder="#{messages['contact.info.PrimaryContact']}" lookupProfile="T:Person"/>
+                    <t:inputLookupDialog label="contact.label.ParentCorporation" value="#{contactHome.entity.parentCorporation}" lookupBean="#{contactLookup}" lookupListener="contactHome.entity.parentCorporation" placeholder="#{messages['contact.info.ParentCorporation']}" lookupProfile="T:Corporation"/>
+
+                </div>
+            </ui:fragment>
+
+
+            <div class="row">
+                <t:inputTextarea label="general.label.Info" value="#{contactHome.entity.info}" columnClass="col-xs-12"/>
+            </div>
+
+            <div class="row">
+                <t:inputDialog label="contact.label.PrimaryMobile" value="#{contactHome.entity.primaryMobile.caption}" action="#{phoneEditor.editPrimaryMobile(contactHome.entity, contactHome.entity.primaryMobile)}" icon="fa fa-mobile"/>
+                <t:inputDialog label="contact.label.PrimaryPhone" value="#{contactHome.entity.primaryPhone.caption}" action="#{phoneEditor.editPrimaryPhone(contactHome.entity, contactHome.entity.primaryPhone)}" icon="fa fa-phone"/>
+                <t:inputDialog label="contact.label.PrimaryFax" value="#{contactHome.entity.primaryFax.caption}" action="#{phoneEditor.editPrimaryFax(contactHome.entity, contactHome.entity.primaryFax)}" icon="fa fa-fax"/>
+                <t:inputDialog label="contact.label.PrimaryEmail" value="#{contactHome.entity.primaryEmail.caption}" action="#{emailEditor.editPrimaryEmail(contactHome.entity, contactHome.entity.primaryEmail)}" icon="fa fa-envelope-o"/>
+                <t:inputDialog label="contact.label.PrimaryAddress" value="#{contactHome.entity.primaryAddress.caption}" action="#{addressEditor.editPrimaryAddress(contactHome.entity, contactHome.entity.primaryAddress)}" icon="fa fa-map-o"/>
+            </div>
+
+
+            <ui:fragment rendered="#{contactHome.isAccount}">
+                <div class="row">
+                    <t:inputText label="contact.label.TaxOffice" value="#{contactHome.entity.taxOffice}" required="true"/>
+                    <t:inputText label="contact.label.TaxNumber" value="#{contactHome.entity.taxNumber}" required="true"/>
+                    <t:inputText label="contact.label.BankAccount" value="#{contactHome.entity.bankAccount}" required="false"/>
+                    <t:inputCurrency label="general.label.Currency" value="#{contactHome.entity.currency}" required="true"/>
+                </div>
+            </ui:fragment>
+
+        </ui:remove>
 
     </ui:define> 
 
-    
+
 </ui:composition>

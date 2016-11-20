@@ -73,7 +73,7 @@
             </p:commandLink>
         </li>
         <li>
-            <p:commandLink action="#{contactHome.convertToAccount()}" styleClass="context-command" >
+            <p:commandLink action="#{contactHome.convertToAccount()}" styleClass="context-command" rendered="#{not contactHome.isAccount}">
                 <i class="fa fa-briefcase"></i>
                 <h:outputText value=" #{messages['contact.button.ConvertAccount']}" />
             </p:commandLink>
