@@ -158,6 +158,26 @@
             <column name="AMOUNT" type="decimal(19, 2)"/>
         </createTable>
     </changeSet>
+    <changeSet author="oyas (generated)" id="1479746567441-1">
+        <addColumn tableName="TCC_CONTACT_INFO">
+            <column name="BANK" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1479746567441-2">
+        <addColumn tableName="TCC_CONTACT">
+            <column name="BANK_ID" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1479746567441-3">
+        <addColumn tableName="TCC_CONTACT_INFO">
+            <column name="IBAN" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1479746567441-4">
+        <addColumn tableName="TCC_CONTACT_INFO">
+            <column name="CCY" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
     <changeSet author="oyas (generated)" id="1467649436683-9">
         <addForeignKeyConstraint baseColumnNames="LOCATION_ID" baseTableName="TCC_CONTACT_INFO" constraintName="FK_CONADDR_LOC" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_LOCATION"/>
     </changeSet>

@@ -37,6 +37,12 @@
                             <p:ajax event="dialogReturn" update=":ci:contactInfos" partialSubmit="true" process="@this" />   
                         </p:commandLink>
                     </li>
+                    <li>
+                        <p:commandLink id="ab" action="#{bankEditor.create(contact)}" process="@this">
+                            <i class="fa fa-bank" /> #{messages['contact.button.AddBankAccount']}
+                            <p:ajax event="dialogReturn" update=":ci:contactInfos" partialSubmit="true" process="@this" />   
+                        </p:commandLink>
+                    </li>
                 </ul>
             </div>
 

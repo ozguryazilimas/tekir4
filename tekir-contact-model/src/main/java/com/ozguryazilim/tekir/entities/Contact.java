@@ -133,6 +133,10 @@ public abstract class Contact extends AuditBase{
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "ADDR_ID", foreignKey = @ForeignKey(name = "FK_CON_ADDR"))
     private ContactAddress primaryAddress;
+    
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "BANK_ID", foreignKey = @ForeignKey(name = "FK_CON_BANK"))
+    private ContactBank primaryBank;
 
     
     
@@ -366,6 +370,14 @@ public abstract class Contact extends AuditBase{
 
     public void setPrimaryAddress(ContactAddress primaryAddress) {
         this.primaryAddress = primaryAddress;
+    }
+
+    public ContactBank getPrimaryBank() {
+        return primaryBank;
+    }
+
+    public void setPrimaryBank(ContactBank primaryBank) {
+        this.primaryBank = primaryBank;
     }
 
     public List<String> getCommunicationChannels() {
