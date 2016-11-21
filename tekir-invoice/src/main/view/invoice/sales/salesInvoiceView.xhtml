@@ -1,0 +1,131 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"                
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"               
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/voucherViewBase.xhtml">
+
+    <ui:param name="bean" value="#{salesInvoiceHome}" />
+    <ui:param name="entityName" value="salesInvoice" />
+    <ui:param name="viewIdentifier" value="#{salesInvoiceHome.entity.voucherNo}" />
+    <ui:param name="viewState" value="#{salesInvoiceHome.entity.state.name} #{salesInvoiceHome.entity.stateReason}" />
+    <ui:param name="showCaption" value="true"/>
+    <ui:param name="dontShowContentHeader" value="false" />
+
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{salesInvoiceHome.id}" />
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="caption">
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <t:outputEntityLink label="general.label.Account" value="#{salesInvoiceHome.entity.account}" view="/contact/contactView.xhtml" />
+                <t:outputMoney label="general.label.TotalAmount" value="#{salesInvoiceHome.entity.total}" currency="#{salesInvoiceHome.entity.currency}" />
+                <ui:remove>
+                <t:outputText label="salesInvoice.label.Revision" value="#{salesInvoiceHome.entity.revision}"  />
+                
+                <t:outputDate label="general.label.ExpireDate" value="#{salesInvoiceHome.entity.expireDate}"  />
+                </ui:remove>
+
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <t:outputText label="voucher.label.VoucherNo" value="#{salesInvoiceHome.entity.voucherNo}"  />
+                <t:outputText label="voucher.label.ReferenceNo" value="#{salesInvoiceHome.entity.referenceNo}" />
+                <t:outputText label="voucher.label.Process" value="#{salesInvoiceHome.entity.process.processNo}" />
+                <t:outputText label="general.label.Code" value="#{salesInvoiceHome.entity.code}" />
+            </div>
+        </div>  
+    </ui:define>
+
+
+    <ui:remove>
+    <ui:define name="stateDlgExt">
+        <t:inputLookupDialog label="general.label.Competitor" value="#{salesInvoiceHome.entity.competitor}" 
+                             lookupBean="#{contactLookup}" lookupListener="opportunityHome.entity.competitor" 
+                             placeholder="#{messages['general.info.Competitor']}" columnClass="col-xs-12"
+                             rendered="#{salesInvoiceHome.dlgStateAction.name ne 'Revise' }"/>
+    </ui:define>
+        </ui:remove>
+    
+    <ui:remove>
+    <ui:define name="context-menu">
+        <li>
+            <p:commandLink action="#{salesInvoiceHome.create()}" styleClass="context-command" ajax="false">
+                <i class="fa fa-plus-circle"></i>
+                <h:outputText value=" #{messages['general.button.Add']}" />
+            </p:commandLink>
+        </li>
+        <ui:remove>
+        <li>
+            <p:commandLink action="#{salesInvoiceHome.publish()}" styleClass="context-command" ajax="false" rendered="#{salesInvoiceHome.entity.status eq 'DRAFT'}">
+                <i class="fa fa-check"></i>
+                <h:outputText value=" #{messages['general.button.Publish']}" />
+            </p:commandLink>
+        </li>
+        <li>
+            <p:commandLink action="#{salesInvoiceHome.publish()}" styleClass="context-command" ajax="false" rendered="#{salesInvoiceHome.entity.status eq 'OPEN'}">
+                <i class="fa fa-check"></i>
+                <h:outputText value=" #{messages['general.button.Revision']}" />
+            </p:commandLink>
+        </li>
+        <li>
+            <p:commandLink action="#{salesInvoiceHome.closeWin()}" styleClass="context-command" ajax="false" rendered="#{salesInvoiceHome.entity.status eq 'OPEN'}">
+                <i class="fa fa-check"></i>
+                <h:outputText value=" #{messages['general.button.CloseWin']}" />
+            </p:commandLink>
+        </li>
+        <li>
+            <p:commandLink  styleClass="context-command" rendered="#{salesInvoiceHome.entity.status eq 'OPEN'}" update="closeLoss" oncomplete="PF('closeLoss').show()" >
+                <i class="fa fa-close"></i>
+                <h:outputText value=" #{messages['general.button.CloseLoss']}" />
+            </p:commandLink >
+        </li>
+        <li>
+            <p:commandLink  styleClass="context-command" rendered="#{salesInvoiceHome.entity.status eq 'OPEN'}" update="closeCancel" oncomplete="PF('closeCancel').show()" >
+                <i class="fa fa-ban"></i>
+                <h:outputText value=" #{messages['general.button.CloseCancel']}" />
+            </p:commandLink >
+        </li>
+            </ui:remove>
+
+    </ui:define>
+    
+    <ui:define name="includes">
+        <ui:remove>
+        <p:dialog header="#{messages['dialog.caption.Lost']}" id="closeLoss" widgetVar="closeLoss">
+            <h:form id="lossForm" style="width: 250px;">
+                <div class="row">
+                    <t:inputTextarea label="general.label.Reason" value="#{salesInvoiceHome.entity.statusReason}" columnClass="col-xs-12"/>
+                    <t:inputLookupDialog label="general.label.Competitor" value="#{salesInvoiceHome.entity.competitor}" lookupBean="#{contactLookup}" lookupListener="salesInvoiceHome.entity.competitor" placeholder="#{messages['general.info.Competitor']}" columnClass="col-xs-12"/>
+                </div>
+
+                <div class="row actionButtons">
+                    <div class="col-xs-12 pull-right">
+                        <p:commandButton id="select" value="#{messages['general.button.Ok']}" icon="fa fa-check" action="#{salesInvoiceHome.closeLoss()}" styleClass="btn-primary" oncomplete="PF('closeLoss').hide()"/>
+                        <p:commandButton id="close" value="#{messages['general.button.Cancel']}" icon="ui-icon-close" onclick="PF('closeLoss').hide()" />
+                    </div>
+                </div>
+            </h:form>
+        </p:dialog>
+        <p:dialog header="#{messages['dialog.caption.Cancel']}" id="closeCancel" widgetVar="closeCancel">
+            <h:form id="cancelForm" style="width: 250px;">
+                <div class="row">
+                    <t:inputTextarea label="general.label.Reason" value="#{salesInvoiceHome.entity.statusReason}" columnClass="col-xs-12"/>
+                </div>
+
+                <div class="row actionButtons">
+                    <div class="col-xs-12 pull-right">
+                        <p:commandButton id="select" value="#{messages['general.button.Ok']}" icon="fa fa-check" action="#{salesInvoiceHome.closeCancel()}" styleClass="btn-primary" oncomplete="PF('closeCancel').hide()"/>
+                        <p:commandButton id="close" value="#{messages['general.button.Cancel']}" icon="ui-icon-close" onclick="PF('closeCancel').hide()" />
+                    </div>
+                </div>
+            </h:form>
+        </p:dialog>
+            </ui:remove>
+    </ui:define>
+        </ui:remove>    
+
+</ui:composition>

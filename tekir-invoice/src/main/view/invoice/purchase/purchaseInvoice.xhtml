@@ -1,0 +1,60 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"                
+                template="/layout/editBase.xhtml">
+
+    <ui:param name="homeBean" value="#{purchaseInvoiceHome}" />
+    <ui:param name="entity" value="#{purchaseInvoiceHome.entity}" />
+
+    <ui:define name="form">
+        <div class="row">
+
+            <div class="col-md-6 col-xs-12">
+                <p:outputPanel id="ddt" styleClass="row" layout="block">
+                    <t:inputLookupDialog label="general.label.Account" value="#{purchaseInvoiceHome.account}" 
+                                         lookupBean="#{contactLookup}" lookupListener="purchaseInvoiceHome.account" 
+                                         lookupProfile="R:ACCOUNT;S:VENDOR"
+                                         placeholder="#{messages['general.info.Account']}" update=":form:prss" columnClass="col-xs-12"/>
+                    
+                    <t:inputText label="voucher.label.Topic" value="#{purchaseInvoiceHome.entity.topic}"  required="true" columnClass="col-xs-12"/>
+                    
+                    <t:inputCurrency label="general.label.Currency" value="#{purchaseInvoiceHome.entity.currency}" required="true"/>
+                    <t:inputDate label="purchaseInvoice.label.ShippingDate" value="#{purchaseInvoiceHome.entity.shippingDate}" />
+                    <t:inputTextarea label="general.label.ShippingNote" value="#{purchaseInvoiceHome.entity.shippingNote}" columnClass="col-xs-12"/>
+                    
+                    <t:inputLookupDialog label="general.label.PaymentPlan" value="#{purchaseInvoiceHome.entity.paymentPlan}" lookupBean="#{paymentPlanLookup}" lookupListener="purchaseInvoiceHome.entity.paymentPlan" placeholder="#{messages['general.info.PaymentPlan']}" columnClass="col-xs-12" required="true"/>
+                </p:outputPanel>
+            </div>
+
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <t:inputDate label="voucher.label.Date" value="#{purchaseInvoiceHome.entity.date}" columnClass="col-md-4"/>
+                    <t:inputText label="voucher.label.VoucherNo" value="#{purchaseInvoiceHome.entity.voucherNo}"  required="true" readonly="true" columnClass="col-md-4"/>
+                    <t:inputText label="voucher.label.ReferenceNo" value="#{purchaseInvoiceHome.entity.referenceNo}" columnClass="col-md-4"/>
+                    
+                    <p:outputPanel id="prss">
+                    <t:inputProcess value="#{purchaseInvoiceHome.process}" lookupListener="purchaseInvoiceHome.process" lookupProfile="A:#{purchaseInvoiceHome.entity.account.id};T:SALES" update=":form:ddt" />
+                    </p:outputPanel>
+                    
+                    <t:inputLookupDialog label="voucher.label.Group" value="#{purchaseInvoiceHome.entity.group}" lookupBean="#{voucherGroupLookup}" lookupListener="purchaseInvoiceHome.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" />
+                    
+                    <t:inputText label="voucher.label.Owner" value="#{purchaseInvoiceHome.entity.owner}" />
+                    <t:inputText label="general.label.Code" value="#{purchaseInvoiceHome.entity.code}" />
+                    <t:inputTextarea label="general.label.Info" value="#{purchaseInvoiceHome.entity.info}" columnClass="col-xs-12"/>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="padding-top: 8px;">
+            <ui:include src="/voucher/voucherCommodityWidget.xhtml">
+                <ui:param name="bean" value="#{purchaseInvoiceHome}" />
+                <ui:param name="editable" value="#{true}" />
+            </ui:include>
+        </div>
+        
+    </ui:define> 
+</ui:composition>

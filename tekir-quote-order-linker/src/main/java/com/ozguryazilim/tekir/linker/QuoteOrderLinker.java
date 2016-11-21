@@ -14,6 +14,7 @@ import com.ozguryazilim.tekir.quote.QuoteFeature;
 import com.ozguryazilim.tekir.voucher.Voucher;
 import com.ozguryazilim.tekir.voucher.VoucherRedirectHandler;
 import com.ozguryazilim.tekir.voucher.VoucherStateChange;
+import com.ozguryazilim.tekir.voucher.utils.VoucherItemUtils;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureQualifier;
 import com.ozguryazilim.telve.messages.FacesMessages;
@@ -74,12 +75,8 @@ public class QuoteOrderLinker implements VoucherRedirectHandler, Serializable{
                 //Detayları dolduralım
                 for( QuoteItem qi : entity.getItems() ){
                     OrderItem oi = new OrderItem();
-                    oi.setCommodity(qi.getCommodity());
-                    oi.setInfo(qi.getInfo());
+                    VoucherItemUtils.copyCommodityItem(qi, oi);
                     oi.setMaster(salesOrderHome.getEntity());
-                    oi.setPrice(qi.getPrice());
-                    oi.setQuantity(qi.getQuantity());
-                    oi.setTotal(qi.getTotal());
                     salesOrderHome.getEntity().getItems().add(oi);
                 }
                 

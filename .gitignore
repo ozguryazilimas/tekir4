@@ -22,3 +22,6 @@
 /tekir-opportunity-quote-linker/target/
 /tekir-order/target/
 /tekir-quote-order-linker/target/
+/tekir-invoice-model/target/
+/tekir-invoice/target/
+/tekir-order-invoice-linker/target/

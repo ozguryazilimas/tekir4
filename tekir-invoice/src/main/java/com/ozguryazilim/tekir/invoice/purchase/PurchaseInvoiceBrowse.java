@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ozguryazilim.tekir.order.purchase;
+package com.ozguryazilim.tekir.invoice.purchase;
 
 import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.tekir.entities.Process_;
-import com.ozguryazilim.tekir.entities.PurchaseOrder;
-import com.ozguryazilim.tekir.entities.PurchaseOrder_;
+import com.ozguryazilim.tekir.entities.PurchaseInvoice;
+import com.ozguryazilim.tekir.entities.PurchaseInvoice_;
 import com.ozguryazilim.tekir.entities.VoucherBase_;
 import com.ozguryazilim.tekir.entities.VoucherProcessBase_;
 import com.ozguryazilim.tekir.voucher.VoucherBrowseBase;
@@ -35,25 +35,25 @@ import javax.inject.Inject;
  *
  * @author oyas
  */
-@Browse( feature=PurchaseOrderFeature.class )
-public class PurchaseOrderBrowse extends VoucherBrowseBase<PurchaseOrder, PurchaseOrderViewModel> {
+@Browse( feature=PurchaseInvoiceFeature.class )
+public class PurchaseInvoiceBrowse extends VoucherBrowseBase<PurchaseInvoice, PurchaseInvoiceViewModel> {
 
     @Inject
-    private PurchaseOrderRepository repository;
+    private PurchaseInvoiceRepository repository;
     
     @Override
-    public VoucherRepositoryBase<PurchaseOrder, PurchaseOrderViewModel> getVoucherRepository() {
+    public VoucherRepositoryBase<PurchaseInvoice, PurchaseInvoiceViewModel> getVoucherRepository() {
         return repository;
     }
 
     @Override
-    protected void buildQueryDefinition(QueryDefinition<PurchaseOrder, PurchaseOrderViewModel> queryDefinition) {
+    protected void buildQueryDefinition(QueryDefinition<PurchaseInvoice, PurchaseInvoiceViewModel> queryDefinition) {
         queryDefinition
                 .addColumn(new LinkColumn<>(VoucherBase_.voucherNo, "voucher.label.VoucherNo"), true)
                 .addColumn(new SubTextColumn<>(VoucherProcessBase_.account, Contact_.name, "vaoucher.label.Account"), true)
                 .addColumn(new TextColumn<>(VoucherProcessBase_.topic, "voucher.label.Topic"), true)
                 .addColumn(new DateColumn<>(VoucherBase_.date, "voucher.label.Date"), true)
-                .addColumn(new MoneyColumn<>(PurchaseOrder_.total, PurchaseOrder_.currency, "general.label.Total"), true)
+                .addColumn(new MoneyColumn<>(PurchaseInvoice_.total, PurchaseInvoice_.currency, "general.label.Total"), true)
                 .addColumn(new UserColumn<>(VoucherBase_.owner, "voucher.label.Owner"), true)
                 .addColumn(new TextColumn<>(VoucherBase_.referenceNo, "voucher.label.ReferenceNo"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.code, "voucher.label.Code"), false)
@@ -70,7 +70,7 @@ public class PurchaseOrderBrowse extends VoucherBrowseBase<PurchaseOrder, Purcha
                 .addFilter(new StringFilter<>(VoucherBase_.topic, "voucher.label.Topic"))
                 .addFilter(new StringFilter<>(VoucherBase_.stateReason, "voucher.label.StateReason"))
                 .addFilter(new UserFilter<>(VoucherBase_.owner, "voucher.label.Owner"))
-                .addFilter(new BigDecimalFilter<>(PurchaseOrder_.total, "general.label.Total"))
+                .addFilter(new BigDecimalFilter<>(PurchaseInvoice_.total, "general.label.Total"))
                 .addFilter(new SubStringFilter<>(VoucherProcessBase_.account, Contact_.name, "voucher.label.Account"))
                 .addFilter(new SubStringFilter<>(VoucherProcessBase_.process, Process_.processNo, "voucher.label.Process"))
                 .addFilter(new DateFilter<>(VoucherBase_.date, "voucher.label.Date", FilterOperand.In, DateValueType.LastTenDays));

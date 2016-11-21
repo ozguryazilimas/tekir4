@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ozguryazilim.tekir.order.purchase;
+package com.ozguryazilim.tekir.invoice.sales;
 
-import com.ozguryazilim.tekir.entities.PurchaseOrder;
+import com.ozguryazilim.tekir.entities.SalesInvoice;
 import com.ozguryazilim.tekir.feed.AbstractFeeder;
 import com.ozguryazilim.tekir.feed.Feeder;
 import com.ozguryazilim.tekir.voucher.VoucherStateChange;
@@ -24,18 +24,18 @@ import javax.inject.Inject;
  * @author oyas
  */
 @Feeder
-public class PurchaseOrderFeeder extends AbstractFeeder<PurchaseOrder>{
+public class SalesInvoiceFeeder extends AbstractFeeder<SalesInvoice>{
     
     @Inject
     private Identity identity;
     
-    public void feed(@Observes @FeatureQualifier(feauture = PurchaseOrderFeature.class) @After VoucherStateChange event) {
+    public void feed(@Observes @FeatureQualifier(feauture = SalesInvoiceFeature.class) @After VoucherStateChange event) {
 
         //FIXME: acaba bunun için bir Qualifier yapabilir miyiz?
-        if (event.getPayload() instanceof PurchaseOrder) {
+        if (event.getPayload() instanceof SalesInvoice) {
 
             List<FeaturePointer> mentions = new ArrayList<>();
-            PurchaseOrder entity = (PurchaseOrder) event.getPayload();
+            SalesInvoice entity = (SalesInvoice) event.getPayload();
 
             FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
             FeaturePointer contactPointer = FeatureUtils.getAccountFeaturePointer(entity);
@@ -60,11 +60,11 @@ public class PurchaseOrderFeeder extends AbstractFeeder<PurchaseOrder>{
                 case "CLOSE":
                     return "Sales order Won. Congrats!";
                 case "LOST":
-                    return "Sales Order lost! " + event.getPayload().getStateReason();
+                    return "Sales Invoice lost! " + event.getPayload().getStateReason();
                 case "CANCELED":
-                    return "Sales Order canceled. " + event.getPayload().getStateReason();
+                    return "Sales Invoice canceled. " + event.getPayload().getStateReason();
                 default:
-                    return "Sales Order created";
+                    return "Sales Invoice created";
             }
     }
     
