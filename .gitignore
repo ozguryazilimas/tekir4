@@ -25,3 +25,5 @@
 /tekir-invoice-model/target/
 /tekir-invoice/target/
 /tekir-order-invoice-linker/target/
+/tekir-payment/target/
+/tekir-payment-model/target/

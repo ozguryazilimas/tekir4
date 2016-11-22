@@ -21,6 +21,21 @@ public class BankCashAccountViewModel implements ViewModel, Serializable {
     private Currency currency;
     private String iban;
 
+    public BankCashAccountViewModel(Long id, String code, String name) {
+        this.id = id;
+        this.code = code;
+        this.name = name;
+    }
+
+    public BankCashAccountViewModel(Long id, String code, String name, Currency currency, String iban) {
+        this.id = id;
+        this.code = code;
+        this.name = name;
+        this.currency = currency;
+        this.iban = iban;
+    }
+
+    
     @Override
     public Long getId() {
         return id;

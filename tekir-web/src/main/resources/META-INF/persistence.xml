@@ -21,6 +21,7 @@
         <jar-file>lib/tekir-account-notes-model-${version.tekir}.jar</jar-file>
         <jar-file>lib/tekir-order-model-${version.tekir}.jar</jar-file>
         <jar-file>lib/tekir-invoice-model-${version.tekir}.jar</jar-file>
+        <jar-file>lib/tekir-payment-model-${version.tekir}.jar</jar-file>
         
         <properties>
             <!-- Properties for Hibernate -->

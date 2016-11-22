@@ -1,0 +1,82 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"               
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                template="/layout/voucherMasterViewBase.xhtml">
+
+    <ui:define name="content">     
+        <div class="row">
+            <div class="col-md-3 col-xs-12">
+                <t:accordion icon="fa fa-stack-exchange" label="general.label.Summary" columnClass="col-xs-12">
+                    <t:outputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(paymentHome.entity.starter)}" columnClass="col-xs-12"/>
+                    <ui:remove>
+                        bir output account input account seti mi hazırlasak?
+                    </ui:remove>
+                    <t:outputEntityLink label="general.label.Account" value="#{paymentHome.entity.account}" view="/contact/contactView.xhtml" columnClass="col-xs-12"/>
+                    <t:outputText label="bankCashAccount.label.Account" value="#{paymentHome.entity.bankCashAccount.name}" columnClass="col-xs-12"/>
+
+                    <t:outputMoney label="general.label.Amount" value="#{paymentHome.entity.amount}" currency="#{paymentHome.entity.currency}" columnClass="col-xs-12"/>
+                    
+                </t:accordion>
+
+                <t:accordion icon="fa fa-file-text" label="general.label.Voucher" columnClass="col-xs-12">
+                    <t:outputText label="voucher.label.VoucherNo" value="#{paymentHome.entity.voucherNo}"  columnClass="col-xs-12"/>
+                    <t:outputText label="voucher.label.ReferenceNo" value="#{paymentHome.entity.referenceNo}" columnClass="col-xs-12"/>
+                    <t:outputText label="voucher.label.Process" value="#{paymentHome.entity.process.processNo}" columnClass="col-xs-12"/>
+                    <t:outputText label="voucher.label.Owner" value="#{paymentHome.entity.owner}" columnClass="col-xs-12"/>
+                    <t:outputText label="general.label.Code" value="#{paymentHome.entity.code}" columnClass="col-xs-12"/>
+                    <t:outputText label="general.label.Info" value="#{paymentHome.entity.info}" columnClass="col-xs-12"/>
+                    <t:outputDate label="voucher.label.Date" value="#{paymentHome.entity.date}" columnClass="col-xs-12"/>
+                </t:accordion>
+            </div>
+
+            <div class="col-md-6 col-xs-12">
+
+            </div>
+
+            <div class="col-md-3 col-xs-12">
+
+                <ui:include src="/notes/noteWidget.xhtml">
+                    <ui:param name="featurePointer" value="#{paymentHome.featurePointer}" />
+                </ui:include>
+                
+                <ui:include src="/activities/activityWidget.xhtml">
+                    <ui:param name="person" value="#{paymentHome.person}" />
+                    <ui:param name="corporation" value="#{paymentHome.corporation}" />
+                    <ui:param name="feature" value="#{paymentHome.featurePointer}" />
+                    <ui:param name="attached" value="Feature" />
+                </ui:include>
+
+                <t:accordion icon="fa fa-file" id="cx" label="general.label.ReleatedVouchers" columnClass="col-xs-12">
+                    <ul class="products-list product-list-in-box">
+                        <ui:repeat value="#{accountTxnService.getProcessVouchers(paymentHome.entity.process.processNo)}" var="ci" >
+                            <li class="item">
+                                <t:cellOutputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
+
+                                <span class="text-muted pull-right">#{ci.processId}</span>
+
+                                <div class="text-sm">
+                                    #{ci.info}
+                                </div>
+
+                            </li>
+                        </ui:repeat>
+                    </ul>
+                </t:accordion>
+
+                <ui:include src="/feeds/feedWidget.xhtml">
+                    <ui:param name="feature" value="#{paymentHome.featureClass.simpleName}" />
+                    <ui:param name="pk" value="#{paymentHome.entity.id}" />
+                </ui:include>
+
+            </div>
+
+
+
+        </div>
+
+    </ui:define>
+
+</ui:composition>

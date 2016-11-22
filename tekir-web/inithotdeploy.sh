@@ -24,6 +24,7 @@ rm -rf WEB-INF/lib/tekir-account-notes-4.0.0-SNAPSHOT.jar
 rm -rf WEB-INF/lib/tekir-feed-4.0.0-SNAPSHOT.jar
 rm -rf WEB-INF/lib/tekir-opportunity-quote-linker-4.0.0-SNAPSHOT.jar
 rm -rf WEB-INF/lib/tekir-invoice-4.0.0-SNAPSHOT.jar
+rm -rf WEB-INF/lib/tekir-payment-4.0.0-SNAPSHOT.jar
 
 
 
@@ -49,6 +50,7 @@ ln -s ~/git/tekir4/tekir-account-notes/target/classes/ WEB-INF/lib/tekir-account
 ln -s ~/git/tekir4/tekir-feed/target/classes/ WEB-INF/lib/tekir-feed-4.0.0-SNAPSHOT.jar
 ln -s ~/git/tekir4/tekir-opportunity-quote-linker/target/classes/ WEB-INF/lib/tekir-opportunity-quote-linker-4.0.0-SNAPSHOT.jar
 ln -s ~/git/tekir4/tekir-invoice/target/classes/ WEB-INF/lib/tekir-invoice-4.0.0-SNAPSHOT.jar
+ln -s ~/git/tekir4/tekir-payment/target/classes/ WEB-INF/lib/tekir-payment-4.0.0-SNAPSHOT.jar
 
 
 

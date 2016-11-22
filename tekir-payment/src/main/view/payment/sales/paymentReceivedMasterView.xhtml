@@ -1,0 +1,82 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"               
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                template="/layout/voucherMasterViewBase.xhtml">
+
+    <ui:define name="content">     
+        <div class="row">
+            <div class="col-md-3 col-xs-12">
+                <t:accordion icon="fa fa-stack-exchange" label="general.label.Summary" columnClass="col-xs-12">
+                    <t:outputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(paymentReceivedHome.entity.starter)}" columnClass="col-xs-12"/>
+                    <ui:remove>
+                        bir output account input account seti mi hazırlasak?
+                    </ui:remove>
+                    <t:outputEntityLink label="general.label.Account" value="#{paymentReceivedHome.entity.account}" view="/contact/contactView.xhtml" columnClass="col-xs-12"/>
+                    <t:outputText label="bankCashAccount.label.Account" value="#{paymentReceivedHome.entity.bankCashAccount.name}" columnClass="col-xs-12"/>
+
+                    <t:outputMoney label="general.label.Amount" value="#{paymentReceivedHome.entity.amount}" currency="#{paymentReceivedHome.entity.currency}" columnClass="col-xs-12"/>
+                    
+                </t:accordion>
+
+                <t:accordion icon="fa fa-file-text" label="general.label.Voucher" columnClass="col-xs-12">
+                    <t:outputText label="voucher.label.VoucherNo" value="#{paymentReceivedHome.entity.voucherNo}"  columnClass="col-xs-12"/>
+                    <t:outputText label="voucher.label.ReferenceNo" value="#{paymentReceivedHome.entity.referenceNo}" columnClass="col-xs-12"/>
+                    <t:outputText label="voucher.label.Process" value="#{paymentReceivedHome.entity.process.processNo}" columnClass="col-xs-12"/>
+                    <t:outputText label="voucher.label.Owner" value="#{paymentReceivedHome.entity.owner}" columnClass="col-xs-12"/>
+                    <t:outputText label="general.label.Code" value="#{paymentReceivedHome.entity.code}" columnClass="col-xs-12"/>
+                    <t:outputText label="general.label.Info" value="#{paymentReceivedHome.entity.info}" columnClass="col-xs-12"/>
+                    <t:outputDate label="voucher.label.Date" value="#{paymentReceivedHome.entity.date}" columnClass="col-xs-12"/>
+                </t:accordion>
+            </div>
+
+            <div class="col-md-6 col-xs-12">
+
+            </div>
+
+            <div class="col-md-3 col-xs-12">
+
+                <ui:include src="/notes/noteWidget.xhtml">
+                    <ui:param name="featurePointer" value="#{paymentReceivedHome.featurePointer}" />
+                </ui:include>
+                
+                <ui:include src="/activities/activityWidget.xhtml">
+                    <ui:param name="person" value="#{paymentReceivedHome.person}" />
+                    <ui:param name="corporation" value="#{paymentReceivedHome.corporation}" />
+                    <ui:param name="feature" value="#{paymentReceivedHome.featurePointer}" />
+                    <ui:param name="attached" value="Feature" />
+                </ui:include>
+
+                <t:accordion icon="fa fa-file" id="cx" label="general.label.ReleatedVouchers" columnClass="col-xs-12">
+                    <ul class="products-list product-list-in-box">
+                        <ui:repeat value="#{accountTxnService.getProcessVouchers(paymentReceivedHome.entity.process.processNo)}" var="ci" >
+                            <li class="item">
+                                <t:cellOutputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
+
+                                <span class="text-muted pull-right">#{ci.processId}</span>
+
+                                <div class="text-sm">
+                                    #{ci.info}
+                                </div>
+
+                            </li>
+                        </ui:repeat>
+                    </ul>
+                </t:accordion>
+
+                <ui:include src="/feeds/feedWidget.xhtml">
+                    <ui:param name="feature" value="#{paymentReceivedHome.featureClass.simpleName}" />
+                    <ui:param name="pk" value="#{paymentReceivedHome.entity.id}" />
+                </ui:include>
+
+            </div>
+
+
+
+        </div>
+
+    </ui:define>
+
+</ui:composition>

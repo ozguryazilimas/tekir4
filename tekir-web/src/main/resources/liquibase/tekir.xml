@@ -22,6 +22,7 @@
     <include file="liquibase/tekir-account-notes.xml" />
     <include file="liquibase/tekir-order.xml" />
     <include file="liquibase/tekir-invoice.xml" />
+    <include file="liquibase/tekir-payment.xml" />
     
     
         
