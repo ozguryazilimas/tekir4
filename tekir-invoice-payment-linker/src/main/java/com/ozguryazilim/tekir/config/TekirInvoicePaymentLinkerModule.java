@@ -21,6 +21,7 @@ public class TekirInvoicePaymentLinkerModule {
     public void init(){
         
         ContextMenuResolverRegistery.registerMenu(InvoicePages.Purchase.PurchaseInvoiceView.class, "/menu/purchaseInvoicePayment.xhtml");
+        ContextMenuResolverRegistery.registerMenu(InvoicePages.Sales.SalesInvoiceView.class, "/menu/salesInvoicePayment.xhtml");
         
     }
 }

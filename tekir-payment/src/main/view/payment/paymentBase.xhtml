@@ -4,59 +4,54 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
                 xmlns:p="http://primefaces.org/ui"                
-                template="/payment/paymentBase.xhtml">
+                template="/layout/editBase.xhtml">
 
-    <ui:param name="homeBean" value="#{paymentHome}" />
-    <ui:param name="homeBeanName" value="paymentHome" />
-    <ui:param name="entity" value="#{paymentHome.entity}" />
-    <ui:param name="regardingFeature" value="PurchaseInvoiceFeature" />
 
-    <ui:remove>
     <ui:define name="form">
         <div class="row">
 
             <div class="col-md-6 col-xs-12">
                 <p:outputPanel id="ddt" styleClass="row" layout="block">
-                    <t:inputLookupDialog label="general.label.Account" value="#{paymentHome.account}" 
-                                         lookupBean="#{contactLookup}" lookupListener="paymentHome.account" 
+                    <t:inputLookupDialog label="general.label.Account" value="#{homeBean.account}" 
+                                         lookupBean="#{contactLookup}" lookupListener="#{homeBeanName}.account" 
                                          lookupProfile="R:ACCOUNT;S:CUSTOMER"
                                          placeholder="#{messages['general.info.Account']}" update=":form:prss, :form:ddt" required="true"
-                                         disabled="#{paymentHome.entity.state.name ne 'DRAFT'}"/>
+                                         disabled="#{homeBean.entity.state.name ne 'DRAFT'}"/>
 
-                    <t:inputLookupDialog label="general.label.BankCashAccount" value="#{paymentHome.entity.bankCashAccount}" 
-                                         lookupBean="#{bankCashAccountLookup}" lookupListener="paymentHome.entity.bankCashAccount" 
+                    <t:inputLookupDialog label="general.label.BankCashAccount" value="#{homeBean.entity.bankCashAccount}" 
+                                         lookupBean="#{bankCashAccountLookup}" lookupListener="#{homeBeanName}.entity.bankCashAccount" 
                                          placeholder="#{messages['general.info.BankCashAccount']}" update=":form:prss" required="true"/>
 
-                    <t:inputFeatureLookupDialog label="general.label.Regarding" value="#{paymentHome.matchable}" 
-                                                lookupBean="#{voucherMatchableLookup}" lookupListener="paymentHome.matchable" 
-                                                lookupProfile="A:#{paymentHome.account.id};F:PurchaseInvoiceFeature"
+                    <t:inputFeatureLookupDialog label="general.label.Regarding" value="#{homeBean.matchable}" 
+                                                lookupBean="#{voucherMatchableLookup}" lookupListener="#{homeBeanName}.matchable" 
+                                                lookupProfile="A:#{homeBean.account.id};F:#{regardingFeature}"
                                                 caption="feature"
                                                 placeholder="#{messages['general.info.Regarding']}" update=":form:prss, :form:ddt" 
-                                                disabled="#{paymentHome.entity.state.name ne 'DRAFT'}" columnClass="col-xs-12"/>
+                                                disabled="#{homeBean.entity.state.name ne 'DRAFT'}" columnClass="col-xs-12"/>
 
-                    <t:inputText label="voucher.label.Topic" value="#{paymentHome.entity.topic}"  required="true" columnClass="col-xs-12"/>
+                    <t:inputText label="voucher.label.Topic" value="#{homeBean.entity.topic}"  required="true" columnClass="col-xs-12"/>
 
-                    <t:inputCurrency label="general.label.Currency" value="#{paymentHome.entity.currency}" required="true"/>
-                    <t:inputMoney label="general.label.Amount" value="#{paymentHome.entity.amount}"  currency="#{paymentHome.entity.currency}" required="true" />
+                    <t:inputCurrency label="general.label.Currency" value="#{homeBean.entity.currency}" required="true"/>
+                    <t:inputMoney label="general.label.Amount" value="#{homeBean.entity.amount}"  currency="#{homeBean.entity.currency}" required="true" />
 
                 </p:outputPanel>
             </div>
 
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <t:inputDate label="voucher.label.Date" value="#{paymentHome.entity.date}" columnClass="col-md-4"/>
-                    <t:inputText label="voucher.label.VoucherNo" value="#{paymentHome.entity.voucherNo}"  required="true" readonly="true" columnClass="col-md-4"/>
-                    <t:inputText label="voucher.label.ReferenceNo" value="#{paymentHome.entity.referenceNo}" columnClass="col-md-4"/>
+                    <t:inputDate label="voucher.label.Date" value="#{homeBean.entity.date}" columnClass="col-md-4"/>
+                    <t:inputText label="voucher.label.VoucherNo" value="#{homeBean.entity.voucherNo}"  required="true" readonly="true" columnClass="col-md-4"/>
+                    <t:inputText label="voucher.label.ReferenceNo" value="#{homeBean.entity.referenceNo}" columnClass="col-md-4"/>
 
                     <p:outputPanel id="prss">
-                        <t:inputProcess value="#{paymentHome.process}" lookupListener="paymentHome.process" lookupProfile="A:#{paymentHome.entity.account.id};T:PURCHASE" update=":form:ddt" disabled="true"/>
+                        <t:inputProcess value="#{homeBean.process}" lookupListener="#{homeBeanName}.process" lookupProfile="A:#{homeBean.entity.account.id};T:PURCHASE" update=":form:ddt" disabled="true"/>
                     </p:outputPanel>
 
-                    <t:inputLookupDialog label="voucher.label.Group" value="#{paymentHome.entity.group}" lookupBean="#{voucherGroupLookup}" lookupListener="paymentHome.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" />
+                    <t:inputLookupDialog label="voucher.label.Group" value="#{homeBean.entity.group}" lookupBean="#{voucherGroupLookup}" lookupListener="homeBean.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" />
 
-                    <t:inputText label="voucher.label.Owner" value="#{paymentHome.entity.owner}" />
-                    <t:inputText label="general.label.Code" value="#{paymentHome.entity.code}" />
-                    <t:inputTextarea label="general.label.Info" value="#{paymentHome.entity.info}" columnClass="col-xs-12"/>
+                    <t:inputText label="voucher.label.Owner" value="#{homeBean.entity.owner}" />
+                    <t:inputText label="general.label.Code" value="#{homeBean.entity.code}" />
+                    <t:inputTextarea label="general.label.Info" value="#{homeBean.entity.info}" columnClass="col-xs-12"/>
 
                 </div>
             </div>
@@ -68,8 +63,8 @@
                 <t:accordion icon="fa fa-file-text" id="regs" label="general.label.Regarding" columnClass="col-xs-12">
 
                     <div class="row">
-                        <p:dataTable id="its" value="#{paymentHome.matcherViewModels}" var="item" reflow="true" editable="true" editMode="cell" styleClass="col-xs-12">
-                            <p:ajax event="cellEdit" listener="#{paymentHome.onCellEdit}" update=":form:regs:its" />
+                        <p:dataTable id="its" value="#{homeBean.matcherViewModels}" var="item" reflow="true" editable="true" editMode="cell" styleClass="col-xs-12">
+                            <p:ajax event="cellEdit" listener="#{homeBean.onCellEdit}" update=":form:regs:its" />
 
                             <p:column headerText="Fiş">
                                 <h:outputText value="#{item.matchable.feature.businessKey}" />
@@ -88,7 +83,7 @@
                             </p:column>
                             <p:column headerText="Kapatılan">
                                 <p:cellEditor>
-                                    <f:facet name="output"><t:cellOutputMoney value="#{item.amount}" currency="#{paymentHome.entity.currency}"/></f:facet>
+                                    <f:facet name="output"><t:cellOutputMoney value="#{item.amount}" currency="#{homeBean.entity.currency}"/></f:facet>
                                     <f:facet name="input">
                                         <p:inputNumber value="#{item.amount}" maxValue="#{item.matchable.remainder}" />
                                     </f:facet>
@@ -99,7 +94,7 @@
 
                         <div class="col-xs-3 pull-right" >
                             <p:outputPanel layout="span" styleClass="pull-right" autoUpdate="true" style="padding: 8px;">
-                                <t:cellOutputMoney value="#{paymentHome.remainder}" currency="#{paymentHome.entity.currency}"/>
+                                <t:cellOutputMoney value="#{homeBean.remainder}" currency="#{homeBean.entity.currency}"/>
                             </p:outputPanel>
                         </div>
                         <div class="col-xs-3 pull-right">
@@ -115,5 +110,4 @@
             </div>
         </ui:remove>
     </ui:define> 
-        </ui:remove>
 </ui:composition>

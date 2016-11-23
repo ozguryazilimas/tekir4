@@ -4,8 +4,11 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
-                template="/layout/voucherMasterViewBase.xhtml">
+                template="/payment/paymentMasterViewBase.xhtml">
 
+    <ui:param name="homeBean" value="#{paymentReceivedHome}" />
+    
+    <ui:remove>
     <ui:define name="content">     
         <div class="row">
             <div class="col-md-3 col-xs-12">
@@ -78,5 +81,6 @@
         </div>
 
     </ui:define>
+        </ui:remove>
 
 </ui:composition>

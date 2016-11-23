@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ozguryazilim.tekir.invoice;
+package com.ozguryazilim.tekir.payment;
 
 import com.ozguryazilim.tekir.account.AccountTxnService;
-import com.ozguryazilim.tekir.entities.Invoice;
+import com.ozguryazilim.tekir.entities.PaymentBase;
 import com.ozguryazilim.tekir.entities.ProcessType;
 import com.ozguryazilim.tekir.entities.VoucherStateType;
 import com.ozguryazilim.tekir.feed.AbstractFeeder;
@@ -26,7 +26,7 @@ import javax.inject.Inject;
  *
  * @author oyas
  */
-public abstract class InvoiceFeeder<E extends Invoice> extends AbstractFeeder<E> {
+public abstract class PaymentFeederBase<E extends PaymentBase> extends AbstractFeeder<E> {
     
     @Inject
     private Identity identity;
@@ -41,7 +41,7 @@ public abstract class InvoiceFeeder<E extends Invoice> extends AbstractFeeder<E>
     private AccountTxnService accountTxnService;
     
     public void feedFeeder(VoucherStateChange event) {
-        if (event.getPayload() instanceof Invoice) {
+        if (event.getPayload() instanceof PaymentBase) {
 
             List<FeaturePointer> mentions = new ArrayList<>();
             E entity = (E) event.getPayload();
@@ -59,23 +59,23 @@ public abstract class InvoiceFeeder<E extends Invoice> extends AbstractFeeder<E>
         //TODO: Burada sadece publish olduğunda matcherservise gitmeli.
         //TODO: Eğer üzerinde bir matcher varsa edite izin verilmemeli.
         if( "OPEN".equals(event.getTo().getName())){
-            if (event.getPayload() instanceof Invoice) {
+            if (event.getPayload() instanceof PaymentBase) {
                 E entity = (E) event.getPayload();
-                matcherService.register(entity, entity.getCurrency(), entity.getTotal());
+                matcherService.register(entity, entity.getCurrency(), entity.getAmount());
             }
         }
         
         
         
         if( "OPEN".equals(event.getTo().getName()) && "DRAFT".equals(event.getFrom().getName()) ){
-            if (event.getPayload() instanceof Invoice) {
+            if (event.getPayload() instanceof PaymentBase) {
                 E entity = (E) event.getPayload();
                 processService.incProcessUsage(entity.getProcess());
             }
         }
         
         if( event.getTo().getType().equals(VoucherStateType.CLOSE) ){
-            if (event.getPayload() instanceof Invoice) {
+            if (event.getPayload() instanceof PaymentBase) {
                 E entity = (E) event.getPayload();
                 processService.decProcessUsage(entity.getProcess());
             }
@@ -91,7 +91,7 @@ public abstract class InvoiceFeeder<E extends Invoice> extends AbstractFeeder<E>
             
             FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
             
-            accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getCode(), entity.getInfo(), Boolean.FALSE, getProcessType() == ProcessType.PURCHASE, entity.getCurrency(), entity.getTotal(), entity.getDate(), entity.getOwner(), entity.getProcess().getProcessNo(), entity.getState().toString(), entity.getStateReason());
+            accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getCode(), entity.getInfo(), Boolean.FALSE, getProcessType() == ProcessType.PURCHASE, entity.getCurrency(), entity.getAmount(), entity.getDate(), entity.getOwner(), entity.getProcess().getProcessNo(), entity.getState().toString(), entity.getStateReason());
         }
         
         //TODO: Delete edildiğinde de gidip txn'den silme yapılmalı.
@@ -108,15 +108,15 @@ public abstract class InvoiceFeeder<E extends Invoice> extends AbstractFeeder<E>
     protected String getMessage( VoucherStateChange event ){
         switch (event.getTo().getName()) {
                 case "OPEN":
-                    return getProcessType() + " invoice created";
+                    return getProcessType() + " payment created";
                 case "CLOSE":
-                    return getProcessType() + " invoice Won. Congrats!";
+                    return getProcessType() + " payment Won. Congrats!";
                 case "LOST":
-                    return getProcessType() + " invoice lost! " + event.getPayload().getStateReason();
+                    return getProcessType() + " payment lost! " + event.getPayload().getStateReason();
                 case "CANCELED":
-                    return getProcessType() + " invoice canceled. " + event.getPayload().getStateReason();
+                    return getProcessType() + " payment canceled. " + event.getPayload().getStateReason();
                 default:
-                    return getProcessType() + " invoice created";
+                    return getProcessType() + " payment created";
             }
     }
     

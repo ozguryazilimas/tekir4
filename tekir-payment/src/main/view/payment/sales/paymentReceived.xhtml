@@ -4,11 +4,14 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
                 xmlns:p="http://primefaces.org/ui"                
-                template="/layout/editBase.xhtml">
+                template="/payment/paymentBase.xhtml">
 
     <ui:param name="homeBean" value="#{paymentReceivedHome}" />
+    <ui:param name="homeBeanName" value="paymentReceivedHome" />
     <ui:param name="entity" value="#{paymentReceivedHome.entity}" />
+    <ui:param name="regardingFeature" value="SalesInvoiceFeature" />
 
+    <ui:remove>
     <ui:define name="form">
         <div class="row">
 
@@ -97,4 +100,5 @@
             </t:accordion>
         </div>
     </ui:define> 
+        </ui:remove>
 </ui:composition>
