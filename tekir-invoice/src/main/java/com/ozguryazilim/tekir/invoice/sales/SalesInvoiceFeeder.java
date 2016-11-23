@@ -5,67 +5,37 @@
  */
 package com.ozguryazilim.tekir.invoice.sales;
 
+import com.ozguryazilim.tekir.entities.ProcessType;
 import com.ozguryazilim.tekir.entities.SalesInvoice;
-import com.ozguryazilim.tekir.feed.AbstractFeeder;
 import com.ozguryazilim.tekir.feed.Feeder;
+import com.ozguryazilim.tekir.invoice.InvoiceFeeder;
 import com.ozguryazilim.tekir.voucher.VoucherStateChange;
-import com.ozguryazilim.tekir.voucher.utils.FeatureUtils;
-import com.ozguryazilim.telve.auth.Identity;
-import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureQualifier;
+import com.ozguryazilim.telve.forms.EntityChangeEvent;
 import com.ozguryazilim.telve.qualifiers.After;
-import java.util.ArrayList;
-import java.util.List;
+import com.ozguryazilim.telve.qualifiers.EntityQualifier;
 import javax.enterprise.event.Observes;
-import javax.inject.Inject;
 
 /**
  *
  * @author oyas
  */
 @Feeder
-public class SalesInvoiceFeeder extends AbstractFeeder<SalesInvoice>{
-    
-    @Inject
-    private Identity identity;
-    
-    public void feed(@Observes @FeatureQualifier(feauture = SalesInvoiceFeature.class) @After VoucherStateChange event) {
+public class SalesInvoiceFeeder extends InvoiceFeeder<SalesInvoice> {
 
-        //FIXME: acaba bunun için bir Qualifier yapabilir miyiz?
-        if (event.getPayload() instanceof SalesInvoice) {
+    public void listenStateChange(@Observes @FeatureQualifier(feauture = SalesInvoiceFeature.class) @After VoucherStateChange event) {
+        feedFeeder(event);
+        feedMatcherService(event);
 
-            List<FeaturePointer> mentions = new ArrayList<>();
-            SalesInvoice entity = (SalesInvoice) event.getPayload();
-
-            FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
-            FeaturePointer contactPointer = FeatureUtils.getAccountFeaturePointer(entity);
-            mentions.add(contactPointer);
-            mentions.add(voucherPointer);
-            
-            sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(), entity.getVoucherNo(), getMessage(event), mentions);
-        }
     }
 
-    /**
-     * Geriye event bilgilerine bakarak feed body mesajını hazırlayıp döndürür.
-     * 
-     * TODO: i18n problemi ve action / state karşılaştırması + const kullanımına ihtiyaç var.
-     * @param event
-     * @return 
-     */
-    protected String getMessage( VoucherStateChange event ){
-        switch (event.getTo().getName()) {
-                case "OPEN":
-                    return "Sales order created";
-                case "CLOSE":
-                    return "Sales order Won. Congrats!";
-                case "LOST":
-                    return "Sales Invoice lost! " + event.getPayload().getStateReason();
-                case "CANCELED":
-                    return "Sales Invoice canceled. " + event.getPayload().getStateReason();
-                default:
-                    return "Sales Invoice created";
-            }
+    public void listenEntityChange(@Observes @EntityQualifier(entity = SalesInvoice.class) @After EntityChangeEvent event) {
+        feedAccountTxn(event);
     }
-    
+
+    @Override
+    protected ProcessType getProcessType() {
+        return ProcessType.SALES;
+    }
+
 }
