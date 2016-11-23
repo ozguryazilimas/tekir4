@@ -6,9 +6,12 @@
 package com.ozguryazilim.tekir.order.purchase;
 
 import com.ozguryazilim.tekir.entities.PurchaseOrder;
+import com.ozguryazilim.tekir.entities.VoucherStateType;
 import com.ozguryazilim.tekir.feed.AbstractFeeder;
 import com.ozguryazilim.tekir.feed.Feeder;
 import com.ozguryazilim.tekir.voucher.VoucherStateChange;
+import com.ozguryazilim.tekir.voucher.matcher.VoucherMatcherService;
+import com.ozguryazilim.tekir.voucher.process.ProcessService;
 import com.ozguryazilim.tekir.voucher.utils.FeatureUtils;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.entities.FeaturePointer;
@@ -29,6 +32,12 @@ public class PurchaseOrderFeeder extends AbstractFeeder<PurchaseOrder>{
     @Inject
     private Identity identity;
     
+    @Inject
+    private VoucherMatcherService matcherService;
+    
+    @Inject
+    private ProcessService processService;
+    
     public void feed(@Observes @FeatureQualifier(feauture = PurchaseOrderFeature.class) @After VoucherStateChange event) {
 
         //FIXME: acaba bunun için bir Qualifier yapabilir miyiz?
@@ -46,6 +55,32 @@ public class PurchaseOrderFeeder extends AbstractFeeder<PurchaseOrder>{
         }
     }
 
+     public void feedMatcherService(@Observes @FeatureQualifier(feauture = PurchaseOrderFeature.class) @After VoucherStateChange event) {
+        //TODO: Burada sadece publish olduğunda matcherservise gitmeli.
+        //TODO: Eğer üzerinde bir matcher varsa edite izin verilmemeli.
+        if( "OPEN".equals(event.getTo().getName())){
+            if (event.getPayload() instanceof PurchaseOrder) {
+                PurchaseOrder entity = (PurchaseOrder) event.getPayload();
+                matcherService.register(entity, entity.getCurrency(), entity.getTotal());
+            }
+        }
+        
+        
+        if( "OPEN".equals(event.getTo().getName()) && "DRAFT".equals(event.getFrom().getName()) ){
+            if (event.getPayload() instanceof PurchaseOrder) {
+                PurchaseOrder entity = (PurchaseOrder) event.getPayload();
+                processService.incProcessUsage(entity.getProcess());
+            }
+        }
+        
+        if( event.getTo().getType().equals(VoucherStateType.CLOSE) ){
+            if (event.getPayload() instanceof PurchaseOrder) {
+                PurchaseOrder entity = (PurchaseOrder) event.getPayload();
+                processService.decProcessUsage(entity.getProcess());
+            }
+        }
+    }
+    
     /**
      * Geriye event bilgilerine bakarak feed body mesajını hazırlayıp döndürür.
      * 

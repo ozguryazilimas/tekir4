@@ -27,6 +27,7 @@ public class VoucherStateAction {
     private final Boolean needDialog;
     private final String permission;
     private Integer order = 50;
+    private Boolean silence = Boolean.FALSE;
 
     public VoucherStateAction(String name, String icon, Boolean needDialog, String permission) {
         this.name = name;
@@ -60,6 +61,21 @@ public class VoucherStateAction {
         this.permission = name;
     }
 
+    /**
+     * Sesiz bir transition için kullanılır.
+     * 
+     * UI üzerinde kullanıcıya gösterilmez. Bir State'den diğerine sadece programatik olarak geçiş için kullanılır.
+     * 
+     * @param name 
+     */
+    public VoucherStateAction(String name) {
+        this.name = name;
+        this.icon = "";
+        this.needDialog = Boolean.FALSE;
+        this.permission = "";
+        this.silence = Boolean.TRUE;
+    }
+    
     public String getName() {
         return name;
     }
@@ -84,7 +100,10 @@ public class VoucherStateAction {
         this.order = order;
     }
 
-    
+    public Boolean getSilence() {
+        return silence;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;

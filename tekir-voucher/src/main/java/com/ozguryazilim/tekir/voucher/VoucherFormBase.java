@@ -123,6 +123,7 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
         }
         
         trn.keySet().stream()
+                .filter( act -> !act.getSilence() )
                 .filter((act) -> ( identity.isPermitted(getPermissionDomain() + ":" +  act.getPermission() +":" + getEntity().getOwner()) ))
                 .forEachOrdered((act) -> {
                     result.add(act);
@@ -152,7 +153,9 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
 
         //Şimdi varılacak olan state'i bulalım
         Map<VoucherStateAction, VoucherState> trn = stateConfig.getTransitions().get(getCurrentState());
+        if( trn == null ) return null;
         VoucherState toState = trn.get(action);
+        if( toState == null ) return null;
 
         //Gönderilecek olan event'i hazırlayalım
         VoucherStateChange e = new VoucherStateChange(fromState, action, toState, getEntity());

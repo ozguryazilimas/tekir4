@@ -6,7 +6,7 @@
                 xmlns:t="http://java.sun.com/jsf/composite/telveComponents">
 
     <li>
-        <p:commandLink action="#{opportunityContactMenuAction.newOpportunity()}" styleClass="context-command" >
+        <p:commandLink action="#{opportunityContactMenuAction.newOpportunity()}" styleClass="context-command" rendered="#{identity.hasPermission('opportunity', 'insert')}">
             <i class="fa fa-lightbulb-o"></i>
             <h:outputText value=" #{messages['opportunity.button.NewOpportunity']}" />
         </p:commandLink>

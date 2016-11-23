@@ -27,6 +27,9 @@ public interface VoucherPages extends Pages {
     @SecuredPage() @View
     class VoucherGroupLookup implements VoucherPages {}
     
+    @SecuredPage() @View
+    class VoucherMatchableLookup implements VoucherPages {}
+    
     @SecuredPage("voucherSerial") @View
     @Navigation(label = "module.caption.VoucherSerial", icon = "fa fa-book", section = ParamNavigationSection.class)
     class VoucherSerial implements VoucherPages {}

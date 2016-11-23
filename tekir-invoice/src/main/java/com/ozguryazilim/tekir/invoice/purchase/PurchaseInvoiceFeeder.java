@@ -9,6 +9,7 @@ import com.ozguryazilim.tekir.entities.PurchaseInvoice;
 import com.ozguryazilim.tekir.feed.AbstractFeeder;
 import com.ozguryazilim.tekir.feed.Feeder;
 import com.ozguryazilim.tekir.voucher.VoucherStateChange;
+import com.ozguryazilim.tekir.voucher.matcher.VoucherMatcherService;
 import com.ozguryazilim.tekir.voucher.utils.FeatureUtils;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.entities.FeaturePointer;
@@ -29,6 +30,10 @@ public class PurchaseInvoiceFeeder extends AbstractFeeder<PurchaseInvoice>{
     @Inject
     private Identity identity;
     
+    @Inject
+    private VoucherMatcherService matcherService;
+    
+    
     public void feed(@Observes @FeatureQualifier(feauture = PurchaseInvoiceFeature.class) @After VoucherStateChange event) {
 
         //FIXME: acaba bunun için bir Qualifier yapabilir miyiz?
@@ -46,6 +51,20 @@ public class PurchaseInvoiceFeeder extends AbstractFeeder<PurchaseInvoice>{
         }
     }
 
+    public void feedMatcherService(@Observes @FeatureQualifier(feauture = PurchaseInvoiceFeature.class) @After VoucherStateChange event) {
+        //TODO: Burada sadece publish olduğunda matcherservise gitmeli.
+        //TODO: Eğer üzerinde bir matcher varsa edite izin verilmemeli.
+        if( "OPEN".equals(event.getTo().getName())){
+            if (event.getPayload() instanceof PurchaseInvoice) {
+                PurchaseInvoice entity = (PurchaseInvoice) event.getPayload();
+                matcherService.register(entity, entity.getCurrency(), entity.getTotal());
+            }
+        }
+    }
+    
+    
+    
+    
     /**
      * Geriye event bilgilerine bakarak feed body mesajını hazırlayıp döndürür.
      * 

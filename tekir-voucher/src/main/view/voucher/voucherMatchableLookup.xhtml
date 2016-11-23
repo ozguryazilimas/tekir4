@@ -1,0 +1,31 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                template="/layout/lookupBase.xhtml">
+    <ui:param name="bean" value="#{voucherMatchableLookup}" />
+    <ui:param name="title" value="#{messages['voucherMatchableLookup.title']}" />
+    <ui:param name="noStandartFilter" value="true" />
+    <ui:param name="useCustomColumns" value="true" />
+    
+    <ui:define name="columns">
+        <p:column styleClass="actionColumn">
+            <i class="#{messages['feature.icon.'.concat(item.feature.feature)]}" 
+               title="#{messages['feature.caption.'.concat(item.feature.feature)]}"/>
+        </p:column>
+        <p:column headerText="Feature">
+            <h:outputText value="#{item.feature.businessKey}"
+                          title="#{messages['feature.caption.'.concat(item.feature.feature)]}"/>
+        </p:column>
+        <p:column headerText="Topic">
+            #{item.topic}
+        </p:column>
+        <p:column headerText="Tutar">
+            <t:cellOutputMoney value="#{item.ammount}" currency="#{item.currency}"/>
+        </p:column>
+        <p:column headerText="Kalan">
+            <t:cellOutputMoney value="#{item.remainder}" currency="#{item.currency}"/>
+        </p:column>
+    </ui:define>
+</ui:composition>

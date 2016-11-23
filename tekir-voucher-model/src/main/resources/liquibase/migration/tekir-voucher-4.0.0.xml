@@ -32,4 +32,47 @@
     <changeSet author="oyas (generated)" id="1478451375584-3">
         <addForeignKeyConstraint baseColumnNames="ACCOUNT_ID" baseTableName="TVO_PROCESS" constraintName="FK_PROCESS_ACC" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
     </changeSet>
+    <changeSet author="oyas (generated)" id="1479824343704-1">
+        <createTable tableName="TVO_MATCHABLE">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TVO_MATCHABLEPK"/>
+            </column>
+            <column name="AMOUNT" type="DECIMAL(19, 2)"/>
+            <column name="CCY" type="VARCHAR(255)"/>
+            <column name="FEATURE_BK" type="VARCHAR(255)"/>
+            <column name="FEATURE" type="VARCHAR(255)"/>
+            <column name="FEATURE_PK" type="BIGINT"/>
+            <column name="PROCESS_NO" type="VARCHAR(30)" />
+            <column name="REMAINDER" type="DECIMAL(19, 2)"/>
+            <column name="STATUS" type="VARCHAR(255)"/>
+            <column name="TOPIC" type="VARCHAR(255)"/>
+            <column name="TXNDATE" type="date"/>
+            <column name="TYPE" type="VARCHAR(255)"/>
+            <column name="ACCOUNT_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1479824343704-2">
+        <createTable tableName="TVO_MATCHER">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TVO_MATCHERPK"/>
+            </column>
+            <column name="AMOUNT" type="DECIMAL(19, 2)"/>
+            <column name="CCY" type="VARCHAR(255)"/>
+            <column name="FEATURE_BK" type="VARCHAR(255)"/>
+            <column name="FEATURE" type="VARCHAR(255)"/>
+            <column name="FEATURE_PK" type="BIGINT"/>
+            <column name="MASTER_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1479824343704-3">
+        <addForeignKeyConstraint baseColumnNames="MASTER_ID" baseTableName="TVO_MATCHER" constraintName="FK_MATCHER_MATCH" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TVO_MATCHABLE"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1479824343704-4">
+        <addForeignKeyConstraint baseColumnNames="ACCOUNT_ID" baseTableName="TVO_MATCHABLE" constraintName="FK_MATCH_ACC" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1479895591607-1">
+        <addColumn tableName="TVO_PROCESS">
+            <column name="COUNTER" type="integer"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

@@ -54,6 +54,12 @@ public class Process extends EntityBase{
     @Column( name="STATUS")
     private ProcessStatus status;
     
+    /**
+     * Bu process ile ilişkili açık belgeler bir artırır kapandıkların da bir eksiltir.
+     */
+    @Column( name="COUNTER")
+    private Integer counter = 0;
+    
     @Override
     public Long getId() {
         return id;
@@ -101,6 +107,14 @@ public class Process extends EntityBase{
 
     public void setStatus(ProcessStatus status) {
         this.status = status;
+    }
+
+    public Integer getCounter() {
+        return counter;
+    }
+
+    public void setCounter(Integer counter) {
+        this.counter = counter;
     }
     
     

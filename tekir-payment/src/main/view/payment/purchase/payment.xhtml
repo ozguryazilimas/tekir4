@@ -17,16 +17,25 @@
                     <t:inputLookupDialog label="general.label.Account" value="#{paymentHome.account}" 
                                          lookupBean="#{contactLookup}" lookupListener="paymentHome.account" 
                                          lookupProfile="R:ACCOUNT;S:CUSTOMER"
-                                         placeholder="#{messages['general.info.Account']}" update=":form:prss" />
+                                         placeholder="#{messages['general.info.Account']}" update=":form:prss, :form:ddt" required="true"
+                                         disabled="#{paymentHome.entity.state.name ne 'DRAFT'}"/>
 
                     <t:inputLookupDialog label="general.label.BankCashAccount" value="#{paymentHome.entity.bankCashAccount}" 
                                          lookupBean="#{bankCashAccountLookup}" lookupListener="paymentHome.entity.bankCashAccount" 
-                                         placeholder="#{messages['general.info.BankCashAccount']}" update=":form:prss" />
+                                         placeholder="#{messages['general.info.BankCashAccount']}" update=":form:prss" required="true"/>
+
+                    <t:inputFeatureLookupDialog label="general.label.Regarding" value="#{paymentHome.matchable}" 
+                                                lookupBean="#{voucherMatchableLookup}" lookupListener="paymentHome.matchable" 
+                                                lookupProfile="A:#{paymentHome.account.id};F:PurchaseInvoiceFeature"
+                                                caption="feature"
+                                                placeholder="#{messages['general.info.Regarding']}" update=":form:prss, :form:ddt" 
+                                                disabled="#{paymentHome.entity.state.name ne 'DRAFT'}" columnClass="col-xs-12"/>
 
                     <t:inputText label="voucher.label.Topic" value="#{paymentHome.entity.topic}"  required="true" columnClass="col-xs-12"/>
 
                     <t:inputCurrency label="general.label.Currency" value="#{paymentHome.entity.currency}" required="true"/>
                     <t:inputMoney label="general.label.Amount" value="#{paymentHome.entity.amount}"  currency="#{paymentHome.entity.currency}" required="true" />
+
                 </p:outputPanel>
             </div>
 
@@ -37,7 +46,7 @@
                     <t:inputText label="voucher.label.ReferenceNo" value="#{paymentHome.entity.referenceNo}" columnClass="col-md-4"/>
 
                     <p:outputPanel id="prss">
-                        <t:inputProcess value="#{paymentHome.process}" lookupListener="paymentHome.process" lookupProfile="A:#{paymentHome.entity.account.id};T:SALES" update=":form:ddt" />
+                        <t:inputProcess value="#{paymentHome.process}" lookupListener="paymentHome.process" lookupProfile="A:#{paymentHome.entity.account.id};T:PURCHASE" update=":form:ddt" disabled="true"/>
                     </p:outputPanel>
 
                     <t:inputLookupDialog label="voucher.label.Group" value="#{paymentHome.entity.group}" lookupBean="#{voucherGroupLookup}" lookupListener="paymentHome.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" />
@@ -50,51 +59,57 @@
             </div>
         </div>
 
-        <div class="row">
-            <t:accordion icon="fa fa-cube" id="ca1" label="general.label.Regarding" columnClass="col-xs-12">
+        <ui:remove>
+            <div class="row">
 
-                <div class="row">
-                    <p:dataTable id="its" value="#{paymentHome.entity.details}" var="item" reflow="true" styleClass="col-xs-12">
-                        <p:column headerText="Fiş">
-                            <h:outputText value="#{item.feature.businessKey}" />
-                        </p:column>
-                        <p:column headerText="Açıklama">
+                <t:accordion icon="fa fa-file-text" id="regs" label="general.label.Regarding" columnClass="col-xs-12">
 
-                        </p:column>
-                        <p:column headerText="Tutar" >
-                            <t:cellOutputMoney value="#{item.amount}" currency="#{paymentHome.entity.currency}" />
-                        </p:column>
-                        <p:column styleClass="actionColumnDouble" >
-                            <ui:remove>
-                                <f:facet name="header">
+                    <div class="row">
+                        <p:dataTable id="its" value="#{paymentHome.matcherViewModels}" var="item" reflow="true" editable="true" editMode="cell" styleClass="col-xs-12">
+                            <p:ajax event="cellEdit" listener="#{paymentHome.onCellEdit}" update=":form:regs:its" />
 
-                                    <p:commandLink action="#{bean.addItem()}" process="@this" >
-                                        <i class="fa fa-plus"/>
-                                        <p:ajax event="dialogReturn" partialSubmit="true" 
-                                                process="@this" update="@([id$=its]) @([id$=sms])"/>   
-                                    </p:commandLink>
+                            <p:column headerText="Fiş">
+                                <h:outputText value="#{item.matchable.feature.businessKey}" />
+                            </p:column>
+                            <p:column headerText="Fiş">
+                                <h:outputText value="#{item.matchable.topic}" />
+                            </p:column>
+                            <p:column headerText="Fiş">
+                                <h:outputText value="#{item.matchable.processNo}" />
+                            </p:column>
+                            <p:column headerText="Tutar">
+                                <t:cellOutputMoney value="#{item.matchable.ammount}" currency="#{item.matchable.currency}"/>
+                            </p:column>
+                            <p:column headerText="Kalan">
+                                <t:cellOutputMoney value="#{item.matchable.remainder}" currency="#{item.matchable.currency}"/>
+                            </p:column>
+                            <p:column headerText="Kapatılan">
+                                <p:cellEditor>
+                                    <f:facet name="output"><t:cellOutputMoney value="#{item.amount}" currency="#{paymentHome.entity.currency}"/></f:facet>
+                                    <f:facet name="input">
+                                        <p:inputNumber value="#{item.amount}" maxValue="#{item.matchable.remainder}" />
+                                    </f:facet>
+                                </p:cellEditor>
 
-                                </f:facet>
+                            </p:column>
+                        </p:dataTable>
 
-                                <p:commandLink action="#{bean.editItem(item)}" process="@this" >
-                                    <i class="fa fa-pencil"/>
-                                    <p:ajax event="dialogReturn" partialSubmit="true" 
-                                            process="@this" update="@([id$=its]) @([id$=sms])"/>   
-                                </p:commandLink>
-                                <p:commandLink action="#{bean.removeItem(item)}" process="@this" update="@([id$=its]) @([id$=sms])">
-                                    <i class="fa fa-trash"/>
-                                </p:commandLink>
-                            </ui:remove>
-                        </p:column>
-                        <f:facet name="footer">
-                            <div class="pull-right">
-                                Bakiye : 0TL
-                            </div>
-                        </f:facet>
-                    </p:dataTable>
+                        <div class="col-xs-3 pull-right" >
+                            <p:outputPanel layout="span" styleClass="pull-right" autoUpdate="true" style="padding: 8px;">
+                                <t:cellOutputMoney value="#{paymentHome.remainder}" currency="#{paymentHome.entity.currency}"/>
+                            </p:outputPanel>
+                        </div>
+                        <div class="col-xs-3 pull-right">
+                            <span class="pull-right" style="padding: 8px; font-weight: bold; ">
+                                Bakiye : 
+                            </span>
+                        </div>
+                    </div>
 
-                </div>
-            </t:accordion>
-        </div>
+                </t:accordion>
+
+
+            </div>
+        </ui:remove>
     </ui:define> 
 </ui:composition>

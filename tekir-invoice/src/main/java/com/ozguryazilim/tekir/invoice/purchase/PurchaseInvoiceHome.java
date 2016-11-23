@@ -10,6 +10,7 @@ import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.InvoiceItem;
 import com.ozguryazilim.tekir.entities.InvoiceSummary;
 import com.ozguryazilim.tekir.entities.Person;
+import com.ozguryazilim.tekir.entities.ProcessStatus;
 import com.ozguryazilim.tekir.entities.ProcessType;
 import com.ozguryazilim.tekir.entities.PurchaseInvoice;
 import com.ozguryazilim.tekir.entities.VoucherState;
@@ -21,13 +22,17 @@ import com.ozguryazilim.tekir.voucher.VoucherFormBase;
 import com.ozguryazilim.tekir.voucher.VoucherStateAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateChange;
 import com.ozguryazilim.tekir.voucher.VoucherStateConfig;
+import com.ozguryazilim.tekir.voucher.matcher.MatcherStateChange;
+import com.ozguryazilim.tekir.voucher.matcher.VoucherMatcherService;
 import com.ozguryazilim.tekir.voucher.process.ProcessService;
 import com.ozguryazilim.tekir.voucher.utils.SummaryCalculator;
 import com.ozguryazilim.telve.data.RepositoryBase;
+import com.ozguryazilim.telve.feature.FeatureQualifier;
 import com.ozguryazilim.telve.forms.FormEdit;
 import com.ozguryazilim.telve.messages.FacesMessages;
 import java.util.ArrayList;
 import java.util.List;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
 /**
@@ -45,6 +50,9 @@ public class PurchaseInvoiceHome extends VoucherFormBase<PurchaseInvoice> implem
 
     @Inject
     private ProcessService processService;
+    
+    @Inject
+    private VoucherMatcherService matcherService;
     
     @Override
     public boolean onAfterLoad() {
@@ -67,6 +75,19 @@ public class PurchaseInvoiceHome extends VoucherFormBase<PurchaseInvoice> implem
     }
 
     @Override
+    public boolean onAfterSave() {
+        //Her hangi bir türlü Publish/Open olduğunda : Open, PartialPaid 
+        if( getEntity().getState().getType().equals(VoucherStateType.OPEN)){
+            if( getEntity().getStarter() != null ){
+                matcherService.updateMachters(getEntity().getStarter(), getFeaturePointer(), getEntity().getCurrency(), getEntity().getTotal(), getEntity().getProcess().getProcessNo(), false);
+            }
+        }
+        return super.onAfterSave(); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+
+    @Override
     protected boolean onBeforeTrigger(VoucherStateChange e) {
         if ("publish".equals(e.getAction().getName())) {
             if (!getEntity().getAccount().getContactRoles().contains("ACCOUNT")) {
@@ -80,11 +101,23 @@ public class PurchaseInvoiceHome extends VoucherFormBase<PurchaseInvoice> implem
     @Override
     protected VoucherStateConfig buildStateConfig() {
         VoucherStateConfig config = new VoucherStateConfig();
+        
+        VoucherState paid = new VoucherState("PAID", VoucherStateType.CLOSE, VoucherStateEffect.POSIVITE);
+        VoucherState partialPaid = new VoucherState("PARTIAL", VoucherStateType.OPEN, VoucherStateEffect.NEUTRAL);
+        
+        VoucherStateAction paidAction = new VoucherStateAction("paid");
+        VoucherStateAction partialPaidAction = new VoucherStateAction("partial");
+        
         config.addTranstion(VoucherState.DRAFT, new VoucherStateAction("publish", "fa fa-check"), VoucherState.OPEN);
-        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("won", "fa fa-check", false), new VoucherState("WON", VoucherStateType.CLOSE, VoucherStateEffect.POSIVITE));
-        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("loss", "fa fa-close", true), new VoucherState("WON", VoucherStateType.CLOSE, VoucherStateEffect.NEGATIVE));
+        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("loss", "fa fa-close", true), new VoucherState("UNPAID", VoucherStateType.CLOSE, VoucherStateEffect.NEGATIVE));
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("cancel", "fa fa-ban", true), VoucherState.CLOSE);
-        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("revise", "fa fa-unlock", true), VoucherState.DRAFT);
+        config.addTranstion(VoucherState.OPEN, partialPaidAction, partialPaid);
+        config.addTranstion(VoucherState.OPEN, paidAction, paid);
+        config.addTranstion( partialPaid, paidAction, paid);
+        config.addTranstion( partialPaid, new VoucherStateAction("loss", "fa fa-close", true), new VoucherState("PARTUNPAID", VoucherStateType.CLOSE, VoucherStateEffect.NEGATIVE));
+        config.addTranstion( partialPaid, new VoucherStateAction("cancel", "fa fa-ban", true), VoucherState.CLOSE);
+        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("revise", "fa fa-unlock", true), VoucherState.REVISE);
+        config.addTranstion(VoucherState.REVISE, new VoucherStateAction("publish", "fa fa-check", true), VoucherState.OPEN);
         //config.addTranstion(VoucherState.CLOSE, new VoucherStateAction("unlock", "fa fa-unlock", true ), VoucherState.DRAFT);
         return config;
     }
@@ -181,6 +214,35 @@ public class PurchaseInvoiceHome extends VoucherFormBase<PurchaseInvoice> implem
     public void removeItem(InvoiceItem item) {
         getEntity().getItems().remove(item);
         calculateSummaries();
+    }
+    
+    
+    public void feedMatcherState(@Observes @FeatureQualifier(feauture = PurchaseInvoiceFeature.class) MatcherStateChange event) {
+        //TODO: Burada nasıl bir şey yapmalı? Home sınıfı sadece state değiştirmek için çok ağır
+        // ama bir yandan da onun üzerinde bir dolu kontrol işlemi var.
+        // üstelikte FSM onun üzerinde. Ama ekranda açık olan bir form varsa da onu bozarız.
+        
+        //Önce doğru entityi bir bulalım ( Burada yetkiler araya girer mi acaba?
+        setId(event.getMatchable().getFeature().getPrimaryKey());
+        
+        if( event.getMatchable().getStatus() == ProcessStatus.CLOSE ){
+            if( !"PAID".equals(getEntity().getState().getName())){
+                trigger("paid");
+            }
+            //Süreç varsa ( ki otomatik var ) Order/Contract yoksa süreç kapanmalı
+            //Order/Contract varsa onların kapanma durumunu kontrol edip kapanmalı
+        } else {
+            if( event.getMatchable().getRemainder().compareTo(event.getMatchable().getAmmount()) == 0  ){
+                //Bu durum aslında payment'ın silinmesi anlamına geliyor.
+                //FIXME: Süreçte böyle bişi yok ?! paid ya da partial paid olan bişiyi geri nasıl alacağız?
+                //trigger("paid");
+            } else {
+                if( !"PARTIAL".equals(getEntity().getState().getName())){
+                    trigger("partial");
+                }
+            }
+        }
+        
     }
 
 }

@@ -112,4 +112,24 @@ public abstract class AccountTxnRepository extends
         
         return crit.getResultList();
     }
+    
+    public List<AccountTxn> findPayables( Contact account ){
+        Criteria<AccountTxn,AccountTxn> crit = criteria()
+                .eq(AccountTxn_.account, account)
+                .eq(AccountTxn_.accountable, true)
+                .eq(AccountTxn_.debit, true)
+                .in(AccountTxn_.status, "OPEN")
+                .orderAsc(AccountTxn_.date);
+        return null;
+    }
+    
+    public List<AccountTxn> findReceivables( Contact account ){
+        Criteria<AccountTxn,AccountTxn> crit = criteria()
+                .eq(AccountTxn_.account, account)
+                .eq(AccountTxn_.accountable, true)
+                .eq(AccountTxn_.debit, false)
+                .in(AccountTxn_.status, "OPEN")
+                .orderAsc(AccountTxn_.date);
+        return null;
+    }
 }

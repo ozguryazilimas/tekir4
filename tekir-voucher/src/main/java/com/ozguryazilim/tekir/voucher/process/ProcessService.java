@@ -48,5 +48,32 @@ public class ProcessService implements Serializable{
         return result;
     }
     
+    public Process findByProcessNo( String processNo ){
+        return repository.findAnyByProcessNo( processNo );
+    }
     
+    public void incProcessUsage( String processNo ){
+        Process p = repository.findAnyByProcessNo( processNo );
+        incProcessUsage(p);
+    }
+    
+    public void decProcessUsage( String processNo ){
+        Process p = repository.findAnyByProcessNo( processNo );
+        decProcessUsage(p);
+    }
+    
+    public void incProcessUsage( Process p){
+                p.setCounter( p.getCounter() + 1 );
+        repository.save(p);
+    }
+    
+    public void decProcessUsage( Process p ){
+        
+        p.setCounter( p.getCounter() - 1 );
+        //Eğer counter sayısı 0 ya da küçük ise processi kapatıyoruz.
+        if( p.getCounter().compareTo(0) < 1){
+            p.setStatus(ProcessStatus.CLOSE);
+        }
+        repository.save(p);
+    }
 }

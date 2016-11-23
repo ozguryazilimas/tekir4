@@ -21,6 +21,7 @@ import com.ozguryazilim.tekir.voucher.VoucherFormBase;
 import com.ozguryazilim.tekir.voucher.VoucherStateAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateChange;
 import com.ozguryazilim.tekir.voucher.VoucherStateConfig;
+import com.ozguryazilim.tekir.voucher.matcher.VoucherMatcherService;
 import com.ozguryazilim.tekir.voucher.process.ProcessService;
 import com.ozguryazilim.tekir.voucher.utils.SummaryCalculator;
 import com.ozguryazilim.telve.data.RepositoryBase;
@@ -46,6 +47,9 @@ public class PurchaseOrderHome extends VoucherFormBase<PurchaseOrder> implements
     @Inject
     private ProcessService processService;
     
+    @Inject
+    private VoucherMatcherService matcherService;
+    
     @Override
     public boolean onAfterLoad() {
         if (!getEntity().getAccount().getContactRoles().contains("ACCOUNT")) {
@@ -67,6 +71,20 @@ public class PurchaseOrderHome extends VoucherFormBase<PurchaseOrder> implements
     }
 
     @Override
+    public boolean onAfterSave() {
+        //Her hangi bir türlü Publish/Open olduğunda : Open, PartialPaid 
+        if( getEntity().getState().getType().equals(VoucherStateType.CLOSE)){
+            if( getEntity().getStarter() != null ){
+                matcherService.closeMatchable(getFeaturePointer());
+            }
+        }
+    
+        return super.onAfterSave();
+    }
+    
+    
+
+    @Override
     protected boolean onBeforeTrigger(VoucherStateChange e) {
         if ("publish".equals(e.getAction().getName())) {
             if (!getEntity().getAccount().getContactRoles().contains("ACCOUNT")) {
@@ -81,10 +99,11 @@ public class PurchaseOrderHome extends VoucherFormBase<PurchaseOrder> implements
     protected VoucherStateConfig buildStateConfig() {
         VoucherStateConfig config = new VoucherStateConfig();
         config.addTranstion(VoucherState.DRAFT, new VoucherStateAction("publish", "fa fa-check"), VoucherState.OPEN);
-        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("won", "fa fa-check", false), new VoucherState("WON", VoucherStateType.CLOSE, VoucherStateEffect.POSIVITE));
-        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("loss", "fa fa-close", true), new VoucherState("WON", VoucherStateType.CLOSE, VoucherStateEffect.NEGATIVE));
+        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("complete", "fa fa-check", false), new VoucherState("COMPLETE", VoucherStateType.CLOSE, VoucherStateEffect.POSIVITE));
+        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("loss", "fa fa-close", true), new VoucherState("LOSS", VoucherStateType.CLOSE, VoucherStateEffect.NEGATIVE));
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("cancel", "fa fa-ban", true), VoucherState.CLOSE);
-        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("revise", "fa fa-unlock", true), VoucherState.DRAFT);
+        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("revise", "fa fa-unlock", true), VoucherState.REVISE);
+        config.addTranstion(VoucherState.REVISE, new VoucherStateAction("publish", "fa fa-check"), VoucherState.OPEN);
         //config.addTranstion(VoucherState.CLOSE, new VoucherStateAction("unlock", "fa fa-unlock", true ), VoucherState.DRAFT);
         return config;
     }
