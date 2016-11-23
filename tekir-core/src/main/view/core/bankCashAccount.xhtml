@@ -13,7 +13,7 @@
 
     <ui:define name="form">
         <div class="row">
-            <t:inputEnum label="bankCashAccount.label.TaxType" value="#{bankCashAccountHome.entity.type}" itemLabel="accountType." required="true" >
+            <t:inputEnum label="bankCashAccount.label.AccountType" value="#{bankCashAccountHome.entity.type}" itemLabel="accountType." required="true" >
                 <p:ajax event="change" process="@this" update="@this" />
             </t:inputEnum>
             <t:inputText label="general.label.Code" value="#{bankCashAccountHome.entity.code}" required="true" />
