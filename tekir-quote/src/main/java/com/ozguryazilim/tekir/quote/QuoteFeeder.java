@@ -5,15 +5,21 @@
  */
 package com.ozguryazilim.tekir.quote;
 
+import com.ozguryazilim.tekir.account.AccountTxnService;
 import com.ozguryazilim.tekir.entities.Quote;
+import com.ozguryazilim.tekir.entities.VoucherStateType;
 import com.ozguryazilim.tekir.feed.AbstractFeeder;
 import com.ozguryazilim.tekir.feed.Feeder;
 import com.ozguryazilim.tekir.voucher.VoucherStateChange;
+import com.ozguryazilim.tekir.voucher.process.ProcessService;
 import com.ozguryazilim.tekir.voucher.utils.FeatureUtils;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureQualifier;
+import com.ozguryazilim.telve.forms.EntityChangeAction;
+import com.ozguryazilim.telve.forms.EntityChangeEvent;
 import com.ozguryazilim.telve.qualifiers.After;
+import com.ozguryazilim.telve.qualifiers.EntityQualifier;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.event.Observes;
@@ -24,11 +30,17 @@ import javax.inject.Inject;
  * @author oyas
  */
 @Feeder
-public class QuoteFeeder extends AbstractFeeder<Quote>{
+public class QuoteFeeder extends AbstractFeeder<Quote> {
 
     @Inject
     private Identity identity;
-    
+
+    @Inject
+    private AccountTxnService accountTxnService;
+
+    @Inject
+    private ProcessService processService;
+
     public void feed(@Observes @FeatureQualifier(feauture = QuoteFeature.class) @After VoucherStateChange event) {
 
         //FIXME: acaba bunun için bir Qualifier yapabilir miyiz?
@@ -41,32 +53,55 @@ public class QuoteFeeder extends AbstractFeeder<Quote>{
             FeaturePointer contactPointer = FeatureUtils.getAccountFeaturePointer(entity);
             mentions.add(contactPointer);
             mentions.add(voucherPointer);
-            
+
             sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(), entity.getVoucherNo(), getMessage(event), mentions);
+
+            //Process feed
+            if ("OPEN".equals(event.getTo().getName()) && "DRAFT".equals(event.getFrom().getName())) {
+                processService.incProcessUsage(entity.getProcess());
+            }
+
+            if (event.getTo().getType().equals(VoucherStateType.CLOSE)) {
+                processService.decProcessUsage(entity.getProcess());
+            }
         }
+    }
+
+    public void feed(@Observes @EntityQualifier(entity = Quote.class) @After EntityChangeEvent event) {
+
+        if (event.getAction() != EntityChangeAction.DELETE) {
+            Quote entity = (Quote) event.getEntity();
+
+            FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
+
+            accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getCode(), entity.getInfo(), Boolean.FALSE, Boolean.FALSE, entity.getCurrency(), entity.getTotal(), entity.getDate(), entity.getOwner(), null, entity.getState().toString(), entity.getStateReason());
+        }
+
+        //TODO: Delete edildiğinde de gidip txn'den silme yapılmalı.
     }
 
     /**
      * Geriye event bilgilerine bakarak feed body mesajını hazırlayıp döndürür.
-     * 
-     * TODO: i18n problemi ve action / state karşılaştırması + const kullanımına ihtiyaç var.
+     *
+     * TODO: i18n problemi ve action / state karşılaştırması + const kullanımına
+     * ihtiyaç var.
+     *
      * @param event
-     * @return 
+     * @return
      */
-    protected String getMessage( VoucherStateChange event ){
+    protected String getMessage(VoucherStateChange event) {
         switch (event.getTo().getName()) {
-                case "OPEN":
-                    return "Quote created";
-                case "CLOSE":
-                    return "Quote Won. Congrats!";
-                case "LOST":
-                    return "Quote lost! " + event.getPayload().getStateReason();
-                case "CANCELED":
-                    return "Quote canceled. " + event.getPayload().getStateReason();
-                default:
-                    return "Quote created";
-            }
+            case "OPEN":
+                return "Quote created";
+            case "CLOSE":
+                return "Quote Won. Congrats!";
+            case "LOST":
+                return "Quote lost! " + event.getPayload().getStateReason();
+            case "CANCELED":
+                return "Quote canceled. " + event.getPayload().getStateReason();
+            default:
+                return "Quote created";
+        }
     }
-    
-    
+
 }

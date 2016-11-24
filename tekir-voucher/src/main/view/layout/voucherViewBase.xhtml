@@ -7,6 +7,8 @@
                 xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
                 template="/layout/containerViewTabBase.xhtml">
 
+    <ui:param name="viewState" value="" />
+
     <ui:define name="context-menu-2">
         <ui:repeat value="#{bean.permittedStateActions}" var="act">
             <li>
@@ -22,15 +24,33 @@
         </ui:repeat>
     </ui:define>
 
+    <ui:define name="state-header">
+
+        <ul class="states pull-right">
+            <li role="presentation">
+                <div style="font-weight: bold;"> Belge Sahibi</div>
+                <div >
+                    #{userLookup.getUserName(bean.entity.owner)}
+                </div>
+            </li>
+            <li role="presentation">
+                <div style="font-weight: bold;">#{bean.entity.state.name} </div>
+                <div >#{bean.entity.stateReason}</div>
+            </li>
+
+        </ul>
+
+    </ui:define>
+
     <ui:define name="includes">
         <p:dialog header="#{messages['dialog.caption.State']}" id="stateDlg" widgetVar="stateDlg" >
             <h:form id="stateDlgForm" style="width: 250px;">
                 <div class="row">
                     <t:inputSuggestion label="general.label.Reason" value="#{bean.entity.stateReason}" group="#{bean.entity.class.simpleName}" listener="" columnClass="col-xs-12"/>
                     <t:inputTextarea label="general.label.Info" value="#{bean.entity.stateInfo}" columnClass="col-xs-12"/>
-                    
+
                     <ui:insert name="stateDlgExt" />
-                    
+
                 </div>
 
                 <div class="row actionButtons">

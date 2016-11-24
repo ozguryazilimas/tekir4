@@ -9,7 +9,6 @@
     <ui:param name="bean" value="#{contactHome}" />
     <ui:param name="entityName" value="contact" />
     <ui:param name="viewIdentifier" value="#{contactHome.entity.name}" />
-    <ui:param name="viewState" value="#{contactHome.entity.status} #{contactHome.entity.statusReason}" />
     <ui:param name="showCaption" value="true"/>
     <ui:param name="dontShowContentHeader" value="true" />
 
@@ -21,11 +20,19 @@
 
     <ui:define name="customHeader">
         <section class="content-header">
-            <ui:fragment rendered="#{viewState ne ''}" >
-                <div class="pull-right">
-                    #{viewState}
-                </div>
-            </ui:fragment>
+            <ul class="states pull-right">
+                <li role="presentation">
+                    <div style="font-weight: bold;"> Belge Sahibi</div>
+                    <div >
+                        #{userLookup.getUserName(contactHome.entity.owner)}
+                    </div>
+                </li>
+                <li role="presentation">
+                    <div style="font-weight: bold;">#{contactHome.entity.status} </div>
+                    <div >#{contactHome.entity.statusReason}</div>
+                </li>
+
+            </ul>
             <i class="fa fa-3x #{messages['feature.icon.'.concat(bean.feature.name)]} pull-left" />
             <small class="text-muted">#{ messages[pageTitleResolver.pageTitle] }</small>
             <h1>#{messages['contact.class.'.concat(contactHome.entity.class.simpleName)]}  <small>#{ viewIdentifier }</small></h1> 
