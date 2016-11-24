@@ -17,7 +17,7 @@
                     <t:outputEntityLink label="general.label.Account" value="#{purchaseOrderHome.entity.account}" view="/contact/contactView.xhtml" columnClass="col-xs-12"/>
 
                     <t:outputMoney label="general.label.TotalAmount" value="#{purchaseOrderHome.entity.total}" currency="#{purchaseOrderHome.entity.currency}" columnClass="col-xs-12"/>
-                    
+
                     <t:outputText label="general.label.PaymentPlan" value="#{purchaseOrderHome.entity.paymentPlan.name}"  columnClass="col-xs-12"/>
                     <t:outputDate label="general.label.ShippingDate" value="#{purchaseOrderHome.entity.shippingDate}"  columnClass="col-xs-12"/>
                     <t:outputText label="general.label.ShippingNote" value="#{purchaseOrderHome.entity.shippingNote}"  columnClass="col-xs-12"/>
@@ -47,7 +47,7 @@
                 <ui:include src="/notes/noteWidget.xhtml">
                     <ui:param name="featurePointer" value="#{purchaseOrderHome.featurePointer}" />
                 </ui:include>
-                
+
                 <ui:include src="/activities/activityWidget.xhtml">
                     <ui:param name="person" value="#{purchaseOrderHome.person}" />
                     <ui:param name="corporation" value="#{purchaseOrderHome.corporation}" />
@@ -55,36 +55,11 @@
                     <ui:param name="attached" value="Feature" />
                 </ui:include>
 
-                 <t:accordion icon="fa fa-file" id="cp" label="general.label.Invoices" columnClass="col-xs-12">
-                    <ul class="products-list product-list-in-box">
-                        <ui:repeat value="#{voucherMatcherService.findMatchersForFeature(purchaseOrderHome.featurePointer)}" var="ci" >
-                            <li class="item">
-                                <t:cellOutputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
-                                <span class="text-muted pull-right">
-                                    
-                                    <t:cellOutputMoney value="#{ci.ammount}" currency="#{ci.currency}" columnClass="col-xs-12"/>
-                                
-                                </span>
-                            </li>
-                        </ui:repeat>
-                        </ul>
-                </t:accordion>
-                <t:accordion icon="fa fa-file" id="cx" label="general.label.ReleatedVouchers" columnClass="col-xs-12">
-                    <ul class="products-list product-list-in-box">
-                        <ui:repeat value="#{accountTxnService.getProcessVouchers(purchaseOrderHome.entity.process.processNo)}" var="ci" >
-                            <li class="item">
-                                <t:cellOutputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
-
-                                <span class="text-muted pull-right">#{ci.processId}</span>
-
-                                <div class="text-sm">
-                                    #{ci.info}
-                                </div>
-
-                            </li>
-                        </ui:repeat>
-                    </ul>
-                </t:accordion>
+                <ui:include src="/voucher/voucherReleatedWidget.xhtml">
+                    <ui:param name="featurePointer" value="#{purchaseOrderHome.featurePointer}" />
+                    <ui:param name="processNo" value="#{purchaseOrderHome.entity.process.processNo}" />
+                    <ui:param name="groupNo" value="#{purchaseOrderHome.entity.group.groupNo}" />
+                </ui:include>
 
                 <ui:include src="/feeds/feedWidget.xhtml">
                     <ui:param name="feature" value="#{purchaseOrderHome.featureClass.simpleName}" />

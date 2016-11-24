@@ -55,23 +55,12 @@
                     <ui:param name="attached" value="Feature" />
                 </ui:include>
 
-                <t:accordion icon="fa fa-file" id="cx" label="general.label.ReleatedVouchers" columnClass="col-xs-12">
-                    <ul class="products-list product-list-in-box">
-                        <ui:repeat value="#{accountTxnService.getProcessVouchers(salesInvoiceHome.entity.process.processNo)}" var="ci" >
-                            <li class="item">
-                                <t:cellOutputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
-
-                                <span class="text-muted pull-right">#{ci.processId}</span>
-
-                                <div class="text-sm">
-                                    #{ci.info}
-                                </div>
-
-                            </li>
-                        </ui:repeat>
-                    </ul>
-                </t:accordion>
-
+                <ui:include src="/voucher/voucherReleatedWidget.xhtml">
+                    <ui:param name="featurePointer" value="#{salesInvoiceHome.featurePointer}" />
+                    <ui:param name="processNo" value="#{salesInvoiceHome.entity.process.processNo}" />
+                    <ui:param name="groupNo" value="#{salesInvoiceHome.entity.group.groupNo}" />
+                </ui:include>
+                
                 <ui:include src="/feeds/feedWidget.xhtml">
                     <ui:param name="feature" value="#{salesInvoiceHome.featureClass.simpleName}" />
                     <ui:param name="pk" value="#{salesInvoiceHome.entity.id}" />
