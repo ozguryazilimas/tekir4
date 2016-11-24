@@ -46,12 +46,12 @@
             <version>${version.telve}</version>
             <type>ejb</type>
         </dependency>
-        <dependency>
+<!--         <dependency>
             <groupId>com.ozguryazilim.mutfak</groupId>
             <artifactId>telve-keycloak</artifactId>
             <version>${version.telve}</version>
             <type>ejb</type>
-        </dependency>
+        </dependency> -->
         <!--
         <dependency>
             <groupId>com.ozguryazilim.mutfak</groupId>
