@@ -1,3 +1,6 @@
+.settings
+.classpath
+.project
 /tekir-core-model/target/
 /tekir-core/target/
 /tekir-web/target/
