@@ -149,6 +149,6 @@ public class SummaryCalculator<E extends VoucherBase, I extends VoucherCommodity
         
 
         //Sonuç toplamı da geri döndürelim.
-        totalConsumer.accept(lineTot);
+        totalConsumer.accept(lineTot.add(totalTax));
     }
 }
