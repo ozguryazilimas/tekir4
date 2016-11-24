@@ -43,7 +43,7 @@ public class SalesOrderLinker implements VoucherRedirectHandler, Serializable{
     @Override
     public Class<? extends ViewConfig> redirect(VoucherStateChange event) {
         LOG.debug("Purchase Order Invoice Linker");
-        if( "WON".equals( event.getTo().getName()) ){
+        if( "XXX".equals( event.getTo().getName()) ){
             
             if (event.getPayload() instanceof SalesOrder) {
             

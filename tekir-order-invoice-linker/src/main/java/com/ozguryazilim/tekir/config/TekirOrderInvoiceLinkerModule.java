@@ -21,6 +21,7 @@ public class TekirOrderInvoiceLinkerModule {
     public void init(){
         
         ContextMenuResolverRegistery.registerMenu(OrderPages.Purchase.PurchaseOrderView.class, "/menu/purchaseOrderInvoice.xhtml");
+        ContextMenuResolverRegistery.registerMenu(OrderPages.Sales.SalesOrderView.class, "/menu/salesOrderInvoice.xhtml");
         
     }
 }

@@ -107,7 +107,10 @@ public abstract class AccountTxnRepository extends
     public List<AccountTxn> findOpenTxnsByAccount( Contact account ){
         Criteria<AccountTxn,AccountTxn> crit = criteria()
                 .eq(AccountTxn_.account, account)
-                .in(AccountTxn_.status, "DRAFT", "OPEN")
+                .or(
+                    criteria().like(AccountTxn_.status, "DRAFT%"),
+                    criteria().like(AccountTxn_.status, "OPEN%")
+                )
                 .orderDesc(AccountTxn_.date);
         
         return crit.getResultList();

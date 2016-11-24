@@ -76,7 +76,7 @@ public class OpportunityFeeder extends AbstractFeeder<Opportunity> {
 
             FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
 
-            accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getCode(), entity.getInfo(), Boolean.FALSE, Boolean.TRUE, entity.getCurrency(), entity.getBudget(), entity.getDate(), entity.getOwner(), null, entity.getState().toString(), entity.getStateReason());
+            accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getCode(), entity.getInfo(), Boolean.FALSE, Boolean.TRUE, entity.getCurrency(), entity.getBudget(), entity.getDate(), entity.getOwner(), entity.getProcess().getProcessNo(), entity.getState().toString(), entity.getStateReason());
         }
 
         //TODO: Delete edildiğinde de gidip txn'den silme yapılmalı.
