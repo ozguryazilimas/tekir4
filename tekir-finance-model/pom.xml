@@ -6,21 +6,21 @@
         <artifactId>tekir-parent</artifactId>
         <version>4.0.0-SNAPSHOT</version>
     </parent>
-    <artifactId>tekir-payment-model</artifactId>
+    <artifactId>tekir-finance-model</artifactId>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
             <groupId>com.ozguryazilim.mutfak</groupId>
-            <artifactId>tekir-finance-model</artifactId>
+            <artifactId>telve-core-model</artifactId>
+            <version>${version.telve}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>tekir-core-model</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
-            <artifactId>tekir-voucher-model</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>tekir-contact-model</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -92,7 +92,7 @@
                             <referenceUrl>hibernate:ejb3:tekirCore</referenceUrl>
                             <verbose>true</verbose>
                             <logging>debug</logging>
-                            <diffIncludeObjects>table:TPC_.*</diffIncludeObjects>
+                            <diffIncludeObjects>table:TFN_.*</diffIncludeObjects>
                         </configuration>
                         <dependencies>
                             <dependency>

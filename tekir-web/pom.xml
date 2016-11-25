@@ -86,6 +86,12 @@
         
         <dependency>
             <groupId>com.ozguryazilim.mutfak</groupId>
+            <artifactId>tekir-finance</artifactId>
+            <version>${version.tekir}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.ozguryazilim.mutfak</groupId>
             <artifactId>tekir-opportunity</artifactId>
             <version>${version.tekir}</version>
         </dependency>

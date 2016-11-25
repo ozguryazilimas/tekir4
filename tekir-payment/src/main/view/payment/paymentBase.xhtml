@@ -18,9 +18,9 @@
                                          placeholder="#{messages['general.info.Account']}" update=":form:prss, :form:ddt" required="true"
                                          disabled="#{homeBean.entity.state.name ne 'DRAFT'}"/>
 
-                    <t:inputLookupDialog label="general.label.BankCashAccount" value="#{homeBean.entity.bankCashAccount}" 
-                                         lookupBean="#{bankCashAccountLookup}" lookupListener="#{homeBeanName}.entity.bankCashAccount" 
-                                         placeholder="#{messages['general.info.BankCashAccount']}" update=":form:prss" required="true"/>
+                    <t:inputLookupDialog label="general.label.FinanceAccount" value="#{homeBean.entity.financeAccount}" 
+                                         lookupBean="#{financeAccountLookup}" lookupListener="#{homeBeanName}.entity.financeAccount" 
+                                         placeholder="#{messages['general.info.FinanceAccount']}" update=":form:prss" required="true"/>
 
                     <t:inputFeatureLookupDialog label="general.label.Regarding" value="#{homeBean.matchable}" 
                                                 lookupBean="#{voucherMatchableLookup}" lookupListener="#{homeBeanName}.matchable" 

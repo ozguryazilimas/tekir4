@@ -1,0 +1,34 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/containerViewTabBase.xhtml">
+
+    <ui:param name="bean" value="#{financeAccountHome}" />
+    <ui:param name="entityName" value="financeAccount" />
+    <ui:param name="viewIdentifier" value="#{financeAccountHome.entity.name}" />
+    <ui:param name="showCaption" value="true"/>
+    <ui:param name="dontShowContentHeader" value="false" />
+
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{financeAccountHome.id}" />
+        </f:metadata>
+    </ui:define>
+
+
+    <ui:define name="caption">
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <t:outputText label="general.label.Info" value="#{financeAccountHome.entity.info}" columnClass="col-xs-12"/>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <t:outputText label="general.label.Code" value="#{financeAccountHome.entity.code}" />
+            </div>
+        </div>  
+
+    </ui:define>
+
+</ui:composition>

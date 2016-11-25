@@ -5,7 +5,7 @@
  */
 package com.ozguryazilim.tekir.payment;
 
-import com.ozguryazilim.tekir.entities.BankCashAccount_;
+import com.ozguryazilim.tekir.entities.FinanceAccount_;
 import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.tekir.entities.PaymentBase;
 import com.ozguryazilim.tekir.entities.PaymentBase_;
@@ -40,7 +40,7 @@ public abstract class PaymentBrowseBase<E extends PaymentBase, V extends Payment
         queryDefinition
                 .addColumn(new LinkColumn<>(VoucherBase_.voucherNo, "voucher.label.VoucherNo"), true)
                 .addColumn(new SubTextColumn<>(VoucherProcessBase_.account, Contact_.name, "voucher.label.Account"), true)
-                .addColumn(new SubTextColumn<>(PaymentBase_.bankCashAccount, BankCashAccount_.name, "bankCashAccount.label.Account"), true)
+                .addColumn(new SubTextColumn<>(PaymentBase_.financeAccount, FinanceAccount_.name, "financeAccount.label.Account"), true)
                 .addColumn(new TextColumn<>(VoucherProcessBase_.topic, "voucher.label.Topic"), true)
                 .addColumn(new DateColumn<>(VoucherBase_.date, "voucher.label.Date"), true)
                 .addColumn(new MoneyColumn<>(PaymentBase_.amount, PaymentBase_.currency, "general.label.Total"), true)
@@ -62,7 +62,7 @@ public abstract class PaymentBrowseBase<E extends PaymentBase, V extends Payment
                 .addFilter(new UserFilter<>(VoucherBase_.owner, "voucher.label.Owner"))
                 .addFilter(new BigDecimalFilter<>(PaymentBase_.amount, "general.label.Total"))
                 .addFilter(new SubStringFilter<>(VoucherProcessBase_.account, Contact_.name, "voucher.label.Account"))
-                .addFilter(new SubStringFilter<>(PaymentBase_.bankCashAccount, BankCashAccount_.name, "bankCashAccount.label.Account"))
+                .addFilter(new SubStringFilter<>(PaymentBase_.financeAccount, FinanceAccount_.name, "financeAccount.label.Account"))
                 .addFilter(new SubStringFilter<>(VoucherProcessBase_.process, Process_.processNo, "voucher.label.Process"))
                 .addFilter(new DateFilter<>(VoucherBase_.date, "voucher.label.Date", FilterOperand.In, DateValueType.LastTenDays));
     }

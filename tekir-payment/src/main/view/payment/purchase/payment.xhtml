@@ -23,9 +23,9 @@
                                          placeholder="#{messages['general.info.Account']}" update=":form:prss, :form:ddt" required="true"
                                          disabled="#{paymentHome.entity.state.name ne 'DRAFT'}"/>
 
-                    <t:inputLookupDialog label="general.label.BankCashAccount" value="#{paymentHome.entity.bankCashAccount}" 
-                                         lookupBean="#{bankCashAccountLookup}" lookupListener="paymentHome.entity.bankCashAccount" 
-                                         placeholder="#{messages['general.info.BankCashAccount']}" update=":form:prss" required="true"/>
+                    <t:inputLookupDialog label="general.label.FinanceAccount" value="#{paymentHome.entity.financeAccount}" 
+                                         lookupBean="#{financeAccountLookup}" lookupListener="paymentHome.entity.financeAccount" 
+                                         placeholder="#{messages['general.info.FinanceAccount']}" update=":form:prss" required="true"/>
 
                     <t:inputFeatureLookupDialog label="general.label.Regarding" value="#{paymentHome.matchable}" 
                                                 lookupBean="#{voucherMatchableLookup}" lookupListener="paymentHome.matchable" 

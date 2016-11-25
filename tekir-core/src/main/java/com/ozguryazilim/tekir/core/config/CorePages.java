@@ -106,16 +106,5 @@ public interface CorePages extends Pages {
 				com.ozguryazilim.tekir.core.config.CorePages {
 	}
         
-        @View
-	@SecuredPage("bankCashAccount")
-	@PageTitle("module.caption.BankCashAccount")
-	@Navigation(label = "module.caption.BankCashAccount", icon = "flaticon-tax", section = ParamNavigationSection.class)
-	class BankCashAccount implements com.ozguryazilim.tekir.core.config.CorePages {
-	}
-
-	@View @SecuredPage()
-	class BankCashAccountLookup
-			implements
-				com.ozguryazilim.tekir.core.config.CorePages {
-	}
+        
 }

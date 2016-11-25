@@ -1,0 +1,68 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"               
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                template="/layout/masterViewBase.xhtml">
+
+    <ui:define name="content">     
+
+        <div class="row">
+            <div class="col-md-4 col-xs-12">
+                <t:accordion icon="fa fa-stack-exchange" label="general.label.Summary" columnClass="col-xs-12">
+                    <t:outputText label="general.label.Info" value="#{financeAccountHome.entity.info}" columnClass="col-xs-12"/>
+                </t:accordion>
+
+                <t:accordion icon="fa fa-file-text" label="general.label.Voucher" columnClass="col-xs-12">
+                    <ui:remove>
+                    <t:outputText label="voucher.label.Owner" value="#{financeAccountHome.entity.owner}" columnClass="col-xs-12"/>
+                    </ui:remove>
+                    <t:outputText label="general.label.Code" value="#{financeAccountHome.entity.code}" columnClass="col-xs-12"/>
+                </t:accordion>
+            </div>
+
+
+            <div class="col-md-4 col-xs-12">
+
+                <ui:remove>
+                <ui:include src="/notes/noteWidget.xhtml">
+                    <ui:param name="featurePointer" value="#{financeAccountHome.featurePointer}" />
+                </ui:include>
+
+                <ui:include src="/feeds/feedWidget.xhtml">
+                    <ui:param name="feature" value="#{financeAccountHome.featureClass.simpleName}" />
+                    <ui:param name="pk" value="#{financeAccountHome.entity.id}" />
+                </ui:include>
+                    </ui:remove>
+
+
+            </div>
+
+            <div class="col-md-4 col-xs-12">
+                <ui:remove>
+                    TODO: Belki Group'la bağlanabilirler
+                    <t:accordion icon="fa fa-file" id="cx" label="general.label.ReleatedVouchers" columnClass="col-xs-12">
+                        <ul class="products-list product-list-in-box">
+                            <ui:repeat value="#{accountTxnService.getProcessVouchers(financeAccountHome.entity.process.processNo)}" var="ci" >
+                                <li class="item">
+                                    <t:cellOutputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
+
+                                    <span class="text-muted pull-right">#{ci.processId}</span>
+
+                                    <div class="text-sm">
+                                        #{ci.info}
+                                    </div>
+
+                                </li>
+                            </ui:repeat>
+                        </ul>
+                    </t:accordion>
+                </ui:remove>
+            </div>
+
+        </div>
+
+    </ui:define>
+
+</ui:composition>

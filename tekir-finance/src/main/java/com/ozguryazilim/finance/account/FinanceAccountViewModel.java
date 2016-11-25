@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ozguryazilim.tekir.core.bank;
+package com.ozguryazilim.finance.account;
 
 import com.ozguryazilim.telve.entities.ViewModel;
 import java.io.Serializable;
@@ -13,7 +13,7 @@ import java.util.Currency;
  *
  * @author oyas
  */
-public class BankCashAccountViewModel implements ViewModel, Serializable {
+public class FinanceAccountViewModel implements ViewModel, Serializable {
     
     private Long id;
     private String code;
@@ -21,13 +21,13 @@ public class BankCashAccountViewModel implements ViewModel, Serializable {
     private Currency currency;
     private String iban;
 
-    public BankCashAccountViewModel(Long id, String code, String name) {
+    public FinanceAccountViewModel(Long id, String code, String name) {
         this.id = id;
         this.code = code;
         this.name = name;
     }
 
-    public BankCashAccountViewModel(Long id, String code, String name, Currency currency, String iban) {
+    public FinanceAccountViewModel(Long id, String code, String name, Currency currency, String iban) {
         this.id = id;
         this.code = code;
         this.name = name;

@@ -22,9 +22,9 @@
                                          lookupProfile="R:ACCOUNT;S:CUSTOMER"
                                          placeholder="#{messages['general.info.Account']}" update=":form:prss" />
 
-                    <t:inputLookupDialog label="general.label.BankCashAccount" value="#{paymentReceivedHome.entity.bankCashAccount}" 
-                                         lookupBean="#{bankCashAccountLookup}" lookupListener="paymentReceivedHome.entity.bankCashAccount" 
-                                         placeholder="#{messages['general.info.BankCashAccount']}" update=":form:prss" />
+                    <t:inputLookupDialog label="general.label.FinanceAccount" value="#{paymentReceivedHome.entity.financeAccount}" 
+                                         lookupBean="#{financeAccountLookup}" lookupListener="paymentReceivedHome.entity.financeAccount" 
+                                         placeholder="#{messages['general.info.FinanceAccount']}" update=":form:prss" />
 
                     <t:inputText label="voucher.label.Topic" value="#{paymentReceivedHome.entity.topic}"  required="true" columnClass="col-xs-12"/>
 

@@ -92,6 +92,8 @@
         <module>tekir-payment-model</module>
         <module>tekir-payment</module>
         <module>tekir-invoice-payment-linker</module>
+        <module>tekir-finance-model</module>
+        <module>tekir-finance</module>
     </modules>
     
     

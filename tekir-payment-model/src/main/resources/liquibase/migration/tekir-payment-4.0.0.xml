@@ -34,22 +34,4 @@
             <column name="BCA_ID" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet author="oyas (generated)" id="1479811992600-2">
-        <createTable tableName="TPC_PAYMENT_DET">
-            <column name="ID" type="BIGINT">
-                <constraints primaryKey="true" primaryKeyName="TPC_PAYMENT_DETPK"/>
-            </column>
-            <column name="AMOUNT" type="DECIMAL(19, 2)"/>
-            <column name="FEATURE_BK" type="VARCHAR(255)"/>
-            <column name="FEATURE" type="VARCHAR(255)"/>
-            <column name="FEATURE_PK" type="BIGINT"/>
-            <column name="PAYMENT_ID" type="BIGINT"/>
-        </createTable>
-    </changeSet>
-    <changeSet author="oyas (generated)" id="1479811992600-3">
-        <addForeignKeyConstraint baseColumnNames="PAYMENT_ID" baseTableName="TPC_PAYMENT_DET" constraintName="FK_PAYF_PAY" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TPC_PAYMENT"/>
-    </changeSet>
-    <changeSet author="oyas (generated)" id="1479811992600-4">
-        <addForeignKeyConstraint baseColumnNames="BCA_ID" baseTableName="TPC_PAYMENT" constraintName="FK_PB_BCA" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_BANK_CASH_ACC"/>
-    </changeSet>
 </databaseChangeLog>

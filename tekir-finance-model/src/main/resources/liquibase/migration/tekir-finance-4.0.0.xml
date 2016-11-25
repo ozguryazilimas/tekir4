@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="oyas (generated)" id="1480082261131-1">
+        <createTable tableName="TFN_FINANCE_ACC">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TFN_BANK_CASH_ACCPK"/>
+            </column>
+            <column name="CREATE_DATE" type="datetime"/>
+            <column name="UPDATE_DATE" type="datetime"/>
+            <column name="UPDATE_USER" type="VARCHAR(255)"/>
+            <column name="ACCOUNT_NO" type="VARCHAR(255)"/>
+            <column name="ROLES" type="VARCHAR(255)"/>
+            <column name="BANK" type="VARCHAR(255)"/>
+            <column name="BRANCH" type="VARCHAR(255)"/>
+            <column name="CLOSE_DATE" type="date"/>
+            <column name="CODE" type="VARCHAR(255)"/>
+            <column name="CCY" type="VARCHAR(255)"/>
+            <column name="IBAN" type="VARCHAR(255)"/>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="NAME" type="VARCHAR(255)"/>
+            <column name="OPEN_DATE" type="date"/>
+            <column name="STATUS" type="VARCHAR(255)"/>
+            <column name="STATUS_REASON" type="VARCHAR(255)"/>
+            <column name="TYPE" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1480082261131-2">
+        <createTable tableName="TFN_FINANCE_TXN">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TFN_FINANCE_TXNPK"/>
+            </column>
+            <column name="AMOUNT" type="DECIMAL(19, 2)"/>
+            <column name="CODE" type="VARCHAR(30)"/>
+            <column name="CCY" type="VARCHAR(255)"/>
+            <column name="TXNDATE" type="datetime"/>
+            <column name="DEBIT" type="BOOLEAN"/>
+            <column name="FEATURE_BK" type="VARCHAR(255)"/>
+            <column name="FEATURE" type="VARCHAR(255)"/>
+            <column name="FEATURE_PK" type="BIGINT"/>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="OWNER" type="VARCHAR(255)"/>
+            <column name="PROCESS_ID" type="VARCHAR(255)"/>
+            <column name="REFERENCE_NO" type="VARCHAR(30)"/>
+            <column name="STATUS" type="VARCHAR(255)"/>
+            <column name="STATUS_REASON" type="VARCHAR(255)"/>
+            <column name="ACCOUNT_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1480082261131-3">
+        <addForeignKeyConstraint baseColumnNames="ACCOUNT_ID" baseTableName="TFN_FINANCE_TXN" constraintName="FK_FINACCTXN_ACC" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TFN_FINANCE_ACC"/>
+    </changeSet>
+</databaseChangeLog>

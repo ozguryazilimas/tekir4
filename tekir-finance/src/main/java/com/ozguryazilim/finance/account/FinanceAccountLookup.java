@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ozguryazilim.tekir.core.bank;
+package com.ozguryazilim.finance.account;
 
-import com.ozguryazilim.tekir.core.config.CorePages;
-import com.ozguryazilim.tekir.entities.BankCashAccount;
-import com.ozguryazilim.tekir.entities.BankCashAccount_;
+import com.ozguryazilim.finance.config.FinancePages;
+import com.ozguryazilim.tekir.entities.FinanceAccount;
+import com.ozguryazilim.tekir.entities.FinanceAccount_;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.lookup.Lookup;
 import com.ozguryazilim.telve.lookup.LookupTableControllerBase;
@@ -18,26 +18,26 @@ import javax.inject.Inject;
  *
  * @author oyas
  */
-@Lookup(dialogPage = CorePages.BankCashAccountLookup.class)
-public class BankCashAccountLookup extends
-        LookupTableControllerBase<BankCashAccount, BankCashAccountViewModel> {
+@Lookup(dialogPage = FinancePages.FinanceAccountLookup.class)
+public class FinanceAccountLookup extends
+        LookupTableControllerBase<FinanceAccount, FinanceAccountViewModel> {
 
     @Inject
-    private BankCashAccountRepository repository;
+    private FinanceAccountRepository repository;
 
     @Override
-    public void buildModel(LookupTableModel<BankCashAccountViewModel> model) {
+    public void buildModel(LookupTableModel<FinanceAccountViewModel> model) {
         model.addColumn("code", "general.label.Code");
         model.addColumn("name", "general.label.Name");
     }
 
     @Override
-    protected RepositoryBase<BankCashAccount, BankCashAccountViewModel> getRepository() {
+    protected RepositoryBase<FinanceAccount, FinanceAccountViewModel> getRepository() {
         return repository;
     }
 
     @Override
     public String getCaptionFieldName() {
-        return BankCashAccount_.name.getName();
+        return FinanceAccount_.name.getName();
     }
 }

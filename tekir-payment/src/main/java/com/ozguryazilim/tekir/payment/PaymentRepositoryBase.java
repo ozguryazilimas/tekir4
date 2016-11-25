@@ -6,7 +6,7 @@
 package com.ozguryazilim.tekir.payment;
 
 import com.google.common.base.Strings;
-import com.ozguryazilim.tekir.entities.BankCashAccount_;
+import com.ozguryazilim.tekir.entities.FinanceAccount_;
 import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.tekir.entities.PaymentBase;
 import com.ozguryazilim.tekir.entities.PaymentBase_;
@@ -106,8 +106,8 @@ public abstract class PaymentRepositoryBase<E extends PaymentBase, V extends Pay
                 from.get(VoucherBase_.group).get(VoucherGroup_.id),
                 from.get(VoucherBase_.group).get(VoucherGroup_.groupNo),
                 from.get(VoucherBase_.topic),
-                from.get(PaymentBase_.bankCashAccount).get(BankCashAccount_.id),
-                from.get(PaymentBase_.bankCashAccount).get(BankCashAccount_.name),
+                from.get(PaymentBase_.financeAccount).get(FinanceAccount_.id),
+                from.get(PaymentBase_.financeAccount).get(FinanceAccount_.name),
                 from.get(PaymentBase_.currency),
                 from.get(PaymentBase_.amount)
         );
@@ -120,7 +120,7 @@ public abstract class PaymentRepositoryBase<E extends PaymentBase, V extends Pay
                             criteriaBuilder.like(from.get(VoucherBase_.topic), "%" + searchText + "%"),
                             criteriaBuilder.like(from.get(VoucherBase_.voucherNo), "%" + searchText + "%"),
                             criteriaBuilder.like(from.get(VoucherProcessBase_.account).get(Contact_.name), "%" + searchText + "%"),
-                            criteriaBuilder.like(from.get(PaymentBase_.bankCashAccount).get(BankCashAccount_.name), "%" + searchText + "%")
+                            criteriaBuilder.like(from.get(PaymentBase_.financeAccount).get(FinanceAccount_.name), "%" + searchText + "%")
                     )
             );
         }

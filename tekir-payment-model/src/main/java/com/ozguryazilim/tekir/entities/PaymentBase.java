@@ -6,10 +6,7 @@
 package com.ozguryazilim.tekir.entities;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Currency;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
@@ -21,10 +18,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  * Tahsilat ve Tediye işlemleri için aynı model yapısı kullanılacak.
@@ -46,7 +40,7 @@ public abstract class PaymentBase extends VoucherProcessBase{
     
     @ManyToOne
     @JoinColumn(name = "BCA_ID", foreignKey = @ForeignKey(name = "FK_PB_BCA"))
-    private BankCashAccount bankCashAccount;
+    private FinanceAccount financeAccount;
     
     @Column(name = "CCY")
     private Currency currency;
@@ -54,10 +48,6 @@ public abstract class PaymentBase extends VoucherProcessBase{
     @Column(name = "AMOUNT")
     private BigDecimal amount = BigDecimal.ZERO;
 
-    @OneToMany(mappedBy = "master", cascade = CascadeType.ALL, orphanRemoval = true)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<PaymentDetail> details = new ArrayList<>();
-    
     @Override
     public Long getId() {
         return id;
@@ -67,12 +57,12 @@ public abstract class PaymentBase extends VoucherProcessBase{
         this.id = id;
     }
 
-    public BankCashAccount getBankCashAccount() {
-        return bankCashAccount;
+    public FinanceAccount getFinanceAccount() {
+        return financeAccount;
     }
 
-    public void setBankCashAccount(BankCashAccount bankCashAccount) {
-        this.bankCashAccount = bankCashAccount;
+    public void setFinanceAccount(FinanceAccount financeAccount) {
+        this.financeAccount = financeAccount;
     }
 
     public Currency getCurrency() {
@@ -91,13 +81,4 @@ public abstract class PaymentBase extends VoucherProcessBase{
         this.amount = amount;
     }
 
-    public List<PaymentDetail> getDetails() {
-        return details;
-    }
-
-    public void setDetails(List<PaymentDetail> details) {
-        this.details = details;
-    }
-
-    
 }
