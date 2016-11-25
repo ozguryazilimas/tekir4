@@ -1,0 +1,35 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                template="/layout/dashletBase.xhtml">
+
+    <ui:param name="name" value="activeContactsDashlet" />
+    <ui:param name="bean" value="#{activeContactsDashlet}" />
+
+    <ui:define name="caption">
+        
+    </ui:define>
+
+    <ui:define name="extraButtons">
+
+    </ui:define>
+
+    <ui:define name="edit">
+        <t:inputCheckbox label="voucher.label.Owner" itemLabel="general.label.MineOnly" value="#{activeContactsDashlet.mineOnly}" />
+       
+    </ui:define>
+
+    <ui:define name="view">
+
+        <ul class="list-group">
+            <ui:repeat value="#{activeContactsDashlet.items}" var="it" >
+                <li class="list-group-item"><t:cellOutputFeatureLink value="#{featureController.getFeatureLink(it)}" /></li>
+            </ui:repeat>
+        </ul>
+
+      
+    </ui:define>
+</ui:composition>

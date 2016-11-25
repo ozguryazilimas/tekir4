@@ -6,8 +6,10 @@
 package com.ozguryazilim.tekir.feed;
 
 import com.ozguryazilim.tekir.entities.Feed;
+import com.ozguryazilim.tekir.entities.FeedMention;
 import com.ozguryazilim.tekir.entities.Feed_;
 import com.ozguryazilim.telve.data.RepositoryBase;
+import com.ozguryazilim.telve.entities.FeaturePointer;
 import java.util.List;
 import javax.enterprise.context.Dependent;
 import org.apache.deltaspike.data.api.Query;
@@ -71,4 +73,18 @@ public abstract class FeedRepository extends RepositoryBase<Feed, Feed> implemen
                 .getResultList();
     }
     
+    @Query( "select m from Feed f INNER JOIN f.mentions m where ( m.featurePointer.feature in :features ) order by f.date desc")
+    public abstract QueryResult<FeedMention> findMentionedFeature( @QueryParam("features") List<String> features );
+    
+    public List<FeedMention> findMentionedFeature( List<String> features, Integer limit ){
+        return findMentionedFeature( features ).maxResults(limit).getResultList();
+    }
+    
+    
+    @Query( "select m.featurePointer from Feed f INNER JOIN f.mentions m where ( m.featurePointer.feature in :features ) group by m.featurePointer order by max(f.date) desc")
+    public abstract QueryResult<FeaturePointer> findLatestMentionedFeature( @QueryParam("features") List<String> features );
+    
+    public List<FeaturePointer> findLatestMentionedFeature( List<String> features, Integer limit ){
+        return findLatestMentionedFeature( features ).maxResults(limit).getResultList();
+    }
 }
