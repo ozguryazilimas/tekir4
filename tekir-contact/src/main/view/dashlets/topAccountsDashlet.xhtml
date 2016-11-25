@@ -1,0 +1,86 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                template="/layout/dashletBase.xhtml">
+
+    <ui:param name="name" value="topAccountsDashlet" />
+    <ui:param name="bean" value="#{topAccountsDashlet}" />
+
+    <ui:define name="caption">
+        <ui:remove>
+            <t:cellOutputDate value="#{feedDashlet.beginDate}" /> -
+            <t:cellOutputDate value="#{feedDashlet.endDate}" />
+        </ui:remove>
+    </ui:define>
+
+    <ui:define name="extraButtons">
+
+    </ui:define>
+
+    <ui:define name="edit">
+        <t:inputCheckbox label="voucher.label.Owner" itemLabel="general.label.MineOnly" value="#{topAccountsDashlet.mineOnly}" />
+        <t:inputText label="general.label.StartPeriod" value="#{topAccountsDashlet.startPeriod}" />
+        <t:inputCombobox label="general.label.Style" value="#{topAccountsDashlet.style}">
+            <f:selectItem itemLabel="Table" itemValue="TABLE" />
+            <f:selectItem itemLabel="Chart" itemValue="CHART" />
+        </t:inputCombobox>
+    </ui:define>
+
+    <ui:define name="view">
+
+
+
+        <ui:fragment rendered="#{topAccountsDashlet.style eq 'CHART'}">
+            <p:chart type="pie" model="#{topAccountsDashlet.pieChartModel}" style="height: auto;"  responsive="true" />
+        </ui:fragment>
+
+        <ui:fragment rendered="#{topAccountsDashlet.style eq 'TABLE'}">
+            <h:outputScript library="telve" name="js/jquery.sparkline.js" target="head"/>
+            <div style="margin-left: -1em; margin-right: -1em; margin-top: -0.5em;">
+                <table class="table table-condensed">
+                    <tr>
+                        <td>#{messages['general.label.Customer']}</td>
+                        <td>#{messages['general.label.Amount']}</td>
+                        <td>#{messages['general.label.Rate']}</td>
+                    </tr>
+                    <ui:repeat value="#{topAccountsDashlet.sums}" var="it">
+                        <tr>
+                            <td>#{it.accountName}</td>
+                            <td><t:cellOutputMoney value="#{it.amount}" currency="#{it.currency}" /></td>
+                            <ui:remove>
+                                <td>
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar progress-bar-success" style="width: #{it.rate}%" />
+                                    </div>
+                                </td>
+                            </ui:remove>
+                            <td style="text-align: center">
+                                <span class="ratePie" sparkType="pie" sliceColors="['#3366cc','#dc3912','#ff9900']">#{it.amount},#{topAccountsDashlet.sum - it.amount}</span>
+                            </td>
+                        </tr>
+                    </ui:repeat>
+                </table>
+            </div>
+
+            <script>
+
+                jQuery('.ratePie').sparkline('html', {type: 'pie', sliceColors: ['#00a65a', '#f5f5f5', '#ff9900'], offset: +180});
+                $('.sparklines').sparkline('html', {enableTagOptions: true});
+                jQuery('.inlinesparkline').sparkline();
+                jQuery("#topAccPie").sparkline([
+                                            <ui:repeat value="#{topAccountsDashlet.sums}" var="it">
+                        #{it.amount},
+                    </ui:repeat>
+                ], {type: 'pie', height: '80'});
+            </script>
+
+        </ui:fragment>
+
+
+
+
+    </ui:define>
+</ui:composition>
