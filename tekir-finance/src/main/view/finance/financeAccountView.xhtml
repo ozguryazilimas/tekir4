@@ -18,16 +18,58 @@
         </f:metadata>
     </ui:define>
 
+    
+    <ui:define name="customHeader">
+        <section class="content-header">
+            <ul class="states pull-right">
+                <li role="presentation">
+                    <div style="font-weight: bold;"> Belge Sahibi</div>
+                    <div >
+                        #{userLookup.getUserName(financeAccountHome.entity.owner)}
+                    </div>
+                </li>
+                <li role="presentation">
+                    <div style="font-weight: bold;">#{financeAccountHome.entity.status} </div>
+                    <div >#{financeAccountHome.entity.statusReason}</div>
+                </li>
+
+            </ul>
+            <i class="fa fa-3x #{messages['account.type.icon.'.concat(financeAccountHome.entity.type)]} pull-left" />
+            <small class="text-muted">#{ messages[pageTitleResolver.pageTitle] }</small>
+            <h1>#{messages['account.type.caption.'.concat(financeAccountHome.entity.type)]}  <small>#{ viewIdentifier }</small></h1> 
+        </section>
+    </ui:define>
 
     <ui:define name="caption">
         <div class="row">
             <div class="col-md-6 col-xs-12">
-                <t:outputText label="general.label.Info" value="#{financeAccountHome.entity.info}" columnClass="col-xs-12"/>
+                <div class="row">
+                <t:outputText label="general.label.Code" value="#{financeAccountHome.entity.code}" />
+                <t:outputText label="general.label.Name" value="#{financeAccountHome.entity.name}" />
+                <t:outputText label="general.label.Bank" value="#{financeAccountHome.entity.bank}" rendered="#{financeAccountHome.entity.type ne 'CASH'}"/>
+                <t:outputText label="general.label.BankBranch" value="#{financeAccountHome.entity.branch}" rendered="#{financeAccountHome.entity.type eq 'BANK'}"/>
+                <t:outputText label="general.label.AccountNo" value="#{financeAccountHome.entity.accountNo}" rendered="#{financeAccountHome.entity.type ne 'CASH'}"/>
+                <t:outputText label="general.label.IBAN" value="#{financeAccountHome.entity.iban}" rendered="#{financeAccountHome.entity.type eq 'BANK'}"/>
+                </div>
+                
             </div>
             <div class="col-md-6 col-xs-12">
-                <t:outputText label="general.label.Code" value="#{financeAccountHome.entity.code}" />
+                <div class="row">
+                <t:outputDate label="general.label.OpenDate" value="#{financeAccountHome.entity.openDate}" />
+                <t:outputDate label="general.label.CloseDate" value="#{financeAccountHome.entity.closeDate}" />
+                <t:outputText label="general.label.Info" value="#{financeAccountHome.entity.info}" columnClass="col-xs-12" />
+                </div>
             </div>
         </div>  
+        <div class="row">        
+            <div class="col-md-12 col-xs-12">
+                <ul class="list-inline text-sm text-muted">
+                    <ui:repeat value="#{financeAccountHome.entity.accountRoles}" var="item" >
+                        <li><i class="fa fa-tag" /> #{messages['account.role.'.concat(item)]}</li>
+                    </ui:repeat>
+                </ul>
+            </div>
+        </div>
 
     </ui:define>
 

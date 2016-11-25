@@ -25,7 +25,6 @@
 
             <div class="col-md-4 col-xs-12">
 
-                <ui:remove>
                 <ui:include src="/notes/noteWidget.xhtml">
                     <ui:param name="featurePointer" value="#{financeAccountHome.featurePointer}" />
                 </ui:include>
@@ -34,7 +33,7 @@
                     <ui:param name="feature" value="#{financeAccountHome.featureClass.simpleName}" />
                     <ui:param name="pk" value="#{financeAccountHome.entity.id}" />
                 </ui:include>
-                    </ui:remove>
+
 
 
             </div>

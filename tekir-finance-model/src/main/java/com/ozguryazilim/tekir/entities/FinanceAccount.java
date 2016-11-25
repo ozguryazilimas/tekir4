@@ -100,6 +100,9 @@ public class FinanceAccount extends AuditBase{
     @Column( name = "STATUS_REASON")
     private String statusReason;
     
+    @Column( name = "OWNER")
+    private String owner;
+    
     @Override
     public Long getId() {
         return id;
@@ -220,8 +223,15 @@ public class FinanceAccount extends AuditBase{
     public void setStatusReason(String statusReason) {
         this.statusReason = statusReason;
     }
-    
-    
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
     public String getCaption(){
         if( type == AccountType.BANK ){
             return getBank() + " " + getBranch()  + " " + getCurrency().getCurrencyCode() + " " + getName() + " " + getIban();

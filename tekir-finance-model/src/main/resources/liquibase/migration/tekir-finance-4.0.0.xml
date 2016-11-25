@@ -49,4 +49,9 @@
     <changeSet author="oyas (generated)" id="1480082261131-3">
         <addForeignKeyConstraint baseColumnNames="ACCOUNT_ID" baseTableName="TFN_FINANCE_TXN" constraintName="FK_FINACCTXN_ACC" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TFN_FINANCE_ACC"/>
     </changeSet>
+    <changeSet author="oyas (generated)" id="1480086140820-1">
+        <addColumn tableName="TFN_FINANCE_ACC">
+            <column name="OWNER" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

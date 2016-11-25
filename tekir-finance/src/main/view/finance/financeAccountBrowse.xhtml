@@ -15,8 +15,31 @@
 
     <ui:define name="beforeColumns">
         <p:column styleClass="actionColumn">
-            <i class="fa #{item.status eq 'CLOSE' ? 'fa-lock' : 'fa-unlock-alt' }" />
+            <i class="fa #{messages['account.type.icon.'.concat(item.type)]}" title="#{messages['account.type.caption.'.concat(item.type)]}"/>
         </p:column>
     </ui:define>
+
+    <ui:define name="context-menu">
+        <li>
+            <p:commandLink action="#{financeAccountHome.newCashAccount()}" styleClass="context-command" >
+                <i class="fa fa-money"></i>
+                <h:outputText value=" #{messages['general.button.AddCashAccount']}" />
+            </p:commandLink>
+        </li>
+        <li>
+            <p:commandLink action="#{financeAccountHome.newBankAccount()}" styleClass="context-command" >
+                <i class="fa fa-bank"></i>
+                <h:outputText value=" #{messages['general.button.AddBankAccount']}" />
+            </p:commandLink>
+        </li>
+        <li>
+            <p:commandLink action="#{financeAccountHome.newCreditCardAccount()}" styleClass="context-command" >
+                <i class="fa fa-credit-card"></i>
+                <h:outputText value=" #{messages['general.button.AddCreditCardAccount']}" />
+            </p:commandLink>
+        </li>
+        
+    </ui:define>
+
     
 </ui:composition>

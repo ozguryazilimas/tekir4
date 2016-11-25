@@ -20,19 +20,19 @@ import javax.inject.Inject;
  */
 @Lookup(dialogPage = FinancePages.FinanceAccountLookup.class)
 public class FinanceAccountLookup extends
-        LookupTableControllerBase<FinanceAccount, FinanceAccountViewModel> {
+        LookupTableControllerBase<FinanceAccount, FinanceAccount> {
 
     @Inject
     private FinanceAccountRepository repository;
 
     @Override
-    public void buildModel(LookupTableModel<FinanceAccountViewModel> model) {
+    public void buildModel(LookupTableModel<FinanceAccount> model) {
         model.addColumn("code", "general.label.Code");
         model.addColumn("name", "general.label.Name");
     }
 
     @Override
-    protected RepositoryBase<FinanceAccount, FinanceAccountViewModel> getRepository() {
+    protected RepositoryBase<FinanceAccount, FinanceAccount> getRepository() {
         return repository;
     }
 
