@@ -22,6 +22,10 @@
     <ui:define name="customHeader">
         <section class="content-header">
             <ul class="states pull-right">
+                <li class="#{financeAccountHome.balance lt 0 ? 'text-red' : ''}">
+                    <div style="font-weight: bold;">Bakiye</div>
+                    <div ><h:outputText value="#{financeAccountHome.balance}" styleClass="#{financeAccountHome.balance lt 0 ? 'text-red' : ''}" /></div>
+                </li>
                 <li role="presentation">
                     <div style="font-weight: bold;"> Belge Sahibi</div>
                     <div >

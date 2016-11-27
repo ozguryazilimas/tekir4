@@ -18,6 +18,7 @@ import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.forms.EntityChangeAction;
 import com.ozguryazilim.telve.forms.EntityChangeEvent;
+import com.ozguryazilim.finance.account.txn.FinanceAccountTxnService;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -39,6 +40,9 @@ public abstract class PaymentFeederBase<E extends PaymentBase> extends AbstractF
     
     @Inject
     private AccountTxnService accountTxnService;
+    
+    @Inject
+    private FinanceAccountTxnService financeAccountTxnService;
     
     public void feedFeeder(VoucherStateChange event) {
         if (event.getPayload() instanceof PaymentBase) {
@@ -92,6 +96,7 @@ public abstract class PaymentFeederBase<E extends PaymentBase> extends AbstractF
             FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
             
             accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getCode(), entity.getInfo(), Boolean.FALSE, getProcessType() == ProcessType.PURCHASE, entity.getCurrency(), entity.getAmount(), entity.getDate(), entity.getOwner(), entity.getProcess().getProcessNo(), entity.getState().toString(), entity.getStateReason());
+            financeAccountTxnService.saveFeature(voucherPointer, entity.getFinanceAccount(), entity.getCode(), entity.getInfo(), Boolean.FALSE, getProcessType() == ProcessType.PURCHASE, entity.getCurrency(), entity.getAmount(), entity.getDate(), entity.getOwner(), entity.getProcess().getProcessNo(), entity.getState().toString(), entity.getStateReason());
         }
         
         //TODO: Delete edildiğinde de gidip txn'den silme yapılmalı.

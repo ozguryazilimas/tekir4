@@ -9,19 +9,78 @@
     <ui:define name="content">     
 
         <div class="row">
-            <div class="col-md-4 col-xs-12">
-                <t:accordion icon="fa fa-stack-exchange" label="general.label.Summary" columnClass="col-xs-12">
-                    <t:outputText label="general.label.Info" value="#{financeAccountHome.entity.info}" columnClass="col-xs-12"/>
+            <div class="col-md-8 col-xs-12">
+                <t:accordion icon="fa fa-line-chart" label="general.label.Summary" columnClass="col-xs-12">
+                    
+                    <h:outputScript library="telve" name="js/jqplot.canvasoverlay.js" target="head" />
+
+                    <script type="text/javascript">
+
+                        function chartExt() {
+                            this.cfg.grid = {
+                                hoverable: true,
+                                borderColor: "#f3f3f3",
+                                backgroundColor: "#fff",
+                                borderWidth: 1,
+                                tickColor: "#f3f3f3",
+                                shadow: false
+                            }
+
+                            this.cfg.seriesColors = ["#f39c12", "#008d4c", "#ff7701"];
+
+                            this.cfg.series[0].fillAlpha = 0.2;
+                            this.cfg.series[0].step = true;
+
+                            this.cfg.canvasOverlay = {
+                                show: true,
+                                objects: [{horizontalLine: {
+                                            name: 'pebbles',
+                                            y: 1,
+                                            lineWidth: 1,
+                                            color: '#d33724',
+                                            shadow: true,
+                                            lineCap: 'butt',
+                                            xOffset: 0
+                                        }}]
+                            };
+
+                            /*
+                            this.cfg.seriesDefaults = {
+                                rendererOptions: {
+                                    smooth: true
+                                },
+                                step: true,
+                                markerOptions: {show: false}
+                            }*/
+                            
+                        }
+
+                    </script>
+
+                    <p:chart type="line" model="#{financeAccountHome.chartModel}" responsive="true"/>
                 </t:accordion>
 
                 <t:accordion icon="fa fa-file-text" label="general.label.Voucher" columnClass="col-xs-12">
-                    <ui:remove>
-                    <t:outputText label="voucher.label.Owner" value="#{financeAccountHome.entity.owner}" columnClass="col-xs-12"/>
-                    </ui:remove>
-                    <t:outputText label="general.label.Code" value="#{financeAccountHome.entity.code}" columnClass="col-xs-12"/>
+
+                    <p:dataTable value="#{financeAccountHome.balanceModels}" var="txn" >
+                        <p:column headerText="Tarih">
+                            <t:cellOutputDate value="#{txn.date}" />
+                        </p:column>
+                        <p:column headerText="Fiş">
+                            <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(txn.featurePointer)}" rendered="#{txn.lineType eq 'TXN'}"/>
+                            <h:outputText value="#{messages[txn.topic]}" rendered="#{txn.lineType ne 'TXN'}" style="font-weight: bold;"/>
+                        </p:column>
+                        <p:column headerText="Tutar">
+                            <h:outputText value="#{txn.amount}" styleClass="pull-right #{txn.amount lt 0 ? 'text-red' : ''}" />
+                        </p:column>
+                        <p:column headerText="Bakiye">
+                            <h:outputText value="#{txn.balance}" styleClass="pull-right #{txn.balance lt 0 ? 'text-red' : ''}" />
+                        </p:column>
+                    </p:dataTable>
+
+
                 </t:accordion>
             </div>
-
 
             <div class="col-md-4 col-xs-12">
 
@@ -34,11 +93,6 @@
                     <ui:param name="pk" value="#{financeAccountHome.entity.id}" />
                 </ui:include>
 
-
-
-            </div>
-
-            <div class="col-md-4 col-xs-12">
                 <ui:remove>
                     TODO: Belki Group'la bağlanabilirler
                     <t:accordion icon="fa fa-file" id="cx" label="general.label.ReleatedVouchers" columnClass="col-xs-12">
