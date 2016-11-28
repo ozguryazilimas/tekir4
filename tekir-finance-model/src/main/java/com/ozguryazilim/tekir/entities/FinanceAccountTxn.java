@@ -112,6 +112,9 @@ public class FinanceAccountTxn extends EntityBase {
     @Column(name="AMOUNT")
     private BigDecimal amount = BigDecimal.ZERO;
     
+    @Column(name="LOCAL_AMOUNT")
+    private BigDecimal localAmount = BigDecimal.ZERO;
+    
     @Column(name="DEBIT")
     private Boolean debit = Boolean.FALSE;
 
@@ -225,6 +228,14 @@ public class FinanceAccountTxn extends EntityBase {
 
     public void setDebit(Boolean debit) {
         this.debit = debit;
+    }
+
+    public BigDecimal getLocalAmount() {
+        return localAmount;
+    }
+
+    public void setLocalAmount(BigDecimal localAmount) {
+        this.localAmount = localAmount;
     }
     
     

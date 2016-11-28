@@ -51,6 +51,9 @@ public class Opportunity extends VoucherProcessBase{
     @Column(name = "BUDGET")
     private BigDecimal budget = BigDecimal.ZERO;
     
+    @Column(name = "LOCAL_BUDGET")
+    private BigDecimal localBudget = BigDecimal.ZERO;
+    
     
     @Column( name="CCY")
     private Currency currency;
@@ -175,6 +178,14 @@ public class Opportunity extends VoucherProcessBase{
 
     public void setCompetitor(Contact competitor) {
         this.competitor = competitor;
+    }
+
+    public BigDecimal getLocalBudget() {
+        return localBudget;
+    }
+
+    public void setLocalBudget(BigDecimal localBudget) {
+        this.localBudget = localBudget;
     }
 
     

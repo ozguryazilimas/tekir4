@@ -22,10 +22,13 @@
             #{item.topic}
         </p:column>
         <p:column headerText="Tutar">
-            <t:cellOutputMoney value="#{item.ammount}" currency="#{item.currency}"/>
+            <t:cellOutputMoney value="#{item.amount}" currency="#{item.currency}"/>
+        </p:column>
+        <p:column headerText="Tutar">
+            <t:cellOutputMoney value="#{item.localAmount}" currency="#{currencyService.reportCurrency}"/>
         </p:column>
         <p:column headerText="Kalan">
-            <t:cellOutputMoney value="#{item.remainder}" currency="#{item.currency}"/>
+            <t:cellOutputMoney value="#{item.remainder}" currency="#{currencyService.reportCurrency}"/>
         </p:column>
     </ui:define>
 </ui:composition>

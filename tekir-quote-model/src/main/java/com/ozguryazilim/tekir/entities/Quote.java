@@ -83,6 +83,9 @@ public class Quote extends VoucherProcessBase{
     @Column(name = "TOT_AMT")
     private BigDecimal total = BigDecimal.ZERO;
     
+    @Column(name = "LOCAL_AMOUNT")
+    private BigDecimal localAmount = BigDecimal.ZERO;
+    
     @Override
     public Long getId() {
         return id;
@@ -154,6 +157,14 @@ public class Quote extends VoucherProcessBase{
 
     public void setPaymentPlan(PaymentPlan paymentPlan) {
         this.paymentPlan = paymentPlan;
+    }
+
+    public BigDecimal getLocalAmount() {
+        return localAmount;
+    }
+
+    public void setLocalAmount(BigDecimal localAmount) {
+        this.localAmount = localAmount;
     }
 
     

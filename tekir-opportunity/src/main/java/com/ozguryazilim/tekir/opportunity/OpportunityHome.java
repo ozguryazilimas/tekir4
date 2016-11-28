@@ -72,6 +72,8 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
             getEntity().setProcess(processService.createProcess(getEntity().getAccount(), getEntity().getTopic(), ProcessType.SALES));
         }
         
+        getEntity().setLocalBudget(currencyService.convert(getEntity().getCurrency(), getEntity().getBudget(), getEntity().getDate()));
+        
         return super.onBeforeSave(); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -18,6 +18,7 @@
                                 <f:selectItems value="#{currencyDefinitionHome.selectedCurrencies}" var="ccy" itemLabel="#{ccy.currencyCode}" itemValue="#{ccy}" />
                             </p:selectOneMenu>
                         </t:inputAny>
+                        <t:inputText label="general.label.ReportCurrency" value="#{currencyService.reportCurrency}" readonly="true"/>
                     </div>
 
                     <div class="row">

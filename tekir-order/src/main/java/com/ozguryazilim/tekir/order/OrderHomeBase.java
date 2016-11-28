@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.tekir.order;
 
+import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.Order;
@@ -43,6 +44,9 @@ public abstract class OrderHomeBase<E extends Order> extends VoucherFormBase<E> 
     
     @Inject
     private VoucherMatcherService matcherService;
+    
+    @Inject
+    private CurrencyService currencyService;
     
     @Override
     protected VoucherStateConfig buildStateConfig() {
@@ -83,6 +87,8 @@ public abstract class OrderHomeBase<E extends Order> extends VoucherFormBase<E> 
             getEntity().setProcess(processService.createProcess(getEntity().getAccount(), getEntity().getTopic(), getProcessType()));
         }
 
+        getEntity().setLocalAmount(currencyService.convert(getEntity().getCurrency(), getEntity().getTotal(), getEntity().getDate()));
+        
         return super.onBeforeSave();
     }
     

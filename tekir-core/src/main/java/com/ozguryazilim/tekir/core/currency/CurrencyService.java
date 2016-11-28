@@ -194,6 +194,36 @@ public class CurrencyService implements Serializable{
         return convert(fromCurrency, amount, toCurrency, new Date());
     }
     
+    /**
+     * Veirlen değeri istenilen döviz türüne verilen tarih ile çevirir
+     * @param fromCurrency
+     * @param amount
+     * @param date
+     * @return 
+     */
+    public BigDecimal convert( Currency fromCurrency, BigDecimal amount, Date date ){
+        CurrencyUnit c = Monetary.getCurrency(getReportCurrency().getCurrencyCode());
+        MonetaryAmount a = Money.of( amount, fromCurrency.getCurrencyCode());
+        LocalDate ldt = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        MonetaryAmount r = convert(a, c, ldt);
+        return r.getNumber().numberValue(BigDecimal.class);
+    }
+    
+    /**
+     * Veirlen değeri istenilen döviz türüne verilen tarih ile çevirir
+     * @param fromCurrency
+     * @param amount
+     * @param toCurrency
+     * @param date
+     * @return 
+     */
+    public BigDecimal convert( Currency fromCurrency, BigDecimal amount, Currency toCurrency, Date date ){
+        CurrencyUnit c = Monetary.getCurrency(toCurrency.getCurrencyCode());
+        MonetaryAmount a = Money.of( amount, fromCurrency.getCurrencyCode());
+        LocalDate ldt = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        MonetaryAmount r = convert(a, c, ldt);
+        return r.getNumber().numberValue(BigDecimal.class);
+    }
     
     /**
      * Veirlen değeri istenilen döviz türüne verilen tarih ile çevirir

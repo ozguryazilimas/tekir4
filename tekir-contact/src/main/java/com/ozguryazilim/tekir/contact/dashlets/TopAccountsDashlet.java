@@ -17,6 +17,7 @@ import com.ozguryazilim.telve.dashboard.DashletCapability;
 import com.ozguryazilim.telve.utils.DateUtils;
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
@@ -107,6 +108,13 @@ public class TopAccountsDashlet extends AbstractDashlet{
         Date d = DateUtils.getDateBeforePeriod(startPeriod, new Date());
         
         items = repository.findTopAccounts(getFeatureName(), username, d, getLimit());
+        
+        items.sort(new Comparator<AccountTxnSumModel>() {
+            @Override
+            public int compare(AccountTxnSumModel t, AccountTxnSumModel t1) {
+                return t.getAmount().compareTo(t1.getAmount()) * -1;
+            }
+        });
         
         items.forEach((sm) -> {
             sum = sum.add(sm.getAmount());

@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.tekir.payment;
 
+import com.ozguryazilim.finance.account.FinanceAccountFeature;
 import com.ozguryazilim.tekir.account.AccountTxnService;
 import com.ozguryazilim.tekir.entities.PaymentBase;
 import com.ozguryazilim.tekir.entities.ProcessType;
@@ -54,6 +55,7 @@ public abstract class PaymentFeederBase<E extends PaymentBase> extends AbstractF
             FeaturePointer contactPointer = FeatureUtils.getAccountFeaturePointer(entity);
             mentions.add(contactPointer);
             mentions.add(voucherPointer);
+            mentions.add(FeatureUtils.getFeaturePointer(FinanceAccountFeature.class, entity.getFinanceAccount().getName(), entity.getFinanceAccount().getId()));
             
             sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(), entity.getVoucherNo(), getMessage(event), mentions);
         }
@@ -65,7 +67,7 @@ public abstract class PaymentFeederBase<E extends PaymentBase> extends AbstractF
         if( "OPEN".equals(event.getTo().getName())){
             if (event.getPayload() instanceof PaymentBase) {
                 E entity = (E) event.getPayload();
-                matcherService.register(entity, entity.getCurrency(), entity.getAmount());
+                matcherService.register(entity, entity.getCurrency(), entity.getAmount(), entity.getLocalAmount());
             }
         }
         
@@ -95,8 +97,8 @@ public abstract class PaymentFeederBase<E extends PaymentBase> extends AbstractF
             
             FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
             
-            accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getCode(), entity.getInfo(), Boolean.FALSE, getProcessType() == ProcessType.PURCHASE, entity.getCurrency(), entity.getAmount(), entity.getDate(), entity.getOwner(), entity.getProcess().getProcessNo(), entity.getState().toString(), entity.getStateReason());
-            financeAccountTxnService.saveFeature(voucherPointer, entity.getFinanceAccount(), entity.getCode(), entity.getInfo(), Boolean.FALSE, getProcessType() == ProcessType.PURCHASE, entity.getCurrency(), entity.getAmount(), entity.getDate(), entity.getOwner(), entity.getProcess().getProcessNo(), entity.getState().toString(), entity.getStateReason());
+            accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getCode(), entity.getInfo(), Boolean.FALSE, getProcessType() == ProcessType.PURCHASE, entity.getCurrency(), entity.getAmount(), entity.getLocalAmount(), entity.getDate(), entity.getOwner(), entity.getProcess().getProcessNo(), entity.getState().toString(), entity.getStateReason());
+            financeAccountTxnService.saveFeature(voucherPointer, entity.getFinanceAccount(), entity.getCode(), entity.getInfo(), Boolean.FALSE, getProcessType() == ProcessType.PURCHASE, entity.getCurrency(), entity.getAmount(), entity.getLocalAmount(), entity.getDate(), entity.getOwner(), entity.getProcess().getProcessNo(), entity.getState().toString(), entity.getStateReason());
         }
         
         //TODO: Delete edildiğinde de gidip txn'den silme yapılmalı.

@@ -75,4 +75,19 @@
             <column name="COUNTER" type="integer"/>
         </addColumn>
     </changeSet>
+    <changeSet author="oyas (generated)" id="1480345813271-1">
+        <addColumn tableName="TVO_MATCHABLE">
+            <column name="LOCAL_AMOUNT" type="decimal(19, 2)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1480345813271-4">
+        <addColumn tableName="TVO_MATCHABLE">
+            <column name="LOCAL_REMAINDER" type="decimal(19, 2)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1480345813271-2">
+        <addColumn tableName="TVO_MATCHER">
+            <column name="LOCAL_AMOUNT" type="decimal(19, 2)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

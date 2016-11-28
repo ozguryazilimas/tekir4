@@ -61,7 +61,7 @@ public abstract class InvoiceFeeder<E extends Invoice> extends AbstractFeeder<E>
         if( "OPEN".equals(event.getTo().getName())){
             if (event.getPayload() instanceof Invoice) {
                 E entity = (E) event.getPayload();
-                matcherService.register(entity, entity.getCurrency(), entity.getTotal());
+                matcherService.register(entity, entity.getCurrency(), entity.getTotal(), entity.getLocalAmount());
             }
         }
         
@@ -91,7 +91,7 @@ public abstract class InvoiceFeeder<E extends Invoice> extends AbstractFeeder<E>
             
             FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
             
-            accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getCode(), entity.getInfo(), Boolean.FALSE, getProcessType() == ProcessType.PURCHASE, entity.getCurrency(), entity.getTotal(), entity.getDate(), entity.getOwner(), entity.getProcess().getProcessNo(), entity.getState().toString(), entity.getStateReason());
+            accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getCode(), entity.getInfo(), Boolean.FALSE, getProcessType() == ProcessType.PURCHASE, entity.getCurrency(), entity.getTotal(), entity.getLocalAmount(), entity.getDate(), entity.getOwner(), entity.getProcess().getProcessNo(), entity.getState().toString(), entity.getStateReason());
         }
         
         //TODO: Delete edildiğinde de gidip txn'den silme yapılmalı.

@@ -45,6 +45,7 @@ public class AccountDebitNoteHome extends VoucherFormBase<AccountDebitNote>{
             getEntity().setProcessId(sequenceManager.getNewSerialNumber("PS", 6));
         }
         */
+        getEntity().setLocalAmount(currencyService.convert(getEntity().getCurrency(), getEntity().getAmount(), getEntity().getDate()));
         return super.onBeforeSave();
     }
     

@@ -72,6 +72,9 @@ public class Order extends VoucherProcessBase{
 
     @Column(name = "TOT_AMT")
     private BigDecimal total = BigDecimal.ZERO;
+    
+    @Column(name = "LOCAL_AMOUNT")
+    private BigDecimal localAmount = BigDecimal.ZERO;
 
     @OneToMany(mappedBy = "master", cascade = CascadeType.ALL, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -146,5 +149,14 @@ public class Order extends VoucherProcessBase{
     public void setShippingNote(String shippingNote) {
         this.shippingNote = shippingNote;
     }
+
+    public BigDecimal getLocalAmount() {
+        return localAmount;
+    }
+
+    public void setLocalAmount(BigDecimal localAmount) {
+        this.localAmount = localAmount;
+    }
+    
     
 }

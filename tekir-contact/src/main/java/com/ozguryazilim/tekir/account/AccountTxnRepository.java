@@ -159,15 +159,15 @@ public abstract class AccountTxnRepository extends
                 from.get(AccountTxn_.account).get(Contact_.id),
                 from.get(AccountTxn_.account).get(Contact_.name),
                 //from.get(AccountTxn_.account).type(),
-                criteriaBuilder.sum(from.get(AccountTxn_.amount)),
-                from.get(AccountTxn_.currency)
+                criteriaBuilder.sum(from.get(AccountTxn_.localAmount))
         );
         
         criteriaQuery.groupBy(
                 from.get(AccountTxn_.account).get(Contact_.id),
-                from.get(AccountTxn_.account).get(Contact_.name),
+                from.get(AccountTxn_.account).get(Contact_.name)
+                //,
                 //from.get(AccountTxn_.account).type(),
-                from.get(AccountTxn_.currency)
+                //from.get(AccountTxn_.currency)
         );
         
         //Filtreleri ekleyelim.

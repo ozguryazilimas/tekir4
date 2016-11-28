@@ -49,7 +49,7 @@
                     <ui:repeat value="#{topAccountsDashlet.sums}" var="it">
                         <tr>
                             <td>#{it.accountName}</td>
-                            <td><t:cellOutputMoney value="#{it.amount}" currency="#{it.currency}" /></td>
+                            <td><t:cellOutputMoney value="#{it.amount}" currency="#{currencyService.reportCurrency}" /></td>
                             <ui:remove>
                                 <td>
                                     <div class="progress progress-xs">

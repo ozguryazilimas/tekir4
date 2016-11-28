@@ -88,4 +88,9 @@
     <changeSet author="oyas (generated)" id="1469889916962-5">
         <addForeignKeyConstraint baseColumnNames="COMPETITOR_ID" baseTableName="TCO_OPPOTUNITY" constraintName="FK_OPP_COMP" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
     </changeSet>
+    <changeSet author="oyas (generated)" id="1478453126263-1">
+        <addColumn tableName="TCO_OPPOTUNITY">
+            <column name="LOCAL_BUDGET" type="decimal(19, 2)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

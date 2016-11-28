@@ -70,4 +70,9 @@
     <changeSet author="oyas (generated)" id="1479725030340-5">
         <addForeignKeyConstraint baseColumnNames="ACCOUNT_ID" baseTableName="TIV_INVOICE" constraintName="FK_PROSS_ACC" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
     </changeSet>
+    <changeSet author="oyas (generated)" id="1480343283864-1">
+        <addColumn tableName="TIV_INVOICE">
+            <column name="LOCAL_AMOUNT" type="decimal(19, 2)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

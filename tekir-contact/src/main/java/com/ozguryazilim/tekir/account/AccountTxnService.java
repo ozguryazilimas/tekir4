@@ -31,7 +31,7 @@ public class AccountTxnService implements Serializable{
     private AccountTxnRepository repository;
 
     @Transactional
-    public void saveFeature( FeaturePointer feature, Contact account, String code, String info, Boolean accountable, Boolean debit, Currency currency, BigDecimal amount, Date date,  String owner, String processId,  String status, String statusReason ){
+    public void saveFeature( FeaturePointer feature, Contact account, String code, String info, Boolean accountable, Boolean debit, Currency currency, BigDecimal amount, BigDecimal localAmount, Date date,  String owner, String processId,  String status, String statusReason ){
         
         AccountTxn txn = repository.findOptionalByFeature( feature );
         
@@ -42,6 +42,7 @@ public class AccountTxnService implements Serializable{
         txn.setAccount(account);
         txn.setAccountable(accountable);
         txn.setAmount(amount);
+        txn.setLocalAmount(localAmount);
         txn.setCurrency(currency);
         txn.setDebit(debit);
         txn.setDate(date);

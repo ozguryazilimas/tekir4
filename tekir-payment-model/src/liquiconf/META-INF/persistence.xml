@@ -8,6 +8,7 @@
         <jta-data-source>java:jboss/datasources/TekirDS</jta-data-source>
             <jar-file>../tekir-core-model/target/classes</jar-file>
             <jar-file>../tekir-contact-model/target/classes</jar-file>
+            <jar-file>../tekir-finance-model/target/classes</jar-file>
             <jar-file>../tekir-voucher-model/target/classes</jar-file>
             <properties>
             <!-- Properties for Hibernate -->

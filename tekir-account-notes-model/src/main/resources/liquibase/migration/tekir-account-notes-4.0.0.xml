@@ -157,4 +157,19 @@
     <changeSet author="oyas (generated)" id="1478422974382-7">
         <addForeignKeyConstraint baseColumnNames="TO_ACCOUNT_ID" baseTableName="TAN_VIREMENT" constraintName="FK_AV_TACC" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
     </changeSet>
+    <changeSet author="oyas (generated)" id="1480342891079-1">
+        <addColumn tableName="TAN_CREDIT_NOTE">
+            <column name="LOCAL_AMOUNT" type="decimal(19, 2)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1480342891079-2">
+        <addColumn tableName="TAN_DEBIT_NOTE">
+            <column name="LOCAL_AMOUNT" type="decimal(19, 2)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1480342891079-3">
+        <addColumn tableName="TAN_VIREMENT">
+            <column name="LOCAL_AMOUNT" type="decimal(19, 2)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

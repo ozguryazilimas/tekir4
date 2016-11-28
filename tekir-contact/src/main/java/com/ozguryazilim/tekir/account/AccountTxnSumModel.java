@@ -39,6 +39,14 @@ public class AccountTxnSumModel implements Serializable{
         this.amount = amount;
         this.currency = currency;
     }
+    
+    public AccountTxnSumModel(Long accountId, String accountName, BigDecimal amount) {
+        this.accountId = accountId;
+        this.accountName = accountName;
+        //this.contactClass = contactClass;
+        this.amount = amount;
+        //this.currency = currency;
+    }
 
     public Long getAccountId() {
         return accountId;

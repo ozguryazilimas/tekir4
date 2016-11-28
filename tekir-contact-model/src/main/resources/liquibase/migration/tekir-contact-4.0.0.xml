@@ -232,4 +232,9 @@
     <changeSet author="oyas (generated)" id="1467649436683-28">
         <addForeignKeyConstraint baseColumnNames="PID" baseTableName="TCC_CONTACT_CAT" constraintName="FK_sjkf2ep6fcrq182sdjar52ttb" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT_CAT"/>
     </changeSet>
+    <changeSet author="oyas (generated)" id="1480342069846-1">
+        <addColumn tableName="TCC_ACCOUNT_TXN">
+            <column name="LOCAL_AMOUNT" type="decimal(19, 2)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

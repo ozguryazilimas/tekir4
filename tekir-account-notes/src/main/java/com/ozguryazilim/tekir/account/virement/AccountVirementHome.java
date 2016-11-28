@@ -42,6 +42,12 @@ public class AccountVirementHome extends VoucherFormBase<AccountVirement>{
         getEntity().setCurrency(currencyService.getDefaultCurrency());
     }
 
+    @Override
+    public boolean onBeforeSave() {
+        getEntity().setLocalAmount(currencyService.convert(getEntity().getCurrency(), getEntity().getAmount(), getEntity().getDate()));
+        return super.onBeforeSave(); 
+    }
+
     
     @Override
     protected VoucherStateConfig buildStateConfig() {

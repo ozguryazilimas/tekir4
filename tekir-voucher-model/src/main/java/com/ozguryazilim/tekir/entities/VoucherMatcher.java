@@ -40,7 +40,10 @@ public class VoucherMatcher extends EntityBase{
     private Currency currency;
     
     @Column(name = "AMOUNT")
-    private BigDecimal ammount = BigDecimal.ZERO;
+    private BigDecimal amount = BigDecimal.ZERO;
+    
+    @Column(name = "LOCAL_AMOUNT")
+    private BigDecimal localAmount = BigDecimal.ZERO;
     
     @Embedded
     private FeaturePointer feature;
@@ -70,12 +73,12 @@ public class VoucherMatcher extends EntityBase{
         this.currency = currency;
     }
 
-    public BigDecimal getAmmount() {
-        return ammount;
+    public BigDecimal getAmount() {
+        return amount;
     }
 
-    public void setAmmount(BigDecimal ammount) {
-        this.ammount = ammount;
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
     }
 
     public FeaturePointer getFeature() {
@@ -84,6 +87,14 @@ public class VoucherMatcher extends EntityBase{
 
     public void setFeature(FeaturePointer feature) {
         this.feature = feature;
+    }
+
+    public BigDecimal getLocalAmount() {
+        return localAmount;
+    }
+
+    public void setLocalAmount(BigDecimal localAmount) {
+        this.localAmount = localAmount;
     }
     
     

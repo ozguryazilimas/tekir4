@@ -67,10 +67,16 @@ public class VoucherMatchable extends EntityBase{
     private Currency currency;
     
     @Column(name = "AMOUNT")
-    private BigDecimal ammount;
+    private BigDecimal amount;
+    
+    @Column(name = "LOCAL_AMOUNT")
+    private BigDecimal localAmount;
     
     @Column(name = "REMAINDER")
     private BigDecimal remainder;
+    
+    @Column(name = "LOCAL_REMAINDER")
+    private BigDecimal localRemainder;
     
     @Embedded
     private FeaturePointer feature;
@@ -132,12 +138,12 @@ public class VoucherMatchable extends EntityBase{
         this.currency = currency;
     }
 
-    public BigDecimal getAmmount() {
-        return ammount;
+    public BigDecimal getAmount() {
+        return amount;
     }
 
-    public void setAmmount(BigDecimal ammount) {
-        this.ammount = ammount;
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
     }
 
     public FeaturePointer getFeature() {
@@ -163,8 +169,22 @@ public class VoucherMatchable extends EntityBase{
     public void setTxnDate(Date txnDate) {
         this.txnDate = txnDate;
     }
-    
-    
+
+    public BigDecimal getLocalAmount() {
+        return localAmount;
+    }
+
+    public void setLocalAmount(BigDecimal localAmount) {
+        this.localAmount = localAmount;
+    }
+
+    public BigDecimal getLocalRemainder() {
+        return localRemainder;
+    }
+
+    public void setLocalRemainder(BigDecimal localRemainder) {
+        this.localRemainder = localRemainder;
+    }
     
     
 }

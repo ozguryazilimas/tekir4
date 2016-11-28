@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.tekir.invoice;
 
+import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.Invoice;
@@ -45,6 +46,9 @@ public abstract class InvoiceHomeBase<E extends Invoice> extends VoucherFormBase
     
     @Inject
     private VoucherMatcherService matcherService;
+    
+    @Inject
+    private CurrencyService currencyService;
     
     
     @Override
@@ -95,6 +99,8 @@ public abstract class InvoiceHomeBase<E extends Invoice> extends VoucherFormBase
             getEntity().setProcess(processService.createProcess(getEntity().getAccount(), getEntity().getTopic(), getProcessType()));
         }
 
+        getEntity().setLocalAmount(currencyService.convert(getEntity().getCurrency(), getEntity().getTotal(), getEntity().getDate()));
+        
         return super.onBeforeSave();
     }
     
@@ -103,7 +109,7 @@ public abstract class InvoiceHomeBase<E extends Invoice> extends VoucherFormBase
         //Her hangi bir türlü Publish/Open olduğunda : Open, PartialPaid 
         if( getEntity().getState().getType().equals(VoucherStateType.OPEN)){
             if( getEntity().getStarter() != null ){
-                matcherService.updateMachters(getEntity().getStarter(), getFeaturePointer(), getEntity().getCurrency(), getEntity().getTotal(), getEntity().getProcess().getProcessNo(), false);
+                matcherService.updateMachters(getEntity().getStarter(), getFeaturePointer(), getEntity().getCurrency(), getEntity().getTotal(), getEntity().getLocalAmount(), getEntity().getProcess().getProcessNo(), false);
             }
         }
         return super.onAfterSave(); //To change body of generated methods, choose Tools | Templates.
@@ -235,7 +241,7 @@ public abstract class InvoiceHomeBase<E extends Invoice> extends VoucherFormBase
             //Süreç varsa ( ki otomatik var ) Order/Contract yoksa süreç kapanmalı
             //Order/Contract varsa onların kapanma durumunu kontrol edip kapanmalı
         } else {
-            if( event.getMatchable().getRemainder().compareTo(event.getMatchable().getAmmount()) == 0  ){
+            if( event.getMatchable().getRemainder().compareTo(event.getMatchable().getAmount()) == 0  ){
                 //Bu durum aslında payment'ın silinmesi anlamına geliyor.
                 //FIXME: Süreçte böyle bişi yok ?! paid ya da partial paid olan bişiyi geri nasıl alacağız?
                 //trigger("paid");

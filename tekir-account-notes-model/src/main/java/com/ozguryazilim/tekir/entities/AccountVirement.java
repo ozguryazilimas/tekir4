@@ -48,6 +48,9 @@ public class AccountVirement extends VoucherBase{
     
     @Column(name = "AMOUNT")
     private BigDecimal amount = BigDecimal.ZERO;
+    
+    @Column(name = "LOCAL_AMOUNT")
+    private BigDecimal localAmount = BigDecimal.ZERO;
 
     public Long getId() {
         return id;
@@ -87,6 +90,14 @@ public class AccountVirement extends VoucherBase{
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
+    }
+
+    public BigDecimal getLocalAmount() {
+        return localAmount;
+    }
+
+    public void setLocalAmount(BigDecimal localAmount) {
+        this.localAmount = localAmount;
     }
 
     

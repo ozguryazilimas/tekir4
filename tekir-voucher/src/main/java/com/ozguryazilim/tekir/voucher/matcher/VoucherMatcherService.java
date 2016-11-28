@@ -6,6 +6,7 @@
 package com.ozguryazilim.tekir.voucher.matcher;
 
 import com.google.common.base.Strings;
+import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.tekir.entities.ProcessStatus;
 import com.ozguryazilim.tekir.entities.VoucherMatchable;
@@ -47,6 +48,9 @@ public class VoucherMatcherService implements Serializable {
     @Inject
     private ProcessService processService;
     
+    @Inject
+    private CurrencyService currencyService;
+    
     /**
      * Eşleme için master fiş.
      *
@@ -56,7 +60,7 @@ public class VoucherMatcherService implements Serializable {
      * @param ccy
      * @param amount
      */
-    public void register(VoucherProcessBase voucher, Currency ccy, BigDecimal amount) {
+    public void register(VoucherProcessBase voucher, Currency ccy, BigDecimal amount, BigDecimal localAmount) {
         
         FeaturePointer vp = FeatureUtils.getFeaturePointer(voucher);
         
@@ -67,8 +71,10 @@ public class VoucherMatcherService implements Serializable {
         }
         
         vm.setAccount(voucher.getAccount());
-        vm.setAmmount(amount);
+        vm.setAmount(amount);
         vm.setRemainder(amount);
+        vm.setLocalAmount(localAmount);
+        vm.setLocalRemainder(localAmount);
         vm.setCurrency(ccy);
         vm.setProcessNo(voucher.getProcess().getProcessNo());
         vm.setTopic(voucher.getTopic());
@@ -120,21 +126,21 @@ public class VoucherMatcherService implements Serializable {
     }
     
     @Transactional
-    public void updateMachters(FeaturePointer matchablePointer, FeaturePointer feature, Currency ccy, BigDecimal amount, String processId) {
-        updateMachters(matchablePointer, feature, ccy, amount, processId, true);
+    public void updateMachters(FeaturePointer matchablePointer, FeaturePointer feature, Currency ccy, BigDecimal amount, BigDecimal localAmount, String processId) {
+        updateMachters(matchablePointer, feature, ccy, amount, localAmount, processId, true);
     }
     
     @Transactional
-    public void updateMachters(FeaturePointer matchablePointer, FeaturePointer feature, Currency ccy, BigDecimal amount, String processId, boolean calcRemainder) {
+    public void updateMachters(FeaturePointer matchablePointer, FeaturePointer feature, Currency ccy, BigDecimal amount, BigDecimal localAmount, String processId, boolean calcRemainder) {
         VoucherMatchable matchable = matchableRepository.findAnyByFeature(matchablePointer);
         //TODO: Burada bir exception fırlatmalı mı?
         if (matchable != null) {
-            updateMachters(matchable, feature, ccy, amount, processId, calcRemainder);
+            updateMachters(matchable, feature, ccy, amount, localAmount, processId, calcRemainder);
         }
     }
 
     @Transactional
-    public void updateMachters(VoucherMatchable matchable, FeaturePointer feature, Currency ccy, BigDecimal amount, String processId, boolean calcRemainder) {
+    public void updateMachters(VoucherMatchable matchable, FeaturePointer feature, Currency ccy, BigDecimal amount, BigDecimal localAmount, String processId, boolean calcRemainder) {
 
         //TODO: Belge edit olarak geliyor olabilir dolayısı ile daha önce girilmiş bir matcher var mı diye bakmak lazım.
         VoucherMatcher vm = matcherRepository.findAnyByMatchableAndFeature(matchable, feature);
@@ -144,9 +150,12 @@ public class VoucherMatcherService implements Serializable {
             vm.setFeature(feature);
         }
 
-        BigDecimal oldValue = vm.getAmmount() != null ? vm.getAmmount() : BigDecimal.ZERO;
+        Currency oldCurrency = vm.getCurrency() != null ? vm.getCurrency() : currencyService.getDefaultCurrency();
+        BigDecimal oldValue = vm.getAmount() != null ? vm.getAmount() : BigDecimal.ZERO;
+        BigDecimal oldLocalValue = vm.getLocalAmount() != null ? vm.getLocalAmount() : BigDecimal.ZERO;
         
-        vm.setAmmount(amount);
+        vm.setAmount(amount);
+        vm.setLocalAmount(localAmount);
         vm.setCurrency(ccy);
         matcherRepository.save(vm);
 
@@ -154,11 +163,18 @@ public class VoucherMatcherService implements Serializable {
         if( calcRemainder ){
             //Bakiyeyi hesapla
             //eğer matcher güncelleniyor ise sadece çıkarmak değil önceki durumu da geri almak lazım
-            matchable.setRemainder(matchable.getRemainder().add(oldValue).subtract(amount));
+            
+            //FIXME: aslında matcher'ın tarihine ihtiyacımız var.
+            //Matcher dövizini Machable dövizine çeviriyoruz.
+            BigDecimal a = currencyService.convert(oldCurrency, oldValue, matchable.getCurrency(), matchable.getTxnDate());
+            BigDecimal b = currencyService.convert(vm.getCurrency(), vm.getAmount(), matchable.getCurrency(), matchable.getTxnDate());
+            
+            matchable.setRemainder(matchable.getRemainder().add(a).subtract(b));
+            matchable.setLocalRemainder(matchable.getLocalRemainder().add(oldLocalValue).subtract(localAmount));
 
             //Eğer bakiye 0 ya da küçükse CLOSE yap. 
             //TODO: 0'dan küçükse hata vermeli mi?
-            if (matchable.getRemainder().compareTo(BigDecimal.ZERO) < 1) {
+            if (matchable.getLocalRemainder().compareTo(BigDecimal.ZERO) < 1) {
                 matchable.setStatus(ProcessStatus.CLOSE);
             } else {
                 matchable.setStatus(ProcessStatus.OPEN);

@@ -90,4 +90,9 @@
     <changeSet author="oyas (generated)" id="1479311713256-3">
         <addForeignKeyConstraint baseColumnNames="PAYMENTPLAN_ID" baseTableName="TOR_ORDER" constraintName="FK_ORD_PP" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_PAYMENT_PLAN"/>
     </changeSet>
+    <changeSet author="oyas (generated)" id="1480343096214-1">
+        <addColumn tableName="TOR_ORDER">
+            <column name="LOCAL_AMOUNT" type="decimal(19, 2)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

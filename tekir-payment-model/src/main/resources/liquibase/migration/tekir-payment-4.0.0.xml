@@ -34,4 +34,9 @@
             <column name="BCA_ID" type="BIGINT"/>
         </createTable>
     </changeSet>
+    <changeSet author="oyas (generated)" id="1480340414802-1">
+        <addColumn tableName="TPC_PAYMENT">
+            <column name="LOCAL_AMOUNT" type="decimal(19, 2)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

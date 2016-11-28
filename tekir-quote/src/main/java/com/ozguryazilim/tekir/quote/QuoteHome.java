@@ -105,6 +105,8 @@ public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodit
             getEntity().setProcess(processService.createProcess(getEntity().getAccount(), getEntity().getTopic(), ProcessType.SALES));
         }
 
+        getEntity().setLocalAmount(currencyService.convert(getEntity().getCurrency(), getEntity().getTotal(), getEntity().getDate()));
+        
         return super.onBeforeSave();
     }
 

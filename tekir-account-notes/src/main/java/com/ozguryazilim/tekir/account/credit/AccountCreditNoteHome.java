@@ -44,6 +44,9 @@ public class AccountCreditNoteHome extends VoucherFormBase<AccountCreditNote>{
         if( Strings.isNullOrEmpty( getEntity().getProcessId() )){
             getEntity().setProcessId(sequenceManager.getNewSerialNumber("PS", 6));
         }*/
+        
+        getEntity().setLocalAmount(currencyService.convert(getEntity().getCurrency(), getEntity().getAmount(), getEntity().getDate()));
+        
         return super.onBeforeSave();
     }
     

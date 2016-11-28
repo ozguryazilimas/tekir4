@@ -21,6 +21,16 @@ public class FeatureUtils {
     private FeatureUtils() {
     }
 
+    
+    public static FeaturePointer getFeaturePointer(Class featureClass, String bizKey, Long pk) {
+        FeaturePointer fp = new FeaturePointer();
+        fp.setBusinessKey(bizKey);
+        fp.setPrimaryKey(pk);
+        fp.setFeature(featureClass.getSimpleName());
+
+        return fp;
+    }
+    
     /**
      * Voucher'dan türeyen bir entity için Voucher Pointer üretir.
      * 

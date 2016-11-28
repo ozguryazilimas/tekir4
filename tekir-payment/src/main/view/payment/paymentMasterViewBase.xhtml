@@ -15,9 +15,10 @@
                         bir output account input account seti mi hazırlasak?
                     </ui:remove>
                     <t:outputEntityLink label="general.label.Account" value="#{homeBean.entity.account}" view="/contact/contactView.xhtml" columnClass="col-xs-12"/>
-                    <t:outputText label="financeAccount.label.Account" value="#{homeBean.entity.financeAccount.name}" columnClass="col-xs-12"/>
-
+                    <t:outputEntityLink label="financeAccount.label.Account" value="#{homeBean.entity.financeAccount}" view="/finance/financeAccountView.xhtml" columnClass="col-xs-12"/>
+                    
                     <t:outputMoney label="general.label.Amount" value="#{homeBean.entity.amount}" currency="#{homeBean.entity.currency}" columnClass="col-xs-12"/>
+                    <t:outputMoney label="general.label.LocalAmount" value="#{homeBean.entity.localAmount}" currency="#{currencyService.reportCurrency}" columnClass="col-xs-12"/>
                     
                 </t:accordion>
 

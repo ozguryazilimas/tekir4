@@ -47,6 +47,9 @@ public abstract class PaymentBase extends VoucherProcessBase{
     
     @Column(name = "AMOUNT")
     private BigDecimal amount = BigDecimal.ZERO;
+    
+    @Column(name = "LOCAL_AMOUNT")
+    private BigDecimal localAmount = BigDecimal.ZERO;
 
     @Override
     public Long getId() {
@@ -79,6 +82,14 @@ public abstract class PaymentBase extends VoucherProcessBase{
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
+    }
+
+    public BigDecimal getLocalAmount() {
+        return localAmount;
+    }
+
+    public void setLocalAmount(BigDecimal localAmount) {
+        this.localAmount = localAmount;
     }
 
 }

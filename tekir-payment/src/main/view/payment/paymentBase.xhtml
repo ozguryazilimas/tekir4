@@ -76,10 +76,13 @@
                                 <h:outputText value="#{item.matchable.processNo}" />
                             </p:column>
                             <p:column headerText="Tutar">
-                                <t:cellOutputMoney value="#{item.matchable.ammount}" currency="#{item.matchable.currency}"/>
+                                <t:cellOutputMoney value="#{item.matchable.amount}" currency="#{item.matchable.currency}"/>
                             </p:column>
                             <p:column headerText="Kalan">
-                                <t:cellOutputMoney value="#{item.matchable.remainder}" currency="#{item.matchable.currency}"/>
+                                <t:cellOutputMoney value="#{item.matchable.localAmount}" currency="#{currencyService.reportCurrency}"/>
+                            </p:column>
+                            <p:column headerText="Kalan">
+                                <t:cellOutputMoney value="#{item.matchable.remainder}" currency="#{currencyService.reportCurrency}"/>
                             </p:column>
                             <p:column headerText="Kapatılan">
                                 <p:cellEditor>

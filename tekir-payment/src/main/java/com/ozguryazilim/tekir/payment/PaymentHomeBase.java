@@ -68,6 +68,8 @@ public abstract class PaymentHomeBase<E extends PaymentBase> extends VoucherForm
             getEntity().setProcess(processService.createProcess(getEntity().getAccount(), getEntity().getTopic(), getProcessType()));
         }
 
+        getEntity().setLocalAmount(currencyService.convert(getEntity().getCurrency(), getEntity().getAmount(), getEntity().getDate()));
+        
         return super.onBeforeSave();
     }
     
@@ -75,7 +77,7 @@ public abstract class PaymentHomeBase<E extends PaymentBase> extends VoucherForm
     public boolean onAfterSave() {
         if( getEntity().getState().equals(VoucherState.CLOSE)){
             if( getEntity().getStarter() != null ){
-                matcherService.updateMachters(getEntity().getStarter(), getFeaturePointer(), getEntity().getCurrency(), getEntity().getAmount(), getEntity().getProcess().getProcessNo());
+                matcherService.updateMachters(getEntity().getStarter(), getFeaturePointer(), getEntity().getCurrency(), getEntity().getAmount(), getEntity().getLocalAmount(), getEntity().getProcess().getProcessNo());
             }
         }
         return super.onAfterSave();
