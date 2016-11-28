@@ -1,0 +1,54 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                template="/layout/dashletBase.xhtml">
+
+    <ui:param name="name" value="exchangeRateDashlet" />
+    <ui:param name="bean" value="#{exchangeRateDashlet}" />
+
+    <ui:define name="caption">
+        <t:cellOutputDate value="#{exchangeRateDashlet.date}" />
+    </ui:define>
+
+    <ui:define name="extraButtons">
+
+    </ui:define>
+
+    <ui:define name="edit">
+        <t:inputDate label="general.label.Date" value="#{exchangeRateDashlet.date}" />
+    </ui:define>
+
+    <ui:define name="view">
+
+        <ui:fragment rendered="#{not empty exchangeRateDashlet.rates}">
+            <div style="margin-left: -1em; margin-right: -1em; margin-top: -0.5em;">
+                <table class="table table-condensed">
+                    <tr>
+                        <td>#{messages['general.label.Currency']}</td>
+                        <td>#{messages['general.label.BuyRate']}</td>
+                        <td>#{messages['general.label.SellRate']}</td>
+                    </tr>
+                    <ui:repeat value="#{exchangeRateDashlet.rates}" var="it">
+                        <tr>
+                            <td>#{it.baseCurrency.currencyCode}/#{it.termCurrency.currencyCode}</td>
+                            <td><h:outputText value="#{it.buyRate}" /></td>
+                            <td><h:outputText value="#{it.sellRate}" /></td>
+                        </tr>
+                    </ui:repeat>
+                </table>
+            </div>
+        </ui:fragment>
+        
+        <ui:fragment rendered="#{empty exchangeRateDashlet.rates}">
+            #{messages['exhangeRate.message.RateNotFound']}
+            <h:link outcome="/core/exchangeRate.xhtml" rendered="#{identity.hasPermission('exchangeRate', 'insert')}">
+                <i class="fa fa-chain"></i>
+                    #{messages['exhangeRate.message.DefineRate']}
+            </h:link>
+        </ui:fragment>
+
+    </ui:define>
+</ui:composition>
