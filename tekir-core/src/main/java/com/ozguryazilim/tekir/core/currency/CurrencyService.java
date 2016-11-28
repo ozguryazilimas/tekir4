@@ -9,9 +9,12 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.ozguryazilim.mutfak.kahve.Kahve;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Currency;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -40,6 +43,12 @@ public class CurrencyService implements Serializable{
     private static final String USABLE_CURRENCIES = "tekir.currency.useable";
     
     private static final String DEFAULT_CURRENCY = "tekir.currency.default";
+    private static final String REPORT_CURRENCY = "tekir.currency.report";
+    
+    private static final String DEFAULT_REPORT_CURRENCY = "TRY";
+    
+    private static final String EXCHANGE_CURRENCY_MAP = "tekir.currency.exchangeMap";
+    private static final String DEFAULT_EXCHANGE_CURRENCY_MAP = "USD/TRY,EUR/TRY";
     
     @Inject
     private Kahve kahve;
@@ -48,6 +57,8 @@ public class CurrencyService implements Serializable{
     private List<Currency> availableCurrencies = new ArrayList<>();
     private List<Currency> usableCurrencies = new ArrayList<>();
     private Currency defaultCurrency;
+    private Currency reportCurrency;
+    private List<String> exchangeCurrencyMap = new ArrayList<>();
     
     /**
      * Config ve Kahve'den gereken bilgileri toplayarak bileşeni hazırlar.
@@ -70,6 +81,15 @@ public class CurrencyService implements Serializable{
                 .forEach(ccy -> usableCurrencies.add(Currency.getInstance(ccy)));
         
         defaultCurrency = Currency.getInstance(kahve.get(DEFAULT_CURRENCY, ConfigResolver.getPropertyValue(DEFAULT_CURRENCY)).getAsString());
+        reportCurrency = Currency.getInstance(ConfigResolver.getPropertyValue(REPORT_CURRENCY,DEFAULT_REPORT_CURRENCY));
+        
+        vals = kahve.get(EXCHANGE_CURRENCY_MAP,ConfigResolver.getPropertyValue(EXCHANGE_CURRENCY_MAP, DEFAULT_EXCHANGE_CURRENCY_MAP)).getAsString();
+        Splitter.on(',')
+                .trimResults()
+                .omitEmptyStrings()
+                .splitToList(vals)
+                .forEach(ccy -> exchangeCurrencyMap.add(ccy));
+        
     }
     
     /**
@@ -90,7 +110,28 @@ public class CurrencyService implements Serializable{
     public Currency getDefaultCurrency(){
         return defaultCurrency;
     }
-    
+
+    /**
+     * Raporlama için sistem'de kullanılacak olan döviz türü.
+     * 
+     * Bu kurulum ayarlarının bir parçasıdır. Değiştiğinde fişler üzerinde tutulan hesaplamalarında değişmesi gerekir.
+     * 
+     * @return 
+     */
+    public Currency getReportCurrency() {
+        return reportCurrency;
+    }
+
+    /**
+     * Geriye kur girişi için hangi döviz çiftlerinin kullanılabileceği listesini döndürür.
+     * 
+     * Örneğin : USD/TRY, EUR/TRY, EUR/USD gibi.
+     * 
+     * @return 
+     */
+    public List<String> getExchangeCurrencyMap() {
+        return exchangeCurrencyMap;
+    }
     
     /**
      * Verilen currency'i default olarak setler
@@ -129,13 +170,110 @@ public class CurrencyService implements Serializable{
         usableCurrencies.addAll(currencies);
         
     }
+
+
+    /**
+     * Verilen değeri güncel kur ile rapor dövizine çevirir.
+     * 
+     * @param fromCurrency
+     * @param amount
+     * @return 
+     */
+    public BigDecimal convert( String fromCurrency, BigDecimal amount ){
+        return convert(fromCurrency, amount, reportCurrency.getCurrencyCode(), new Date());
+    }
+    
+    /**
+     * Verilen değeri isetenilen döviz türüne çevirir
+     * @param fromCurrency
+     * @param amount
+     * @param toCurrency
+     * @return 
+     */
+    public BigDecimal convert( String fromCurrency, BigDecimal amount, String toCurrency ){
+        return convert(fromCurrency, amount, toCurrency, new Date());
+    }
     
     
-    public void convert( Money m, Currency ccy ){
-        CurrencyUnit c = Monetary.getCurrency("TRY");
-        ConversionQuery q = ConversionQueryBuilder.of().setTermCurrency(c).set(LocalDate.now()).build();
+    /**
+     * Veirlen değeri istenilen döviz türüne verilen tarih ile çevirir
+     * @param fromCurrency
+     * @param amount
+     * @param toCurrency
+     * @param date
+     * @return 
+     */
+    public BigDecimal convert( String fromCurrency, BigDecimal amount, String toCurrency, Date date ){
+        CurrencyUnit c = Monetary.getCurrency(toCurrency);
+        MonetaryAmount a = Money.of( amount, fromCurrency);
+        LocalDate ldt = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        MonetaryAmount r = convert(a, c, ldt);
+        return r.getNumber().numberValue(BigDecimal.class);
+    }
+    
+    /**
+     * Asıl çevrim işe JSR-354 API kullanılarak yapılıyor.
+     * @param m
+     * @param toCurrency
+     * @param date
+     * @return 
+     */
+    public MonetaryAmount convert( MonetaryAmount m, CurrencyUnit toCurrency, LocalDate date ){
+        
+        ConversionQuery q = ConversionQueryBuilder.of().setProviderName("TKR").setTermCurrency(toCurrency).set(date).build();
         CurrencyConversion cc = MonetaryConversions.getConversion(q);
-        MonetaryAmount a = cc.apply(Money.of(10, "TRY"));
+        MonetaryAmount a = cc.apply(m);
+        
+        return a;
+    }
+    
+    
+    public void convert(){
+        CurrencyUnit c = Monetary.getCurrency("TRY");
+        ConversionQuery q = ConversionQueryBuilder.of().setProviderName("TKR").setTermCurrency(c).set(LocalDate.now()).build();
+        CurrencyConversion cc = MonetaryConversions.getConversion(q);
+        MonetaryAmount a = cc.apply(Money.of(10, "EUR"));
+        
+        System.err.println(a);
+        
+        
+        c = Monetary.getCurrency("TRY");
+        q = ConversionQueryBuilder.of().setProviderName("TKR").setTermCurrency(c).build();
+        cc = MonetaryConversions.getConversion(q);
+        a = cc.apply(Money.of(10, "EUR"));
+        
+        System.err.println(a);
+        
+        
+        c = Monetary.getCurrency("EUR");
+        q = ConversionQueryBuilder.of().setProviderName("TKR").setTermCurrency(c).build();
+        cc = MonetaryConversions.getConversion(q);
+        a = cc.apply(Money.of(100, "TRY"));
+        
+        System.err.println(a);
+        
+        c = Monetary.getCurrency("TRY");
+        q = ConversionQueryBuilder.of().setProviderName("TKR").setTermCurrency(c).build();
+        cc = MonetaryConversions.getConversion(q);
+        a = cc.apply(Money.of(100, "TRY"));
+        
+        System.err.println(a);
+        
+        /*
+        c = Monetary.getCurrency("TRY");
+        q = ConversionQueryBuilder.of().setProviderName("TKR").setTermCurrency(c).build();
+        cc = MonetaryConversions.getConversion(q);
+        a = cc.apply(Money.of(10, "USD"));
+        
+        System.err.println(a);
+        */
+
+
+        BigDecimal b = convert("TRY", BigDecimal.TEN, "EUR");
+        System.err.println(b);
+        
+        b = convert("EUR", BigDecimal.TEN);
+        System.err.println(b);
         
         //MonetaryConversions.getConversion(ConversionQueryBuilder.of().setRateTypes(RateTypes.))DEFAULT_CURRENCY, "IMF").getExchangeRate(null).
     }

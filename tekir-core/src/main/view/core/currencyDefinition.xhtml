@@ -45,6 +45,7 @@
                 </div>
                 <div class="box-footer">
                     <div class="pull-right">
+                        <p:commandLink action="#{currencyService.convert()}" value="test" process="@this" />
                         <p:commandButton id="save" 
                                          value="#{messages['general.button.Save']}" 
                                          action="#{currencyDefinitionHome.save()}"
