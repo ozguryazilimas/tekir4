@@ -7,6 +7,9 @@ package com.ozguryazilim.tekir.core.currency.exchange;
 
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.ExchangeRate;
+import com.ozguryazilim.telve.messages.FacesMessages;
+
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -18,6 +21,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.apache.deltaspike.core.api.scope.GroupedConversationScoped;
 import org.apache.deltaspike.jpa.api.transaction.Transactional;
+import org.dom4j.DocumentException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Exchange Rate UI controller sınıfı.
@@ -27,9 +33,15 @@ import org.apache.deltaspike.jpa.api.transaction.Transactional;
 @Named
 @GroupedConversationScoped
 public class ExchangeRateHome implements Serializable {
+	
+	private static final Logger LOG = LoggerFactory.getLogger(ExchangeRateHome.class);
 
     @Inject
     private CurrencyService currencyService;
+    
+    @Inject
+    private TCMBRateParser tcmbRateParser;
+
 
     @Inject
     private ExchangeRateRepository repository;
@@ -114,6 +126,24 @@ public class ExchangeRateHome implements Serializable {
 
     public void setRates(List<ExchangeRate> rates) {
         this.rates = rates;
+    }
+    
+    @Transactional
+    public void getTCMBRates(){
+    	try {
+			List<ExchangeRate> resultList = tcmbRateParser.getExchangeRatesByDate(date);
+			repository.deleteByDate(date);
+			for(ExchangeRate er : resultList){
+				repository.save(er);
+			}
+		} catch (IOException | DocumentException e) {
+			
+			LOG.error("Hata", e);
+			//TODO: hata mesajını propertiesten al
+			FacesMessages.error("Kurlar okunurken hata oluştu");
+		}
+    	populateRates();
+    	
     }
 
 }

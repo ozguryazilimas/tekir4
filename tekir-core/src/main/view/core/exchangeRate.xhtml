@@ -6,10 +6,21 @@
                 xmlns:p="http://primefaces.org/ui"                   
                 template="/layout/primeTemplate.xhtml">
 
+<ui:define name="context-menu">
+        <li>
+        <p:commandLink action="#{exchangeRateHome.getTCMBRates()}" 
+                           styleClass="context-command" 
+                           update="ccyForm"
+                           partialSubmit="true" process="@this">
+                <i class="fa fa-exchange"></i>
+                <h:outputText value=" #{messages['general.button.TCMBrate']}" />
+            </p:commandLink>
+        </li>
+    </ui:define>
+
     <ui:define name="body">
         <div class="box box-primary">
             <h:form id="ccyForm" class="editForm">
-
 
                 <div class="box-body">
                     <div class="row">
