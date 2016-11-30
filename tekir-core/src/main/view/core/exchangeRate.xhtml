@@ -12,8 +12,9 @@
                            styleClass="context-command" 
                            update="ccyForm"
                            partialSubmit="true" process="@this">
+                <p:confirm header="#{messages['general.caption.Confirm']}" message="#{messages['module.message.confirm.ExchangeRate']}" icon="ui-icon-alert" />
                 <i class="fa fa-exchange"></i>
-                <h:outputText value=" #{messages['general.button.TCMBrate']}" />
+                <h:outputText value=" #{messages['module.button.TCMBrate']}" />
             </p:commandLink>
         </li>
     </ui:define>
