@@ -36,30 +36,21 @@ public class TCMBRateParser implements Serializable {
     private ExchangeRateRepository exchangeRateRepository;
 	
 	public List<ExchangeRate> getExchangeRatesByDate(Date date) throws IOException, DocumentException{
-		URL url;
-		//FIXME:Http 404 ise en yakın tarihi(cuma ya da tatil gününe en yakın) baz al
-		if(DateUtils.isSameDay(date, new Date())){
-			url = new URL(EXCHANGE_PROVIDER_URL + "today.xml");
-		}
-		
-		else{
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(date);
-			int year = calendar.get(Calendar.YEAR);
-			int month = calendar.get(Calendar.MONTH)+1;
-			int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-			url = new URL(EXCHANGE_PROVIDER_URL + year + month + "/" + day + month + year + ".xml");
+		HttpURLConnection connection = getConnectionByDate(date);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		while(connection.getResponseCode() == 404){			
+			calendar.add(Calendar.DATE, -1);
+			connection.disconnect();
+			connection = getConnectionByDate(calendar.getTime());			
 		}		
-
-		HttpURLConnection connection =
-				(HttpURLConnection) url.openConnection();
-		connection.setRequestMethod("GET");		
-
-		return parse(date,connection.getInputStream());
+		
+		return parse(date,connection.getInputStream());		
+		
 	}
 	
-	public List<ExchangeRate> parse(Date date, InputStream inputStream) throws DocumentException{
+	public List<ExchangeRate> parse(Date date, InputStream inputStream) throws DocumentException, IOException{
 		List<ExchangeRate> resultList = new ArrayList<ExchangeRate>();
 		SAXReader reader = new SAXReader();
 		Document doc = reader.read(inputStream);		
@@ -92,7 +83,35 @@ public class TCMBRateParser implements Serializable {
 			resultList.add(er);
 			}
 		}
+		inputStream.close();
 		return resultList;
+	}
+	
+	private HttpURLConnection getConnectionByDate(Date date) throws IOException{
+		URL url;
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		if(DateUtils.isSameDay(date, new Date())){
+			url = new URL(EXCHANGE_PROVIDER_URL + "today.xml");
+		}
+		
+		else{			
+			int year = calendar.get(Calendar.YEAR);
+			int month = calendar.get(Calendar.MONTH)+1;
+			String monthStr = String.format("%02d", month);  
+			
+			int day = calendar.get(Calendar.DAY_OF_MONTH);
+			String dayStr = String.format("%02d", day);  
+
+			url = new URL(EXCHANGE_PROVIDER_URL + year + monthStr + "/" + dayStr + monthStr + year + ".xml");;
+		}		
+		
+		
+		HttpURLConnection connection =
+				(HttpURLConnection) url.openConnection();
+		connection.setRequestMethod("GET");	
+		
+		return connection;
 	}
 	
 

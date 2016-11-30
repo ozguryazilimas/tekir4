@@ -68,7 +68,7 @@ public interface CorePages extends Pages {
         @View
 	@SecuredPage("exchangeRate")
 	@PageTitle("module.caption.ExchangeRate")
-	@Navigation(label = "module.caption.ExchangeRate", icon = "flaticon-exchange-1", section = ParamNavigationSection.class)
+	@Navigation(label = "module.caption.ExchangeRate", icon = "fa fa-money", section = ParamNavigationSection.class)
 	class ExchangeRate implements CorePages {
 	}
 
