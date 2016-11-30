@@ -25,6 +25,10 @@ import org.dom4j.io.SAXReader;
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.ExchangeRate;
 
+/**
+ * @author Ceyhun Onur
+ * Türkiye Cumhuriyeti Merkez Bankasına bağlanıp verilen tarihe göre tekir tarafından belirtilmiş kurları çeker.
+ */
 @Dependent
 public class TCMBRateParser implements Serializable {	
 	private final static String EXCHANGE_PROVIDER_URL = "http://www.tcmb.gov.tr/kurlar/";
@@ -35,21 +39,39 @@ public class TCMBRateParser implements Serializable {
     @Inject
     private ExchangeRateRepository exchangeRateRepository;
 	
+	/**
+	 * TCMB sayfasına bir bağlantı açar, bağlantı 404 veriyorsa TCMB'nin eski sayfalarına bakar.
+	 * @param date
+	 * @return List<ExchangeRate> kurlar listesi
+	 * @throws IOException
+	 * @throws DocumentException
+	 */
 	public List<ExchangeRate> getExchangeRatesByDate(Date date) throws IOException, DocumentException{
-
+		//Verilen tarih için bir bağlantı alır.
 		HttpURLConnection connection = getConnectionByDate(date);
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
+		
+		//404 veriyorsa bir gün öncesinin sayfasına bakar.
 		while(connection.getResponseCode() == 404){			
 			calendar.add(Calendar.DATE, -1);
+			//Connection açık kalmasın.
 			connection.disconnect();
 			connection = getConnectionByDate(calendar.getTime());			
 		}		
-		
+		//Connection'ı parse methoduna yollar
 		return parse(date,connection.getInputStream());		
 		
 	}
 	
+	/**
+	 * Bir inputStream alarak içersindeki .xml'i ayrıştırır, ve ExhangeRate listesi döner.
+	 * @param date
+	 * @param inputStream
+	 * @return List<ExchangeRate> kurlar listesi
+	 * @throws DocumentException
+	 * @throws IOException
+	 */
 	public List<ExchangeRate> parse(Date date, InputStream inputStream) throws DocumentException, IOException{
 		List<ExchangeRate> resultList = new ArrayList<ExchangeRate>();
 		SAXReader reader = new SAXReader();
@@ -87,6 +109,12 @@ public class TCMBRateParser implements Serializable {
 		return resultList;
 	}
 	
+	/**
+	 * Verilen tarihe göre URL oluşturur ve bu URL'e connection açar.
+	 * @param date
+	 * @return
+	 * @throws IOException
+	 */
 	private HttpURLConnection getConnectionByDate(Date date) throws IOException{
 		URL url;
 		Calendar calendar = Calendar.getInstance();

@@ -127,6 +127,9 @@ public class ExchangeRateHome implements Serializable {
 		this.rates = rates;
 	}
 
+	/**
+	 * TCMB'den kurları alır ve veritabanına tarih değerleri ile birlikte yazar.
+	 */
 	@Transactional
 	public void getTCMBRates() {
 		try {
@@ -140,6 +143,7 @@ public class ExchangeRateHome implements Serializable {
 			LOG.error("Hata", e);		
 			FacesMessages.error("exchangeRate.message.Error");
 		}
+		//Yeni gelen değerler ile tekrar doldursun.
 		populateRates();
 
 	}
