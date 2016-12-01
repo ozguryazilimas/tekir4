@@ -111,7 +111,7 @@ public class ExchangeRateHome implements Serializable {
 	public void setDate(Date date) {
 		this.date = date;
 		// TODO: önce değerleri bir saklasak mı?
-		save();
+		//save();
 		// Tarih değişti. Değerler değişti.
 		populateRates();
 	}
