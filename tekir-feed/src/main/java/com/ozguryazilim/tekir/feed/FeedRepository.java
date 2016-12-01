@@ -10,8 +10,10 @@ import com.ozguryazilim.tekir.entities.FeedMention;
 import com.ozguryazilim.tekir.entities.Feed_;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
+import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.Dependent;
+import org.apache.deltaspike.data.api.Modifying;
 import org.apache.deltaspike.data.api.Query;
 import org.apache.deltaspike.data.api.QueryParam;
 import org.apache.deltaspike.data.api.QueryResult;
@@ -87,4 +89,8 @@ public abstract class FeedRepository extends RepositoryBase<Feed, Feed> implemen
     public List<FeaturePointer> findLatestMentionedFeature( List<String> features, Integer limit ){
         return findLatestMentionedFeature( features ).maxResults(limit).getResultList();
     }
+    
+    @Modifying
+    @Query("delete Feed as f where f.date <= ?1")
+    public abstract void deleteBeforeDate( Date date );
 }
