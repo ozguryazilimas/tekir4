@@ -16,11 +16,24 @@
                 <i class="fa fa-exchange"></i>
                 <h:outputText value=" #{messages['module.button.TCMBrate']}" />
             </p:commandLink>
+            
         </li>
+        <li>
+           
+         <p:commandLink action="#{exchangeRateHome.populateRates()}" styleClass="context-command" 
+         update="ccyForm" process="@this" >
+                                    <i class="fa fa-refresh"/>
+                                    <h:outputText value=" #{messages['general.button.Refresh']}"></h:outputText>
+                                </p:commandLink>
+                               	
+                        </li>   
+                        
     </ui:define>
 
     <ui:define name="body">
         <div class="box box-primary">
+        
+                               
             <h:form id="ccyForm" class="editForm">
 
                 <div class="box-body">
@@ -31,6 +44,7 @@
                     </div>
 
                     <div class="row">
+                    
                         <div class="col-xs-12" style="margin-top: 8px;">
                             <p:dataTable value="#{exchangeRateHome.rates}" var="rate" editMode="cell" editable="true">
 
@@ -65,7 +79,9 @@
                         </div>
 
                     </div>
+                    
                 </div>
+                 
                 <div class="box-footer">
                     <div class="pull-right">
 

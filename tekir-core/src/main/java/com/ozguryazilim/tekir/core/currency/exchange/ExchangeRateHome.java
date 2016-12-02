@@ -9,6 +9,8 @@ import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.ExchangeRate;
 import com.ozguryazilim.telve.messages.FacesMessages;
 
+import freemarker.template.utility.DateUtil;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -19,6 +21,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.apache.commons.lang3.time.DateUtils;
 import org.apache.deltaspike.core.api.scope.GroupedConversationScoped;
 import org.apache.deltaspike.jpa.api.transaction.Transactional;
 import org.dom4j.DocumentException;
@@ -109,11 +113,15 @@ public class ExchangeRateHome implements Serializable {
 	}
 
 	public void setDate(Date date) {
+		
+		//Aynı gün değilse set etmesin ki save butonu düzgün çalışabilsin.
+		if(!DateUtils.isSameDay(this.date, date)){
+			// TODO: önce değerleri bir saklasak mı?			
+			save();
 		this.date = date;
-		// TODO: önce değerleri bir saklasak mı?
-		save();
 		// Tarih değişti. Değerler değişti.
 		populateRates();
+		}
 	}
 
 	public List<ExchangeRate> getRates() {
