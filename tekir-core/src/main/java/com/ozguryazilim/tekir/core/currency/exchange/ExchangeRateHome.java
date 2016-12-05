@@ -18,14 +18,18 @@ import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.deltaspike.core.api.scope.GroupedConversationScoped;
 import org.apache.deltaspike.jpa.api.transaction.Transactional;
 import org.dom4j.DocumentException;
+import org.jboss.util.collection.CollectionsUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -123,12 +127,25 @@ public class ExchangeRateHome implements Serializable {
 		populateRates();
 		}
 	}
-
+	//Tüm kurlar
 	public List<ExchangeRate> getRates() {
 		if (rates.isEmpty()) {
 			populateRates();
 		}
 		return rates;
+	}
+	//TRY bazlı kurlar
+	public List<ExchangeRate> getTryRates() {
+
+		List<ExchangeRate> tryRates = getRates().stream()
+				.filter(r -> 	r.getTermCurrency().getCurrencyCode().equals("TRY")).collect(Collectors.toList());		
+		return tryRates;
+	}
+	
+	//Çapraz kurlar
+	public List<ExchangeRate> getCrossRates() {
+		
+		return new ArrayList(CollectionUtils.subtract(getRates(), getTryRates()));
 	}
 
 	public void setRates(List<ExchangeRate> rates) {

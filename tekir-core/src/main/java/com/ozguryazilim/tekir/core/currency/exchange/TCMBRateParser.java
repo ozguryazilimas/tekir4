@@ -82,6 +82,9 @@ public class TCMBRateParser implements Serializable {
 			if(doc.valueOf(xPathQuery) != null && !doc.valueOf(xPathQuery).isEmpty()){
 			String buyRateStr = doc.valueOf("//*[@Kod=\""+currency.getCurrencyCode()+"\"]/BanknoteBuying");
 			String sellRateStr = doc.valueOf("//*[@Kod=\""+currency.getCurrencyCode()+"\"]/BanknoteSelling");	
+			String crossRateUsdStr = doc.valueOf("//*[@Kod=\""+currency.getCurrencyCode()+"\"]/CrossRateUSD");
+			String crossRateOtherStr = doc.valueOf("//*[@Kod=\""+currency.getCurrencyCode()+"\"]/CrossRateOther");
+
 			ExchangeRate er = new ExchangeRate();
 			er.setDate(date);
 			er.setBaseCurrency(currency);
@@ -92,7 +95,9 @@ public class TCMBRateParser implements Serializable {
 			}
 			else{
 				String forexBuyRateStr = doc.valueOf("//*[@Kod=\""+currency.getCurrencyCode()+"\"]/ForexBuying");
+				if(forexBuyRateStr != null && !forexBuyRateStr.isEmpty()){
 				er.setBuyRate(new BigDecimal(forexBuyRateStr));
+				}
 			}
 			
 			if(sellRateStr != null && !sellRateStr.isEmpty()){
@@ -100,8 +105,30 @@ public class TCMBRateParser implements Serializable {
 			}
 			else{
 				String forexSellRateStr = doc.valueOf("//*[@Kod=\""+currency.getCurrencyCode()+"\"]/ForexSelling");
+				if(forexSellRateStr != null && !forexSellRateStr.isEmpty()){
 				er.setSellRate(new BigDecimal(forexSellRateStr));
+				}
 			}
+			//Çapraz kurlar
+			if(crossRateUsdStr != null && !crossRateUsdStr.isEmpty()){
+				//TCMB çapraz kurları kur ve USD arasında yapıyor.
+				ExchangeRate erc = new ExchangeRate();
+				erc.setDate(date);
+				erc.setBaseCurrency(Currency.getInstance("USD"));
+				erc.setTermCurrency(currency);
+				erc.setBuyRate(new BigDecimal(crossRateUsdStr));
+				resultList.add(erc);
+			}
+			else if(crossRateOtherStr != null && !crossRateOtherStr.isEmpty()){
+				//TCMB CrossRateOther bilgisini USD/Kur çapraz dönüşümü için kullanıyor.
+				ExchangeRate erc = new ExchangeRate();
+				erc.setDate(date);
+				erc.setBaseCurrency(currency);
+				erc.setTermCurrency(Currency.getInstance("USD"));
+				erc.setBuyRate(new BigDecimal(crossRateOtherStr));
+				resultList.add(erc);
+			}
+			
 			resultList.add(er);
 			}
 		}
