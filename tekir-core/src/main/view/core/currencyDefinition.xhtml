@@ -46,20 +46,24 @@
                 </div>
                 <div class="box-footer">
                     <div class="pull-right">
+                    
+											<h:outputText value="#{currencyService.reportCurrency.getCurrencyCode()}" />
+									
                         <p:commandLink action="#{currencyService.convert()}" value="test" process="@this" />
                         <p:commandButton id="save" 
                                          value="#{messages['general.button.Save']}" 
                                          action="#{currencyDefinitionHome.save()}"
                                          rendered="#{identity.hasPermission( 'currencyDefinition', 'update')}"
                                          ajax="true"
+                                         update="@form"
                                          process="@form"
                                          validateClient="true"
                                          styleClass="btn-success"
                                          icon="fa fa-save" />  
 
                         <p:commandButton id="done" 
-                                         value="#{messages['general.button.Close']}"
-                                         action="#{currencyDefinitionHome.close()}"
+                                         value="#{messages['general.button.Cancel']}"
+                                         action="#{currencyDefinitionHome.init()}"
                                          icon="ui-icon-close" 
                                          partialSubmit="true"
                                          process="@this"
@@ -67,6 +71,10 @@
                     </div>
                 </div>
             </h:form>
+            <h:form>        
+    <p:inputNumber id="input" binding="#{input}" emptyValue="0"/>  
+    <h:commandButton action="#{currencyDefinitionHome.convert(input.value)}" />  
+</h:form> 
         </div>
     </ui:define>
 

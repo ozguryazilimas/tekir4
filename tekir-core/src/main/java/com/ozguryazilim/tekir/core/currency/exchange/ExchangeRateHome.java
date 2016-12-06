@@ -29,7 +29,6 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.apache.deltaspike.core.api.scope.GroupedConversationScoped;
 import org.apache.deltaspike.jpa.api.transaction.Transactional;
 import org.dom4j.DocumentException;
-import org.jboss.util.collection.CollectionsUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,6 +51,9 @@ public class ExchangeRateHome implements Serializable {
 
 	@Inject
 	private ExchangeRateRepository repository;
+	
+    @Inject
+    private ExchangeRateCache rateCache;
 
 	/**
 	 * İşlem yapılacak olan tarih
@@ -110,6 +112,7 @@ public class ExchangeRateHome implements Serializable {
 	public void save() {
 		rates.stream().forEach(xcr -> repository.save(xcr));
 		// TODO: Rate Cache temizlenmeli.
+		rateCache.clearCache();
 	}
 
 	public Date getDate() {

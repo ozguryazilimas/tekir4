@@ -31,6 +31,8 @@ public class CurrencyDefinitionHome implements Serializable {
     @PostConstruct
     public void init(){
         //Burada populate yapmak lazım gibi
+    	selectedCurrencies = service.getCurrencies();
+    	 defaultCurrency = service.getDefaultCurrency();
     }
 
     public List<Currency> getSelectedCurrencies() {
@@ -58,9 +60,12 @@ public class CurrencyDefinitionHome implements Serializable {
     
     
     public void save(){
+    	System.out.println(defaultCurrency);
+    	System.out.println(selectedCurrencies);
         service.setDefaultCurrency(defaultCurrency);
         service.setCurrencies(selectedCurrencies);
     }
     
+
     
 }
