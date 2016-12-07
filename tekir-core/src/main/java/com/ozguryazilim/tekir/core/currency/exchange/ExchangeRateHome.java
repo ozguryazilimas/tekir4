@@ -23,7 +23,9 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.money.convert.CurrencyConversionException;
 
+import org.apache.commons.beanutils.ConversionException;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.deltaspike.core.api.scope.GroupedConversationScoped;
@@ -64,9 +66,19 @@ public class ExchangeRateHome implements Serializable {
 	 * Değerler
 	 */
 	private List<ExchangeRate> rates = new ArrayList<>();
+	
+	private BigDecimal amount;
+	private BigDecimal result;
+	private Currency fromCurrency;
+	private Currency toCurrency;
+
 
 	@PostConstruct
 	public void init() {
+		amount = new BigDecimal(0.0);
+		result = new BigDecimal(0.0);
+		fromCurrency = currencyService.getDefaultCurrency();
+		toCurrency = currencyService.getReportCurrency();
 		populateRates();
 	}
 
@@ -175,5 +187,57 @@ public class ExchangeRateHome implements Serializable {
 		populateRates();
 
 	}
+	
+	public void convert(){
+		System.out.println(	"hoop");
+		try{
+			setResult(currencyService.convert(fromCurrency.getCurrencyCode(),this.amount,toCurrency.getCurrencyCode()));
+		} catch (CurrencyConversionException | NullPointerException e){
+			LOG.error("Error",e);
+			FacesMessages.error("module.error.calculation.CurrencyDefinition");
+		}
+
+	}    
+	
+	public void handleClose(){
+		amount = new BigDecimal(0.0);
+		result = new BigDecimal(0.0);
+		fromCurrency = currencyService.getDefaultCurrency();
+		toCurrency = currencyService.getReportCurrency();
+		
+	}
+	
+	public BigDecimal getAmount() {
+		return amount;
+	}
+
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
+	}
+
+	public BigDecimal getResult() {
+		return result;
+	}
+
+	public void setResult(BigDecimal result) {
+		this.result = result;
+	}
+	public Currency getToCurrency() {
+		return toCurrency;
+	}
+
+	public void setToCurrency(Currency toCurrency) {
+		this.toCurrency = toCurrency;
+	}
+
+	public Currency getFromCurrency() {
+		return fromCurrency;
+	}
+
+	public void setFromCurrency(Currency fromCurrency) {
+		this.fromCurrency = fromCurrency;
+	}
+
+	
 
 }

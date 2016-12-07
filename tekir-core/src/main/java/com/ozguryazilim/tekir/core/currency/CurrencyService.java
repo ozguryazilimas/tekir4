@@ -254,7 +254,7 @@ public class CurrencyService implements Serializable{
     }
     
     /**
-     * Asıl çevrim işe JSR-354 API kullanılarak yapılıyor.
+     * Asıl çevrim ise JSR-354 API kullanılarak yapılıyor.
      * @param m
      * @param toCurrency
      * @param date
