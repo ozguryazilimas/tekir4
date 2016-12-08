@@ -79,7 +79,9 @@ public class ExchangeRateHome implements Serializable {
 		result = new BigDecimal(0.0);
 		fromCurrency = currencyService.getDefaultCurrency();
 		toCurrency = currencyService.getReportCurrency();
+		rateCache.clearCache();
 		populateRates();
+		
 	}
 
 	/**
@@ -87,7 +89,7 @@ public class ExchangeRateHome implements Serializable {
 	 * yoksa, 0 değerler ile kayıt listesi oluşturur.
 	 *
 	 */
-	public void populateRates() {
+	private void populateRates() {
 
 		rates.clear();
 
@@ -124,7 +126,8 @@ public class ExchangeRateHome implements Serializable {
 	public void save() {
 		rates.stream().forEach(xcr -> repository.save(xcr));
 		// TODO: Rate Cache temizlenmeli.
-		rateCache.clearCache();
+		init();
+		
 	}
 
 	public Date getDate() {
@@ -139,7 +142,7 @@ public class ExchangeRateHome implements Serializable {
 			save();
 		this.date = date;
 		// Tarih değişti. Değerler değişti.
-		populateRates();
+		init();
 		}
 	}
 	//Tüm kurlar
@@ -184,12 +187,11 @@ public class ExchangeRateHome implements Serializable {
 			FacesMessages.error("exchangeRate.message.Error");
 		}
 		//Yeni gelen değerler ile tekrar doldursun.
-		populateRates();
-
+		
+		init();
 	}
 	
-	public void convert(){
-		System.out.println(	"hoop");
+	public void convert(){		
 		try{
 			setResult(currencyService.convert(fromCurrency.getCurrencyCode(),this.amount,toCurrency.getCurrencyCode()));
 		} catch (CurrencyConversionException | NullPointerException e){

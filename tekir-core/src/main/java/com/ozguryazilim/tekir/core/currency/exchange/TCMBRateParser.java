@@ -117,7 +117,7 @@ public class TCMBRateParser implements Serializable {
 				erc.setBaseCurrency(Currency.getInstance("USD"));
 				erc.setTermCurrency(currency);
 				erc.setBuyRate(new BigDecimal(crossRateUsdStr));
-				erc.setSellRate(new BigDecimal(crossRateOtherStr));
+				erc.setSellRate(new BigDecimal(crossRateUsdStr));
 				resultList.add(erc);
 			}
 			else if(crossRateOtherStr != null && !crossRateOtherStr.isEmpty()){

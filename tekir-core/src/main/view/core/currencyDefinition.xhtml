@@ -42,8 +42,6 @@
 
 
 								<p:column headerText="Name">
-                                    #{ccy.getDisplayName(localeSelector.locale)} 
-                                    #{localeSelector.locale}
                                     #{messages['currency.'.concat(ccy.currencyCode)]}
                                 </p:column>
 
@@ -61,10 +59,10 @@
 							ajax="true" update="@form" process="@form" validateClient="true"
 							styleClass="btn-success" icon="fa fa-save" />
 
-						<p:commandButton id="done"
+						<p:commandButton id="close"
 							value="#{messages['general.button.Cancel']}"
 							action="#{currencyDefinitionHome.init()}" icon="ui-icon-close"
-							partialSubmit="true" process="@this" ajax="true" />
+							partialSubmit="true" process="@this" ajax="true" update="@form" />
 					</div>
 				</div>
 			</h:form>

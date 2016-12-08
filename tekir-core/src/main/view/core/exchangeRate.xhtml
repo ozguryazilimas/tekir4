@@ -16,12 +16,12 @@
 				<i class="fa fa-exchange"></i>
 				<h:outputText value=" #{messages['module.button.TCMBrate']}" />
 			</p:commandLink></li>
-		<li><p:commandLink action="#{exchangeRateHome.populateRates()}"
+		<li><p:commandLink action="#{exchangeRateHome.init()}"
 				styleClass="context-command" update="ccyForm" process="@this">
 				<i class="fa fa-refresh" />
 				<h:outputText value=" #{messages['general.button.Refresh']}"></h:outputText>
 			</p:commandLink></li>
-		<li><p:commandLink onclick="PF('dlg2').show();"
+		<li><p:commandLink actionListener="#{exchangeRateHome.handleClose()}" update="calcForm" oncomplete="PF('calc').show();"
 				styleClass="context-command">
 				<i class="fa fa-calculator" />
 				<h:outputText
@@ -33,9 +33,8 @@
 	</ui:define>
 
 	<ui:define name="body">
-			<p:dialog header="#{messages['module.button.calculator.ExchangeRate']}" widgetVar="dlg2" modal="true"
-			height="100" appendTo="@(body)" >
-			 <p:ajax event="close" action="#{exchangeRateHome.handleClose()}"/>
+			<p:dialog header="#{messages['module.button.calculator.ExchangeRate']}" widgetVar="calc" modal="true"
+			height="100" appendTo="@(body)" >			
 			<h:form id="calcForm">
 				<h:panelGrid columns="2">
 
@@ -61,6 +60,7 @@
 					ajax="true" process="@form" update="@form"/>
 			</h:form>
 		</p:dialog>
+		
 		<div class="box box-primary">
 
 
