@@ -4,6 +4,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
 	template="/layout/primeTemplate.xhtml">
 
 	<ui:define name="context-menu">
@@ -44,12 +45,22 @@
 							<p:dataTable value="#{exchangeRateHome.getTryRates()}" var="rate"
 								editMode="cell" editable="true">
 
-								<p:column headerText="#{messages['module.header.code.ExchangeRate']}">
+								<p:column
+									headerText="#{messages['module.header.code.ExchangeRate']}">
                                     #{rate.baseCurrency} /
-                                    #{rate.termCurrency}
-                                </p:column>
+                                    #{rate.termCurrency}                             
+										<ui:fragment
+										rendered="#{exchangeRateHome.currencyStatus(rate) eq 1}">
+										<i class="fa fa-arrow-up" style="color: green"></i>
+									</ui:fragment>
+									<ui:fragment
+										rendered="#{exchangeRateHome.currencyStatus(rate) eq -1}">
+										<i class="fa fa-arrow-down" style="color: red"></i>
+									</ui:fragment>
+								</p:column>
 
-								<p:column headerText="#{messages['module.header.buying.ExchangeRate']}">
+								<p:column
+									headerText="#{messages['module.header.buying.ExchangeRate']}">
 									<p:cellEditor>
 										<f:facet name="output">
 											<h:outputText value="#{rate.buyRate}" />
@@ -60,7 +71,8 @@
 									</p:cellEditor>
 								</p:column>
 
-								<p:column headerText="#{messages['module.header.selling.ExchangeRate']}">
+								<p:column
+									headerText="#{messages['module.header.selling.ExchangeRate']}">
 									<p:cellEditor>
 										<f:facet name="output">
 											<h:outputText value="#{rate.sellRate}" />
@@ -76,14 +88,24 @@
 						<div class="col-xs-12" style="margin-top: 8px;">
 							<p:dataTable value="#{exchangeRateHome.getCrossRates()}"
 								var="crossRate" editMode="cell" editable="true">
-								<f:facet name="header"> #{messages['module.header.crossrates.ExchangeRate']} </f:facet>       						
+								<f:facet name="header"> #{messages['module.header.crossrates.ExchangeRate']} </f:facet>
 
-								<p:column headerText="#{messages['module.header.code.ExchangeRate']}">
+								<p:column
+									headerText="#{messages['module.header.code.ExchangeRate']}">
                                     #{crossRate.baseCurrency} /
                                     #{crossRate.termCurrency}
-                                </p:column>
+                                    <ui:fragment
+										rendered="#{exchangeRateHome.currencyStatus(crossRate) eq 1}">
+										<i class="fa fa-arrow-up" style="color: green"></i>
+									</ui:fragment>
+									<ui:fragment
+										rendered="#{exchangeRateHome.currencyStatus(crossRate) eq -1}">
+										<i class="fa fa-arrow-down" style="color: red"></i>
+									</ui:fragment>
+								</p:column>
 
-								<p:column headerText="#{messages['module.header.crossrate.ExchangeRate']}	">
+								<p:column
+									headerText="#{messages['module.header.crossrate.ExchangeRate']}	">
 									<p:cellEditor>
 										<f:facet name="output">
 											<h:outputText value="#{crossRate.buyRate}" />
