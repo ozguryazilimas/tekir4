@@ -29,7 +29,6 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.apache.deltaspike.core.api.scope.GroupedConversationScoped;
 import org.apache.deltaspike.jpa.api.transaction.Transactional;
 import org.dom4j.DocumentException;
-import org.jboss.util.collection.CollectionsUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
