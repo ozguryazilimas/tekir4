@@ -22,7 +22,7 @@
                     <t:inputText label="voucher.label.Topic" value="#{salesOrderHome.entity.topic}"  required="true" columnClass="col-xs-12"/>
                     
                     <t:inputCurrency label="general.label.Currency" value="#{salesOrderHome.entity.currency}" required="true"/>
-                    <t:inputDate label="salesOrder.label.ShippingDate" value="#{salesOrderHome.entity.shippingDate}" />
+                    <t:inputDate label="general.label.ShippingDate" value="#{salesOrderHome.entity.shippingDate}" />
                     <t:inputTextarea label="general.label.ShippingNote" value="#{salesOrderHome.entity.shippingNote}" columnClass="col-xs-12"/>
                     
                     <t:inputLookupDialog label="general.label.PaymentPlan" value="#{salesOrderHome.entity.paymentPlan}" lookupBean="#{paymentPlanLookup}" lookupListener="salesOrderHome.entity.paymentPlan" placeholder="#{messages['general.info.PaymentPlan']}" columnClass="col-xs-12" required="true"/>

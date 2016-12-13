@@ -12,13 +12,13 @@
 
     <ui:define name="form">
         <div class="row">
-            <t:inputText label="global.label.Name" value="#{locationHome.entity.name}" required="true" />
-            <t:inputText label="global.label.Code" value="#{locationHome.entity.code}" required="true" />
+            <t:inputText label="general.label.Name" value="#{locationHome.entity.name}" required="true" />
+            <t:inputText label="general.label.Code" value="#{locationHome.entity.code}" required="true" />
         </div>            
         <div class="row">        
-            <t:inputTextarea label="global.label.Info" value="#{locationHome.entity.info}" required="false" />                                            
-            <t:inputCheckboxGroup label="global.label.Status">
-                <p:selectBooleanCheckbox value="#{locationHome.entity.active}" itemLabel="#{messages['global.label.Active']}" />
+            <t:inputTextarea label="general.label.Info" value="#{locationHome.entity.info}" required="false" />                                            
+            <t:inputCheckboxGroup label="general.label.Status">
+                <p:selectBooleanCheckbox value="#{locationHome.entity.active}" itemLabel="#{messages['general.label.Active']}" />
             </t:inputCheckboxGroup>
         </div>  
     </ui:define> 
