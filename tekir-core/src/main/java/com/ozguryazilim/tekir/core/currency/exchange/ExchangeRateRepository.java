@@ -112,4 +112,8 @@ public abstract class ExchangeRateRepository extends
         baseRateMap.put(xr.getTermCurrency().getCurrencyCode(), xr.getSellRate());
         
     }
+    
+    public abstract void deleteByDate(Date date);
+    	
+    
 }

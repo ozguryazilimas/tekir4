@@ -1,74 +1,119 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
-                xmlns:p="http://primefaces.org/ui"                   
-                template="/layout/primeTemplate.xhtml">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+	xmlns:p="http://primefaces.org/ui"
+	template="/layout/primeTemplate.xhtml">
 
-    <ui:define name="body">
-        <div class="box box-primary">
-            <h:form id="ccyForm" class="editForm">
+	<ui:define name="context-menu">
+		<li><p:commandLink action="#{exchangeRateHome.getTCMBRates()}"
+				styleClass="context-command" update="ccyForm" partialSubmit="true"
+				process="@this">
+				<p:confirm header="#{messages['general.caption.Confirm']}"
+					message="#{messages['module.message.confirm.ExchangeRate']}"
+					icon="ui-icon-alert" />
+				<i class="fa fa-exchange"></i>
+				<h:outputText value=" #{messages['module.button.TCMBrate']}" />
+			</p:commandLink></li>
+		<li><p:commandLink action="#{exchangeRateHome.populateRates()}"
+				styleClass="context-command" update="ccyForm" process="@this">
+				<i class="fa fa-refresh" />
+				<h:outputText value=" #{messages['general.button.Refresh']}"></h:outputText>
+			</p:commandLink></li>
+
+	</ui:define>
+
+	<ui:define name="body">
+		<div class="box box-primary">
 
 
-                <div class="box-body">
-                    <div class="row">
-                        <t:inputDate label="general.label.Date" value="#{exchangeRateHome.date}">
-                            <p:ajax event="dateSelect" process="@this" update="ccyForm" />
-                        </t:inputDate>
-                    </div>
+			<h:form id="ccyForm" class="editForm">
 
-                    <div class="row">
-                        <div class="col-xs-12" style="margin-top: 8px;">
-                            <p:dataTable value="#{exchangeRateHome.rates}" var="rate" editMode="cell" editable="true">
+				<div class="box-body">
+					<div class="row">
+						<t:inputDate label="general.label.Date"
+							value="#{exchangeRateHome.date}">
+							<p:ajax event="dateSelect" process="@this" update="ccyForm" />
+						</t:inputDate>
+					</div>
 
-                                <p:column headerText="Code">
+					<div class="row">
+
+						<div class="col-xs-12" style="margin-top: 8px;">
+							<p:dataTable value="#{exchangeRateHome.getTryRates()}" var="rate"
+								editMode="cell" editable="true">
+
+								<p:column headerText="#{messages['module.header.code.ExchangeRate']}">
                                     #{rate.baseCurrency} /
                                     #{rate.termCurrency}
                                 </p:column>
-                                
-                                <p:column headerText="Alış">
-                                    <p:cellEditor>
-                                        <f:facet name="output">
-                                            <h:outputText value="#{rate.buyRate}" />
-                                        </f:facet>
-                                        <f:facet name="input">
-                                            <t:cellInputNumber value="#{rate.buyRate}" decimalPlaces="5"/>
-                                        </f:facet>
-                                    </p:cellEditor>
+
+								<p:column headerText="#{messages['module.header.buying.ExchangeRate']}">
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{rate.buyRate}" />
+										</f:facet>
+										<f:facet name="input">
+											<t:cellInputNumber value="#{rate.buyRate}" decimalPlaces="5" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+
+								<p:column headerText="#{messages['module.header.selling.ExchangeRate']}">
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{rate.sellRate}" />
+										</f:facet>
+										<f:facet name="input">
+											<t:cellInputNumber value="#{rate.sellRate}" decimalPlaces="5" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+
+							</p:dataTable>
+						</div>
+						<div class="col-xs-12" style="margin-top: 8px;">
+							<p:dataTable value="#{exchangeRateHome.getCrossRates()}"
+								var="crossRate" editMode="cell" editable="true">
+								<f:facet name="header"> #{messages['module.header.crossrates.ExchangeRate']} </f:facet>       						
+
+								<p:column headerText="#{messages['module.header.code.ExchangeRate']}">
+                                    #{crossRate.baseCurrency} /
+                                    #{crossRate.termCurrency}
                                 </p:column>
-                                
-                                <p:column headerText="Satış">
-                                    <p:cellEditor>
-                                        <f:facet name="output">
-                                            <h:outputText value="#{rate.sellRate}" />
-                                        </f:facet>
-                                        <f:facet name="input">
-                                            <t:cellInputNumber value="#{rate.sellRate}" decimalPlaces="5"/>
-                                        </f:facet>
-                                    </p:cellEditor>
-                                </p:column>
 
-                            </p:dataTable>
-                        </div>
+								<p:column headerText="#{messages['module.header.crossrate.ExchangeRate']}	">
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{crossRate.buyRate}" />
+										</f:facet>
+										<f:facet name="input">
+											<t:cellInputNumber value="#{crossRate.buyRate}"
+												decimalPlaces="5" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
 
-                    </div>
-                </div>
-                <div class="box-footer">
-                    <div class="pull-right">
+							</p:dataTable>
 
-                        <p:commandButton id="save" 
-                                         value="#{messages['general.button.Save']}" 
-                                         action="#{exchangeRateHome.save()}"
-                                         ajax="true"
-                                         process="@form"
-                                         validateClient="true"
-                                         styleClass="btn-success"
-                                         icon="fa fa-save" />  
-                    </div>
-                </div>
-            </h:form>
-        </div>
-    </ui:define>
+
+						</div>
+					</div>
+
+				</div>
+
+				<div class="box-footer">
+					<div class="pull-right">
+
+						<p:commandButton id="save"
+							value="#{messages['general.button.Save']}"
+							action="#{exchangeRateHome.save()}" ajax="true" process="@form"
+							validateClient="true" styleClass="btn-success" icon="fa fa-save" />
+					</div>
+				</div>
+			</h:form>
+		</div>
+	</ui:define>
 
 </ui:composition>
