@@ -45,7 +45,7 @@ public class OpportunityBrowse extends VoucherBrowseBase<Opportunity, Opportunit
     protected void buildQueryDefinition(QueryDefinition<Opportunity, OpportunityViewModel> queryDefinition) {
         queryDefinition
                 .addColumn(new LinkColumn<>(VoucherBase_.voucherNo, "voucher.label.VoucherNo"), true)
-                .addColumn(new SubTextColumn<>(Opportunity_.account, Contact_.name, "vaoucher.label.Account"), true)
+                .addColumn(new SubTextColumn<>(Opportunity_.account, Contact_.name, "general.label.Account"), true)
                 .addColumn(new TextColumn<>(Opportunity_.topic, "voucher.label.Topic"), true)
                 .addColumn(new DateColumn<>(Opportunity_.date, "voucher.label.Date"), true)
                 .addColumn(new MoneyColumn<>(Opportunity_.budget, Opportunity_.currency, "opportunity.label.Budget"), true)
@@ -66,7 +66,7 @@ public class OpportunityBrowse extends VoucherBrowseBase<Opportunity, Opportunit
                 .addFilter(new StringFilter<>(VoucherBase_.stateReason, "voucher.label.StateReason"))
                 .addFilter(new UserFilter<>(VoucherBase_.owner, "voucher.label.Owner"))
                 .addFilter(new BigDecimalFilter<>(Opportunity_.budget, "opportunity.label.Budget"))
-                .addFilter(new SubStringFilter<>(Opportunity_.account, Contact_.name, "voucher.label.Account"))
+                .addFilter(new SubStringFilter<>(Opportunity_.account, Contact_.name, "general.label.Account"))
                 .addFilter(new SubStringFilter<>(VoucherProcessBase_.process, Process_.processNo, "voucher.label.Process"))
                 .addFilter(new DateFilter<>(VoucherBase_.date, "voucher.label.Date", FilterOperand.In, DateValueType.LastTenDays));
                 

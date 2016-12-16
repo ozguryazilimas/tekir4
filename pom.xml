@@ -80,10 +80,10 @@
         <module>tekir-order-model</module>
         <module>tekir-quote</module>
         <module>tekir-commodity-model</module>
-        <module>tekir-conmodity</module>
+        <module>tekir-commodity</module>
         <module>tekir-account-notes-model</module>
         <module>tekir-account-notes</module>
-    <module>tekir-opportunity-quote-linker</module>
+    	<module>tekir-opportunity-quote-linker</module>
         <module>tekir-order</module>
         <module>tekir-quote-order-linker</module>
         <module>tekir-invoice-model</module>

@@ -41,7 +41,7 @@ public class QuoteBrowse extends VoucherBrowseBase<Quote, QuoteViewModel> {
     protected void buildQueryDefinition(QueryDefinition<Quote, QuoteViewModel> queryDefinition) {
         queryDefinition
                 .addColumn(new LinkColumn<>(VoucherBase_.voucherNo, "voucher.label.VoucherNo"), true)
-                .addColumn(new SubTextColumn<>(VoucherProcessBase_.account, Contact_.name, "vaoucher.label.Account"), true)
+                .addColumn(new SubTextColumn<>(VoucherProcessBase_.account, Contact_.name, "general.label.Account"), true)
                 .addColumn(new TextColumn<>(VoucherProcessBase_.topic, "voucher.label.Topic"), true)
                 .addColumn(new DateColumn<>(VoucherBase_.date, "voucher.label.Date"), true)
                 .addColumn(new MoneyColumn<>(Quote_.total, Quote_.currency, "general.label.Total"), true)
@@ -62,7 +62,7 @@ public class QuoteBrowse extends VoucherBrowseBase<Quote, QuoteViewModel> {
                 .addFilter(new StringFilter<>(VoucherBase_.stateReason, "voucher.label.StateReason"))
                 .addFilter(new UserFilter<>(VoucherBase_.owner, "voucher.label.Owner"))
                 .addFilter(new BigDecimalFilter<>(Quote_.total, "general.label.Total"))
-                .addFilter(new SubStringFilter<>(VoucherProcessBase_.account, Contact_.name, "voucher.label.Account"))
+                .addFilter(new SubStringFilter<>(VoucherProcessBase_.account, Contact_.name, "general.label.Account"))
                 .addFilter(new SubStringFilter<>(VoucherProcessBase_.process, Process_.processNo, "voucher.label.Process"))
                 .addFilter(new DateFilter<>(VoucherBase_.date, "voucher.label.Date", FilterOperand.In, DateValueType.LastTenDays));
 

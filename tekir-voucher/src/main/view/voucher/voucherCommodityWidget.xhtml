@@ -10,30 +10,30 @@
 
         <div class="row">
             <p:dataTable id="its" value="#{bean.entity.items}" var="item" reflow="true" styleClass="col-xs-12">
-                <p:column headerText="Emtia">
+                <p:column headerText="#{messages['widget.label.Commodity']}">
                     <h:outputText value="#{item.commodity.name}" />
                 </p:column>
-                <p:column headerText="Açıklama">
+                <p:column headerText="#{messages['widget.label.Description']}">
                     <h:outputText value="#{item.info}" />
                 </p:column>
-                <p:column headerText="Miktar" >
+                <p:column headerText="#{messages['widget.label.Amount']}" >
                     <div style="text-align: right;">
                         <h:outputText value="#{item.quantity.amount}" />
                         <h:outputText value=" #{item.quantity.unitName.name}" />
                     </div>
                 </p:column>
-                <p:column headerText="Birim Fiyat" >
+                <p:column headerText="#{messages['widget.label.UnitPrice']}" >
                     <t:cellOutputMoney value="#{item.price}" currency="#{bean.entity.currency}" />
                 </p:column>
-                <p:column headerText="Tutar" >
+                <p:column headerText="#{messages['widget.label.Cost']}" >
                     <t:cellOutputMoney value="#{item.total}" currency="#{bean.entity.currency}" />
                 </p:column>
-                <p:column headerText="İndirim">
+                <p:column headerText="#{messages['widget.label.Discount']}">
                     <t:cellOutputMoney value="#{item.discount}" currency="#{bean.entity.currency}" />
                 </p:column>
 
 
-                <p:column headerText="Toplam" >
+                <p:column headerText="#{messages['widget.label.Total']}" >
                     <t:cellOutputMoney value="#{item.lineTotal}" currency="#{bean.entity.currency}" />
                 </p:column>
 
@@ -78,22 +78,22 @@
             <p:outputPanel id="sms" layout="block" styleClass="col-md-12 col-xs-12 pull-right">
                 <table class="table table-bordered" style="margin-top: 5px;">
                     <tr>
-                        <th>Toplam</th>
+                        <th>#{messages['widget.label.Total']}</th>
                         <td><t:cellOutputMoney value="#{bean.entity.summaries['BeforeDiscountTotal'].amount}" currency="#{bean.entity.currency}" /></td>
                     </tr>
                     <ui:fragment rendered="#{not empty bean.entity.summaries['Discount']}">
                         <tr>
-                            <th>İndirim %#{bean.entity.summaries['DiscountRate'].amount} ( - )</th>
+                            <th>#{messages['widget.label.Discount']} %#{bean.entity.summaries['DiscountRate'].amount} ( - )</th>
                             <td><t:cellOutputMoney value="#{bean.entity.summaries['Discount'].amount}" currency="#{bean.entity.currency}" /></td>
                         </tr>
                     </ui:fragment>
 
                     <tr>
-                        <th>Vergi Matrah </th>
+                        <th>#{messages['widget.label.TaxBase']} </th>
                         <td><t:cellOutputMoney value="#{bean.entity.summaries['BeforeTaxTotal'].amount}" currency="#{bean.entity.currency}" /></td>
                     </tr>
                     <tr>
-                        <th>Vergi ( + )</th>
+                        <th>#{messages['widget.label.Tax']} ( + )</th>
                         <td><t:cellOutputMoney value="#{bean.entity.summaries['TaxTotal'].amount}" currency="#{bean.entity.currency}" /></td>
                     </tr>
                     <ui:repeat value="#{bean.getTaxes()}" var="ent">
@@ -103,7 +103,7 @@
                         </tr>
                     </ui:repeat>
                     <tr>
-                        <th>Genel Toplam</th>
+                        <th>#{messages['widget.label.GrandTotal']}</th>
                         <th><t:cellOutputMoney value="#{bean.entity.summaries['GrandTotal'].amount}" currency="#{bean.entity.currency}" /></th>
                     </tr>
                 </table>

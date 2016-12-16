@@ -64,7 +64,7 @@ public class AccountTxnSubView extends SubViewQueryBase<AccountTxn, AccountTxn>{
                 //.addFilter(new StringFilter<>(AccountTxn_.stateReason, "voucher.label.StateReason"))
                 
                 .addFilter(new BigDecimalFilter<>(AccountTxn_.amount, "general.label.Total"))
-                //.addFilter(new SubStringFilter<>(VoucherProcessBase_.account, Contact_.name, "voucher.label.Account"))
+                //.addFilter(new SubStringFilter<>(VoucherProcessBase_.account, Contact_.name, "general.label.Account"))
                 //.addFilter(new SubStringFilter<>(VoucherProcessBase_.process, Process_.processNo, "voucher.label.Process"))
                 .addFilter(new DateFilter<>(AccountTxn_.date, "voucher.label.Date", FilterOperand.In, DateValueType.LastTenDays));
     }

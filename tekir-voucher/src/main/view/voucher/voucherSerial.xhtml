@@ -15,10 +15,10 @@
             <h:form id="vsf">
                 <div class="box-body">
                     <p:dataTable value="#{voucherSerialController.features}" var="feature" >
-                        <p:column headerText="Voucher">
+                        <p:column headerText="#{messages['general.label.Voucher']}">
                             #{messages[voucherSerialController.captions[feature]]}
                         </p:column>
-                        <p:column headerText="Serial">
+                        <p:column headerText="#{messages['module.caption.VoucherSerial']}">
                             <p:inputText value="#{voucherSerialController.serials[feature]}" />
                         </p:column>
 

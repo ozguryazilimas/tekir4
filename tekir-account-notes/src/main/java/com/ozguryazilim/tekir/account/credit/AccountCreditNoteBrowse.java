@@ -62,7 +62,7 @@ public class AccountCreditNoteBrowse extends VoucherBrowseBase<AccountCreditNote
                 .addFilter(new StringFilter<>(VoucherBase_.stateReason, "voucher.label.StateReason"))
                 .addFilter(new UserFilter<>(VoucherBase_.owner, "voucher.label.Owner"))
                 .addFilter(new BigDecimalFilter<>(AccountCreditNote_.amount, "general.label.Amount"))
-                .addFilter(new SubStringFilter<>(AccountCreditNote_.account, Contact_.name, "voucher.label.Account"))
+                .addFilter(new SubStringFilter<>(AccountCreditNote_.account, Contact_.name, "general.label.Account"))
                 .addFilter(new DateFilter<>(VoucherBase_.date, "voucher.label.Date", FilterOperand.In, DateValueType.LastTenDays));
                 
     }
