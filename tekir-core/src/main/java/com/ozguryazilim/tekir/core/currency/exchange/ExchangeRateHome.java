@@ -15,9 +15,13 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Currency;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
@@ -61,6 +65,8 @@ public class ExchangeRateHome implements Serializable {
 	 * Değerler
 	 */
 	private List<ExchangeRate> rates = new ArrayList<>();
+	
+	private Map<String,BigDecimal> yesterdayRates = new HashMap<>();
 
 	@PostConstruct
 	public void init() {
@@ -80,6 +86,19 @@ public class ExchangeRateHome implements Serializable {
 		if (!ls.isEmpty()) {
 			rates.addAll(ls);
 		}
+		
+		 Calendar calendar = Calendar.getInstance();
+		 calendar.setTime(date);
+	     calendar.add(Calendar.DATE, -1);
+		List<ExchangeRate> yls = repository.findByDate(calendar.getTime());
+	
+		if (!yls.isEmpty()) {
+			yesterdayRates = yls.stream().collect(HashMap<String, BigDecimal>::new, 
+	                (m, c) -> m.put(c.getBaseCurrency().getCurrencyCode() + "/" + c.getTermCurrency().getCurrencyCode(), c.getBuyRate()),
+	                (m, u) -> {});
+		}
+		
+		
 
 		// Veri tababanından aldığımız değerler içerisinde eşlerin hepsi yoksa
 		// ekliyoruz.
@@ -171,5 +190,14 @@ public class ExchangeRateHome implements Serializable {
 		populateRates();
 
 	}
-
+	public int currencyStatus(ExchangeRate rate){
+		BigDecimal yesterdayRate = yesterdayRates.get(rate.getBaseCurrency().getCurrencyCode() + "/" +
+													  rate.getTermCurrency().getCurrencyCode());
+		if(yesterdayRate == null){
+		return 0;
+		}
+		
+		return rate.getBuyRate().compareTo(yesterdayRate);
+		
+	}
 }
