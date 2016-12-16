@@ -184,6 +184,18 @@ public class CurrencyService implements Serializable{
     }
     
     /**
+     * Verilen değeri güncel kur ile rapor dövizine çevirir.
+     * 
+     * @param fromCurrency
+     * @param amount
+     * @return 
+     */
+    public BigDecimal convert( BigDecimal amount ){
+        return convert(defaultCurrency.getCurrencyCode(), amount, reportCurrency.getCurrencyCode(), new Date());
+    }
+    
+    
+    /**
      * Verilen değeri isetenilen döviz türüne çevirir
      * @param fromCurrency
      * @param amount
@@ -242,7 +254,7 @@ public class CurrencyService implements Serializable{
     }
     
     /**
-     * Asıl çevrim işe JSR-354 API kullanılarak yapılıyor.
+     * Asıl çevrim ise JSR-354 API kullanılarak yapılıyor.
      * @param m
      * @param toCurrency
      * @param date
@@ -289,14 +301,14 @@ public class CurrencyService implements Serializable{
         
         System.err.println(a);
         
-        /*
+        
         c = Monetary.getCurrency("TRY");
         q = ConversionQueryBuilder.of().setProviderName("TKR").setTermCurrency(c).build();
         cc = MonetaryConversions.getConversion(q);
         a = cc.apply(Money.of(10, "USD"));
         
         System.err.println(a);
-        */
+        
 
 
         BigDecimal b = convert("TRY", BigDecimal.TEN, "EUR");
@@ -305,6 +317,11 @@ public class CurrencyService implements Serializable{
         b = convert("EUR", BigDecimal.TEN);
         System.err.println(b);
         
+        b = convert(BigDecimal.TEN);
+        System.err.println(b);
+        
         //MonetaryConversions.getConversion(ConversionQueryBuilder.of().setRateTypes(RateTypes.))DEFAULT_CURRENCY, "IMF").getExchangeRate(null).
     }
+      
+    
 }

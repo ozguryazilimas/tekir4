@@ -17,15 +17,51 @@
 				<i class="fa fa-exchange"></i>
 				<h:outputText value=" #{messages['module.button.TCMBrate']}" />
 			</p:commandLink></li>
-		<li><p:commandLink action="#{exchangeRateHome.populateRates()}"
+		<li><p:commandLink action="#{exchangeRateHome.init()}"
 				styleClass="context-command" update="ccyForm" process="@this">
 				<i class="fa fa-refresh" />
 				<h:outputText value=" #{messages['general.button.Refresh']}"></h:outputText>
 			</p:commandLink></li>
+		<li><p:commandLink actionListener="#{exchangeRateHome.handleClose()}" update="calcForm" oncomplete="PF('calc').show();"
+				styleClass="context-command">
+				<i class="fa fa-calculator" />
+				<h:outputText
+					value=" #{messages['module.button.calculator.ExchangeRate']}"></h:outputText>
+			</p:commandLink></li>
+
+
 
 	</ui:define>
 
 	<ui:define name="body">
+			<p:dialog header="#{messages['module.button.calculator.ExchangeRate']}" widgetVar="calc" modal="true"
+			height="100" appendTo="@(body)" >			
+			<h:form id="calcForm">
+				<h:panelGrid columns="2">
+
+					<p:selectOneMenu value="#{exchangeRateHome.fromCurrency}"
+						converter="currencyConverter">
+						<f:selectItems value="#{currencyService.availableCurrencies}"
+							var="ccy" itemLabel="#{ccy.currencyCode}" itemValue="#{ccy}" />
+					</p:selectOneMenu>
+
+					<p:selectOneMenu value="#{exchangeRateHome.toCurrency}"
+						converter="currencyConverter">
+						<f:selectItems value="#{currencyService.availableCurrencies}"
+							var="ccy" itemLabel="#{ccy.currencyCode}" itemValue="#{ccy}" />
+					</p:selectOneMenu>
+
+					<p:inputNumber value="#{exchangeRateHome.amount}" />
+					<p:inputNumber value="#{exchangeRateHome.result}" readonly="true" />
+
+				</h:panelGrid>
+				<p:commandButton icon="fa fa-exchange"
+					action="#{exchangeRateHome.convert()}" 
+					value="#{messages['module.button.calculation.ExchangeRate']}"
+					ajax="true" process="@form" update="@form"/>
+			</h:form>
+		</p:dialog>
+		
 		<div class="box box-primary">
 
 

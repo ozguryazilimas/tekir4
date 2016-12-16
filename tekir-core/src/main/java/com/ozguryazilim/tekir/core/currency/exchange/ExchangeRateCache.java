@@ -31,7 +31,7 @@ public class ExchangeRateCache implements Serializable{
      * 
      * TODO: Event-Observer yapsak mı?
      */
-    public void clearChache(){
+    public void clearCache(){
         rates.clear();
     }
     

@@ -27,7 +27,9 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.money.convert.CurrencyConversionException;
 
+import org.apache.commons.beanutils.ConversionException;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.deltaspike.core.api.scope.GroupedConversationScoped;
@@ -55,6 +57,9 @@ public class ExchangeRateHome implements Serializable {
 
 	@Inject
 	private ExchangeRateRepository repository;
+	
+    @Inject
+    private ExchangeRateCache rateCache;
 
 	/**
 	 * İşlem yapılacak olan tarih
@@ -67,10 +72,20 @@ public class ExchangeRateHome implements Serializable {
 	private List<ExchangeRate> rates = new ArrayList<>();
 	
 	private Map<String,BigDecimal> yesterdayRates = new HashMap<>();
+	private BigDecimal amount;
+	private BigDecimal result;
+	private Currency fromCurrency;
+	private Currency toCurrency;
 
 	@PostConstruct
 	public void init() {
+		amount = new BigDecimal(0.0);
+		result = new BigDecimal(0.0);
+		fromCurrency = currencyService.getDefaultCurrency();
+		toCurrency = currencyService.getReportCurrency();
+		rateCache.clearCache();
 		populateRates();
+		
 	}
 
 	/**
@@ -78,7 +93,7 @@ public class ExchangeRateHome implements Serializable {
 	 * yoksa, 0 değerler ile kayıt listesi oluşturur.
 	 *
 	 */
-	public void populateRates() {
+	private void populateRates() {
 
 		rates.clear();
 
@@ -128,6 +143,8 @@ public class ExchangeRateHome implements Serializable {
 	public void save() {
 		rates.stream().forEach(xcr -> repository.save(xcr));
 		// TODO: Rate Cache temizlenmeli.
+		init();
+		
 	}
 
 	public Date getDate() {
@@ -142,7 +159,7 @@ public class ExchangeRateHome implements Serializable {
 			save();
 		this.date = date;
 		// Tarih değişti. Değerler değişti.
-		populateRates();
+		init();
 		}
 	}
 	//Tüm kurlar
@@ -187,8 +204,38 @@ public class ExchangeRateHome implements Serializable {
 			FacesMessages.error("exchangeRate.message.Error");
 		}
 		//Yeni gelen değerler ile tekrar doldursun.
-		populateRates();
+		
+		init();
+	}
+	
+	public void convert(){		
+		try{
+			setResult(currencyService.convert(fromCurrency.getCurrencyCode(),this.amount,toCurrency.getCurrencyCode()));
+		} catch (CurrencyConversionException | NullPointerException e){
+			LOG.error("Error",e);
+			FacesMessages.error("module.error.calculation.CurrencyDefinition");
+		}
 
+	}    
+	
+	public void handleClose(){
+		amount = new BigDecimal(0.0);
+		result = new BigDecimal(0.0);
+		fromCurrency = currencyService.getDefaultCurrency();
+		toCurrency = currencyService.getReportCurrency();
+		
+	}
+	
+	public BigDecimal getAmount() {
+		return amount;
+	}
+
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
+	}
+
+	public BigDecimal getResult() {
+		return result;
 	}
 	public int currencyStatus(ExchangeRate rate){
 		BigDecimal yesterdayRate = yesterdayRates.get(rate.getBaseCurrency().getCurrencyCode() + "/" +
@@ -200,4 +247,24 @@ public class ExchangeRateHome implements Serializable {
 		return rate.getBuyRate().compareTo(yesterdayRate);
 		
 	}
+
+	public void setResult(BigDecimal result) {
+		this.result = result;
+	}
+	public Currency getToCurrency() {
+		return toCurrency;
+	}
+
+	public void setToCurrency(Currency toCurrency) {
+		this.toCurrency = toCurrency;
+	}
+
+	public Currency getFromCurrency() {
+		return fromCurrency;
+	}
+
+	public void setFromCurrency(Currency fromCurrency) {
+		this.fromCurrency = fromCurrency;
+	}
+
 }
