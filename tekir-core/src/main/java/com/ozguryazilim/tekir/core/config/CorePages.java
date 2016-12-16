@@ -13,6 +13,7 @@ import com.ozguryazilim.telve.auth.SecuredPage;
 import com.ozguryazilim.telve.view.PageTitle;
 import com.ozguryazilim.telve.nav.Navigation;
 import com.ozguryazilim.tekir.core.config.CorePages;
+import com.ozguryazilim.tekir.feed.config.FeedPages;
 
 /**
  *
@@ -112,6 +113,13 @@ public interface CorePages extends Pages {
 			implements
 				com.ozguryazilim.tekir.core.config.CorePages {
 	}
+	
+    @SecuredPage()
+    @View
+    class TcmbExchangeRatesCommand 
+    implements  com.ozguryazilim.tekir.core.config.CorePages {
+    
+    }
         
         
 }
