@@ -306,11 +306,12 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
             m.setTopic(txn.getInfo());
             if (txn.getDebit()) {
                 m.setAmount(txn.getAmount().negate());
-                takeOverTotal = takeOverTotal.subtract(txn.getAmount());
+                takeOverTotal = takeOverTotal.subtract(txn.getLocalAmount());
             } else {
                 m.setAmount(txn.getAmount());
-                takeOverTotal = takeOverTotal.add(txn.getAmount());
+                takeOverTotal = takeOverTotal.add(txn.getLocalAmount());
             }
+            m.setCcy(txn.getCurrency());
             m.setBalance(takeOverTotal);
             m.setDate(txn.getDate());
             balanceModels.add(m);

@@ -7,6 +7,7 @@ package com.ozguryazilim.finance.account;
 
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import java.math.BigDecimal;
+import java.util.Currency;
 import java.util.Date;
 
 /**
@@ -21,6 +22,7 @@ public class FinanceAccountBalanceModel {
     private String topic;
     private BigDecimal amount;
     private BigDecimal balance;
+    private Currency ccy;
     private String lineType = "TXN"; //TAKE-OVER ( devir ) ve RESULT ( sonuç ) da olabilir 
 
     public FeaturePointer getFeaturePointer() {
@@ -70,6 +72,14 @@ public class FinanceAccountBalanceModel {
     public void setLineType(String lineType) {
         this.lineType = lineType;
     }
+
+	public Currency getCcy() {
+		return ccy;
+	}
+
+	public void setCcy(Currency ccy) {
+		this.ccy = ccy;
+	}
     
     
     

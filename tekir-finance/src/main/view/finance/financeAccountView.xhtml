@@ -23,11 +23,11 @@
         <section class="content-header">
             <ul class="states pull-right">
                 <li class="#{financeAccountHome.balance lt 0 ? 'text-red' : ''}">
-                    <div style="font-weight: bold;">Bakiye</div>
-                    <div ><h:outputText value="#{financeAccountHome.balance}" styleClass="#{financeAccountHome.balance lt 0 ? 'text-red' : ''}" /></div>
+                    <div style="font-weight: bold;">#{messages['general.label.Balance']}</div>
+                    <div ><h:outputText value="#{financeAccountHome.balance}  #{currencyService.reportCurrency}" styleClass="#{financeAccountHome.balance lt 0 ? 'text-red' : ''}" /></div>
                 </li>
                 <li role="presentation">
-                    <div style="font-weight: bold;"> Belge Sahibi</div>
+                    <div style="font-weight: bold;"> #{messages['account.label.Owner']}</div>
                     <div >
                         #{userLookup.getUserName(financeAccountHome.entity.owner)}
                     </div>

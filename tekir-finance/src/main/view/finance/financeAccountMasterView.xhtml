@@ -71,10 +71,10 @@
                             <h:outputText value="#{messages[txn.topic]}" rendered="#{txn.lineType ne 'TXN'}" style="font-weight: bold;"/>
                         </p:column>
                         <p:column headerText="Tutar">
-                            <h:outputText value="#{txn.amount}" styleClass="pull-right #{txn.amount lt 0 ? 'text-red' : ''}" />
+                            <h:outputText value="#{txn.amount} #{txn.ccy.getCurrencyCode()}" styleClass="pull-right #{txn.amount lt 0 ? 'text-red' : ''}" />
                         </p:column>
                         <p:column headerText="Bakiye">
-                            <h:outputText value="#{txn.balance}" styleClass="pull-right #{txn.balance lt 0 ? 'text-red' : ''}" />
+                            <h:outputText value="#{txn.balance} #{currencyService.reportCurrency}" styleClass="pull-right #{txn.balance lt 0 ? 'text-red' : ''}" />
                         </p:column>
                     </p:dataTable>
 
