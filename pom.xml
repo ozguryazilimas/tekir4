@@ -21,6 +21,7 @@
         <version.telve>4.0.0.Beta4</version.telve>
         <version.tekir>4.0.0-SNAPSHOT</version.tekir>
         <version.hibernate>4.3.11.Final</version.hibernate>
+        <version.liquibase-hibernate4>3.5</version.liquibase-hibernate4>
     </properties>
     
     <issueManagement>

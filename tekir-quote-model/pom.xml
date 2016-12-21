@@ -112,7 +112,7 @@
                             <dependency>
                                 <groupId>org.liquibase.ext</groupId>
                                 <artifactId>liquibase-hibernate4</artifactId>
-                                <version>3.5</version>
+                                <version>${version.liquibase-hibernate4}</version>
                                 <exclusions>
                                     <exclusion>
                                         <groupId>org.hibernate</groupId>
