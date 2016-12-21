@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.finance.account.txn;
 
+import com.ozguryazilim.tekir.entities.AccountTxn;
 import com.ozguryazilim.tekir.entities.FinanceAccount;
 import com.ozguryazilim.tekir.entities.FinanceAccountTxn;
 import com.ozguryazilim.telve.data.RepositoryBase;
@@ -25,7 +26,12 @@ import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
 @Dependent
 public abstract class FinanceAccountTxnRepository extends RepositoryBase<FinanceAccountTxn, FinanceAccountTxn> implements   CriteriaSupport<FinanceAccountTxn> {
 
+	public abstract List<FinanceAccountTxn> findByProcessId( String processId );
+	
     public abstract FinanceAccountTxn findOptionalByFeature( FeaturePointer feature );
+    
+    public abstract FinanceAccountTxn findOptionalByFeatureAndAccount( FeaturePointer feature , FinanceAccount account);
+
     
     /**
      * Account için verilen tarihten daha büyük değerleri toplar.

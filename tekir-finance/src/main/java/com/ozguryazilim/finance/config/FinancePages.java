@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.finance.config;
 
+import com.ozguryazilim.finance.virement.FinanceAccountVirementFeature;
 import com.ozguryazilim.tekir.core.config.ParamNavigationSection;
 import com.ozguryazilim.telve.auth.SecuredPage;
 import com.ozguryazilim.telve.nav.Navigation;
@@ -25,7 +26,7 @@ public interface FinancePages extends Pages {
     @View
     @SecuredPage("financeAccount")
     @PageTitle("module.caption.FinanceAccount")
-    @Navigation(label = "module.caption.FinanceAccount", icon = "flaticon-tax", section = ParamNavigationSection.class)
+    @Navigation(label = "module.caption.FinanceAccount", icon = "flaticon-tax", section = FinanceNavigationSection.class)
     class FinanceAccountBrowse implements FinancePages {
     }
 
@@ -54,6 +55,34 @@ public interface FinancePages extends Pages {
     @SecuredPage()
     @View
     class FinanceAccountLookup
+            implements
+            FinancePages {
+    }
+    
+    @View
+    @SecuredPage("FinanceAccountVirement")
+    @PageTitle("module.caption.FinanceAccountVirementBrowse")
+    @Navigation(label = "module.caption.FinanceAccountVirementBrowse", feature = FinanceAccountVirementFeature.class, section = FinanceNavigationSection.class)
+    class FinanceAccountVirementBrowse implements FinancePages {
+    }
+
+    @View
+    @SecuredPage("FinanceAccountVirement")
+    @PageTitle("module.caption.FinanceAccountVirement")
+    class FinanceAccountVirement implements FinancePages {
+    }
+
+    @View
+    @SecuredPage("FinanceAccountVirement")
+    @PageTitle("module.caption.FinanceAccountVirement")
+    class FinanceAccountVirementView
+            implements
+            FinancePages {
+    }
+
+    @View
+    @SecuredPage("FinanceAccountVirement")
+    class FinanceAccountVirementMasterView
             implements
             FinancePages {
     }

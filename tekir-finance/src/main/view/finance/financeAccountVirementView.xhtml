@@ -1,0 +1,41 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/voucherViewBase.xhtml">
+
+    <ui:param name="bean" value="#{financeAccountVirementHome}" />
+    <ui:param name="entityName" value="financeAccountVirement" />
+    <ui:param name="viewIdentifier" value="#{financeAccountVirementHome.entity.voucherNo}" />
+    <ui:param name="viewState" value="#{financeAccountVirementHome.entity.state.name} #{financeAccountVirementHome.entity.stateReason}" />
+    <ui:param name="showCaption" value="true"/>
+    <ui:param name="dontShowContentHeader" value="false" />
+
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{financeAccountVirementHome.id}" />
+        </f:metadata>
+    </ui:define>
+
+
+    <ui:define name="caption">
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <t:outputEntityLink label="general.label.FromAccount" value="#{financeAccountVirementHome.entity.fromAccount}" view="/finance/financeAccountView.xhtml" />
+                <t:outputEntityLink label="general.label.ToAccount" value="#{financeAccountVirementHome.entity.toAccount}" view="/finance/financeAccountView.xhtml" />
+                <t:outputMoney label="general.label.Amount" value="#{financeAccountVirementHome.entity.amount}" currency="#{financeAccountVirementHome.entity.currency}" />
+                <t:outputText label="general.label.Info" value="#{financeAccountVirementHome.entity.info}" columnClass="col-xs-12"/>
+                
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <t:outputText label="voucher.label.VoucherNo" value="#{financeAccountVirementHome.entity.voucherNo}"  />
+                <t:outputText label="voucher.label.ReferenceNo" value="#{financeAccountVirementHome.entity.referenceNo}" />
+                <t:outputText label="general.label.Code" value="#{financeAccountVirementHome.entity.code}" />
+            </div>
+        </div>  
+
+    </ui:define>
+
+</ui:composition>

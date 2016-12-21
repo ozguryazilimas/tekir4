@@ -1,0 +1,49 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"                
+                template="/layout/voucherEditBase.xhtml">
+
+    <ui:param name="homeBean" value="#{financeAccountVirementHome}" />
+    <ui:param name="entity" value="#{financeAccountVirementHome.entity}" />
+    <ui:param name="dontShowContentHeader" value="true" />
+
+
+    <ui:define name="form">
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <t:inputLookupDialog label="general.label.FromAccount" value="#{financeAccountVirementHome.entity.fromAccount}" 
+                                         lookupBean="#{financeAccountLookup}" lookupListener="financeAccountVirementHome.entity.fromAccount" 
+                                         placeholder="#{messages['general.info.Account']}" />
+                    <t:inputLookupDialog label="general.label.ToAccount" value="#{financeAccountVirementHome.entity.toAccount}" 
+                                         lookupBean="#{financeAccountLookup}" lookupListener="financeAccountVirementHome.entity.toAccount" 
+                                         placeholder="#{messages['general.info.Account']}" />
+                    <t:inputText label="voucher.label.Topic" value="#{financeAccountVirementHome.entity.topic}"  required="false" columnClass="col-xs-12"/>
+                    <t:inputTextarea label="general.label.Info" value="#{financeAccountVirementHome.entity.info}" columnClass="col-xs-12"/>
+                    <t:inputCurrency label="general.label.Currency" value="#{financeAccountVirementHome.entity.currency}"  required="true" />
+                    <t:inputMoney label="financeAccountVirement.label.Amount" value="#{financeAccountVirementHome.entity.amount}"  currency="#{financeAccountVirementHome.entity.currency}" required="true" />
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <t:inputText label="voucher.label.VoucherNo" value="#{financeAccountVirementHome.entity.voucherNo}"  required="true" readonly="true" />
+                    <t:inputText label="voucher.label.ReferenceNo" value="#{financeAccountVirementHome.entity.referenceNo}" />
+                    
+                    <t:inputText label="voucher.label.Owner" value="#{financeAccountVirementHome.entity.owner}" />
+                    <t:inputText label="general.label.Code" value="#{financeAccountVirementHome.entity.code}" />
+                    <t:inputLookupDialog label="voucher.label.Group" value="#{financeAccountVirementHome.entity.group}" lookupBean="#{voucherGroupLookup}" lookupListener="financeAccountVirementHome.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" />
+                    <t:inputDate label="voucher.label.Date" value="#{financeAccountVirementHome.entity.date}" columnClass="col-xs-12"/>
+                </div>
+            </div>
+
+            
+
+
+        </div>
+    </ui:define>
+
+</ui:composition>
