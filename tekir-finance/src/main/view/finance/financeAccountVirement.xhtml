@@ -1,0 +1,63 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"                
+                template="/layout/voucherEditBase.xhtml">
+
+    <ui:param name="homeBean" value="#{financeAccountVirementHome}" />
+    <ui:param name="entity" value="#{financeAccountVirementHome.entity}" />
+    <ui:param name="dontShowContentHeader" value="true" />
+
+
+    <ui:define name="form">
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+               	    <t:inputEnum value="#{financeAccountVirementHome.entity.virementType}" label="finance.label.VirementType" 
+               	    itemLabel="virementtype." hasNullValue="false" required="true" columnClass="col-xs-12">
+               	    </t:inputEnum>
+	
+                    <t:inputLookupDialog label="general.label.FromAccount" value="#{financeAccountVirementHome.fromAccount}" 
+                                         lookupBean="#{financeAccountLookup}" lookupListener="financeAccountVirementHome.fromAccount" 
+                                         placeholder="#{messages['general.info.Account']}"
+                                         update="@form">
+                    </t:inputLookupDialog>
+                    <t:inputLookupDialog label="general.label.ToAccount" value="#{financeAccountVirementHome.toAccount}" 
+                                         lookupBean="#{financeAccountLookup}" lookupListener="financeAccountVirementHome.toAccount" 
+                                         placeholder="#{messages['general.info.Account']}"
+                                         update="@form">
+                   </t:inputLookupDialog>
+                    <t:inputText label="voucher.label.Topic" value="#{financeAccountVirementHome.entity.topic}"  required="false" columnClass="col-xs-12"/>
+                    <t:inputText label="general.label.Info" value="#{financeAccountVirementHome.entity.info}" columnClass="col-xs-12"/>
+                    <div class="row col-md-6">
+                    <t:inputCurrency id="fromCCY" label="general.label.FromCurrency" value="#{financeAccountVirementHome.entity.fromCurrency}" required="true" readonly="#{!financeAccountVirementHome.isFromCurrencyEditable()}" columnClass="col-xs-12"/>
+                    <t:inputMoney id="fromAmount" label="financeAccountVirement.label.FromAmount" value="#{financeAccountVirementHome.entity.fromAmount}"  currency="#{financeAccountVirementHome.entity.fromCurrency}" required="true" columnClass="col-xs-12"/>
+                    </div>
+                    <div class="row col-md-6">
+                    <t:inputCurrency id="toCCY" label="general.label.ToCurrency" value="#{financeAccountVirementHome.entity.toCurrency}"  required="true" readonly="#{!financeAccountVirementHome.isToCurrencyEditable()}" columnClass="col-xs-12"/>
+                    <t:inputMoney id="toAmount" label="financeAccountVirement.label.ToAmount" value="#{financeAccountVirementHome.entity.toAmount}"  currency="#{financeAccountVirementHome.entity.toCurrency}" required="#{financeAccountVirementHome.isToAmountRendered()}" rendered="#{financeAccountVirementHome.isToAmountRendered()}" columnClass="col-xs-12"/>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <t:inputText label="voucher.label.VoucherNo" value="#{financeAccountVirementHome.entity.voucherNo}"  required="true" readonly="true" />
+                    <t:inputText label="voucher.label.ReferenceNo" value="#{financeAccountVirementHome.entity.referenceNo}" />
+                    
+                    <t:inputText label="voucher.label.Owner" value="#{financeAccountVirementHome.entity.owner}" />
+                    <t:inputText label="general.label.Code" value="#{financeAccountVirementHome.entity.code}" />
+                    <t:inputLookupDialog label="voucher.label.Group" value="#{financeAccountVirementHome.entity.group}" lookupBean="#{voucherGroupLookup}" lookupListener="financeAccountVirementHome.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" />
+                    <t:inputDate label="voucher.label.Date" value="#{financeAccountVirementHome.entity.date}" columnClass="col-xs-12"/>
+                </div>
+            </div>
+
+            
+
+
+        </div>
+    </ui:define>
+
+</ui:composition>

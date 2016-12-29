@@ -33,7 +33,10 @@ public class AccountTxnService implements Serializable{
     @Transactional
     public void saveFeature( FeaturePointer feature, Contact account, String code, String info, Boolean accountable, Boolean debit, Currency currency, BigDecimal amount, BigDecimal localAmount, Date date,  String owner, String processId,  String status, String statusReason ){
         
-        AccountTxn txn = repository.findOptionalByFeature( feature );
+    	AccountTxn txn = repository.findOptionalByFeatureAndAccount(feature, account);
+        /*/FIXME: findOptionalByFeature olduğu zaman giriş ve çıkış için 2 farklı kayıt AccountTxn'e atılamıyor.
+        Bu yüzden findOptionalByFeatureAndAccount olarak değiştirildi, fakat bu da kayıtlardan birinin hesabı değiştirileceği
+        zaman sorun çıkartıyor! Başka birşey düşünülecek!./*/
         
         if( txn == null ){
             txn = new AccountTxn();

@@ -105,6 +105,8 @@ public abstract class AccountTxnRepository extends
     
     public abstract AccountTxn findOptionalByFeature( FeaturePointer feature );
     
+    public abstract AccountTxn findOptionalByFeatureAndAccount( FeaturePointer feature , Contact account);
+    
     public abstract List<AccountTxn> findByProcessId( String processId );
     
     public List<AccountTxn> findOpenTxnsByAccount( Contact account ){
