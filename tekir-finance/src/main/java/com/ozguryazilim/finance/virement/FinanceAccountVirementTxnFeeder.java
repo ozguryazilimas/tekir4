@@ -6,6 +6,7 @@
 package com.ozguryazilim.finance.virement;
 
 import com.ozguryazilim.finance.account.txn.FinanceAccountTxnService;
+import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.FinanceAccountVirement;
 import com.ozguryazilim.tekir.voucher.utils.FeatureUtils;
 import com.ozguryazilim.telve.entities.FeaturePointer;
@@ -14,6 +15,8 @@ import com.ozguryazilim.telve.forms.EntityChangeEvent;
 import com.ozguryazilim.telve.qualifiers.After;
 import com.ozguryazilim.telve.qualifiers.EntityQualifier;
 import java.io.Serializable;
+import java.math.BigDecimal;
+
 import javax.enterprise.context.Dependent;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
@@ -26,23 +29,48 @@ import org.apache.deltaspike.jpa.api.transaction.Transactional;
  */
 @Dependent
 public class FinanceAccountVirementTxnFeeder implements Serializable{
-    
-    @Inject
-    private FinanceAccountTxnService financeAccountTxnService;
-    
-   
-    public void feed(@Observes @EntityQualifier(entity = FinanceAccountVirement.class) @After EntityChangeEvent event) {
-        
-        if( event.getAction() != EntityChangeAction.DELETE   ) {
-        	FinanceAccountVirement entity = (FinanceAccountVirement) event.getEntity();
-            
-            FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
-            
-            financeAccountTxnService.saveFeature(voucherPointer, entity.getFromAccount(), entity.getCode(), entity.getInfo(), Boolean.TRUE, Boolean.TRUE, entity.getFromCurrency(), entity.getFromAmount(), entity.getLocalAmount(), entity.getDate(), entity.getOwner(), null, entity.getState().toString(), entity.getStateReason());
-            financeAccountTxnService.saveFeature(voucherPointer, entity.getToAccount(), entity.getCode(), entity.getInfo(), Boolean.TRUE, Boolean.FALSE, entity.getToCurrency(), entity.getToAmount(), entity.getLocalAmount(), entity.getDate(), entity.getOwner(), null, entity.getState().toString(), entity.getStateReason());
-        }
-        
-        //TODO: Delete edildiğinde de gidip txn'den silme yapılmalı.
-            
-    }
+
+	@Inject
+	private FinanceAccountTxnService financeAccountTxnService;
+
+	@Inject
+	private CurrencyService currencyService;
+
+	public void feed(@Observes @EntityQualifier(entity = FinanceAccountVirement.class) @After EntityChangeEvent event) {
+
+		if( event.getAction() != EntityChangeAction.DELETE   ) {
+			FinanceAccountVirement entity = (FinanceAccountVirement) event.getEntity();
+
+			FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
+
+			BigDecimal fromLocalAmount;
+			BigDecimal toLocalAmount;
+			if(entity.getFromCurrency() == currencyService.getReportCurrency()){
+				fromLocalAmount = entity.getFromAmount();
+			}
+			else{
+				fromLocalAmount = entity.getLocalAmount();
+			}
+
+			if(entity.getToCurrency() == currencyService.getReportCurrency()){
+				toLocalAmount = entity.getToAmount();
+			}
+			else{
+				toLocalAmount = entity.getLocalAmount();
+			}
+
+
+			financeAccountTxnService.saveFeature(voucherPointer, entity.getFromAccount(), entity.getCode(), 
+					entity.getInfo(), Boolean.TRUE, Boolean.TRUE, entity.getFromCurrency(), 
+					entity.getFromAmount(), fromLocalAmount, entity.getDate(),
+					entity.getOwner(), null, entity.getState().toString(), entity.getStateReason());
+			financeAccountTxnService.saveFeature(voucherPointer, entity.getToAccount(), entity.getCode(), 
+					entity.getInfo(), Boolean.TRUE, Boolean.FALSE, entity.getToCurrency(), 
+					entity.getToAmount(), toLocalAmount, entity.getDate(),
+					entity.getOwner(), null, entity.getState().toString(), entity.getStateReason());
+
+			//TODO: Delete edildiğinde de gidip txn'den silme yapılmalı.
+
+		}
+	}
 }

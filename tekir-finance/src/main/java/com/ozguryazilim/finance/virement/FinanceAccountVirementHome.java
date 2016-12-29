@@ -54,9 +54,17 @@ public class FinanceAccountVirementHome extends VoucherFormBase<FinanceAccountVi
         initCurrencyFeatures();
 
     }
+    
+    @Override   
+    public boolean onAfterLoad() {
+    	// TODO Auto-generated method stub
+    	enableCurrencyFeatures();
+    	return super.onAfterLoad();
+    }
 
     @Override
     public boolean onBeforeSave() {
+    	
     	if(!isFromCurrencyEditable()){
     		getEntity().setFromCurrency(getEntity().getFromAccount().getCurrency());
     	}
@@ -66,7 +74,16 @@ public class FinanceAccountVirementHome extends VoucherFormBase<FinanceAccountVi
     	if(!isToAmountRendered()){
     		getEntity().setToAmount(getEntity().getFromAmount());
     	}
+    	
+    	if(getEntity().getFromCurrency() == currencyService.getReportCurrency()){
+    		getEntity().setLocalAmount(getEntity().getFromAmount());
+    	}
+    	else if(getEntity().getToCurrency() == currencyService.getReportCurrency()){
+    		getEntity().setLocalAmount(getEntity().getToAmount());
+    	}
+    	else{
         getEntity().setLocalAmount(currencyService.convert(getEntity().getToCurrency(), getEntity().getToAmount(), getEntity().getDate()));
+    	}
         return super.onBeforeSave(); 
     }
 
