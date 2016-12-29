@@ -96,10 +96,7 @@
     <changeSet author="oyas (generated)" id="1482317043182-3">
         <addForeignKeyConstraint baseColumnNames="TO_ACCOUNT_ID" baseTableName="TFN_FINANCE_VIREMENT" constraintName="FK_FAV_TACC" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TFN_FINANCE_ACC"/>
     </changeSet>
-    <changeSet author="oyas (generated)" id="1482317043182-4">
-        <addForeignKeyConstraint baseColumnNames="GROUP_ID" baseTableName="TFN_FINANCE_VIREMENT" constraintName="FK_VOG_VOG" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TVO_GROUP"/>
-    </changeSet>
-       <changeSet author="oyas (generated)" id="1482482197773-1">
+    <changeSet author="oyas (generated)" id="1482482197773-1">
         <addColumn tableName="TFN_FINANCE_VIREMENT">
             <column name="FROM_AMOUNT" type="decimal(19, 2)"/>
         </addColumn>
