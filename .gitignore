@@ -1,6 +1,7 @@
 .settings
 .classpath
 .project
+target
 /tekir-core-model/target/
 /tekir-core/target/
 /tekir-web/target/
