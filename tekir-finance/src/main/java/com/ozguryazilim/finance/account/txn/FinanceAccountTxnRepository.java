@@ -43,6 +43,6 @@ public abstract class FinanceAccountTxnRepository extends RepositoryBase<Finance
      * @param date
      * @return 
      */
-    @Query( "select sum( t.amount * ( case when t.debit = true then -1 else 1 end )) from FinanceAccountTxn t where t.account = ?1 and t.date < ?2" )
+    @Query( "select sum( t.localAmount * ( case when t.debit = true then -1 else 1 end )) from FinanceAccountTxn t where t.account = ?1 and t.date < ?2" )
     public abstract BigDecimal findByAccountBalance( FinanceAccount account, Date date );
 }
