@@ -23,9 +23,11 @@
     <ui:define name="caption">
         <div class="row">
             <div class="col-md-6 col-xs-12">
+          		<t:outputEnum label="finance.label.VirementType" itemLabel="virementtype." value="#{financeAccountVirementHome.entity.virementType}" />
                 <t:outputEntityLink label="general.label.FromAccount" value="#{financeAccountVirementHome.entity.fromAccount}" view="/finance/financeAccountView.xhtml" />
                 <t:outputEntityLink label="general.label.ToAccount" value="#{financeAccountVirementHome.entity.toAccount}" view="/finance/financeAccountView.xhtml" />
-                <t:outputMoney label="general.label.Amount" value="#{financeAccountVirementHome.entity.amount}" currency="#{financeAccountVirementHome.entity.currency}" />
+                <t:outputMoney label="general.label.FromAmount" value="#{financeAccountVirementHome.entity.fromAmount}" currency="#{financeAccountVirementHome.entity.fromCurrency}" columnClass="col-xs-12"/>
+                <t:outputMoney label="general.label.ToAmount" value="#{financeAccountVirementHome.entity.toAmount}" currency="#{financeAccountVirementHome.entity.toCurrency}" columnClass="col-xs-12"/>
                 <t:outputText label="general.label.Info" value="#{financeAccountVirementHome.entity.info}" columnClass="col-xs-12"/>
                 
             </div>

@@ -6,6 +6,7 @@
 package com.ozguryazilim.finance.virement;
 
 import com.ozguryazilim.tekir.entities.FinanceAccount_;
+import com.ozguryazilim.tekir.entities.VirementType;
 import com.ozguryazilim.tekir.entities.FinanceAccountVirement;
 import com.ozguryazilim.tekir.entities.FinanceAccountVirement_;
 import com.ozguryazilim.tekir.entities.VoucherBase_;
@@ -15,6 +16,7 @@ import com.ozguryazilim.tekir.voucher.columns.VoucherStateColumn;
 import com.ozguryazilim.telve.forms.Browse;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.columns.DateColumn;
+import com.ozguryazilim.telve.query.columns.EnumColumn;
 import com.ozguryazilim.telve.query.columns.LinkColumn;
 import com.ozguryazilim.telve.query.columns.MoneyColumn;
 import com.ozguryazilim.telve.query.columns.SubTextColumn;
@@ -23,6 +25,7 @@ import com.ozguryazilim.telve.query.columns.UserColumn;
 import com.ozguryazilim.telve.query.filters.BigDecimalFilter;
 import com.ozguryazilim.telve.query.filters.DateFilter;
 import com.ozguryazilim.telve.query.filters.DateValueType;
+import com.ozguryazilim.telve.query.filters.EnumFilter;
 import com.ozguryazilim.telve.query.filters.FilterOperand;
 import com.ozguryazilim.telve.query.filters.StringFilter;
 import com.ozguryazilim.telve.query.filters.SubStringFilter;
@@ -53,8 +56,10 @@ public class FinanceAccountVirementBrowse extends VoucherBrowseBase<FinanceAccou
                 .addColumn(new TextColumn<>(VoucherBase_.stateReason, "voucher.label.StateReason"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.stateInfo, "voucher.label.StateInfo"), false)
                 .addColumn(new UserColumn<>(VoucherBase_.owner, "voucher.label.Owner"), true)
-                .addColumn(new MoneyColumn<>(FinanceAccountVirement_.amount, FinanceAccountVirement_.currency, "general.label.Amount"), true);
-                
+                .addColumn(new MoneyColumn<>(FinanceAccountVirement_.fromAmount, FinanceAccountVirement_.fromCurrency, "general.label.FromAmount"), true)
+                .addColumn(new MoneyColumn<>(FinanceAccountVirement_.toAmount, FinanceAccountVirement_.toCurrency, "general.label.ToAmount"), true)
+                .addColumn(new EnumColumn<>(FinanceAccountVirement_.virementType, "finance.label.VirementType","virementtype."), true);
+
         queryDefinition
                 .addFilter(new StringFilter<>(VoucherBase_.voucherNo, "voucher.label.VoucherNo"))
                 .addFilter(new StringFilter<>(VoucherBase_.code, "voucher.label.Code"))
@@ -62,11 +67,14 @@ public class FinanceAccountVirementBrowse extends VoucherBrowseBase<FinanceAccou
                 .addFilter(new StringFilter<>(VoucherBase_.topic, "voucher.label.Topic"))
                 .addFilter(new StringFilter<>(VoucherBase_.stateReason, "voucher.label.StateReason"))
                 .addFilter(new UserFilter<>(VoucherBase_.owner, "voucher.label.Owner"))
-                .addFilter(new BigDecimalFilter<>(FinanceAccountVirement_.amount, "general.label.Amount"))
+                .addFilter(new BigDecimalFilter<>(FinanceAccountVirement_.fromAmount, "general.label.FromAmount"))
+                .addFilter(new BigDecimalFilter<>(FinanceAccountVirement_.toAmount, "general.label.ToAmount"))
                 .addFilter(new SubStringFilter<>(FinanceAccountVirement_.fromAccount, FinanceAccount_.name, "general.label.FromAccount"))
                 .addFilter(new SubStringFilter<>(FinanceAccountVirement_.toAccount, FinanceAccount_.name, "general.label.ToAccount"))
-                .addFilter(new DateFilter<>(VoucherBase_.date, "voucher.label.Date", FilterOperand.In, DateValueType.LastTenDays));
-                
+                .addFilter(new DateFilter<>(VoucherBase_.date, "voucher.label.Date", FilterOperand.In, DateValueType.LastTenDays))
+                .addFilter(new EnumFilter<>(FinanceAccountVirement_.virementType, VirementType.VIREMENT, "finance.label.VirementType", "virementtype."))
+;
+
     }
 
     @Override

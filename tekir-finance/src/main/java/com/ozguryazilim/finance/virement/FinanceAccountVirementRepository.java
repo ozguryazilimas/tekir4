@@ -80,10 +80,13 @@ public abstract class FinanceAccountVirementRepository extends VoucherRepository
     private void buildVieModelSelect(CriteriaQuery<FinanceAccountVirementViewModel> criteriaQuery, Root<? extends FinanceAccountVirement> from) {
         criteriaQuery.multiselect(
                 from.get(FinanceAccountVirement_.id),
+                from.get(FinanceAccountVirement_.virementType),
                 from.get(FinanceAccountVirement_.fromAccount),
                 from.get(FinanceAccountVirement_.toAccount),
-                from.get(FinanceAccountVirement_.currency),
-                from.get(FinanceAccountVirement_.amount),
+                from.get(FinanceAccountVirement_.fromCurrency),
+                from.get(FinanceAccountVirement_.toCurrency),
+                from.get(FinanceAccountVirement_.fromAmount),
+                from.get(FinanceAccountVirement_.toAmount),                
                 from.get(VoucherBase_.code),
                 from.get(VoucherBase_.voucherNo),
                 from.get(VoucherBase_.info),
@@ -95,6 +98,7 @@ public abstract class FinanceAccountVirementRepository extends VoucherRepository
                 from.get(VoucherBase_.stateInfo),
                 from.get(VoucherBase_.group),
                 from.get(VoucherBase_.topic)
+                
                 
         );
     }

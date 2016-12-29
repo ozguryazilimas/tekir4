@@ -6,6 +6,7 @@
 package com.ozguryazilim.finance.virement;
 
 import com.ozguryazilim.tekir.entities.FinanceAccount;
+import com.ozguryazilim.tekir.entities.VirementType;
 import com.ozguryazilim.tekir.entities.VoucherGroup;
 import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.tekir.voucher.VoucherViewModel;
@@ -21,15 +22,22 @@ public class FinanceAccountVirementViewModel extends VoucherViewModel{
     
     private FinanceAccount fromAccount;
     private FinanceAccount toAccount;
-    private Currency currency;
-    private BigDecimal amount = BigDecimal.ZERO;
+    private Currency fromCurrency;
+    private Currency toCurrency;
+    private BigDecimal fromAmount = BigDecimal.ZERO;
+    private BigDecimal toAmount = BigDecimal.ZERO;
+    private VirementType virementType = VirementType.VIREMENT;
 
-    public FinanceAccountVirementViewModel(Long id, FinanceAccount fromAccount, FinanceAccount toAccount, Currency currency, BigDecimal amount,  String code, String voucherNo, String info, String referenceNo, Date date, String owner, VoucherState state, String stateReason, String stateInfo, VoucherGroup group, String topic) {
+    public FinanceAccountVirementViewModel(Long id, VirementType virementType, FinanceAccount fromAccount, FinanceAccount toAccount, Currency fromCurrency, Currency toCurrency, BigDecimal fromAmount, BigDecimal toAmount, String code, String voucherNo, String info, String referenceNo, Date date, String owner, VoucherState state, String stateReason, String stateInfo, VoucherGroup group, String topic) {
         super(id, code, voucherNo, info, referenceNo, date, owner, state, stateReason, stateInfo, group, topic);
         this.fromAccount = fromAccount;
         this.toAccount = toAccount;
-        this.currency = currency;
-        this.amount = amount;
+        this.fromCurrency = fromCurrency;
+        this.toCurrency = toCurrency;
+        this.fromAmount = fromAmount;
+        this.toAmount = toAmount;
+        this.virementType = virementType;
+        
     }
 
     public FinanceAccount getFromAccount() {
@@ -48,22 +56,47 @@ public class FinanceAccountVirementViewModel extends VoucherViewModel{
         this.toAccount = toAccount;
     }
 
-    public Currency getCurrency() {
-        return currency;
-    }
+	public Currency getFromCurrency() {
+		return fromCurrency;
+	}
 
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
-    }
+	public void setFromCurrency(Currency fromCurrency) {
+		this.fromCurrency = fromCurrency;
+	}
 
-    public BigDecimal getAmount() {
-        return amount;
-    }
+	public Currency getToCurrency() {
+		return toCurrency;
+	}
 
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-    
+	public void setToCurrency(Currency toCurrency) {
+		this.toCurrency = toCurrency;
+	}
+
+	public BigDecimal getFromAmount() {
+		return fromAmount;
+	}
+
+	public void setFromAmount(BigDecimal fromAmount) {
+		this.fromAmount = fromAmount;
+	}
+
+	public BigDecimal getToAmount() {
+		return toAmount;
+	}
+
+	public void setToAmount(BigDecimal toAmount) {
+		this.toAmount = toAmount;
+	}
+
+	public VirementType getVirementType() {
+		return virementType;
+	}
+
+	public void setVirementType(VirementType virementType) {
+		this.virementType = virementType;		
+	}
+
+   
     
     
 }

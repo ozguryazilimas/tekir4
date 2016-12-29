@@ -99,4 +99,35 @@
     <changeSet author="oyas (generated)" id="1482317043182-4">
         <addForeignKeyConstraint baseColumnNames="GROUP_ID" baseTableName="TFN_FINANCE_VIREMENT" constraintName="FK_VOG_VOG" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TVO_GROUP"/>
     </changeSet>
+       <changeSet author="oyas (generated)" id="1482482197773-1">
+        <addColumn tableName="TFN_FINANCE_VIREMENT">
+            <column name="FROM_AMOUNT" type="decimal(19, 2)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1482482197773-2">
+        <addColumn tableName="TFN_FINANCE_VIREMENT">
+            <column name="FROM_CCY" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1482482197773-3">
+        <addColumn tableName="TFN_FINANCE_VIREMENT">
+            <column name="TO_AMOUNT" type="decimal(19, 2)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1482482197773-4">
+        <addColumn tableName="TFN_FINANCE_VIREMENT">
+            <column name="TO_CCY" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1482482197773-5">
+        <addColumn tableName="TFN_FINANCE_VIREMENT">
+            <column name="VIREMENT_TYPE" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1482482197773-6">
+        <dropColumn columnName="AMOUNT" tableName="TFN_FINANCE_VIREMENT"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1482482197773-7">
+        <dropColumn columnName="CCY" tableName="TFN_FINANCE_VIREMENT"/>
+    </changeSet>
 </databaseChangeLog>

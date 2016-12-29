@@ -62,7 +62,7 @@ public interface FinancePages extends Pages {
     @View
     @SecuredPage("FinanceAccountVirement")
     @PageTitle("module.caption.FinanceAccountVirementBrowse")
-    @Navigation(label = "module.caption.FinanceAccountVirementBrowse", feature = FinanceAccountVirementFeature.class, section = FinanceNavigationSection.class)
+    @Navigation(label = "module.caption.FinanceAccountVirementBrowse", icon="flaticon-contract", feature = FinanceAccountVirementFeature.class, section = FinanceNavigationSection.class)
     class FinanceAccountVirementBrowse implements FinancePages {
     }
 

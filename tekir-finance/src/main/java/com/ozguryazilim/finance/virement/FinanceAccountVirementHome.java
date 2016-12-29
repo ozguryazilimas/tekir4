@@ -5,9 +5,12 @@
  */
 package com.ozguryazilim.finance.virement;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
+import com.ozguryazilim.tekir.entities.FinanceAccount;
 import com.ozguryazilim.tekir.entities.FinanceAccountVirement;
 import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.tekir.voucher.VoucherFormBase;
@@ -37,15 +40,33 @@ public class FinanceAccountVirementHome extends VoucherFormBase<FinanceAccountVi
     @Inject
     private ProcessService processService;
     
+    private boolean fromCurrencyEditable = true;
+    
+    private boolean toCurrencyEditable = true;
+    
+    private boolean toAmountRendered = true;
+       
     @Override
     public void createNew() {
         super.createNew(); 
-        getEntity().setCurrency(currencyService.getDefaultCurrency());
+        getEntity().setFromCurrency(currencyService.getDefaultCurrency());
+        getEntity().setToCurrency(currencyService.getDefaultCurrency());
+        initCurrencyFeatures();
+
     }
 
     @Override
     public boolean onBeforeSave() {
-        getEntity().setLocalAmount(currencyService.convert(getEntity().getCurrency(), getEntity().getAmount(), getEntity().getDate()));
+    	if(!isFromCurrencyEditable()){
+    		getEntity().setFromCurrency(getEntity().getFromAccount().getCurrency());
+    	}
+    	if(!isToCurrencyEditable()){
+    		getEntity().setToCurrency(getEntity().getToAccount().getCurrency());
+    	}
+    	if(!isToAmountRendered()){
+    		getEntity().setToAmount(getEntity().getFromAmount());
+    	}
+        getEntity().setLocalAmount(currencyService.convert(getEntity().getToCurrency(), getEntity().getToAmount(), getEntity().getDate()));
         return super.onBeforeSave(); 
     }
 
@@ -63,4 +84,78 @@ public class FinanceAccountVirementHome extends VoucherFormBase<FinanceAccountVi
         return repository;
     }
     
+    private void initCurrencyFeatures(){
+    	setToAmountRendered(true);
+    	setFromCurrencyEditable(true);
+    	setToCurrencyEditable(true);
+    }
+    
+    public void enableCurrencyFeatures(){
+    	List<String> fromAccountRoles = getEntity().getFromAccount().getAccountRoles();
+    	List<String> toAccountRoles = getEntity().getToAccount().getAccountRoles();
+    	getEntity().setFromCurrency(getEntity().getFromAccount().getCurrency());
+    	getEntity().setToCurrency(getEntity().getToAccount().getCurrency());
+    	initCurrencyFeatures();
+    	
+    	if(getEntity().getFromAccount().getCurrency() == getEntity().getToAccount().getCurrency()){
+    		setToAmountRendered(false);
+    	}
+    	
+    	if(!fromAccountRoles.contains("MULTI_CURRENCY")){    		
+    		setFromCurrencyEditable(false);
+    	}
+    	else{    		
+    		setToAmountRendered(true);
+    	}
+    	
+    	if(!toAccountRoles.contains("MULTI_CURRENCY")){    		
+    		setToCurrencyEditable(false);
+    	}
+    	else{
+    		setToAmountRendered(true);    		
+    	}
+    }
+
+	public boolean isFromCurrencyEditable() {
+		return fromCurrencyEditable;
+	}
+
+	public void setFromCurrencyEditable(boolean fromCurrencyEditable) {
+		this.fromCurrencyEditable = fromCurrencyEditable;
+	}
+
+	public boolean isToCurrencyEditable() {
+		return toCurrencyEditable;
+	}
+
+	public void setToCurrencyEditable(boolean toCurrencyEditable) {
+		this.toCurrencyEditable = toCurrencyEditable;
+	}
+
+	public boolean isToAmountRendered() {
+		return toAmountRendered;
+	}
+
+	public void setToAmountRendered(boolean toAmountEnabled) {
+		this.toAmountRendered = toAmountEnabled;
+	}
+	
+	public FinanceAccount getFromAccount() {
+		return getEntity().getFromAccount();
+	}
+
+	public FinanceAccount getToAccount() {
+		return getEntity().getToAccount();
+	}
+
+	public void setToAccount(FinanceAccount toAccount) {		
+		getEntity().setToAccount(toAccount);
+		enableCurrencyFeatures();
+	}
+
+	public void setFromAccount(FinanceAccount fromAccount) {
+		getEntity().setFromAccount(fromAccount);
+		enableCurrencyFeatures();
+	}
+	    
 }

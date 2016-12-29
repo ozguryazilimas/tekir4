@@ -15,16 +15,30 @@
         <div class="row">
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <t:inputLookupDialog label="general.label.FromAccount" value="#{financeAccountVirementHome.entity.fromAccount}" 
-                                         lookupBean="#{financeAccountLookup}" lookupListener="financeAccountVirementHome.entity.fromAccount" 
-                                         placeholder="#{messages['general.info.Account']}" />
-                    <t:inputLookupDialog label="general.label.ToAccount" value="#{financeAccountVirementHome.entity.toAccount}" 
-                                         lookupBean="#{financeAccountLookup}" lookupListener="financeAccountVirementHome.entity.toAccount" 
-                                         placeholder="#{messages['general.info.Account']}" />
+               	    <t:inputEnum value="#{financeAccountVirementHome.entity.virementType}" label="finance.label.VirementType" 
+               	    itemLabel="virementtype." hasNullValue="false" required="true" columnClass="col-xs-12">
+               	    </t:inputEnum>
+	
+                    <t:inputLookupDialog label="general.label.FromAccount" value="#{financeAccountVirementHome.fromAccount}" 
+                                         lookupBean="#{financeAccountLookup}" lookupListener="financeAccountVirementHome.fromAccount" 
+                                         placeholder="#{messages['general.info.Account']}"
+                                         update="@form">
+                    </t:inputLookupDialog>
+                    <t:inputLookupDialog label="general.label.ToAccount" value="#{financeAccountVirementHome.toAccount}" 
+                                         lookupBean="#{financeAccountLookup}" lookupListener="financeAccountVirementHome.toAccount" 
+                                         placeholder="#{messages['general.info.Account']}"
+                                         update="@form">
+                   </t:inputLookupDialog>
                     <t:inputText label="voucher.label.Topic" value="#{financeAccountVirementHome.entity.topic}"  required="false" columnClass="col-xs-12"/>
-                    <t:inputTextarea label="general.label.Info" value="#{financeAccountVirementHome.entity.info}" columnClass="col-xs-12"/>
-                    <t:inputCurrency label="general.label.Currency" value="#{financeAccountVirementHome.entity.currency}"  required="true" />
-                    <t:inputMoney label="financeAccountVirement.label.Amount" value="#{financeAccountVirementHome.entity.amount}"  currency="#{financeAccountVirementHome.entity.currency}" required="true" />
+                    <t:inputText label="general.label.Info" value="#{financeAccountVirementHome.entity.info}" columnClass="col-xs-12"/>
+                    <div class="row col-md-6">
+                    <t:inputCurrency id="fromCCY" label="general.label.FromCurrency" value="#{financeAccountVirementHome.entity.fromCurrency}" required="true" readonly="#{!financeAccountVirementHome.isFromCurrencyEditable()}" columnClass="col-xs-12"/>
+                    <t:inputMoney id="fromAmount" label="financeAccountVirement.label.FromAmount" value="#{financeAccountVirementHome.entity.fromAmount}"  currency="#{financeAccountVirementHome.entity.fromCurrency}" required="true" columnClass="col-xs-12"/>
+                    </div>
+                    <div class="row col-md-6">
+                    <t:inputCurrency id="toCCY" label="general.label.ToCurrency" value="#{financeAccountVirementHome.entity.toCurrency}"  required="true" readonly="#{!financeAccountVirementHome.isToCurrencyEditable()}" columnClass="col-xs-12"/>
+                    <t:inputMoney id="toAmount" label="financeAccountVirement.label.ToAmount" value="#{financeAccountVirementHome.entity.toAmount}"  currency="#{financeAccountVirementHome.entity.toCurrency}" required="#{financeAccountVirementHome.isToAmountRendered()}" rendered="#{financeAccountVirementHome.isToAmountRendered()}" columnClass="col-xs-12"/>
+                    </div>
                 </div>
             </div>
             

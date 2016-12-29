@@ -43,16 +43,25 @@ public class FinanceAccountVirement extends VoucherBase{
     @JoinColumn(name = "TO_ACCOUNT_ID", foreignKey = @ForeignKey(name = "FK_FAV_TACC"))
     private FinanceAccount toAccount;
     
-    @Column(name = "CCY")
-    private Currency currency;
+    @Column(name = "FROM_CCY")
+    private Currency fromCurrency;
     
-    @Column(name = "AMOUNT")
-    private BigDecimal amount = BigDecimal.ZERO;
+    @Column(name = "TO_CCY")
+    private Currency toCurrency;
+    
+    @Column(name = "FROM_AMOUNT")
+    private BigDecimal fromAmount = BigDecimal.ZERO;
+    
+    @Column(name = "TO_AMOUNT")
+    private BigDecimal toAmount = BigDecimal.ZERO;
     
     @Column(name = "LOCAL_AMOUNT")
-    private BigDecimal localAmount = BigDecimal.ZERO;
+    private BigDecimal localAmount = BigDecimal.ZERO;    
 
-    public Long getId() {
+    @Column(name = "VIREMENT_TYPE")
+    private VirementType virementType = VirementType.VIREMENT;
+
+    public Long getId() {    	
         return id;
     }
 
@@ -75,23 +84,7 @@ public class FinanceAccountVirement extends VoucherBase{
     public void setToAccount(FinanceAccount toAccount) {
         this.toAccount = toAccount;
     }
-
-    public Currency getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
+   
     public BigDecimal getLocalAmount() {
         return localAmount;
     }
@@ -99,6 +92,46 @@ public class FinanceAccountVirement extends VoucherBase{
     public void setLocalAmount(BigDecimal localAmount) {
         this.localAmount = localAmount;
     }
+
+	public Currency getFromCurrency() {
+		return fromCurrency;
+	}
+
+	public void setFromCurrency(Currency fromCurrency) {
+		this.fromCurrency = fromCurrency;
+	}
+
+	public Currency getToCurrency() {
+		return toCurrency;
+	}
+
+	public void setToCurrency(Currency toCurrency) {
+		this.toCurrency = toCurrency;
+	}
+
+	public BigDecimal getFromAmount() {
+		return fromAmount;
+	}
+
+	public void setFromAmount(BigDecimal fromAmount) {
+		this.fromAmount = fromAmount;
+	}
+
+	public BigDecimal getToAmount() {
+		return toAmount;
+	}
+
+	public void setToAmount(BigDecimal toAmount) {
+		this.toAmount = toAmount;
+	}
+
+	public VirementType getVirementType() {		
+		return virementType;
+	}
+
+	public void setVirementType(VirementType virementType) {
+		this.virementType = virementType;
+	}
 
     
     
