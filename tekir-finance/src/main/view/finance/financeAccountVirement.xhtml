@@ -19,26 +19,25 @@
                	    itemLabel="virementtype." hasNullValue="false" required="true" columnClass="col-xs-12">
                	    </t:inputEnum>
 	
-                    <t:inputLookupDialog label="general.label.FromAccount" value="#{financeAccountVirementHome.fromAccount}" 
+                    <t:inputLookupDialog label="finance.label.FromAccount" value="#{financeAccountVirementHome.fromAccount}" 
                                          lookupBean="#{financeAccountLookup}" lookupListener="financeAccountVirementHome.fromAccount" 
                                          placeholder="#{messages['general.info.Account']}"
                                          update="@form">
                     </t:inputLookupDialog>
-                    <t:inputLookupDialog label="general.label.ToAccount" value="#{financeAccountVirementHome.toAccount}" 
+                    <t:inputLookupDialog label="finance.label.ToAccount" value="#{financeAccountVirementHome.toAccount}" 
                                          lookupBean="#{financeAccountLookup}" lookupListener="financeAccountVirementHome.toAccount" 
                                          placeholder="#{messages['general.info.Account']}"
                                          update="@form">
                    </t:inputLookupDialog>
                     <t:inputText label="voucher.label.Topic" value="#{financeAccountVirementHome.entity.topic}"  required="false" columnClass="col-xs-12"/>
-                    <t:inputText label="general.label.Info" value="#{financeAccountVirementHome.entity.info}" columnClass="col-xs-12"/>
-                    <div class="row col-md-6">
-                    <t:inputCurrency id="fromCCY" label="general.label.FromCurrency" value="#{financeAccountVirementHome.entity.fromCurrency}" required="true" readonly="#{!financeAccountVirementHome.isFromCurrencyEditable()}" columnClass="col-xs-12"/>
-                    <t:inputMoney id="fromAmount" label="financeAccountVirement.label.FromAmount" value="#{financeAccountVirementHome.entity.fromAmount}"  currency="#{financeAccountVirementHome.entity.fromCurrency}" required="true" columnClass="col-xs-12"/>
-                    </div>
-                    <div class="row col-md-6">
-                    <t:inputCurrency id="toCCY" label="general.label.ToCurrency" value="#{financeAccountVirementHome.entity.toCurrency}"  required="true" readonly="#{!financeAccountVirementHome.isToCurrencyEditable()}" columnClass="col-xs-12"/>
-                    <t:inputMoney id="toAmount" label="financeAccountVirement.label.ToAmount" value="#{financeAccountVirementHome.entity.toAmount}"  currency="#{financeAccountVirementHome.entity.toCurrency}" required="#{financeAccountVirementHome.isToAmountRendered()}" rendered="#{financeAccountVirementHome.isToAmountRendered()}" columnClass="col-xs-12"/>
-                    </div>
+                    <t:inputTextarea label="general.label.Info" value="#{financeAccountVirementHome.entity.info}" columnClass="col-xs-12"/>
+                   
+                    <t:inputCurrency id="fromCCY" label="general.label.FromCurrency" value="#{financeAccountVirementHome.entity.fromCurrency}" required="true" readonly="#{!financeAccountVirementHome.isFromCurrencyEditable()}" columnClass="col-md-6 col-xs-12"/>
+                    <t:inputCurrency id="toCCY" label="general.label.ToCurrency" value="#{financeAccountVirementHome.entity.toCurrency}"  required="true" readonly="#{!financeAccountVirementHome.isToCurrencyEditable()}" columnClass="col-md-6 col-xs-12"/>
+                    
+                    <t:inputMoney id="fromAmount" label="financeAccountVirement.label.FromAmount" value="#{financeAccountVirementHome.entity.fromAmount}"  currency="#{financeAccountVirementHome.entity.fromCurrency}" required="true" columnClass="col-md-6 col-xs-12"/>
+                    <t:inputMoney id="toAmount" label="financeAccountVirement.label.ToAmount" value="#{financeAccountVirementHome.entity.toAmount}"  currency="#{financeAccountVirementHome.entity.toCurrency}" required="#{financeAccountVirementHome.isToAmountRendered()}" rendered="#{financeAccountVirementHome.isToAmountRendered()}" columnClass="col-md-6 col-xs-12"/>
+                    
                 </div>
             </div>
             
