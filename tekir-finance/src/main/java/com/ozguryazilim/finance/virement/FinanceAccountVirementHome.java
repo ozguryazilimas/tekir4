@@ -5,9 +5,14 @@
  */
 package com.ozguryazilim.finance.virement;
 
+import java.math.BigDecimal;
+import java.util.Currency;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
+
+import org.primefaces.context.RequestContext;
 
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.FinanceAccount;
@@ -19,6 +24,7 @@ import com.ozguryazilim.tekir.voucher.VoucherStateConfig;
 import com.ozguryazilim.tekir.voucher.process.ProcessService;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.forms.FormEdit;
+import com.ozguryazilim.telve.messages.FacesMessages;
 import com.ozguryazilim.telve.sequence.SequenceManager;
 
 /**
@@ -45,6 +51,8 @@ public class FinanceAccountVirementHome extends VoucherFormBase<FinanceAccountVi
     private boolean toCurrencyEditable = true;
     
     private boolean toAmountRendered = true;
+    
+    private boolean cont;
        
     @Override
     public void createNew() {
@@ -52,11 +60,21 @@ public class FinanceAccountVirementHome extends VoucherFormBase<FinanceAccountVi
         getEntity().setFromCurrency(currencyService.getDefaultCurrency());
         getEntity().setToCurrency(currencyService.getDefaultCurrency());
         initCurrencyFeatures();
+        cont = false;
 
+    }
+    
+    @Override   
+    public boolean onAfterLoad() {
+    	// TODO Auto-generated method stub
+    	enableCurrencyFeatures();
+    	cont = false;
+    	return super.onAfterLoad();
     }
 
     @Override
     public boolean onBeforeSave() {
+    	
     	if(!isFromCurrencyEditable()){
     		getEntity().setFromCurrency(getEntity().getFromAccount().getCurrency());
     	}
@@ -66,7 +84,24 @@ public class FinanceAccountVirementHome extends VoucherFormBase<FinanceAccountVi
     	if(!isToAmountRendered()){
     		getEntity().setToAmount(getEntity().getFromAmount());
     	}
+    	
+    	
+    	if(getEntity().getFromCurrency() == currencyService.getReportCurrency()){
+    		getEntity().setLocalAmount(getEntity().getFromAmount());
+    	}
+    	else if(getEntity().getToCurrency() == currencyService.getReportCurrency()){
+    		getEntity().setLocalAmount(getEntity().getToAmount());
+    	}
+    	else{
         getEntity().setLocalAmount(currencyService.convert(getEntity().getToCurrency(), getEntity().getToAmount(), getEntity().getDate()));
+    	}
+
+    	if(isExchangeRateTooBig() && !cont){
+    		RequestContext context = RequestContext.getCurrentInstance();
+    		context.execute("PF('rateWarnDialog').show();");
+    		return false;
+    	}
+    	
         return super.onBeforeSave(); 
     }
 
@@ -91,8 +126,10 @@ public class FinanceAccountVirementHome extends VoucherFormBase<FinanceAccountVi
     }
     
     public void enableCurrencyFeatures(){
+    	try{
     	List<String> fromAccountRoles = getEntity().getFromAccount().getAccountRoles();
     	List<String> toAccountRoles = getEntity().getToAccount().getAccountRoles();
+    	
     	getEntity().setFromCurrency(getEntity().getFromAccount().getCurrency());
     	getEntity().setToCurrency(getEntity().getToAccount().getCurrency());
     	initCurrencyFeatures();
@@ -114,6 +151,11 @@ public class FinanceAccountVirementHome extends VoucherFormBase<FinanceAccountVi
     	else{
     		setToAmountRendered(true);    		
     	}
+    }
+    	catch (Exception e) {
+    		initCurrencyFeatures();
+			// TODO: handle exception
+		}
     }
 
 	public boolean isFromCurrencyEditable() {
@@ -157,5 +199,41 @@ public class FinanceAccountVirementHome extends VoucherFormBase<FinanceAccountVi
 		getEntity().setFromAccount(fromAccount);
 		enableCurrencyFeatures();
 	}
-	    
+	
+	
+	private boolean isExchangeRateTooBig(){
+		BigDecimal result = currencyService.convert(getEntity().getFromCurrency().getCurrencyCode(), 
+													getEntity().getFromAmount(), 
+													getEntity().getToCurrency().getCurrencyCode());
+		
+		BigDecimal param = new BigDecimal(2);
+		
+		if(getEntity().getToAmount().compareTo(result.multiply(param)) == 1){
+			return true;
+		}
+		
+		if(getEntity().getToAmount().compareTo(result.divide(param)) == -1){
+			return true;
+		}
+
+		return false;
+					
+	}
+
+	public boolean isCont() {
+		return cont;
+	}
+
+	public void setCont(String cont) {
+		if(cont.equalsIgnoreCase("false")){                    
+			this.cont = false;
+                        
+		}
+		else{
+			this.cont = true;           
+		}
+		
+	}
+	
+	
 }

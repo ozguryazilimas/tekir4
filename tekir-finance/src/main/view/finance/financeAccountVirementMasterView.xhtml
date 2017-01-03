@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-md-4 col-xs-12">
                 <t:accordion icon="fa fa-stack-exchange" label="general.label.Summary" columnClass="col-xs-12">
-                    <t:outputEnum label="finance.label.VirementType" itemLabel="virementtype." value="#{financeAccountVirementHome.entity.virementType}" />
+                    <t:outputEnum label="finance.label.VirementType" itemLabel="virementtype." value="#{financeAccountVirementHome.entity.virementType}" columnClass="col-xs-12" />
                     <t:outputText label="voucher.label.Topic" value="#{financeAccountVirementHome.entity.topic}" columnClass="col-xs-12"/>
                     <t:outputText label="general.label.Info" value="#{financeAccountVirementHome.entity.info}" columnClass="col-xs-12"/>
                     <t:outputMoney label="general.label.FromAmount" value="#{financeAccountVirementHome.entity.fromAmount}" currency="#{financeAccountVirementHome.entity.fromCurrency}" columnClass="col-xs-12"/>

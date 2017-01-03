@@ -15,49 +15,69 @@
         <div class="row">
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-               	    <t:inputEnum value="#{financeAccountVirementHome.entity.virementType}" label="finance.label.VirementType" 
+               	    <t:inputEnum value="#{entity.virementType}" label="finance.label.VirementType" 
                	    itemLabel="virementtype." hasNullValue="false" required="true" columnClass="col-xs-12">
                	    </t:inputEnum>
 	
-                    <t:inputLookupDialog label="general.label.FromAccount" value="#{financeAccountVirementHome.fromAccount}" 
+                    <t:inputLookupDialog label="finance.label.FromAccount" value="#{homeBean.fromAccount}" 
                                          lookupBean="#{financeAccountLookup}" lookupListener="financeAccountVirementHome.fromAccount" 
                                          placeholder="#{messages['general.info.Account']}"
                                          update="@form">
                     </t:inputLookupDialog>
-                    <t:inputLookupDialog label="general.label.ToAccount" value="#{financeAccountVirementHome.toAccount}" 
+                    <t:inputLookupDialog label="finance.label.ToAccount" value="#{financeAccountVirementHome.toAccount}" 
                                          lookupBean="#{financeAccountLookup}" lookupListener="financeAccountVirementHome.toAccount" 
                                          placeholder="#{messages['general.info.Account']}"
                                          update="@form">
                    </t:inputLookupDialog>
-                    <t:inputText label="voucher.label.Topic" value="#{financeAccountVirementHome.entity.topic}"  required="false" columnClass="col-xs-12"/>
-                    <t:inputText label="general.label.Info" value="#{financeAccountVirementHome.entity.info}" columnClass="col-xs-12"/>
-                    <div class="row col-md-6">
-                    <t:inputCurrency id="fromCCY" label="general.label.FromCurrency" value="#{financeAccountVirementHome.entity.fromCurrency}" required="true" readonly="#{!financeAccountVirementHome.isFromCurrencyEditable()}" columnClass="col-xs-12"/>
-                    <t:inputMoney id="fromAmount" label="financeAccountVirement.label.FromAmount" value="#{financeAccountVirementHome.entity.fromAmount}"  currency="#{financeAccountVirementHome.entity.fromCurrency}" required="true" columnClass="col-xs-12"/>
-                    </div>
-                    <div class="row col-md-6">
-                    <t:inputCurrency id="toCCY" label="general.label.ToCurrency" value="#{financeAccountVirementHome.entity.toCurrency}"  required="true" readonly="#{!financeAccountVirementHome.isToCurrencyEditable()}" columnClass="col-xs-12"/>
-                    <t:inputMoney id="toAmount" label="financeAccountVirement.label.ToAmount" value="#{financeAccountVirementHome.entity.toAmount}"  currency="#{financeAccountVirementHome.entity.toCurrency}" required="#{financeAccountVirementHome.isToAmountRendered()}" rendered="#{financeAccountVirementHome.isToAmountRendered()}" columnClass="col-xs-12"/>
-                    </div>
+                    <t:inputText label="voucher.label.Topic" value="#{entity.topic}"  required="false" columnClass="col-xs-12"/>
+                    <t:inputTextarea label="general.label.Info" value="#{entity.info}" columnClass="col-xs-12"/>
+                   
+                    <t:inputCurrency id="fromCCY" label="general.label.FromCurrency" 
+                    				 value="#{entity.fromCurrency}" required="true" 
+                    				 readonly="#{!homeBean.isFromCurrencyEditable()}" 
+                    				 columnClass="col-md-6 col-xs-12"/>
+                    <t:inputCurrency id="toCCY" label="general.label.ToCurrency" value="#{entity.toCurrency}"  
+                    				 required="true" readonly="#{!homeBean.isToCurrencyEditable()}" 
+                    				 columnClass="col-md-6 col-xs-12"/>
+                    
+                    <t:inputMoney id="fromAmount" label="financeAccountVirement.label.FromAmount" 
+                    			  value="#{entity.fromAmount}"  currency="#{entity.fromCurrency}" 
+                    			  required="true" columnClass="col-md-6 col-xs-12"/>
+                    <t:inputMoney id="toAmount" label="financeAccountVirement.label.ToAmount" 
+                                  value="#{entity.toAmount}"  currency="#{entity.toCurrency}" 
+                                  required="#{homeBean.isToAmountRendered()}" 
+                                  rendered="#{homeBean.isToAmountRendered()}" columnClass="col-md-6 col-xs-12"/>
+                    
                 </div>
             </div>
             
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <t:inputText label="voucher.label.VoucherNo" value="#{financeAccountVirementHome.entity.voucherNo}"  required="true" readonly="true" />
-                    <t:inputText label="voucher.label.ReferenceNo" value="#{financeAccountVirementHome.entity.referenceNo}" />
+                    <t:inputText label="voucher.label.VoucherNo" value="#{entity.voucherNo}"  required="true" readonly="true" />
+                    <t:inputText label="voucher.label.ReferenceNo" value="#{entity.referenceNo}" />
                     
-                    <t:inputText label="voucher.label.Owner" value="#{financeAccountVirementHome.entity.owner}" />
-                    <t:inputText label="general.label.Code" value="#{financeAccountVirementHome.entity.code}" />
-                    <t:inputLookupDialog label="voucher.label.Group" value="#{financeAccountVirementHome.entity.group}" lookupBean="#{voucherGroupLookup}" lookupListener="financeAccountVirementHome.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" />
-                    <t:inputDate label="voucher.label.Date" value="#{financeAccountVirementHome.entity.date}" columnClass="col-xs-12"/>
+                    <t:inputText label="voucher.label.Owner" value="#{entity.owner}" />
+                    <t:inputText label="general.label.Code" value="#{entity.code}" />
+                    <t:inputLookupDialog label="voucher.label.Group" value="#{entity.group}" lookupBean="#{voucherGroupLookup}" lookupListener="entity.group" placeholder="#{messages['general.info.VoucherGroup']}" />
+                    <t:inputDate label="voucher.label.Date" value="#{entity.date}" columnClass="col-xs-12"/>
                 </div>
-            </div>
-
-            
-
-
+            </div>  
         </div>
+        <p:confirmDialog header="#{messages['finance.caption.ExchangeRate']}" widgetVar="rateWarnDialog" message="#{messages['finance.warning.ExchangeRate']}" showEffect="fade" hideEffect="fade">
+       		 <p:commandButton value="#{messages['general.button.Yes']}"
+       		 				  styleClass="ui-confirmdialog-yes" icon="ui-icon-check" 
+       		 				  actionListener="#{homeBean.setCont('true')}"
+       		 				  oncomplete="PF('rateWarnDialog').hide();"
+       		 				  process="@form"
+       		 				  action="#{homeBean.save()}"
+       		 				  validateClient="true">
+       		 </p:commandButton>
+       		 
+       		 <p:commandButton value="#{messages['general.button.No']}"
+       		 				  styleClass="ui-confirmdialog-no" icon="ui-icon-close" 
+       		 				  actionListener="#{homeBean.setCont('false')}"
+       		 				  oncomplete="PF('rateWarnDialog').hide()"/>
+        </p:confirmDialog>
     </ui:define>
 
 </ui:composition>
