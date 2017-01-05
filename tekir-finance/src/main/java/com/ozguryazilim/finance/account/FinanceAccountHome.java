@@ -7,6 +7,7 @@ package com.ozguryazilim.finance.account;
 
 import com.ozguryazilim.finance.account.txn.FinanceAccountTxnRepository;
 import com.ozguryazilim.finance.config.FinancePages;
+import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.AccountType;
 import com.ozguryazilim.tekir.entities.FinanceAccount;
 import com.ozguryazilim.tekir.entities.FinanceAccountTxn;
@@ -51,6 +52,9 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
 
     @Inject
     private Identity identity;
+    
+    @Inject
+    private CurrencyService currencyService;
 
     @Inject
     private ViewNavigationHandler viewNavigationHandler;
@@ -221,10 +225,15 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
         Date dt = DateUtils.getDateBeforePeriod("10d", new Date());
         accountTxns = txnRepository.findByAccountAndDateGreaterThanEqualsOrderByDateAsc(getEntity(), dt);
         takeOverTotal = txnRepository.findByAccountBalance(getEntity(), dt);
+        
         if (takeOverTotal == null) {
             takeOverTotal = BigDecimal.ZERO;
         }
+        
+        if(isCurrencyTableRenderable()){
         buildCurrencyBalanceMap();
+        }
+        
         buildBalanceModel( dt );
         buildChartModel( dt );
     }
@@ -348,6 +357,11 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
         m.setBalance(takeOverTotal);
         balanceModels.add(m);
 
+    }
+    
+    public boolean isCurrencyTableRenderable(){
+        return getEntity().getCurrency() != currencyService.getReportCurrency() 
+        		|| getEntity().getAccountRoles().contains("MULTI_CURRENCY");
     }
 
 

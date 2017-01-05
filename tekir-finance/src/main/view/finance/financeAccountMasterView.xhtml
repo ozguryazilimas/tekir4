@@ -60,7 +60,7 @@
                     <p:chart type="line" model="#{financeAccountHome.chartModel}" responsive="true"/>
                 </t:accordion>
                 
-                 <t:accordion icon="fa fa-money" label="general.label.CurrencySummary" columnClass="col-xs-12">
+                 <t:accordion icon="fa fa-money" label="general.label.CurrencySummary" rendered="#{financeAccountHome.isCurrencyTableRenderable()}" columnClass="col-xs-12">
                     <p:dataTable value="#{financeAccountHome.currencyBalances}" var="txn" >              
                         <p:column headerText="#{messages['general.label.Currency']}">                       
                             <t:cellOutputCurrency value="#{txn.currency}"/>
