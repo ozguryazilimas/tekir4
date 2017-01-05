@@ -21,8 +21,11 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
@@ -56,7 +59,8 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
 
     private List<FinanceAccountTxn> accountTxns;
     
-
+    private List<FinanceAccountTxnSumModel> currencyBalances;
+    
     private List<FinanceAccountBalanceModel> balanceModels;
 
     private LineChartModel chartModel;
@@ -139,6 +143,7 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
         chartModel = null;
         balance = null;
         takeOverTotal = null;
+        setCurrencyBalances(null);
         
         return super.onAfterLoad();
     }
@@ -183,8 +188,20 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
             }
         }
         return balance;
-    }
+    }   
 
+	public List<FinanceAccountTxnSumModel> getCurrencyBalances() {
+		  if (currencyBalances == null) {
+	            refreshTxns();
+	        }	  
+		return currencyBalances;
+	}
+
+	public void setCurrencyBalances(List<FinanceAccountTxnSumModel> currencyBalances) {
+		this.currencyBalances = currencyBalances;
+	}
+
+    
     public List<FinanceAccountTxn> getAccountTxns() {
         if (accountTxns == null) {
             refreshTxns();
@@ -207,6 +224,7 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
         if (takeOverTotal == null) {
             takeOverTotal = BigDecimal.ZERO;
         }
+        buildCurrencyBalanceMap();
         buildBalanceModel( dt );
         buildChartModel( dt );
     }
@@ -285,6 +303,10 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
         Axis yAxis = chartModel.getAxis(AxisType.Y);
         yAxis.setLabel(getEntity().getCurrency().getDisplayName());
     }
+    
+    private void buildCurrencyBalanceMap(){
+    	currencyBalances = txnRepository.findCurrencyBalances(getEntity());         
+    }
 
     private void buildBalanceModel( Date startDate ) {
 
@@ -327,6 +349,7 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
         balanceModels.add(m);
 
     }
+
 
 }
 

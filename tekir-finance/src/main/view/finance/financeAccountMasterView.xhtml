@@ -59,6 +59,18 @@
 
                     <p:chart type="line" model="#{financeAccountHome.chartModel}" responsive="true"/>
                 </t:accordion>
+                
+                 <t:accordion icon="fa fa-money" label="general.label.CurrencySummary" columnClass="col-xs-12">
+                    <p:dataTable value="#{financeAccountHome.currencyBalances}" var="txn" >              
+                        <p:column headerText="#{messages['general.label.Currency']}">                       
+                            <t:cellOutputCurrency value="#{txn.currency}"/>
+                        </p:column>
+                         <p:column headerText="#{messages['general.label.Balance']}">                       
+                            <t:cellOutputMoney label="general.label.Balance" value="#{txn.balance}" currency="#{txn.currency}" styleClass="pull-right #{txn.amount lt 0 ? 'text-red' : ''}" />
+                        </p:column>
+                    </p:dataTable>
+                 </t:accordion>
+                
 
                 <t:accordion icon="fa fa-file-text" label="general.label.Voucher" columnClass="col-xs-12">
 

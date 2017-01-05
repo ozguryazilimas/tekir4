@@ -5,15 +5,26 @@
  */
 package com.ozguryazilim.finance.account.txn;
 
+import com.ozguryazilim.finance.account.FinanceAccountTxnSumModel;
 import com.ozguryazilim.tekir.entities.AccountTxn;
 import com.ozguryazilim.tekir.entities.FinanceAccount;
+import com.ozguryazilim.tekir.entities.FinanceAccount_;
 import com.ozguryazilim.tekir.entities.FinanceAccountTxn;
+import com.ozguryazilim.tekir.entities.FinanceAccountTxn_;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.Dependent;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
 import org.apache.deltaspike.data.api.Query;
 import org.apache.deltaspike.data.api.Repository;
 import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
@@ -51,4 +62,44 @@ public abstract class FinanceAccountTxnRepository extends RepositoryBase<Finance
      */
     @Query( "select sum( t.localAmount * ( case when t.debit = true then -1 else 1 end )) from FinanceAccountTxn t where t.account = ?1 and t.date < ?2" )
     public abstract BigDecimal findByAccountBalance( FinanceAccount account, Date date );
+    
+    public List<FinanceAccountTxnSumModel> findCurrencyBalances( FinanceAccount account ){
+        CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
+        CriteriaQuery<FinanceAccountTxnSumModel> criteriaQuery = criteriaBuilder.createQuery(FinanceAccountTxnSumModel.class);
+
+        Root<FinanceAccountTxn> from = criteriaQuery.from(FinanceAccountTxn.class);
+        
+        Expression<BigDecimal> sumExp = criteriaBuilder.sum(
+        		criteriaBuilder.<BigDecimal>selectCase()
+                .when(criteriaBuilder.equal(from.get("debit"), true), criteriaBuilder.<BigDecimal>prod(from.get(FinanceAccountTxn_.amount),new BigDecimal(-1)))
+                .otherwise(from.get(FinanceAccountTxn_.amount))
+        );
+        
+        criteriaQuery.multiselect(
+                from.get(FinanceAccountTxn_.account),                
+                sumExp,
+                from.get(FinanceAccountTxn_.currency)	
+        );
+        
+        criteriaQuery.groupBy(                
+                //,
+                //from.get(FinanceAccountTxn_.account).type(),
+                from.get(FinanceAccountTxn_.currency)
+        );
+        
+        criteriaQuery.orderBy(criteriaBuilder.asc(from.get(FinanceAccountTxn_.account).get(FinanceAccount_.id)));
+        
+        //Filtreleri ekleyelim.
+        List<Predicate> predicates = new ArrayList<>();
+        
+     
+        predicates.add(criteriaBuilder.equal(from.get(FinanceAccountTxn_.account), account));
+             
+        criteriaQuery.where(predicates.toArray(new Predicate[]{}));
+        
+        TypedQuery<FinanceAccountTxnSumModel> typedQuery = entityManager().createQuery(criteriaQuery);
+        List<FinanceAccountTxnSumModel> resultList = typedQuery.getResultList();
+        
+        return resultList;
+   }
 }
