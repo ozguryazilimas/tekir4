@@ -34,13 +34,14 @@ public class FinanceAccountTxnSumModel implements Serializable{
         this.accountName = account.getName();
     }
      
+    public FinanceAccountTxnSumModel(FinanceAccount account, BigDecimal balance, Currency currency){
+    	this(account,new BigDecimal(0),balance,currency);
+    	
+    }
+     
     public FinanceAccountTxnSumModel(FinanceAccount account, BigDecimal localBalance) {
-        this.account = account;
-        
-        //this.contactClass = contactClass;
-        this.localBalance = localBalance;
-        this.accountName = account.getName();
-        //this.currency = currency;
+    	this(account,localBalance,new BigDecimal(0),null);
+
     }
 
     public FinanceAccount getAccount() {

@@ -12,7 +12,9 @@ import com.ozguryazilim.tekir.entities.FinanceAccount_;
 import com.ozguryazilim.tekir.entities.AccountTxn;
 import com.ozguryazilim.tekir.entities.AccountType;
 import com.ozguryazilim.tekir.entities.FinanceAccount;
+import com.ozguryazilim.tekir.entities.FinanceAccount_;
 import com.ozguryazilim.tekir.entities.FinanceAccountTxn;
+import com.ozguryazilim.tekir.entities.FinanceAccountTxn_;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.entities.FeaturePointer_;
@@ -115,6 +117,8 @@ public abstract class FinanceAccountTxnRepository extends RepositoryBase<Finance
             predicates.add(from.get(FinanceAccountTxn_.account).get(FinanceAccount_.type).in(types));
         }      
        
+        predicates.add(criteriaBuilder.equal(from.get(FinanceAccountTxn_.account), account));
+             
         criteriaQuery.where(predicates.toArray(new Predicate[]{}));
         
         TypedQuery<FinanceAccountTxnSumModel> typedQuery = entityManager().createQuery(criteriaQuery);
