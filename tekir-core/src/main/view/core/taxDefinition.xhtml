@@ -13,7 +13,7 @@
 
     <ui:define name="form">
         <div class="row">
-            <t:inputEnum label="taxDefinition.label.TaxType" value="#{taxDefinitionHome.entity.type}" required="true" />
+            <t:inputEnum label="taxDefinition.label.TaxType" itemLabel="taxDefinition.type." value="#{taxDefinitionHome.entity.type}" required="true" />
             <t:inputText label="general.label.Name" value="#{taxDefinitionHome.entity.name}" required="true" />
             <t:inputText label="general.label.Code" value="#{taxDefinitionHome.entity.code}" required="true" />
             <t:inputNumber label="taxDefinition.label.Rate" value="#{taxDefinitionHome.entity.rate}" required="true" />
