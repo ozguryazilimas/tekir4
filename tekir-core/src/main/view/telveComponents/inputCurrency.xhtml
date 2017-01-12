@@ -21,10 +21,12 @@
 
             <p:outputLabel for="#{cc.id}_inp" value="#{messages[cc.attrs.label]}" styleClass="name #{invalid?'errors':''}" />
             <span class="value">
+            <div class="input-group-btn">
                 <p:selectOneMenu id="#{cc.id}_inp" value="#{cc.attrs.value}" converter="currencyConverter" disabled="#{cc.attrs.readonly}" >
                     <f:selectItems value="#{currencyService.currencies}" var="ccy" itemLabel="#{messages['currency.'.concat(ccy)]}" itemValue="#{ccy}" />
                     <p:ajax event="change" update="@(.currency)" process="@this"/>
                 </p:selectOneMenu>
+                </div>
             </span>
             <p:message for="#{cc.id}_inp" display="tooltip"/>
         </div>
