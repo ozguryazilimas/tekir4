@@ -133,6 +133,11 @@ CriteriaSupport<Commodity> {
 
 		//From Tabii ki User
 		Root<Commodity> from = criteriaQuery.from(Commodity.class);
+		Join<Commodity, CommodityCategory> cc = from.join(Commodity_.category, JoinType.LEFT);
+        Join<Commodity, UnitSetDefinition> us = from.join(Commodity_.unitSet, JoinType.LEFT);
+        Join<Commodity, TaxDefinition> t1 = from.join(Commodity_.tax1, JoinType.LEFT);
+        Join<Commodity, TaxDefinition> t2 = from.join(Commodity_.tax2, JoinType.LEFT);
+        Join<Commodity, TaxDefinition> t3 = from.join(Commodity_.tax3, JoinType.LEFT);
 
 		//Sonuç filtremiz
 		buildVieModelSelect(criteriaQuery, from );
