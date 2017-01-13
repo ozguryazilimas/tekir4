@@ -73,7 +73,7 @@
                         
                         <groupId>org.liquibase</groupId>
                         <artifactId>liquibase-maven-plugin</artifactId>
-                        <version>3.4.2</version>
+                        <version>${version.liquibase-maven-plugin}</version>
                         <configuration>
                             <changeLogFile>src/main/resources/liquibase/tekir-core.xml</changeLogFile>
                             <diffChangeLogFile>src/main/resources/liquibase/migration/changelog-${maven.build.timestamp}.xml</diffChangeLogFile>

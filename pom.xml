@@ -24,6 +24,7 @@
         <version.liquibase-hibernate4>3.5</version.liquibase-hibernate4>
         <version.mysql-connector-java>5.1.26</version.mysql-connector-java>
         <version.maven-processor-plugin>2.0.5</version.maven-processor-plugin>
+        <version.liquibase-maven-plugin>3.4.2</version.liquibase-maven-plugin>
     </properties>
     
     <issueManagement>
@@ -49,7 +50,6 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
-
 
     <developers>
         <developer>
