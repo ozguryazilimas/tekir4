@@ -25,6 +25,7 @@
         <version.mysql-connector-java>5.1.26</version.mysql-connector-java>
         <version.maven-processor-plugin>2.0.5</version.maven-processor-plugin>
         <version.liquibase-maven-plugin>3.4.2</version.liquibase-maven-plugin>
+        <version.hibernate-jpamodelgen>5.2.1.Final</version.hibernate-jpamodelgen>
     </properties>
     
     <issueManagement>
