@@ -26,6 +26,8 @@
         <version.maven-processor-plugin>2.0.5</version.maven-processor-plugin>
         <version.liquibase-maven-plugin>3.4.2</version.liquibase-maven-plugin>
         <version.hibernate-jpamodelgen>5.2.1.Final</version.hibernate-jpamodelgen>
+        <version.money-api>1.0</version.money-api>
+        <version.moneta>1.1</version.moneta>
     </properties>
     
     <issueManagement>
