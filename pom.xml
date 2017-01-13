@@ -28,6 +28,12 @@
         <version.hibernate-jpamodelgen>5.2.1.Final</version.hibernate-jpamodelgen>
         <version.money-api>1.0</version.money-api>
         <version.moneta>1.1</version.moneta>
+        <version.wildfly-arquillian>8.1.0.Final</version.wildfly-arquillian>
+        <version.shrinkwrap-resolver>2.1.1</version.shrinkwrap-resolver>
+        <version.slf4j-simple>1.6.4</version.slf4j-simple>
+        <version.dom4j>1.6.1</version.dom4j>
+        <version.junit>4.12</version.junit>
+        <version.hamcrest-core>1.3</version.hamcrest-core>
     </properties>
     
     <issueManagement>
