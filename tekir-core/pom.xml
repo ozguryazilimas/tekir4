@@ -78,13 +78,13 @@
         <dependency>
             <groupId>javax.money</groupId>
             <artifactId>money-api</artifactId>
-            <version>1.0</version>
+            <version>${version.money-api}</version>
         </dependency>
         
         <dependency>
             <groupId>org.javamoney</groupId>
             <artifactId>moneta</artifactId>
-            <version>1.1</version>
+            <version>${version.moneta}</version>
         </dependency>
         
         <!-- Test -->
@@ -102,13 +102,13 @@
         <dependency>
             <groupId>org.wildfly</groupId>
             <artifactId>wildfly-arquillian-container-managed</artifactId>
-            <version>8.1.0.Final</version>
+            <version>${version.wildfly-arquillian}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.jboss.shrinkwrap.resolver</groupId>
             <artifactId>shrinkwrap-resolver-depchain</artifactId>
-            <version>2.1.1</version>
+            <version>${version.shrinkwrap-resolver}</version>
             <scope>test</scope>
             <type>pom</type>
         </dependency>
@@ -120,12 +120,12 @@
         <dependency>
             <groupId>dom4j</groupId>
             <artifactId>dom4j</artifactId>
-            <version>1.6.1</version>
+            <version>${version.dom4j}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>1.6.4</version>
+            <version>${version.slf4j-simple}</version>
             <scope>test</scope>
         </dependency>
 

@@ -35,7 +35,7 @@
             <plugin>
                 <groupId>org.bsc.maven</groupId>
                 <artifactId>maven-processor-plugin</artifactId>
-                <version>2.0.5</version>
+                <version>${version.maven-processor-plugin}</version>
                 <executions>
                     <execution>
                         <id>process</id>
@@ -54,7 +54,7 @@
                     <dependency>
                         <groupId>org.hibernate</groupId>
                         <artifactId>hibernate-jpamodelgen</artifactId>
-                        <version>4.3.6.Final</version>
+                        <version>${version.hibernate-jpamodelgen}</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -78,7 +78,7 @@
                         
                         <groupId>org.liquibase</groupId>
                         <artifactId>liquibase-maven-plugin</artifactId>
-                        <version>3.4.2</version>
+                        <version>${version.liquibase-maven-plugin}</version>
                         <configuration>
                             <changeLogFile>src/main/resources/liquibase/tekir-core.xml</changeLogFile>
                             <diffChangeLogFile>src/main/resources/liquibase/migration/changelog-${maven.build.timestamp}.xml</diffChangeLogFile>
@@ -96,7 +96,7 @@
                             <dependency>
                                 <groupId>org.liquibase.ext</groupId>
                                 <artifactId>liquibase-hibernate4</artifactId>
-                                <version>3.5</version>
+                                <version>${version.liquibase-hibernate4}</version>
                                 <exclusions>
                                     <exclusion>
                                         <groupId>org.hibernate</groupId>
@@ -119,22 +119,22 @@
                             <dependency>
                                 <groupId>mysql</groupId>
                                 <artifactId>mysql-connector-java</artifactId>
-                                <version>5.1.26</version>
+                                <version>${version.mysql-connector-java}</version>
                             </dependency>
                             <dependency>
                                 <groupId>org.hibernate</groupId>
                                 <artifactId>hibernate-core</artifactId>
-                                <version>4.3.11.Final</version>
+                                <version>${version.hibernate}</version>
                             </dependency>
                             <dependency>
                                 <groupId>org.hibernate</groupId>
                                 <artifactId>hibernate-entitymanager</artifactId>
-                                <version>4.3.11.Final</version>
+                                <version>${version.hibernate}</version>
                             </dependency>
                             <dependency>
                                 <groupId>org.hibernate</groupId>
                                 <artifactId>hibernate-envers</artifactId>
-                                <version>4.3.11.Final</version>
+                                <version>${version.hibernate}</version>
                             </dependency>
                         </dependencies>
                         
