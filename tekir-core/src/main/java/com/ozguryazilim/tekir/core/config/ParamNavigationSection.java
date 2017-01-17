@@ -13,5 +13,10 @@ import com.ozguryazilim.telve.nav.AbstractNavigationSection;
  * @author Hakan Uygun
  */
 public class ParamNavigationSection extends AbstractNavigationSection{
-    
+
+    @Override
+    public Integer getOrder() {
+        return 99;
+    }
+ 
 }

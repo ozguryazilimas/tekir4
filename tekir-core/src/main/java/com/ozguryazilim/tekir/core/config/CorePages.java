@@ -13,7 +13,6 @@ import com.ozguryazilim.telve.auth.SecuredPage;
 import com.ozguryazilim.telve.view.PageTitle;
 import com.ozguryazilim.telve.nav.Navigation;
 import com.ozguryazilim.tekir.core.config.CorePages;
-import com.ozguryazilim.tekir.feed.config.FeedPages;
 
 /**
  *
@@ -62,14 +61,14 @@ public interface CorePages extends Pages {
 	@View
 	@SecuredPage("currencyDefinition")
 	@PageTitle("module.caption.CurrencyDefinition")
-	@Navigation(label = "module.caption.CurrencyDefinition", icon = "flaticon-exchange-1", section = ParamNavigationSection.class)
+	@Navigation(label = "module.caption.CurrencyDefinition", icon = "flaticon-exchange-1", section = FinanceParamNavigationSection.class)
 	class CurrencyDefinition implements CorePages {
 	}
         
         @View
 	@SecuredPage("exchangeRate")
 	@PageTitle("module.caption.ExchangeRate")
-	@Navigation(label = "module.caption.ExchangeRate", icon = "fa fa-money", section = ParamNavigationSection.class)
+	@Navigation(label = "module.caption.ExchangeRate", icon = "fa fa-money", section = FinanceParamNavigationSection.class)
 	class ExchangeRate implements CorePages {
 	}
 
@@ -90,7 +89,7 @@ public interface CorePages extends Pages {
 	@View
 	@SecuredPage("taxDefinition")
 	@PageTitle("module.caption.TaxDefinition")
-	@Navigation(label = "module.caption.TaxDefinition", icon = "flaticon-tax", section = ParamNavigationSection.class)
+	@Navigation(label = "module.caption.TaxDefinition", icon = "flaticon-tax", section = FinanceParamNavigationSection.class)
 	class TaxDefinition implements com.ozguryazilim.tekir.core.config.CorePages {
 	}
 
@@ -104,7 +103,7 @@ public interface CorePages extends Pages {
         @View
 	@SecuredPage("paymentPlan")
 	@PageTitle("module.caption.PaymentPlan")
-	@Navigation(label = "module.caption.PaymentPlan", icon = "flaticon-tax", section = ParamNavigationSection.class)
+	@Navigation(label = "module.caption.PaymentPlan", icon = "flaticon-tax", section = FinanceParamNavigationSection.class)
 	class PaymentPlan implements com.ozguryazilim.tekir.core.config.CorePages {
 	}
 

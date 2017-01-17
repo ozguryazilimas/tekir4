@@ -41,7 +41,7 @@ ln -s ~/git/telve4/telve-idm/target/classes/ WEB-INF/lib/telve-idm-4.0.0.Beta4.j
 ln -s ~/git/telve4/telve-note/target/classes/ WEB-INF/lib/telve-note-4.0.0.Beta4.jar
 ln -s ~/git/tekir4/tekir-core/target/classes/ WEB-INF/lib/tekir-core-4.0.0-SNAPSHOT.jar
 ln -s ~/git/tekir4/tekir-contact/target/classes/ WEB-INF/lib/tekir-contact-4.0.0-SNAPSHOT.jar
-ln -s ~/git/tekir4/tekir-conmodity/target/classes/ WEB-INF/lib/tekir-commodity-4.0.0-SNAPSHOT.jar
+ln -s ~/git/tekir4/tekir-commodity/target/classes/ WEB-INF/lib/tekir-commodity-4.0.0-SNAPSHOT.jar
 ln -s ~/git/tekir4/tekir-activity/target/classes/ WEB-INF/lib/tekir-activity-4.0.0-SNAPSHOT.jar
 ln -s ~/git/tekir4/tekir-voucher/target/classes/ WEB-INF/lib/tekir-voucher-4.0.0-SNAPSHOT.jar
 ln -s ~/git/tekir4/tekir-opportunity/target/classes/ WEB-INF/lib/tekir-opportunity-4.0.0-SNAPSHOT.jar
