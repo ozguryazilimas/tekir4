@@ -11,32 +11,41 @@
 
     <ui:define name="form">
         <div class="row">
-            <t:inputText label="general.label.Name" value="#{commodityHome.entity.name}" required="true" />
-            <t:inputText label="general.label.Code" value="#{commodityHome.entity.code}" required="true" />
-            <t:inputLookupDialog label="general.label.Category" value="#{commodityHome.entity.category}" lookupBean="#{commodityCategoryLookup}" lookupListener="commodityHome.entity.category" placeholder="#{messages['general.info.Category']}" />
-            <t:inputCurrency label="general.label.Currency" value="#{commodityHome.entity.defaultCurrency}"  required="false" />
-            <t:inputMoney label="general.label.Price" value="#{commodityHome.entity.price}"  currency="#{commodityHome.entity.defaultCurrency}" required="false" />
+            <div class="col-md-6 col-xs-12">  
+             <div class="row">
+		            <t:inputText label="general.label.Name" value="#{commodityHome.entity.name}" required="true" columnClass="col-xs-12"/>
+		            <t:inputLookupDialog label="general.label.Category" value="#{commodityHome.entity.category}" lookupBean="#{commodityCategoryLookup}" lookupListener="commodityHome.entity.category" placeholder="#{messages['general.info.Category']}" columnClass="col-xs-12"/>
+		            
+		            <t:inputLookup label="general.label.UnitSet" value="#{commodityHome.entity.unitSet}" lookupListener="commodityHome.entity.unitSet" lookupBean="#{unitSetDefinitionLookup}" placeholder="#{messages['general.label.UnitSet']}" columnClass="col-md-6 col-xs-12">
+		                <p:ajax event="change" listener="#{commodityHome.onUnitSetChange}" update=":form:baseUnit" process="@this"/>
+		            </t:inputLookup>
             
-            
-            <t:inputLookup label="general.label.UnitSet" value="#{commodityHome.entity.unitSet}" lookupListener="commodityHome.entity.unitSet" lookupBean="#{unitSetDefinitionLookup}" placeholder="#{messages['general.label.UnitSet']}" >
-                <p:ajax event="change" listener="#{commodityHome.onUnitSetChange}" update=":form:baseUnit" process="@this"/>
-            </t:inputLookup>
-            
-            <p:outputPanel id="baseUnit" layout="span">
-                <t:inputUnit label="general.label.Unit" value="#{commodityHome.entity.unitName}" />
-            </p:outputPanel>
+		            <p:outputPanel id="baseUnit" layout="span">
+		                <t:inputUnit label="general.label.Unit" value="#{commodityHome.entity.unitName}"  columnClass="col-md-6 col-xs-12" />
+		            </p:outputPanel>
+		            
+		            <t:inputCurrency label="general.label.Currency" value="#{commodityHome.entity.defaultCurrency}"  required="false"  columnClass="col-md-6 col-xs-12"/>
+		            <t:inputMoney label="general.label.Price" value="#{commodityHome.entity.price}"  currency="#{commodityHome.entity.defaultCurrency}" required="false" columnClass="col-md-6 col-xs-12"/>
+		        
+		          	<t:inputLookupDialog label="general.label.Tax1" value="#{commodityHome.entity.tax1}" lookupBean="#{taxDefinitionLookup}" lookupListener="commodityHome.entity.tax1" placeholder="#{messages['commodity.info.Tax1']}" columnClass="col-md-6 col-xs-12"/>
+		           	<t:inputLookupDialog label="general.label.Tax2" value="#{commodityHome.entity.tax2}" lookupBean="#{taxDefinitionLookup}" lookupListener="commodityHome.entity.tax2" placeholder="#{messages['commodity.info.Tax2']}" columnClass="col-md-6 col-xs-12"/>
+		           	<t:inputLookupDialog label="general.label.Tax3" value="#{commodityHome.entity.tax3}" lookupBean="#{taxDefinitionLookup}" lookupListener="commodityHome.entity.tax3" placeholder="#{messages['commodity.info.Tax3']}" columnClass="col-md-6 col-xs-12"/> 
+		           
+	            </div>
         </div>            
-        <div class="row">
-            <t:inputLookupDialog label="commodity.label.Tax" value="#{commodityHome.entity.tax1}" lookupBean="#{taxDefinitionLookup}" lookupListener="commodityHome.entity.tax1" placeholder="#{messages['commodity.info.Tax1']}" />
-            <t:inputLookupDialog label="commodity.label.Tax" value="#{commodityHome.entity.tax2}" lookupBean="#{taxDefinitionLookup}" lookupListener="commodityHome.entity.tax2" placeholder="#{messages['commodity.info.Tax2']}" />
-            <t:inputLookupDialog label="commodity.label.Tax" value="#{commodityHome.entity.tax3}" lookupBean="#{taxDefinitionLookup}" lookupListener="commodityHome.entity.tax3" placeholder="#{messages['commodity.info.Tax3']}" />
-        </div>
-        <div class="row">        
-            <t:inputTextarea label="general.label.Info" value="#{commodityHome.entity.info}" required="false" />                                            
-            <t:inputCheckboxGroup label="general.label.Status">
-                <p:selectBooleanCheckbox value="#{commodityHome.entity.active}" itemLabel="#{messages['general.label.Active']}" />
-            </t:inputCheckboxGroup>
-
+      
+      
+            
+        
+        <div class="col-md-6 col-xs-12">
+        <div class="row">       
+            <t:inputText label="general.label.Code" value="#{commodityHome.entity.code}" required="true" columnClass="col-xs-8"/>          
+	        <t:inputCheckboxGroup label="general.label.Status" columnClass="col-xs-4">
+	        	<p:selectBooleanCheckbox value="#{commodityHome.entity.active}" itemLabel="#{messages['general.label.Active']}" />
+	        </t:inputCheckboxGroup>
+	        <t:inputTextarea label="general.label.Info" value="#{commodityHome.entity.info}" required="false" columnClass="col-xs-12"/>                                            
         </div>  
+        </div>
+          </div>
     </ui:define> 
 </ui:composition>

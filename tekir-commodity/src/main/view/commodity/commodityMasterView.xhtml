@@ -1,28 +1,72 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"               
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
-                template="/layout/masterViewBase.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+	template="/layout/masterViewBase.xhtml">
 
-    <ui:define name="content">     
+	<ui:define name="content">
 
-        <div class="row">
-            <t:outputText label="general.label.Name" value="#{commodityHome.entity.name}" />
-            <t:outputText label="general.label.Code" value="#{commodityHome.entity.code}" />
-        </div>            
-        <div class="row">        
-            <t:outputText label="general.label.Info" value="#{commodityHome.entity.info}" />
-            <t:outputBoolean label="general.label.Status" itemLabel="general.boolean.active." value="#{commodityHome.entity.active}" />
-        </div>  
-        
-        <div class="row">        
-            <t:outputText label="general.label.UnitSet" value="#{commodityHome.entity.unitSet.name}" />
-            <t:outputText label="general.label.Unit" value="#{commodityHome.entity.unitName.name}" />
-            
-        </div>  
+		<div class="row">
+			<div class="col-md-4 col-xs-12">
 
-    </ui:define>
+				<t:accordion icon="fa fa-stack-exchange" label="general.label.Summary"
+					columnClass="col-xs-12">
+					<div class="row">
+						<t:outputEntityLink label="general.label.Category"
+							value="#{commodityHome.entity.category}"
+							view="/commodity/commodityCategory" columnClass="col-xs-12" />
+					</div>
+
+					<div class="row">
+						<t:outputEntityLink label="general.label.UnitSet"
+							value="#{commodityHome.entity.unitSet}" view="/core/unitSetDefinition"
+							columnClass="col-xs-12" />
+						<t:outputText label="general.label.Unit"
+							value="#{commodityHome.entity.unitName}" columnClass="col-xs-12" />
+					</div>
+
+					<div class="row">
+						<t:outputCurrency label="general.label.Currency"
+							value="#{commodityHome.entity.defaultCurrency}"
+							columnClass="col-md-6 col-xs-12" />
+						<t:outputMoney label="general.label.Price"
+							value="#{commodityHome.entity.price}"
+							currency="#{commodityHome.entity.defaultCurrency}"
+							columnClass="col-md-6 col-xs-12" />
+					</div>
+				</t:accordion>
+			</div>
+			<div class="col-md-4 col-xs-12">
+				<t:accordion icon="fa flaticon-tax" label="general.label.Taxes"
+					columnClass="col-xs-12">
+					<ui:repeat var="it" value="#{commodityHome.getTaxList()}" varStatus="ctr">
+						<t:accordion icon="fa flaticon-tax" label="general.label.Tax#{ctr.index+1}">
+							<div class="row">
+								<t:outputEntityLink label="general.label.Tax" value="#{it}"
+									view="/core/taxDefinition" columnClass="col-md-6 col-xs-12" />
+
+								<t:outputText label="taxDefinition.label.TaxType"
+									itemLabel="taxDefinition.type" value="#{it.type}"
+									columnClass="col-md-6 col-xs-12" />
+
+								<t:outputBoolean label="general.label.Status"
+									itemLabel="general.boolean.active." value="#{it.active}" />
+
+								<t:outputText label="taxDefinition.label.Rate" value="%#{it.rate}"
+									columnClass="col-md-6 col-xs-12" />
+							</div>
+						</t:accordion>
+					</ui:repeat>
+				</t:accordion>
+			</div>
+			<div class="col-md-4 col-xs-12">
+				<ui:include src="/notes/noteWidget.xhtml">
+					<ui:param name="featurePointer" value="#{commodityHome.featurePointer}" />
+				</ui:include>
+			</div>
+		</div>
+	</ui:define>
+
 
 </ui:composition>

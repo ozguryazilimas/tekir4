@@ -1,15 +1,58 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"                
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"               
-                template="/layout/containerViewBase.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+	xmlns:p="http://primefaces.org/ui"
+	template="/layout/containerViewTabBase.xhtml">
 
-    <ui:param name="bean" value="#{commodityHome}" />
+	<ui:param name="bean" value="#{commodityHome}" />
+	<ui:param name="entityName" value="commodity" />
+	<ui:param name="viewIdentifier" value="#{commodityHome.entity.name}" />
+	<ui:param name="showCaption" value="true" />
+	<ui:param name="dontShowContentHeader" value="false" />
 
-    <ui:define name="metadata">
-        <f:metadata>
-            <f:viewParam name="eid" value="#{commodityHome.id}" />
-        </f:metadata>
-    </ui:define>
-    
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="eid" value="#{commodityHome.id}" />
+		</f:metadata>
+	</ui:define>
+
+	<ui:define name="caption">
+		<div class="row">
+			<div class="col-md-4 col-xs-12">
+				<div class="row">
+					<t:outputText label="general.label.Name"
+						value="#{commodityHome.entity.name}" columnClass="col-xs-8" />
+					<t:outputEntityLink label="general.label.Category"
+						value="#{commodityHome.entity.category}"
+						view="/commodity/commodityCategory" columnClass="col-xs-8" />
+				</div>
+			</div>
+
+			<div class="col-md-4 col-xs-12">
+				<div class="row">
+					<t:outputMoney label="general.label.Price"
+						value="#{commodityHome.entity.price}"
+						currency="#{commodityHome.entity.defaultCurrency}" columnClass="col-xs-8" />
+					<t:outputText label="commodity.label.TotalTaxRate"
+						value="%#{commodityHome.getTotalTaxRate()}" columnClass="col-xs-8" />
+				</div>
+			</div>
+
+			<div class="col-md-4 col-xs-12">
+				<div class="row">
+					<t:outputText label="general.label.Code"
+						value="#{commodityHome.entity.code}" required="true"
+						columnClass="col-xs-8" />
+					<t:outputBoolean label="general.label.Status"
+						value="#{commodityHome.entity.active}" itemLabel="general.boolean.active."
+						columnClass="col-xs-4" />
+					<t:outputText label="general.label.Info"
+						value="#{commodityHome.entity.info}" required="false"
+						columnClass="col-xs-12" />
+				</div>
+			</div>
+		</div>
+	</ui:define>
+
 </ui:composition>
