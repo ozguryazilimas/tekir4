@@ -3,19 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ozguryazilim.finance.config;
+package com.ozguryazilim.tekir.core.config;
 
 import com.ozguryazilim.telve.nav.AbstractNavigationSection;
 
 /**
- * Cari Dekontları için menü grubu
- * @author Hakan Uygun
+ * Fianansal Parametreler
+ * 
+ * @author Hakan uygun
  */
-public class FinanceNavigationSection extends AbstractNavigationSection{
+public class FinanceParamNavigationSection extends AbstractNavigationSection{
 
     @Override
     public Integer getOrder() {
-        return 60;
+        return 98;
     }
     
 }

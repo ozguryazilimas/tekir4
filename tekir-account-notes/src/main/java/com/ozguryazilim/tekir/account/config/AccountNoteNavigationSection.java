@@ -12,5 +12,10 @@ import com.ozguryazilim.telve.nav.AbstractNavigationSection;
  * @author Hakan Uygun
  */
 public class AccountNoteNavigationSection extends AbstractNavigationSection{
-    
+
+    @Override
+    public Integer getOrder() {
+        return 70;
+    }
+ 
 }

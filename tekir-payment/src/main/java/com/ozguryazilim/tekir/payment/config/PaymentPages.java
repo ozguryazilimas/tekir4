@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.tekir.payment.config;
 
+import com.ozguryazilim.finance.config.FinanceNavigationSection;
 import com.ozguryazilim.tekir.core.config.PurchaseNavigationSection;
 import com.ozguryazilim.tekir.core.config.SalesNavigationSection;
 import com.ozguryazilim.telve.auth.SecuredPage;
@@ -28,6 +29,7 @@ public interface PaymentPages extends Pages {
 	@SecuredPage("paymentReceived")
 	@PageTitle("module.caption.PaymentReceivedBrowse")
 	@Navigation(label = "module.caption.PaymentReceivedBrowse", icon = "flaticon-speech-bubble", section = SalesNavigationSection.class)
+        @Navigation(label = "module.caption.PaymentReceivedBrowse", icon = "flaticon-speech-bubble", section = FinanceNavigationSection.class)
 	class PaymentReceivedBrowse implements Sales {
 	}
 
@@ -58,6 +60,7 @@ public interface PaymentPages extends Pages {
 	@SecuredPage("payment")
 	@PageTitle("module.caption.PaymentBrowse")
 	@Navigation(label = "module.caption.PaymentBrowse", icon = "flaticon-speech-bubble", section = PurchaseNavigationSection.class)
+        @Navigation(label = "module.caption.PaymentBrowse", icon = "flaticon-speech-bubble", section = FinanceNavigationSection.class)
 	class PaymentBrowse implements Purchase {
 	}
 
