@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.2.final using JasperReports Library version 6.2.2  -->
+<!-- 2017-01-17T18:18:33 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="accountCreditNote" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="aaa9241d-89c5-4ba2-9abc-902d3786637a">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Tekir"/>
+	<parameter name="EID" class="java.lang.Long">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from  TAN_CREDIT_NOTE where id =  $P{EID} ]]>
+	</queryString>
+	<field name="ID" class="java.lang.Long"/>
+	<field name="CREATE_DATE" class="java.sql.Timestamp"/>
+	<field name="UPDATE_DATE" class="java.sql.Timestamp"/>
+	<field name="UPDATE_USER" class="java.lang.String"/>
+	<field name="CODE" class="java.lang.String"/>
+	<field name="TXNDATE" class="java.sql.Timestamp"/>
+	<field name="INFO" class="java.lang.String"/>
+	<field name="OWNER" class="java.lang.String"/>
+	<field name="REFERENCE_NO" class="java.lang.String"/>
+	<field name="FEATURE_BK" class="java.lang.String"/>
+	<field name="FEATURE" class="java.lang.String"/>
+	<field name="FEATURE_PK" class="java.lang.Long"/>
+	<field name="STATE" class="java.lang.String"/>
+	<field name="STATE_INFO" class="java.lang.String"/>
+	<field name="STATE_REASON" class="java.lang.String"/>
+	<field name="VOUCHER_NO" class="java.lang.String"/>
+	<field name="AMOUNT" class="java.math.BigDecimal"/>
+	<field name="CCY" class="java.lang.String"/>
+	<field name="ACCOUNT_ID" class="java.lang.Long"/>
+	<field name="PROCESS_ID" class="java.lang.Long"/>
+	<field name="GROUP_ID" class="java.lang.Long"/>
+	<field name="TOPIC" class="java.lang.String"/>
+	<field name="LOCAL_AMOUNT" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="80" y="0" width="100" height="30" uuid="efa16bca-f873-4bea-8806-eb5509387b23"/>
+				<text><![CDATA[REFERENCE_NO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="214" y="0" width="100" height="30" uuid="0e549003-4784-40fc-b756-f986d1dfd791"/>
+				<text><![CDATA[CCY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="353" y="0" width="100" height="30" uuid="4d01ae85-19f1-413e-a83b-b96246d84bb9"/>
+				<text><![CDATA[AMOUNT]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="80" y="61" width="100" height="30" uuid="8111b336-2eea-4f0d-97ca-5b415c9b8a16"/>
+				<textFieldExpression><![CDATA[$F{REFERENCE_NO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="214" y="74" width="100" height="30" uuid="ee8d9307-c11d-4962-a3e0-c8a566bb5cf2"/>
+				<textFieldExpression><![CDATA[$F{CCY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="353" y="63" width="100" height="30" uuid="039eff88-8942-437d-b8ec-41908c7f3554"/>
+				<textFieldExpression><![CDATA[$F{AMOUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

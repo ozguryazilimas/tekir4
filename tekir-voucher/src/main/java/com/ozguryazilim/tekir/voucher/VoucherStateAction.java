@@ -6,6 +6,7 @@
 package com.ozguryazilim.tekir.voucher;
 
 import java.util.Objects;
+import org.apache.deltaspike.core.api.config.view.ViewConfig;
 
 /**
  * Voucher State Geçişleri için action tanımları.
@@ -104,6 +105,11 @@ public class VoucherStateAction {
         return silence;
     }
 
+    
+    public Class<? extends ViewConfig> execute(){
+        return null;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;
