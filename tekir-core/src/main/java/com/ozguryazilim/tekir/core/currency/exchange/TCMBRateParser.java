@@ -77,7 +77,7 @@ public class TCMBRateParser implements Serializable {
 		SAXReader reader = new SAXReader();
 		Document doc = reader.read(inputStream);		
 		
-		for (Currency currency : currencyService.getAvailableCurrencies()){							
+		for (Currency currency : currencyService.getCurrencies()){							
 			String xPathQuery = "//*[@Kod=\""+currency.getCurrencyCode()+"\"]";
 			if(doc.valueOf(xPathQuery) != null && !doc.valueOf(xPathQuery).isEmpty()){
 			String buyRateStr = doc.valueOf("//*[@Kod=\""+currency.getCurrencyCode()+"\"]/BanknoteBuying");
