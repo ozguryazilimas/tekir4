@@ -80,15 +80,4 @@ public class CommodityHome extends FormBase<Commodity, Long> {
 			taxList.add(getEntity().getTax3());
 		}
 	}
-
-	public BigDecimal getTotalTaxRate(){
-		BigDecimal result = BigDecimal.ZERO;
-		if(getTaxList().size() != 0){
-			Function<TaxDefinition, BigDecimal> rateMapper = tax -> tax.getRate();
-	        result = taxList.stream().map(rateMapper).reduce(BigDecimal.ZERO, BigDecimal::add);				
-		}
-		return result;
-	}
-
-
 }
