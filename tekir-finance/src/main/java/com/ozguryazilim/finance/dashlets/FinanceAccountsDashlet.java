@@ -83,6 +83,7 @@ public class FinanceAccountsDashlet extends AbstractDashlet{
 	protected void populate(){
 
 		sum = BigDecimal.ZERO;
+		debit = BigDecimal.ZERO;
 
 		String username = identity.getLoginName();
 		List<AccountType> types = new ArrayList<AccountType>(Arrays.asList(AccountType.values()));
