@@ -35,7 +35,7 @@ public class OpportunityViewModel extends VoucherProcessViewModel{
         this.budget = budget;
         this.currency = currency;
     }
-
+   
     public BigDecimal getBudget() {
         return budget;
     }

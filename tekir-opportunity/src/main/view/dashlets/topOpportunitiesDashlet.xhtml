@@ -1,0 +1,53 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                template="/layout/dashletBase.xhtml">
+
+    <ui:param name="name" value="topOpportunitiesDashlet" />
+    <ui:param name="bean" value="#{topOpportunitiesDashlet}" />
+
+    <ui:define name="caption">
+        <ui:remove>
+            <t:cellOutputDate value="#{feedDashlet.beginDate}" /> -
+            <t:cellOutputDate value="#{feedDashlet.endDate}" />
+        </ui:remove>
+    </ui:define>
+
+    <ui:define name="extraButtons">
+
+    </ui:define>
+
+    <ui:define name="edit">
+        <t:inputCheckbox label="voucher.label.Owner" itemLabel="general.label.MineOnly" value="#{topOpportunitiesDashlet.mineOnly}" />
+        <t:inputText label="general.label.limit" value="#{topOpportunitiesDashlet.limit}" />
+        <t:inputText label="general.label.StartPeriod" value="#{topOpportunitiesDashlet.startPeriod}" />
+    </ui:define>
+
+    <ui:define name="view">            
+            <h:outputScript library="telve" name="js/jquery.sparkline.js" target="head"/>
+            <div style="margin-left: -1em; margin-right: -1em; margin-top: -0.5em;">
+                <table class="table table-condensed">
+                    <tr>
+                        <td>#{messages['general.label.Customer']}</td>
+                        <td>#{messages['opportunity.label.Topic']}</td>
+                        <td>#{messages['general.label.Date']}</td>
+                        <td>#{messages['opportunity.label.Budget']}</td>
+                        <td>#{messages['opportunity.label.Probability']}</td>
+                        
+                    </tr>
+                    <ui:repeat value="#{topOpportunitiesDashlet.sums}" var="it">
+                        <tr>
+                            <td>#{it.contactName}</td>
+                            <td>#{it.topic}</td>
+                            <td><t:cellOutputDate value="#{it.date}" /></td>
+                            <td><t:cellOutputMoney value="#{it.budget}" currency="#{it.currency}" /></td>
+                            <td>%#{it.probability}</td>                            
+                        </tr>
+                    </ui:repeat>
+                </table>
+            </div>
+    </ui:define>
+</ui:composition>
