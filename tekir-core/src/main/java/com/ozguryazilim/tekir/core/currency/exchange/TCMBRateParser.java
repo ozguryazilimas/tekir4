@@ -84,6 +84,7 @@ public class TCMBRateParser implements Serializable {
 			String sellRateStr = doc.valueOf("//*[@Kod=\""+currency.getCurrencyCode()+"\"]/BanknoteSelling");	
 			String crossRateUsdStr = doc.valueOf("//*[@Kod=\""+currency.getCurrencyCode()+"\"]/CrossRateUSD");
 			String crossRateOtherStr = doc.valueOf("//*[@Kod=\""+currency.getCurrencyCode()+"\"]/CrossRateOther");
+			String unit = doc.valueOf("//*[@Kod=\""+currency.getCurrencyCode()+"\"]/Unit");
 
 			ExchangeRate er = new ExchangeRate();
 			er.setDate(date);
@@ -91,22 +92,22 @@ public class TCMBRateParser implements Serializable {
 			er.setTermCurrency(Currency.getInstance("TRY"));
 			
 			if(buyRateStr != null && !buyRateStr.isEmpty()){
-			er.setBuyRate(new BigDecimal(buyRateStr));
+			er.setBuyRate(new BigDecimal(buyRateStr).divide(new BigDecimal(unit)));
 			}
 			else{
 				String forexBuyRateStr = doc.valueOf("//*[@Kod=\""+currency.getCurrencyCode()+"\"]/ForexBuying");
 				if(forexBuyRateStr != null && !forexBuyRateStr.isEmpty()){
-				er.setBuyRate(new BigDecimal(forexBuyRateStr));
+				er.setBuyRate(new BigDecimal(forexBuyRateStr).divide(new BigDecimal(unit)));
 				}
 			}
 			
 			if(sellRateStr != null && !sellRateStr.isEmpty()){
-			er.setSellRate(new BigDecimal(sellRateStr));
+			er.setSellRate(new BigDecimal(sellRateStr).divide(new BigDecimal(unit)));
 			}
 			else{
 				String forexSellRateStr = doc.valueOf("//*[@Kod=\""+currency.getCurrencyCode()+"\"]/ForexSelling");
 				if(forexSellRateStr != null && !forexSellRateStr.isEmpty()){
-				er.setSellRate(new BigDecimal(forexSellRateStr));
+				er.setSellRate(new BigDecimal(forexSellRateStr).divide(new BigDecimal(unit)));
 				}
 			}
 			//Çapraz kurlar
