@@ -5,10 +5,13 @@
  */
 package com.ozguryazilim.tekir.opportunity;
 
+import com.fasterxml.jackson.databind.ser.std.NumberSerializers.IntegerSerializer;
 import com.google.common.base.Strings;
+import com.ozguryazilim.opportunity.dashlets.TopOpportunityModel;
 import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.tekir.entities.Opportunity;
 import com.ozguryazilim.tekir.entities.Opportunity_;
+import com.ozguryazilim.tekir.entities.Person_;
 import com.ozguryazilim.tekir.entities.Process_;
 import com.ozguryazilim.tekir.entities.VoucherBase_;
 import com.ozguryazilim.tekir.entities.VoucherGroup;
@@ -18,6 +21,7 @@ import com.ozguryazilim.tekir.voucher.VoucherRepositoryBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.filters.Filter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.Dependent;
 import javax.persistence.TypedQuery;
@@ -120,5 +124,52 @@ public abstract class OpportunityRepository extends VoucherRepositoryBase<Opport
             );
         }
     }
+        
+    /**
+    *
+    * @param feature hangi evrak türü. boş olması hepsi demek
+    * @param username hangi kullanıcı için boş olması hesap demek
+    * @param startDate hangi tarihten başlayacağız
+    * @param limit geriye kaç sonuç dönecek
+    * @return 
+    */
+   public List<TopOpportunityModel> findTopOpportunities(String username, Date startDate, Integer limit ){
+       CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
+       //Geriye AccidentAnalysisViewModel dönecek cq'yu ona göre oluşturuyoruz.
+       CriteriaQuery<TopOpportunityModel> criteriaQuery = criteriaBuilder.createQuery(TopOpportunityModel.class);
+
+       //From Tabii ki PersonWorkHistory
+       Root<Opportunity> from = criteriaQuery.from(Opportunity.class);
+       
+       criteriaQuery.multiselect(
+    		   from.get(Opportunity_.id),  
+    		   from.get(Opportunity_.topic),
+               from.get(Opportunity_.primaryContact).get(Person_.id),
+               from.get(Opportunity_.account).get(Person_.name),               
+               from.get(Opportunity_.date),
+               from.get(Opportunity_.budget),          
+               from.get(Opportunity_.currency),
+               from.get(Opportunity_.localBudget),  
+               from.get(Opportunity_.probability)             
+       );       
+           
+       //Filtreleri ekleyelim.
+       List<Predicate> predicates = new ArrayList<>();
+       
+       if( !Strings.isNullOrEmpty(username)){
+           predicates.add(criteriaBuilder.equal(from.get(Opportunity_.owner), username));
+       }
+  
+       predicates.add(criteriaBuilder.greaterThanOrEqualTo(from.get(Opportunity_.date), startDate));
+       
+       criteriaQuery.where(predicates.toArray(new Predicate[]{}));
+    
+       criteriaQuery.orderBy(criteriaBuilder.desc(from.get(Opportunity_.localBudget)));
+       TypedQuery<TopOpportunityModel> typedQuery = entityManager().createQuery(criteriaQuery);
+       typedQuery.setMaxResults(limit);      
+       List<TopOpportunityModel> resultList = typedQuery.getResultList();
+       
+       return resultList;
+   }
 
 }
