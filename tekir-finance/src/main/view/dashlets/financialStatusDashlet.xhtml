@@ -1,0 +1,34 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                template="/layout/dashletBase.xhtml">
+
+    <ui:param name="home" value="financialStatusDashlet" />
+    <ui:param name="bean" value="#{financialStatusDashlet}" />
+
+    <ui:define name="view">    
+        <ui:fragment>
+            <div style="margin-left: -1em; margin-right: -1em; margin-top: -0.5em;">
+                <table class="table table-condensed">
+                    <tr>
+                        <td>#{messages['finance.label.Receivables']}(+)</td>                     
+                        <td>#{messages['finance.label.Debts']}(-)</td>
+                        <td>#{messages['finance.label.CashBalance']}(+)</td>
+                        <td>#{messages['finance.label.FinancialTotal']}</td>
+                    </tr>                   
+                        <tr>
+                            <td><t:cellOutputMoney value="#{bean.receivables}" currency="#{currencyService.reportCurrency}" /></td>
+                            <td><t:cellOutputMoney value="#{bean.debit}" currency="#{currencyService.reportCurrency}" /></td>
+                            <td><t:cellOutputMoney value="#{bean.cashBalance}" currency="#{currencyService.reportCurrency}" /></td>
+                            <td><t:cellOutputMoney value="#{bean.sum}" currency="#{currencyService.reportCurrency}" /></td>
+								
+                        </tr>                 
+                </table>
+            </div>
+             
+        </ui:fragment>
+    </ui:define>
+</ui:composition>
