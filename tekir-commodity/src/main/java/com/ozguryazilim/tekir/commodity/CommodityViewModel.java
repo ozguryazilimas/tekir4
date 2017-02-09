@@ -41,7 +41,7 @@ public class CommodityViewModel implements ViewModel, Serializable {
 		
 		this.category = new CommodityCategory();
 		category.setId(categoryId);
-		category.setName(name);
+		category.setName(categoryName);
 		
 		this.price = price;
 		
