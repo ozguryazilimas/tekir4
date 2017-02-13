@@ -56,7 +56,7 @@
                         <t:inputText label="general.label.Name" value="#{contactHome.entity.name}" columnClass="col-xs-12" required="true"/>
                         <t:inputText label="general.label.OrganizationName" value="#{contactHome.entity.organizastionName}" columnClass="col-xs-12" required="true"/>
                         <t:inputLookupDialog label="contact.label.PrimaryContact" value="#{contactHome.entity.primaryContact}" lookupBean="#{contactLookup}" lookupListener="contactHome.entity.primaryContact" placeholder="#{messages['contact.info.PrimaryContact']}" lookupProfile="T:Person"/>
-                        <t:inputLookupDialog label="contact.label.ParentCorporation" value="#{contactHome.entity.parentCorporation}" lookupBean="#{contactLookup}" lookupListener="contactHome.entity.parentCorporation" placeholder="#{messages['contact.info.ParentCorporation']}" lookupProfile="T:Corporation"/>
+                        <t:inputLookupDialog label="contact.label.ParentCorporation" value="#{contactHome.entity.parentCorporation}" lookupBean="#{contactLookup}" lookupListener="contactHome.entity.parentCorporation" placeholder="#{messages['contact.info.ParentCorporation']}" lookupProfile="T:Corporation; C:#{contactHome.entity.id}"/>
 
                     </div>
                 </ui:fragment>

@@ -6,6 +6,7 @@
 package com.ozguryazilim.tekir.contact;
 
 import com.ozguryazilim.tekir.contact.config.ContactPages;
+import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.tekir.entities.ContactRelation_;
 import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.tekir.entities.RelatedContact;
@@ -42,14 +43,19 @@ public class RelatedContactSubView extends SubViewQueryBase<RelatedContact, Rela
 
     @Override
     protected RepositoryBase<RelatedContact, RelatedContactViewModel> getRepository() {
-        repository.setContact(contactHome.getEntity());
+        repository.setContact(getSourceContact());
         return repository;
     }
     
     @Override
     public boolean onBeforeSave(){
-        getEntity().setSourceContact(contactHome.getEntity());
+        getEntity().setSourceContact(getSourceContact());
+        
         return true;
+    }
+    
+    public Contact getSourceContact(){
+    	return contactHome.getEntity();
     }
     
 }
