@@ -1,0 +1,91 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="oyas (generated)" id="1486985428895-1">
+        <createTable tableName="TCR_CONTRACT">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TCR_CONTRACTPK"/>
+            </column>
+            <column name="CREATE_DATE" type="datetime"/>
+            <column name="UPDATE_DATE" type="datetime"/>
+            <column name="UPDATE_USER" type="VARCHAR(255)"/>
+            <column name="CODE" type="VARCHAR(30)"/>
+            <column name="TXNDATE" type="datetime"/>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="OWNER" type="VARCHAR(255)"/>
+            <column name="REFERENCE_NO" type="VARCHAR(30)"/>
+            <column name="FEATURE_BK" type="VARCHAR(255)"/>
+            <column name="FEATURE" type="VARCHAR(255)"/>
+            <column name="FEATURE_PK" type="BIGINT"/>
+            <column name="STATE" type="VARCHAR(255)"/>
+            <column name="STATE_INFO" type="VARCHAR(255)"/>
+            <column name="STATE_REASON" type="VARCHAR(255)"/>
+            <column name="TOPIC" type="VARCHAR(255)"/>
+            <column name="VOUCHER_NO" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TOT_CCY" type="VARCHAR(255)"/>
+            <column name="END_DATE" type="date"/>
+            <column name="LOCAL_AMOUNT" type="DECIMAL(19, 2)"/>
+            <column name="START_DATE" type="date"/>
+            <column name="TERMS" type="VARCHAR(255)"/>
+            <column name="TOT_AMT" type="DECIMAL(19, 2)"/>
+            <column name="GROUP_ID" type="BIGINT"/>
+            <column name="ACCOUNT_ID" type="BIGINT"/>
+            <column name="PROCESS_ID" type="BIGINT"/>
+            <column name="PAYMENTPLAN_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1486985428895-2">
+        <createTable tableName="TCR_CONTRACT_ITEM">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TCR_CONTRACT_ITEMPK"/>
+            </column>
+            <column name="DISC_AMT" type="DECIMAL(19, 2)"/>
+            <column name="DISC_RATE" type="INT"/>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="LİNE_TOT_AMT" type="DECIMAL(19, 2)"/>
+            <column name="PRICE_AMT" type="DECIMAL(19, 2)"/>
+            <column name="QTY_AMT" type="DECIMAL(19, 2)"/>
+            <column name="QTY_UNIT" type="VARCHAR(255)"/>
+            <column name="TOT_AMT" type="DECIMAL(19, 2)"/>
+            <column name="COMMODITY_ID" type="BIGINT"/>
+            <column name="MASTER_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1486985428895-3">
+        <createTable tableName="TCR_CONTRACT_SUM">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TCR_CONTRACT_SUMPK"/>
+            </column>
+            <column name="AMOUNT" type="DECIMAL(19, 2)"/>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="ROW_KEY" type="VARCHAR(255)"/>
+            <column name="MASTER_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1486985428895-4">
+        <addUniqueConstraint columnNames="VOUCHER_NO" constraintName="UC_TCR_CONTRACTVOUCHER_NO_COL" tableName="TCR_CONTRACT"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1486985428895-5">
+        <addForeignKeyConstraint baseColumnNames="PROCESS_ID" baseTableName="TCR_CONTRACT" constraintName="FK_PROSS_VOG" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TVO_PROCESS"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1486985428895-6">
+        <addForeignKeyConstraint baseColumnNames="GROUP_ID" baseTableName="TCR_CONTRACT" constraintName="FK_VOG_VOG" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TVO_GROUP"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1486985428895-7">
+        <dropForeignKeyConstraint baseTableName="TCR_CONTRACT" constraintName="FK_ORD_PP"/>
+        <addForeignKeyConstraint baseColumnNames="PAYMENTPLAN_ID" baseTableName="TCR_CONTRACT" constraintName="FK_ORD_PP" referencedColumnNames="ID" referencedTableName="TCO_PAYMENT_PLAN"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1486985428895-8">
+        <dropForeignKeyConstraint baseTableName="TCR_CONTRACT" constraintName="FK_PROSS_ACC"/>
+        <addForeignKeyConstraint baseColumnNames="ACCOUNT_ID" baseTableName="TCR_CONTRACT" constraintName="FK_PROSS_ACC" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1486985428895-9">
+        <dropForeignKeyConstraint baseTableName="TCR_CONTRACT_ITEM" constraintName="FK_QUOTEIT_COMMO"/>
+        <addForeignKeyConstraint baseColumnNames="COMMODITY_ID" baseTableName="TCR_CONTRACT_ITEM" constraintName="FK_QUOTEIT_COMMO" referencedColumnNames="ID" referencedTableName="TCO_COMMOTITY"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1486985428895-10">
+        <dropForeignKeyConstraint baseTableName="TCR_CONTRACT_ITEM" constraintName="FK_QUOTEIT_QUOTE"/>
+        <addForeignKeyConstraint baseColumnNames="MASTER_ID" baseTableName="TCR_CONTRACT_ITEM" constraintName="FK_QUOTEIT_QUOTE" referencedColumnNames="ID" referencedTableName="TCR_CONTRACT"/>
+    </changeSet>
+</databaseChangeLog>
