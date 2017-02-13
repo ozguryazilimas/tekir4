@@ -11,9 +11,13 @@ import com.ozguryazilim.tekir.entities.VoucherBase_;
 import com.ozguryazilim.tekir.entities.VoucherGroup;
 import com.ozguryazilim.tekir.entities.VoucherGroup_;
 import com.ozguryazilim.tekir.entities.VoucherProcessBase_;
+import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.tekir.voucher.VoucherRepositoryBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.filters.Filter;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.TypedQuery;
@@ -117,4 +121,62 @@ public abstract class QuoteRepository extends VoucherRepositoryBase<Quote, Quote
             );
         }
     }
+    
+    public BigDecimal sumLocalBudgetByStateAndOwner(VoucherState state, String owner){
+		CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
+		CriteriaQuery<BigDecimal> criteriaQuery = criteriaBuilder.createQuery(BigDecimal.class);
+
+		Root<Quote> from = criteriaQuery.from(Quote.class);
+
+		criteriaQuery.select(
+				criteriaBuilder.sum(from.get(Quote_.localAmount))
+				);             
+
+		//Filtreleri ekleyelim.
+		List<Predicate> predicates = new ArrayList<>();
+		
+		if(state != null){
+			predicates.add(criteriaBuilder.equal(from.get(Quote_.state), state));
+		}
+
+		if(Strings.isNullOrEmpty(owner)){
+			predicates.add(criteriaBuilder.equal(from.get(Quote_.owner), owner));
+		}
+
+		criteriaQuery.where(predicates.toArray(new Predicate[]{}));
+
+		TypedQuery<BigDecimal> typedQuery = entityManager().createQuery(criteriaQuery);
+		BigDecimal result = typedQuery.getSingleResult();
+
+		return result;
+	}
+	
+	public Long countByStateAndOwner(VoucherState state, String owner){
+		CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
+		CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
+
+		Root<Quote> from = criteriaQuery.from(Quote.class);
+
+		criteriaQuery.select(
+				criteriaBuilder.count(from)
+				);             
+
+		//Filtreleri ekleyelim.
+		List<Predicate> predicates = new ArrayList<>();
+		
+		if(state != null){
+			predicates.add(criteriaBuilder.equal(from.get(Quote_.state), state));
+		}
+
+		if(Strings.isNullOrEmpty(owner)){
+			predicates.add(criteriaBuilder.equal(from.get(Quote_.owner), owner));
+		}
+
+		criteriaQuery.where(predicates.toArray(new Predicate[]{}));
+
+		TypedQuery<Long> typedQuery = entityManager().createQuery(criteriaQuery);
+		Long result = typedQuery.getSingleResult();
+
+		return result;
+	}
 }

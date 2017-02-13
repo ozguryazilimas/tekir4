@@ -1,0 +1,66 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                template="/layout/dashletBase.xhtml">
+
+    <ui:param name="name" value="salesStatusDashlet" />
+    <ui:param name="bean" value="#{salesStatusDashlet}" />
+
+    <ui:define name="caption">
+    </ui:define>
+
+    <ui:define name="extraButtons">
+
+    </ui:define>
+
+    <ui:define name="edit">
+        <t:inputCheckbox label="voucher.label.Owner" itemLabel="general.label.MineOnly" value="#{bean.mineOnly}" />
+        <t:inputText label="general.label.StartPeriod" value="#{bean.startPeriod}" />
+        <t:inputCombobox label="general.label.Style" value="#{bean.style}">
+            <f:selectItem itemLabel="Table" itemValue="TABLE" />
+            <f:selectItem itemLabel="Chart" itemValue="CHART" />
+        </t:inputCombobox>
+    </ui:define>
+
+    <ui:define name="view">
+
+
+
+        <ui:fragment rendered="#{bean.style eq 'CHART'}">
+            <p:chart type="pie" model="#{bean.budgetPieChartModel}" style="height: auto;"  responsive="true" />
+            <p:chart type="pie" model="#{bean.piecePieChartModel}" style="height: auto;"  responsive="true" />            
+        </ui:fragment>
+
+        <ui:fragment rendered="#{bean.style eq 'TABLE'}">
+            <h:outputScript library="telve" name="js/jquery.sparkline.js" target="head"/>
+            <div style="margin-left: -1em; margin-right: -1em; margin-top: -0.5em;">
+                <table class="table table-condensed">
+                    <tr>
+                    	<td>#{messages['general.label.Type']}</td>                      
+                        <td>#{messages['general.label.Piece']}</td>
+                        <td>#{messages['general.label.Budget']}</td>
+                    </tr>                   
+                    <tr>
+                    	<td>#{messages['general.label.Opportunity']}</td>
+                        <td>#{bean.opportunityPieces}"</td>
+                        <td><t:cellOutputMoney value="#{bean.opportunityBudgets}" currency="#{currencyService.reportCurrency}" /></td>
+                    </tr>                  
+                    <tr>
+                    	<td>#{messages['general.label.Quote']}</td>
+                        <td>#{bean.quotePieces}"</td>
+                        <td><t:cellOutputMoney value="#{bean.quoteBudgets}" currency="#{currencyService.reportCurrency}" /></td>
+                    </tr>         
+                </table>
+            </div>
+
+            
+        </ui:fragment>
+
+
+
+
+    </ui:define>
+</ui:composition>
