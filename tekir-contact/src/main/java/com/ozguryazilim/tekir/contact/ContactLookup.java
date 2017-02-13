@@ -3,6 +3,7 @@ package com.ozguryazilim.tekir.contact;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.ozguryazilim.telve.lookup.Lookup;
+import com.ozguryazilim.telve.lookup.LookupModel;
 import com.ozguryazilim.telve.lookup.LookupTableControllerBase;
 import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.tekir.entities.Contact_;
@@ -31,6 +32,7 @@ public class ContactLookup
         private List<String> requiredRoles;
         private List<String> optinalRoles;
         private List<String> selectedOptinalRoles;
+        private String callerContact;
         
 	@Override
 	public void buildModel(LookupTableModel<ContactViewModel> model) {
@@ -58,7 +60,9 @@ public class ContactLookup
         rls.addAll(selectedOptinalRoles);
                 
         //Şimdide Repository'den sorgumuz yapıp datayı dolduruyoruz
-        getModel().setData(repository.lookupQuery(getModel().getSearchText(), type, rls));
+        List<ContactViewModel> models = repository.lookupQuery(getModel().getSearchText(), type, rls);
+        models.removeIf(c -> c.getId().toString().equals(callerContact));
+        getModel().setData(models);
     }
 
     @Override
@@ -87,6 +91,14 @@ public class ContactLookup
         } else {
             selectedOptinalRoles = new ArrayList<>();
         }
+        
+        String cContact = getModel().getProfileProperties().get("C");
+        if( !Strings.isNullOrEmpty(cContact)){
+        	callerContact = cContact;            
+        } else {
+        	callerContact = "";
+        }
+        
     }
     
     
@@ -110,6 +122,7 @@ public class ContactLookup
         
         
         String roles = getModel().getProfileProperties().get("R");
+        LookupModel<ContactViewModel, ?> a = getModel();
         if( !Strings.isNullOrEmpty(roles)){
             List<String> rls = Splitter.on(',').omitEmptyStrings().trimResults().splitToList(roles);
         
@@ -145,4 +158,8 @@ public class ContactLookup
     public Boolean isRoleSelected( String role ){
         return selectedOptinalRoles.contains(role);
     }
+
+	public String getCallerContact() {
+		return callerContact;
+	}
 }
