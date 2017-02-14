@@ -1,0 +1,26 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"               
+                xmlns:ui="http://java.sun.com/jsf/facelets"               
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"                
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/layout/browseBase.xhtml">
+
+    <ui:param name="bean" value="#{processBrowse}" />
+    <ui:param name="advanceEnabled" value="true" />
+    <ui:param name="saveEnabled" value="true" />
+    <ui:param name="filterEnabled" value="true" />
+    <ui:param name="permission" value="process" />
+    <ui:param name="showQuickSearch" value="true" />
+    <ui:param name="showDetailPanel" value="false" />
+
+    <ui:define name="beforeColumns">
+        <p:column styleClass="actionColumn">
+            <i class="fa #{item.type eq 'SALES' ? 'fa-long-arrow-right' : 'fa-long-arrow-left' }" />
+        </p:column>
+    </ui:define>
+    
+    <ui:define name="context-menu">
+    
+    </ui:define>
+    
+</ui:composition>
