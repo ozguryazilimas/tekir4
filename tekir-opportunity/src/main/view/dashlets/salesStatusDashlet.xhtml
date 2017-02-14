@@ -18,7 +18,7 @@
 
     <ui:define name="edit">
         <t:inputCheckbox label="voucher.label.Owner" itemLabel="general.label.MineOnly" value="#{bean.mineOnly}" />
-        <t:inputText label="general.label.StartPeriod" value="#{bean.startPeriod}" />
+        <t:inputCheckbox label="general.label.State" itemLabel="general.label.OpenOnly" value="#{bean.openOnly}" />        
         <t:inputCombobox label="general.label.Style" value="#{bean.style}">
             <f:selectItem itemLabel="Table" itemValue="TABLE" />
             <f:selectItem itemLabel="Chart" itemValue="CHART" />
@@ -44,13 +44,13 @@
                         <td>#{messages['general.label.Budget']}</td>
                     </tr>                   
                     <tr>
-                    	<td>#{messages['general.label.Opportunity']}</td>
-                        <td>#{bean.opportunityPieces}"</td>
+                    	<td>#{messages['module.caption.Opportunity']}</td>
+                        <td>#{bean.opportunityPieces}</td>
                         <td><t:cellOutputMoney value="#{bean.opportunityBudgets}" currency="#{currencyService.reportCurrency}" /></td>
                     </tr>                  
                     <tr>
-                    	<td>#{messages['general.label.Quote']}</td>
-                        <td>#{bean.quotePieces}"</td>
+                    	<td>#{messages['module.caption.Quote']}</td>
+                        <td>#{bean.quotePieces}</td>
                         <td><t:cellOutputMoney value="#{bean.quoteBudgets}" currency="#{currencyService.reportCurrency}" /></td>
                     </tr>         
                 </table>

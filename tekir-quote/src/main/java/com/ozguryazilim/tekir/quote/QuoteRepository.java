@@ -4,6 +4,8 @@ import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.tekir.entities.Process_;
 import org.apache.deltaspike.data.api.Repository;
+import org.apache.deltaspike.data.api.criteria.Criteria;
+
 import javax.enterprise.context.Dependent;
 import com.ozguryazilim.tekir.entities.Quote;
 import com.ozguryazilim.tekir.entities.Quote_;
@@ -20,6 +22,9 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -37,146 +42,103 @@ import javax.persistence.criteria.Root;
 @Dependent
 public abstract class QuoteRepository extends VoucherRepositoryBase<Quote, QuoteViewModel> {
 
-    @Override
-    public List<QuoteViewModel> browseQuery(QueryDefinition queryDefinition) {
-        List<Filter<Quote, ?, ?>> filters = queryDefinition.getFilters();
+	@Override
+	public List<QuoteViewModel> browseQuery(QueryDefinition queryDefinition) {
+		List<Filter<Quote, ?, ?>> filters = queryDefinition.getFilters();
 
-        CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
-        //Geriye PersonViewModel dönecek cq'yu ona göre oluşturuyoruz.
-        CriteriaQuery<QuoteViewModel> criteriaQuery = criteriaBuilder.createQuery(QuoteViewModel.class);
-
-        //From 
-        Root<Quote> from = criteriaQuery.from(Quote.class);
-        Join<Quote, VoucherGroup> joinGroup = from.join(Quote_.group, JoinType.LEFT);
-
-        //Sonuç filtremiz
-        buildVieModelSelect(criteriaQuery, from);
-
-        //Filtreleri ekleyelim.
-        List<Predicate> predicates = new ArrayList<>();
-
-        decorateFilters(filters, predicates, criteriaBuilder, from);
-
-        buildSearchTextControl(queryDefinition.getSearchText(), criteriaBuilder, predicates, from);
-
-        //RowLevel yetki kontrol filtresi
-        buildOwnerFilter(predicates, from);
-        
-        //Oluşan filtreleri sorgumuza ekliyoruz
-        criteriaQuery.where(predicates.toArray(new Predicate[]{}));
-
-        // Öncelikle default sıralama verelim eğer kullanıcı tarafından tanımlı sıralama var ise onu setleyelim
-        if (queryDefinition.getSorters().isEmpty()) {
-            criteriaQuery.orderBy(criteriaBuilder.desc(from.get(VoucherBase_.date)));
-        } else {
-            criteriaQuery.orderBy(decorateSorts(queryDefinition.getSorters(), criteriaBuilder, from));
-        }
-
-        //Haydi bakalım sonuçları alalım
-        TypedQuery<QuoteViewModel> typedQuery = entityManager().createQuery(criteriaQuery);
-        typedQuery.setMaxResults(queryDefinition.getResultLimit());
-        List<QuoteViewModel> resultList = typedQuery.getResultList();
-
-        return resultList;
-    }
-
-    @Override
-    public List<Quote> suggestion(String searchText) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    private void buildVieModelSelect(CriteriaQuery<QuoteViewModel> criteriaQuery, Root<? extends Quote> from) {
-        criteriaQuery.multiselect(
-                from.get(Quote_.id),
-                from.get(VoucherProcessBase_.process).get(Process_.id),
-                from.get(VoucherProcessBase_.process).get(Process_.processNo),
-                from.get(VoucherProcessBase_.account).get(Contact_.id),
-                from.get(VoucherProcessBase_.account).get(Contact_.name),
-                from.get(VoucherProcessBase_.account).type(),
-                from.get(VoucherBase_.code),
-                from.get(VoucherBase_.voucherNo),
-                from.get(VoucherBase_.info),
-                from.get(VoucherBase_.referenceNo),
-                from.get(VoucherBase_.date),
-                from.get(VoucherBase_.owner),
-                from.get(VoucherBase_.state),
-                from.get(VoucherBase_.stateReason),
-                from.get(VoucherBase_.stateInfo),
-                from.get(VoucherBase_.group).get(VoucherGroup_.id),
-                from.get(VoucherBase_.group).get(VoucherGroup_.groupNo),
-                from.get(VoucherBase_.topic),
-                from.get(Quote_.total),
-                from.get(Quote_.currency)
-        );
-    }
-
-    private void buildSearchTextControl(String searchText, CriteriaBuilder criteriaBuilder, List<Predicate> predicates, Root<? extends Quote> from) {
-        if (!Strings.isNullOrEmpty(searchText)) {
-            predicates.add(
-                    criteriaBuilder.or(
-                            criteriaBuilder.like(from.get(VoucherBase_.topic), "%" + searchText + "%"),
-                            criteriaBuilder.like(from.get(VoucherBase_.voucherNo), "%" + searchText + "%"),
-                            criteriaBuilder.like(from.get(VoucherProcessBase_.account).get(Contact_.name), "%" + searchText + "%")
-                    )
-            );
-        }
-    }
-    
-    public BigDecimal sumLocalBudgetByStateAndOwner(VoucherState state, String owner){
 		CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
-		CriteriaQuery<BigDecimal> criteriaQuery = criteriaBuilder.createQuery(BigDecimal.class);
+		//Geriye PersonViewModel dönecek cq'yu ona göre oluşturuyoruz.
+		CriteriaQuery<QuoteViewModel> criteriaQuery = criteriaBuilder.createQuery(QuoteViewModel.class);
 
+		//From 
 		Root<Quote> from = criteriaQuery.from(Quote.class);
+		Join<Quote, VoucherGroup> joinGroup = from.join(Quote_.group, JoinType.LEFT);
 
-		criteriaQuery.select(
-				criteriaBuilder.sum(from.get(Quote_.localAmount))
-				);             
+		//Sonuç filtremiz
+		buildVieModelSelect(criteriaQuery, from);
 
 		//Filtreleri ekleyelim.
 		List<Predicate> predicates = new ArrayList<>();
-		
-		if(state != null){
-			predicates.add(criteriaBuilder.equal(from.get(Quote_.state), state));
-		}
 
-		if(Strings.isNullOrEmpty(owner)){
-			predicates.add(criteriaBuilder.equal(from.get(Quote_.owner), owner));
-		}
+		decorateFilters(filters, predicates, criteriaBuilder, from);
 
+		buildSearchTextControl(queryDefinition.getSearchText(), criteriaBuilder, predicates, from);
+
+		//RowLevel yetki kontrol filtresi
+		buildOwnerFilter(predicates, from);
+
+		//Oluşan filtreleri sorgumuza ekliyoruz
 		criteriaQuery.where(predicates.toArray(new Predicate[]{}));
 
-		TypedQuery<BigDecimal> typedQuery = entityManager().createQuery(criteriaQuery);
-		BigDecimal result = typedQuery.getSingleResult();
+		// Öncelikle default sıralama verelim eğer kullanıcı tarafından tanımlı sıralama var ise onu setleyelim
+		if (queryDefinition.getSorters().isEmpty()) {
+			criteriaQuery.orderBy(criteriaBuilder.desc(from.get(VoucherBase_.date)));
+		} else {
+			criteriaQuery.orderBy(decorateSorts(queryDefinition.getSorters(), criteriaBuilder, from));
+		}
 
-		return result;
+		//Haydi bakalım sonuçları alalım
+		TypedQuery<QuoteViewModel> typedQuery = entityManager().createQuery(criteriaQuery);
+		typedQuery.setMaxResults(queryDefinition.getResultLimit());
+		List<QuoteViewModel> resultList = typedQuery.getResultList();
+
+		return resultList;
 	}
-	
-	public Long countByStateAndOwner(VoucherState state, String owner){
-		CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
-		CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
 
-		Root<Quote> from = criteriaQuery.from(Quote.class);
+	@Override
+	public List<Quote> suggestion(String searchText) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 
-		criteriaQuery.select(
-				criteriaBuilder.count(from)
-				);             
+	private void buildVieModelSelect(CriteriaQuery<QuoteViewModel> criteriaQuery, Root<? extends Quote> from) {
+		criteriaQuery.multiselect(
+				from.get(Quote_.id),
+				from.get(VoucherProcessBase_.process).get(Process_.id),
+				from.get(VoucherProcessBase_.process).get(Process_.processNo),
+				from.get(VoucherProcessBase_.account).get(Contact_.id),
+				from.get(VoucherProcessBase_.account).get(Contact_.name),
+				from.get(VoucherProcessBase_.account).type(),
+				from.get(VoucherBase_.code),
+				from.get(VoucherBase_.voucherNo),
+				from.get(VoucherBase_.info),
+				from.get(VoucherBase_.referenceNo),
+				from.get(VoucherBase_.date),
+				from.get(VoucherBase_.owner),
+				from.get(VoucherBase_.state),
+				from.get(VoucherBase_.stateReason),
+				from.get(VoucherBase_.stateInfo),
+				from.get(VoucherBase_.group).get(VoucherGroup_.id),
+				from.get(VoucherBase_.group).get(VoucherGroup_.groupNo),
+				from.get(VoucherBase_.topic),
+				from.get(Quote_.total),
+				from.get(Quote_.currency)
+				);
+	}
 
-		//Filtreleri ekleyelim.
-		List<Predicate> predicates = new ArrayList<>();
+	private void buildSearchTextControl(String searchText, CriteriaBuilder criteriaBuilder, List<Predicate> predicates, Root<? extends Quote> from) {
+		if (!Strings.isNullOrEmpty(searchText)) {
+			predicates.add(
+					criteriaBuilder.or(
+							criteriaBuilder.like(from.get(VoucherBase_.topic), "%" + searchText + "%"),
+							criteriaBuilder.like(from.get(VoucherBase_.voucherNo), "%" + searchText + "%"),
+							criteriaBuilder.like(from.get(VoucherProcessBase_.account).get(Contact_.name), "%" + searchText + "%")
+							)
+					);
+		}
+	}
+
+	public List<Quote> findByStateAndOwner(VoucherState state, String owner){
+		Criteria<Quote, Quote> cr = criteria();
 		
 		if(state != null){
-			predicates.add(criteriaBuilder.equal(from.get(Quote_.state), state));
+			cr.eq(Quote_.state, state);
 		}
-
-		if(Strings.isNullOrEmpty(owner)){
-			predicates.add(criteriaBuilder.equal(from.get(Quote_.owner), owner));
+		
+		if(!Strings.isNullOrEmpty(owner)){
+			cr.eq(Quote_.owner, owner);
 		}
-
-		criteriaQuery.where(predicates.toArray(new Predicate[]{}));
-
-		TypedQuery<Long> typedQuery = entityManager().createQuery(criteriaQuery);
-		Long result = typedQuery.getSingleResult();
-
-		return result;
+		
+		return cr.createQuery().getResultList();
+		
 	}
 }

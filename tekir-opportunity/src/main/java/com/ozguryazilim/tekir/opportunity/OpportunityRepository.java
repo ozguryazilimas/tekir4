@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.Dependent;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -40,6 +42,7 @@ import javax.persistence.criteria.Root;
 import org.apache.deltaspike.data.api.Query;
 import org.apache.deltaspike.data.api.QueryParam;
 import org.apache.deltaspike.data.api.Repository;
+import org.apache.deltaspike.data.api.criteria.Criteria;
 
 /**
  * Opportunity'ler için repository
@@ -180,67 +183,18 @@ public abstract class OpportunityRepository extends VoucherRepositoryBase<Opport
 		return resultList;
 	}
 
-//	@Query("SELECT SUM(o.localBudget) FROM Opportunity o WHERE o.state = CASE WHEN :state = '' THEN o.state ELSE :state END")
-//	public abstract BigDecimal sumLocalBudgetsByState(@QueryParam("state") VoucherState state);
-//
-//	@Query("SELECT COUNT(o) FROM Opportunity o WHERE o.state = CASE WHEN :state = '' THEN o.state ELSE :state END")
-//	public abstract BigDecimal countAllByState(@QueryParam("state") VoucherState state);
-
-	public BigDecimal sumLocalBudgetByStateAndOwner(VoucherState state, String owner){
-		CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
-		CriteriaQuery<BigDecimal> criteriaQuery = criteriaBuilder.createQuery(BigDecimal.class);
-
-		Root<Opportunity> from = criteriaQuery.from(Opportunity.class);
-
-		criteriaQuery.select(
-				criteriaBuilder.sum(from.get(Opportunity_.localBudget))
-				);             
-
-		//Filtreleri ekleyelim.
-		List<Predicate> predicates = new ArrayList<>();
+	public List<Opportunity> findByStateAndOwner(VoucherState state, String owner){
+		Criteria<Opportunity, Opportunity> cr = criteria();
 		
 		if(state != null){
-			predicates.add(criteriaBuilder.equal(from.get(Opportunity_.state), state));
+			cr.eq(Opportunity_.state, state);
 		}
-
-		if(Strings.isNullOrEmpty(owner)){
-			predicates.add(criteriaBuilder.equal(from.get(Opportunity_.owner), owner));
-		}
-
-		criteriaQuery.where(predicates.toArray(new Predicate[]{}));
-
-		TypedQuery<BigDecimal> typedQuery = entityManager().createQuery(criteriaQuery);
-		BigDecimal result = typedQuery.getSingleResult();
-
-		return result;
-	}
-	
-	public Long countByStateAndOwner(VoucherState state, String owner){
-		CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
-		CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
-
-		Root<Opportunity> from = criteriaQuery.from(Opportunity.class);
-
-		criteriaQuery.select(
-				criteriaBuilder.count(from)
-				);             
-
-		//Filtreleri ekleyelim.
-		List<Predicate> predicates = new ArrayList<>();
 		
-		if(state != null){
-			predicates.add(criteriaBuilder.equal(from.get(Opportunity_.state), state));
+		if(!Strings.isNullOrEmpty(owner)){
+			cr.eq(Opportunity_.owner, owner);
 		}
-
-		if(Strings.isNullOrEmpty(owner)){
-			predicates.add(criteriaBuilder.equal(from.get(Opportunity_.owner), owner));
-		}
-
-		criteriaQuery.where(predicates.toArray(new Predicate[]{}));
-
-		TypedQuery<Long> typedQuery = entityManager().createQuery(criteriaQuery);
-		Long result = typedQuery.getSingleResult();
-
-		return result;
+		
+		return cr.createQuery().getResultList();
+		
 	}
 }

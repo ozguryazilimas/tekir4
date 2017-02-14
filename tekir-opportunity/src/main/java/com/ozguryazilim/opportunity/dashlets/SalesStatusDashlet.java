@@ -10,6 +10,8 @@ import com.ozguryazilim.mutfak.kahve.KahveEntry;
 import com.ozguryazilim.mutfak.kahve.annotations.UserAware;
 import com.ozguryazilim.tekir.account.AccountTxnRepository;
 import com.ozguryazilim.tekir.account.AccountTxnSumModel;
+import com.ozguryazilim.tekir.entities.Opportunity;
+import com.ozguryazilim.tekir.entities.Quote;
 import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.tekir.opportunity.OpportunityRepository;
 import com.ozguryazilim.tekir.quote.QuoteRepository;
@@ -17,13 +19,19 @@ import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.dashboard.AbstractDashlet;
 import com.ozguryazilim.telve.dashboard.Dashlet;
 import com.ozguryazilim.telve.dashboard.DashletCapability;
+import com.ozguryazilim.telve.messages.FacesMessages;
+import com.ozguryazilim.telve.messages.Messages;
 import com.ozguryazilim.telve.utils.DateUtils;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
 import javax.inject.Inject;
+
+import org.apache.deltaspike.core.api.provider.BeanProvider;
 import org.primefaces.model.chart.PieChartModel;
 
 /**
@@ -106,26 +114,33 @@ public class SalesStatusDashlet extends AbstractDashlet{
         	state = VoucherState.OPEN;
         }
         
-        opportunityBudgets = opportunityRepository.sumLocalBudgetByStateAndOwner(state, username);
+        List<Opportunity> opportunityList = opportunityRepository.findByStateAndOwner(state, username);         
+        List<Quote> quoteList = quoteRepository.findByStateAndOwner(state, username);
+
+        opportunityList.forEach((sm) -> {
+            opportunityBudgets = opportunityBudgets.add(sm.getLocalBudget());
+        });
         
-        opportunityPieces = opportunityRepository.countByStateAndOwner(state, username).intValue(); 
+        quoteList.forEach((sm) -> {
+            quoteBudgets = quoteBudgets.add(sm.getLocalAmount());
+        });
         
-        quoteBudgets = quoteRepository.sumLocalBudgetByStateAndOwner(state, username);
-        
-        quotePieces = quoteRepository.countByStateAndOwner(state, username).intValue();  
+        opportunityPieces = opportunityList.size(); 
+        quotePieces = quoteList.size();  
 
         
         buildChartModel();
     }
     
     protected void buildChartModel(){
+    	Map<String,String> messages = (Map<String, String>) BeanProvider.getContextualReference("messages", true );
         budgetPieChartModel = new PieChartModel();
         
-        budgetPieChartModel.set("general.label.Opportunity", opportunityBudgets);
-        budgetPieChartModel.set("general.label.Quote", quoteBudgets);        
+        budgetPieChartModel.set(messages.get("module.caption.Opportunity"), opportunityBudgets);
+        budgetPieChartModel.set(messages.get("module.caption.Quote"), quoteBudgets);        
         
         
-        budgetPieChartModel.setTitle("Budgets");
+        budgetPieChartModel.setTitle(messages.get("general.label.Budgets"));
         budgetPieChartModel.setLegendPosition("e");
         budgetPieChartModel.setFill(false);
         budgetPieChartModel.setShowDataLabels(true);
@@ -133,11 +148,12 @@ public class SalesStatusDashlet extends AbstractDashlet{
         budgetPieChartModel.setDiameter(150);
         
         piecePieChartModel = new PieChartModel();
+       
         
-        piecePieChartModel.set("general.label.Opportunity", opportunityPieces);
-        piecePieChartModel.set("general.label.Quote", quotePieces);       
+        piecePieChartModel.set(messages.get("module.caption.Opportunity"), opportunityPieces);
+        piecePieChartModel.set(messages.get("module.caption.Quote"), quotePieces);       
         
-        piecePieChartModel.setTitle("Pieces");
+        piecePieChartModel.setTitle(messages.get("general.label.Pieces"));
         piecePieChartModel.setLegendPosition("e");
         piecePieChartModel.setFill(false);
         piecePieChartModel.setShowDataLabels(true);
