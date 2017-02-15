@@ -66,7 +66,7 @@
                             <t:cellOutputCurrency value="#{txn.currency}"/>
                         </p:column>
                          <p:column headerText="#{messages['general.label.Balance']}">                       
-                            <t:cellOutputMoney label="general.label.Balance" value="#{txn.balance}" currency="#{txn.currency}" styleClass="pull-right #{txn.amount lt 0 ? 'text-red' : ''}" />
+                            <t:cellOutputMoney label="general.label.Balance" value="#{txn.balance}" currency="#{txn.currency}" styleClass="pull-right #{txn.balance lt 0 ? 'text-red' : ''}" />
                         </p:column>
                     </p:dataTable>
                  </t:accordion>
@@ -83,10 +83,10 @@
                             <h:outputText value="#{messages[txn.topic]}" rendered="#{txn.lineType ne 'TXN'}" style="font-weight: bold;"/>
                         </p:column>
                         <p:column headerText="Tutar">
-                            <h:outputText value="#{txn.amount} #{txn.ccy.getCurrencyCode()}" styleClass="pull-right #{txn.amount lt 0 ? 'text-red' : ''}" />
+                            <t:cellOutputMoney value="#{txn.amount}" currency="#{txn.ccy.getCurrencyCode()}" styleClass="pull-right #{txn.amount lt 0 ? 'text-red' : ''}" />
                         </p:column>
                         <p:column headerText="Bakiye">
-                            <h:outputText value="#{txn.balance} #{currencyService.reportCurrency}" styleClass="pull-right #{txn.balance lt 0 ? 'text-red' : ''}" />
+                            <t:cellOutputMoney value="#{txn.balance}" currency="#{currencyService.reportCurrency}" styleClass="pull-right #{txn.balance lt 0 ? 'text-red' : ''}" />
                         </p:column>
                     </p:dataTable>
 
