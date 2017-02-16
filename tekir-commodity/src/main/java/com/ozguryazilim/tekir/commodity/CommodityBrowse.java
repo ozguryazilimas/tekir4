@@ -50,7 +50,6 @@ public class CommodityBrowse extends BrowseBase<Commodity, CommodityViewModel> {
 		.addFilter(new SubStringFilter<>(Commodity_.tax2, TaxDefinition_.name, "general.label.Tax"))
 		.addFilter(new SubStringFilter<>(Commodity_.tax3, TaxDefinition_.name, "general.label.Tax"))
 		.addFilter(new BigDecimalFilter<>(Commodity_.price, "general.label.Price"))
-		.addFilter(new StringFilter<>(Commodity_.defaultUnit, "general.label.Unit"))
 		.addFilter(bf);
 		
 		queryDefinition
