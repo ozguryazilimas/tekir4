@@ -25,10 +25,29 @@ public interface VoucherPages extends Pages {
 	
 	@View
 	@SecuredPage("process")
-	@PageTitle("module.caption.ProcessBrowse")
-	@Navigation(label = "module.caption.ProcessBrowse", icon = "flaticon-speech-bubble", section = ParamNavigationSection.class)
+	@PageTitle("module.caption.Process")
+	@Navigation(label = "module.caption.Process", icon = "flaticon-speech-bubble", section = ParamNavigationSection.class)
 	class ProcessBrowse implements VoucherPages {
 	}
+	
+	@View
+    @SecuredPage("process")
+    @PageTitle("module.caption.Process")
+    class Process implements VoucherPages {
+    }
+
+    @View
+    @SecuredPage("process")
+    @PageTitle("module.caption.Process")
+    class ProcessView implements VoucherPages {
+    }
+    
+	@View
+	@SecuredPage("process")
+	@PageTitle("module.caption.Process")
+	class ProcessMasterView implements VoucherPages {
+	}
+
     
     @SecuredPage() @View
     class ProcessLookup implements VoucherPages {}

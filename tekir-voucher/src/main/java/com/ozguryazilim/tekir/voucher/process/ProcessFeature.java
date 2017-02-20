@@ -19,9 +19,9 @@ import javax.enterprise.inject.Default;
  */
 @Feature(permission = "feature", forEntity = Feature.class )
 @Page( type = PageType.BROWSE, page = VoucherPages.ProcessBrowse.class )
-
-//@Page( type = PageType.VIEW, page = VoucherPages.ProcessView.class )
-//@Page( type = PageType.MASTER_VIEW, page = VoucherPages.ProcessMasterView.class )
+@Page(type = PageType.EDIT, page = VoucherPages.Process.class)
+@Page(type = PageType.VIEW, page = VoucherPages.ProcessView.class)
+@Page(type = PageType.MASTER_VIEW, page = VoucherPages.ProcessMasterView.class)
 @Voucher @Default
 public class ProcessFeature extends AbstractFeatureHandler{
     
