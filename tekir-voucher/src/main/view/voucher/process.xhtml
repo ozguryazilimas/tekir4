@@ -1,0 +1,28 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"                
+                template="/layout/editBase.xhtml">
+
+    <ui:param name="bean" value="#{processHome}" />
+    <ui:param name="entityName" value="process" />
+    <ui:param name="dontShowContentHeader" value="true" />
+
+
+    <ui:define name="form">
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <t:inputText label="process.label.Topic" value="#{bean.entity.topic}" required="true"/>
+				<t:inputLookupDialog label="general.label.Account" value="#{bean.entity.contact}" lookupBean="#{contactLookup}" 
+                               		 lookupProfile="T:Person"
+                                 	 lookupListener="bean.entity.contact" placeholder="#{messages['general.info.Account']}" />                
+                <t:inputEnum value="#{bean.entity.type}" label="process.label.Type" itemLabel="processType." hasNullValue="false" columnClass="col-xs-6"/>
+                <t:inputEnum value="#{bean.entity.status}" label="process.label.Status" itemLabel="statusType." hasNullValue="false" columnClass="col-xs-6"/>
+               </div>
+         </div>
+                    
+    </ui:define>
+
+</ui:composition>
