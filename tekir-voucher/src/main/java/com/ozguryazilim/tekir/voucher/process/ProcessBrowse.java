@@ -46,10 +46,10 @@ public class ProcessBrowse extends BrowseBase<Process, Process> {
     protected void buildQueryDefinition(QueryDefinition<Process, Process> queryDefinition) {
         queryDefinition
                 .addColumn(new TextColumn<>(Process_.topic, "voucher.label.Topic"), true)
-                .addColumn(new TextColumn<>(Process_.processNo, "voucher.label.Date"), true)
+                .addColumn(new LinkColumn<>(Process_.processNo, "voucher.label.ProcessNo"), true)
+                .addColumn(new SubTextColumn<>(Process_.account,Contact_.name, "voucher.label.Account"), true)
                 .addColumn(new EnumColumn<>(Process_.type, "general.label.Type", "processType."), true)
-                .addColumn(new EnumColumn<>(Process_.status, "general.label.Status", "processStatus."), true)
-                .addColumn(new SubTextColumn<>(Process_.account,Contact_.name, "voucher.label.Account"), true);
+                .addColumn(new EnumColumn<>(Process_.status, "general.label.Status", "processStatus."), true);
                 
         
         queryDefinition
