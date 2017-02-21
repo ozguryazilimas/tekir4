@@ -23,6 +23,7 @@ public class VoucherStateConfig {
     private final List<VoucherState> states = new ArrayList<>();
     private final Map<String,VoucherStateAction> actions = new HashMap<>();
     private final Map<VoucherState, Map<VoucherStateAction,VoucherState>> transitions = new HashMap<>();
+    private final Map<VoucherState,List<VoucherStateAction>> stateActions = new HashMap<>();
     
     /**
      * Hangi durumdan hangi action ile hangi duruma geçilecek.
@@ -55,6 +56,21 @@ public class VoucherStateConfig {
        trn.put(action, to);
     }
 
+    /**
+     * State'e bağlı olarak UI üzerinde ek actionlar sağlar.
+     * @param state
+     * @param action 
+     */
+    public void addStateAction( VoucherState state, VoucherStateAction action){
+        List<VoucherStateAction> acts = stateActions.get(state);
+        if( acts == null ){
+            acts = new ArrayList<>();
+            stateActions.put(state, acts);
+        }
+        
+        acts.add(action);
+    }
+    
     public List<VoucherState> getStates() {
         return states;
     }
@@ -63,9 +79,13 @@ public class VoucherStateConfig {
         return actions;
     }
 
+    public List<VoucherStateAction> getStateActions( VoucherState state ) {
+        return stateActions.get(state);
+    }
+    
     public Map<VoucherState, Map<VoucherStateAction, VoucherState>> getTransitions() {
         return transitions;
     }
-    
+
     
 }

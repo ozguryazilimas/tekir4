@@ -10,13 +10,21 @@
     <ui:param name="viewState" value="" />
 
     <ui:define name="context-menu-2">
-        <ui:repeat value="#{bean.permittedStateActions}" var="act">
+        <ui:repeat value="#{bean.permittedStateTransitionActions}" var="act">
             <li>
                 <p:commandLink action="#{bean.trigger(act)}" styleClass="context-command" ajax="false" rendered="#{not act.hasDialog()}">
                     <i class="#{act.icon}"></i>
                     <h:outputText value=" #{messages['general.button.'.concat( act.name )]}" />
                 </p:commandLink>
                 <p:commandLink action="#{bean.prepareTriggerDlg(act)}" styleClass="context-command" ajax="true" rendered="#{act.hasDialog()}" update="stateDlg" oncomplete="PF('stateDlg').show()">
+                    <i class="#{act.icon}"></i>
+                    <h:outputText value=" #{messages['general.button.'.concat( act.name )]}" />
+                </p:commandLink>
+            </li>
+        </ui:repeat>
+        <ui:repeat value="#{bean.permittedStateActions}" var="act">
+            <li>
+                <p:commandLink action="#{bean.triggerExec(act)}" styleClass="context-command" ajax="false" rendered="#{not act.hasDialog()}">
                     <i class="#{act.icon}"></i>
                     <h:outputText value=" #{messages['general.button.'.concat( act.name )]}" />
                 </p:commandLink>

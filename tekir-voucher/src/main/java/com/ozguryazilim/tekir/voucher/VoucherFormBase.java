@@ -16,10 +16,12 @@ import com.ozguryazilim.telve.forms.FormBase;
 import com.ozguryazilim.telve.messages.FacesMessages;
 import com.ozguryazilim.telve.qualifiers.AfterLiteral;
 import com.ozguryazilim.telve.qualifiers.BeforeLiteral;
+import com.ozguryazilim.telve.reports.JasperReportHandler;
 import com.ozguryazilim.telve.sequence.SequenceManager;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
@@ -27,9 +29,13 @@ import javax.enterprise.event.Event;
 import javax.enterprise.inject.Any;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
+import net.sf.jasperreports.engine.JRException;
+import org.apache.deltaspike.core.api.config.ConfigResolver;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
 import org.apache.deltaspike.core.api.config.view.navigation.ViewNavigationHandler;
 import org.apache.deltaspike.jpa.api.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Voucher tabanlı formlar için temel kontrol sınıfı
@@ -38,6 +44,8 @@ import org.apache.deltaspike.jpa.api.transaction.Transactional;
  */
 public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E, Long> {
 
+    private static Logger LOG = LoggerFactory.getLogger(VoucherFormBase.class);
+    
     @Inject
     private Identity identity;
 
@@ -56,6 +64,9 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
     @Inject @Any
     private Instance<VoucherRedirectHandler> redirectHandlers;
 
+    @Inject
+    private JasperReportHandler reportHandler;
+    
     private VoucherStateConfig stateConfig;
 
     /**
@@ -110,7 +121,7 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
      *
      * @return
      */
-    public List<VoucherStateAction> getPermittedStateActions() {
+    public List<VoucherStateAction> getPermittedStateTransitionActions() {
         
         List<VoucherStateAction> result = new ArrayList<>();
         
@@ -135,6 +146,49 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
         
         return result;
     }
+    
+    public List<VoucherStateAction> getPermittedStateActions() {
+        
+        List<VoucherStateAction> result = new ArrayList<>();
+        
+        List<VoucherStateAction> acts = stateConfig.getStateActions(getCurrentState());
+        if (acts == null) {
+            return Collections.emptyList();
+        }
+        if (acts.isEmpty()) {
+            return Collections.emptyList();
+        }
+        
+        acts.stream()
+                .filter( act -> !act.getSilence() )
+                .filter((act) -> ( identity.isPermitted(getPermissionDomain() + ":" +  act.getPermission() +":" + getEntity().getOwner()) ))
+                .forEachOrdered((act) -> {
+                    result.add(act);
+                });
+        
+        result.sort((VoucherStateAction t, VoucherStateAction t1) -> {
+            return t.getOrder().compareTo(t1.getOrder());
+        });
+        
+        return result;
+    }
+    
+    
+    @Transactional
+    public Class<? extends ViewConfig> triggerExec(String action) {
+        for( VoucherStateAction act : stateConfig.getStateActions(getCurrentState())){
+            if( act.getName().equals(action)){
+                return act.execute();
+            }
+        }
+        
+        return null;
+    }
+    
+    public Class<? extends ViewConfig> triggerExec(VoucherStateAction action) {
+        return triggerExec(action.getName());
+    }
+    
 
     /**
      * Bir state'den bir başka state'e geçiş için trigger.
@@ -300,4 +354,37 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
         return true;
     }
 
+    /**
+     * ClassPath üzerinde jasper bularak onu çalıştırır.
+     * 
+     * printout.featureName keyi ile arama yapar. Bulamaz ise featureName.jasper arar.
+     * 
+     */
+    protected void printOut(){
+
+        
+        String fhn = getFeature().getName();
+        
+        String jasperName = ConfigResolver.getPropertyValue("printout." + fhn, fhn );
+        
+        Map<String,Object> params = new HashMap<>();
+        
+        params.put("EID", getEntity().getId());
+        
+        decoratePrintOutParams(params);
+        
+        try {
+            reportHandler.reportToPDF(jasperName, getEntity().getVoucherNo(), params);
+        } catch (JRException ex) {
+            LOG.error("Error on printout", ex);
+        }
+    }
+    
+    /**
+     * PrintOut için ek parametre gönderilmek istenirse oveeride edilebilir.
+     * @param params 
+     */
+    protected void decoratePrintOutParams( Map<String,Object> params){
+        //Varsayılan olarak içi boş
+    }
 }
