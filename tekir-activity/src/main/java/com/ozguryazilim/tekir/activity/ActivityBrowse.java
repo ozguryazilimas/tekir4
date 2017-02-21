@@ -9,6 +9,7 @@ import com.ozguryazilim.tekir.entities.Activity;
 import com.ozguryazilim.tekir.entities.ActivityPriority;
 import com.ozguryazilim.tekir.entities.ActivityStatus;
 import com.ozguryazilim.tekir.entities.Activity_;
+import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.forms.Browse;
@@ -73,6 +74,14 @@ public class ActivityBrowse extends BrowseBase<Activity, Activity> {
     @Override
     protected RepositoryBase<Activity, Activity> getRepository() {
         return repository;
+    }
+    
+    public Activity getActivity(){
+        if( getSelectedItem() != null ){
+            return repository.findBy(getSelectedItem().getId());
+        } else {
+            return null;
+        }
     }
 
 }

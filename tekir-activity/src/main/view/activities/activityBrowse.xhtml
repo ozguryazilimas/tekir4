@@ -11,80 +11,54 @@
     <ui:param name="filterEnabled" value="true" />
     <ui:param name="permission" value="activity" />
     <ui:param name="showQuickSearch" value="true" />
-    <ui:param name="showDetailPanel" value="false" />
+    <ui:param name="showDetailPanel" value="true" />
 
+   <ui:define name="beforeColumns">
+         <p:column styleClass="actionColumn">              
+             <i class="#{messages['activity.button.icon.'.concat(item.class.simpleName)]}"/> 
+         </p:column>
+	</ui:define>
 
-    <ui:remove>
-        <ui:define name="beforeColumns">
-            <p:column styleClass="actionColumn">
-                <ui:fragment rendered="#{item.contactType eq 'Person'}" >
-                    <i class="fa fa-user" />
-                </ui:fragment>
-                <ui:fragment rendered="#{item.contactType eq 'Corporation'}" >
-                    <i class="fa fa-building" />
-                </ui:fragment>
-            </p:column>
-        </ui:define>
-    </ui:remove>
-
-    <ui:remove>
+   
         <ui:define name="detailBar">
             <div class="row">
                 <div class="text-muted col-xs-12">
-                    <ui:fragment rendered="#{contactBrowse.selectedItem.contactType eq 'Person'}" >
-                        <i class="fa fa-user" />
-                    </ui:fragment>
-
-                    <ui:fragment rendered="#{contactBrowse.selectedItem.contactType eq 'Corporation'}" >
-                        <i class="fa fa-building" />
-                    </ui:fragment>
-                    #{contactBrowse.contact.name}
+                    <i class="#{messages['activity.button.icon.'.concat(activityBrowse.selectedItem.class.simpleName)]}"/> 
+                    #{activityBrowse.activity.subject}
                     <ul class="list-inline text-sm text-muted">
-                        <ui:repeat value="#{contactBrowse.contact.contactRoles}" var="item" >
-                            <li><i class="fa fa-tag" /> #{messages['contact.role.'.concat(item)]}</li>
-                        </ui:repeat>
+                    
+                    <ui:fragment rendered="#{contactBrowse.selectedItem.contactType ne null}" >
+                    	<li><i class="fa fa-tag" /> #{messages['activity.status.'.concat(activityBrowse.selectedItem.status)]}</li>
+                    	<li><i class="fa fa-tag" /> #{messages['activity.priority.'.concat(activityBrowse.selectedItem.priority)]}</li>
+                    </ui:fragment>
                     </ul>
                 </div>
             </div>
 
-            <ui:fragment rendered="#{contactBrowse.contact.class.simpleName eq 'Person'}">
+            <ui:fragment rendered="#{activityBrowse.activity.class.simpleName eq 'MeetingActivity'}">
                 <div class="row">
-                    <t:outputText label="general.label.FirstName" value="#{contactBrowse.contact.firstName}" columnClass="col-xs-12"/>
-                    <t:outputText label="general.label.LastName" value="#{contactBrowse.contact.lastName}" columnClass="col-xs-12"/>
-                    <t:outputText label="general.label.Info" value="#{contactBrowse.contact.info}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.info}"/>
-                    <t:outputText label="contact.label.JobTitle" value="#{contactBrowse.contact.jobTitle}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.jobTitle}"/>
-                    <t:outputText label="contact.label.CorporationName" value="#{contactBrowse.contact.corporationName}" rendered="#{empty contactBrowse.contact.corporation}" columnClass="col-xs-12"/>
-                    <t:outputEntityLink label="general.label.Corporation" value="#{contactBrowse.contact.corporation}" view="/contact/contactView.xhtml" rendered="#{not empty contactBrowse.contact.corporation}" columnClass="col-xs-12"/>
-                    <t:outputText label="contact.label.SSN" value="#{contactBrowse.contact.ssn}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.ssn}"/>
+                    <t:outputText label="activity.label.Location" value="#{activityBrowse.activity.location}" columnClass="col-xs-12"/>
+                    <t:outputText label="activity.label.Attendees" value="#{activityBrowse.activity.attendees}" columnClass="col-xs-12"/>
+                    <t:outputText label="activity.label.MeetingMinutes" value="#{activityBrowse.activity.meetingMinutes}" columnClass="col-xs-12"/>
                 </div>            
             </ui:fragment>
 
-            <ui:fragment rendered="#{contactBrowse.contact.class.simpleName eq 'Corporation'}">
+            <ui:fragment rendered="#{activityBrowse.activity.class.simpleName eq 'PhoneActivity'}">
                 <div class="row">
-                    <t:outputText label="general.label.OrganizationName" value="#{contactBrowse.contact.organizastionName}" columnClass="col-xs-12"/>
-                    <t:outputText label="general.label.Info" value="#{contactBrowse.contact.info}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.info}"/>
-                    <t:outputText label="contact.label.CorporationType" value="#{contactBrowse.contact.corporationType.name}"  columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.corporationType}"/>
-                    <t:outputEntityLink label="contact.label.PrimaryContact" value="#{contactBrowse.contact.primaryContact}" view="/contact/contactView.xhtml" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.primaryContact}"/>
-                    <t:outputEntityLink label="contact.label.ParentCorporation" value="#{contactBrowse.contact.parentCorporation}" view="/contact/contactView.xhtml" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.parentCorporation}"/>
+                    <t:outputText label="activity.label.PhoneNumber" value="#{activityBrowse.activity.number}" columnClass="col-xs-12"/>
                 </div>            
             </ui:fragment>
+            
+            <ui:fragment rendered="#{activityBrowse.activity.class.simpleName eq 'EMeailActivity'}">
 
-            <div class="row">
-                <t:outputText label="general.label.Category" value="#{contactBrowse.contact.category.name}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.category}"/>
-                <t:outputText label="general.label.Industry" value="#{contactBrowse.contact.industry.name}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.industry}"/>
-                <t:outputText label="general.label.Territory" value="#{contactBrowse.contact.territory.name}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.territory}"/>
-            </div>
-
-            <div class="row">
-                <t:outputText label="contact.label.PrimaryMobile" value="#{contactBrowse.contact.primaryMobile.caption}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.primaryMobile}"/>
-                <t:outputText label="contact.label.PrimaryPhone" value="#{contactBrowse.contact.primaryPhone.caption}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.primaryPhone}"/>
-                <t:outputText label="contact.label.PrimaryEmail" value="#{contactBrowse.contact.primaryEmail.caption}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.primaryEmail}"/>
-                <t:outputText label="contact.label.PrimaryAddress" value="#{contactBrowse.contact.primaryAddress.caption}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.primaryAddress}"/>
-                <t:outputText label="contact.label.PrimaryFax" value="#{contactBrowse.contact.primaryFax.caption}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.primaryFax}"/>
-            </div>
+            </ui:fragment>
+            
+            <ui:fragment rendered="#{activityBrowse.activity.class.simpleName eq 'TaskActivity'}">
+            
+            </ui:fragment>
 
         </ui:define>
-    </ui:remove>
+
 
 
     <ui:define name="context-menu">
@@ -100,20 +74,6 @@
                 <h:outputText value=" #{messages['general.button.AddCorporation']}" />
             </p:commandLink>
         </li>
-        <ui:remove>
-            <li>
-                <p:commandLink action="#{newPersonDialog.openDialog()}" styleClass="context-command" >
-                    <i class="fa fa-user"></i>
-                    <h:outputText value=" #{messages['general.button.AddPerson']}" />
-                </p:commandLink>
-            </li>
-            <li>
-                <p:commandLink action="#{newCorporationDialog.openDialog()}" styleClass="context-command" >
-                    <i class="fa fa-building"></i>
-                    <h:outputText value=" #{messages['general.button.AddCorporation']}" />
-                </p:commandLink>
-            </li>
-        </ui:remove>
     </ui:define>
 
 
