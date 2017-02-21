@@ -99,7 +99,7 @@
 									headerText="#{messages['module.header.buying.ExchangeRate']}">
 									<p:cellEditor>
 										<f:facet name="output">
-											<h:outputText value="#{rate.buyRate}" />
+											<t:cellOutputNumber minFraction="5" value="#{rate.buyRate}" />
 										</f:facet>
 										<f:facet name="input">
 											<t:cellInputNumber value="#{rate.buyRate}" decimalPlaces="5" />
@@ -111,7 +111,7 @@
 									headerText="#{messages['module.header.selling.ExchangeRate']}">
 									<p:cellEditor>
 										<f:facet name="output">
-											<h:outputText value="#{rate.sellRate}" />
+											<t:cellOutputNumber minFraction="5" value="#{rate.sellRate}" />
 										</f:facet>
 										<f:facet name="input">
 											<t:cellInputNumber value="#{rate.sellRate}" decimalPlaces="5" />
@@ -144,7 +144,7 @@
 									headerText="#{messages['module.header.crossrate.ExchangeRate']}	">
 									<p:cellEditor>
 										<f:facet name="output">
-											<h:outputText value="#{crossRate.buyRate}" />
+											<t:cellOutputNumber minFraction="5" value="#{crossRate.buyRate}" />
 										</f:facet>
 										<f:facet name="input">
 											<t:cellInputNumber value="#{crossRate.buyRate}"

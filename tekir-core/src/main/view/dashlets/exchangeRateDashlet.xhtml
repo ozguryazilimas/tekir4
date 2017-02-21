@@ -44,8 +44,8 @@
 									<i class="fa fa-arrow-down" style="color: red"></i>
 								</ui:fragment>
 							</td>
-							<td><h:outputText value="#{it.buyRate}" /></td>
-							<td><h:outputText value="#{it.sellRate}" /></td>
+							<td><t:cellOutputNumber minFraction="5" value="#{it.buyRate}" /></td>
+							<td><t:cellOutputNumber minFraction="5" value="#{it.sellRate}" /></td>
 						</tr>
 					</ui:repeat>
 				</table>
@@ -69,7 +69,7 @@
 									<i class="fa fa-arrow-down" style="color: red"></i>
 								</ui:fragment>
 							</td>
-							<td><h:outputText value="#{itc.buyRate}" /></td>							
+							<td><t:cellOutputNumber minFraction="5" value="#{itc.buyRate}" /></td>							
 						</tr>
 					</ui:repeat>
 				</table>

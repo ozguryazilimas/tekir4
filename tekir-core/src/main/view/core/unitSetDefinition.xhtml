@@ -30,7 +30,7 @@
         <p:outputPanel id="dets" layout="block" styleClass="row" style="margin-top: 8px;">        
             <p:dataTable id="its" value="#{unitSetDefinitionHome.entity.items}" var="item" styleClass="col-xs-12" editable="true" editMode="cell" 
                          rendered="#{ ( not empty unitSetDefinitionHome.entity.code ) and ( not empty unitSetDefinitionHome.entity.baseUnit )}">
-                <p:column headerText="general.label.Unit">
+                <p:column headerText="general.label.UnitName">
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{item.name}" /></f:facet>
                         <f:facet name="input"><p:inputText value="#{item.name}" /></f:facet>
@@ -38,7 +38,7 @@
                 </p:column>
                 <p:column headerText="general.label.Unit">
                     <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{item.quantity.amount}" /></f:facet>
+                        <f:facet name="output"><t:cellOutputNumber minFraction="2" maxFraction="2" value="#{item.quantity.amount}" /></f:facet>
                         <f:facet name="input"><p:inputNumber value="#{item.quantity.amount}" /></f:facet>
                     </p:cellEditor>
                 </p:column>

@@ -50,7 +50,7 @@
                         </p:column>
                         <p:column headerText="Miktar" >
                             <div style="text-align: right;">
-                            <h:outputText value="#{item.quantity.amount}" />
+                            <t:cellOutputNumber minFraction="2" value="#{item.quantity.amount}" />
                             <h:outputText value=" #{item.quantity.unitName.name}" />
                             </div>
                         </p:column>
