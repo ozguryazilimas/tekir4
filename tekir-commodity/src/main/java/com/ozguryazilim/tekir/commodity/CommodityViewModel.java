@@ -38,6 +38,7 @@ public class CommodityViewModel implements ViewModel, Serializable {
 		this.name = name;
 		this.info = info;
 		this.active = active;
+		this.defaultCurrency=defaultCurrency;
 		
 		this.category = new CommodityCategory();
 		category.setId(categoryId);
