@@ -24,7 +24,7 @@
             <ul class="states pull-right">
                 <li class="#{financeAccountHome.balance lt 0 ? 'text-red' : ''}">
                     <div style="font-weight: bold;">#{messages['general.label.Balance']}</div>
-                    <div ><h:outputText value="#{financeAccountHome.balance}  #{currencyService.reportCurrency}" styleClass="#{financeAccountHome.balance lt 0 ? 'text-red' : ''}" /></div>
+                    <div ><t:cellOutputMoney value="#{financeAccountHome.balance}" currency="#{currencyService.reportCurrency}" styleClass="#{financeAccountHome.balance lt 0 ? 'text-red' : ''}" /></div>
                 </li>
                 <li role="presentation">
                     <div style="font-weight: bold;"> #{messages['account.label.Owner']}</div>
