@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.2.final using JasperReports Library version 6.2.2  -->
-<!-- 2017-01-17T18:18:33 -->
+<!-- 2017-02-21T14:10:52 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="accountCreditNote" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="aaa9241d-89c5-4ba2-9abc-902d3786637a">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Tekir"/>
 	<parameter name="EID" class="java.lang.Long">
 		<parameterDescription><![CDATA[]]></parameterDescription>
-		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Long( 703 )]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select * from  TAN_CREDIT_NOTE where id =  $P{EID} ]]>
+		<![CDATA[select * from  TAN_CREDIT_NOTE cn 
+inner join TCC_CONTACT c on cn.ACCOUNT_ID = c.ID
+where cn.ID =  $P{EID}]]>
 	</queryString>
 	<field name="ID" class="java.lang.Long"/>
 	<field name="CREATE_DATE" class="java.sql.Timestamp"/>
@@ -34,52 +36,76 @@
 	<field name="GROUP_ID" class="java.lang.Long"/>
 	<field name="TOPIC" class="java.lang.String"/>
 	<field name="LOCAL_AMOUNT" class="java.math.BigDecimal"/>
+	<field name="CONTACT_TYPE" class="java.lang.String"/>
+	<field name="NAME" class="java.lang.String"/>
+	<field name="COMPANY_TITLE" class="java.lang.String"/>
+	<field name="FIRST_NAME" class="java.lang.String"/>
+	<field name="LAST_NAME" class="java.lang.String"/>
+	<field name="SECOND_NAME" class="java.lang.String"/>
+	<field name="SSN" class="java.lang.String"/>
+	<field name="USE_NAME" class="java.lang.String"/>
+	<field name="BANK_ACCOUNT" class="java.lang.String"/>
+	<field name="TAX_NUMBER" class="java.lang.String"/>
+	<field name="TAX_OFFICE" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch"/>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="190" y="20" width="190" height="30" uuid="6de70c48-cb1d-4555-b68f-79dd5ae833dd"/>
+				<textElement textAlignment="Center">
+					<font size="22"/>
+				</textElement>
+				<text><![CDATA[Borç Dekontu]]></text>
+			</staticText>
+			<textField pattern="dd.MM.yyyy">
+				<reportElement x="430" y="49" width="100" height="30" uuid="ebd2e974-a765-4df0-8fa4-2ab3bfa368a7"/>
+				<textFieldExpression><![CDATA[$F{TXNDATE}]]></textFieldExpression>
+			</textField>
+		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
-	</pageHeader>
-	<columnHeader>
-		<band height="61" splitType="Stretch">
-			<staticText>
-				<reportElement x="80" y="0" width="100" height="30" uuid="efa16bca-f873-4bea-8806-eb5509387b23"/>
-				<text><![CDATA[REFERENCE_NO]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="214" y="0" width="100" height="30" uuid="0e549003-4784-40fc-b756-f986d1dfd791"/>
-				<text><![CDATA[CCY]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="353" y="0" width="100" height="30" uuid="4d01ae85-19f1-413e-a83b-b96246d84bb9"/>
-				<text><![CDATA[AMOUNT]]></text>
-			</staticText>
-		</band>
-	</columnHeader>
-	<detail>
-		<band height="125" splitType="Stretch">
+		<band height="69" splitType="Stretch">
 			<textField>
-				<reportElement x="80" y="61" width="100" height="30" uuid="8111b336-2eea-4f0d-97ca-5b415c9b8a16"/>
-				<textFieldExpression><![CDATA[$F{REFERENCE_NO}]]></textFieldExpression>
+				<reportElement x="10" y="4" width="250" height="30" uuid="9bea1690-0f32-434b-9f68-f3b6810ee1ea"/>
+				<textFieldExpression><![CDATA[$F{NAME}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="214" y="74" width="100" height="30" uuid="ee8d9307-c11d-4962-a3e0-c8a566bb5cf2"/>
+				<reportElement x="430" y="4" width="100" height="30" uuid="ab4a4a0e-bbe8-4ce9-b730-d1603416919e"/>
+				<textFieldExpression><![CDATA[$F{VOUCHER_NO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="41" splitType="Stretch">
+			<textField>
+				<reportElement x="453" y="0" width="100" height="30" uuid="ee8d9307-c11d-4962-a3e0-c8a566bb5cf2"/>
 				<textFieldExpression><![CDATA[$F{CCY}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="353" y="63" width="100" height="30" uuid="039eff88-8942-437d-b8ec-41908c7f3554"/>
+				<reportElement x="350" y="0" width="100" height="30" uuid="039eff88-8942-437d-b8ec-41908c7f3554"/>
 				<textFieldExpression><![CDATA[$F{AMOUNT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="0" width="330" height="30" uuid="f23953ac-2284-4488-8894-d70d8cef0a11"/>
+				<textFieldExpression><![CDATA[$F{TOPIC}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="54" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="10" y="17" width="530" height="30" uuid="592b9d07-66d8-4f27-9469-207a49b4df50"/>
+				<textFieldExpression><![CDATA[$F{INFO}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 	<summary>
 		<band height="42" splitType="Stretch"/>
