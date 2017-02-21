@@ -5,6 +5,8 @@
  */
 package com.ozguryazilim.tekir.voucher.process;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.inject.Inject;
 import org.primefaces.model.diagram.Connection;
@@ -15,6 +17,7 @@ import org.primefaces.model.diagram.endpoint.BlankEndPoint;
 import org.primefaces.model.diagram.endpoint.EndPoint;
 import org.primefaces.model.diagram.endpoint.EndPointAnchor;
 import com.ozguryazilim.telve.data.RepositoryBase;
+import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureLinkController;
 import com.ozguryazilim.telve.forms.FormBase;
 import com.ozguryazilim.telve.forms.FormEdit;
@@ -43,7 +46,7 @@ public class ProcessHome extends FormBase<Process, Long>{
 
 	private List<AccountTxn> txnList;
 	private DiagramModel diagramModel;
-
+	private List<String> milestoneList;
 
 	@Override
 	protected RepositoryBase<Process, ?> getRepository() {
@@ -63,41 +66,69 @@ public class ProcessHome extends FormBase<Process, Long>{
 			return t.getDate().compareTo(t1.getDate());
 		});
 
-		buildDiagramModel();
+		initDiagramModel();
+		connectDiagramModel();
 	}
 
-	private void buildDiagramModel(){
+	private void initDiagramModel(){
 		diagramModel = new DefaultDiagramModel();
-		((DefaultDiagramModel) diagramModel).setMaxConnections(-1);		
+		((DefaultDiagramModel) diagramModel).setMaxConnections(-1);	
 
+		milestoneList = new ArrayList<>();
+		if(getEntity().getType().toString().equals("SALES")){
+			milestoneList = Arrays.asList("Opportunity","Quote","Sales Order","Sales Invoice","Received Payment");
+		}
+		else if(getEntity().getType().toString().equals("PURCHASE")){
+			milestoneList = Arrays.asList("Purchase Order","Purchase Invoice","Payment");
+		}
+
+		for(int i = 0; i < milestoneList.size();i++){
+			String xPoint = Integer.toString(i*(15))+"em";
+			String yPoint = "0em";
+			String label = milestoneList.get(i);
+			Element e = new Element(label,xPoint,yPoint);				
+			e.setDraggable(false);
+			e.setStyleClass("ui-diagram-unchecked");
+			EndPoint currentLeftPoint = new BlankEndPoint(EndPointAnchor.LEFT); 
+			e.addEndPoint(currentLeftPoint);					
+
+			EndPoint currentRightPoint = new BlankEndPoint(EndPointAnchor.RIGHT);				
+			e.addEndPoint(currentRightPoint);		
+
+			diagramModel.addElement(e);
+		}
+	}
+
+	private void connectDiagramModel(){
 		if(!txnList.isEmpty()){
-			for(int i = 0; i < txnList.size();i++){
-				String xPoint = Integer.toString(i*(20))+"em";
-				String yPoint = "0em";
-				String label = txnList.get(i).getFeature().getFeature().replace("Feature", "");
-				Element e = new Element(label,xPoint,yPoint);				
-				e.setDraggable(false);
-				
-				EndPoint currentStartPoint = new BlankEndPoint(EndPointAnchor.LEFT); 
-				e.addEndPoint(currentStartPoint);					
-				
-				EndPoint currentEndPoint = new BlankEndPoint(EndPointAnchor.RIGHT);				
-				e.addEndPoint(currentEndPoint);		
+			EndPoint prevRightPoint = null;
+			for(int i = 0; i < milestoneList.size();i++){
+				String currentClassName = milestoneList.get(i).replaceAll("\\s+","").concat("Feature");
+				boolean milestoneExists = txnList.stream().anyMatch(item -> currentClassName.equals(item.getFeature().getFeature()));
 
-				diagramModel.addElement(e);
+				if(milestoneExists){
+					Element currentElement = diagramModel.getElements().get(i);
+					currentElement.setStyleClass("ui-diagram-checked");			
+					EndPoint currentLeftPoint = currentElement.getEndPoints().get(0);
 
-				if(i != 0){
-					Element prevElement = diagramModel.getElements().get(i-1);
-					EndPoint prevEndPoint = prevElement.getEndPoints().get(1);
-					currentStartPoint = e.getEndPoints().get(0);
-					Connection con = new Connection(prevEndPoint,currentStartPoint);
-					con.setDetachable(false);
-					diagramModel.connect(con);
-				}				
+					if(prevRightPoint != null){
+						Connection con = new Connection(prevRightPoint,currentLeftPoint);
+						con.setDetachable(false);
+						diagramModel.connect(con);
+					}
+					prevRightPoint = currentElement.getEndPoints().get(1);
+				}
 			}
 		}
 	}
 
+	public FeaturePointer getFeaturePointer() {
+		FeaturePointer result = new FeaturePointer();
+		result.setBusinessKey(getEntity().getTopic());
+		result.setFeature(getFeatureClass().getSimpleName());
+		result.setPrimaryKey(getEntity().getId());
+		return result;
+	}
 
 
 	public List<AccountTxn> getTxnList() {
