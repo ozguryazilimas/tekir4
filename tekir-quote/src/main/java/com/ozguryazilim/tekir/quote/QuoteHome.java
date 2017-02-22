@@ -14,6 +14,7 @@ import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.tekir.voucher.VoucherCommodityItemEditor;
 import com.ozguryazilim.tekir.voucher.VoucherCommodityItemEditorListener;
 import com.ozguryazilim.tekir.voucher.VoucherFormBase;
+import com.ozguryazilim.tekir.voucher.VoucherPrintOutAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateConfig;
 import com.ozguryazilim.tekir.voucher.process.ProcessService;
@@ -21,11 +22,17 @@ import com.ozguryazilim.telve.data.RepositoryBase;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.ozguryazilim.tekir.entities.Process;
 import com.ozguryazilim.tekir.entities.VoucherStateEffect;
 import com.ozguryazilim.tekir.entities.VoucherStateType;
 import com.ozguryazilim.tekir.voucher.utils.SummaryCalculator;
 import com.ozguryazilim.telve.messages.FacesMessages;
+import com.ozguryazilim.telve.reports.JasperReportHandler;
+
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -37,7 +44,9 @@ import java.util.Date;
  */
 @FormEdit(feature = QuoteFeature.class)
 public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodityItemEditorListener<QuoteItem> {
-
+	
+	private static Logger LOG = LoggerFactory.getLogger(QuoteHome.class);
+	
     @Inject
     private QuoteRepository repository;
 
@@ -52,6 +61,9 @@ public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodit
 
     @Inject
     private ProcessService processService;
+    
+    @Inject
+    private JasperReportHandler reportHandler;
 
     @Override
     protected RepositoryBase<Quote, QuoteViewModel> getRepository() {
@@ -131,6 +143,7 @@ public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodit
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("loss", "fa fa-close", true), new VoucherState("WON", VoucherStateType.CLOSE, VoucherStateEffect.NEGATIVE));
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("cancel", "fa fa-ban", true), VoucherState.CLOSE);
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("revise", "fa fa-unlock", true), VoucherState.DRAFT);
+        config.addStateAction(VoucherState.CLOSE, new VoucherPrintOutAction(this));
         //config.addTranstion(VoucherState.CLOSE, new VoucherStateAction("unlock", "fa fa-unlock", true ), VoucherState.DRAFT);
         return config;
     }
