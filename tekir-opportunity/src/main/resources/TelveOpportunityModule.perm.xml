@@ -8,6 +8,7 @@
             <action name="won" scope="owner,group" order="11"/>
             <action name="loss" scope="owner,group" order="12"/>
             <action name="cancel" scope="owner,group" order="13"/>
+            <action name="print" scope="owner,group" order="14"/>
         </permission>
     </permissionGroup>
 </permissions>

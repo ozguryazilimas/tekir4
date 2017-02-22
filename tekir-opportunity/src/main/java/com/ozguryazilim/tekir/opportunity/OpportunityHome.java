@@ -14,12 +14,18 @@ import com.ozguryazilim.tekir.entities.VoucherStateEffect;
 import com.ozguryazilim.tekir.entities.VoucherStateType;
 import com.ozguryazilim.tekir.quote.QuoteHome;
 import com.ozguryazilim.tekir.voucher.VoucherFormBase;
+import com.ozguryazilim.tekir.voucher.VoucherPrintOutAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateConfig;
 import com.ozguryazilim.tekir.voucher.process.ProcessService;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.forms.FormEdit;
+import com.ozguryazilim.telve.reports.JasperReportHandler;
+
 import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Opportunity View Conttroller
@@ -27,7 +33,9 @@ import javax.inject.Inject;
  */
 @FormEdit(feature=OpportunityFeature.class)
 public class OpportunityHome extends VoucherFormBase<Opportunity>{
-
+	
+    private static Logger LOG = LoggerFactory.getLogger(OpportunityHome.class);
+    
     @Inject
     private OpportunityRepository repository;
 
@@ -42,6 +50,9 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
     
     @Inject
     private ProcessService processService;
+    
+    @Inject
+    private JasperReportHandler reportHandler;
     
     @Override
     public void createNew() {
@@ -85,6 +96,7 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("loss", "fa fa-close", true ), new VoucherState( "LOSS", VoucherStateType.CLOSE, VoucherStateEffect.NEGATIVE));
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("cancel", "fa fa-ban", true ), VoucherState.CLOSE);
         config.addTranstion(VoucherState.CLOSE, new VoucherStateAction("revise", "fa fa-unlock", true ), VoucherState.OPEN);
+        config.addStateAction(VoucherState.CLOSE, new VoucherPrintOutAction(this));
         return config;
     }
 
