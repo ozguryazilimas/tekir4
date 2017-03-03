@@ -84,6 +84,8 @@ public abstract class InvoiceHomeBase<E extends Invoice> extends VoucherFormBase
         config.addTranstion( partialPaid, new VoucherStateAction("cancel", "fa fa-ban", true), VoucherState.CLOSE);
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("revise", "fa fa-unlock", true), VoucherState.REVISE);
         config.addTranstion(VoucherState.REVISE, new VoucherStateAction("publish", "fa fa-check", true), VoucherState.OPEN);
+        
+        config.addStateAction(VoucherState.CLOSE, new VoucherPrintOutAction(this));
         config.addStateAction(partialPaid, new VoucherPrintOutAction(this));
         config.addStateAction(paid, new VoucherPrintOutAction(this));
         config.addStateAction(unpaid, new VoucherPrintOutAction(this));

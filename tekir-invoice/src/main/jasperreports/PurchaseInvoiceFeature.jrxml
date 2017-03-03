@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.2.final using JasperReports Library version 6.2.2  -->
-<!-- 2017-02-22T17:56:13 -->
+<!-- 2017-03-03T11:16:22 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="invoice" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="aaa9241d-89c5-4ba2-9abc-902d3786637a">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Tekir"/>
@@ -13,6 +13,7 @@
 inner join TCC_CONTACT c on i.ACCOUNT_ID = c.ID
 where i.ID =  $P{EID}]]>
 	</queryString>
+	<field name="DIRECTION" class="java.lang.String"/>
 	<field name="ID" class="java.lang.Long"/>
 	<field name="CREATE_DATE" class="java.sql.Timestamp"/>
 	<field name="UPDATE_DATE" class="java.sql.Timestamp"/>
@@ -28,27 +29,30 @@ where i.ID =  $P{EID}]]>
 	<field name="STATE" class="java.lang.String"/>
 	<field name="STATE_INFO" class="java.lang.String"/>
 	<field name="STATE_REASON" class="java.lang.String"/>
+	<field name="TOPIC" class="java.lang.String"/>
 	<field name="VOUCHER_NO" class="java.lang.String"/>
-	<field name="AMOUNT" class="java.math.BigDecimal"/>
-	<field name="CCY" class="java.lang.String"/>
+	<field name="TOT_CCY" class="java.lang.String"/>
+	<field name="SHIP_DATE" class="java.sql.Date"/>
+	<field name="SHIP_NOTE" class="java.lang.String"/>
+	<field name="TOT_AMT" class="java.math.BigDecimal"/>
+	<field name="GROUP_ID" class="java.lang.Long"/>
 	<field name="ACCOUNT_ID" class="java.lang.Long"/>
 	<field name="PROCESS_ID" class="java.lang.Long"/>
-	<field name="GROUP_ID" class="java.lang.Long"/>
-	<field name="TOPIC" class="java.lang.String"/>
+	<field name="PAYMENTPLAN_ID" class="java.lang.Long"/>
 	<field name="LOCAL_AMOUNT" class="java.math.BigDecimal"/>
 	<field name="CONTACT_TYPE" class="java.lang.String"/>
-	<field name="COLUMN_25" class="java.lang.Long"/>
-	<field name="COLUMN_26" class="java.sql.Timestamp"/>
-	<field name="COLUMN_27" class="java.sql.Timestamp"/>
-	<field name="COLUMN_28" class="java.lang.String"/>
+	<field name="COLUMN_29" class="java.lang.Long"/>
+	<field name="COLUMN_30" class="java.sql.Timestamp"/>
+	<field name="COLUMN_31" class="java.sql.Timestamp"/>
+	<field name="COLUMN_32" class="java.lang.String"/>
 	<field name="ISACTIVE" class="java.lang.Boolean"/>
 	<field name="CHANNELS" class="java.lang.String"/>
 	<field name="ROLES" class="java.lang.String"/>
-	<field name="COLUMN_32" class="java.lang.String"/>
-	<field name="NAME" class="java.lang.String"/>
-	<field name="COLUMN_34" class="java.lang.String"/>
-	<field name="OWNER_ORG" class="java.lang.String"/>
 	<field name="COLUMN_36" class="java.lang.String"/>
+	<field name="NAME" class="java.lang.String"/>
+	<field name="COLUMN_38" class="java.lang.String"/>
+	<field name="OWNER_ORG" class="java.lang.String"/>
+	<field name="COLUMN_40" class="java.lang.String"/>
 	<field name="SOURCE" class="java.lang.String"/>
 	<field name="STATUS" class="java.lang.String"/>
 	<field name="STATUS_REASON" class="java.lang.String"/>
@@ -75,7 +79,7 @@ where i.ID =  $P{EID}]]>
 	<field name="CONTACT_ID" class="java.lang.Long"/>
 	<field name="CORP_ID" class="java.lang.Long"/>
 	<field name="BANK_ACCOUNT" class="java.lang.String"/>
-	<field name="COLUMN_63" class="java.lang.String"/>
+	<field name="CCY" class="java.lang.String"/>
 	<field name="TAX_NUMBER" class="java.lang.String"/>
 	<field name="TAX_OFFICE" class="java.lang.String"/>
 	<field name="SOURCE_FP" class="java.lang.String"/>
@@ -92,7 +96,7 @@ where i.ID =  $P{EID}]]>
 				<textElement textAlignment="Center">
 					<font size="22"/>
 				</textElement>
-				<text><![CDATA[Ödeme  Faturası]]></text>
+				<text><![CDATA[Satın Alım Faturası]]></text>
 			</staticText>
 			<textField pattern="dd.MM.yyyy">
 				<reportElement x="430" y="49" width="100" height="30" uuid="ebd2e974-a765-4df0-8fa4-2ab3bfa368a7"/>
@@ -119,11 +123,11 @@ where i.ID =  $P{EID}]]>
 		<band height="41" splitType="Stretch">
 			<textField>
 				<reportElement x="453" y="0" width="100" height="30" uuid="ee8d9307-c11d-4962-a3e0-c8a566bb5cf2"/>
-				<textFieldExpression><![CDATA[$F{CCY}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{TOT_CCY}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="350" y="0" width="100" height="30" uuid="039eff88-8942-437d-b8ec-41908c7f3554"/>
-				<textFieldExpression><![CDATA[$F{AMOUNT}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{TOT_AMT}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="10" y="0" width="330" height="30" uuid="f23953ac-2284-4488-8894-d70d8cef0a11"/>
