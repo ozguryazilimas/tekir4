@@ -15,11 +15,14 @@ import com.ozguryazilim.tekir.entities.ProcessType;
 import com.ozguryazilim.tekir.entities.VoucherMatchable;
 import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.tekir.voucher.VoucherFormBase;
+import com.ozguryazilim.tekir.voucher.VoucherPrintOutAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateConfig;
 import com.ozguryazilim.tekir.voucher.matcher.VoucherMatcherService;
 import com.ozguryazilim.tekir.voucher.process.ProcessService;
 import com.ozguryazilim.telve.messages.FacesMessages;
+import com.ozguryazilim.telve.reports.JasperReportHandler;
+
 import javax.inject.Inject;
 
 /**
@@ -37,6 +40,10 @@ public abstract class PaymentHomeBase<E extends PaymentBase> extends VoucherForm
     @Inject
     private CurrencyService currencyService;
     
+    @Inject
+    private JasperReportHandler reportHandler;
+   
+    
     private VoucherMatchable matchable;
     
     @Override
@@ -45,6 +52,7 @@ public abstract class PaymentHomeBase<E extends PaymentBase> extends VoucherForm
         config.addTranstion(VoucherState.DRAFT, new VoucherStateAction("publish", "fa fa-check"), VoucherState.CLOSE);
         config.addTranstion(VoucherState.REVISE, new VoucherStateAction("publish", "fa fa-check"), VoucherState.CLOSE);
         config.addTranstion(VoucherState.CLOSE, new VoucherStateAction("revise", "fa fa-unlock", true), VoucherState.REVISE);
+        config.addStateAction(VoucherState.CLOSE, new VoucherPrintOutAction(this));
         return config;
     }
 
