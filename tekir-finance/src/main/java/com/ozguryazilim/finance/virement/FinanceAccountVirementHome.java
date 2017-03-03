@@ -13,18 +13,22 @@ import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 
 import org.primefaces.context.RequestContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.FinanceAccount;
 import com.ozguryazilim.tekir.entities.FinanceAccountVirement;
 import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.tekir.voucher.VoucherFormBase;
+import com.ozguryazilim.tekir.voucher.VoucherPrintOutAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateConfig;
 import com.ozguryazilim.tekir.voucher.process.ProcessService;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.forms.FormEdit;
 import com.ozguryazilim.telve.messages.FacesMessages;
+import com.ozguryazilim.telve.reports.JasperReportHandler;
 import com.ozguryazilim.telve.sequence.SequenceManager;
 
 /**
@@ -33,7 +37,9 @@ import com.ozguryazilim.telve.sequence.SequenceManager;
  */
 @FormEdit( feature = FinanceAccountVirementFeature.class)
 public class FinanceAccountVirementHome extends VoucherFormBase<FinanceAccountVirement>{
-
+	
+    private static Logger LOG = LoggerFactory.getLogger(FinanceAccountVirementHome.class);
+	
     @Inject
     private FinanceAccountVirementRepository repository;
     
@@ -45,6 +51,9 @@ public class FinanceAccountVirementHome extends VoucherFormBase<FinanceAccountVi
     
     @Inject
     private ProcessService processService;
+    
+    @Inject
+    private JasperReportHandler reportHandler;
     
     private boolean fromCurrencyEditable = true;
     
@@ -69,7 +78,7 @@ public class FinanceAccountVirementHome extends VoucherFormBase<FinanceAccountVi
     	// TODO Auto-generated method stub
     	enableCurrencyFeatures();
     	cont = false;
-    	return super.onAfterLoad();
+    	return super.onAfterLoad();    	
     }
 
     @Override
@@ -111,6 +120,7 @@ public class FinanceAccountVirementHome extends VoucherFormBase<FinanceAccountVi
         VoucherStateConfig config = new VoucherStateConfig();
         config.addTranstion(VoucherState.DRAFT, new VoucherStateAction("publish", "fa fa-check" ), VoucherState.CLOSE);
         config.addTranstion(VoucherState.CLOSE, new VoucherStateAction("reopen", "fa fa-unlock", true ), VoucherState.DRAFT);
+        config.addStateAction(VoucherState.CLOSE, new VoucherPrintOutAction(this));
         return config;
     }
 
