@@ -11,21 +11,23 @@
 
     <ui:define name="view">    
         <ui:fragment>
-            <div style="margin-left: -1em; margin-right: -1em; margin-top: -0.5em;">
-                <table class="table table-condensed">
-                    <tr>
-                        <td>#{messages['finance.label.Receivables']}(+)</td>                     
-                        <td>#{messages['finance.label.Debts']}(-)</td>
-                        <td>#{messages['finance.label.CashBalance']}(+)</td>
-                        <td>#{messages['finance.label.FinancialTotal']}</td>
-                    </tr>                   
-                        <tr>
-                            <td><t:cellOutputMoney value="#{bean.receivables}" currency="#{currencyService.reportCurrency}" /></td>
-                            <td><t:cellOutputMoney value="#{bean.debit}" currency="#{currencyService.reportCurrency}" /></td>
-                            <td><t:cellOutputMoney value="#{bean.cashBalance}" currency="#{currencyService.reportCurrency}" /></td>
-                            <td><t:cellOutputMoney value="#{bean.sum}" currency="#{currencyService.reportCurrency}" /></td>
-								
-                        </tr>                 
+            <div>
+                <table class="table table-condensed">                    
+	                <tr> 
+	                	<td>#{messages['finance.label.Receivables']}(+): <t:cellOutputMoney value="#{bean.receivables}" currency="#{currencyService.reportCurrency}" styleClass="text-green inline" /></td>
+                	</tr>                     
+	                <tr> 
+	                	<td>#{messages['finance.label.Debts']}(-): <t:cellOutputMoney value="#{bean.debit}" currency="#{currencyService.reportCurrency}" styleClass="text-red inline" /></td>
+	                </tr>
+	                <tr> 
+	                	<td>#{messages['finance.label.CashBalance']}(+): <t:cellOutputMoney value="#{bean.cashBalance}" currency="#{currencyService.reportCurrency}" styleClass="#{bean.cashBalance lt 0 ? 'text-red' : 'text-green'} inline"/></td>
+	                </tr>
+	                <tr>
+	                <td>----------------------------------------</td>
+	                </tr>
+	                <tr> 
+	                	<td>#{messages['finance.label.FinancialTotal']}: <t:cellOutputMoney value="#{bean.sum}" currency="#{currencyService.reportCurrency}" styleClass="#{bean.sum lt 0 ? 'text-red' : 'text-green'} inline"/></td>
+                	</tr>
                 </table>
             </div>
              
