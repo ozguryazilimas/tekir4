@@ -9,12 +9,17 @@ import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.AccountDebitNote;
 import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.tekir.voucher.VoucherFormBase;
+import com.ozguryazilim.tekir.voucher.VoucherPrintOutAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateConfig;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.forms.FormEdit;
+import com.ozguryazilim.telve.reports.JasperReportHandler;
 import com.ozguryazilim.telve.sequence.SequenceManager;
 import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -31,6 +36,11 @@ public class AccountDebitNoteHome extends VoucherFormBase<AccountDebitNote>{
 
     @Inject
     private SequenceManager sequenceManager;
+    
+    @Inject
+    private JasperReportHandler reportHandler;
+    
+    private static Logger LOG = LoggerFactory.getLogger(AccountDebitNoteHome.class);
     
     @Override
     public void createNew() {
@@ -54,6 +64,7 @@ public class AccountDebitNoteHome extends VoucherFormBase<AccountDebitNote>{
         VoucherStateConfig config = new VoucherStateConfig();
         config.addTranstion(VoucherState.DRAFT, new VoucherStateAction("publish", "fa fa-check" ), VoucherState.CLOSE);
         config.addTranstion(VoucherState.CLOSE, new VoucherStateAction("reopen", "fa fa-unlock", true ), VoucherState.DRAFT);
+        config.addStateAction(VoucherState.CLOSE, new VoucherPrintOutAction(this));
         return config;
     }
 
