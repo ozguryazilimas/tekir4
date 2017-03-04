@@ -19,6 +19,7 @@ import com.ozguryazilim.tekir.entities.VoucherStateType;
 import com.ozguryazilim.tekir.voucher.VoucherCommodityItemEditor;
 import com.ozguryazilim.tekir.voucher.VoucherCommodityItemEditorListener;
 import com.ozguryazilim.tekir.voucher.VoucherFormBase;
+import com.ozguryazilim.tekir.voucher.VoucherPrintOutAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateChange;
 import com.ozguryazilim.tekir.voucher.VoucherStateConfig;
@@ -26,9 +27,14 @@ import com.ozguryazilim.tekir.voucher.matcher.VoucherMatcherService;
 import com.ozguryazilim.tekir.voucher.process.ProcessService;
 import com.ozguryazilim.tekir.voucher.utils.SummaryCalculator;
 import com.ozguryazilim.telve.messages.FacesMessages;
+import com.ozguryazilim.telve.reports.JasperReportHandler;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -36,6 +42,8 @@ import javax.inject.Inject;
  */
 public abstract class OrderHomeBase<E extends Order> extends VoucherFormBase<E> implements VoucherCommodityItemEditorListener<OrderItem>{
     
+	private static Logger LOG = LoggerFactory.getLogger(OrderHomeBase.class);
+	
     @Inject
     private VoucherCommodityItemEditor commodityItemEditor;
 
@@ -48,16 +56,24 @@ public abstract class OrderHomeBase<E extends Order> extends VoucherFormBase<E> 
     @Inject
     private CurrencyService currencyService;
     
+    @Inject
+    private JasperReportHandler reportHandler;
+    
     @Override
     protected VoucherStateConfig buildStateConfig() {
         VoucherStateConfig config = new VoucherStateConfig();
+        VoucherState complete = new VoucherState("COMPLETE", VoucherStateType.CLOSE, VoucherStateEffect.POSIVITE);
+        VoucherState loss = new VoucherState("LOSS", VoucherStateType.CLOSE, VoucherStateEffect.NEGATIVE);
         config.addTranstion(VoucherState.DRAFT, new VoucherStateAction("publish", "fa fa-check"), VoucherState.OPEN);
-        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("complete", "fa fa-check", false), new VoucherState("COMPLETE", VoucherStateType.CLOSE, VoucherStateEffect.POSIVITE));
-        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("loss", "fa fa-close", true), new VoucherState("LOSS", VoucherStateType.CLOSE, VoucherStateEffect.NEGATIVE));
+        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("complete", "fa fa-check", false), complete);
+        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("loss", "fa fa-close", true), loss);
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("cancel", "fa fa-ban", true), VoucherState.CLOSE);
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("revise", "fa fa-unlock", true), VoucherState.REVISE);
         config.addTranstion(VoucherState.REVISE, new VoucherStateAction("publish", "fa fa-check"), VoucherState.OPEN);
-
+        
+        config.addStateAction(VoucherState.CLOSE, new VoucherPrintOutAction(this));
+        config.addStateAction(complete, new VoucherPrintOutAction(this));
+        config.addStateAction(loss, new VoucherPrintOutAction(this));
         //config.addTranstion(VoucherState.CLOSE, new VoucherStateAction("unlock", "fa fa-unlock", true ), VoucherState.DRAFT);
         return config;
     }
