@@ -214,11 +214,7 @@ public class CurrencyService implements Serializable{
      * @return 
      */
     public BigDecimal convert( Currency fromCurrency, BigDecimal amount, Date date ){
-        CurrencyUnit c = Monetary.getCurrency(getReportCurrency().getCurrencyCode());
-        MonetaryAmount a = Money.of( amount, fromCurrency.getCurrencyCode());
-        LocalDate ldt = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        MonetaryAmount r = convert(a, c, ldt);
-        return r.getNumber().numberValue(BigDecimal.class);
+    	return convert(fromCurrency,amount, getReportCurrency(), date );
     }
     
     /**
@@ -230,11 +226,7 @@ public class CurrencyService implements Serializable{
      * @return 
      */
     public BigDecimal convert( Currency fromCurrency, BigDecimal amount, Currency toCurrency, Date date ){
-        CurrencyUnit c = Monetary.getCurrency(toCurrency.getCurrencyCode());
-        MonetaryAmount a = Money.of( amount, fromCurrency.getCurrencyCode());
-        LocalDate ldt = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        MonetaryAmount r = convert(a, c, ldt);
-        return r.getNumber().numberValue(BigDecimal.class);
+    	return convert(fromCurrency.getCurrencyCode(), amount, toCurrency.getCurrencyCode(), date );
     }
     
     /**
@@ -248,6 +240,10 @@ public class CurrencyService implements Serializable{
     public BigDecimal convert( String fromCurrency, BigDecimal amount, String toCurrency, Date date ){
         CurrencyUnit c = Monetary.getCurrency(toCurrency);
         MonetaryAmount a = Money.of( amount, fromCurrency);
+        //TODO: #23012 geçici çözüm 
+        if(date instanceof java.sql.Date){
+        	date = new java.util.Date(date.getTime());
+        }
         LocalDate ldt = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         MonetaryAmount r = convert(a, c, ldt);
         return r.getNumber().numberValue(BigDecimal.class);
