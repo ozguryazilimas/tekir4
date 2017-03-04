@@ -1,6 +1,7 @@
 .settings
 .classpath
 .project
+*.jasper
 target
 *.jasper
 /tekir-core-model/target/
