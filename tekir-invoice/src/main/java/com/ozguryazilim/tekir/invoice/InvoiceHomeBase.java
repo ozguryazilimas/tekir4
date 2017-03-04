@@ -20,6 +20,7 @@ import com.ozguryazilim.tekir.entities.VoucherStateType;
 import com.ozguryazilim.tekir.voucher.VoucherCommodityItemEditor;
 import com.ozguryazilim.tekir.voucher.VoucherCommodityItemEditorListener;
 import com.ozguryazilim.tekir.voucher.VoucherFormBase;
+import com.ozguryazilim.tekir.voucher.VoucherPrintOutAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateChange;
 import com.ozguryazilim.tekir.voucher.VoucherStateConfig;
@@ -28,9 +29,14 @@ import com.ozguryazilim.tekir.voucher.matcher.VoucherMatcherService;
 import com.ozguryazilim.tekir.voucher.process.ProcessService;
 import com.ozguryazilim.tekir.voucher.utils.SummaryCalculator;
 import com.ozguryazilim.telve.messages.FacesMessages;
+import com.ozguryazilim.telve.reports.JasperReportHandler;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -38,6 +44,8 @@ import javax.inject.Inject;
  */
 public abstract class InvoiceHomeBase<E extends Invoice> extends VoucherFormBase<E> implements VoucherCommodityItemEditorListener<InvoiceItem> {
     
+	private static Logger LOG = LoggerFactory.getLogger(InvoiceHomeBase.class);
+	
     @Inject
     private VoucherCommodityItemEditor commodityItemEditor;
 
@@ -50,6 +58,9 @@ public abstract class InvoiceHomeBase<E extends Invoice> extends VoucherFormBase
     @Inject
     private CurrencyService currencyService;
     
+    @Inject
+    private JasperReportHandler reportHandler;
+    
     
     @Override
     protected VoucherStateConfig buildStateConfig() {
@@ -57,20 +68,28 @@ public abstract class InvoiceHomeBase<E extends Invoice> extends VoucherFormBase
         
         VoucherState paid = new VoucherState("PAID", VoucherStateType.CLOSE, VoucherStateEffect.POSIVITE);
         VoucherState partialPaid = new VoucherState("PARTIAL", VoucherStateType.OPEN, VoucherStateEffect.NEUTRAL);
+        VoucherState unpaid = new VoucherState("UNPAID", VoucherStateType.CLOSE, VoucherStateEffect.NEGATIVE);
+        VoucherState partialUnpaid = new VoucherState("PARTUNPAID", VoucherStateType.CLOSE, VoucherStateEffect.NEGATIVE);
         
         VoucherStateAction paidAction = new VoucherStateAction("paid");
         VoucherStateAction partialPaidAction = new VoucherStateAction("partial");
         
         config.addTranstion(VoucherState.DRAFT, new VoucherStateAction("publish", "fa fa-check"), VoucherState.OPEN);
-        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("loss", "fa fa-close", true), new VoucherState("UNPAID", VoucherStateType.CLOSE, VoucherStateEffect.NEGATIVE));
+        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("loss", "fa fa-close", true), unpaid);
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("cancel", "fa fa-ban", true), VoucherState.CLOSE);
         config.addTranstion(VoucherState.OPEN, partialPaidAction, partialPaid);
         config.addTranstion(VoucherState.OPEN, paidAction, paid);
         config.addTranstion( partialPaid, paidAction, paid);
-        config.addTranstion( partialPaid, new VoucherStateAction("loss", "fa fa-close", true), new VoucherState("PARTUNPAID", VoucherStateType.CLOSE, VoucherStateEffect.NEGATIVE));
+        config.addTranstion( partialPaid, new VoucherStateAction("loss", "fa fa-close", true), partialUnpaid);
         config.addTranstion( partialPaid, new VoucherStateAction("cancel", "fa fa-ban", true), VoucherState.CLOSE);
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("revise", "fa fa-unlock", true), VoucherState.REVISE);
         config.addTranstion(VoucherState.REVISE, new VoucherStateAction("publish", "fa fa-check", true), VoucherState.OPEN);
+        
+        config.addStateAction(VoucherState.CLOSE, new VoucherPrintOutAction(this));
+        config.addStateAction(partialPaid, new VoucherPrintOutAction(this));
+        config.addStateAction(paid, new VoucherPrintOutAction(this));
+        config.addStateAction(unpaid, new VoucherPrintOutAction(this));
+        config.addStateAction(partialUnpaid, new VoucherPrintOutAction(this));
         //config.addTranstion(VoucherState.CLOSE, new VoucherStateAction("unlock", "fa fa-unlock", true ), VoucherState.DRAFT);
         return config;
     }
