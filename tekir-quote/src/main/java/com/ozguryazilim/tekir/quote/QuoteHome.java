@@ -151,6 +151,7 @@ public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodit
         config.addStateAction(VoucherState.CLOSE, new VoucherPrintOutAction(this));
         config.addStateAction(won, new VoucherPrintOutAction(this));
         config.addStateAction(loss, new VoucherPrintOutAction(this));
+        config.addStateAction(VoucherState.OPEN, new VoucherPrintOutAction(this));
         return config;
     }
 
