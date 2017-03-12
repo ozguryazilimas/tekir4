@@ -64,6 +64,7 @@ public abstract class OrderHomeBase<E extends Order> extends VoucherFormBase<E> 
         VoucherStateConfig config = new VoucherStateConfig();
         VoucherState complete = new VoucherState("COMPLETE", VoucherStateType.CLOSE, VoucherStateEffect.POSIVITE);
         VoucherState loss = new VoucherState("LOSS", VoucherStateType.CLOSE, VoucherStateEffect.NEGATIVE);
+        
         config.addTranstion(VoucherState.DRAFT, new VoucherStateAction("publish", "fa fa-check"), VoucherState.OPEN);
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("complete", "fa fa-check", false), complete);
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("loss", "fa fa-close", true), loss);
@@ -74,6 +75,8 @@ public abstract class OrderHomeBase<E extends Order> extends VoucherFormBase<E> 
         config.addStateAction(VoucherState.CLOSE, new VoucherPrintOutAction(this));
         config.addStateAction(complete, new VoucherPrintOutAction(this));
         config.addStateAction(loss, new VoucherPrintOutAction(this));
+        config.addStateAction(VoucherState.REVISE, new VoucherPrintOutAction(this));
+        config.addStateAction(VoucherState.OPEN, new VoucherPrintOutAction(this));
         //config.addTranstion(VoucherState.CLOSE, new VoucherStateAction("unlock", "fa fa-unlock", true ), VoucherState.DRAFT);
         return config;
     }
