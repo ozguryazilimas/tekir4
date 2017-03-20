@@ -17,16 +17,26 @@
             <f:viewParam name="eid" value="#{processHome.id}" />
         </f:metadata>
     </ui:define>
+    
+    <ui:define name="context-menu">
+		<li>
+            <p:commandLink title="#{messages['general.button.Delete']}" action="#{bean.delete()}" 
+                           rendered="#{bean.showDelete() and not empty bean.entity.id and bean.hasDeletePermission() }">
+                <i class="fa fa-trash-o"></i>
+                <h:outputText value=" #{messages['general.button.Delete']}" />
+            </p:commandLink>
+        </li>
+	</ui:define>
 
     <ui:define name="caption">
         <div class="row">
             <div>
-            	<t:outputText label="process.label.Topic" value="#{bean.entity.topic}" />
+            	<t:outputText label="voucher.label.Topic" value="#{bean.entity.topic}" />
                 <t:outputEntityLink label="general.label.Account" value="#{bean.entity.account}" view="/contact/contactView.xhtml" />
-                <t:outputEnum label="process.label.Type" itemLabel="processType." value="#{bean.entity.type}"/>
-                <t:outputEnum label="process.label.Status" itemLabel="processStatus." value="#{bean.entity.status}"/>
-                <t:outputText label="process.label.ProcessNo" value="#{bean.entity.processNo}" />
-                <t:outputNumber label="process.label.Counter" value="#{bean.entity.counter}" maxFraction="0" minFraction="0" />
+                <t:outputEnum label="general.label.Type" itemLabel="processType." value="#{bean.entity.type}"/>
+                <t:outputEnum label="general.label.Status" itemLabel="processStatus." value="#{bean.entity.status}"/>
+                <t:outputText label="voucher.label.ProcessNo" value="#{bean.entity.processNo}" />
+                <t:outputNumber label="voucher.label.Counter" value="#{bean.entity.counter}" maxFraction="0" minFraction="0" />
             </div>         
         </div>  
 

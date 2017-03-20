@@ -57,6 +57,7 @@ public class ProcessHome extends FormBase<Process, Long>{
 
 		setTxnList(null);
 		setDiagramModel(null);
+		refreshTxn();
 		return super.onAfterLoad();
 	}
 
@@ -99,7 +100,7 @@ public class ProcessHome extends FormBase<Process, Long>{
 		}
 	}
 
-	private void connectDiagramModel(){
+	private void connectDiagramModel(){		
 		if(!txnList.isEmpty()){
 			EndPoint prevRightPoint = null;
 			for(int i = 0; i < milestoneList.size();i++){
@@ -120,6 +121,10 @@ public class ProcessHome extends FormBase<Process, Long>{
 				}
 			}
 		}
+	}
+	
+	public boolean showDelete(){
+		return txnList.isEmpty();
 	}
 
 	public FeaturePointer getFeaturePointer() {
