@@ -1,0 +1,46 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/containerViewTabBase.xhtml">
+
+    <ui:param name="bean" value="#{processHome}" />
+    <ui:param name="entityName" value="process" />
+    <ui:param name="viewIdentifier" value="#{bean.entity.processNo}" />
+    <ui:param name="showCaption" value="true"/>
+    <ui:param name="dontShowContentHeader" value="false" />
+
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{processHome.id}" />
+        </f:metadata>
+    </ui:define>
+    
+    <ui:define name="context-menu">
+		<li>
+            <p:commandLink title="#{messages['general.button.Delete']}" action="#{bean.delete()}" 
+                           rendered="#{bean.showDelete() and not empty bean.entity.id and bean.hasDeletePermission() }">
+                <i class="fa fa-trash-o"></i>
+                <h:outputText value=" #{messages['general.button.Delete']}" />
+            </p:commandLink>
+        </li>
+	</ui:define>
+
+    <ui:define name="caption">
+        <div class="row">
+            <div>
+            	<t:outputText label="voucher.label.Topic" value="#{bean.entity.topic}" />
+                <t:outputEntityLink label="general.label.Account" value="#{bean.entity.account}" view="/contact/contactView.xhtml" />
+                <t:outputEnum label="general.label.Type" itemLabel="processType." value="#{bean.entity.type}"/>
+                <t:outputEnum label="general.label.Status" itemLabel="processStatus." value="#{bean.entity.status}"/>
+                <t:outputText label="voucher.label.ProcessNo" value="#{bean.entity.processNo}" />
+                <t:outputNumber label="voucher.label.Counter" value="#{bean.entity.counter}" maxFraction="0" minFraction="0" />
+            </div>         
+        </div>  
+
+
+    </ui:define>   
+
+</ui:composition>
