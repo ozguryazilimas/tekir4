@@ -32,8 +32,8 @@
             <ui:insert name="assignment" />
 
             <div class="row">
-                <t:inputLookupDialog label="contact.label.Person" value="#{meetingActivityController.entity.person}" lookupBean="#{contactLookup}" lookupListener="meetingActivityController.entity.person" placeholder="#{messages['contact.info.Person']}" lookupProfile="T:Person" columnClass="col-xs-6"/>
-                <t:inputLookupDialog label="general.label.Corporation" value="#{meetingActivityController.entity.corporation}" lookupBean="#{contactLookup}" lookupListener="meetingActivityController.entity.corporation" placeholder="#{messages['general.info.Corparation']}" lookupProfile="T:Corporation" columnClass="col-xs-6"/>
+                <t:inputLookupDialog label="contact.label.Person" value="#{bean.entity.person}" lookupBean="#{contactLookup}" lookupListener="meetingActivityController.entity.person" placeholder="#{messages['contact.info.Person']}" lookupProfile="T:Person" columnClass="col-xs-6"/>
+                <t:inputLookupDialog label="general.label.Corporation" value="#{bean.entity.corporation}" lookupBean="#{contactLookup}" lookupListener="meetingActivityController.entity.corporation" placeholder="#{messages['general.info.Corparation']}" lookupProfile="T:Corporation" columnClass="col-xs-6"/>
             </div>
 
             <ui:remove>
