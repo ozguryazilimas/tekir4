@@ -90,6 +90,8 @@ public abstract class InvoiceHomeBase<E extends Invoice> extends VoucherFormBase
         config.addStateAction(paid, new VoucherPrintOutAction(this));
         config.addStateAction(unpaid, new VoucherPrintOutAction(this));
         config.addStateAction(partialUnpaid, new VoucherPrintOutAction(this));
+        config.addStateAction(VoucherState.REVISE, new VoucherPrintOutAction(this));
+        config.addStateAction(VoucherState.OPEN, new VoucherPrintOutAction(this));
         //config.addTranstion(VoucherState.CLOSE, new VoucherStateAction("unlock", "fa fa-unlock", true ), VoucherState.DRAFT);
         return config;
     }
