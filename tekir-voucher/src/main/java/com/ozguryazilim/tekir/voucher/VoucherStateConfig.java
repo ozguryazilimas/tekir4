@@ -6,6 +6,7 @@
 package com.ozguryazilim.tekir.voucher;
 
 import com.ozguryazilim.tekir.entities.VoucherState;
+import com.ozguryazilim.tekir.entities.VoucherStateType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +25,7 @@ public class VoucherStateConfig {
     private final Map<String,VoucherStateAction> actions = new HashMap<>();
     private final Map<VoucherState, Map<VoucherStateAction,VoucherState>> transitions = new HashMap<>();
     private final Map<VoucherState,List<VoucherStateAction>> stateActions = new HashMap<>();
+    private final Map<VoucherStateType,List<VoucherStateAction>> stateTypeActions = new HashMap<>();
     
     /**
      * Hangi durumdan hangi action ile hangi duruma geçilecek.
@@ -71,6 +73,24 @@ public class VoucherStateConfig {
         acts.add(action);
     }
     
+    /**
+     * StateType'e bağlı olarak UI üzerinde ek actionlar sağlar.
+     * 
+     * Örneğin OPEN stateType'ında olan tüm stateler için
+     * 
+     * @param stateType
+     * @param action 
+     */
+    public void addStateTypeAction( VoucherStateType stateType, VoucherStateAction action){
+        List<VoucherStateAction> acts = stateTypeActions.get(stateType);
+        if( acts == null ){
+            acts = new ArrayList<>();
+            stateTypeActions.put(stateType, acts);
+        }
+        
+        acts.add(action);
+    }
+    
     public List<VoucherState> getStates() {
         return states;
     }
@@ -79,8 +99,28 @@ public class VoucherStateConfig {
         return actions;
     }
 
+    /**
+     * Geriye verilen state için tanımlı tüm action'ları döner.
+     * 
+     * Listeye verilen State'in type'ı için tanımlı olanlarda döner.
+     * 
+     * @param state
+     * @return 
+     */
     public List<VoucherStateAction> getStateActions( VoucherState state ) {
-        return stateActions.get(state);
+        List<VoucherStateAction> result = new ArrayList<>();
+        
+        List<VoucherStateAction> ls = stateActions.get(state);
+        if( ls != null ){
+            result.addAll(ls);
+        }
+        
+        ls = stateTypeActions.get(state.getType());
+        if( ls != null ){
+            result.addAll(ls);
+        }
+        
+        return result;
     }
     
     public Map<VoucherState, Map<VoucherStateAction, VoucherState>> getTransitions() {
