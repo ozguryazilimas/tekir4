@@ -90,4 +90,14 @@
             <column name="LOCAL_AMOUNT" type="decimal(19, 2)"/>
         </addColumn>
     </changeSet>
+    <changeSet author="oyas (generated)" id="1491230740840-1">
+        <addColumn tableName="TVO_GROUP">
+            <column name="STATUS" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+        <changeSet author="oyas (generated)" id="1491235561935-1">
+        <addColumn tableName="TVO_GROUP">
+            <column name="TOPIC" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

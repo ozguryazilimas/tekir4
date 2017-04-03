@@ -87,7 +87,7 @@
                         <artifactId>liquibase-maven-plugin</artifactId>
                         <version>${version.liquibase-maven-plugin}</version>
                         <configuration>
-                            <changeLogFile>src/main/resources/liquibase/tekir-core.xml</changeLogFile>
+                            <changeLogFile>src/main/resources/liquibase/tekir-voucher.xml</changeLogFile>
                             <diffChangeLogFile>src/main/resources/liquibase/migration/changelog-${maven.build.timestamp}.xml</diffChangeLogFile>
                             <driver>${liquibase.driver}</driver>
                             <url>${liquibase.url}</url>

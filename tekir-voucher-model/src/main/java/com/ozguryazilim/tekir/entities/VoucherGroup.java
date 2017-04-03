@@ -9,6 +9,8 @@ import com.ozguryazilim.telve.annotations.BizKey;
 import com.ozguryazilim.telve.entities.AuditBase;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,12 +45,25 @@ public class VoucherGroup extends AuditBase{
     private String groupNo;
     
     /**
+     * Grup başlığı
+     */
+    
+    @Column(name = "TOPIC")
+    private String topic;
+    
+    /**
      * Ek kod alanı. Raporlar v.s. için
      */
     @Column(name="CODE", length=30)
     @Size(max=30)
     private String code;
     
+    /**
+     * Grubun durumu(aktif-pasif)
+     */
+    @Enumerated(EnumType.STRING)
+    @Column(name="STATUS")
+    private VoucherGroupStatus status;
     
     /**
      * Fiş açıklama alanı
@@ -88,6 +103,22 @@ public class VoucherGroup extends AuditBase{
     public void setInfo(String info) {
         this.info = info;
     }
+
+	public VoucherGroupStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(VoucherGroupStatus status) {
+		this.status = status;
+	}
+
+	public String getTopic() {
+		return topic;
+	}
+
+	public void setTopic(String topic) {
+		this.topic = topic;
+	}
 
     
     
