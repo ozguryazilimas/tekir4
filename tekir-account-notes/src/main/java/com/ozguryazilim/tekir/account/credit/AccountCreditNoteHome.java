@@ -8,6 +8,7 @@ package com.ozguryazilim.tekir.account.credit;
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.AccountCreditNote;
 import com.ozguryazilim.tekir.entities.VoucherState;
+import com.ozguryazilim.tekir.entities.VoucherStateType;
 import com.ozguryazilim.tekir.voucher.VoucherFormBase;
 import com.ozguryazilim.tekir.voucher.VoucherPrintOutAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateAction;
@@ -66,7 +67,7 @@ public class AccountCreditNoteHome extends VoucherFormBase<AccountCreditNote>{
         VoucherStateConfig config = new VoucherStateConfig();
         config.addTranstion(VoucherState.DRAFT, new VoucherStateAction("publish", "fa fa-check" ), VoucherState.CLOSE);
         config.addTranstion(VoucherState.CLOSE, new VoucherStateAction("reopen", "fa fa-unlock", true ), VoucherState.DRAFT);
-        config.addStateAction(VoucherState.CLOSE, new VoucherPrintOutAction(this));
+        config.addStateTypeAction(VoucherStateType.CLOSE, new VoucherPrintOutAction(this));
         return config;
     }
 

@@ -44,169 +44,173 @@ import java.util.Date;
  */
 @FormEdit(feature = QuoteFeature.class)
 public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodityItemEditorListener<QuoteItem> {
-	
+
 	private static Logger LOG = LoggerFactory.getLogger(QuoteHome.class);
-	
-    @Inject
-    private QuoteRepository repository;
 
-    @Inject
-    private CurrencyService currencyService;
+	@Inject
+	private QuoteRepository repository;
 
-    @Inject
-    private AccountTxnService accountTxnService;
+	@Inject
+	private CurrencyService currencyService;
 
-    @Inject
-    private VoucherCommodityItemEditor commodityItemEditor;
+	@Inject
+	private AccountTxnService accountTxnService;
 
-    @Inject
-    private ProcessService processService;
-    
-    @Inject
-    private JasperReportHandler reportHandler;
+	@Inject
+	private VoucherCommodityItemEditor commodityItemEditor;
 
-    @Override
-    protected RepositoryBase<Quote, QuoteViewModel> getRepository() {
-        return repository;
-    }
+	@Inject
+	private ProcessService processService;
 
-    @Override
-    public void createNew() {
-        super.createNew();
+	@Inject
+	private JasperReportHandler reportHandler;
 
-        getEntity().setCurrency(currencyService.getDefaultCurrency());
-        //TODO: Bu iş için DateUtils fean yazmak lazım.
-        LocalDateTime dt = LocalDateTime.now();
-        getEntity().setExpireDate(Date.from(dt.plusDays(30).atZone(ZoneId.systemDefault()).toInstant()));
-        getEntity().setRevision(1);
-    }
+	@Override
+	protected RepositoryBase<Quote, QuoteViewModel> getRepository() {
+		return repository;
+	}
 
-    @Override
-    public void addItem() {
-        QuoteItem item = new QuoteItem();
-        item.setMaster(getEntity());
-        commodityItemEditor.openDialog(item, getEntity().getCurrency(), this);
-    }
+	@Override
+	public void createNew() {
+		super.createNew();
 
-    @Override
-    public void editItem(QuoteItem item) {
-        commodityItemEditor.openDialog(item, getEntity().getCurrency(), this);
-    }
+		getEntity().setCurrency(currencyService.getDefaultCurrency());
+		// TODO: Bu iş için DateUtils fean yazmak lazım.
+		LocalDateTime dt = LocalDateTime.now();
+		getEntity().setExpireDate(Date.from(dt.plusDays(30).atZone(ZoneId.systemDefault()).toInstant()));
+		getEntity().setRevision(1);
+	}
 
-    @Override
-    public void removeItem(QuoteItem item) {
-        getEntity().getItems().remove(item);
-        calculateSummaries();
-    }
+	@Override
+	public void addItem() {
+		QuoteItem item = new QuoteItem();
+		item.setMaster(getEntity());
+		commodityItemEditor.openDialog(item, getEntity().getCurrency(), this);
+	}
 
-    @Override
-    public boolean onAfterLoad() {
-        if (!getEntity().getAccount().getContactRoles().contains("ACCOUNT")) {
-            FacesMessages.warn("Seçtiğiniz bağlantı bir Cari değil!", "Bağlantıyı cariye dönüştürmek ister misiniz?");
-        }
-        return super.onAfterLoad(); //To change body of generated methods, choose Tools | Templates.
-    }
+	@Override
+	public void editItem(QuoteItem item) {
+		commodityItemEditor.openDialog(item, getEntity().getCurrency(), this);
+	}
 
-    @Override
-    public boolean onBeforeSave() {
-        //TODO: Before Save'de her seferinden yeniden sum hesaplamaya gerek var mı? Arayüze ReCalculate gibi bir düğme mi koysak?
-        //calculateSummaries();
+	@Override
+	public void removeItem(QuoteItem item) {
+		getEntity().getItems().remove(item);
+		calculateSummaries();
+	}
 
-        //Eğer daha önce bir process alınmamış ise yeni bir tane oluştur.
-        if (getEntity().getProcess() == null) {
-            getEntity().setProcess(processService.createProcess(getEntity().getAccount(), getEntity().getTopic(), ProcessType.SALES));
-        }
+	@Override
+	public boolean onAfterLoad() {
+		if (!getEntity().getAccount().getContactRoles().contains("ACCOUNT")) {
+			FacesMessages.warn("Seçtiğiniz bağlantı bir Cari değil!", "Bağlantıyı cariye dönüştürmek ister misiniz?");
+		}
+		return super.onAfterLoad(); // To change body of generated methods,
+									// choose Tools | Templates.
+	}
 
-        getEntity().setLocalAmount(currencyService.convert(getEntity().getCurrency(), getEntity().getTotal(), getEntity().getDate()));
-        
-        return super.onBeforeSave();
-    }
+	@Override
+	public boolean onBeforeSave() {
+		// TODO: Before Save'de her seferinden yeniden sum hesaplamaya gerek var
+		// mı? Arayüze ReCalculate gibi bir düğme mi koysak?
+		// calculateSummaries();
 
-    @Override
-    public List<QuoteSummary> getTaxes() {
-        List<QuoteSummary> result = new ArrayList<>();
+		// Eğer daha önce bir process alınmamış ise yeni bir tane oluştur.
+		if (getEntity().getProcess() == null) {
+			getEntity().setProcess(
+					processService.createProcess(getEntity().getAccount(), getEntity().getTopic(), ProcessType.SALES));
+		}
 
-        getEntity().getSummaries().entrySet().stream()
-                .filter(e -> e.getKey().startsWith("Tax."))
-                .forEach(e -> {
-                    result.add(e.getValue());
-                });
+		getEntity().setLocalAmount(
+				currencyService.convert(getEntity().getCurrency(), getEntity().getTotal(), getEntity().getDate()));
 
-        return result;
-    }
+		return super.onBeforeSave();
+	}
 
-    @Override
-    protected VoucherStateConfig buildStateConfig() {
-        VoucherStateConfig config = new VoucherStateConfig();
-        VoucherState won = new VoucherState("WON", VoucherStateType.CLOSE, VoucherStateEffect.POSIVITE);
-        VoucherState loss = new VoucherState("LOSS", VoucherStateType.CLOSE, VoucherStateEffect.NEGATIVE);
-        
-        config.addTranstion(VoucherState.DRAFT, new VoucherStateAction("publish", "fa fa-check"), VoucherState.OPEN);
-        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("won", "fa fa-check", false), won);
-        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("loss", "fa fa-close", true), loss);
-        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("cancel", "fa fa-ban", true), VoucherState.CLOSE);
-        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("revise", "fa fa-unlock", true), VoucherState.DRAFT);
-        //config.addTranstion(VoucherState.CLOSE, new VoucherStateAction("unlock", "fa fa-unlock", true ), VoucherState.DRAFT);
-        
-        config.addStateAction(VoucherState.CLOSE, new VoucherPrintOutAction(this));
-        config.addStateAction(won, new VoucherPrintOutAction(this));
-        config.addStateAction(loss, new VoucherPrintOutAction(this));
-        config.addStateAction(VoucherState.OPEN, new VoucherPrintOutAction(this));
-        return config;
-    }
+	@Override
+	public List<QuoteSummary> getTaxes() {
+		List<QuoteSummary> result = new ArrayList<>();
 
-    @Override
-    public void saveItem(QuoteItem item) {
-        if (!getEntity().getItems().contains(item)) {
-            getEntity().getItems().add(item);
-        }
-        calculateSummaries();
-    }
+		getEntity().getSummaries().entrySet().stream().filter(e -> e.getKey().startsWith("Tax.")).forEach(e -> {
+			result.add(e.getValue());
+		});
 
-    public Process getProcess() {
-        return getEntity().getProcess();
-    }
+		return result;
+	}
 
-    public void setProcess(Process process) {
-        getEntity().setProcess(process);
-        if (process != null) {
-            getEntity().setAccount(process.getAccount());
-            getEntity().setTopic(process.getTopic());
-        }
-    }
+	@Override
+	protected VoucherStateConfig buildStateConfig() {
+		VoucherStateConfig config = new VoucherStateConfig();
+		VoucherState won = new VoucherState("WON", VoucherStateType.CLOSE, VoucherStateEffect.POSIVITE);
+		VoucherState loss = new VoucherState("LOSS", VoucherStateType.CLOSE, VoucherStateEffect.NEGATIVE);
 
-    public Contact getAccount() {
-        return getEntity().getAccount();
-    }
+		config.addTranstion(VoucherState.DRAFT, new VoucherStateAction("publish", "fa fa-check"), VoucherState.OPEN);
+		config.addTranstion(VoucherState.OPEN, new VoucherStateAction("won", "fa fa-check", false), won);
+		config.addTranstion(VoucherState.OPEN, new VoucherStateAction("loss", "fa fa-close", true), loss);
+		config.addTranstion(VoucherState.OPEN, new VoucherStateAction("cancel", "fa fa-ban", true), VoucherState.CLOSE);
+		config.addTranstion(VoucherState.OPEN, new VoucherStateAction("revise", "fa fa-unlock", true),
+				VoucherState.DRAFT);
+		// config.addTranstion(VoucherState.CLOSE, new
+		// VoucherStateAction("unlock", "fa fa-unlock", true ),
+		// VoucherState.DRAFT);
 
-    public void setAccount(Contact account) {
-        getEntity().setAccount(account);
-        getEntity().setProcess(null);
+		config.addStateTypeAction(VoucherStateType.OPEN, new VoucherPrintOutAction(this));
+		config.addStateTypeAction(VoucherStateType.CLOSE, new VoucherPrintOutAction(this));
+		return config;
+	}
 
-        if (!account.getContactRoles().contains("ACCOUNT")) {
-            FacesMessages.warn("Seçtiğiniz bağlantı bir Cari değil!", "Bağlantıyı cariye dönüştürmek ister misiniz?");
-        }
-    }
+	@Override
+	public void saveItem(QuoteItem item) {
+		if (!getEntity().getItems().contains(item)) {
+			getEntity().getItems().add(item);
+		}
+		calculateSummaries();
+	}
 
-    public Person getPerson() {
-        if (getAccount() instanceof Person) {
-            return (Person) getAccount();
-        } else {
-            return ((Corporation) getAccount()).getPrimaryContact();
-        }
-    }
+	public Process getProcess() {
+		return getEntity().getProcess();
+	}
 
-    public Corporation getCorporation() {
-        if (getAccount() instanceof Corporation) {
-            return (Corporation) getAccount();
-        } else {
-            return ((Person) getAccount()).getCorporation();
-        }
-    }
+	public void setProcess(Process process) {
+		getEntity().setProcess(process);
+		if (process != null) {
+			getEntity().setAccount(process.getAccount());
+			getEntity().setTopic(process.getTopic());
+		}
+	}
 
-    @Override
-    public void calculateSummaries() {
-        SummaryCalculator<Quote, QuoteItem, QuoteSummary> sc = new SummaryCalculator();
-        sc.calcSummaries(this::getEntity, getEntity()::getItems, getEntity()::getSummaries, () -> new QuoteSummary(), getEntity()::setTotal);
-    }
+	public Contact getAccount() {
+		return getEntity().getAccount();
+	}
+
+	public void setAccount(Contact account) {
+		getEntity().setAccount(account);
+		getEntity().setProcess(null);
+
+		if (!account.getContactRoles().contains("ACCOUNT")) {
+			FacesMessages.warn("Seçtiğiniz bağlantı bir Cari değil!", "Bağlantıyı cariye dönüştürmek ister misiniz?");
+		}
+	}
+
+	public Person getPerson() {
+		if (getAccount() instanceof Person) {
+			return (Person) getAccount();
+		} else {
+			return ((Corporation) getAccount()).getPrimaryContact();
+		}
+	}
+
+	public Corporation getCorporation() {
+		if (getAccount() instanceof Corporation) {
+			return (Corporation) getAccount();
+		} else {
+			return ((Person) getAccount()).getCorporation();
+		}
+	}
+
+	@Override
+	public void calculateSummaries() {
+		SummaryCalculator<Quote, QuoteItem, QuoteSummary> sc = new SummaryCalculator();
+		sc.calcSummaries(this::getEntity, getEntity()::getItems, getEntity()::getSummaries, () -> new QuoteSummary(),
+				getEntity()::setTotal);
+	}
 }
