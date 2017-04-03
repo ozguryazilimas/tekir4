@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.tekir.voucher.group;
 
+import com.ozguryazilim.tekir.entities.Process;
 import com.ozguryazilim.tekir.entities.VoucherGroup;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import java.util.List;
@@ -24,5 +25,7 @@ public abstract class VoucherGroupRepository extends RepositoryBase<VoucherGroup
     public List<VoucherGroup> lookupQuery(String searchText) {
         return criteria().getResultList();
     }
+    
+    public abstract VoucherGroup findAnyByGroupNo( String groupNo );
     
 }
