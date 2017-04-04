@@ -18,7 +18,7 @@ import javax.inject.Inject;
  *
  * @author oyas
  */
-@Lookup(dialogPage = VoucherPages.VoucherGroupLookup.class)
+@Lookup(dialogPage = VoucherPages.Group.VoucherGroupLookup.class)
 public class VoucherGroupLookup extends LookupTableControllerBase<VoucherGroup, VoucherGroup> {
 
     @Inject
@@ -26,6 +26,7 @@ public class VoucherGroupLookup extends LookupTableControllerBase<VoucherGroup, 
     
     @Override
     protected void buildModel(LookupTableModel<VoucherGroup> model) {
+    	model.addColumn("topic", "general.label.Topic");
         model.addColumn("groupNo", "voucher.label.Group");
         model.addColumn("info", "general.label.Info");
     }

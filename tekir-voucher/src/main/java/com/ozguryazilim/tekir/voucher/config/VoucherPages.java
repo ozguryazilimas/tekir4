@@ -25,38 +25,70 @@ import org.apache.deltaspike.jsf.api.config.view.View;
 @Folder(name = "./voucher")
 public interface VoucherPages extends Pages {	
 	
+	interface Process extends VoucherPages{
 	@View
 	@SecuredPage("process")
 	@PageTitle("module.caption.Process")
 	@Navigation(label = "module.caption.Process", icon = "fa fa-random", section = SideNavigationSection.class)
-	class ProcessBrowse implements VoucherPages {
+	class ProcessBrowse implements Process {
 	}
 
     @View
     @SecuredPage("process")
     @PageTitle("module.caption.Process")
-    class ProcessView implements VoucherPages {
+    class ProcessView implements Process {
     }
     
 	@View
 	@SecuredPage("process")
 	@PageTitle("module.caption.Process")
-	class ProcessMasterView implements VoucherPages {
+	class ProcessMasterView implements Process {
 	}
 
+    @SecuredPage() @View
+    class ProcessLookup implements Process {}
+	}
+	
+	interface Group extends VoucherPages{
+	@View
+	@SecuredPage("group")
+	@PageTitle("module.caption.VoucherGroup")
+	@Navigation(label = "module.caption.VoucherGroup", icon = "fa fa-object-group", section = SideNavigationSection.class)
+	class VoucherGroupBrowse implements Group {
+	}
+	
+	
+    @View
+    @SecuredPage("group")
+    @PageTitle("module.caption.VoucherGroup")
+    class VoucherGroupView implements Group {
+    }
+    
+	@View
+	@SecuredPage("group")
+	@PageTitle("module.caption.VoucherGroup")
+	class VoucherGroupMasterView implements Group {
+	}
+	
+    @View
+    @SecuredPage("group")
+    @PageTitle("module.caption.VoucherGroup")
+    class VoucherGroup implements Group {
+    }
     
     @SecuredPage() @View
-    class ProcessLookup implements VoucherPages {}
+  	class NewVoucherGroupPopup implements Group {
+  	}
     
     @SecuredPage() @View
-    class VoucherGroupLookup implements VoucherPages {}
+    class VoucherGroupLookup implements Group {}
+    
+	}
     
     @SecuredPage() @View
     class VoucherMatchableLookup implements VoucherPages {}
     
-    @SecuredPage() @View
-  	class NewVoucherGroupPopup implements VoucherPages {
-  	}
+
     
     @SecuredPage("voucherSerial") @View
     @Navigation(label = "module.caption.VoucherSerial", icon = "fa fa-book", section = ParamNavigationSection.class)

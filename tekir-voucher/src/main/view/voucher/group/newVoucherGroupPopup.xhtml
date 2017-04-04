@@ -12,10 +12,9 @@
     <ui:define name="form">
         <h:form id="personForm">
             <div class="row">
-                <t:inputText label="general.label.Code" value="#{bean.entity.code}" columnClass="col-xs-6" required="true"/>
-                <t:inputText label="general.label.Topic" value="#{bean.entity.topic}" columnClass="col-xs-6" required="true"/>
-                <t:inputText label="general.label.Info" value="#{bean.entity.info}" columnClass="col-xs-6"/>
-                <t:inputEnum value="#{bean.entity.status}" label="voucher.label.VoucherGroupStatus" itemLabel="voucher.groupStatus." hasNullValue="false" columnClass="col-xs-6"/> 
+                <t:inputText label="general.label.Topic" value="#{bean.entity.topic}" columnClass="col-xs-12" required="true"/>
+                <t:inputTextarea label="general.label.Info" value="#{bean.entity.info}" columnClass="col-xs-12"/>
+                <t:inputText label="general.label.Code" value="#{bean.entity.code}" columnClass="col-xs-6" required="false"/>
              </div>
             <h:panelGroup styleClass="row actionButtons" layout="block" >
                 <ui:insert name="actionButtons" />

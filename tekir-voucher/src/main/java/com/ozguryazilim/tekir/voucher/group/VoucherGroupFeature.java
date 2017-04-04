@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ozguryazilim.tekir.voucher.process;
+package com.ozguryazilim.tekir.voucher.group;
 
 import com.ozguryazilim.tekir.voucher.Voucher;
 import com.ozguryazilim.tekir.voucher.config.VoucherPages;
@@ -18,11 +18,13 @@ import javax.enterprise.inject.Default;
  * @author Hakan Uygun
  */
 @Feature(permission = "feature", forEntity = Feature.class )
-@Page( type = PageType.BROWSE, page = VoucherPages.Process.ProcessBrowse.class )
-@Page(type = PageType.EDIT, page = VoucherPages.Process.ProcessView.class)
-@Page(type = PageType.VIEW, page = VoucherPages.Process.ProcessView.class)
-@Page(type = PageType.MASTER_VIEW, page = VoucherPages.Process.ProcessMasterView.class)
+@Page(type = PageType.BROWSE, page = VoucherPages.Group.VoucherGroupBrowse.class )
+@Page(type = PageType.VIEW, page = VoucherPages.Group.VoucherGroupView.class)
+@Page(type = PageType.MASTER_VIEW, page = VoucherPages.Group.VoucherGroupMasterView.class)
+@Page(type = PageType.EDIT, page = VoucherPages.Group.VoucherGroup.class )
+
+
 @Voucher @Default
-public class ProcessFeature extends AbstractFeatureHandler{
+public class VoucherGroupFeature extends AbstractFeatureHandler{
     
 }

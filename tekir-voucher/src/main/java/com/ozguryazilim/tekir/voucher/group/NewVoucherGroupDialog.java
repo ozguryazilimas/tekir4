@@ -7,6 +7,7 @@ package com.ozguryazilim.tekir.voucher.group;
 
 import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.VoucherGroup;
+import com.ozguryazilim.tekir.entities.VoucherGroupStatus;
 import com.ozguryazilim.tekir.voucher.config.VoucherPages;
 import com.ozguryazilim.tekir.voucher.process.ProcessService;
 import com.ozguryazilim.telve.sequence.SequenceManager;
@@ -66,6 +67,7 @@ public class NewVoucherGroupDialog implements Serializable {
 	 * Yeni person'ı save eder.
 	 */
 	public void closeDialog() {
+		entity.setStatus(VoucherGroupStatus.ACTIVE);
 		voucherGroupService.saveVoucherGroup(entity);
 
 		// navigationParameterContext.addPageParameter("eid",
@@ -88,7 +90,7 @@ public class NewVoucherGroupDialog implements Serializable {
 	 * @return
 	 */
 	public String getDialogName() {
-		String viewId = viewConfigResolver.getViewConfigDescriptor(VoucherPages.NewVoucherGroupPopup.class).getViewId();
+		String viewId = viewConfigResolver.getViewConfigDescriptor(VoucherPages.Group.NewVoucherGroupPopup.class).getViewId();
 		return viewId.substring(0, viewId.indexOf(".xhtml"));
 	}
 
