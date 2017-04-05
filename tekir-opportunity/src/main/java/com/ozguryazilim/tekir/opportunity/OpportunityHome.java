@@ -73,7 +73,7 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
     @Override
     public boolean onBeforeSave() {
         
-        if( getEntity().getState().equals(VoucherState.DRAFT) ){
+        if( getEntity().getState().equals(VoucherState.DRAFT) && !getEntity().isPersisted()){
             getEntity().setState(VoucherState.OPEN);
         }
         
@@ -98,7 +98,7 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("won", "fa fa-check" ), won);
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("loss", "fa fa-close", true ),loss);
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("cancel", "fa fa-ban", true ), VoucherState.CLOSE);
-        config.addTranstion(VoucherState.CLOSE, new VoucherStateAction("revise", "fa fa-unlock", true ), VoucherState.OPEN);
+        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("revise", "fa fa-unlock", true ), VoucherState.DRAFT);
         
         config.addStateTypeAction(VoucherStateType.OPEN, new VoucherPrintOutAction(this));
         config.addStateTypeAction(VoucherStateType.CLOSE, new VoucherPrintOutAction(this));
