@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.tekir.voucher;
 
+import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.entities.VoucherBase;
 import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.tekir.entities.VoucherStateType;
@@ -34,6 +35,7 @@ import org.apache.deltaspike.core.api.config.ConfigResolver;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
 import org.apache.deltaspike.core.api.config.view.navigation.ViewNavigationHandler;
 import org.apache.deltaspike.jpa.api.transaction.Transactional;
+import org.primefaces.event.SelectEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -340,6 +342,15 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
         }
         return identity.isPermitted(getPermissionDomain() + ":delete:" + getEntity().getOwner());
     }
+    
+    
+    /**
+     * Belge sahipliğini değiştirme yetkisi var mı?
+     * @return 
+     */
+    public Boolean hasChangeOwnerPermission() {
+        return identity.isPermitted(getPermissionDomain() + ":changeOwner:" + getEntity().getOwner());
+    }
 
     /**
      * State action tetiklemeden hemen önce çağrılır. 
@@ -386,5 +397,16 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
      */
     protected void decoratePrintOutParams( Map<String,Object> params){
         //Varsayılan olarak içi boş
+    }
+    
+    /**
+     * Belge Sahibini değiştirir.
+     * @param event 
+     */
+    public void onOwnerChange(SelectEvent event) {
+        String userName = (String) event.getObject();
+        if( Strings.isNullOrEmpty(userName)) return;
+        getEntity().setOwner(userName);
+        save();
     }
 }

@@ -4,6 +4,7 @@
     <permissionGroup name="Contact" order="10">
         <permission target="contact" order="1">
             <entityActions scope="owner,group"/>
+            <action name="changeOwner" scope="owner,group" order="15"/>
         </permission>
         <permission target="corporationType" >
             <entityActions />
