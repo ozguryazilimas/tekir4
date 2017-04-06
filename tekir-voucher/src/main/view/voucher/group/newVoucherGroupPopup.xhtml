@@ -1,0 +1,36 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"                
+                template="/layout/dialogBase.xhtml">
+
+    <ui:param name="title" value="newVoucherGroupPopup.label.Title" />
+    <ui:param name="bean" value="#{newVoucherGroupDialog}" />
+
+    <ui:define name="form">
+        <h:form id="personForm">
+            <div class="row">
+                <t:inputText label="general.label.Topic" value="#{bean.entity.topic}" columnClass="col-xs-12" required="true"/>
+                <t:inputTextarea label="general.label.Info" value="#{bean.entity.info}" columnClass="col-xs-12"/>
+                <t:inputText label="general.label.Code" value="#{bean.entity.code}" columnClass="col-xs-6" required="false"/>
+             </div>
+            <h:panelGroup styleClass="row actionButtons" layout="block" >
+                <ui:insert name="actionButtons" />
+                <p:commandButton id="select" 
+                                 value="#{messages['general.button.Ok']}" 
+                                 icon="fa fa-check" 
+                                 action="#{bean.closeDialog()}" 
+                                 validateClient="true"
+                                 styleClass="btn-primary" />
+                <p:commandButton id="close" 
+                                 value="#{messages['general.button.Cancel']}" 
+                                 icon="ui-icon-close" 
+                                 action="#{bean.cancelDialog()}" 
+                                 partialSubmit="true" 
+                                 process="@this"/>
+            </h:panelGroup>
+        </h:form>
+    </ui:define> 
+</ui:composition>

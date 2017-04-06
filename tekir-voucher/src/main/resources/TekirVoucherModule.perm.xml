@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<permissions>
+    <permissionGroup name="Voucher" order="13">
+        <permission target="voucherGroup" order="1">
+            <entityActions />
+        </permission>
+    </permissionGroup>
+</permissions>
