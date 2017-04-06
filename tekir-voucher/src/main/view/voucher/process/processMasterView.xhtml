@@ -1,69 +1,128 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
-	template="/layout/masterViewBase.xhtml">
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                template="/layout/masterViewBase.xhtml">
 
-	<ui:define name="content">
-		<div class="row">	
-			<div class="col-md-16 col-xs-12">
-				<t:accordion icon="fa fa-file-text"  label="general.label.Pipeline" columnClass="col-xs-12">
-				<p:diagram responsive="true" style="height:50px" value="#{processHome.diagramModel}" styleClass="ui-widget-content" />					
-				</t:accordion>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-8 col-xs-12">
-				<t:accordion icon="fa fa-file" id="cx" label="general.label.ReleatedVouchers" columnClass="col-xs-12">
-                	<ul class="products-list product-list-in-box">
-                    	<ui:repeat value="#{processHome.txnList}" var="ci" >
-                        	<li class="item">
-                            	<t:cellOutputFeatureLink label="#{ci.feature.feature}" value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
-	                               <span class="text-muted pull-right">#{ci.feature.businessKey}</span>
-	                               <div class="text-sm">
-	                                   #{ci.info}
-	                               </div>
-	                               <div class="text-sm">
-	                                   #{ci.date}
-	                               </div>
-                       	 	</li>
+    <ui:define name="content">
+
+        <style>
+
+
+            .ribbon-state { 
+                list-style: none; 
+                overflow: hidden; 
+                padding-left: 0px;
+                /*font: 18px Helvetica, Arial, Sans-Serif;*/
+            }
+            .ribbon-state li { 
+                float: left; 
+            }
+            .ribbon-state li a {
+                color: white;
+                text-decoration: none; 
+                padding: 10px 0 10px 55px;
+                background: brown;                   /* fallback color */
+                background: silver; /* hsla(34,85%,35%,1); */
+                position: relative; 
+                display: block;
+                float: left;
+                pointer-events: none;
+                cursor: default;
+            }
+            .ribbon-state li a:after { 
+                content: " "; 
+                display: block; 
+                width: 0; 
+                height: 0;
+                border-top: 50px solid transparent;           /* Go big on the size, and let overflow hide */
+                border-bottom: 50px solid transparent;
+                border-left: 30px solid silver; /*hsla(34,85%,35%,1)*/
+                position: absolute;
+                top: 50%;
+                margin-top: -50px; 
+                left: 100%;
+                z-index: 2; 
+            }	
+            .ribbon-state li a:before { 
+                content: " "; 
+                display: block; 
+                width: 0; 
+                height: 0;
+                border-top: 50px solid transparent;           /* Go big on the size, and let overflow hide */
+                border-bottom: 50px solid transparent;
+                border-left: 30px solid white;
+                position: absolute;
+                top: 50%;
+                margin-top: -50px; 
+                margin-left: 1px;
+                left: 100%;
+                z-index: 1; 
+            }	
+            .ribbon-state li:first-child a {
+                padding-left: 10px;
+            }
+        
+            .ribbon-state li a.NEUTRAL        { background:        #f39c12; }
+            .ribbon-state li a.NEUTRAL:after  { border-left-color: #f39c12; }
+            .ribbon-state li a.POSIVITE       { background:        #00a65a; }
+            .ribbon-state li a.POSIVITE:after { border-left-color: #00a65a; }
+            .ribbon-state li a.NEGATIVE       { background:        #d33724; }
+            .ribbon-state li a.NEGATIVE:after { border-left-color: #d33724; }
+        
+            .ribbon-state li:last-child a {
+                pointer-events: none;
+                cursor: default;
+                padding-right: 10px;
+            }
+            .ribbon-state li:last-child a:after { border: 0; }
+            .ribbon-state li a:hover { background: hsla(34,85%,25%,1); }
+            .ribbon-state li a:hover:after { border-left-color: hsla(34,85%,25%,1) !important; }
+
+        </style>
+
+        <div class="row">	
+            <div class="col-md-16 col-xs-12">
+                <ul class="ribbon-state">
+
+                    <ui:repeat value="#{processHome.processSteps}" var="ms">
+                        <li ><a href="#" class="#{processHome.steps[ms]}">#{messages['feature.caption.'.concat(ms)]}</a></li>
+                    </ui:repeat>
+                </ul>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-xs-12">
+                <t:accordion icon="fa fa-file" id="cx" label="general.label.ReleatedVouchers" columnClass="col-xs-12">
+                    <ul class="products-list product-list-in-box">
+                        <ui:repeat value="#{processHome.txnList}" var="ci" >
+                            <li class="item">
+                                <t:cellOutputFeatureLink label="#{ci.feature.feature}" value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
+                                <span class="text-muted pull-right">#{ci.feature.businessKey}</span>
+                                <div class="text-sm">
+                                    #{ci.info}
+                                </div>
+                                <div class="text-sm">
+                                    #{ci.date}
+                                </div>
+                            </li>
                        	</ui:repeat>
-                   	</ul>
-              	</t:accordion>  
-  			 </div>
-  		 
-	         	<div class="col-md-4 col-xs-12">
-		             <ui:include src="/notes/noteWidget.xhtml">
-		                 <ui:param name="featurePointer" value="#{processHome.featurePointer}" />
-		             </ui:include>
-		             
-		             <ui:include src="/feeds/feedWidget.xhtml">
-		                 <ui:param name="feature" value="#{processHome.featureClass.simpleName}" />
-		                 <ui:param name="pk" value="#{processHome.entity.id}" />
-		             </ui:include>
-	        	 </div>   		
-		</div>
-		<style type="text/css">
-			.ui-diagram-element {
-				border: 0.2em groove #d4e06b;
-				text-align: center;
-				box-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
-				border-radius: 1px;
-				border: 1px solid transparent;
-				background-color: #98AFC7;
-				color: #ffffff;
-			}
-			
-			.ui-diagram-unchecked {
-				background-color: #C34A2C;
-				color: #ffffff;
-			}
-			
-			.ui-diagram-checked {
-				background-color: #9CB071;
-				color: #ffffff;
-			}
-		</style>
-	</ui:define>
+                    </ul>
+                </t:accordion>  
+            </div>
+
+            <div class="col-md-4 col-xs-12">
+                <ui:include src="/notes/noteWidget.xhtml">
+                    <ui:param name="featurePointer" value="#{processHome.featurePointer}" />
+                </ui:include>
+
+                <ui:include src="/feeds/feedWidget.xhtml">
+                    <ui:param name="feature" value="#{processHome.featureClass.simpleName}" />
+                    <ui:param name="pk" value="#{processHome.entity.id}" />
+                </ui:include>
+            </div>   		
+        </div>
+    </ui:define>
 </ui:composition>

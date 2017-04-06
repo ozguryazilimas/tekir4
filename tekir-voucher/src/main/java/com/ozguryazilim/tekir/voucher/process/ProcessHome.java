@@ -5,17 +5,9 @@
  */
 package com.ozguryazilim.tekir.voucher.process;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import com.google.common.base.Splitter;
 import java.util.List;
 import javax.inject.Inject;
-import org.primefaces.model.diagram.Connection;
-import org.primefaces.model.diagram.DefaultDiagramModel;
-import org.primefaces.model.diagram.DiagramModel;
-import org.primefaces.model.diagram.Element;
-import org.primefaces.model.diagram.endpoint.BlankEndPoint;
-import org.primefaces.model.diagram.endpoint.EndPoint;
-import org.primefaces.model.diagram.endpoint.EndPointAnchor;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureLinkController;
@@ -24,138 +16,100 @@ import com.ozguryazilim.telve.forms.FormEdit;
 import com.ozguryazilim.tekir.account.AccountTxnRepository;
 import com.ozguryazilim.tekir.entities.AccountTxn;
 import com.ozguryazilim.tekir.entities.Process;
+import com.ozguryazilim.tekir.entities.ProcessType;
+import com.ozguryazilim.tekir.entities.VoucherState;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Process View Conttroller
+ *
  * @author oyas
  */
-@FormEdit(feature=ProcessFeature.class)
-public class ProcessHome extends FormBase<Process, Long>{
+@FormEdit(feature = ProcessFeature.class)
+public class ProcessHome extends FormBase<Process, Long> {
 
-	@Inject
-	private AccountTxnRepository accountTxnRepository;
+    @Inject
+    private AccountTxnRepository accountTxnRepository;
 
-	@Inject
-	private ProcessRepository repository;
+    @Inject
+    private ProcessRepository repository;
 
-	@Inject
-	private ProcessService processService;
+    @Inject
+    private ProcessService processService;
 
-	@Inject
-	private FeatureLinkController featureController;
+    @Inject
+    private FeatureLinkController featureController;
 
-	private List<AccountTxn> txnList;
-	private DiagramModel diagramModel;
-	private List<String> milestoneList;
+    private List<AccountTxn> txnList;
 
-	@Override
-	protected RepositoryBase<Process, ?> getRepository() {
-		return repository;
-	}
+    private static final String SALES_PROCESS_STEPS = "OpportunityFeature,QuoteFeature,SalesOrderFeature,SalesInvoiceFeature,PaymentReceivedFeature";
+    private static final String PURCHAES_PROCESS_STEPS = "PurchaseOrderFeature,PurchaseInvoiceFeature,PaymentFeature";
 
-	public boolean onAfterLoad() {
+    private Map<String, String> steps = new HashMap<>();
 
-		setTxnList(null);
-		setDiagramModel(null);
-		refreshTxn();
-		return super.onAfterLoad();
-	}
+    @Override
+    protected RepositoryBase<Process, ?> getRepository() {
+        return repository;
+    }
 
-	protected void refreshTxn(){    	
-		txnList = accountTxnRepository.findByProcessId(getEntity().getProcessNo());
-		txnList.sort((AccountTxn t, AccountTxn t1) -> {
-			return t.getDate().compareTo(t1.getDate());
-		});
+    public boolean onAfterLoad() {
+        setTxnList(null);
+        refreshTxn();
+        return super.onAfterLoad();
+    }
 
-		initDiagramModel();
-		connectDiagramModel();
-	}
+    protected void refreshTxn() {
+        txnList = accountTxnRepository.findByProcessId(getEntity().getProcessNo());
+        txnList.sort((AccountTxn t, AccountTxn t1) -> {
+            return t.getDate().compareTo(t1.getDate());
+        });
 
-	private void initDiagramModel(){
-		diagramModel = new DefaultDiagramModel();
-		((DefaultDiagramModel) diagramModel).setMaxConnections(-1);	
+        steps.clear();
+        getProcessSteps().forEach((s) -> steps.put(s, "NAN"));
+        txnList.forEach((t) -> {
+            VoucherState vs = VoucherState.valueOf(t.getStatus());
+            steps.put(t.getFeature().getFeature(), vs.getEffect().toString());
+        });
+    }
 
-		milestoneList = new ArrayList<>();
-		if(getEntity().getType().toString().equals("SALES")){
-			milestoneList = Arrays.asList("Opportunity","Quote","Sales Order","Sales Invoice","Received Payment");
-		}
-		else if(getEntity().getType().toString().equals("PURCHASE")){
-			milestoneList = Arrays.asList("Purchase Order","Purchase Invoice","Payment");
-		}
+    public boolean showDelete() {
+        return txnList.isEmpty();
+    }
 
-		for(int i = 0; i < milestoneList.size();i++){
-			String xPoint = Integer.toString(i*(15))+"em";
-			String yPoint = "0em";
-			String label = milestoneList.get(i);
-			Element e = new Element(label,xPoint,yPoint);				
-			e.setDraggable(false);
-			e.setStyleClass("ui-diagram-unchecked");
-			EndPoint currentLeftPoint = new BlankEndPoint(EndPointAnchor.LEFT); 
-			e.addEndPoint(currentLeftPoint);					
+    public FeaturePointer getFeaturePointer() {
+        FeaturePointer result = new FeaturePointer();
+        result.setBusinessKey(getEntity().getTopic());
+        result.setFeature(getFeatureClass().getSimpleName());
+        result.setPrimaryKey(getEntity().getId());
+        return result;
+    }
 
-			EndPoint currentRightPoint = new BlankEndPoint(EndPointAnchor.RIGHT);				
-			e.addEndPoint(currentRightPoint);		
+    public List<AccountTxn> getTxnList() {
+        if (txnList == null) {
+            refreshTxn();
+        }
+        return txnList;
+    }
 
-			diagramModel.addElement(e);
-		}
-	}
+    public void setTxnList(List<AccountTxn> txnList) {
+        this.txnList = txnList;
+    }
 
-	private void connectDiagramModel(){		
-		if(!txnList.isEmpty()){
-			EndPoint prevRightPoint = null;
-			for(int i = 0; i < milestoneList.size();i++){
-				String currentClassName = milestoneList.get(i).replaceAll("\\s+","").concat("Feature");
-				boolean milestoneExists = txnList.stream().anyMatch(item -> currentClassName.equals(item.getFeature().getFeature()));
+    public List<String> getProcessSteps() {
+        if (ProcessType.SALES.equals(getEntity().getType())) {
+            return Splitter.on(',').omitEmptyStrings().trimResults().splitToList(SALES_PROCESS_STEPS);
+        } else {
+            return Splitter.on(',').omitEmptyStrings().trimResults().splitToList(PURCHAES_PROCESS_STEPS);
+        }
+    }
 
-				if(milestoneExists){
-					Element currentElement = diagramModel.getElements().get(i);
-					currentElement.setStyleClass("ui-diagram-checked");			
-					EndPoint currentLeftPoint = currentElement.getEndPoints().get(0);
+    public Map<String, String> getSteps() {
+        return steps;
+    }
 
-					if(prevRightPoint != null){
-						Connection con = new Connection(prevRightPoint,currentLeftPoint);
-						con.setDetachable(false);
-						diagramModel.connect(con);
-					}
-					prevRightPoint = currentElement.getEndPoints().get(1);
-				}
-			}
-		}
-	}
-	
-	public boolean showDelete(){
-		return txnList.isEmpty();
-	}
-
-	public FeaturePointer getFeaturePointer() {
-		FeaturePointer result = new FeaturePointer();
-		result.setBusinessKey(getEntity().getTopic());
-		result.setFeature(getFeatureClass().getSimpleName());
-		result.setPrimaryKey(getEntity().getId());
-		return result;
-	}
-
-
-	public List<AccountTxn> getTxnList() {
-		if(txnList == null){
-			refreshTxn();
-		}
-		return txnList;
-	}
-
-	public void setTxnList(List<AccountTxn> txnList) {
-		this.txnList = txnList;
-	}
-
-	public DiagramModel getDiagramModel() {
-		if(diagramModel == null){
-			refreshTxn();
-		}
-		return diagramModel;
-	}
-
-	public void setDiagramModel(DiagramModel diagramModel) {
-		this.diagramModel = diagramModel;
-	}
+    public void setSteps(Map<String, String> steps) {
+        this.steps = steps;
+    }
 
 }
