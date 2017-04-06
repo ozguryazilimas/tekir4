@@ -1,5 +1,6 @@
 package com.ozguryazilim.tekir.contact;
 
+import com.google.common.base.Strings;
 import com.ozguryazilim.telve.forms.FormEdit;
 import com.ozguryazilim.telve.forms.FormBase;
 import com.ozguryazilim.tekir.entities.Contact;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
 import org.apache.deltaspike.core.api.config.view.navigation.ViewNavigationHandler;
+import org.primefaces.event.SelectEvent;
 
 /**
  * Home Control Class
@@ -54,6 +56,7 @@ public class ContactHome extends FormBase<Contact, Long> {
         Person p = new Person();
         p.getContactRoles().add("CONTACT");
         p.getContactRoles().add("PERSON");
+        p.setOwner(identity.getLoginName());
         setEntity(p);
         selectedRoles.clear();
         return ContactPages.Contact.class;
@@ -63,6 +66,7 @@ public class ContactHome extends FormBase<Contact, Long> {
         Corporation p = new Corporation();
         p.getContactRoles().add("CONTACT");
         p.getContactRoles().add("CORPORATION");
+        p.setOwner(identity.getLoginName());
         setEntity(p);
         selectedRoles.clear();
         return ContactPages.Contact.class;
@@ -180,5 +184,24 @@ public class ContactHome extends FormBase<Contact, Long> {
         result.setFeature(getFeatureClass().getSimpleName());
         result.setPrimaryKey(getEntity().getId());
         return result;
+    }
+    
+    /**
+     * Belge sahipliğini değiştirme yetkisi var mı?
+     * @return 
+     */
+    public Boolean hasChangeOwnerPermission() {
+        return identity.isPermitted(getPermissionDomain() + ":changeOwner:" + getEntity().getOwner());
+    }
+    
+    /**
+     * Belge Sahibini değiştirir.
+     * @param event 
+     */
+    public void onOwnerChange(SelectEvent event) {
+        String userName = (String) event.getObject();
+        if( Strings.isNullOrEmpty(userName)) return;
+        getEntity().setOwner(userName);
+        save();
     }
 }

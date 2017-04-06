@@ -20,6 +20,7 @@
 
     <ui:define name="customHeader">
         <section class="content-header">
+            <p:outputPanel id="states">
             <ul class="states pull-right">
                 <li role="presentation">
                     <div style="font-weight: bold;"> Belge Sahibi</div>
@@ -27,12 +28,15 @@
                         #{userLookup.getUserName(contactHome.entity.owner)}
                     </div>
                 </li>
+                <ui:remove>
+                    Buraya Puanlama v.b. gelebilir mi? Bu bizim için değerli bir müşteridir v.b.
                 <li role="presentation">
                     <div style="font-weight: bold;">#{contactHome.entity.status} </div>
                     <div >#{contactHome.entity.statusReason}</div>
                 </li>
-
+                </ui:remove>
             </ul>
+            </p:outputPanel>
             <i class="fa fa-3x #{messages['feature.icon.'.concat(bean.feature.name)]} pull-left" />
             <small class="text-muted">#{ messages[pageTitleResolver.pageTitle] }</small>
             <h1>#{messages['contact.class.'.concat(contactHome.entity.class.simpleName)]}  <small>#{ viewIdentifier }</small></h1> 
@@ -77,6 +81,13 @@
             <p:commandLink action="#{contactHome.edit()}" styleClass="context-command" rendered="#{identity.hasPermission( entityName, 'update') and hideEditBtn ne 'true' }">
                 <i class="fa fa-edit"></i>
                 <h:outputText value=" #{messages['general.button.Edit']}" />
+            </p:commandLink>
+        </li>
+        <li>
+            <p:commandLink action="#{changeOwnerDialog.openDialog()}" styleClass="context-command" ajax="false" rendered="#{contactHome.hasChangeOwnerPermission()}">
+                <i class="fa fa-random"></i>
+                <h:outputText value=" #{messages['general.button.ChangeOwner']}" />
+                <p:ajax event="dialogReturn" listener="#{contactHome.onOwnerChange}" update=":states" />
             </p:commandLink>
         </li>
         <li>

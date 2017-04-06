@@ -31,9 +31,20 @@
             </li>
         </ui:repeat>
     </ui:define>
+    
+    <ui:define name="context-menu-4">
+        <li>
+            <p:commandLink action="#{changeOwnerDialog.openDialog()}" styleClass="context-command" ajax="false" rendered="#{bean.hasChangeOwnerPermission()}">
+                <i class="fa fa-random"></i>
+                <h:outputText value=" #{messages['general.button.ChangeOwner']}" />
+                <p:ajax event="dialogReturn" listener="#{bean.onOwnerChange}" update=":states" />
+            </p:commandLink>
+        </li>
+    </ui:define>
 
     <ui:define name="state-header">
 
+        <p:outputPanel id="states">
         <ul class="states pull-right">
             <li role="presentation">
                 <div style="font-weight: bold;"> Belge Sahibi</div>
@@ -47,6 +58,7 @@
             </li>
 
         </ul>
+            </p:outputPanel>
 
     </ui:define>
 
