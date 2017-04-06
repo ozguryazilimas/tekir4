@@ -9,7 +9,13 @@
     <ui:param name="bean" value="#{voucherGroupHome}" />
     <ui:param name="entity" value="#{voucherGroupHome.entity}" />
     <ui:param name="dontShowContentHeader" value="true" />
-
+    
+ 	<ui:define name="metadata">
+          <f:metadata>
+              <f:viewParam name="eid" value="#{voucherGroupHome.id}" />
+              <f:viewAction action="#{voucherGroupHome.initData()}" />
+          </f:metadata>
+    </ui:define>
 
     <ui:define name="form">
         <div class="row">

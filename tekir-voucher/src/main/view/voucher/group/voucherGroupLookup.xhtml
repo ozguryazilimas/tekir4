@@ -4,10 +4,11 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 template="/layout/lookupBase.xhtml">
     <ui:param name="bean" value="#{voucherGroupLookup}" />
+    <ui:param name="entityName" value="voucherGroup" />
     <ui:param name="title" value="#{messages['voucherGroupLookup.title']}" />
     <ui:param name="noStandartFilter" value="true" />
     
     <ui:define name="actionButtons">
-	     <p:commandButton value="#{messages['general.button.Add']}" icon="fa fa-plus-circle" action="#{newVoucherGroupDialog.openDialog()}" styleClass="pull-left btn-success" />
+	     <p:commandButton value="#{messages['general.button.Add']}" icon="fa fa-plus-circle" action="#{newVoucherGroupDialog.openDialog()}" rendered="#{identity.hasPermission( entityName, 'insert')}" styleClass="pull-left btn-success" />
     </ui:define>
 </ui:composition>

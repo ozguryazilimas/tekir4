@@ -12,20 +12,22 @@
     <ui:param name="viewState" value="#{voucherGroup.entity.status.name}" />
     <ui:param name="showCaption" value="true"/>
     <ui:param name="dontShowContentHeader" value="false" />
+    <ui:param name="permission" value="voucherGroup" />
 
     <ui:define name="metadata">
         <f:metadata>
             <f:viewParam name="eid" value="#{voucherGroupHome.id}" />
+            <f:viewAction action="#{voucherGroupHome.initData()}" />
         </f:metadata>
     </ui:define>
     
     <ui:define name="caption">
         <div class="row">
             <div>
-            	<t:outputText label="general.label.Topic" value="#{bean.entity.topic}" />
-            	<t:outputText label="general.label.Info" value="#{bean.entity.info}" />
-                <t:outputEnum label="general.label.Status" itemLabel="voucher.groupStatus." value="#{bean.entity.status}"/>
-                <t:outputText label="voucher.label.GroupNo" value="#{bean.entity.groupNo}" />
+            	<t:outputText label="general.label.Topic" value="#{voucherGroupHome.entity.topic}" />
+            	<t:outputText label="general.label.Info" value="#{voucherGroupHome.entity.info}" />
+                <t:outputEnum label="general.label.Status" itemLabel="voucher.groupStatus." value="#{voucherGroupHome.entity.status}"/>
+                <t:outputText label="voucher.label.GroupNo" value="#{voucherGroupHome.entity.groupNo}" />
             </div>         
         </div>  
 
