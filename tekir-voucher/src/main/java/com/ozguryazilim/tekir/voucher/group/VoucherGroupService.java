@@ -11,6 +11,7 @@ import javax.enterprise.context.Dependent;
 import javax.inject.Named;
 import com.ozguryazilim.tekir.entities.VoucherGroup;
 import com.ozguryazilim.tekir.entities.VoucherGroupStatus;
+import com.ozguryazilim.telve.feature.FeatureHandler;
 import com.ozguryazilim.telve.sequence.SequenceManager;
 import javax.inject.Inject;
 import org.apache.deltaspike.jpa.api.transaction.Transactional;
@@ -32,7 +33,7 @@ public class VoucherGroupService implements Serializable{
     @Transactional
     public VoucherGroup saveVoucherGroup( VoucherGroup voucherGroup){
         //TODO: Prefix'i configden alsak iyi olur
-    	voucherGroup.setGroupNo(sequenceManager.getNewSerialNumber("VG", 6));
+    	voucherGroup.setGroupNo(getNewSerialNumber());
         
     	voucherGroup = repository.save(voucherGroup);
         
@@ -43,4 +44,7 @@ public class VoucherGroupService implements Serializable{
         return repository.findAnyByGroupNo( processNo );
     }
     
+    public String getNewSerialNumber(){       
+        return sequenceManager.getNewSerialNumber("VG", 6);
+    }
 }

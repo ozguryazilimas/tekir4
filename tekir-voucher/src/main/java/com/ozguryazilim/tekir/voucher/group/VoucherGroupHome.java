@@ -54,6 +54,15 @@ public class VoucherGroupHome extends FormBase<VoucherGroup, Long>{
 		result.setPrimaryKey(getEntity().getId());
 		return result;
 	}
+	
+	@Override
+	protected VoucherGroup getNewEntity() {
+		// TODO Auto-generated method stub
+		VoucherGroup e = super.getNewEntity();
+		e.setGroupNo(voucherGroupService.getNewSerialNumber());	
+		
+		return e;
+	}
 
 
 }
