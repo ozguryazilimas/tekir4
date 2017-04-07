@@ -10,7 +10,6 @@ import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.Opportunity;
 import com.ozguryazilim.tekir.entities.ProcessType;
 import com.ozguryazilim.tekir.entities.VoucherState;
-import com.ozguryazilim.tekir.entities.VoucherStateEffect;
 import com.ozguryazilim.tekir.entities.VoucherStateType;
 import com.ozguryazilim.tekir.quote.QuoteHome;
 import com.ozguryazilim.tekir.voucher.VoucherFormBase;
@@ -91,12 +90,10 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
     @Override
     protected VoucherStateConfig buildStateConfig() {
         VoucherStateConfig config = new VoucherStateConfig();        
-        VoucherState won = new VoucherState( "WON", VoucherStateType.CLOSE, VoucherStateEffect.POSIVITE);
-        VoucherState loss = new VoucherState( "LOSS", VoucherStateType.CLOSE, VoucherStateEffect.NEGATIVE);
         
         config.addTranstion(VoucherState.DRAFT, new VoucherStateAction("publish", "fa fa-check" ), VoucherState.OPEN);
-        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("won", "fa fa-check" ), won);
-        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("loss", "fa fa-close", true ),loss);
+        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("won", "fa fa-check" ), VoucherState.WON);
+        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("loss", "fa fa-close", true ), VoucherState.LOSS);
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("cancel", "fa fa-ban", true ), VoucherState.CLOSE);
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("revise", "fa fa-unlock", true ), VoucherState.DRAFT);
         

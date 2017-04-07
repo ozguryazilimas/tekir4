@@ -30,6 +30,8 @@ public class VoucherState implements Serializable{
     public static final VoucherState OPEN = new VoucherState( "OPEN", VoucherStateType.OPEN, VoucherStateEffect.NEUTRAL);
     public static final VoucherState CLOSE = new VoucherState( "CLOSE", VoucherStateType.CLOSE, VoucherStateEffect.NEUTRAL);
     public static final VoucherState REVISE = new VoucherState( "REVISE", VoucherStateType.DRAFT, VoucherStateEffect.NEUTRAL);
+    public static final VoucherState WON = new VoucherState( "WON", VoucherStateType.CLOSE, VoucherStateEffect.POSITIVE);
+    public static final VoucherState LOSS = new VoucherState( "LOSS", VoucherStateType.CLOSE, VoucherStateEffect.NEGATIVE);
     
     private final String name;
     private final VoucherStateType type;

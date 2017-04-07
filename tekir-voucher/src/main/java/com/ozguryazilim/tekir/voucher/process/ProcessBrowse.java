@@ -1,6 +1,5 @@
 package com.ozguryazilim.tekir.voucher.process;
 
-import com.ozguryazilim.tekir.entities.Process_;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.forms.Browse;
 import com.ozguryazilim.telve.forms.BrowseBase;
@@ -10,25 +9,14 @@ import com.ozguryazilim.tekir.entities.ProcessStatus;
 import com.ozguryazilim.tekir.entities.ProcessType;
 import com.ozguryazilim.tekir.entities.Process_;
 import com.ozguryazilim.tekir.entities.Contact_;
-import com.ozguryazilim.tekir.entities.VoucherBase_;
-import com.ozguryazilim.tekir.voucher.VoucherBrowseBase;
-import com.ozguryazilim.tekir.voucher.VoucherRepositoryBase;
-import com.ozguryazilim.tekir.voucher.columns.VoucherStateColumn;
-import com.ozguryazilim.telve.query.columns.DateColumn;
 import com.ozguryazilim.telve.query.columns.EnumColumn;
 import com.ozguryazilim.telve.query.columns.LinkColumn;
-import com.ozguryazilim.telve.query.columns.MoneyColumn;
 import com.ozguryazilim.telve.query.columns.SubTextColumn;
 import com.ozguryazilim.telve.query.columns.TextColumn;
-import com.ozguryazilim.telve.query.columns.UserColumn;
-import com.ozguryazilim.telve.query.filters.BigDecimalFilter;
-import com.ozguryazilim.telve.query.filters.DateFilter;
-import com.ozguryazilim.telve.query.filters.DateValueType;
 import com.ozguryazilim.telve.query.filters.EnumFilter;
 import com.ozguryazilim.telve.query.filters.FilterOperand;
 import com.ozguryazilim.telve.query.filters.StringFilter;
 import com.ozguryazilim.telve.query.filters.SubStringFilter;
-import com.ozguryazilim.telve.query.filters.UserFilter;
 import javax.inject.Inject;
 
 /**
@@ -52,10 +40,12 @@ public class ProcessBrowse extends BrowseBase<Process, Process> {
                 .addColumn(new EnumColumn<>(Process_.status, "general.label.Status", "processStatus."), true);
                 
         
+        EnumFilter typeFilter = new EnumFilter<>(Process_.type, ProcessType.SALES,"general.label.Type", "processType.");
+        typeFilter.setOperand(FilterOperand.All);
         queryDefinition
 		        .addFilter(new StringFilter<>(Process_.topic, "voucher.label.Topic"))
 		        .addFilter(new StringFilter<>(Process_.processNo, "voucher.label.Date"))
-		        .addFilter(new EnumFilter<>(Process_.type, ProcessType.SALES,"general.label.Type", "processType."))
+		        .addFilter(typeFilter)
 		        .addFilter(new EnumFilter<>(Process_.status, ProcessStatus.OPEN,"general.label.Status", "processStatus."))
 		        .addFilter(new SubStringFilter<>(Process_.account,Contact_.name, "voucher.label.Account"));
     }

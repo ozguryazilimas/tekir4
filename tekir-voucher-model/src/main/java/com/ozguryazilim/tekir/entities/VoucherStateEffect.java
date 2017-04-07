@@ -13,7 +13,7 @@ public enum VoucherStateEffect {
     /**
      * Olumlu
      */
-    POSIVITE,
+    POSITIVE,
     /**
      * Olumsuz
      */
