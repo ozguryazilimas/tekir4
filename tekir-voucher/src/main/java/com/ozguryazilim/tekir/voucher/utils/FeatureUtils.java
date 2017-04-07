@@ -51,6 +51,41 @@ public class FeatureUtils {
     
     
     /**
+     * Voucher'dan türeyen bir entity için Process Pointer üretir.
+     * 
+     * Feature'da entity sınıfı ( forEntity ) işaretlenmiş olmalıdır.
+     * 
+     * @param <C> VoucherBase'dan üreyen bir entity sınıfı
+     * @param voucher
+     * @return 
+     */
+    public static <C extends VoucherProcessBase> FeaturePointer getProcessPointer(C voucher) {
+        FeaturePointer fp = new FeaturePointer();
+        fp.setBusinessKey(voucher.getProcess().getProcessNo());
+        fp.setPrimaryKey(voucher.getProcess().getId());
+        fp.setFeature(FeatureRegistery.getFeatureClass(voucher.getProcess().getClass()).getSimpleName());
+
+        return fp;
+    }
+    
+    /**
+     * Voucher'dan türeyen bir entity için Voucher Group Pointer üretir.
+     * 
+     * Feature'da entity sınıfı ( forEntity ) işaretlenmiş olmalıdır.
+     * 
+     * @param <C> VoucherBase'dan üreyen bir entity sınıfı
+     * @param voucher
+     * @return 
+     */
+    public static <C extends VoucherBase> FeaturePointer getVoucherGroupPointer(C voucher) {
+        FeaturePointer fp = new FeaturePointer();
+        fp.setBusinessKey(voucher.getGroup().getGroupNo());
+        fp.setPrimaryKey(voucher.getGroup().getId());
+        fp.setFeature(FeatureRegistery.getFeatureClass(voucher.getGroup().getClass()).getSimpleName());
+
+        return fp;
+    }
+    /**
      * Voucher'dan türeyen bir entity için Account Pointer üretir.
      * 
      * Feature'da entity sınıfı ( forEntity ) işaretlenmiş olmalıdır.
@@ -67,7 +102,6 @@ public class FeatureUtils {
 
         return fp;
     }
-    
     
     /**
      * Voucher'dan türeyen bir entity için Account Pointer üretir.

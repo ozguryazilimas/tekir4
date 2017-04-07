@@ -41,6 +41,12 @@ public class AccountDebitNoteFeeder extends AbstractFeeder<AccountDebitNote>{
 
             FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
             FeaturePointer contactPointer = FeatureUtils.getAccountFeaturePointer(entity.getAccount());
+            
+			if (entity.getGroup() != null && entity.getGroup().isPersisted()) {
+				FeaturePointer groupPointer = FeatureUtils.getVoucherGroupPointer(entity);
+				mentions.add(groupPointer);
+			}
+
             mentions.add(voucherPointer);
             mentions.add(contactPointer);
 

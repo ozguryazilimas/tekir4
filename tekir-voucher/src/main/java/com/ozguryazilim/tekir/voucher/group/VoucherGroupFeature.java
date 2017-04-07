@@ -15,7 +15,7 @@ import com.ozguryazilim.telve.feature.PageType;
 import javax.enterprise.inject.Default;
 
 /**
- * Quote Feature Definition
+ * Voucher Group Feature Definition
  * @author Hakan Uygun
  */
 
@@ -24,9 +24,7 @@ import javax.enterprise.inject.Default;
 @Page(type = PageType.VIEW, page = VoucherPages.Group.VoucherGroupView.class)
 @Page(type = PageType.MASTER_VIEW, page = VoucherPages.Group.VoucherGroupMasterView.class)
 @Page(type = PageType.EDIT, page = VoucherPages.Group.VoucherGroup.class )
-
-
-@Voucher @Default
+@Default
 public class VoucherGroupFeature extends AbstractFeatureHandler{
     
 }
