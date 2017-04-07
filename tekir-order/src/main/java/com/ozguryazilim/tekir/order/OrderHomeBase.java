@@ -62,12 +62,11 @@ public abstract class OrderHomeBase<E extends Order> extends VoucherFormBase<E> 
     @Override
     protected VoucherStateConfig buildStateConfig() {
         VoucherStateConfig config = new VoucherStateConfig();
-        VoucherState complete = new VoucherState("COMPLETE", VoucherStateType.CLOSE, VoucherStateEffect.POSIVITE);
-        VoucherState loss = new VoucherState("LOSS", VoucherStateType.CLOSE, VoucherStateEffect.NEGATIVE);
+        VoucherState complete = new VoucherState("COMPLETE", VoucherStateType.CLOSE, VoucherStateEffect.POSITIVE);
         
         config.addTranstion(VoucherState.DRAFT, new VoucherStateAction("publish", "fa fa-check"), VoucherState.OPEN);
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("complete", "fa fa-check", false), complete);
-        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("loss", "fa fa-close", true), loss);
+        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("loss", "fa fa-close", true), VoucherState.LOSS);
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("cancel", "fa fa-ban", true), VoucherState.CLOSE);
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("revise", "fa fa-unlock", true), VoucherState.REVISE);
         config.addTranstion(VoucherState.REVISE, new VoucherStateAction("publish", "fa fa-check"), VoucherState.OPEN);

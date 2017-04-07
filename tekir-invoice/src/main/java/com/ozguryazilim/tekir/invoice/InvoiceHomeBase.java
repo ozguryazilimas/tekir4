@@ -66,7 +66,7 @@ public abstract class InvoiceHomeBase<E extends Invoice> extends VoucherFormBase
     protected VoucherStateConfig buildStateConfig() {
         VoucherStateConfig config = new VoucherStateConfig();
         
-        VoucherState paid = new VoucherState("PAID", VoucherStateType.CLOSE, VoucherStateEffect.POSIVITE);
+        VoucherState paid = new VoucherState("PAID", VoucherStateType.CLOSE, VoucherStateEffect.POSITIVE);
         VoucherState partialPaid = new VoucherState("PARTIAL", VoucherStateType.OPEN, VoucherStateEffect.NEUTRAL);
         VoucherState unpaid = new VoucherState("UNPAID", VoucherStateType.CLOSE, VoucherStateEffect.NEGATIVE);
         VoucherState partialUnpaid = new VoucherState("PARTUNPAID", VoucherStateType.CLOSE, VoucherStateEffect.NEGATIVE);

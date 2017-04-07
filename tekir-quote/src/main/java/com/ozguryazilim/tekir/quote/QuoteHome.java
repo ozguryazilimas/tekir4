@@ -27,7 +27,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ozguryazilim.tekir.entities.Process;
-import com.ozguryazilim.tekir.entities.VoucherStateEffect;
 import com.ozguryazilim.tekir.entities.VoucherStateType;
 import com.ozguryazilim.tekir.voucher.utils.SummaryCalculator;
 import com.ozguryazilim.telve.messages.FacesMessages;
@@ -140,12 +139,10 @@ public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodit
 	@Override
 	protected VoucherStateConfig buildStateConfig() {
 		VoucherStateConfig config = new VoucherStateConfig();
-		VoucherState won = new VoucherState("WON", VoucherStateType.CLOSE, VoucherStateEffect.POSIVITE);
-		VoucherState loss = new VoucherState("LOSS", VoucherStateType.CLOSE, VoucherStateEffect.NEGATIVE);
 
 		config.addTranstion(VoucherState.DRAFT, new VoucherStateAction("publish", "fa fa-check"), VoucherState.OPEN);
-		config.addTranstion(VoucherState.OPEN, new VoucherStateAction("won", "fa fa-check", false), won);
-		config.addTranstion(VoucherState.OPEN, new VoucherStateAction("loss", "fa fa-close", true), loss);
+		config.addTranstion(VoucherState.OPEN, new VoucherStateAction("won", "fa fa-check", false), VoucherState.WON);
+		config.addTranstion(VoucherState.OPEN, new VoucherStateAction("loss", "fa fa-close", true), VoucherState.LOSS);
 		config.addTranstion(VoucherState.OPEN, new VoucherStateAction("cancel", "fa fa-ban", true), VoucherState.CLOSE);
 		config.addTranstion(VoucherState.OPEN, new VoucherStateAction("revise", "fa fa-unlock", true),
 				VoucherState.DRAFT);

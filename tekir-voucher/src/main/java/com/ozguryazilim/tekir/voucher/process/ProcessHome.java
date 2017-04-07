@@ -18,6 +18,7 @@ import com.ozguryazilim.tekir.entities.AccountTxn;
 import com.ozguryazilim.tekir.entities.Process;
 import com.ozguryazilim.tekir.entities.ProcessType;
 import com.ozguryazilim.tekir.entities.VoucherState;
+import com.ozguryazilim.tekir.entities.VoucherStateType;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,7 +70,11 @@ public class ProcessHome extends FormBase<Process, Long> {
         getProcessSteps().forEach((s) -> steps.put(s, "NAN"));
         txnList.forEach((t) -> {
             VoucherState vs = VoucherState.valueOf(t.getStatus());
-            steps.put(t.getFeature().getFeature(), vs.getEffect().toString());
+            if( vs.getType().equals(VoucherStateType.CLOSE) ){
+                steps.put(t.getFeature().getFeature(), vs.getEffect().toString());
+            } else {
+                steps.put(t.getFeature().getFeature(), vs.getType().toString());
+            }
         });
     }
 

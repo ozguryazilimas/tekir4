@@ -28,6 +28,15 @@
         </li>
 	</ui:define>
 
+    <ui:define name="state-header">
+        <ul class="ribbon-state pull-right">
+
+                    <ui:repeat value="#{processHome.processSteps}" var="ms">
+                        <li ><a href="#" class="#{processHome.steps[ms]}">#{messages['feature.caption.'.concat(ms)]}</a></li>
+                    </ui:repeat>
+                </ul>
+    </ui:define>
+    
     <ui:define name="caption">
         <div class="row">
             <div>

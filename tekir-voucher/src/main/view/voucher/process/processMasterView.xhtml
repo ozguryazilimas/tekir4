@@ -63,14 +63,19 @@
             .ribbon-state li:first-child a {
                 padding-left: 10px;
             }
-        
-            .ribbon-state li a.NEUTRAL        { background:        #f39c12; }
-            .ribbon-state li a.NEUTRAL:after  { border-left-color: #f39c12; }
-            .ribbon-state li a.POSIVITE       { background:        #00a65a; }
-            .ribbon-state li a.POSIVITE:after { border-left-color: #00a65a; }
+
+            .ribbon-state li a.NEUTRAL        { background:        #3c8dbc; }
+            .ribbon-state li a.NEUTRAL:after  { border-left-color: #3c8dbc; }
+            .ribbon-state li a.OPEN           { background:        #f39c12; }
+            .ribbon-state li a.OPEN:after     { border-left-color: #f39c12; }
+            .ribbon-state li a.DRAFT          { background:        #f39c12; }
+            .ribbon-state li a.DRAFT:after    { border-left-color: #f39c12; }
+            .ribbon-state li a.POSITIVE       { background:        #00a65a; }
+            .ribbon-state li a.POSITIVE:after { border-left-color: #00a65a; }
             .ribbon-state li a.NEGATIVE       { background:        #d33724; }
             .ribbon-state li a.NEGATIVE:after { border-left-color: #d33724; }
-        
+            
+
             .ribbon-state li:last-child a {
                 pointer-events: none;
                 cursor: default;
@@ -110,6 +115,36 @@
                             </li>
                        	</ui:repeat>
                     </ul>
+
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table table-hover">
+                            <tr>
+                                <th>Fiş</th>
+                                <th>Açıklama</th>
+                                <th>Tarih</th>
+                                <th>Tutar</th>
+                                <th>Durum</th>
+                                <th>Durum Nedeni</th>
+                            </tr>
+                            <ui:repeat value="#{processHome.txnList}" var="ci" >
+                                <tr>
+                                    <td>
+                                        <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
+                                    </td>
+                                    <ui:remove>
+                                    <td>#{ci.feature.businessKey}</td>
+                                    </ui:remove>
+                                    <td>#{ci.info}</td>
+                                    <td><t:cellOutputDate value="#{ci.date}"/></td>
+                                    <td><t:cellOutputMoney value="#{ci.amount}" currency="#{ci.currency}"/></td>
+                                    <td>
+                                        <h:outputText value="#{messages['voucherState.name.'.concat(ci.status)]}" styleClass="#{ ci.status.contains('POSITIVE') ? 'label label-success' : ci.status.contains('NEGATIVE') ? 'label label-danger' : ci.status.startsWith('CLOSE', 0) ? 'label label-primary' : 'label label-warning' }" />
+                                    </td>
+                                    <td>#{ci.statusReason}</td>
+                                </tr>
+                            </ui:repeat>
+                        </table>
+                    </div>
                 </t:accordion>  
             </div>
 
