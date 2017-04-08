@@ -37,11 +37,23 @@
                             </span>
                         </div>
                         <div class="product-info">
+                            <div class="dropdown pull-right">
+                                <button id="feedDropMenu" class="btn btn-box-tool dropdown-toogle" data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-external-link-square"/>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right" arai-labeledby="feedDropMenu" style="z-index: 5000">
+                                    <ui:repeat value="#{feed.mentions}" var="mention" >
+                                        <li><t:cellOutputFeatureLink value="#{featureController.getFeatureLink(mention.featurePointer)}" /></li>
+                                    </ui:repeat>
+                                </ul>
+                            </div>
+                            
                             <span class="product-title">#{feed.subject}</span>
                             <span class="product-description text-sm">
-                                <h:outputText value="#{feed.body}" escape="false" />
+                                <h:outputText value="#{formatedMessage.getMessageFromData(feed.body)}" escape="false" />
                             </span>
 
+                            <ui:remove>
                             <span class="product-description text-sm">
                                 <ul class="list-inline">
                                     <ui:repeat value="#{feed.mentions}" var="mention" >
@@ -49,11 +61,12 @@
                                     </ui:repeat>
                                 </ul>
                             </span>
+                                </ui:remove>
 
                             <span class="product-description text-sm"></span>
                             <span class="product-description text-sm">
-                                <i class="fa fa-user"/> #{userLookup.getUserName(feed.user)} 
-                                <i class="fa  fa-clock-o"/> <t:cellOutputDateTime value="#{feed.date}"/></span>
+                                <i class="fa fa-user margin-r-5"/>#{userLookup.getUserName(feed.user)} 
+                                <i class="fa  fa-clock-o margin-r-5"/><t:cellOutputDateTime value="#{feed.date}"/></span>
                         </div>
                     </li>
                 </ui:repeat>
