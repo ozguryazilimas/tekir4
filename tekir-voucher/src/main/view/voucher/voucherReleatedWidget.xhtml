@@ -43,7 +43,7 @@
         <ul class="products-list product-list-in-box">
             <ui:repeat value="#{voucherMatcherService.findMatchersForFeature(featurePointer)}" var="ci" >
                 <li class="item">
-                    <t:cellOutputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
+                    <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
                     <span class="text-muted pull-right">
 
                         <t:cellOutputMoney value="#{ci.amount}" currency="#{ci.currency}" columnClass="col-xs-12"/>
@@ -58,7 +58,7 @@
         <ul class="products-list product-list-in-box">
             <ui:repeat value="#{accountTxnService.getProcessVouchers(processNo)}" var="ci" >
                 <li class="item">
-                    <t:cellOutputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
+                    <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
 
                     <span class="text-muted pull-right">#{ci.processId}</span>
 
@@ -72,7 +72,7 @@
         </ui:fragment>
 
         <ui:fragment rendered="#{voucherReleatedWidget.filter eq 'ALL' or voucherReleatedWidget.filter eq 'GROUP'}">
-            Yapılacak
+            <!-- Grup Fişleri Yapılacak -->
         </ui:fragment>
     </t:accordion>
 

@@ -95,7 +95,7 @@
                                     <ui:repeat value="#{accountTxnService.getAccountOpenVouchers(contactHome.entity)}" var="ci" >
                                         <tr>
                                             <td>
-                                                <t:cellOutputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
+                                                <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
                                             </td>
                                             <td>
                                                 #{ci.processId}
@@ -111,9 +111,9 @@
                         <ul class="products-list product-list-in-box">
                             <ui:repeat value="#{accountTxnService.getAccountOpenVouchers(contactHome.entity)}" var="ci" >
                                 <li class="item">
-                                    <t:cellOutputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
+                                    <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
 
-                                    <span class="text-muted pull-right">#{ci.processId}</span>
+                                    <span class="text-muted pull-right"><h:outputText value="#{messages['voucherState.name.'.concat(ci.status)]}" styleClass="#{ ci.status.startsWith('OPEN', 0) ? 'label label-primary' : 'label label-warning' }" /> </span>
 
                                     <div class="text-sm">
                                         #{ci.info}
