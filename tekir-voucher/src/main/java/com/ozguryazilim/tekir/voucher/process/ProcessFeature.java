@@ -5,24 +5,25 @@
  */
 package com.ozguryazilim.tekir.voucher.process;
 
-import com.ozguryazilim.tekir.voucher.Voucher;
+import javax.enterprise.inject.Default;
+
 import com.ozguryazilim.tekir.voucher.config.VoucherPages;
 import com.ozguryazilim.telve.feature.AbstractFeatureHandler;
 import com.ozguryazilim.telve.feature.Feature;
 import com.ozguryazilim.telve.feature.Page;
 import com.ozguryazilim.telve.feature.PageType;
-import javax.enterprise.inject.Default;
+import com.ozguryazilim.tekir.entities.Process;
 
 /**
- * Quote Feature Definition
+ * Process Feature Definition
  * @author Hakan Uygun
  */
-@Feature(permission = "feature", forEntity = Feature.class )
+@Feature(permission = "process", forEntity = Process.class )
 @Page( type = PageType.BROWSE, page = VoucherPages.Process.ProcessBrowse.class )
 @Page(type = PageType.EDIT, page = VoucherPages.Process.ProcessView.class)
 @Page(type = PageType.VIEW, page = VoucherPages.Process.ProcessView.class)
 @Page(type = PageType.MASTER_VIEW, page = VoucherPages.Process.ProcessMasterView.class)
-@Voucher @Default
+@Default
 public class ProcessFeature extends AbstractFeatureHandler{
     
 }

@@ -5,7 +5,6 @@
  */
 package com.ozguryazilim.tekir.account.credit;
 
-
 import com.ozguryazilim.tekir.entities.AccountCreditNote;
 import com.ozguryazilim.tekir.feed.AbstractFeeder;
 import com.ozguryazilim.tekir.feed.Feeder;
@@ -25,63 +24,72 @@ import javax.inject.Inject;
  * @author oyas
  */
 @Feeder
-public class AccountCreditNoteFeeder extends AbstractFeeder<AccountCreditNote>{
+public class AccountCreditNoteFeeder extends AbstractFeeder<AccountCreditNote> {
 
-    @Inject
-    private Identity identity;
-    
-    public void feed(@Observes @FeatureQualifier(feauture = AccountCreditNoteFeature.class) @After VoucherStateChange event) {
+	@Inject
+	private Identity identity;
 
-        //FIXME: acaba bunun için bir Qualifier yapabilir miyiz?
-        if (event.getPayload() instanceof AccountCreditNote) {
+	public void feed(
+			@Observes @FeatureQualifier(feauture = AccountCreditNoteFeature.class) @After VoucherStateChange event) {
 
-            List<FeaturePointer> mentions = new ArrayList<>();
-            AccountCreditNote entity = (AccountCreditNote) event.getPayload();
+		// FIXME: acaba bunun için bir Qualifier yapabilir miyiz?
+		if (event.getPayload() instanceof AccountCreditNote) {
 
-            FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
-            FeaturePointer contactPointer = FeatureUtils.getAccountFeaturePointer(entity.getAccount());
-            mentions.add(voucherPointer);
-            mentions.add(contactPointer);
+			List<FeaturePointer> mentions = new ArrayList<>();
+			AccountCreditNote entity = (AccountCreditNote) event.getPayload();
 
-            
-            sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(), entity.getInfo(), getMessage(event), mentions);
-        }
-    }
-    
-    /**
-     * Geriye event bilgilerine bakarak feed body mesajını hazırlayıp döndürür.
-     * 
-     * TODO: i18n problemi ve action / state karşılaştırması + const kullanımına ihtiyaç var.
-     * @param event
-     * @return 
-     */
-    protected String getMessage( VoucherStateChange event ){
-        switch( event.getAction().getName()){
-            case "CREATE" :
-                return "Credit Note created";
-            case "Publish" :
-                return "Credit Note published";
-            case "Won" :
-                return "Credit Note";
-            case "Loss" :
-                return "Opportunity Lost" + event.getPayload().getStateReason();
-            case "Cancel":
-                return "Opportunity canceled. " + event.getPayload().getStateReason();
-                
-        }
-        
-        switch (event.getTo().getName()) {
-                case "OPEN":
-                    return "Opportunity created";
-                case "CLOSE":
-                    return "Opportunity Won. Congrats!";
-                case "LOST":
-                    return "Opportunity lost! " + event.getPayload().getStateReason();
-                case "CANCELED":
-                    return "Opportunity canceled. " + event.getPayload().getStateReason();
-                default:
-                    return "Opportunity created";
-            }
-    }
-    
+			FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
+			FeaturePointer contactPointer = FeatureUtils.getAccountFeaturePointer(entity.getAccount());
+
+			if (entity.getGroup() != null && entity.getGroup().isPersisted()) {
+				FeaturePointer groupPointer = FeatureUtils.getVoucherGroupPointer(entity);
+				mentions.add(groupPointer);
+			}
+
+			mentions.add(voucherPointer);
+			mentions.add(contactPointer);
+
+			sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(), entity.getInfo(),
+					getMessage(event), mentions);
+		}
+	}
+
+	/**
+	 * Geriye event bilgilerine bakarak feed body mesajını hazırlayıp döndürür.
+	 * 
+	 * TODO: i18n problemi ve action / state karşılaştırması + const kullanımına
+	 * ihtiyaç var.
+	 * 
+	 * @param event
+	 * @return
+	 */
+	protected String getMessage(VoucherStateChange event) {
+		switch (event.getAction().getName()) {
+		case "CREATE":
+			return "Credit Note created";
+		case "Publish":
+			return "Credit Note published";
+		case "Won":
+			return "Credit Note";
+		case "Loss":
+			return "Opportunity Lost" + event.getPayload().getStateReason();
+		case "Cancel":
+			return "Opportunity canceled. " + event.getPayload().getStateReason();
+
+		}
+
+		switch (event.getTo().getName()) {
+		case "OPEN":
+			return "Opportunity created";
+		case "CLOSE":
+			return "Opportunity Won. Congrats!";
+		case "LOST":
+			return "Opportunity lost! " + event.getPayload().getStateReason();
+		case "CANCELED":
+			return "Opportunity canceled. " + event.getPayload().getStateReason();
+		default:
+			return "Opportunity created";
+		}
+	}
+
 }

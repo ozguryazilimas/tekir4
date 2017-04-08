@@ -51,6 +51,14 @@ public class QuoteFeeder extends AbstractFeeder<Quote> {
 
             FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
             FeaturePointer contactPointer = FeatureUtils.getAccountFeaturePointer(entity);
+            FeaturePointer processPointer = FeatureUtils.getProcessPointer(entity);
+
+			if (entity.getGroup() != null && entity.getGroup().isPersisted()) {
+				FeaturePointer groupPointer = FeatureUtils.getVoucherGroupPointer(entity);
+				mentions.add(groupPointer);
+			}
+
+			mentions.add(processPointer);
             mentions.add(contactPointer);
             mentions.add(voucherPointer);
 

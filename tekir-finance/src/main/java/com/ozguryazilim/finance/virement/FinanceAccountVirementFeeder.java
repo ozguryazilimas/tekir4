@@ -42,6 +42,12 @@ public class FinanceAccountVirementFeeder extends AbstractFeeder<FinanceAccountV
             FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
             FeaturePointer fromContactPointer = FeatureUtils.getFeaturePointer(FinanceAccountFeature.class, entity.getFromAccount().getName(), entity.getFromAccount().getId());
             FeaturePointer toContactPointer = FeatureUtils.getFeaturePointer(FinanceAccountFeature.class, entity.getToAccount().getName(), entity.getToAccount().getId());
+
+			if (entity.getGroup() != null && entity.getGroup().isPersisted()) {
+				FeaturePointer groupPointer = FeatureUtils.getVoucherGroupPointer(entity);
+				mentions.add(groupPointer);
+			}
+			
             mentions.add(voucherPointer);
             mentions.add(fromContactPointer);
             mentions.add(toContactPointer);
