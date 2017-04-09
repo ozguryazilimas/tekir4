@@ -82,6 +82,9 @@
                         </div>
                         <div class="product-info">
                             <div class="box-tools pull-right">
+                                <h:link value="" outcome="/activities/activityView.xhtml?eid=#{act.id}" styleClass="btn btn-box-tool">
+                                    <i class="fa fa-external-link-square"></i>
+                                </h:link>
                                 <p:commandLink action="#{activityWidget.edit(act)}" process="@this" styleClass="btn btn-box-tool">
                                     <i class="fa fa-pencil" />
                                     <p:ajax event="dialogReturn" update=":actW:actWL" partialSubmit="true" process="@this" />   
@@ -98,12 +101,7 @@
                             <span class="product-description">
                                 #{act.body}
                             </span>
-                            <ui:fragment rendered="#{ act.status ne 'SCHEDULED' and (  act.resultNote ne '' or act.statusReason ne '' )}">
-                            <span class="product-description">
-                                <i class="fa #{ act.status eq 'SCHEDULED' ? 'fa-calendar' : act.status eq 'SUCCESS' ? 'fa-check' : 'fa-ban' }" />
-                                #{act.statusReason} #{act.resultNote}
-                            </span>
-                            </ui:fragment>
+                            
                             <span class="product-description text-sm">
                                 <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(act.regarding)}" />
                             </span>

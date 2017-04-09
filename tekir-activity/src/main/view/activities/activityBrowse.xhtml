@@ -13,66 +13,54 @@
     <ui:param name="showQuickSearch" value="true" />
     <ui:param name="showDetailPanel" value="true" />
 
-   <ui:define name="beforeColumns">
-         <p:column styleClass="actionColumn">              
-             <i class="#{messages['activity.button.icon.'.concat(item.class.simpleName)]}"/> 
-         </p:column>
-	</ui:define>
+    <ui:define name="beforeColumns">
+        <p:column styleClass="actionColumn">              
+            <i class="#{messages['activity.button.icon.'.concat(item.class.simpleName)]}"/> 
+        </p:column>
+    </ui:define>
 
-   
-        <ui:define name="detailBar">
-            <div class="row">
-                <div class="text-muted col-xs-12">
-                    <i class="#{messages['activity.button.icon.'.concat(activityBrowse.selectedItem.class.simpleName)]}"/> 
-                    #{activityBrowse.activity.subject}
-                    <ul class="list-inline text-sm text-muted">
-                    	<li><i class="fa fa-tag" /> #{messages['activity.status.'.concat(activityBrowse.selectedItem.status)]}</li>
-                    	<li><i class="fa fa-tag" /> #{messages['activity.priority.'.concat(activityBrowse.selectedItem.priority)]}</li>
-                    </ul>
-                </div>
+
+    <ui:define name="detailBar">
+        <div class="row">
+            <div class="text-muted col-xs-12">
+                <i class="#{messages['activity.button.icon.'.concat(activityBrowse.selectedItem.class.simpleName)]}"/> 
+                #{activityBrowse.activity.subject}
+                <ul class="list-inline text-sm text-muted">
+                    <li><i class="fa fa-tag" /> #{messages['activity.direction.'.concat(activityBrowse.selectedItem.direction)]}</li>
+                    <li><i class="fa fa-tag" /> #{messages['activity.status.'.concat(activityBrowse.selectedItem.status)]}</li>
+                    <li><i class="fa fa-tag" /> #{messages['activity.priority.'.concat(activityBrowse.selectedItem.priority)]}</li>
+                </ul>
             </div>
+        </div>
 
-            #{activityBrowse.activity.body}
-            
-            <ui:fragment rendered="#{activityBrowse.activity.class.simpleName eq 'MeetingActivity'}">
-                <div class="row">
-                    <t:outputText label="activity.label.Location" value="#{activityBrowse.activity.location}" columnClass="col-xs-12"/>
-                    <t:outputText label="activity.label.Attendees" value="#{activityBrowse.activity.attendees}" columnClass="col-xs-12"/>
-                    <t:outputText label="activity.label.MeetingMinutes" value="#{activityBrowse.activity.meetingMinutes}" columnClass="col-xs-12"/>
-                </div>            
-            </ui:fragment>
-
-            <ui:fragment rendered="#{activityBrowse.activity.class.simpleName eq 'PhoneActivity'}">
-                <div class="row">
-                    <t:outputText label="activity.label.PhoneNumber" value="#{activityBrowse.activity.number}" columnClass="col-xs-12"/>
-                </div>            
-            </ui:fragment>
-            
-            <ui:fragment rendered="#{activityBrowse.activity.class.simpleName eq 'EMeailActivity'}">
-
-            </ui:fragment>
-            
-            <ui:fragment rendered="#{activityBrowse.activity.class.simpleName eq 'TaskActivity'}">
-            
-            </ui:fragment>
-
-        </ui:define>
+        #{activityBrowse.activity.body}
+    </ui:define>
 
 
 
     <ui:define name="context-menu">
-        <li>
-            <p:commandLink action="#{contactHome.newPerson()}" styleClass="context-command" >
-                <i class="fa fa-user"></i>
-                <h:outputText value=" #{messages['general.button.AddPerson']}" />
-            </p:commandLink>
+        
+        <li class="dropdown">
+            
+                <a id="actNewMenu1" href="#" class="dropdown-toogle context-command" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-plus-circle"/>
+                    #{messages['general.button.Add']}
+                    <i class="fa fa-caret-down" />
+                </a>
+                <ul class="dropdown-menu" arai-labeledby="actNewMenu1" style="z-index: 5000">
+                    #{activityWidget.init(null, null, null, 'NONE')}
+                    <ui:repeat value="#{activityWidget.addableActivities}" var="act">
+                        <li>
+                            <p:commandLink action="#{activityWidget.createNew(act)}" process="@this" >
+                                <i class="#{messages['activity.button.icon.'.concat(act)]}" /> #{messages['activity.button.label.'.concat(act)]}
+                                <p:ajax event="dialogReturn" update="@([id$=results])" partialSubmit="true" process="@this" />   
+                            </p:commandLink>
+                        </li>
+                    </ui:repeat>
+                </ul>
+            
         </li>
-        <li>
-            <p:commandLink action="#{contactHome.newCorporation()}" styleClass="context-command" >
-                <i class="fa fa-building"></i>
-                <h:outputText value=" #{messages['general.button.AddCorporation']}" />
-            </p:commandLink>
-        </li>
+
     </ui:define>
 
 
