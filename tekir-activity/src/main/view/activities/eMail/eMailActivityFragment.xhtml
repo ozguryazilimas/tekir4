@@ -5,5 +5,9 @@
                 xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
                 xmlns:p="http://primefaces.org/ui">
 
+    <div class="row">
+        <t:outputText label="activity.label.Subject" value="#{bean.entity.subject}" columnClass="col-xs-12"/>
+        <t:outputText label="activity.label.Body" value="#{bean.entity.body}" columnClass="col-xs-12"/>
+    </div>
 
 </ui:composition>

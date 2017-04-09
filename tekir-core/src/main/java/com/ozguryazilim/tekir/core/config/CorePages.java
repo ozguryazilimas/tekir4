@@ -22,6 +22,11 @@ import com.ozguryazilim.tekir.core.config.CorePages;
 @Folder(name = "./core")
 public interface CorePages extends Pages {
 
+        @SecuredPage()
+	@View
+	class TekirFeatureLookup implements CorePages {
+	}
+    
 	@View
 	@SecuredPage("location")
 	@PageTitle("module.caption.Location")

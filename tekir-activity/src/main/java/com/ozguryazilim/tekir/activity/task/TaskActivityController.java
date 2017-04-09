@@ -9,6 +9,7 @@ import com.ozguryazilim.tekir.activity.AbstractActivityController;
 import com.ozguryazilim.tekir.activity.ActivityController;
 import com.ozguryazilim.tekir.activity.config.ActivityPages;
 import com.ozguryazilim.tekir.entities.ActivityDirection;
+import com.ozguryazilim.tekir.entities.ActivityStatus;
 import com.ozguryazilim.tekir.entities.TaskActivity;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import java.util.Date;
@@ -29,6 +30,7 @@ public class TaskActivityController extends AbstractActivityController<TaskActiv
     protected TaskActivity createNewEntity() {
         TaskActivity result = new TaskActivity();
         result.setDirection(ActivityDirection.NONE);
+        result.setStatus(ActivityStatus.DRAFT);
         result.setDueDate(new Date());
         return result;
     }

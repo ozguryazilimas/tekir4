@@ -18,6 +18,8 @@ import com.ozguryazilim.telve.feature.PageType;
  */
 @Feature(permission = "activity", forEntity = Activity.class)
 @Page(type = PageType.BROWSE, page = ActivityPages.ActivityBrowse.class)
+@Page(type = PageType.VIEW, page = ActivityPages.ActivityView.class)
+@Page(type = PageType.MASTER_VIEW, page = ActivityPages.ActivityMasterView.class)
 public class ActivityFeature extends AbstractFeatureHandler{
     
 }

@@ -9,7 +9,6 @@ import com.ozguryazilim.tekir.entities.Activity;
 import com.ozguryazilim.tekir.entities.ActivityPriority;
 import com.ozguryazilim.tekir.entities.ActivityStatus;
 import com.ozguryazilim.tekir.entities.Activity_;
-import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.forms.Browse;
@@ -41,33 +40,32 @@ public class ActivityBrowse extends BrowseBase<Activity, Activity> {
 
     @Override
     protected void buildQueryDefinition(QueryDefinition<Activity, Activity> queryDefinition) {
-    	EnumFilter statusFilter = new EnumFilter(Activity_.status, ActivityStatus.OPEN, "general.label.Status", "activity.status.");
-    	statusFilter.setOperand(FilterOperand.All);
-    	
-    	EnumFilter priorityFilter = new EnumFilter(Activity_.priority, ActivityPriority.HIGH, "general.label.Priority", "activity.priority.");
-		priorityFilter.setOperand(FilterOperand.All);
-    	
-        queryDefinition        		
-        		.addFilter(new StringFilter<>(Activity_.subject, "activity.label.Subject"))
-        		.addFilter(statusFilter)
+        EnumFilter statusFilter = new EnumFilter(Activity_.status, ActivityStatus.OPEN, "general.label.Status", "activity.status.");
+        statusFilter.setOperand(FilterOperand.All);
+
+        EnumFilter priorityFilter = new EnumFilter(Activity_.priority, ActivityPriority.HIGH, "general.label.Priority", "activity.priority.");
+        priorityFilter.setOperand(FilterOperand.All);
+
+        queryDefinition
+                .addFilter(new StringFilter<>(Activity_.subject, "activity.label.Subject"))
+                .addFilter(statusFilter)
                 .addFilter(priorityFilter)
                 .addFilter(new SubStringFilter<>(Activity_.person, Contact_.name, "general.label.Person"))
                 .addFilter(new SubStringFilter<>(Activity_.corporation, Contact_.name, "general.label.Corporation"))
-        		.addFilter(new DateFilter<>(Activity_.date, "general.label.Date", FilterOperand.All, DateValueType.LastMonth))
-        		.addFilter(new DateFilter<>(Activity_.dueDate, "activity.label.DueDate", FilterOperand.All, DateValueType.NextMonth));
-        
+                .addFilter(new DateFilter<>(Activity_.date, "general.label.Date", FilterOperand.All, DateValueType.LastMonth))
+                .addFilter(new DateFilter<>(Activity_.dueDate, "activity.label.DueDate", FilterOperand.All, DateValueType.NextMonth));
+
         queryDefinition
-                .addColumn(new TextColumn<>(Activity_.subject, "activity.label.Subject"), true)
-                .addColumn(new TextColumn<>(Activity_.body, "activity.label.Body"), true)
+                .addColumn(new LinkColumn<>(Activity_.subject, "activity.label.Subject"), true)
+                //.addColumn(new TextColumn<>(Activity_.body, "activity.label.Body"), true)
                 .addColumn(new SubTextColumn<>(Activity_.person, Contact_.name, "general.label.Person"), true)
                 .addColumn(new SubTextColumn<>(Activity_.corporation, Contact_.name, "general.label.Corporation"), false)
-                .addColumn(new EnumColumn<>(Activity_.priority, "general.label.Priority", "activity.priority."),true)
-                .addColumn(new EnumColumn<>(Activity_.status, "general.label.Status", "activity.status."),true)
+                .addColumn(new EnumColumn<>(Activity_.priority, "general.label.Priority", "activity.priority."), true)
+                .addColumn(new EnumColumn<>(Activity_.status, "general.label.Status", "activity.status."), true)
                 .addColumn(new DateColumn<>(Activity_.date, "general.label.Date"), false)
-        		.addColumn(new TextColumn<>(Activity_.assignee, "activity.label.Assignee"), false)
+                .addColumn(new TextColumn<>(Activity_.assignee, "activity.label.Assignee"), false)
                 .addColumn(new DateColumn<>(Activity_.date, "general.label.Date"), false)
                 .addColumn(new DateColumn<>(Activity_.dueDate, "activity.label.DueDate"), false);
-
 
     }
 
@@ -75,9 +73,9 @@ public class ActivityBrowse extends BrowseBase<Activity, Activity> {
     protected RepositoryBase<Activity, Activity> getRepository() {
         return repository;
     }
-    
-    public Activity getActivity(){
-        if( getSelectedItem() != null ){
+
+    public Activity getActivity() {
+        if (getSelectedItem() != null) {
             return repository.findBy(getSelectedItem().getId());
         } else {
             return null;

@@ -31,8 +31,8 @@
                         <p:commandLink action="#{activityWidget.setFilter('OVERDUE')}" process="@this" update=":actW">
                             #{messages['activity.filter.OVERDUE']}
                         </p:commandLink>
-                        <p:commandLink action="#{activityWidget.setFilter('FAILD')}" process="@this"  update=":actW">
-                            #{messages['activity.filter.FAILD']}
+                        <p:commandLink action="#{activityWidget.setFilter('FAILED')}" process="@this"  update=":actW">
+                            #{messages['activity.filter.FAILED']}
                         </p:commandLink>
                         <p:commandLink action="#{activityWidget.setFilter('SUCCESS')}" process="@this" update=":actW">
                             #{messages['activity.filter.SUCCESS']}
@@ -82,6 +82,9 @@
                         </div>
                         <div class="product-info">
                             <div class="box-tools pull-right">
+                                <h:link value="" outcome="/activities/activityView.xhtml?eid=#{act.id}" styleClass="btn btn-box-tool">
+                                    <i class="fa fa-external-link-square"></i>
+                                </h:link>
                                 <p:commandLink action="#{activityWidget.edit(act)}" process="@this" styleClass="btn btn-box-tool">
                                     <i class="fa fa-pencil" />
                                     <p:ajax event="dialogReturn" update=":actW:actWL" partialSubmit="true" process="@this" />   
@@ -98,12 +101,13 @@
                             <span class="product-description">
                                 #{act.body}
                             </span>
+                            
                             <span class="product-description text-sm">
                                 <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(act.regarding)}" />
                             </span>
                             <span class="product-description text-sm">
-                                <i class="fa fa-user"/> #{userLookup.getUserName(act.assignee)} 
-                                <i class="fa  fa-clock-o"/> <t:cellOutputDateTime value="#{act.dueDate}"/></span>
+                                <i class="fa fa-user margin-r-5"/>#{userLookup.getUserName(act.assignee)} 
+                                <i class="fa  fa-clock-o margin-r-5"/><t:cellOutputDateTime value="#{act.dueDate}"/></span>
                         </div>
                     </li>
                 </ui:repeat>

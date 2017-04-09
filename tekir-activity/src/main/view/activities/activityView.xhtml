@@ -1,0 +1,94 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/containerViewTabBase.xhtml">
+
+    <ui:param name="bean" value="#{activityHome}" />
+    <ui:param name="entityName" value="activity" />
+    <ui:param name="viewIdentifier" value="#{bean.entity.subject}" />
+    <ui:param name="showCaption" value="true"/>
+    <ui:param name="dontShowContentHeader" value="false" />
+
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{activityHome.id}" />
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="customHeader">
+        <section class="content-header">
+            <p:outputPanel id="states">
+                <ul class="states pull-right">
+                    <li role="presentation">
+                        <div style="font-weight: bold;">#{messages['activity.label.Assignee']}</div>
+                        <div >
+                            #{userLookup.getUserName(activityHome.entity.assignee)}
+                        </div>
+                    </li>
+                    <ui:remove>
+                        Buraya Puanlama v.b. gelebilir mi? Bu bizim için değerli bir müşteridir v.b.
+                        <li role="presentation">
+                            <div style="font-weight: bold;">#{contactHome.entity.status} </div>
+                            <div >#{contactHome.entity.statusReason}</div>
+                        </li>
+                    </ui:remove>
+                </ul>
+            </p:outputPanel>
+            <i class="fa fa-3x #{messages['activity.button.icon.'.concat(bean.entity.class.simpleName)]} pull-left"/> 
+            <small class="text-muted">#{ messages[pageTitleResolver.pageTitle] }</small>
+            <h1>#{messages['activity.class.'.concat(activityHome.entity.class.simpleName)]}  <small>#{ viewIdentifier }</small></h1> 
+        </section>
+    </ui:define>
+
+    <ui:define name="context-menu">
+
+        <li class="dropdown">
+
+            <a id="actNewMenu1" href="#" class="dropdown-toogle context-command" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-plus-circle"/>
+                #{messages['general.button.Add']}
+                <i class="fa fa-caret-down" />
+            </a>
+            <ul class="dropdown-menu" arai-labeledby="actNewMenu1" style="z-index: 5000">
+                #{activityWidget.init(activityHome.entity.person, activityHome.entity.corporation, activityHome.entity.regarding, 'NONE')}
+                <ui:repeat value="#{activityWidget.addableActivities}" var="act">
+                    <li>
+                        <p:commandLink action="#{activityWidget.createNew(act)}" process="@this" >
+                            <i class="#{messages['activity.button.icon.'.concat(act)]}" /> #{messages['activity.button.label.'.concat(act)]}
+                            <p:ajax event="dialogReturn" update="@([id$=results])" partialSubmit="true" process="@this" />   
+                        </p:commandLink>
+                    </li>
+                </ui:repeat>
+            </ul>
+
+        </li>
+
+        <li>
+            <p:commandLink action="#{activityWidget.edit(activityHome.entity)}" process="@this" styleClass="context-command">
+                <i class="fa fa-pencil" />
+                <h:outputText value=" #{messages['general.button.Edit']}" />
+                <p:ajax event="dialogReturn" update="viewarea" partialSubmit="true" process="@this" />   
+            </p:commandLink>
+        </li>
+
+    </ui:define>
+
+
+    <ui:define name="caption">
+        <div class="row">
+            <div>
+                <t:outputText label="voucher.label.Topic" value="#{bean.entity.subject}" />
+                <t:outputEnum label="general.label.Status" itemLabel="activity.status." value="#{bean.entity.status}" columnClass="col-md-3 col-xs-12"/>
+                <t:outputText label="activity.label.Assignee" value="#{userLookup.getUserName(bean.entity.assignee)}" columnClass="col-md-3 col-xs-12"/>
+                <t:outputDateTime label="activity.label.DueDate" value="#{bean.entity.dueDate}" columnClass="col-md-3 col-xs-12"/>
+                <t:outputText label="activity.label.Duration" value="#{bean.entity.duration}" columnClass="col-md-3 col-xs-12"/>
+            </div>         
+        </div>  
+
+
+    </ui:define>   
+
+</ui:composition>

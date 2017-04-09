@@ -1,0 +1,35 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                template="/layout/featureLookupBase.xhtml">
+
+    <ui:param name="title" value="general.label.FeatureLookUp" />
+    <ui:param name="hideStandartFilter" value="true" />
+    <ui:param name="bean" value="#{tekirFeatureLookup}" />
+
+    <ui:define name="filters">
+        <t:inputCombobox label="general.label.Feature" value="#{bean.featureName}" columnClass="col-md-6 col-xs-6">
+            <f:selectItems value="#{bean.getSearchableFeatures()}" var="feature" itemValue="#{feature}" itemLabel="#{messages['feature.caption.'.concat(feature)]}"/>
+        </t:inputCombobox>
+
+        <t:inputCheckboxGroup label="general.label.Status" columnClass="col-md-6 col-xs-6">
+            <p:selectBooleanCheckbox itemLabel="#{messages['general.label.MineOnly']}" value="#{bean.mineOnly}" />
+            <p:selectBooleanCheckbox itemLabel="#{messages['general.label.Actives']}" value="#{bean.actives}" />
+        </t:inputCheckboxGroup>
+        
+        <t:inputAny label="general.label.SearchKey" columnClass="col-xs-12">
+            <h:panelGroup styleClass="input-group" layout="block">
+                <p:inputText value="#{bean.searchText}" />
+                <div class="input-group-btn">
+                    <p:commandButton id="search2" icon="fa fa-search" action="#{bean.search()}" update=":lookupForm:resultLists" styleClass="ui-icon-only btn btn-default" />
+                </div>
+            </h:panelGroup>
+        </t:inputAny>
+    </ui:define>
+    
+</ui:composition>

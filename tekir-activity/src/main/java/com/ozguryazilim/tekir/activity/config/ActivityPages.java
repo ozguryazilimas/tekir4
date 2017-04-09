@@ -32,6 +32,17 @@ public interface ActivityPages extends Pages{
     @Navigation(label = "module.caption.ActivityBrowse", feature = ActivityFeature.class, section = MainNavigationSection.class)
     class ActivityBrowse implements ActivityPages {}
     
+    @View
+    @SecuredPage()
+    @PageTitle("module.caption.Activity")
+    class ActivityView implements ActivityPages {}
+    
+    @View
+    @SecuredPage()
+    @PageTitle("module.caption.Activity")
+    class ActivityMasterView implements ActivityPages {}
+
+    
     @SecuredPage()
     interface Phone extends ActivityPages{
         
