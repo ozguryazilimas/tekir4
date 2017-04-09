@@ -25,8 +25,9 @@
 
     <ui:define name="assignment">
         <div class="row">
-            <t:inputLookupDialog label="general.label.Person" value="#{bean.entity.person}" lookupBean="#{contactLookup}" lookupListener="phoneActivityController.entity.person" placeholder="#{messages['contact.info.Person']}" lookupProfile="T:Person" columnClass="col-xs-6"/>
+            <t:inputLookupDialog label="general.label.Person" value="#{bean.entity.person}" lookupBean="#{contactLookup}" lookupListener="phoneActivityController.entity.person" placeholder="#{messages['general.info.Person']}" lookupProfile="T:Person" columnClass="col-xs-6"/>
             <t:inputLookupDialog label="general.label.Corporation" value="#{bean.entity.corporation}" lookupBean="#{contactLookup}" lookupListener="phoneActivityController.entity.corporation" placeholder="#{messages['general.info.Corparation']}" lookupProfile="T:Corporation" columnClass="col-xs-6"/>
+            <t:inputFeature label="activity.label.Regarding" value="#{phoneActivityController.entity.regarding}" lookupBean="#{tekirFeatureLookup}" lookupListener="phoneActivityController.entity.regarding" columnClass="col-xs-6"/>
             <t:inputUser label="general.label.Assignee" value="#{bean.entity.assignee}" hasNotSelected="true" required="true"  columnClass="col-xs-6"/>
         </div>
 

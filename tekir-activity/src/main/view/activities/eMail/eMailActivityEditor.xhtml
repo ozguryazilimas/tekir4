@@ -19,7 +19,7 @@
         <div class="row">
                 <t:inputLookupDialog label="general.label.Person" value="#{eMailActivityController.entity.person}" lookupBean="#{contactLookup}" lookupListener="eMailActivityController.entity.person" placeholder="#{messages['contact.info.Person']}" lookupProfile="T:Person" columnClass="col-xs-6"/>
                 <t:inputLookupDialog label="general.label.Corporation" value="#{eMailActivityController.entity.corporation}" lookupBean="#{contactLookup}" lookupListener="eMailActivityController.entity.corporation" placeholder="#{messages['general.info.Corparation']}" lookupProfile="T:Corporation" columnClass="col-xs-6"/>
-                <t:inputText label="activity.label.Regarding" value="#{bean.entity.duration}" columnClass="col-xs-6"/>
+                <t:inputFeature label="activity.label.Regarding" value="#{eMailActivityController.entity.regarding}" lookupBean="#{tekirFeatureLookup}" lookupListener="eMailActivityController.entity.regarding" columnClass="col-xs-6"/>
                 <t:inputUser label="general.label.Assignee" value="#{bean.entity.assignee}" hasNotSelected="true" required="true"  columnClass="col-xs-6"/>
             </div>
     </ui:define>

@@ -12,6 +12,7 @@ import com.ozguryazilim.telve.feature.AbstractFeatureHandler;
 import com.ozguryazilim.telve.feature.Feature;
 import com.ozguryazilim.telve.feature.Page;
 import com.ozguryazilim.telve.feature.PageType;
+import com.ozguryazilim.telve.feature.search.Search;
 import javax.enterprise.inject.Default;
 
 /**
@@ -23,6 +24,7 @@ import javax.enterprise.inject.Default;
 @Page( type = PageType.VIEW, page = OpportunityPages.OpportunityView.class )
 @Page( type = PageType.MASTER_VIEW, page = OpportunityPages.OpportunityMasterView.class )
 @Page( type = PageType.EDIT, page = OpportunityPages.Opportunity.class )
+@Search(handler = OpportunitySearchHandler.class )
 @Voucher @Default
 public class OpportunityFeature extends AbstractFeatureHandler{
     

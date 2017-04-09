@@ -17,8 +17,9 @@
     
     <ui:define name="assignment">
         <div class="row">
-            <t:inputLookupDialog label="general.label.Person" value="#{bean.entity.person}" lookupBean="#{contactLookup}" lookupListener="taskActivityController.entity.person" placeholder="#{messages['contact.info.Person']}" lookupProfile="T:Person" columnClass="col-xs-6"/>
-            <t:inputLookupDialog label="general.label.Corporation" value="#{bean.entity.corporation}" lookupBean="#{contactLookup}" lookupListener="taskActivityController.entity.corporation" placeholder="#{messages['general.info.Corparation']}" lookupProfile="T:Corporation" columnClass="col-xs-6"/>
+            <t:inputLookupDialog label="general.label.Person" value="#{taskActivityController.entity.person}" lookupBean="#{contactLookup}" lookupListener="taskActivityController.entity.person" placeholder="#{messages['contact.info.Person']}" lookupProfile="T:Person" columnClass="col-xs-6"/>
+            <t:inputLookupDialog label="general.label.Corporation" value="#{taskActivityController.entity.corporation}" lookupBean="#{contactLookup}" lookupListener="taskActivityController.entity.corporation" placeholder="#{messages['general.info.Corparation']}" lookupProfile="T:Corporation" columnClass="col-xs-6"/>
+            <t:inputFeature label="activity.label.Regarding" value="#{taskActivityController.entity.regarding}" lookupBean="#{tekirFeatureLookup}" lookupListener="taskActivityController.entity.regarding" columnClass="col-xs-6"/>
             <t:inputUser label="general.label.Assignee" value="#{bean.entity.assignee}" hasNotSelected="true" required="true"  columnClass="col-xs-6"/>
         </div>
 

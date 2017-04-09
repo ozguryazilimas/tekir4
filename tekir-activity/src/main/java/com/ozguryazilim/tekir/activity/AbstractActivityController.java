@@ -70,6 +70,7 @@ public abstract class AbstractActivityController<E extends Activity> implements 
         entity.setPerson(person);
         entity.setCorporation(corporation);
         entity.setRegarding(featurePointer);
+        entity.setDueDate(new Date());
         followupDlg = followUp;
         followupActivity = "NONE";
         openDialog();
