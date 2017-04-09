@@ -117,6 +117,16 @@ public abstract class AbstractActivityController<E extends Activity> implements 
         }
     }
     
+    public void complete() {
+        entity.setStatus(ActivityStatus.SUCCESS);
+        save();
+    }
+    
+    public void failed() {
+        entity.setStatus(ActivityStatus.FAILED);
+        save();
+    }
+    
     public void cancel() {
         RequestContext.getCurrentInstance().closeDialog(null);
     }

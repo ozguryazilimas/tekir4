@@ -13,7 +13,45 @@
         <div class="row">
             <t:inputText label="activity.label.PhoneNumber" value="#{phoneActivityController.entity.number}" />
         </div>
+
+        <div class="row">
+            <t:inputSuggestion label="general.label.Reason" value="#{bean.entity.statusReason}" group="#{bean.entity.class.simpleName}" listener="" columnClass="col-xs-12"/>
+            <ui:remove>
+            <t:inputTextarea label="general.label.ResultNote" value="#{bean.entity.resultNote}" columnClass="col-xs-12"/>
+            </ui:remove>
+        </div>
+
     </ui:define> 
-    
-    
+
+    <ui:define name="assignment">
+        <div class="row">
+            <t:inputLookupDialog label="general.label.Person" value="#{bean.entity.person}" lookupBean="#{contactLookup}" lookupListener="phoneActivityController.entity.person" placeholder="#{messages['contact.info.Person']}" lookupProfile="T:Person" columnClass="col-xs-6"/>
+            <t:inputLookupDialog label="general.label.Corporation" value="#{bean.entity.corporation}" lookupBean="#{contactLookup}" lookupListener="phoneActivityController.entity.corporation" placeholder="#{messages['general.info.Corparation']}" lookupProfile="T:Corporation" columnClass="col-xs-6"/>
+            <t:inputUser label="general.label.Assignee" value="#{bean.entity.assignee}" hasNotSelected="true" required="true"  columnClass="col-xs-6"/>
+        </div>
+
+        <div class="row">
+            <t:inputDateTime label="activity.label.DueDate" value="#{bean.entity.dueDate}" columnClass="col-xs-6"/>
+            <t:inputText label="activity.label.Duration" value="#{bean.entity.duration}" columnClass="col-xs-6"/>
+        </div>
+
+    </ui:define>
+
+    <ui:define name="actionButtons">
+        <p:commandButton id="complete" 
+                         value="#{messages['activity.button.Complete']}" 
+                         icon="fa fa-check" 
+                         action="#{bean.complete()}" 
+                         validateClient="true"
+                         styleClass="btn-success" />
+
+        <p:commandButton id="faild" 
+                         value="#{messages['activity.button.Failed']}" 
+                         icon="fa fa-ban" 
+                         action="#{bean.failed()}" 
+                         validateClient="true"
+                         styleClass="btn-danger" />
+
+    </ui:define>
+
 </ui:composition>

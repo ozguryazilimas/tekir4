@@ -31,8 +31,8 @@
                         <p:commandLink action="#{activityWidget.setFilter('OVERDUE')}" process="@this" update=":actW">
                             #{messages['activity.filter.OVERDUE']}
                         </p:commandLink>
-                        <p:commandLink action="#{activityWidget.setFilter('FAILD')}" process="@this"  update=":actW">
-                            #{messages['activity.filter.FAILD']}
+                        <p:commandLink action="#{activityWidget.setFilter('FAILED')}" process="@this"  update=":actW">
+                            #{messages['activity.filter.FAILED']}
                         </p:commandLink>
                         <p:commandLink action="#{activityWidget.setFilter('SUCCESS')}" process="@this" update=":actW">
                             #{messages['activity.filter.SUCCESS']}
@@ -98,12 +98,18 @@
                             <span class="product-description">
                                 #{act.body}
                             </span>
+                            <ui:fragment rendered="#{ act.status ne 'SCHEDULED' and (  act.resultNote ne '' or act.statusReason ne '' )}">
+                            <span class="product-description">
+                                <i class="fa #{ act.status eq 'SCHEDULED' ? 'fa-calendar' : act.status eq 'SUCCESS' ? 'fa-check' : 'fa-ban' }" />
+                                #{act.statusReason} #{act.resultNote}
+                            </span>
+                            </ui:fragment>
                             <span class="product-description text-sm">
                                 <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(act.regarding)}" />
                             </span>
                             <span class="product-description text-sm">
-                                <i class="fa fa-user"/> #{userLookup.getUserName(act.assignee)} 
-                                <i class="fa  fa-clock-o"/> <t:cellOutputDateTime value="#{act.dueDate}"/></span>
+                                <i class="fa fa-user margin-r-5"/>#{userLookup.getUserName(act.assignee)} 
+                                <i class="fa  fa-clock-o margin-r-5"/><t:cellOutputDateTime value="#{act.dueDate}"/></span>
                         </div>
                     </li>
                 </ui:repeat>

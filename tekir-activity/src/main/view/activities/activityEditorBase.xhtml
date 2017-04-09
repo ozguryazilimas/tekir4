@@ -21,6 +21,7 @@
 
             <ui:insert name="editorContent" />
 
+            <ui:remove>
             <div class="row">
                 <t:inputDateTime label="activity.label.DueDate" value="#{bean.entity.dueDate}" columnClass="col-xs-6"/>
                 <t:inputUser label="general.label.Assignee" value="#{bean.entity.assignee}" hasNotSelected="true" required="true"  columnClass="col-xs-6"/>
@@ -28,40 +29,41 @@
                     <t:inputText label="activity.label.Duration" value="#{bean.entity.duration}" columnClass="col-xs-6"/>
                 </ui:remove>
             </div>
+                </ui:remove>
 
             <ui:insert name="assignment" />
 
+                        <ui:remove>
             <div class="row">
                 <t:inputLookupDialog label="contact.label.Person" value="#{bean.entity.person}" lookupBean="#{contactLookup}" lookupListener="meetingActivityController.entity.person" placeholder="#{messages['contact.info.Person']}" lookupProfile="T:Person" columnClass="col-xs-6"/>
                 <t:inputLookupDialog label="general.label.Corporation" value="#{bean.entity.corporation}" lookupBean="#{contactLookup}" lookupListener="meetingActivityController.entity.corporation" placeholder="#{messages['general.info.Corparation']}" lookupProfile="T:Corporation" columnClass="col-xs-6"/>
             </div>
 
-            <ui:remove>
-                <t:inputSuggestion label="general.label.Reason" value="#{bean.entity.statusReason}" group="#{bean.entity.class.simpleName}" listener="" columnClass="col-xs-12"/>
+
 
                 <div class="row">
+                    <t:inputSuggestion label="general.label.Reason" value="#{bean.entity.statusReason}" group="#{bean.entity.class.simpleName}" listener="" columnClass="col-xs-12"/>
                     <t:inputTextarea label="general.label.Info" value="#{bean.entity.info}" columnClass="col-xs-12"/>
-                </div>
-
-                <div class="row">
                     <t:inputTextarea label="general.label.ResultNote" value="#{bean.entity.resultNote}" columnClass="col-xs-12"/>
                 </div>
-
             </ui:remove>
+
 
             <h:panelGroup styleClass="row" style="padding-top: 8px;" layout="block" >
                 <div class="col-xs-12">
                     <ui:insert name="actionButtons" />
 
-                    <div class="pull-left">
-                        <p:commandButton id="wsws" 
-                                         value="#{messages['general.button.Close']}" 
-                                         icon="fa fa-check" 
-                                         validateClient="true"
-                                         styleClass="btn-warning" 
-                                         onclick="PF('www').show();"
-                                         rendered="#{not bean.followupDlg}"/>
-                    </div>
+                    <ui:remove>
+                        <div class="pull-left">
+                            <p:commandButton id="wsws" 
+                                             value="#{messages['general.button.Close']}" 
+                                             icon="fa fa-check" 
+                                             validateClient="true"
+                                             styleClass="btn-warning" 
+                                             onclick="PF('www').show();"
+                                             rendered="#{not bean.followupDlg}"/>
+                        </div>
+                    </ui:remove>
 
                     <div class="pull-right">
 

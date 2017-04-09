@@ -26,15 +26,14 @@
                     <i class="#{messages['activity.button.icon.'.concat(activityBrowse.selectedItem.class.simpleName)]}"/> 
                     #{activityBrowse.activity.subject}
                     <ul class="list-inline text-sm text-muted">
-                    
-                    <ui:fragment rendered="#{contactBrowse.selectedItem.contactType ne null}" >
                     	<li><i class="fa fa-tag" /> #{messages['activity.status.'.concat(activityBrowse.selectedItem.status)]}</li>
                     	<li><i class="fa fa-tag" /> #{messages['activity.priority.'.concat(activityBrowse.selectedItem.priority)]}</li>
-                    </ui:fragment>
                     </ul>
                 </div>
             </div>
 
+            #{activityBrowse.activity.body}
+            
             <ui:fragment rendered="#{activityBrowse.activity.class.simpleName eq 'MeetingActivity'}">
                 <div class="row">
                     <t:outputText label="activity.label.Location" value="#{activityBrowse.activity.location}" columnClass="col-xs-12"/>
