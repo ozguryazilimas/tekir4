@@ -7,6 +7,9 @@ package com.ozguryazilim.tekir.account.credit;
 
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.AccountCreditNote;
+import com.ozguryazilim.tekir.entities.Contact;
+import com.ozguryazilim.tekir.entities.Corporation;
+import com.ozguryazilim.tekir.entities.Person;
 import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.tekir.entities.VoucherStateType;
 import com.ozguryazilim.tekir.voucher.VoucherFormBase;
@@ -74,6 +77,26 @@ public class AccountCreditNoteHome extends VoucherFormBase<AccountCreditNote>{
     @Override
     protected RepositoryBase<AccountCreditNote, ?> getRepository() {
         return repository;
+    }
+    
+    public Contact getAccount() {
+        return getEntity().getAccount();
+    }
+    
+    public Person getPerson() {
+        if (getAccount() instanceof Person) {
+            return (Person) getAccount();
+        } else {
+            return ((Corporation) getAccount()).getPrimaryContact();
+        }
+    }
+
+    public Corporation getCorporation() {
+        if (getAccount() instanceof Corporation) {
+            return (Corporation) getAccount();
+        } else {
+            return ((Person) getAccount()).getCorporation();
+        }
     }
     
 }
