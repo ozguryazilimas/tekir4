@@ -10,6 +10,7 @@ import com.ozguryazilim.tekir.entities.VoucherBase;
 import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.tekir.entities.VoucherStateType;
 import com.ozguryazilim.tekir.voucher.number.VoucherSerialService;
+import com.ozguryazilim.telve.audit.AuditLogger;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureQualifierLiteral;
@@ -68,6 +69,9 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
 
     @Inject
     private JasperReportHandler reportHandler;
+    
+    @Inject
+    private AuditLogger auditLogger;
     
     private VoucherStateConfig stateConfig;
 
@@ -389,6 +393,8 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
         } catch (JRException ex) {
             LOG.error("Error on printout", ex);
         }
+        
+        auditLogger.actionLog(getEntity().getClass().getSimpleName(), getEntity().getId(), getEntity().getVoucherNo(), "ACTION", "PRINT_OUT", identity.getLoginName(), jasperName);
     }
     
     /**
@@ -404,9 +410,12 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
      * @param event 
      */
     public void onOwnerChange(SelectEvent event) {
+        String oldOwner = getEntity().getOwner();
         String userName = (String) event.getObject();
         if( Strings.isNullOrEmpty(userName)) return;
         getEntity().setOwner(userName);
         save();
+        
+        auditLogger.actionLog(getEntity().getClass().getSimpleName(), getEntity().getId(), getEntity().getVoucherNo(), "ACTION", "OWNER_CHANGE", identity.getLoginName(), oldOwner + " -> " + userName);
     }
 }
