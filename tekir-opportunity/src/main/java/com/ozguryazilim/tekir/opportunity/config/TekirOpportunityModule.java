@@ -15,7 +15,7 @@ import javax.annotation.PostConstruct;
  * @author Hakan Uygun
  */
 @TelveModule
-public class TelveOpportunityModule {
+public class TekirOpportunityModule {
 
 
     @PostConstruct

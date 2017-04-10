@@ -11,14 +11,29 @@
         <permission target="industry" order="3">
             <entityActions />
         </permission>
-        <permission target="currencyDefinition" order="4">
-            <entityActions />
-        </permission>
         <permission target="unitSetDefinition" order="5">
             <entityActions />
         </permission>
-        <permission target="taxDefinition" order="6">
+        
+       
+    </permissionGroup>
+        <permissionGroup name="FinancialParams" order="100">
+        <permission target="currencyDefinition" order="1">
             <entityActions />
+        </permission>
+        <permission target="exchangeRate" order="2">
+            <entityActions />
+        </permission>
+         <permission target="paymentPlan" order="3">
+            <entityActions />
+        </permission>
+        <permission target="taxDefinition" order="4">
+            <entityActions />
+        </permission>
+    </permissionGroup>
+    <permissionGroup name="Dashlets">
+    	<permission target="exchangeRateDashlet">
+            <action name="select" />
         </permission>
     </permissionGroup>
 </permissions>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<permissions>
+    <permissionGroup name="Sales">
+        <permission target="salesOrder">
+            <entityActions scope="owner,group"/>
+            <action name="publish" scope="owner,group" order="7"/>
+            <action name="cancel" scope="owner,group" order="8"/> 
+            <action name="revise" scope="owner,group" order="9"/>           
+            <action name="print" scope="owner,group" order="10"/>
+            <action name="changeOwner" scope="owner,group" order="11"/>
+            <action name="complete" scope="owner,group" order="12"/>            
+            <action name="loss" scope="owner,group" order="13"/>
+        </permission>
+    </permissionGroup>
+    <permissionGroup name="Purchase">
+        <permission target="purchaseOrder">
+            <entityActions scope="owner,group"/>
+            <action name="publish" scope="owner,group" order="7"/>
+            <action name="cancel" scope="owner,group" order="8"/> 
+            <action name="revise" scope="owner,group" order="9"/>           
+            <action name="print" scope="owner,group" order="10"/>
+            <action name="changeOwner" scope="owner,group" order="11"/>
+            <action name="complete" scope="owner,group" order="12"/>            
+            <action name="loss" scope="owner,group" order="13"/>
+        </permission>
+    </permissionGroup>
+</permissions>

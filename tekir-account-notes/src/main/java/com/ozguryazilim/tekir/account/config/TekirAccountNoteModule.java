@@ -13,6 +13,6 @@ import com.ozguryazilim.telve.api.module.TelveModule;
  * @author Hakan Uygun
  */
 @TelveModule
-public class TelveAccountNoteModule {
+public class TekirAccountNoteModule {
     
 }

@@ -5,5 +5,8 @@
         <permission target="voucherGroup" order="1">
             <entityActions />
         </permission>
+        <permission target="process" order="1">
+            <entityActions />
+        </permission>
     </permissionGroup>
 </permissions>
