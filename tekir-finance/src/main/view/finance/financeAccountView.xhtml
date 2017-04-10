@@ -21,6 +21,7 @@
     
     <ui:define name="customHeader">
         <section class="content-header">
+          <p:outputPanel id="states">
             <ul class="states pull-right">
                 <li class="#{financeAccountHome.balance lt 0 ? 'text-red' : ''}">
                     <div style="font-weight: bold;">#{messages['general.label.Balance']}</div>
@@ -38,11 +39,25 @@
                 </li>
 
             </ul>
+            	</p:outputPanel>
             <i class="fa fa-3x #{messages['account.type.icon.'.concat(financeAccountHome.entity.type)]} pull-left" />
             <small class="text-muted">#{ messages[pageTitleResolver.pageTitle] }</small>
             <h1>#{messages['account.type.caption.'.concat(financeAccountHome.entity.type)]}  <small>#{ viewIdentifier }</small></h1> 
         </section>
     </ui:define>
+	
+	
+	<ui:define name="context-menu-2">
+		<li>		
+		 	<p:commandLink action="#{changeOwnerDialog.openDialog()}" styleClass="context-command" 
+ 						   ajax="false" rendered="#{financeAccountHome.hasChangeOwnerPermission()}">
+		 		<i class="fa fa-random"></i>
+ 		 		<h:outputText value=" #{messages['general.button.ChangeOwner']}" />
+       	 		<p:ajax event="dialogReturn" listener="#{financeAccountHome.onOwnerChange}" update=":states" />
+         	</p:commandLink>        
+       	</li>
+    </ui:define>
+   
 
     <ui:define name="caption">
         <div class="row">

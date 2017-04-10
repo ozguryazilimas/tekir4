@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.finance.account;
 
+import com.google.common.base.Strings;
 import com.ozguryazilim.finance.account.txn.FinanceAccountTxnRepository;
 import com.ozguryazilim.finance.config.FinancePages;
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
@@ -31,6 +32,7 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
 import org.apache.deltaspike.core.api.config.view.navigation.ViewNavigationHandler;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.DateAxis;
@@ -151,6 +153,25 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
         
         return super.onAfterLoad();
     }
+    
+    /**
+     * Belge sahipliğini değiştirme yetkisi var mı?
+     * @return 
+     */
+    public Boolean hasChangeOwnerPermission() {
+        return identity.isPermitted(getPermissionDomain() + ":changeOwner:" + getEntity().getOwner());
+    }
+    
+    /**
+     * Belge Sahibini değiştirir.
+     * @param event 
+     */
+    public void onOwnerChange(SelectEvent event) {
+        String userName = (String) event.getObject();
+        if( Strings.isNullOrEmpty(userName)) return;
+        getEntity().setOwner(userName);
+        save();
+   }
 
     public List<String> getAccountRoles() {
         return AccountRoleRegitery.getSelectableAccountRoles();

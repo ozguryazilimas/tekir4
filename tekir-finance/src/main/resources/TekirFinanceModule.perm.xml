@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<permissions>
+    <permissionGroup name="Finance">
+        <permission target="financeAccount">
+            <entityActions />
+            <action name="changeOwner" scope="owner,group" order="15"/>
+        </permission>
+    </permissionGroup>
+    <permissionGroup name="Dashlets">
+    	<permission target="financeAccountsDashlet">
+            <action name="select" />
+        </permission>
+        <permission target="financialStatusDashlet">
+            <action name="select" />
+        </permission>
+    </permissionGroup>
+</permissions>
