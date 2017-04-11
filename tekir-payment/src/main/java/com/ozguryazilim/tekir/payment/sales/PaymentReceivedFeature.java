@@ -7,11 +7,14 @@ package com.ozguryazilim.tekir.payment.sales;
 
 import com.ozguryazilim.tekir.entities.PaymentReceived;
 import com.ozguryazilim.tekir.payment.config.PaymentPages;
+import com.ozguryazilim.tekir.payment.purchase.PaymentSearchHandler;
 import com.ozguryazilim.tekir.voucher.Voucher;
 import com.ozguryazilim.telve.feature.AbstractFeatureHandler;
 import com.ozguryazilim.telve.feature.Feature;
 import com.ozguryazilim.telve.feature.Page;
 import com.ozguryazilim.telve.feature.PageType;
+import com.ozguryazilim.telve.feature.search.Search;
+
 import javax.enterprise.inject.Default;
 
 /**
@@ -23,6 +26,7 @@ import javax.enterprise.inject.Default;
 @Page( type = PageType.VIEW, page = PaymentPages.Sales.PaymentReceivedView.class )
 @Page( type = PageType.MASTER_VIEW, page = PaymentPages.Sales.PaymentReceivedMasterView.class )
 @Page( type = PageType.EDIT, page = PaymentPages.Sales.PaymentReceived.class )
+@Search(handler = PaymentReceivedSearchHandler.class )
 @Voucher @Default
 public class PaymentReceivedFeature extends AbstractFeatureHandler{
     

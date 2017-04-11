@@ -12,6 +12,8 @@ import com.ozguryazilim.telve.feature.AbstractFeatureHandler;
 import com.ozguryazilim.telve.feature.Feature;
 import com.ozguryazilim.telve.feature.Page;
 import com.ozguryazilim.telve.feature.PageType;
+import com.ozguryazilim.telve.feature.search.Search;
+
 import javax.enterprise.inject.Default;
 
 /**
@@ -23,6 +25,7 @@ import javax.enterprise.inject.Default;
 @Page( type = PageType.VIEW, page = OrderPages.Purchase.PurchaseOrderView.class )
 @Page( type = PageType.MASTER_VIEW, page = OrderPages.Purchase.PurchaseOrderMasterView.class )
 @Page( type = PageType.EDIT, page = OrderPages.Purchase.PurchaseOrder.class )
+@Search(handler = PurchaseOrderSearchHandler.class )
 @Voucher @Default
 public class PurchaseOrderFeature extends AbstractFeatureHandler{
     
