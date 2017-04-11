@@ -10,6 +10,7 @@ import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.qualifiers.After;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
+import javax.enterprise.event.TransactionPhase;
 import javax.inject.Inject;
 
 /**
@@ -28,7 +29,7 @@ public class VoucherStateChangeLogger {
     @Inject
     private AuditLogger auditLogger;
     
-    public void feed(@Observes @After VoucherStateChange event) {
+    public void feed(@Observes(during = TransactionPhase.AFTER_SUCCESS) @After VoucherStateChange event) {
     
         auditLogger.actionLog( event.getPayload().getClass().getSimpleName(), 
                                event.getPayload().getId(), 

@@ -18,6 +18,7 @@ import com.ozguryazilim.telve.qualifiers.After;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.event.Observes;
+import javax.enterprise.event.TransactionPhase;
 import javax.inject.Inject;
 
 /**
@@ -31,7 +32,7 @@ public class AccountDebitNoteFeeder extends AbstractFeeder<AccountDebitNote>{
     private Identity identity;
     
     
-    public void feed(@Observes @FeatureQualifier(feauture = AccountDebitNoteFeature.class) @After VoucherStateChange event) {
+    public void feed(@Observes(during = TransactionPhase.AFTER_SUCCESS) @FeatureQualifier(feauture = AccountDebitNoteFeature.class) @After VoucherStateChange event) {
 
         //FIXME: acaba bunun için bir Qualifier yapabilir miyiz?
         if (event.getPayload() instanceof AccountDebitNote) {
