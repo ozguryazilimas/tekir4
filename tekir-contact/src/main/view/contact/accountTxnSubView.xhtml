@@ -19,6 +19,10 @@
     <ui:param name="permission" value="accountTxn" />
 
 
-    
+    <ui:define name="beforeColumns">
+        <p:column styleClass="actionColumn">
+            <i class="fa #{item.status.startsWith( 'CLOSE', 0 ) ? 'fa-lock' : 'fa-unlock-alt' }" />
+        </p:column>
+    </ui:define>
 
 </ui:composition>

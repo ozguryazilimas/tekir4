@@ -30,7 +30,7 @@ import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
 
 /**
  * AccountTxn için repository sınıfı.
- * 
+ *
  * @author Hakan Uygun
  */
 @Repository
@@ -39,7 +39,7 @@ public abstract class AccountTxnRepository extends
         RepositoryBase<AccountTxn, AccountTxn>
         implements
         CriteriaSupport<AccountTxn> {
-    
+
     private Contact account;
 
     public Contact getAccount() {
@@ -53,14 +53,13 @@ public abstract class AccountTxnRepository extends
     @Override
     public List<AccountTxn> browseQuery(QueryDefinition queryDefinition) {
         List<Filter<AccountTxn, ?, ?>> filters = queryDefinition.getFilters();
-        
+
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
         //Geriye AccidentAnalysisViewModel dönecek cq'yu ona göre oluşturuyoruz.
         CriteriaQuery<AccountTxn> criteriaQuery = criteriaBuilder.createQuery(AccountTxn.class);
 
         //From Tabii ki PersonWorkHistory
         Root<AccountTxn> from = criteriaQuery.from(AccountTxn.class);
-        
 
         //Sonuç filtremiz
         /*
@@ -74,10 +73,8 @@ public abstract class AccountTxnRepository extends
                 //from.get(RelatedContact_.releation).get(ContactRelation_.name)
                 from.get(RelatedContact_.info)
         );*/
-
         //Filtreleri ekleyelim.
         List<Predicate> predicates = new ArrayList<>();
-        
 
         decorateFilters(filters, predicates, criteriaBuilder, from);
 
@@ -87,13 +84,19 @@ public abstract class AccountTxnRepository extends
             predicates.add(criteriaBuilder.or( 
                     criteriaBuilder.equal(from.get(RelatedContact_.sourceContact).get(Contact_.id), contact.getId()),
                     criteriaBuilder.equal(from.get(RelatedContact_.targetContact).get(Contact_.id), contact.getId())));
-            */
+             */
             predicates.add(criteriaBuilder.equal(from.get(AccountTxn_.account).get(Contact_.id), account.getId()));
         }
-        
+
         //filtremize ekledik.
         criteriaQuery.where(predicates.toArray(new Predicate[]{}));
 
+        // Öncelikle default sıralama verelim eğer kullanıcı tarafından tanımlı sıralama var ise onu setleyelim
+        if (queryDefinition.getSorters().isEmpty()) {
+            criteriaQuery.orderBy(criteriaBuilder.desc(from.get(AccountTxn_.date)));
+        } else {
+            criteriaQuery.orderBy(decorateSorts(queryDefinition.getSorters(), criteriaBuilder, from));
+        }
 
         //Haydi bakalım sonuçları alalım
         TypedQuery<AccountTxn> typedQuery = entityManager().createQuery(criteriaQuery);
@@ -101,28 +104,27 @@ public abstract class AccountTxnRepository extends
 
         return resultList;
     }
-    
-    
-    public abstract AccountTxn findOptionalByFeature( FeaturePointer feature );
-    
-    public abstract AccountTxn findOptionalByFeatureAndAccount( FeaturePointer feature , Contact account);
-    
-    public abstract List<AccountTxn> findByProcessId( String processId );
-    
-    public List<AccountTxn> findOpenTxnsByAccount( Contact account ){
-        Criteria<AccountTxn,AccountTxn> crit = criteria()
+
+    public abstract AccountTxn findOptionalByFeature(FeaturePointer feature);
+
+    public abstract AccountTxn findOptionalByFeatureAndAccount(FeaturePointer feature, Contact account);
+
+    public abstract List<AccountTxn> findByProcessId(String processId);
+
+    public List<AccountTxn> findOpenTxnsByAccount(Contact account) {
+        Criteria<AccountTxn, AccountTxn> crit = criteria()
                 .eq(AccountTxn_.account, account)
                 .or(
-                    criteria().like(AccountTxn_.status, "DRAFT%"),
-                    criteria().like(AccountTxn_.status, "OPEN%")
+                        criteria().like(AccountTxn_.status, "DRAFT%"),
+                        criteria().like(AccountTxn_.status, "OPEN%")
                 )
                 .orderDesc(AccountTxn_.date);
-        
+
         return crit.getResultList();
     }
-    
-    public List<AccountTxn> findPayables( Contact account ){
-        Criteria<AccountTxn,AccountTxn> crit = criteria()
+
+    public List<AccountTxn> findPayables(Contact account) {
+        Criteria<AccountTxn, AccountTxn> crit = criteria()
                 .eq(AccountTxn_.account, account)
                 .eq(AccountTxn_.accountable, true)
                 .eq(AccountTxn_.debit, true)
@@ -130,9 +132,9 @@ public abstract class AccountTxnRepository extends
                 .orderAsc(AccountTxn_.date);
         return null;
     }
-    
-    public List<AccountTxn> findReceivables( Contact account ){
-        Criteria<AccountTxn,AccountTxn> crit = criteria()
+
+    public List<AccountTxn> findReceivables(Contact account) {
+        Criteria<AccountTxn, AccountTxn> crit = criteria()
                 .eq(AccountTxn_.account, account)
                 .eq(AccountTxn_.accountable, true)
                 .eq(AccountTxn_.debit, false)
@@ -140,57 +142,57 @@ public abstract class AccountTxnRepository extends
                 .orderAsc(AccountTxn_.date);
         return null;
     }
-    
+
     /**
      *
      * @param feature hangi evrak türü. boş olması hepsi demek
      * @param username hangi kullanıcı için boş olması hesap demek
      * @param startDate hangi tarihten başlayacağız
      * @param limit geriye kaç sonuç dönecek
-     * @return 
+     * @return
      */
-    public List<AccountTxnSumModel> findTopAccounts( String feature, String username, Date startDate, int limit ){
+    public List<AccountTxnSumModel> findTopAccounts(String feature, String username, Date startDate, int limit) {
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
         //Geriye AccidentAnalysisViewModel dönecek cq'yu ona göre oluşturuyoruz.
         CriteriaQuery<AccountTxnSumModel> criteriaQuery = criteriaBuilder.createQuery(AccountTxnSumModel.class);
 
         //From Tabii ki PersonWorkHistory
         Root<AccountTxn> from = criteriaQuery.from(AccountTxn.class);
-        
+
         criteriaQuery.multiselect(
                 from.get(AccountTxn_.account).get(Contact_.id),
                 from.get(AccountTxn_.account).get(Contact_.name),
                 //from.get(AccountTxn_.account).type(),
                 criteriaBuilder.sum(from.get(AccountTxn_.localAmount))
         );
-        
+
         criteriaQuery.groupBy(
                 from.get(AccountTxn_.account).get(Contact_.id),
                 from.get(AccountTxn_.account).get(Contact_.name)
-                //,
-                //from.get(AccountTxn_.account).type(),
-                //from.get(AccountTxn_.currency)
+        //,
+        //from.get(AccountTxn_.account).type(),
+        //from.get(AccountTxn_.currency)
         );
-        
+
         //Filtreleri ekleyelim.
         List<Predicate> predicates = new ArrayList<>();
-        
-        if( !Strings.isNullOrEmpty(username)){
+
+        if (!Strings.isNullOrEmpty(username)) {
             predicates.add(criteriaBuilder.equal(from.get(AccountTxn_.owner), username));
         }
-        
-        if( !Strings.isNullOrEmpty(feature)){
+
+        if (!Strings.isNullOrEmpty(feature)) {
             predicates.add(criteriaBuilder.equal(from.get(AccountTxn_.feature).get(FeaturePointer_.feature), feature));
         }
-        
+
         predicates.add(criteriaBuilder.greaterThanOrEqualTo(from.get(AccountTxn_.date), startDate));
-        
+
         criteriaQuery.where(predicates.toArray(new Predicate[]{}));
-        
+
         TypedQuery<AccountTxnSumModel> typedQuery = entityManager().createQuery(criteriaQuery);
         typedQuery.setMaxResults(limit);
         List<AccountTxnSumModel> resultList = typedQuery.getResultList();
-        
+
         return resultList;
     }
 }
