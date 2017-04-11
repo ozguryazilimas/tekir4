@@ -15,6 +15,7 @@ import com.ozguryazilim.telve.forms.EntityChangeEvent;
 import com.ozguryazilim.telve.qualifiers.After;
 import com.ozguryazilim.telve.qualifiers.EntityQualifier;
 import javax.enterprise.event.Observes;
+import javax.enterprise.event.TransactionPhase;
 
 /**
  *
@@ -23,7 +24,7 @@ import javax.enterprise.event.Observes;
 @Feeder
 public class PaymentReceivedFeeder extends PaymentFeederBase<PaymentReceived>{
 
-    public void listenStateChange(@Observes @FeatureQualifier(feauture = PaymentReceivedFeature.class) @After VoucherStateChange event) {
+    public void listenStateChange(@Observes(during = TransactionPhase.AFTER_COMPLETION) @FeatureQualifier(feauture = PaymentReceivedFeature.class) @After VoucherStateChange event) {
         feedFeeder(event);
         feedMatcherService(event);
 

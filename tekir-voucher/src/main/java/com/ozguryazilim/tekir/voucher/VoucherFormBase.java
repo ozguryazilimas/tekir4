@@ -48,13 +48,13 @@ import org.slf4j.LoggerFactory;
 public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E, Long> {
 
     private static Logger LOG = LoggerFactory.getLogger(VoucherFormBase.class);
-    
+
     @Inject
     private Identity identity;
 
     @Inject
     private SequenceManager sequenceManager;
-    
+
     @Inject
     private VoucherSerialService voucherSerialService;
 
@@ -63,16 +63,17 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
 
     @Inject
     private ViewNavigationHandler viewNavigationHandler;
-    
-    @Inject @Any
+
+    @Inject
+    @Any
     private Instance<VoucherRedirectHandler> redirectHandlers;
 
     @Inject
     private JasperReportHandler reportHandler;
-    
+
     @Inject
     private AuditLogger auditLogger;
-    
+
     private VoucherStateConfig stateConfig;
 
     /**
@@ -101,7 +102,7 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
         //FIXME: Bunu config'den sınıf adına göre almak en temizi olur.
         String s = e.getClass().getSimpleName().substring(0, 2);
         e.setVoucherNo(voucherSerialService.getNewSerialNumber(getFeature()));
-        
+
         e.setOwner(identity.getLoginName());
 
         return e;
@@ -128,9 +129,9 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
      * @return
      */
     public List<VoucherStateAction> getPermittedStateTransitionActions() {
-        
+
         List<VoucherStateAction> result = new ArrayList<>();
-        
+
         Map<VoucherStateAction, VoucherState> trn = stateConfig.getTransitions().get(getCurrentState());
         if (trn == null) {
             return Collections.emptyList();
@@ -138,25 +139,25 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
         if (trn.isEmpty()) {
             return Collections.emptyList();
         }
-        
+
         trn.keySet().stream()
-                .filter( act -> !act.getSilence() )
-                .filter((act) -> ( identity.isPermitted(getPermissionDomain() + ":" +  act.getPermission() +":" + getEntity().getOwner()) ))
+                .filter(act -> !act.getSilence())
+                .filter((act) -> (identity.isPermitted(getPermissionDomain() + ":" + act.getPermission() + ":" + getEntity().getOwner())))
                 .forEachOrdered((act) -> {
                     result.add(act);
                 });
-        
+
         result.sort((VoucherStateAction t, VoucherStateAction t1) -> {
             return t.getOrder().compareTo(t1.getOrder());
         });
-        
+
         return result;
     }
-    
+
     public List<VoucherStateAction> getPermittedStateActions() {
-        
+
         List<VoucherStateAction> result = new ArrayList<>();
-        
+
         List<VoucherStateAction> acts = stateConfig.getStateActions(getCurrentState());
         if (acts == null) {
             return Collections.emptyList();
@@ -164,37 +165,36 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
         if (acts.isEmpty()) {
             return Collections.emptyList();
         }
-        
+
         acts.stream()
-                .filter( act -> !act.getSilence() )
-                .filter((act) -> ( identity.isPermitted(getPermissionDomain() + ":" +  act.getPermission() +":" + getEntity().getOwner()) ))
+                .filter(act -> !act.getSilence())
+                .filter((act) -> (identity.isPermitted(getPermissionDomain() + ":" + act.getPermission() + ":" + getEntity().getOwner())))
                 .forEachOrdered((act) -> {
                     result.add(act);
                 });
-        
+
         result.sort((VoucherStateAction t, VoucherStateAction t1) -> {
             return t.getOrder().compareTo(t1.getOrder());
         });
-        
+
         return result;
     }
-    
-    
+
     @Transactional
     public Class<? extends ViewConfig> triggerExec(String action) {
-        for( VoucherStateAction act : stateConfig.getStateActions(getCurrentState())){
-            if( act.getName().equals(action)){
+        for (VoucherStateAction act : stateConfig.getStateActions(getCurrentState())) {
+            if (act.getName().equals(action)) {
                 return act.execute();
             }
         }
-        
+
         return null;
     }
-    
+
+    @Transactional
     public Class<? extends ViewConfig> triggerExec(VoucherStateAction action) {
         return triggerExec(action.getName());
     }
-    
 
     /**
      * Bir state'den bir başka state'e geçiş için trigger.
@@ -213,17 +213,21 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
 
         //Şimdi varılacak olan state'i bulalım
         Map<VoucherStateAction, VoucherState> trn = stateConfig.getTransitions().get(getCurrentState());
-        if( trn == null ) return null;
+        if (trn == null) {
+            return null;
+        }
         VoucherState toState = trn.get(action);
-        if( toState == null ) return null;
+        if (toState == null) {
+            return null;
+        }
 
         //Gönderilecek olan event'i hazırlayalım
         VoucherStateChange e = new VoucherStateChange(fromState, action, toState, getEntity());
 
-        if( !onBeforeTrigger( e )){
+        if (!onBeforeTrigger(e)) {
             return null;
         }
-        
+
         //Before event'ini gönderelim
         stateChangeEvent
                 .select(new FeatureQualifierLiteral(getFeatureClass()))
@@ -232,24 +236,30 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
 
         //State değiştirip saklayalım
         getEntity().setState(toState);
-        Class<? extends ViewConfig> result = save();
+        try {
+            Class<? extends ViewConfig> result = save();
 
-        //After event'ini gönderelim
-        stateChangeEvent
-                .select(new FeatureQualifierLiteral(getFeatureClass()))
-                .select(new AfterLiteral())
-                .fire(e);
+            //After event'ini gönderelim
+            stateChangeEvent
+                    .select(new FeatureQualifierLiteral(getFeatureClass()))
+                    .select(new AfterLiteral())
+                    .fire(e);
 
-        //Burada redirect edilecek bişey var mı diye kontrol edilecek.
-        //BeanProvider.getContextualReferences(result, true)
-        
-        for( VoucherRedirectHandler vrh : redirectHandlers.select(new FeatureQualifierLiteral(getFeatureClass()))){
-            Class<? extends ViewConfig> r = vrh.redirect(e);
-            if( r != null ) return r;
+            //Burada redirect edilecek bişey var mı diye kontrol edilecek.
+            //BeanProvider.getContextualReferences(result, true)
+            for (VoucherRedirectHandler vrh : redirectHandlers.select(new FeatureQualifierLiteral(getFeatureClass()))) {
+                Class<? extends ViewConfig> r = vrh.redirect(e);
+                if (r != null) {
+                    return r;
+                }
+            }
+
+            //Ve bitti
+            return result;
+        } catch (Exception ex) {
+            getEntity().setState(fromState);
+            throw ex;
         }
-        
-        //Ve bitti
-        return result;
     }
 
     @Override
@@ -282,20 +292,21 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
         return super.onAfterLoad();
     }
 
-    public FeaturePointer getFeaturePointer(){
+    public FeaturePointer getFeaturePointer() {
         FeaturePointer fp = new FeaturePointer();
         fp.setBusinessKey(getEntity().getVoucherNo());
         fp.setPrimaryKey(getEntity().getId());
         fp.setFeature(getFeature().getName());
         return fp;
     }
-    
+
     /**
      * Action name üzerinden trigger tetikler.
      *
      * @param action
      * @return
      */
+    @Transactional
     public Class<? extends ViewConfig> trigger(String action) {
         return trigger(stateConfig.getActions().get(action));
     }
@@ -316,6 +327,7 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
      *
      * @return
      */
+    @Transactional
     public Class<? extends ViewConfig> triggerDlgAction() {
         return trigger(dlgStateAction);
     }
@@ -327,43 +339,43 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
     public Boolean hasViewPermission() {
         return identity.isPermitted(getPermissionDomain() + ":select:" + getEntity().getOwner());
     }
-    
+
     @Override
     public Boolean hasUpdatePermission() {
         //DRAFT olmayan hiç bir durumda edit yapılamaz gerisine bakmaya gerek yok.
-        if( !getEntity().getState().getType().equals(VoucherStateType.DRAFT)){
+        if (!getEntity().getState().getType().equals(VoucherStateType.DRAFT)) {
             return false;
         }
-        
+
         return identity.isPermitted(getPermissionDomain() + ":update:" + getEntity().getOwner());
     }
 
     @Override
     public Boolean hasDeletePermission() {
         //TODO: DELETE durumu biraz karışık. DRAFT state'i siler gerisini silemez demek makul mü? Yada close olanları silemez mi demeli? Ya da bunu config'den mi almalı?
-        if( !getEntity().getState().getType().equals(VoucherStateType.DRAFT)){
+        if (!getEntity().getState().getType().equals(VoucherStateType.DRAFT)) {
             return false;
         }
         return identity.isPermitted(getPermissionDomain() + ":delete:" + getEntity().getOwner());
     }
-    
-    
+
     /**
      * Belge sahipliğini değiştirme yetkisi var mı?
-     * @return 
+     *
+     * @return
      */
     public Boolean hasChangeOwnerPermission() {
         return identity.isPermitted(getPermissionDomain() + ":changeOwner:" + getEntity().getOwner());
     }
 
     /**
-     * State action tetiklemeden hemen önce çağrılır. 
-     * 
-     * Home sınıf üzerinde iş kuralları ile ilgili ek kontroller için kullanılır.
-     * Geriye false dönerse akış devam etmez.
-     * 
+     * State action tetiklemeden hemen önce çağrılır.
+     *
+     * Home sınıf üzerinde iş kuralları ile ilgili ek kontroller için
+     * kullanılır. Geriye false dönerse akış devam etmez.
+     *
      * @param e
-     * @return 
+     * @return
      */
     protected boolean onBeforeTrigger(VoucherStateChange e) {
         return true;
@@ -371,51 +383,55 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
 
     /**
      * ClassPath üzerinde jasper bularak onu çalıştırır.
-     * 
-     * printout.featureName keyi ile arama yapar. Bulamaz ise featureName.jasper arar.
-     * 
+     *
+     * printout.featureName keyi ile arama yapar. Bulamaz ise featureName.jasper
+     * arar.
+     *
      */
-    protected void printOut(){
+    protected void printOut() {
 
-        
         String fhn = getFeature().getName();
-        
-        String jasperName = ConfigResolver.getPropertyValue("printout." + fhn, fhn );
-        
-        Map<String,Object> params = new HashMap<>();
-        
+
+        String jasperName = ConfigResolver.getPropertyValue("printout." + fhn, fhn);
+
+        Map<String, Object> params = new HashMap<>();
+
         params.put("EID", getEntity().getId());
-        
+
         decoratePrintOutParams(params);
-        
+
         try {
             reportHandler.reportToPDF(jasperName, getEntity().getVoucherNo(), params);
         } catch (JRException ex) {
             LOG.error("Error on printout", ex);
         }
-        
+
         auditLogger.actionLog(getEntity().getClass().getSimpleName(), getEntity().getId(), getEntity().getVoucherNo(), "ACTION", "PRINT_OUT", identity.getLoginName(), jasperName);
     }
-    
+
     /**
      * PrintOut için ek parametre gönderilmek istenirse oveeride edilebilir.
-     * @param params 
+     *
+     * @param params
      */
-    protected void decoratePrintOutParams( Map<String,Object> params){
+    protected void decoratePrintOutParams(Map<String, Object> params) {
         //Varsayılan olarak içi boş
     }
-    
+
     /**
      * Belge Sahibini değiştirir.
-     * @param event 
+     *
+     * @param event
      */
     public void onOwnerChange(SelectEvent event) {
         String oldOwner = getEntity().getOwner();
         String userName = (String) event.getObject();
-        if( Strings.isNullOrEmpty(userName)) return;
+        if (Strings.isNullOrEmpty(userName)) {
+            return;
+        }
         getEntity().setOwner(userName);
         save();
-        
+
         auditLogger.actionLog(getEntity().getClass().getSimpleName(), getEntity().getId(), getEntity().getVoucherNo(), "ACTION", "OWNER_CHANGE", identity.getLoginName(), oldOwner + " -> " + userName);
     }
 }
