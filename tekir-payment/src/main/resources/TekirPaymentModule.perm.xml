@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<permissions>
+    <permissionGroup name="Sales">
+        <permission target="paymentReceived">
+            <entityActions scope="owner,group"/>
+			<action name="publish" scope="owner,group" order="7"/>
+            <action name="revise" scope="owner,group" order="9"/>           
+            <action name="print" scope="owner,group" order="10"/>
+            <action name="changeOwner" scope="owner,group" order="11"/>
+        </permission>
+    </permissionGroup>
+    <permissionGroup name="Purchase">
+        <permission target="payment">
+            <entityActions scope="owner,group"/>
+			<action name="publish" scope="owner,group" order="7"/>
+            <action name="revise" scope="owner,group" order="9"/>           
+            <action name="print" scope="owner,group" order="10"/>
+            <action name="changeOwner" scope="owner,group" order="11"/>
+        </permission>
+    </permissionGroup>
+</permissions>

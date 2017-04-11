@@ -5,20 +5,23 @@
         <permission target="accountCreditNote" >
             <entityActions scope="owner,group"/>
             <action name="publish" scope="owner,group"/>
-            <action name="revise" scope="owner,group"/>
+            <action name="reopen" scope="owner,group"/>
             <action name="print" scope="owner,group"/>
+            <action name="changeOwner" scope="owner,group"/>
         </permission>
         <permission target="accountDebitNote" >
             <entityActions scope="owner,group"/>
             <action name="publish" scope="owner,group"/>
-            <action name="revise" scope="owner,group"/>
+            <action name="reopen" scope="owner,group"/>
             <action name="print" scope="owner,group"/>
+            <action name="changeOwner" scope="owner,group"/>
         </permission>
         <permission target="accountVirement" >
             <entityActions scope="owner,group"/>
             <action name="publish" scope="owner,group"/>
             <action name="revise" scope="owner,group"/>
-            <action name="print" scope="owner,group"/>
+            <action name="reopen" scope="owner,group"/>
+            <action name="changeOwner" scope="owner,group"/>
         </permission>
     </permissionGroup>
 </permissions>

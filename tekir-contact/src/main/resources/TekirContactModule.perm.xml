@@ -21,5 +21,13 @@
         <permission target="accountTxn" order="100">
             <entityActions />
         </permission>
+            <permissionGroup name="Dashlets" order="13">
+        <permission target="activeContactsDashlet">            
+            <action name="select" scope="owner,group"/>
+        </permission>
+         <permission target="topAccountsDashlet">            
+            <action name="select" scope="owner,group"/>
+        </permission>
+    </permissionGroup>
     </permissionGroup>
 </permissions>

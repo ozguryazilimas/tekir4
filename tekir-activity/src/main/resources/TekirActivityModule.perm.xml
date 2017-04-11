@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<permissions>
+    <permissionGroup name="Activities">
+        <permission target="meetingActivity">           
+            <entityActions scope="owner,group"/>
+        </permission>
+        <permission target="phoneActivity">           
+            <entityActions scope="owner,group"/>
+        </permission>
+        <permission target="emailActivity">           
+            <entityActions scope="owner,group"/>
+        </permission>
+       	<permission target="taskActivity">           
+           <entityActions scope="owner,group"/>
+       	</permission>
+       	<permission target="faxActivity">           
+          <entityActions scope="owner,group"/>
+   	   	</permission>
+  		<permission target="smsActivity">           
+          <entityActions scope="owner,group"/>
+   	   	</permission>
+    </permissionGroup>
+</permissions>
