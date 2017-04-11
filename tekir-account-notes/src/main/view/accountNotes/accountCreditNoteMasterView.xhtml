@@ -28,15 +28,13 @@
 
             <div class="col-md-4 col-xs-12">
 
-                <ui:remove>
-                    <ui:include src="/activities/activityWidget.xhtml">
-                        <ui:param name="person" value="#{accountCreditNoteHome.entity.primaryContact}" />
-                        <ui:param name="corporation" value="#{accountCreditNoteHome.entity.account}" />
-                        <ui:param name="feature" value="#{accountCreditNoteHome.featurePointer}" />
-                        <ui:param name="attached" value="Feature" />
-                    </ui:include>
-                </ui:remove>
-
+                <ui:include src="/activities/activityWidget.xhtml">
+                    <ui:param name="person" value="#{accountCreditNoteHome.person}" />
+                    <ui:param name="corporation" value="#{accountCreditNoteHome.corporation}" />
+                    <ui:param name="feature" value="#{accountCreditNoteHome.featurePointer}" />
+                    <ui:param name="attached" value="Feature" />
+                </ui:include>
+                
                 <ui:include src="/notes/noteWidget.xhtml">
                     <ui:param name="featurePointer" value="#{accountCreditNoteHome.featurePointer}" />
                 </ui:include>

@@ -27,15 +27,14 @@
 
 
             <div class="col-md-4 col-xs-12">
-
-                <ui:remove>
+                
                 <ui:include src="/activities/activityWidget.xhtml">
-                    <ui:param name="person" value="#{accountDebitNoteHome.entity.primaryContact}" />
-                    <ui:param name="corporation" value="#{accountDebitNoteHome.entity.account}" />
+                    <ui:param name="person" value="#{accountDebitNoteHome.person}" />
+                    <ui:param name="corporation" value="#{accountDebitNoteHome.corporation}" />
                     <ui:param name="feature" value="#{accountDebitNoteHome.featurePointer}" />
                     <ui:param name="attached" value="Feature" />
                 </ui:include>
-                    </ui:remove>
+                
 
                 <ui:include src="/notes/noteWidget.xhtml">
                     <ui:param name="featurePointer" value="#{accountDebitNoteHome.featurePointer}" />
