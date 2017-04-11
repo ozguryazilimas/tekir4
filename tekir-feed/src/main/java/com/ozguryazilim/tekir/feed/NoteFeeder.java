@@ -14,6 +14,7 @@ import com.ozguryazilim.telve.qualifiers.EntityQualifier;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.event.Observes;
+import javax.enterprise.event.TransactionPhase;
 
 /**
  * Telve Note girişlerini yakalayıp bunları Feed sistemine ekler.
@@ -28,7 +29,7 @@ public class NoteFeeder extends AbstractFeeder<Note>{
      * 
      * @param event 
      */
-    public void feed( @Observes @After @EntityQualifier(entity = Note.class) EntityChangeEvent event ){
+    public void feed(@Observes(during = TransactionPhase.AFTER_SUCCESS) @After @EntityQualifier(entity = Note.class) EntityChangeEvent event ){
         
         if( event.getAction() != EntityChangeAction.INSERT) return;
         

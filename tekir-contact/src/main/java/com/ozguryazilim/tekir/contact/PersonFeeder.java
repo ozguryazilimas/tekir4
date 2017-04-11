@@ -10,6 +10,7 @@ import com.ozguryazilim.tekir.feed.AbstractFeeder;
 import com.ozguryazilim.tekir.feed.Feeder;
 import com.ozguryazilim.telve.auth.Identity;
 import javax.enterprise.event.Observes;
+import javax.enterprise.event.TransactionPhase;
 import javax.inject.Inject;
 
 /**
@@ -23,7 +24,7 @@ public class PersonFeeder extends AbstractFeeder<Person>{
     private Identity identity;
     
     
-    public void feed( @Observes Person entity) {
+    public void feed(@Observes(during = TransactionPhase.AFTER_COMPLETION) Person entity) {
        /*  FIXME: Burayı iyi bir düşünelim.
         FeaturePointer contactPointer = new FeaturePointer();
         contactPointer.setBusinessKey(entity.getName());

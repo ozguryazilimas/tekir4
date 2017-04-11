@@ -16,6 +16,7 @@ import com.ozguryazilim.telve.qualifiers.EntityQualifier;
 import java.io.Serializable;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.event.Observes;
+import javax.enterprise.event.TransactionPhase;
 import javax.inject.Inject;
 
 /**
@@ -29,7 +30,7 @@ public class AccountCreditNoteAccountTxnFeeder implements Serializable{
     private AccountTxnService accountTxnService;
     
     
-    public void feed(@Observes @EntityQualifier(entity = AccountCreditNote.class) @After EntityChangeEvent event) {
+    public void feed(@Observes(during = TransactionPhase.IN_PROGRESS) @EntityQualifier(entity = AccountCreditNote.class) @After EntityChangeEvent event) {
         
         if( event.getAction() != EntityChangeAction.DELETE   ) {
             AccountCreditNote entity = (AccountCreditNote) event.getEntity();
