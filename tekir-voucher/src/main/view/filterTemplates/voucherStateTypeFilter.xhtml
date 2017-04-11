@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <div class="col-xs-12">
+        <h:outputText value="#{messages[filter.labelKey]}" style="font-weight: bold;"/>
+    </div>
+    <div class="col-xs-12">
+        <p:selectOneMenu id="strOp#{idprefix}" value="#{filter.operand}" styleClass="small" >
+            <f:selectItems value="#{filter.operands}" var="operand"
+                           itemLabel="#{messages['filter.operand.type.'.concat( operand )]}"/>
+            <p:ajax update="strInput#{idprefix}" partialSubmit="true" process="@this" />
+        </p:selectOneMenu>
+    </div>
+    <div class="col-xs-12">
+        <div class="row">
+            <h:panelGroup id="strInput#{idprefix}" layout="block" styleClass="col-xs-12">
+                <p:selectOneMenu id="enumINP#{idprefix}" value="#{filter.value}" 
+                                 rendered="#{filter.operand ne 'All' and filter.operand ne 'None'}">
+                    <f:selectItems value="#{filter.types}" var="item"
+                                   itemLabel="#{messages[ 'vaucherState.type.'.concat( item )]}"
+                                    />
+                </p:selectOneMenu>
+            </h:panelGroup>
+        </div>
+    </div>
+
+</ui:composition>

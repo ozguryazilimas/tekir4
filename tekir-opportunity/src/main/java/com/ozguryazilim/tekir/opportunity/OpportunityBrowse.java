@@ -14,6 +14,8 @@ import com.ozguryazilim.tekir.entities.VoucherProcessBase_;
 import com.ozguryazilim.tekir.voucher.VoucherBrowseBase;
 import com.ozguryazilim.tekir.voucher.VoucherRepositoryBase;
 import com.ozguryazilim.tekir.voucher.columns.VoucherStateColumn;
+import com.ozguryazilim.tekir.voucher.filter.VoucherStateFilter;
+import com.ozguryazilim.tekir.voucher.filter.VoucherStateTypeFilter;
 import com.ozguryazilim.telve.forms.Browse;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.columns.DateColumn;
@@ -41,6 +43,9 @@ public class OpportunityBrowse extends VoucherBrowseBase<Opportunity, Opportunit
     @Inject
     private OpportunityRepository repository;
     
+    @Inject 
+    private OpportunityHome home;
+    
     @Override
     protected void buildQueryDefinition(QueryDefinition<Opportunity, OpportunityViewModel> queryDefinition) {
         queryDefinition
@@ -57,12 +62,15 @@ public class OpportunityBrowse extends VoucherBrowseBase<Opportunity, Opportunit
                 .addColumn(new TextColumn<>(VoucherBase_.stateInfo, "voucher.label.StateInfo"), false)
                 .addColumn(new VoucherStateColumn<>( VoucherBase_.state, "general.label.State"), false)
                 .addColumn(new SubTextColumn<>(Opportunity_.process, Process_.processNo, "voucher.label.Process"), false);
+
         
         queryDefinition
                 .addFilter(new StringFilter<>(VoucherBase_.voucherNo, "voucher.label.VoucherNo"))
                 .addFilter(new StringFilter<>(VoucherBase_.code, "voucher.label.Code"))
                 .addFilter(new StringFilter<>(VoucherBase_.info, "voucher.label.Info"))
                 .addFilter(new StringFilter<>(VoucherBase_.topic, "voucher.label.Topic"))
+                .addFilter(new VoucherStateFilter<>(VoucherBase_.state, home.getStateConfig().getStates(), "general.label.State"))
+                .addFilter(new VoucherStateTypeFilter<>(VoucherBase_.state, "voucher.label.StateType"))
                 .addFilter(new StringFilter<>(VoucherBase_.stateReason, "voucher.label.StateReason"))
                 .addFilter(new UserFilter<>(VoucherBase_.owner, "voucher.label.Owner"))
                 .addFilter(new BigDecimalFilter<>(Opportunity_.budget, "opportunity.label.Budget"))

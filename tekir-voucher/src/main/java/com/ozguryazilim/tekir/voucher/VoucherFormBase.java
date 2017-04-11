@@ -434,4 +434,10 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
 
         auditLogger.actionLog(getEntity().getClass().getSimpleName(), getEntity().getId(), getEntity().getVoucherNo(), "ACTION", "OWNER_CHANGE", identity.getLoginName(), oldOwner + " -> " + userName);
     }
+
+    public VoucherStateConfig getStateConfig() {
+        return stateConfig;
+    }
+    
+    
 }
