@@ -1,0 +1,18 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/browseBase.xhtml">
+
+    <ui:define name="beforeColumns">
+        <p:column styleClass="actionColumn">
+            <i class="fa #{item.state.type eq 'CLOSE' ? 'fa-lock' : 'fa-unlock-alt' }" />
+        </p:column>
+        <p:column styleClass="actionColumn">
+            <i class="fa #{item.state.effect eq 'POSITIVE' ? 'fa-check' : item.state.effect eq 'NEGATIVE' ? 'fa-ban' : '' } #{item.state.effect eq 'POSITIVE' ? 'text-success' : item.state.effect eq 'NEGATIVE' ? 'text-danger' : '' }" />
+        </p:column>
+    </ui:define>
+    
+</ui:composition>
