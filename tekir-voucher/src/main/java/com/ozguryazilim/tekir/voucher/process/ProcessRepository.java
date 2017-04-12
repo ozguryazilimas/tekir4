@@ -39,78 +39,77 @@ import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
  */
 @Dependent
 @Repository
-public abstract class ProcessRepository extends RepositoryBase<Process, Process> implements CriteriaSupport<Process>{
+public abstract class ProcessRepository extends RepositoryBase<Process, Process> implements CriteriaSupport<Process> {
 
-    @Override
-    public List<Process> lookupQuery(String searchText) {
-        return criteria().getResultList();
-    }
-    
-    
-    public List<Process> lookupQuery(String searchText, Long accountId, ProcessType type ) {
-        return criteria()
-                .eq(Process_.type, type)
-                .eq(Process_.status, ProcessStatus.OPEN)
-                .join(Process_.account,
-                    where(Contact.class)
-                        .eq(Contact_.id, accountId)
-                )
-                .getResultList();
-    }
-    
-    
-    public List<Process> lookupQuery(String searchText, ProcessType type ) {
-        return criteria()
-                .eq(Process_.type, type)
-                .eq(Process_.status, ProcessStatus.OPEN)
-                .getResultList();
-    }
-    
-    @Override
-    public List<Process> browseQuery(QueryDefinition queryDefinition) {
-        List<Filter<Process, ?, ?>> filters = queryDefinition.getFilters();
+	@Override
+	public List<Process> lookupQuery(String searchText) {
+		return criteria().getResultList();
+	}
 
-        CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
+	@Override
+	public List<Process> suggestion(String searchText) {
+		return criteria()
+				.or(criteria().like(Process_.processNo, "%" + searchText + "%"),
+					criteria().like(Process_.topic, "%" + searchText + "%"))
+				.eq(Process_.status, ProcessStatus.OPEN).getResultList();		
+	}
+	
 
-        CriteriaQuery<Process> criteriaQuery = criteriaBuilder.createQuery(Process.class);
-        
+	public List<Process> lookupQuery(String searchText, Long accountId, ProcessType type) {
+		return criteria().eq(Process_.type, type).eq(Process_.status, ProcessStatus.OPEN)
+				.join(Process_.account, where(Contact.class).eq(Contact_.id, accountId)).getResultList();
+	}
 
-        Root<Process> from = criteriaQuery.from(Process.class);
-        Join<Process, Contact> pa = from.join(Process_.account, JoinType.LEFT);
+	public List<Process> lookupQuery(String searchText, ProcessType type) {
+		return criteria().eq(Process_.type, type).eq(Process_.status, ProcessStatus.OPEN).getResultList();
+	}
 
-        //Filtreleri ekleyelim.
-        List<Predicate> predicates = new ArrayList<>();
+	@Override
+	public List<Process> browseQuery(QueryDefinition queryDefinition) {
+		List<Filter<Process, ?, ?>> filters = queryDefinition.getFilters();
 
-        decorateFilters(filters, predicates, criteriaBuilder, from);
-        
-        buildSearchTextControl(queryDefinition.getSearchText(), criteriaBuilder, predicates, from);         
+		CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
 
-        //Oluşan filtreleri sorgumuza ekliyoruz
-        criteriaQuery.where(predicates.toArray(new Predicate[]{}));
+		CriteriaQuery<Process> criteriaQuery = criteriaBuilder.createQuery(Process.class);
 
-        // Öncelikle default sıralama verelim eğer kullanıcı tarafından tanımlı sıralama var ise onu setleyelim
-        if (queryDefinition.getSorters().isEmpty()) {
-            criteriaQuery.orderBy(criteriaBuilder.asc(from.get(Process_.topic)));
-        } else {
-            criteriaQuery.orderBy(decorateSorts(queryDefinition.getSorters(), criteriaBuilder, from));
-        }
+		Root<Process> from = criteriaQuery.from(Process.class);
+		Join<Process, Contact> pa = from.join(Process_.account, JoinType.LEFT);
 
-        //Haydi bakalım sonuçları alalım
-        TypedQuery<Process> typedQuery = entityManager().createQuery(criteriaQuery);
-        typedQuery.setMaxResults(queryDefinition.getResultLimit());
-        List<Process> resultList = typedQuery.getResultList();
+		// Filtreleri ekleyelim.
+		List<Predicate> predicates = new ArrayList<>();
 
-        return resultList;
-    }   
-    
-    private void buildSearchTextControl(String searchText, CriteriaBuilder criteriaBuilder, List<Predicate> predicates, Root<? extends Process> from) {
-        if (!Strings.isNullOrEmpty(searchText)) {
-            predicates.add(criteriaBuilder.or(criteriaBuilder.like(from.get(Process_.account).get(Contact_.name), "%" + searchText + "%"),
-                    criteriaBuilder.like(from.get(Process_.topic), "%" + searchText + "%")));
-        }
-    }
-    
-    public abstract Process findAnyByProcessNo( String processNo );
-    
-    
+		decorateFilters(filters, predicates, criteriaBuilder, from);
+
+		buildSearchTextControl(queryDefinition.getSearchText(), criteriaBuilder, predicates, from);
+
+		// Oluşan filtreleri sorgumuza ekliyoruz
+		criteriaQuery.where(predicates.toArray(new Predicate[] {}));
+
+		// Öncelikle default sıralama verelim eğer kullanıcı tarafından tanımlı
+		// sıralama var ise onu setleyelim
+		if (queryDefinition.getSorters().isEmpty()) {
+			criteriaQuery.orderBy(criteriaBuilder.asc(from.get(Process_.topic)));
+		} else {
+			criteriaQuery.orderBy(decorateSorts(queryDefinition.getSorters(), criteriaBuilder, from));
+		}
+
+		// Haydi bakalım sonuçları alalım
+		TypedQuery<Process> typedQuery = entityManager().createQuery(criteriaQuery);
+		typedQuery.setMaxResults(queryDefinition.getResultLimit());
+		List<Process> resultList = typedQuery.getResultList();
+
+		return resultList;
+	}
+
+	private void buildSearchTextControl(String searchText, CriteriaBuilder criteriaBuilder, List<Predicate> predicates,
+			Root<? extends Process> from) {
+		if (!Strings.isNullOrEmpty(searchText)) {
+			predicates.add(criteriaBuilder.or(
+					criteriaBuilder.like(from.get(Process_.account).get(Contact_.name), "%" + searchText + "%"),
+					criteriaBuilder.like(from.get(Process_.topic), "%" + searchText + "%")));
+		}
+	}
+
+	public abstract Process findAnyByProcessNo(String processNo);
+
 }

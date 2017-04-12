@@ -31,8 +31,8 @@ public class ProcessLookup extends LookupTableControllerBase<Process, Process> {
         model.addColumn("processNo", "voucher.label.Process");
         model.addColumn("topic", "general.label.Topic");
     }
-
     
+
     @Override
     public void populateData() {
         String accountId = getModel().getProfileProperties().get("A");

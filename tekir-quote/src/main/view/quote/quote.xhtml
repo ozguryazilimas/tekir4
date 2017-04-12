@@ -33,7 +33,7 @@
                     <t:inputText label="voucher.label.ReferenceNo" value="#{quoteHome.entity.referenceNo}" columnClass="col-md-4"/>
                     
                     <p:outputPanel id="prss">
-                    <t:inputProcess value="#{quoteHome.process}" lookupListener="quoteHome.process" lookupProfile="A:#{quoteHome.entity.account.id};T:SALES" update=":form:ddt" />
+                    <t:inputProcess value="#{quoteHome.process}" caption="topic" lookupListener="quoteHome.process" lookupProfile="A:#{quoteHome.entity.account.id};T:SALES" update=":form:ddt" />
                     </p:outputPanel>
                     
                     <t:inputLookupDialog label="voucher.label.Group" value="#{quoteHome.entity.group}" lookupBean="#{voucherGroupLookup}" lookupListener="quoteHome.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" />
