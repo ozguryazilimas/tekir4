@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ozguryazilim.tekir.opportunity;
+package com.ozguryazilim.tekir.payment.purchase;
 
-import com.ozguryazilim.tekir.entities.Opportunity;
+import com.ozguryazilim.tekir.entities.Payment;
 import com.ozguryazilim.tekir.entities.VoucherBase_;
 import com.ozguryazilim.tekir.entities.VoucherStateType;
+import com.ozguryazilim.tekir.payment.PaymentViewModel;
 import com.ozguryazilim.tekir.voucher.filter.VoucherStateTypeFilter;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.feature.search.AbstractFeatureSearchHandler;
@@ -26,10 +27,10 @@ import javax.inject.Inject;
  * @author oyas
  */
 @Dependent
-public class OpportunitySearchHandler extends AbstractFeatureSearchHandler{
+public class PaymentSearchHandler extends AbstractFeatureSearchHandler{
 
     @Inject
-    private OpportunityRepository repository;
+    private PaymentRepository repository;
     
     @Inject
     private Identity indentity;
@@ -37,7 +38,7 @@ public class OpportunitySearchHandler extends AbstractFeatureSearchHandler{
     @Override
     public List<FeatureSearchResult> search(String searchText, Map<String,Object> params ) {
         
-        QueryDefinition<Opportunity, OpportunityViewModel> query = new QueryDefinition<>();
+        QueryDefinition<Payment, PaymentViewModel> query = new QueryDefinition<>();
         
         query.setSearchText(searchText);
         
@@ -63,9 +64,9 @@ public class OpportunitySearchHandler extends AbstractFeatureSearchHandler{
         }
         
         List<FeatureSearchResult> result = new ArrayList<>();
-        for( OpportunityViewModel o : repository.browseQuery(query) ){
+        for( PaymentViewModel o : repository.browseQuery(query) ){
             FeatureSearchResult sr = new FeatureSearchResult(
-                    OpportunityFeature.class.getSimpleName(),
+                    PaymentFeature.class.getSimpleName(),
                     o.getVoucherNo(),
                     o.getId(),
                     o.getTopic(),

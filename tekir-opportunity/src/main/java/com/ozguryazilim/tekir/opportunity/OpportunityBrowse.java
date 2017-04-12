@@ -12,6 +12,7 @@ import com.ozguryazilim.tekir.entities.Process_;
 import com.ozguryazilim.tekir.entities.VoucherBase_;
 import com.ozguryazilim.tekir.entities.VoucherProcessBase_;
 import com.ozguryazilim.tekir.voucher.VoucherBrowseBase;
+import com.ozguryazilim.tekir.voucher.VoucherFormBase;
 import com.ozguryazilim.tekir.voucher.VoucherRepositoryBase;
 import com.ozguryazilim.tekir.voucher.columns.VoucherStateColumn;
 import com.ozguryazilim.tekir.voucher.filter.VoucherStateFilter;
@@ -69,7 +70,7 @@ public class OpportunityBrowse extends VoucherBrowseBase<Opportunity, Opportunit
                 .addFilter(new StringFilter<>(VoucherBase_.code, "voucher.label.Code"))
                 .addFilter(new StringFilter<>(VoucherBase_.info, "voucher.label.Info"))
                 .addFilter(new StringFilter<>(VoucherBase_.topic, "voucher.label.Topic"))
-                .addFilter(new VoucherStateFilter<>(VoucherBase_.state, home.getStateConfig().getStates(), "general.label.State"))
+                .addFilter(new VoucherStateFilter<>(VoucherBase_.state, getHome().getStateConfig().getStates(), "general.label.State"))
                 .addFilter(new VoucherStateTypeFilter<>(VoucherBase_.state, "voucher.label.StateType"))
                 .addFilter(new StringFilter<>(VoucherBase_.stateReason, "voucher.label.StateReason"))
                 .addFilter(new UserFilter<>(VoucherBase_.owner, "voucher.label.Owner"))
@@ -83,6 +84,12 @@ public class OpportunityBrowse extends VoucherBrowseBase<Opportunity, Opportunit
     @Override
     public VoucherRepositoryBase<Opportunity, OpportunityViewModel> getVoucherRepository() {
         return repository;
+    }
+    
+    @Override
+    public VoucherFormBase<Opportunity> getHome() {
+    	// TODO Auto-generated method stub
+    	return home;
     }
     
 }

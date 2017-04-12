@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ozguryazilim.tekir.opportunity;
+package com.ozguryazilim.tekir.order.purchase;
 
-import com.ozguryazilim.tekir.entities.Opportunity;
+import com.ozguryazilim.tekir.entities.PurchaseOrder;
 import com.ozguryazilim.tekir.entities.VoucherBase_;
 import com.ozguryazilim.tekir.entities.VoucherStateType;
 import com.ozguryazilim.tekir.voucher.filter.VoucherStateTypeFilter;
@@ -26,10 +26,10 @@ import javax.inject.Inject;
  * @author oyas
  */
 @Dependent
-public class OpportunitySearchHandler extends AbstractFeatureSearchHandler{
+public class PurchaseOrderSearchHandler extends AbstractFeatureSearchHandler{
 
     @Inject
-    private OpportunityRepository repository;
+    private PurchaseOrderRepository repository;
     
     @Inject
     private Identity indentity;
@@ -37,7 +37,7 @@ public class OpportunitySearchHandler extends AbstractFeatureSearchHandler{
     @Override
     public List<FeatureSearchResult> search(String searchText, Map<String,Object> params ) {
         
-        QueryDefinition<Opportunity, OpportunityViewModel> query = new QueryDefinition<>();
+        QueryDefinition<PurchaseOrder, PurchaseOrderViewModel> query = new QueryDefinition<>();
         
         query.setSearchText(searchText);
         
@@ -63,9 +63,9 @@ public class OpportunitySearchHandler extends AbstractFeatureSearchHandler{
         }
         
         List<FeatureSearchResult> result = new ArrayList<>();
-        for( OpportunityViewModel o : repository.browseQuery(query) ){
+        for( PurchaseOrderViewModel o : repository.browseQuery(query) ){
             FeatureSearchResult sr = new FeatureSearchResult(
-                    OpportunityFeature.class.getSimpleName(),
+                    PurchaseOrderFeature.class.getSimpleName(),
                     o.getVoucherNo(),
                     o.getId(),
                     o.getTopic(),

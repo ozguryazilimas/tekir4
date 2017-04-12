@@ -3,9 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ozguryazilim.tekir.opportunity;
+package com.ozguryazilim.tekir.account.credit;
 
-import com.ozguryazilim.tekir.entities.Opportunity;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.enterprise.context.Dependent;
+import javax.inject.Inject;
+
+import com.ozguryazilim.tekir.entities.AccountCreditNote;
 import com.ozguryazilim.tekir.entities.VoucherBase_;
 import com.ozguryazilim.tekir.entities.VoucherStateType;
 import com.ozguryazilim.tekir.voucher.filter.VoucherStateTypeFilter;
@@ -15,21 +22,16 @@ import com.ozguryazilim.telve.feature.search.FeatureSearchResult;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.filters.FilterOperand;
 import com.ozguryazilim.telve.query.filters.StringFilter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
 
 /**
  *
  * @author oyas
  */
 @Dependent
-public class OpportunitySearchHandler extends AbstractFeatureSearchHandler{
+public class AccountCreditNoteSearchHandler extends AbstractFeatureSearchHandler{
 
     @Inject
-    private OpportunityRepository repository;
+    private AccountCreditNoteRepository repository;
     
     @Inject
     private Identity indentity;
@@ -37,7 +39,7 @@ public class OpportunitySearchHandler extends AbstractFeatureSearchHandler{
     @Override
     public List<FeatureSearchResult> search(String searchText, Map<String,Object> params ) {
         
-        QueryDefinition<Opportunity, OpportunityViewModel> query = new QueryDefinition<>();
+        QueryDefinition<AccountCreditNote, AccountCreditNoteViewModel> query = new QueryDefinition<>();
         
         query.setSearchText(searchText);
         
@@ -52,6 +54,7 @@ public class OpportunitySearchHandler extends AbstractFeatureSearchHandler{
             }
         }
         
+        
         if( params.get("ACTIVES") != null ){
             Boolean b = (Boolean) params.get("ACTIVES");
             if( b ){
@@ -63,9 +66,9 @@ public class OpportunitySearchHandler extends AbstractFeatureSearchHandler{
         }
         
         List<FeatureSearchResult> result = new ArrayList<>();
-        for( OpportunityViewModel o : repository.browseQuery(query) ){
+        for( AccountCreditNoteViewModel o : repository.browseQuery(query) ){
             FeatureSearchResult sr = new FeatureSearchResult(
-                    OpportunityFeature.class.getSimpleName(),
+            		AccountCreditNoteFeature.class.getSimpleName(),
                     o.getVoucherNo(),
                     o.getId(),
                     o.getTopic(),

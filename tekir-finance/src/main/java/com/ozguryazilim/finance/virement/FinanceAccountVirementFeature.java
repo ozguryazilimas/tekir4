@@ -14,6 +14,7 @@ import com.ozguryazilim.telve.feature.AbstractFeatureHandler;
 import com.ozguryazilim.telve.feature.Feature;
 import com.ozguryazilim.telve.feature.Page;
 import com.ozguryazilim.telve.feature.PageType;
+import com.ozguryazilim.telve.feature.search.Search;
 
 /**
  *
@@ -24,6 +25,7 @@ import com.ozguryazilim.telve.feature.PageType;
 @Page( type = PageType.VIEW, page = FinancePages.FinanceAccountVirementView.class )
 @Page( type = PageType.MASTER_VIEW, page = FinancePages.FinanceAccountVirementMasterView.class )
 @Page( type = PageType.EDIT, page = FinancePages.FinanceAccountVirement.class )
+@Search(handler = FinanceAccountVirementSearchHandler.class )
 @Voucher @Default
 public class FinanceAccountVirementFeature extends AbstractFeatureHandler{
     

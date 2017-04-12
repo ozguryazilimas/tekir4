@@ -9,8 +9,11 @@ import com.ozguryazilim.tekir.entities.Quote_;
 import com.ozguryazilim.tekir.entities.VoucherBase_;
 import com.ozguryazilim.tekir.entities.VoucherProcessBase_;
 import com.ozguryazilim.tekir.voucher.VoucherBrowseBase;
+import com.ozguryazilim.tekir.voucher.VoucherFormBase;
 import com.ozguryazilim.tekir.voucher.VoucherRepositoryBase;
 import com.ozguryazilim.tekir.voucher.columns.VoucherStateColumn;
+import com.ozguryazilim.tekir.voucher.filter.VoucherStateFilter;
+import com.ozguryazilim.tekir.voucher.filter.VoucherStateTypeFilter;
 import com.ozguryazilim.telve.query.columns.DateColumn;
 import com.ozguryazilim.telve.query.columns.LinkColumn;
 import com.ozguryazilim.telve.query.columns.MoneyColumn;
@@ -36,6 +39,9 @@ public class QuoteBrowse extends VoucherBrowseBase<Quote, QuoteViewModel> {
 
     @Inject
     private QuoteRepository repository;
+    
+    @Inject
+    private QuoteHome home;
 
     @Override
     protected void buildQueryDefinition(QueryDefinition<Quote, QuoteViewModel> queryDefinition) {
@@ -59,6 +65,8 @@ public class QuoteBrowse extends VoucherBrowseBase<Quote, QuoteViewModel> {
                 .addFilter(new StringFilter<>(VoucherBase_.code, "voucher.label.Code"))
                 .addFilter(new StringFilter<>(VoucherBase_.info, "voucher.label.Info"))
                 .addFilter(new StringFilter<>(VoucherBase_.topic, "voucher.label.Topic"))
+                .addFilter(new VoucherStateFilter<>(VoucherBase_.state, getHome().getStateConfig().getStates(), "general.label.State"))
+                .addFilter(new VoucherStateTypeFilter<>(VoucherBase_.state, "voucher.label.StateType"))
                 .addFilter(new StringFilter<>(VoucherBase_.stateReason, "voucher.label.StateReason"))
                 .addFilter(new UserFilter<>(VoucherBase_.owner, "voucher.label.Owner"))
                 .addFilter(new BigDecimalFilter<>(Quote_.total, "general.label.Total"))
@@ -72,4 +80,10 @@ public class QuoteBrowse extends VoucherBrowseBase<Quote, QuoteViewModel> {
     public VoucherRepositoryBase<Quote, QuoteViewModel> getVoucherRepository() {
         return repository;
     }
+
+	@Override
+	public VoucherFormBase<Quote> getHome() {
+		// TODO Auto-generated method stub
+		return home;
+	}
 }

@@ -12,6 +12,8 @@ import com.ozguryazilim.tekir.entities.AccountDebitNote;
 import com.ozguryazilim.tekir.voucher.Voucher;
 import com.ozguryazilim.telve.feature.Page;
 import com.ozguryazilim.telve.feature.PageType;
+import com.ozguryazilim.telve.feature.search.Search;
+
 import javax.enterprise.inject.Default;
 
 /**
@@ -23,6 +25,7 @@ import javax.enterprise.inject.Default;
 @Page( type = PageType.VIEW, page = AccountNotePages.AccountDebitNoteView.class )
 @Page( type = PageType.MASTER_VIEW, page = AccountNotePages.AccountDebitNoteMasterView.class )
 @Page( type = PageType.EDIT, page = AccountNotePages.AccountDebitNote.class )
+@Search(handler = AccountDebitNoteSearchHandler.class )
 @Voucher @Default
 public class AccountDebitNoteFeature extends AbstractFeatureHandler{
     
