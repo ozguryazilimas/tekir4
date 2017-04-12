@@ -20,7 +20,7 @@
                 <p:selectOneMenu id="enumINP#{idprefix}" value="#{filter.value}" 
                                  rendered="#{filter.operand ne 'All' and filter.operand ne 'None'}">
                     <f:selectItems value="#{filter.types}" var="item"
-                                   itemLabel="#{messages[ 'vaucherState.type.'.concat( item )]}"
+                                   itemLabel="#{messages['voucherState.type.'.concat( item )]}"
                                     />
                 </p:selectOneMenu>
             </h:panelGroup>
