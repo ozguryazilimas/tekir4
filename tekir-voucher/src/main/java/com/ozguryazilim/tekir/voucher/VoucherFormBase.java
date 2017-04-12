@@ -210,6 +210,8 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
 
         //Önce mevcut State'i alalım
         VoucherState fromState = getCurrentState();
+        String fromStateReason = getEntity().getStateReason();
+        String fromStateInfo = getEntity().getStateInfo();
 
         //Şimdi varılacak olan state'i bulalım
         Map<VoucherStateAction, VoucherState> trn = stateConfig.getTransitions().get(getCurrentState());
@@ -236,6 +238,13 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
 
         //State değiştirip saklayalım
         getEntity().setState(toState);
+        
+        //State reason yoksa eskisini silelim
+        if(!action.hasDialog()){
+        	getEntity().setStateReason(null);
+        	getEntity().setStateInfo(null);
+        }
+        
         try {
             Class<? extends ViewConfig> result = save();
 
@@ -258,6 +267,10 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
             return result;
         } catch (Exception ex) {
             getEntity().setState(fromState);
+            if(!action.hasDialog()){
+            	getEntity().setStateReason(fromStateReason);
+            	getEntity().setStateInfo(fromStateInfo);
+            }
             throw ex;
         }
     }
