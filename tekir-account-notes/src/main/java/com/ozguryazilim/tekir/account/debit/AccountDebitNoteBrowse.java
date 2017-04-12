@@ -10,8 +10,11 @@ import com.ozguryazilim.tekir.entities.AccountDebitNote_;
 import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.tekir.entities.VoucherBase_;
 import com.ozguryazilim.tekir.voucher.VoucherBrowseBase;
+import com.ozguryazilim.tekir.voucher.VoucherFormBase;
 import com.ozguryazilim.tekir.voucher.VoucherRepositoryBase;
 import com.ozguryazilim.tekir.voucher.columns.VoucherStateColumn;
+import com.ozguryazilim.tekir.voucher.filter.VoucherStateFilter;
+import com.ozguryazilim.tekir.voucher.filter.VoucherStateTypeFilter;
 import com.ozguryazilim.telve.forms.Browse;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.columns.DateColumn;
@@ -39,16 +42,19 @@ public class AccountDebitNoteBrowse extends VoucherBrowseBase<AccountDebitNote, 
     @Inject
     private AccountDebitNoteRepository repository;
     
+    @Inject
+    private AccountDebitNoteHome home;
+    
     @Override
     protected void buildQueryDefinition(QueryDefinition<AccountDebitNote, AccountDebitNoteViewModel> queryDefinition) {
         queryDefinition
-                .addColumn(new VoucherStateColumn<>( VoucherBase_.state, "general.label.State"), true)
                 .addColumn(new DateColumn<>(VoucherBase_.date, "general.label.Date"), true)
                 .addColumn(new LinkColumn<>(VoucherBase_.voucherNo, "voucher.label.VoucherNo"), true)
                 .addColumn(new SubTextColumn<>(AccountDebitNote_.account, Contact_.name, "general.label.Account"), true)
                 .addColumn(new TextColumn<>(VoucherBase_.info, "general.label.Info"), true)
                 .addColumn(new TextColumn<>(VoucherBase_.code, "general.label.Code"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.referenceNo, "voucher.label.ReferenceNo"), false)
+                .addColumn(new VoucherStateColumn<>(VoucherBase_.state, "general.label.State"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.stateReason, "voucher.label.StateReason"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.stateInfo, "voucher.label.StateInfo"), false)
                 .addColumn(new UserColumn<>(VoucherBase_.owner, "voucher.label.Owner"), true)
@@ -59,6 +65,8 @@ public class AccountDebitNoteBrowse extends VoucherBrowseBase<AccountDebitNote, 
                 .addFilter(new StringFilter<>(VoucherBase_.code, "voucher.label.Code"))
                 .addFilter(new StringFilter<>(VoucherBase_.info, "voucher.label.Info"))
                 .addFilter(new StringFilter<>(VoucherBase_.topic, "voucher.label.Topic"))
+                .addFilter(new VoucherStateFilter<>(VoucherBase_.state, getHome().getStateConfig().getStates(), "general.label.State"))
+                .addFilter(new VoucherStateTypeFilter<>(VoucherBase_.state, "voucher.label.StateType"))
                 .addFilter(new StringFilter<>(VoucherBase_.stateReason, "voucher.label.StateReason"))
                 .addFilter(new UserFilter<>(VoucherBase_.owner, "voucher.label.Owner"))
                 .addFilter(new BigDecimalFilter<>(AccountDebitNote_.amount, "general.label.Amount"))
@@ -70,6 +78,12 @@ public class AccountDebitNoteBrowse extends VoucherBrowseBase<AccountDebitNote, 
     @Override
     public VoucherRepositoryBase<AccountDebitNote, AccountDebitNoteViewModel> getVoucherRepository() {
         return repository;
+    }
+    
+    @Override
+    public VoucherFormBase<AccountDebitNote> getHome() {
+    	// TODO Auto-generated method stub
+    	return home;
     }
     
 }

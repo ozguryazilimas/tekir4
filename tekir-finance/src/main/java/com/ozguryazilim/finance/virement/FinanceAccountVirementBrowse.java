@@ -11,8 +11,11 @@ import com.ozguryazilim.tekir.entities.FinanceAccountVirement;
 import com.ozguryazilim.tekir.entities.FinanceAccountVirement_;
 import com.ozguryazilim.tekir.entities.VoucherBase_;
 import com.ozguryazilim.tekir.voucher.VoucherBrowseBase;
+import com.ozguryazilim.tekir.voucher.VoucherFormBase;
 import com.ozguryazilim.tekir.voucher.VoucherRepositoryBase;
 import com.ozguryazilim.tekir.voucher.columns.VoucherStateColumn;
+import com.ozguryazilim.tekir.voucher.filter.VoucherStateFilter;
+import com.ozguryazilim.tekir.voucher.filter.VoucherStateTypeFilter;
 import com.ozguryazilim.telve.forms.Browse;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.columns.DateColumn;
@@ -42,10 +45,12 @@ public class FinanceAccountVirementBrowse extends VoucherBrowseBase<FinanceAccou
     @Inject
     private FinanceAccountVirementRepository repository;
     
+    @Inject
+    private FinanceAccountVirementHome home;
+    
     @Override
     protected void buildQueryDefinition(QueryDefinition<FinanceAccountVirement, FinanceAccountVirementViewModel> queryDefinition) {
         queryDefinition
-                .addColumn(new VoucherStateColumn<>( VoucherBase_.state, "general.label.State"), true)
                 .addColumn(new DateColumn<>(VoucherBase_.date, "general.label.Date"), true)
                 .addColumn(new LinkColumn<>(VoucherBase_.voucherNo, "voucher.label.VoucherNo"), true)
                 .addColumn(new SubTextColumn<>(FinanceAccountVirement_.fromAccount, FinanceAccount_.name, "general.label.FromAccount"), true)
@@ -53,6 +58,7 @@ public class FinanceAccountVirementBrowse extends VoucherBrowseBase<FinanceAccou
                 .addColumn(new TextColumn<>(VoucherBase_.info, "general.label.Info"), true)
                 .addColumn(new TextColumn<>(VoucherBase_.code, "general.label.Code"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.referenceNo, "voucher.label.ReferenceNo"), false)
+                .addColumn(new VoucherStateColumn<>( VoucherBase_.state, "general.label.State"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.stateReason, "voucher.label.StateReason"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.stateInfo, "voucher.label.StateInfo"), false)
                 .addColumn(new UserColumn<>(VoucherBase_.owner, "voucher.label.Owner"), true)
@@ -65,6 +71,8 @@ public class FinanceAccountVirementBrowse extends VoucherBrowseBase<FinanceAccou
                 .addFilter(new StringFilter<>(VoucherBase_.code, "voucher.label.Code"))
                 .addFilter(new StringFilter<>(VoucherBase_.info, "voucher.label.Info"))
                 .addFilter(new StringFilter<>(VoucherBase_.topic, "voucher.label.Topic"))
+                .addFilter(new VoucherStateFilter<>(VoucherBase_.state, getHome().getStateConfig().getStates(), "general.label.State"))
+                .addFilter(new VoucherStateTypeFilter<>(VoucherBase_.state, "voucher.label.StateType"))
                 .addFilter(new StringFilter<>(VoucherBase_.stateReason, "voucher.label.StateReason"))
                 .addFilter(new UserFilter<>(VoucherBase_.owner, "voucher.label.Owner"))
                 .addFilter(new BigDecimalFilter<>(FinanceAccountVirement_.fromAmount, "general.label.FromAmount"))
@@ -80,6 +88,12 @@ public class FinanceAccountVirementBrowse extends VoucherBrowseBase<FinanceAccou
     @Override
     public VoucherRepositoryBase<FinanceAccountVirement, FinanceAccountVirementViewModel> getVoucherRepository() {
         return repository;
+    }
+    
+    @Override
+    public VoucherFormBase<FinanceAccountVirement> getHome() {
+    	// TODO Auto-generated method stub
+    	return home;
     }
     
 }

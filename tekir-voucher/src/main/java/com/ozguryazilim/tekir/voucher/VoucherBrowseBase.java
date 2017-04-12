@@ -5,14 +5,16 @@
  */
 package com.ozguryazilim.tekir.voucher;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+
 import com.ozguryazilim.tekir.entities.VoucherBase;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.ViewModel;
 import com.ozguryazilim.telve.forms.BrowseBase;
-import java.util.ArrayList;
-import java.util.List;
-import javax.inject.Inject;
 
 /**
  * Voucher Tabanlı veriler için temel Browse sınıfı
@@ -47,6 +49,8 @@ public abstract class VoucherBrowseBase<E extends VoucherBase, V extends ViewMod
 
         return repository;
     }
+    
+    public abstract VoucherFormBase<E> getHome();
 
     public abstract VoucherRepositoryBase<E, V> getVoucherRepository();
 
