@@ -23,6 +23,7 @@ import com.ozguryazilim.telve.qualifiers.EntityQualifier;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.event.Observes;
+import javax.enterprise.event.TransactionPhase;
 import javax.inject.Inject;
 
 /**
@@ -41,7 +42,7 @@ public class QuoteFeeder extends AbstractFeeder<Quote> {
     @Inject
     private ProcessService processService;
 
-    public void feed(@Observes @FeatureQualifier(feauture = QuoteFeature.class) @After VoucherStateChange event) {
+    public void feed(@Observes(during = TransactionPhase.AFTER_SUCCESS) @FeatureQualifier(feauture = QuoteFeature.class) @After VoucherStateChange event) {
 
         //FIXME: acaba bunun için bir Qualifier yapabilir miyiz?
         if (event.getPayload() instanceof Quote) {
@@ -75,7 +76,7 @@ public class QuoteFeeder extends AbstractFeeder<Quote> {
         }
     }
 
-    public void feed(@Observes @EntityQualifier(entity = Quote.class) @After EntityChangeEvent event) {
+    public void feed(@Observes(during = TransactionPhase.IN_PROGRESS) @EntityQualifier(entity = Quote.class) @After EntityChangeEvent event) {
 
         if (event.getAction() != EntityChangeAction.DELETE) {
             Quote entity = (Quote) event.getEntity();

@@ -3,7 +3,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:t="http://java.sun.com/jsf/composite/telveComponents"                
                 xmlns:h="http://java.sun.com/jsf/html"
-                template="/layout/browseBase.xhtml">
+                template="/layout/voucherBrowseBase.xhtml">
 
     <ui:param name="bean" value="#{opportunityBrowse}" />
     <ui:param name="advanceEnabled" value="true" />
@@ -13,11 +13,5 @@
     <ui:param name="showQuickSearch" value="true" />
     <ui:param name="showDetailPanel" value="false" />
 
-
-    <ui:define name="beforeColumns">
-        <p:column styleClass="actionColumn">
-            <i class="fa #{item.state.type eq 'CLOSE' ? 'fa-lock' : 'fa-unlock-alt' }" />
-        </p:column>
-    </ui:define>
     
 </ui:composition>

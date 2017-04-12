@@ -16,6 +16,7 @@ import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.columns.BooleanColumn;
 import com.ozguryazilim.telve.query.columns.DateColumn;
 import com.ozguryazilim.telve.query.columns.FeatureColumn;
+import com.ozguryazilim.telve.query.columns.MessageColumn;
 import com.ozguryazilim.telve.query.columns.MoneyColumn;
 import com.ozguryazilim.telve.query.columns.TextColumn;
 import com.ozguryazilim.telve.query.columns.UserColumn;
@@ -52,7 +53,7 @@ public class AccountTxnSubView extends SubViewQueryBase<AccountTxn, AccountTxn>{
                 .addColumn(new TextColumn<>(AccountTxn_.code, "general.label.Code"), false)
                 .addColumn(new TextColumn<>(AccountTxn_.processId, "general.label.Process"), false)
                 .addColumn(new TextColumn<>(AccountTxn_.referenceNo, "general.label.ReferenceNo"), false)
-                .addColumn(new TextColumn<>(AccountTxn_.status, "general.label.Status"), true)
+                .addColumn(new MessageColumn<>(AccountTxn_.status, "general.label.Status", "voucherState.name."), true)
                 .addColumn(new TextColumn<>(AccountTxn_.statusReason, "general.label.StatusReason"), false)
                 .addColumn(new UserColumn<>(AccountTxn_.owner, "general.label.Owner"), false);
         
@@ -67,6 +68,7 @@ public class AccountTxnSubView extends SubViewQueryBase<AccountTxn, AccountTxn>{
                 //.addFilter(new SubStringFilter<>(VoucherProcessBase_.account, Contact_.name, "general.label.Account"))
                 //.addFilter(new SubStringFilter<>(VoucherProcessBase_.process, Process_.processNo, "voucher.label.Process"))
                 .addFilter(new DateFilter<>(AccountTxn_.date, "voucher.label.Date", FilterOperand.In, DateValueType.LastTenDays));
+        
     }
 
     @Override

@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 
 import javax.enterprise.context.Dependent;
 import javax.enterprise.event.Observes;
+import javax.enterprise.event.TransactionPhase;
 import javax.inject.Inject;
 
 import org.apache.deltaspike.jpa.api.transaction.Transactional;
@@ -36,7 +37,7 @@ public class FinanceAccountVirementTxnFeeder implements Serializable{
 	@Inject
 	private CurrencyService currencyService;
 
-	public void feed(@Observes @EntityQualifier(entity = FinanceAccountVirement.class) @After EntityChangeEvent event) {
+	public void feed(@Observes(during = TransactionPhase.IN_PROGRESS) @EntityQualifier(entity = FinanceAccountVirement.class) @After EntityChangeEvent event) {
 
 		if( event.getAction() != EntityChangeAction.DELETE   ) {
 			FinanceAccountVirement entity = (FinanceAccountVirement) event.getEntity();
@@ -64,6 +65,7 @@ public class FinanceAccountVirementTxnFeeder implements Serializable{
 					entity.getInfo(), Boolean.TRUE, Boolean.TRUE, entity.getFromCurrency(), 
 					entity.getFromAmount(), fromLocalAmount, entity.getDate(),
 					entity.getOwner(), null, entity.getState().toString(), entity.getStateReason());
+			
 			financeAccountTxnService.saveFeature(voucherPointer, entity.getToAccount(), entity.getCode(), 
 					entity.getInfo(), Boolean.TRUE, Boolean.FALSE, entity.getToCurrency(), 
 					entity.getToAmount(), toLocalAmount, entity.getDate(),

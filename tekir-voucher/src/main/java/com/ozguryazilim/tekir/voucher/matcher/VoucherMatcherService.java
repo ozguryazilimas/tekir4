@@ -188,8 +188,6 @@ public class VoucherMatcherService implements Serializable {
                 .fire(new MatcherStateChange(matchable));
         }
         
-        
-        
     }
 
 }
