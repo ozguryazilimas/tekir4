@@ -17,7 +17,7 @@ import java.util.Date;
  *
  * @author oyas
  */
-public class AccountDebitNote extends AccountNoteViewModel{
+public class AccountCreditNoteViewModel extends AccountNoteViewModel{
     
     public AccountCreditNoteViewModel(Long id, String code, String voucherNo, String info, String referenceNo, Date date, String owner, VoucherState state, String stateReason, String stateInfo, VoucherGroup group, String topic, Contact account, Currency currency, BigDecimal amount) {
         super(id, code, voucherNo, info, referenceNo, date, owner, state, stateReason, stateInfo, group, topic, account, currency, amount);
