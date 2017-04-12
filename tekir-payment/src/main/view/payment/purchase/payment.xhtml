@@ -52,7 +52,7 @@
                         <t:inputProcess value="#{paymentHome.process}" lookupListener="paymentHome.process" lookupProfile="A:#{paymentHome.entity.account.id};T:PURCHASE" update=":form:ddt" disabled="true"/>
                     </p:outputPanel>
 
-                    <t:inputLookupDialog label="voucher.label.Group" value="#{paymentHome.entity.group}" lookupBean="#{voucherGroupLookup}" lookupListener="paymentHome.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" />
+                    <t:inputLookupDialog label="voucher.label.Group" value="#{paymentHome.entity.group}" caption="topic" lookupBean="#{voucherGroupLookup}" lookupListener="paymentHome.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" />
 
                     <t:inputText label="voucher.label.Owner" value="#{paymentHome.entity.owner}" />
                     <t:inputText label="general.label.Code" value="#{paymentHome.entity.code}" />
