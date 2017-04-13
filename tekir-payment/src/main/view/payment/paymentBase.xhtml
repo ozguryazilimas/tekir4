@@ -47,7 +47,7 @@
                         <t:inputProcess value="#{homeBean.process}" lookupListener="#{homeBeanName}.process" lookupProfile="A:#{homeBean.entity.account.id};T:PURCHASE" update=":form:ddt" disabled="true"/>
                     </p:outputPanel>
 
-                    <t:inputLookupDialog label="voucher.label.Group" value="#{homeBean.entity.group}" lookupBean="#{voucherGroupLookup}" lookupListener="homeBean.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" />
+                    <t:inputLookupDialog label="voucher.label.Group" value="#{homeBean.entity.group}" caption="topic" lookupBean="#{voucherGroupLookup}" lookupListener="homeBean.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" />
 
                     <t:inputText label="voucher.label.Owner" value="#{homeBean.entity.owner}" />
                     <t:inputText label="general.label.Code" value="#{homeBean.entity.code}" />

@@ -8,6 +8,7 @@ package com.ozguryazilim.tekir.voucher.group;
 import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.tekir.entities.VoucherGroup;
+import com.ozguryazilim.tekir.entities.VoucherGroupStatus;
 import com.ozguryazilim.tekir.entities.VoucherGroup_;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
@@ -39,6 +40,14 @@ public abstract class VoucherGroupRepository extends RepositoryBase<VoucherGroup
     public List<VoucherGroup> lookupQuery(String searchText) {
         return criteria().getResultList();
     }
+    
+    @Override
+ 	public List<VoucherGroup> suggestion(String searchText) {
+ 		return criteria()
+ 				.or(criteria().like(VoucherGroup_.groupNo, "%" + searchText + "%"),
+ 					criteria().like(VoucherGroup_.topic, "%" + searchText + "%"))
+ 				.eq(VoucherGroup_.status, VoucherGroupStatus.ACTIVE).getResultList();		
+	}
     
     @Override
     public List<VoucherGroup> browseQuery(QueryDefinition queryDefinition) {
