@@ -1,7 +1,23 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
                 template="/layout/lookupBase.xhtml">
     <ui:param name="bean" value="#{financeAccountLookup}" />
     <ui:param name="title" value="#{messages['financeAccountLookup.label.Title']}" />
-    <ui:param name="noStandartFilter" value="true" />
+    <ui:param name="noStandartFilter" value="false" />
+    <ui:param name="useCustomColumns" value="false" />
+
+
+    <ui:define name="filters" >
+        <ul class="list-inline text-sm text-muted">
+            <ui:repeat value="#{financeAccountLookup.requiredRoles}" var="item" >
+                <li><i class="fa fa-check-square" /> #{messages['account.role.'.concat(item)]}</li>
+            </ui:repeat>
+	            <ui:repeat value="#{financeAccountLookup.optinalRoles}" var="item" >
+		            <p:commandLink action="#{financeAccountLookup.toggleRole(item)}" process="@this" update="@this :lookupForm:resultLists">
+		            	<i class="fa #{financeAccountLookup.isRoleSelected(item) ? 'fa-check-square' : 'fa-square-o' }" /> #{messages['account.role.'.concat(item)]}
+		            </p:commandLink>
+            	</ui:repeat>           
+        </ul>
+    </ui:define>
 </ui:composition>

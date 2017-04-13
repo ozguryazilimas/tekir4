@@ -21,11 +21,13 @@
 	
                     <t:inputLookupDialog label="finance.label.FromAccount" value="#{homeBean.fromAccount}" 
                                          lookupBean="#{financeAccountLookup}" lookupListener="financeAccountVirementHome.fromAccount" 
+                                         lookupProfile="R:PAYMENT;O:MULTI_CURRENCY"
                                          placeholder="#{messages['general.info.Account']}"
                                          update="@form">
                     </t:inputLookupDialog>
                     <t:inputLookupDialog label="finance.label.ToAccount" value="#{financeAccountVirementHome.toAccount}" 
-                                         lookupBean="#{financeAccountLookup}" lookupListener="financeAccountVirementHome.toAccount" 
+                                         lookupBean="#{financeAccountLookup}" lookupListener="financeAccountVirementHome.toAccount"
+                                         lookupProfile="R:PAYMENT_RECEIVED;O:MULTI_CURRENCY" 
                                          placeholder="#{messages['general.info.Account']}"
                                          update="@form">
                    </t:inputLookupDialog>

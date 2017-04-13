@@ -23,7 +23,9 @@
                                          placeholder="#{messages['general.info.Account']}" update=":form:prss" />
 
                     <t:inputLookupDialog label="general.label.FinanceAccount" value="#{paymentReceivedHome.entity.financeAccount}" 
-                                         lookupBean="#{financeAccountLookup}" lookupListener="paymentReceivedHome.entity.financeAccount" 
+                                         lookupBean="#{financeAccountLookup}" 
+                                         lookupProfile="R:PAYMENT_RECEIVED;O:MULTI_CURRENCY"
+                                         lookupListener="paymentReceivedHome.entity.financeAccount" 
                                          placeholder="#{messages['general.info.FinanceAccount']}" update=":form:prss" />
 
                     <t:inputText label="voucher.label.Topic" value="#{paymentReceivedHome.entity.topic}"  required="true" columnClass="col-xs-12"/>
