@@ -44,7 +44,7 @@
                     <t:inputText label="voucher.label.ReferenceNo" value="#{homeBean.entity.referenceNo}" columnClass="col-md-4"/>
 
                     <p:outputPanel id="prss">
-                        <t:inputProcess value="#{homeBean.process}" lookupListener="#{homeBeanName}.process" lookupProfile="A:#{homeBean.entity.account.id};T:PURCHASE" update=":form:ddt" disabled="true"/>
+                        <t:inputProcess value="#{homeBean.process}" caption="topic" lookupListener="#{homeBeanName}.process" lookupProfile="A:#{homeBean.entity.account.id};T:PURCHASE" update=":form:ddt" disabled="true"/>
                     </p:outputPanel>
 
                     <t:inputLookupDialog label="voucher.label.Group" value="#{homeBean.entity.group}" caption="topic" lookupBean="#{voucherGroupLookup}" lookupListener="homeBean.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" />

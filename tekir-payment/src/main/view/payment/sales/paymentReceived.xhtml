@@ -40,7 +40,7 @@
                     <t:inputText label="voucher.label.ReferenceNo" value="#{paymentReceivedHome.entity.referenceNo}" columnClass="col-md-4"/>
 
                     <p:outputPanel id="prss">
-                        <t:inputProcess value="#{paymentReceivedHome.process}" lookupListener="paymentReceivedHome.process" lookupProfile="A:#{paymentReceivedHome.entity.account.id};T:SALES" update=":form:ddt" />
+                        <t:inputProcess value="#{paymentReceivedHome.process}" caption="topic" lookupListener="paymentReceivedHome.process" lookupProfile="A:#{paymentReceivedHome.entity.account.id};T:SALES" update=":form:ddt" />
                     </p:outputPanel>
 
                     <t:inputLookupDialog label="voucher.label.Group" value="#{paymentReceivedHome.entity.group}" caption="topic" lookupBean="#{voucherGroupLookup}" lookupListener="paymentReceivedHome.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" />
