@@ -92,7 +92,10 @@ CriteriaSupport<Commodity> {
 
 	@Override
 	public List<Commodity> suggestion(String searchText) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		return criteria()
+  				.or(criteria().like(Commodity_.code, "%" + searchText + "%"),
+  					criteria().like(Commodity_.name, "%" + searchText + "%"))
+ 				.eq(Commodity_.active, true).getResultList();	
 	}
 
 	private void buildVieModelSelect(CriteriaQuery<CommodityViewModel> criteriaQuery, Root<Commodity> from) {
