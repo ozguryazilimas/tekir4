@@ -32,6 +32,12 @@
         </dependency>
         
         <dependency>
+            <groupId>com.ozguryazilim.mutfak</groupId>
+            <artifactId>telve-calendar</artifactId>
+            <version>${version.telve}</version>
+        </dependency>
+        
+        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>tekir-core</artifactId>
             <version>${project.version}</version>
