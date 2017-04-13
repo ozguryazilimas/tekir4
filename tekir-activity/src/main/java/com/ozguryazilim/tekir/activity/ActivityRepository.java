@@ -190,4 +190,42 @@ public abstract class ActivityRepository extends RepositoryBase<Activity, Activi
                 
     }
     
+    
+    public List<Activity> findForCalendarSource( String assignee, Date beginDate, Date endDate, Class<? extends Activity> clazz, Boolean showClocedEvents){
+        
+        CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
+        //Geriye Activity dönecek cq'yu ona göre oluşturuyoruz.
+        CriteriaQuery<Activity> criteriaQuery = criteriaBuilder.createQuery(Activity.class);
+        
+
+        //From
+        Root<Activity> from = criteriaQuery.from(Activity.class);
+        
+
+        //Sonuç filtremiz : Sınıfın kendisi dönecek zati
+        //buildVieModelSelect(criteriaQuery, from);
+
+        //Filtreleri ekleyelim.
+        List<Predicate> predicates = new ArrayList<>();
+
+        predicates.add(criteriaBuilder.equal(from.get(Activity_.assignee), assignee));
+        if( !showClocedEvents ){
+            predicates.add(criteriaBuilder.equal(from.get(Activity_.status), ActivityStatus.SCHEDULED));
+        }
+        predicates.add(criteriaBuilder.equal(from.type(), clazz));
+        predicates.add(criteriaBuilder.greaterThanOrEqualTo(from.get(Activity_.dueDate), beginDate));
+        predicates.add(criteriaBuilder.lessThanOrEqualTo(from.get(Activity_.dueDate), endDate));
+        
+        //Oluşan filtreleri sorgumuza ekliyoruz
+        criteriaQuery.where(predicates.toArray(new Predicate[]{}));
+
+        
+        //Haydi bakalım sonuçları alalım
+        TypedQuery<Activity> typedQuery = entityManager().createQuery(criteriaQuery);
+        List<Activity> resultList = typedQuery.getResultList();
+
+        return resultList;
+        
+    }
+    
 }

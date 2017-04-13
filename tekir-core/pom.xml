@@ -38,6 +38,11 @@
         </dependency>
         <dependency>
             <groupId>com.ozguryazilim.mutfak</groupId>
+            <artifactId>telve-calendar</artifactId>
+            <version>${version.telve}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ozguryazilim.mutfak</groupId>
             <artifactId>telve-unit</artifactId>
             <version>${version.telve}</version>
         </dependency>

@@ -14,12 +14,14 @@
             <t:inputText label="activity.label.PhoneNumber" value="#{phoneActivityController.entity.number}" />
         </div>
 
+        <ui:remove>
         <div class="row">
-            <t:inputSuggestion label="general.label.Reason" value="#{bean.entity.statusReason}" group="#{bean.entity.class.simpleName}" listener="" columnClass="col-xs-12"/>
+            <t:inputSuggestion label="general.label.Reason" value="#{phoneActivityController.entity.statusReason}" group="#{phoneActivityController.entity.class.simpleName}" listener="phoneActivityController.entity.statusReason" columnClass="col-xs-12"/>
             <ui:remove>
             <t:inputTextarea label="general.label.ResultNote" value="#{bean.entity.resultNote}" columnClass="col-xs-12"/>
             </ui:remove>
         </div>
+        </ui:remove>
 
     </ui:define> 
 
