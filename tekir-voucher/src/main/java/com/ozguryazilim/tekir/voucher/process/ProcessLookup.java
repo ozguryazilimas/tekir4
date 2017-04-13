@@ -14,6 +14,7 @@ import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.lookup.Lookup;
 import com.ozguryazilim.telve.lookup.LookupTableControllerBase;
 import com.ozguryazilim.telve.lookup.LookupTableModel;
+import java.util.List;
 import javax.inject.Inject;
 
 /**
@@ -35,6 +36,16 @@ public class ProcessLookup extends LookupTableControllerBase<Process, Process> {
 
     @Override
     public void populateData() {
+        getModel().setData(getData(getModel().getSearchText()));
+    }
+
+    @Override
+    protected List<Process> populateSuggestData(String text) {
+        return getData(text);
+    }
+    
+    
+    private List<Process> getData( String searchText ){
         String accountId = getModel().getProfileProperties().get("A");
         String type = getModel().getProfileProperties().get("T");
         
@@ -42,18 +53,16 @@ public class ProcessLookup extends LookupTableControllerBase<Process, Process> {
         
         if( !Strings.isNullOrEmpty(type)){
             pt = ProcessType.valueOf(type);
-        }
+        } 
         
         if( !Strings.isNullOrEmpty(accountId)){
             Long id = Long.parseLong(accountId);
-            getModel().setData(repository.lookupQuery(getModel().getSearchText(), id, pt));
+            return repository.lookupQuery(searchText, id, pt);
         } else {
-            getModel().setData(repository.lookupQuery(getModel().getSearchText(), pt));
+            return repository.lookupQuery(searchText, pt);
         }
-                
-        //Şimdide Repository'den sorgumuz yapıp datayı dolduruyoruz
-        
     }
+    
     
     @Override
     protected RepositoryBase<Process, Process> getRepository() {
