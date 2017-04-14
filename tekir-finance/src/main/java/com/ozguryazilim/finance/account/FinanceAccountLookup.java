@@ -86,10 +86,7 @@ public class FinanceAccountLookup extends LookupTableControllerBase<FinanceAccou
 			optinalRoles.addAll(selectedOptinalRoles);
 		} else {
 			selectedOptinalRoles = new ArrayList<>();
-		}
-
-		String cContact = getModel().getProfileProperties().get("C");
-
+		}	
 	}
 
 	@Override
