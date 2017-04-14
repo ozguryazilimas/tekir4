@@ -32,7 +32,7 @@ public class ContactLookup
         private List<String> requiredRoles;
         private List<String> optinalRoles;
         private List<String> selectedOptinalRoles;
-        private String callerContact;
+        private Long callerContactId;
         
 	@Override
 	public void buildModel(LookupTableModel<ContactViewModel> model) {
@@ -57,9 +57,7 @@ public class ContactLookup
     }
         
     @Override
-    protected List<Contact> populateSuggestData(String text) {
-    	initProfile();
-    	
+    protected List<Contact> populateSuggestData(String text) {   	
     	List<ContactViewModel> vmList = getData(getModel().getSearchText());
     	List<Contact> resultList = new ArrayList<>();
     	
@@ -98,10 +96,11 @@ public class ContactLookup
         }
         
         String cContact = getModel().getProfileProperties().get("C");
+        
         if( !Strings.isNullOrEmpty(cContact)){
-        	callerContact = cContact;            
+        	callerContactId = Long.parseLong(cContact);            
         } else {
-        	callerContact = "";
+        	callerContactId = -1l;
         }
         
     }
@@ -164,8 +163,8 @@ public class ContactLookup
         return selectedOptinalRoles.contains(role);
     }
 
-	public String getCallerContact() {
-		return callerContact;
+	public Long getCallerContactId() {
+		return callerContactId;
 	}
 	
     private List<ContactViewModel> getData( String searchText ){
@@ -177,7 +176,8 @@ public class ContactLookup
                   
           //Şimdide Repository'den sorgumuz yapıp datayı dolduruyoruz
           List<ContactViewModel> models = repository.lookupQuery(getModel().getSearchText(), type, rls);
-          models.removeIf(c -> c.getId().toString().equals(callerContact));
+                 
+          models.removeIf(c -> c.getId().equals(callerContactId));
           return models;
     }
     
