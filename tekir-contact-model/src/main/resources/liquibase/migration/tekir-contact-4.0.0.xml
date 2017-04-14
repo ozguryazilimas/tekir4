@@ -237,4 +237,9 @@
             <column name="LOCAL_AMOUNT" type="decimal(19, 2)"/>
         </addColumn>
     </changeSet>
+    <changeSet author="oyas (generated)" id="1492182980983-1">
+        <addColumn tableName="TCC_CONTACT">
+            <column name="VAT_WITHHOLDING" type="BOOLEAN"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
