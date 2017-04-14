@@ -24,7 +24,9 @@
                                          disabled="#{paymentHome.entity.state.name ne 'DRAFT'}"/>
 
                     <t:inputLookupDialog label="general.label.FinanceAccount" value="#{paymentHome.entity.financeAccount}" 
-                                         lookupBean="#{financeAccountLookup}" lookupListener="paymentHome.entity.financeAccount" 
+                                         lookupBean="#{financeAccountLookup}" 
+                                         lookupProfile="R:PAYMENT;O:MULTI_CURRENCY"
+                                         lookupListener="paymentHome.entity.financeAccount" 
                                          placeholder="#{messages['general.info.FinanceAccount']}" update=":form:prss" required="true"/>
 
                     <t:inputFeatureLookupDialog label="general.label.Regarding" value="#{paymentHome.matchable}" 
