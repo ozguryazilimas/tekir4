@@ -8,8 +8,6 @@ package com.ozguryazilim.finance.account;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.ozguryazilim.finance.config.FinancePages;
-import com.ozguryazilim.tekir.contact.ContactViewModel;
-import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.tekir.entities.FinanceAccount;
 import com.ozguryazilim.tekir.entities.FinanceAccount_;
 import com.ozguryazilim.telve.data.RepositoryBase;
