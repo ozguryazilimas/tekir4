@@ -49,16 +49,14 @@ public class FinanceAccountLookup extends LookupTableControllerBase<FinanceAccou
 
 	@Override
 	public void populateData() {
-		String type = getModel().getProfileProperties().get("T");
-
-		List<String> rls = new ArrayList<>();
-		rls.addAll(requiredRoles);
-		rls.addAll(selectedOptinalRoles);
-
-		// Şimdide Repository'den sorgumuz yapıp datayı dolduruyoruz
-		List<FinanceAccount> models = repository.lookupQuery(getModel().getSearchText(), type, rls);
-		getModel().setData(models);
+		getModel().setData(getData(getModel().getSearchText()));
 	}
+	
+	@Override
+    protected List<FinanceAccount> populateSuggestData(String text) {   	
+    	List<FinanceAccount> resultList = getData(getModel().getSearchText());   	
+    	return resultList;
+    }
 
 	@Override
 	public void initProfile() {
@@ -113,6 +111,19 @@ public class FinanceAccountLookup extends LookupTableControllerBase<FinanceAccou
 
 	public Boolean isRoleSelected(String role) {
 		return selectedOptinalRoles.contains(role);
+	}
+	
+	private List<FinanceAccount> getData(String searchTest){
+		String type = getModel().getProfileProperties().get("T");
+
+		List<String> rls = new ArrayList<>();
+		rls.addAll(requiredRoles);
+		rls.addAll(selectedOptinalRoles);
+
+		// Şimdide Repository'den sorgumuz yapıp datayı dolduruyoruz
+		List<FinanceAccount> models = repository.lookupQuery(getModel().getSearchText(), type, rls);
+		
+		return models;
 	}
 
 }
