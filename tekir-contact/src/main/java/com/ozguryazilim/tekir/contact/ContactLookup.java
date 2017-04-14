@@ -32,7 +32,7 @@ public class ContactLookup
         private List<String> requiredRoles;
         private List<String> optinalRoles;
         private List<String> selectedOptinalRoles;
-        private String callerContact;
+        private Long callerContactId;
         
 	@Override
 	public void buildModel(LookupTableModel<ContactViewModel> model) {
@@ -53,16 +53,19 @@ public class ContactLookup
         
         @Override
     public void populateData() {
-        String type = getModel().getProfileProperties().get("T");
+        getModel().setData(getData(getModel().getSearchText()));
+    }
         
-        List<String> rls = new ArrayList<>();
-        rls.addAll(requiredRoles);
-        rls.addAll(selectedOptinalRoles);
-                
-        //Şimdide Repository'den sorgumuz yapıp datayı dolduruyoruz
-        List<ContactViewModel> models = repository.lookupQuery(getModel().getSearchText(), type, rls);
-        models.removeIf(c -> c.getId().toString().equals(callerContact));
-        getModel().setData(models);
+    @Override
+    protected List<Contact> populateSuggestData(String text) {   	
+    	List<ContactViewModel> vmList = getData(getModel().getSearchText());
+    	List<Contact> resultList = new ArrayList<>();
+    	
+    	for(ContactViewModel cvm : vmList){
+    		resultList.add(getEntity(cvm));
+    	}
+    	
+    	return resultList;
     }
 
     @Override
@@ -93,10 +96,11 @@ public class ContactLookup
         }
         
         String cContact = getModel().getProfileProperties().get("C");
+        
         if( !Strings.isNullOrEmpty(cContact)){
-        	callerContact = cContact;            
+        	callerContactId = Long.parseLong(cContact);            
         } else {
-        	callerContact = "";
+        	callerContactId = -1l;
         }
         
     }
@@ -159,7 +163,22 @@ public class ContactLookup
         return selectedOptinalRoles.contains(role);
     }
 
-	public String getCallerContact() {
-		return callerContact;
+	public Long getCallerContactId() {
+		return callerContactId;
 	}
+	
+    private List<ContactViewModel> getData( String searchText ){
+    	  String type = getModel().getProfileProperties().get("T");
+          
+          List<String> rls = new ArrayList<>();
+          rls.addAll(requiredRoles);
+          rls.addAll(selectedOptinalRoles);
+                  
+          //Şimdide Repository'den sorgumuz yapıp datayı dolduruyoruz
+          List<ContactViewModel> models = repository.lookupQuery(getModel().getSearchText(), type, rls);
+                 
+          models.removeIf(c -> c.getId().equals(callerContactId));
+          return models;
+    }
+    
 }
