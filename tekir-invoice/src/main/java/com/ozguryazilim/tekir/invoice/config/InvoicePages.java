@@ -26,7 +26,7 @@ public interface InvoicePages extends Pages {
         @View
 	@SecuredPage("salesInvoice")
 	@PageTitle("module.caption.SalesInvoiceBrowse")
-	@Navigation(label = "module.caption.SalesInvoiceBrowse", icon = "flaticon-speech-bubble", section = SalesNavigationSection.class)
+	@Navigation(label = "module.caption.SalesInvoiceBrowse", icon = "flaticon-invoice-1", section = SalesNavigationSection.class)
 	class SalesInvoiceBrowse implements Sales {
 	}
 
@@ -56,7 +56,7 @@ public interface InvoicePages extends Pages {
         @View
 	@SecuredPage("purchaseInvoice")
 	@PageTitle("module.caption.PurchaseInvoiceBrowse")
-	@Navigation(label = "module.caption.PurchaseInvoiceBrowse", icon = "flaticon-speech-bubble", section = PurchaseNavigationSection.class)
+	@Navigation(label = "module.caption.PurchaseInvoiceBrowse", icon = "flaticon-invoice-1", section = PurchaseNavigationSection.class)
 	class PurchaseInvoiceBrowse implements Purchase {
 	}
 

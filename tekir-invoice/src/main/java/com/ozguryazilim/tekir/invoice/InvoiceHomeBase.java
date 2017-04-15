@@ -60,7 +60,12 @@ public abstract class InvoiceHomeBase<E extends Invoice> extends VoucherFormBase
     
     @Inject
     private JasperReportHandler reportHandler;
-    
+
+    @Override
+    public void createNew() {
+        super.createNew(); 
+        getEntity().setCurrency(currencyService.getDefaultCurrency());
+    }
     
     @Override
     protected VoucherStateConfig buildStateConfig() {
