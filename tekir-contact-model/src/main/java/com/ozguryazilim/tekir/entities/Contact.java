@@ -271,6 +271,9 @@ public abstract class Contact extends AuditBase{
     @Column( name = "CCY")
     private String currency;
     
+    @Column( name = "VAT_WITHHOLDING")
+    private Boolean vatWithholding = Boolean.FALSE;
+    
     /**
      * Bu contact'ın üretilmesinde rol oynayan belge.
      * Genelde bir Lead olacaktır.
@@ -499,6 +502,14 @@ public abstract class Contact extends AuditBase{
     public void setSourcePointer(FeaturePointer sourcePointer) {
         this.sourcePointer = sourcePointer;
     }
+
+	public Boolean getVatWithholding() {
+		return vatWithholding;
+	}
+
+	public void setVatWithholding(Boolean vatWithholding) {
+		this.vatWithholding = vatWithholding;
+	}
     
     
     
