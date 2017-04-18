@@ -19,7 +19,6 @@ import com.ozguryazilim.tekir.voucher.VoucherStateAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateConfig;
 import com.ozguryazilim.tekir.voucher.process.ProcessService;
 import com.ozguryazilim.telve.data.RepositoryBase;
-import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -29,6 +28,7 @@ import org.slf4j.LoggerFactory;
 import com.ozguryazilim.tekir.entities.Process;
 import com.ozguryazilim.tekir.entities.VoucherStateType;
 import com.ozguryazilim.tekir.voucher.utils.SummaryCalculator;
+import com.ozguryazilim.tekir.voucher.utils.VoucherItemUtils;
 import com.ozguryazilim.telve.messages.FacesMessages;
 import com.ozguryazilim.telve.reports.JasperReportHandler;
 
@@ -83,7 +83,6 @@ public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodit
 	@Override
 	public void addItem() {
 		QuoteItem item = new QuoteItem();
-		item.setMaster(getEntity());
 		commodityItemEditor.openDialog(item, getEntity().getCurrency(), this);
 	}
 
@@ -127,13 +126,7 @@ public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodit
 
 	@Override
 	public List<QuoteSummary> getTaxes() {
-		List<QuoteSummary> result = new ArrayList<>();
-
-		getEntity().getSummaries().entrySet().stream().filter(e -> e.getKey().startsWith("Tax.")).forEach(e -> {
-			result.add(e.getValue());
-		});
-
-		return result;
+            return VoucherItemUtils.getTaxes(getEntity().getSummaries());
 	}
 
 	@Override
@@ -157,10 +150,12 @@ public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodit
 
 	@Override
 	public void saveItem(QuoteItem item) {
-		if (!getEntity().getItems().contains(item)) {
-			getEntity().getItems().add(item);
-		}
-		calculateSummaries();
+            //Yani yeni ekleniyor ise
+            if ( item.getId() == null && item.getMaster() == null ) {
+                item.setMaster(getEntity());
+                getEntity().getItems().add(item);
+            }
+            calculateSummaries();
 	}
 
 	public Process getProcess() {
@@ -208,6 +203,6 @@ public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodit
 	public void calculateSummaries() {
 		SummaryCalculator<Quote, QuoteItem, QuoteSummary> sc = new SummaryCalculator();
 		sc.calcSummaries(this::getEntity, getEntity()::getItems, getEntity()::getSummaries, () -> new QuoteSummary(),
-				getEntity()::setTotal);
+				getEntity()::setTotal, getEntity().getAccount().getVatWithholding());
 	}
 }

@@ -28,10 +28,10 @@ import com.ozguryazilim.tekir.voucher.matcher.MatcherStateChange;
 import com.ozguryazilim.tekir.voucher.matcher.VoucherMatcherService;
 import com.ozguryazilim.tekir.voucher.process.ProcessService;
 import com.ozguryazilim.tekir.voucher.utils.SummaryCalculator;
+import com.ozguryazilim.tekir.voucher.utils.VoucherItemUtils;
 import com.ozguryazilim.telve.messages.FacesMessages;
 import com.ozguryazilim.telve.reports.JasperReportHandler;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -152,13 +152,13 @@ public abstract class InvoiceHomeBase<E extends Invoice> extends VoucherFormBase
     @Override
     public void addItem() {
         InvoiceItem item = new InvoiceItem();
-        item.setMaster(getEntity());
         commodityItemEditor.openDialog(item, getEntity().getCurrency(), this);
     }
 
     @Override
     public void saveItem(InvoiceItem item) {
-        if (!getEntity().getItems().contains(item)) {
+        if ( item.getId() == null && item.getMaster() == null ) {
+            item.setMaster(getEntity());
             getEntity().getItems().add(item);
         }
         calculateSummaries();
@@ -216,21 +216,13 @@ public abstract class InvoiceHomeBase<E extends Invoice> extends VoucherFormBase
 
     @Override
     public List<InvoiceSummary> getTaxes() {
-        List<InvoiceSummary> result = new ArrayList<>();
-
-        getEntity().getSummaries().entrySet().stream()
-                .filter(e -> e.getKey().startsWith("Tax."))
-                .forEach(e -> {
-                    result.add(e.getValue());
-                });
-
-        return result;
+        return VoucherItemUtils.getTaxes(getEntity().getSummaries());
     }
 
     @Override
     public void calculateSummaries() {
         SummaryCalculator<E, InvoiceItem, InvoiceSummary> sc = new SummaryCalculator();
-        sc.calcSummaries(this::getEntity, getEntity()::getItems, getEntity()::getSummaries, () -> new InvoiceSummary(), getEntity()::setTotal);
+        sc.calcSummaries(this::getEntity, getEntity()::getItems, getEntity()::getSummaries, () -> new InvoiceSummary(), getEntity()::setTotal,getEntity().getAccount().getVatWithholding());
     }
 
     @Override

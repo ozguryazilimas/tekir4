@@ -26,10 +26,10 @@ import com.ozguryazilim.tekir.voucher.VoucherStateConfig;
 import com.ozguryazilim.tekir.voucher.matcher.VoucherMatcherService;
 import com.ozguryazilim.tekir.voucher.process.ProcessService;
 import com.ozguryazilim.tekir.voucher.utils.SummaryCalculator;
+import com.ozguryazilim.tekir.voucher.utils.VoucherItemUtils;
 import com.ozguryazilim.telve.messages.FacesMessages;
 import com.ozguryazilim.telve.reports.JasperReportHandler;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -136,13 +136,13 @@ public abstract class OrderHomeBase<E extends Order> extends VoucherFormBase<E> 
     @Override
     public void addItem() {
         OrderItem item = new OrderItem();
-        item.setMaster(getEntity());
         commodityItemEditor.openDialog(item, getEntity().getCurrency(), this);
     }
 
     @Override
     public void saveItem(OrderItem item) {
-        if (!getEntity().getItems().contains(item)) {
+        if ( item.getId() == null && item.getMaster() == null ) {
+            item.setMaster(getEntity());
             getEntity().getItems().add(item);
         }
         calculateSummaries();
@@ -202,21 +202,13 @@ public abstract class OrderHomeBase<E extends Order> extends VoucherFormBase<E> 
 
     @Override
     public List<OrderSummary> getTaxes() {
-        List<OrderSummary> result = new ArrayList<>();
-
-        getEntity().getSummaries().entrySet().stream()
-                .filter(e -> e.getKey().startsWith("Tax."))
-                .forEach(e -> {
-                    result.add(e.getValue());
-                });
-
-        return result;
+        return VoucherItemUtils.getTaxes(getEntity().getSummaries());
     }
 
     @Override
     public void calculateSummaries() {
         SummaryCalculator<E, OrderItem, OrderSummary> sc = new SummaryCalculator();
-        sc.calcSummaries(this::getEntity, getEntity()::getItems, getEntity()::getSummaries, () -> new OrderSummary(), getEntity()::setTotal);
+        sc.calcSummaries(this::getEntity, getEntity()::getItems, getEntity()::getSummaries, () -> new OrderSummary(), getEntity()::setTotal, getEntity().getAccount().getVatWithholding());
     }
 
     @Override
