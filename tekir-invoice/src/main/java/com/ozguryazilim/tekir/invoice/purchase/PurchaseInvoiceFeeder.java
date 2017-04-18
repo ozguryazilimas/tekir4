@@ -9,6 +9,7 @@ import com.ozguryazilim.tekir.entities.ProcessType;
 import com.ozguryazilim.tekir.entities.PurchaseInvoice;
 import com.ozguryazilim.tekir.feed.Feeder;
 import com.ozguryazilim.tekir.invoice.InvoiceFeeder;
+import com.ozguryazilim.tekir.voucher.VoucherOwnerChange;
 import com.ozguryazilim.tekir.voucher.VoucherStateChange;
 import com.ozguryazilim.telve.feature.FeatureQualifier;
 import com.ozguryazilim.telve.forms.EntityChangeEvent;
@@ -28,6 +29,10 @@ public class PurchaseInvoiceFeeder extends InvoiceFeeder<PurchaseInvoice> {
         feedFeeder(event);
         feedMatcherService(event);
 
+    }
+    
+    public void listenOwnerChange(@Observes(during = TransactionPhase.AFTER_COMPLETION) @FeatureQualifier(feauture = PurchaseInvoiceFeature.class) @After VoucherOwnerChange event) {
+        feedFeeder(event);
     }
 
     public void listenEntityChange(@Observes(during = TransactionPhase.IN_PROGRESS) @EntityQualifier(entity = PurchaseInvoice.class) @After EntityChangeEvent event) {

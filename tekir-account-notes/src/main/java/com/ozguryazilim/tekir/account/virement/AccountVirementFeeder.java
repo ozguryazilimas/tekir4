@@ -9,6 +9,7 @@ package com.ozguryazilim.tekir.account.virement;
 import com.ozguryazilim.tekir.entities.AccountVirement;
 import com.ozguryazilim.tekir.feed.AbstractFeeder;
 import com.ozguryazilim.tekir.feed.Feeder;
+import com.ozguryazilim.tekir.voucher.VoucherOwnerChange;
 import com.ozguryazilim.tekir.voucher.VoucherStateChange;
 import com.ozguryazilim.tekir.voucher.utils.FeatureUtils;
 import com.ozguryazilim.telve.auth.Identity;
@@ -53,6 +54,32 @@ public class AccountVirementFeeder extends AbstractFeeder<AccountVirement>{
             mentions.add(toContactPointer);
             
             sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(), entity.getInfo(), getMessage(event), mentions);
+
+        }
+    }
+    
+    public void feed(@Observes(during = TransactionPhase.AFTER_SUCCESS) @FeatureQualifier(feauture = AccountVirementFeature.class) @After VoucherOwnerChange event) {
+
+        //FIXME: acaba bunun için bir Qualifier yapabilir miyiz?
+        if (event.getPayload() instanceof AccountVirement) {
+
+            List<FeaturePointer> mentions = new ArrayList<>();
+            AccountVirement entity = (AccountVirement) event.getPayload();
+
+            FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
+            FeaturePointer fromContactPointer = FeatureUtils.getAccountFeaturePointer(entity.getFromAccount());
+            FeaturePointer toContactPointer = FeatureUtils.getAccountFeaturePointer(entity.getToAccount());
+
+			if (entity.getGroup() != null && entity.getGroup().isPersisted()) {
+				FeaturePointer groupPointer = FeatureUtils.getVoucherGroupPointer(entity);
+				mentions.add(groupPointer);
+			}
+
+            mentions.add(voucherPointer);
+            mentions.add(fromContactPointer);
+            mentions.add(toContactPointer);
+            
+            sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(), entity.getInfo(), event.generateMessage(), mentions);
 
         }
     }

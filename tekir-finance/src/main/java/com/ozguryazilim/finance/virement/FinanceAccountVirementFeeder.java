@@ -10,6 +10,7 @@ import com.ozguryazilim.finance.account.FinanceAccountFeature;
 import com.ozguryazilim.tekir.entities.FinanceAccountVirement;
 import com.ozguryazilim.tekir.feed.AbstractFeeder;
 import com.ozguryazilim.tekir.feed.Feeder;
+import com.ozguryazilim.tekir.voucher.VoucherOwnerChange;
 import com.ozguryazilim.tekir.voucher.VoucherStateChange;
 import com.ozguryazilim.tekir.voucher.utils.FeatureUtils;
 import com.ozguryazilim.telve.auth.Identity;
@@ -54,6 +55,32 @@ public class FinanceAccountVirementFeeder extends AbstractFeeder<FinanceAccountV
             mentions.add(toContactPointer);
             
             sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(), entity.getInfo(), getMessage(event), mentions);
+
+        }
+    }
+    
+    public void feed(@Observes(during = TransactionPhase.AFTER_SUCCESS) @FeatureQualifier(feauture = FinanceAccountVirementFeature.class) @After VoucherOwnerChange event) {
+
+        //FIXME: acaba bunun için bir Qualifier yapabilir miyiz?
+        if (event.getPayload() instanceof FinanceAccountVirement) {
+
+            List<FeaturePointer> mentions = new ArrayList<>();
+            FinanceAccountVirement entity = (FinanceAccountVirement) event.getPayload();
+
+            FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
+            FeaturePointer fromContactPointer = FeatureUtils.getFeaturePointer(FinanceAccountFeature.class, entity.getFromAccount().getName(), entity.getFromAccount().getId());
+            FeaturePointer toContactPointer = FeatureUtils.getFeaturePointer(FinanceAccountFeature.class, entity.getToAccount().getName(), entity.getToAccount().getId());
+
+			if (entity.getGroup() != null && entity.getGroup().isPersisted()) {
+				FeaturePointer groupPointer = FeatureUtils.getVoucherGroupPointer(entity);
+				mentions.add(groupPointer);
+			}
+			
+            mentions.add(voucherPointer);
+            mentions.add(fromContactPointer);
+            mentions.add(toContactPointer);
+            
+            sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(), entity.getInfo(), event.generateMessage(), mentions);
 
         }
     }

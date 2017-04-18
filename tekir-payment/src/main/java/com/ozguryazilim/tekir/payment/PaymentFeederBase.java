@@ -11,6 +11,7 @@ import com.ozguryazilim.tekir.entities.PaymentBase;
 import com.ozguryazilim.tekir.entities.ProcessType;
 import com.ozguryazilim.tekir.entities.VoucherStateType;
 import com.ozguryazilim.tekir.feed.AbstractFeeder;
+import com.ozguryazilim.tekir.voucher.VoucherOwnerChange;
 import com.ozguryazilim.tekir.voucher.VoucherStateChange;
 import com.ozguryazilim.tekir.voucher.matcher.VoucherMatcherService;
 import com.ozguryazilim.tekir.voucher.process.ProcessService;
@@ -66,6 +67,30 @@ public abstract class PaymentFeederBase<E extends PaymentBase> extends AbstractF
             mentions.add(FeatureUtils.getFeaturePointer(FinanceAccountFeature.class, entity.getFinanceAccount().getName(), entity.getFinanceAccount().getId()));
             
             sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(), entity.getVoucherNo(), getMessage(event), mentions);
+        }
+    }
+    
+    public void feedFeeder(VoucherOwnerChange event) {
+        if (event.getPayload() instanceof PaymentBase) {
+
+            List<FeaturePointer> mentions = new ArrayList<>();
+            E entity = (E) event.getPayload();
+
+            FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
+            FeaturePointer contactPointer = FeatureUtils.getAccountFeaturePointer(entity);
+            FeaturePointer processPointer = FeatureUtils.getProcessPointer(entity);
+
+			if (entity.getGroup() != null && entity.getGroup().isPersisted()) {
+				FeaturePointer groupPointer = FeatureUtils.getVoucherGroupPointer(entity);
+				mentions.add(groupPointer);
+			}
+
+			mentions.add(processPointer);
+            mentions.add(contactPointer);
+            mentions.add(voucherPointer);
+            mentions.add(FeatureUtils.getFeaturePointer(FinanceAccountFeature.class, entity.getFinanceAccount().getName(), entity.getFinanceAccount().getId()));
+            
+            sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(), entity.getVoucherNo(), event.generateMessage(), mentions);
         }
     }
     
