@@ -147,5 +147,11 @@ public interface ContactPages extends Pages {
 			implements
 				ContactPages {
 	}
+        
+	@SecuredPage
+	@View
+	@PageTitle("report.name.accountStatusReport")
+	class AccountStatusReport implements ContactPages {
+	}
 
 }
