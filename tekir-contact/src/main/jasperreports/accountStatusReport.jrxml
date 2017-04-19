@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.2.2.final using JasperReports Library version 6.2.2  -->
-<!-- 2017-04-18T15:36:17 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="accountStatusReport" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" isIgnorePagination="true" uuid="76b5a97f-b408-4bac-aaed-bcb9cdced953">
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2017-04-19T16:32:57 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="accountStatusReport" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" whenResourceMissingType="Empty" uuid="76b5a97f-b408-4bac-aaed-bcb9cdced953">
 	<property name="ireport.zoom" value="1.2100000000000002"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
 	<property name="net.sf.jasperreports.export.csv.exclude.origin.band.1" value="title"/>
 	<property name="net.sf.jasperreports.export.csv.exclude.origin.band.2" value="pageHeader"/>
 	<property name="net.sf.jasperreports.export.csv.exclude.origin.band.3" value="pageFooter"/>
 	<property name="net.sf.jasperreports.export.csv.exclude.origin.band.4" value="columnHeader"/>
+	<property name="net.sf.jasperreports.export.csv.column.names" value="CODE,NAME,DEBIT,REC,BALANCE"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Tekir"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<style name="Kolon_basliklar" isBlankWhenNull="true" fontName="DejaVu Sans" fontSize="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1254"/>
 	<style name="Detail" forecolor="#000000" backcolor="#FFFFFF" isBlankWhenNull="true" fontName="DejaVu Sans" fontSize="8" pdfEncoding="Cp1254"/>
 	<style name="Baslik" forecolor="#003366" backcolor="#FFFFFF" isBlankWhenNull="true" fontName="DejaVu Sans" fontSize="16" isBold="true" pdfEncoding="Cp1254"/>
@@ -35,10 +38,10 @@ FROM TCC_ACCOUNT_TXN tat
 INNER JOIN TCC_CONTACT as tc on tat.ACCOUNT_ID = tc.ID
 WHERE 
 tat.TXNDATE < $P{DATE} 
-AND (tc.CAT_ID = $P{CONTACT_CAT_ID} OR $P{CONTACT_CAT_ID}=0) 
-AND (tc.TYPE_ID = $P{CORP_TYPE_ID} OR $P{CORP_TYPE_ID}=0) 
-AND (tc.INDUSTRY_ID = $P{INDUSTRY_ID}  OR $P{INDUSTRY_ID}=0)  
-AND (tc.TERRITORY_ID = $P{TERRITORY_ID} OR $P{TERRITORY_ID}=0)
+AND ($P{CONTACT_CAT_ID}=0 OR tc.CAT_ID = $P{CONTACT_CAT_ID}) 
+AND ($P{CORP_TYPE_ID}=0 OR tc.TYPE_ID = $P{CORP_TYPE_ID}) 
+AND ($P{INDUSTRY_ID}=0 OR tc.INDUSTRY_ID = $P{INDUSTRY_ID})  
+AND ( $P{TERRITORY_ID}=0 OR tc.TERRITORY_ID = $P{TERRITORY_ID})
 AND tc.NAME LIKE CONCAT('%',$P{NAME},'%')
 AND tc.CODE LIKE CONCAT('%',$P{CODE},'%')
 GROUP BY tat.ACCOUNT_ID]]>
@@ -90,38 +93,19 @@ GROUP BY tat.ACCOUNT_ID]]>
 				<textFieldExpression><![CDATA[$R{AccountStatusReport}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" mode="Opaque" x="694" y="55" width="100" height="10" uuid="68553323-caa4-43e1-b7e2-a8a55bd5e322"/>
+				<reportElement style="Detail" mode="Opaque" x="454" y="50" width="100" height="10" uuid="68553323-caa4-43e1-b7e2-a8a55bd5e322"/>
 				<textElement textAlignment="Center">
 					<font size="7" isUnderline="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{FIRM_TITLE}]]></textFieldExpression>
 			</textField>
 			<image scaleImage="RetainShape" hAlign="Center">
-				<reportElement mode="Transparent" x="694" y="5" width="100" height="50" uuid="ea9acdae-1244-4b27-8500-e38c4b3766cf"/>
+				<reportElement mode="Transparent" x="454" y="0" width="100" height="50" uuid="ea9acdae-1244-4b27-8500-e38c4b3766cf"/>
 				<imageExpression><![CDATA[$P{FIRM_LOGO}]]></imageExpression>
 			</image>
 			<textField pattern="dd/MM/yyyy HH.mm.ss">
 				<reportElement style="Footer_Info" x="0" y="40" width="100" height="15" uuid="d508bdbf-4670-4bd0-8241-a96658cc9044"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement style="Footer_Info" x="778" y="-15" width="8" height="15" uuid="623bee6c-747a-4af2-93b0-33564857047c"/>
-				<text><![CDATA[/]]></text>
-			</staticText>
-			<textField>
-				<reportElement style="Footer_Info" x="756" y="-15" width="22" height="15" uuid="c055043b-8c60-4ba0-a6ec-eb6eee9be8a1"/>
-				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<textField evaluationTime="Report">
-				<reportElement style="Footer_Info" x="786" y="-15" width="18" height="15" uuid="1a07d827-d5e7-4baa-a072-92f254d2cd66"/>
-				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement style="Footer_Info" x="710" y="-15" width="46" height="15" uuid="8ed57ea8-8a23-4eef-a864-c0065649cda0"/>
-				<textElement markup="none">
-					<font pdfEncoding="Cp1254"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$R{PageNo}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -130,9 +114,11 @@ GROUP BY tat.ACCOUNT_ID]]>
 	</pageHeader>
 	<columnHeader>
 		<band height="17" splitType="Stretch">
-			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
 			<textField>
-				<reportElement style="Kolon_basliklar" x="0" y="0" width="150" height="17" uuid="778782dc-dc65-454a-9ec8-c6d7d98f1aef"/>
+				<reportElement style="Kolon_basliklar" x="0" y="0" width="111" height="17" uuid="778782dc-dc65-454a-9ec8-c6d7d98f1aef">
+					<property name="net.sf.jasperreports.export.csv.column.name" value="CODE"/>
+				</reportElement>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Double"/>
 				</box>
@@ -142,7 +128,9 @@ GROUP BY tat.ACCOUNT_ID]]>
 				<textFieldExpression><![CDATA[$R{AccountStatusReport.Code}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Kolon_basliklar" x="150" y="0" width="188" height="17" uuid="7d87185d-dcff-4022-9d5f-56922e7ff5b2"/>
+				<reportElement style="Kolon_basliklar" x="111" y="0" width="111" height="17" uuid="7d87185d-dcff-4022-9d5f-56922e7ff5b2">
+					<property name="net.sf.jasperreports.export.csv.column.name" value="NAME"/>
+				</reportElement>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Double"/>
 				</box>
@@ -152,7 +140,9 @@ GROUP BY tat.ACCOUNT_ID]]>
 				<textFieldExpression><![CDATA[$R{AccountStatusReport.Name}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Kolon_basliklar" x="338" y="0" width="142" height="17" uuid="7d6118d3-ad1f-44c9-a2e0-a80a5249c9f4"/>
+				<reportElement style="Kolon_basliklar" x="222" y="0" width="111" height="17" uuid="7d6118d3-ad1f-44c9-a2e0-a80a5249c9f4">
+					<property name="net.sf.jasperreports.export.csv.column.name" value="DEBIT"/>
+				</reportElement>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Double"/>
 				</box>
@@ -162,7 +152,9 @@ GROUP BY tat.ACCOUNT_ID]]>
 				<textFieldExpression><![CDATA[$R{AccountStatusReport.Debit}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Kolon_basliklar" x="480" y="0" width="160" height="17" uuid="91d1f2a7-4829-4843-852e-48177f4c4502"/>
+				<reportElement style="Kolon_basliklar" x="333" y="0" width="111" height="17" uuid="91d1f2a7-4829-4843-852e-48177f4c4502">
+					<property name="net.sf.jasperreports.export.csv.column.name" value="REC"/>
+				</reportElement>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Double"/>
 				</box>
@@ -172,7 +164,9 @@ GROUP BY tat.ACCOUNT_ID]]>
 				<textFieldExpression><![CDATA[$R{AccountStatusReport.Receivable}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Kolon_basliklar" x="640" y="0" width="162" height="17" uuid="195feef1-874a-4ab3-a521-8e77386e6230"/>
+				<reportElement style="Kolon_basliklar" x="444" y="0" width="111" height="17" uuid="195feef1-874a-4ab3-a521-8e77386e6230">
+					<property name="net.sf.jasperreports.export.csv.column.name" value="BALANCE"/>
+				</reportElement>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Double"/>
 				</box>
@@ -185,11 +179,10 @@ GROUP BY tat.ACCOUNT_ID]]>
 	</columnHeader>
 	<detail>
 		<band height="17" splitType="Stretch">
-			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement style="Detail" x="0" y="0" width="150" height="17" uuid="03896942-64fd-4b08-930a-aa1b6f3f5a31">
-					<property name="net.sf.jasperreports.export.csv.column.name" value="$R{ExaminationResult}"/>
-					<property name="net.sf.jasperreports.export.csv.repeat.value" value="true"/>
+				<reportElement style="Detail" x="0" y="0" width="111" height="17" uuid="03896942-64fd-4b08-930a-aa1b6f3f5a31">
+					<property name="net.sf.jasperreports.export.csv.column.name" value="CODE"/>
 				</reportElement>
 				<box topPadding="3">
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
@@ -200,9 +193,8 @@ GROUP BY tat.ACCOUNT_ID]]>
 				<textFieldExpression><![CDATA[$F{CODE}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" positionType="FixRelativeToBottom" x="150" y="0" width="188" height="17" uuid="f39361e6-6039-4e0a-aa0d-b99bf6940b9c">
-					<property name="net.sf.jasperreports.export.csv.column.name" value="PERSON_NAME"/>
-					<property name="net.sf.jasperreports.export.csv.repeat.value" value="true"/>
+				<reportElement style="Detail" positionType="FixRelativeToBottom" x="111" y="0" width="111" height="17" uuid="f39361e6-6039-4e0a-aa0d-b99bf6940b9c">
+					<property name="net.sf.jasperreports.export.csv.column.name" value="NAME"/>
 				</reportElement>
 				<box topPadding="3">
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
@@ -212,10 +204,9 @@ GROUP BY tat.ACCOUNT_ID]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NAME}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement style="Detail" positionType="Float" x="338" y="0" width="142" height="17" uuid="a04431ea-a70d-4316-ad55-fc8eac30048d">
-					<property name="net.sf.jasperreports.export.csv.column.name" value="GEN_RESULT"/>
-					<property name="net.sf.jasperreports.export.csv.repeat.value" value="true"/>
+			<textField pattern="#,##0.00#">
+				<reportElement key="" style="Detail" positionType="Float" x="222" y="0" width="111" height="17" uuid="a04431ea-a70d-4316-ad55-fc8eac30048d">
+					<property name="net.sf.jasperreports.export.csv.column.name" value="DEBIT"/>
 				</reportElement>
 				<box topPadding="4" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -223,15 +214,14 @@ GROUP BY tat.ACCOUNT_ID]]>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement>
+				<textElement textAlignment="Right">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DEBIT}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement style="Detail" x="480" y="0" width="160" height="17" uuid="f9da19bf-b9b0-4cb2-ae37-aaae7e4664d4">
-					<property name="net.sf.jasperreports.export.csv.column.name" value="GEN_RESULT"/>
-					<property name="net.sf.jasperreports.export.csv.repeat.value" value="true"/>
+			<textField pattern="#,##0.00#">
+				<reportElement style="Detail" x="333" y="0" width="111" height="17" uuid="f9da19bf-b9b0-4cb2-ae37-aaae7e4664d4">
+					<property name="net.sf.jasperreports.export.csv.column.name" value="REC"/>
 				</reportElement>
 				<box topPadding="4" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -239,15 +229,14 @@ GROUP BY tat.ACCOUNT_ID]]>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement>
+				<textElement textAlignment="Right">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{RECEIVABLE}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement style="Detail" x="640" y="0" width="162" height="17" uuid="128fd732-7f0b-482e-bbcf-f308b0566f05">
-					<property name="net.sf.jasperreports.export.csv.column.name" value="GEN_RESULT"/>
-					<property name="net.sf.jasperreports.export.csv.repeat.value" value="true"/>
+			<textField pattern="#,##0.00#">
+				<reportElement style="Detail" x="444" y="0" width="111" height="17" uuid="128fd732-7f0b-482e-bbcf-f308b0566f05">
+					<property name="net.sf.jasperreports.export.csv.column.name" value="BALANCE"/>
 				</reportElement>
 				<box topPadding="4" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -255,7 +244,7 @@ GROUP BY tat.ACCOUNT_ID]]>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement>
+				<textElement textAlignment="Right">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{Balance}]]></textFieldExpression>
@@ -263,31 +252,33 @@ GROUP BY tat.ACCOUNT_ID]]>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="30" splitType="Stretch">
+		<band height="34" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
-			<printWhenExpression><![CDATA[$V{MASTER_TOTAL_PAGES}>1]]></printWhenExpression>
-			<textField>
-				<reportElement x="481" y="10" width="159" height="20" uuid="df65736c-1e46-48c6-bbde-bed98654bd15"/>
+			<printWhenExpression><![CDATA[$V{V_PAGE_COUNT} > 1]]></printWhenExpression>
+			<textField pattern="#,##0.00#">
+				<reportElement x="333" y="10" width="111" height="20" uuid="df65736c-1e46-48c6-bbde-bed98654bd15"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{PT_Rec}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="339" y="10" width="142" height="20" uuid="6ab72ccb-e375-40b1-8999-61196cf462ec"/>
+			<textField pattern="#,##0.00#">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="222" y="10" width="110" height="20" uuid="6ab72ccb-e375-40b1-8999-61196cf462ec"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{PT_Debit}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Kolon_basliklar" x="182" y="10" width="157" height="20" isRemoveLineWhenBlank="true" uuid="623cad8f-ad3e-4a07-858d-8d434f6abc72">
+				<reportElement style="Kolon_basliklar" x="111" y="10" width="102" height="20" isRemoveLineWhenBlank="true" uuid="623cad8f-ad3e-4a07-858d-8d434f6abc72">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement markup="none">
@@ -295,48 +286,94 @@ GROUP BY tat.ACCOUNT_ID]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$R{AccountStatusReport.Subtotal}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="640" y="10" width="162" height="20" uuid="5346d8a8-a24f-4c75-b5e2-7d1039b0e1c1"/>
+			<textField pattern="#,##0.00#">
+				<reportElement x="444" y="10" width="110" height="20" uuid="5346d8a8-a24f-4c75-b5e2-7d1039b0e1c1"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="1.0" lineStyle="Dashed" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{PT_Balance}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnFooter>
-	<lastPageFooter>
-		<band height="30">
-			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+	<pageFooter>
+		<band height="27">
 			<textField>
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="339" y="5" width="142" height="20" uuid="b10d8390-6b72-4239-8c3b-97295c49974e"/>
+				<reportElement style="Footer_Info" x="516" y="10" width="14" height="15" uuid="0c49d6cd-ef2e-4808-bcc1-a92b636ae5fb"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Footer_Info" x="530" y="10" width="8" height="15" uuid="ada46742-a4e4-4848-9afe-79cbe4e3986d"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement style="Footer_Info" x="538" y="10" width="18" height="15" uuid="52e84671-4573-47f5-9476-b0457df12679"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Footer_Info" x="482" y="10" width="34" height="15" uuid="82476cf9-b6cf-4ebd-a98b-e258bd63c5e6"/>
+				<textElement markup="none">
+					<font pdfEncoding="Cp1254"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{PageNo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="66">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+			<textField pattern="#,##0.00#">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="222" y="5" width="111" height="20" uuid="b10d8390-6b72-4239-8c3b-97295c49974e"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{GT_Debit}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="481" y="5" width="159" height="20" uuid="15c6f8cc-6eb6-411c-8435-6eb1f3fd22f7"/>
+			<textField pattern="#,##0.00#">
+				<reportElement x="333" y="5" width="111" height="20" uuid="15c6f8cc-6eb6-411c-8435-6eb1f3fd22f7"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{GT_Rec}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="640" y="5" width="162" height="20" uuid="5300045e-6801-41ab-a6e8-28b88cf0247a"/>
+			<textField pattern="#,##0.00#">
+				<reportElement x="444" y="5" width="111" height="20" uuid="5300045e-6801-41ab-a6e8-28b88cf0247a"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{GT_Balance}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Kolon_basliklar" x="182" y="5" width="157" height="20" uuid="a7fc19be-6411-4cb3-bb9f-cafa0341aad8"/>
+				<reportElement style="Kolon_basliklar" x="111" y="5" width="102" height="20" uuid="a7fc19be-6411-4cb3-bb9f-cafa0341aad8"/>
 				<textElement markup="none">
 					<font size="8" isBold="true" pdfEncoding="Cp1254"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$R{AccountStatusReport.GrandTotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Footer_Info" x="514" y="40" width="14" height="15" uuid="c1e397c7-e1a7-46b9-8d07-a436c80c8c39"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Footer_Info" x="528" y="40" width="8" height="15" uuid="dd93f087-ca79-4aea-867e-2a3404046aa5"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement style="Footer_Info" x="536" y="40" width="18" height="15" uuid="d7a70271-6589-4eab-946c-8c04dd5dce27"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Footer_Info" x="480" y="40" width="34" height="15" uuid="da72c8e2-eeea-4535-8143-edb521fd7134"/>
+				<textElement markup="none">
+					<font pdfEncoding="Cp1254"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{PageNo}]]></textFieldExpression>
 			</textField>
 		</band>
 	</lastPageFooter>

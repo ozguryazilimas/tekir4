@@ -21,6 +21,7 @@ import javax.inject.Inject;
 
 import org.joda.time.DateTime;
 
+import com.ozguryazilim.telve.config.LocaleSelector;
 import com.ozguryazilim.telve.config.TelveConfigResolver;
 import com.ozguryazilim.telve.messages.TelveResourceBundle;
 import com.ozguryazilim.telve.query.filters.DateValueType;
@@ -93,7 +94,8 @@ public class AccountStatusReport extends JasperReportBase {
     }
 
     @Override
-    protected void decorateI18NParams(Map<String, Object> params) {        
+    protected void decorateI18NParams(Map<String, Object> params) {
+    	params.put(JRParameter.REPORT_LOCALE, LocaleSelector.instance().getLocale());
         params.put(JRParameter.REPORT_RESOURCE_BUNDLE, TelveResourceBundle.getBundle());
         super.decorateI18NParams(params); // To change body of generated
         // methods, choose Tools |
