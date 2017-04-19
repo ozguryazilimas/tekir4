@@ -5,13 +5,13 @@
  */
 package com.ozguryazilim.tekir.account.virement;
 
-
 import com.ozguryazilim.tekir.entities.AccountVirement;
 import com.ozguryazilim.tekir.feed.AbstractFeeder;
 import com.ozguryazilim.tekir.feed.Feeder;
 import com.ozguryazilim.tekir.voucher.VoucherOwnerChange;
 import com.ozguryazilim.tekir.voucher.VoucherStateChange;
 import com.ozguryazilim.tekir.voucher.utils.FeatureUtils;
+import com.ozguryazilim.tekir.voucher.utils.FeederUtils;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureQualifier;
@@ -27,97 +27,98 @@ import javax.inject.Inject;
  * @author oyas
  */
 @Feeder
-public class AccountVirementFeeder extends AbstractFeeder<AccountVirement>{
+public class AccountVirementFeeder extends AbstractFeeder<AccountVirement> {
 
-    @Inject
-    private Identity identity;
-    
-    public void feed(@Observes(during = TransactionPhase.AFTER_SUCCESS) @FeatureQualifier(feauture = AccountVirementFeature.class) @After VoucherStateChange event) {
+	@Inject
+	private Identity identity;
 
-        //FIXME: acaba bunun için bir Qualifier yapabilir miyiz?
-        if (event.getPayload() instanceof AccountVirement) {
+	public void feed(
+			@Observes(during = TransactionPhase.AFTER_SUCCESS) @FeatureQualifier(feauture = AccountVirementFeature.class) @After VoucherStateChange event) {
 
-            List<FeaturePointer> mentions = new ArrayList<>();
-            AccountVirement entity = (AccountVirement) event.getPayload();
+		// FIXME: acaba bunun için bir Qualifier yapabilir miyiz?
+		if (event.getPayload() instanceof AccountVirement) {
 
-            FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
-            FeaturePointer fromContactPointer = FeatureUtils.getAccountFeaturePointer(entity.getFromAccount());
-            FeaturePointer toContactPointer = FeatureUtils.getAccountFeaturePointer(entity.getToAccount());
+			AccountVirement entity = (AccountVirement) event.getPayload();
 
-			if (entity.getGroup() != null && entity.getGroup().isPersisted()) {
-				FeaturePointer groupPointer = FeatureUtils.getVoucherGroupPointer(entity);
-				mentions.add(groupPointer);
-			}
+			List<FeaturePointer> mentions = prepareMentionList(entity);
 
-            mentions.add(voucherPointer);
-            mentions.add(fromContactPointer);
-            mentions.add(toContactPointer);
-            
-            sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(), entity.getInfo(), getMessage(event), mentions);
+			sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(), entity.getInfo(),
+					getMessage(event), mentions);
 
-        }
-    }
-    
-    public void feed(@Observes(during = TransactionPhase.AFTER_SUCCESS) @FeatureQualifier(feauture = AccountVirementFeature.class) @After VoucherOwnerChange event) {
+		}
+	}
 
-        //FIXME: acaba bunun için bir Qualifier yapabilir miyiz?
-        if (event.getPayload() instanceof AccountVirement) {
+	public void feed(
+			@Observes(during = TransactionPhase.AFTER_SUCCESS) @FeatureQualifier(feauture = AccountVirementFeature.class) @After VoucherOwnerChange event) {
 
-            List<FeaturePointer> mentions = new ArrayList<>();
-            AccountVirement entity = (AccountVirement) event.getPayload();
+		// FIXME: acaba bunun için bir Qualifier yapabilir miyiz?
+		if (event.getPayload() instanceof AccountVirement) {
 
-            FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
-            FeaturePointer fromContactPointer = FeatureUtils.getAccountFeaturePointer(entity.getFromAccount());
-            FeaturePointer toContactPointer = FeatureUtils.getAccountFeaturePointer(entity.getToAccount());
+			AccountVirement entity = (AccountVirement) event.getPayload();
 
-			if (entity.getGroup() != null && entity.getGroup().isPersisted()) {
-				FeaturePointer groupPointer = FeatureUtils.getVoucherGroupPointer(entity);
-				mentions.add(groupPointer);
-			}
+			List<FeaturePointer> mentions = prepareMentionList(entity);
 
-            mentions.add(voucherPointer);
-            mentions.add(fromContactPointer);
-            mentions.add(toContactPointer);
-            
-            sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(), entity.getInfo(), event.generateMessage(), mentions);
+			sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(), entity.getInfo(),
+					FeederUtils.getEventMessage(event), mentions);
 
-        }
-    }
-    
-    /**
-     * Geriye event bilgilerine bakarak feed body mesajını hazırlayıp döndürür.
-     * 
-     * TODO: i18n problemi ve action / state karşılaştırması + const kullanımına ihtiyaç var.
-     * @param event
-     * @return 
-     */
-    protected String getMessage( VoucherStateChange event ){
-        switch( event.getAction().getName()){
-            case "CREATE" :
-                return "Credit Note created";
-            case "Publish" :
-                return "Credit Note published";
-            case "Won" :
-                return "Credit Note";
-            case "Loss" :
-                return "Opportunity Lost" + event.getPayload().getStateReason();
-            case "Cancel":
-                return "Opportunity canceled. " + event.getPayload().getStateReason();
-                
-        }
-        
-        switch (event.getTo().getName()) {
-                case "OPEN":
-                    return "Opportunity created";
-                case "CLOSE":
-                    return "Opportunity Won. Congrats!";
-                case "LOST":
-                    return "Opportunity lost! " + event.getPayload().getStateReason();
-                case "CANCELED":
-                    return "Opportunity canceled. " + event.getPayload().getStateReason();
-                default:
-                    return "Opportunity created";
-            }
-    }
-    
+		}
+	}
+
+	/**
+	 * Geriye event bilgilerine bakarak feed body mesajını hazırlayıp döndürür.
+	 * 
+	 * TODO: i18n problemi ve action / state karşılaştırması + const kullanımına
+	 * ihtiyaç var.
+	 * 
+	 * @param event
+	 * @return
+	 */
+	protected String getMessage(VoucherStateChange event) {
+		switch (event.getAction().getName()) {
+		case "CREATE":
+			return "Credit Note created";
+		case "Publish":
+			return "Credit Note published";
+		case "Won":
+			return "Credit Note";
+		case "Loss":
+			return "Opportunity Lost" + event.getPayload().getStateReason();
+		case "Cancel":
+			return "Opportunity canceled. " + event.getPayload().getStateReason();
+
+		}
+
+		switch (event.getTo().getName()) {
+		case "OPEN":
+			return "Opportunity created";
+		case "CLOSE":
+			return "Opportunity Won. Congrats!";
+		case "LOST":
+			return "Opportunity lost! " + event.getPayload().getStateReason();
+		case "CANCELED":
+			return "Opportunity canceled. " + event.getPayload().getStateReason();
+		default:
+			return "Opportunity created";
+		}
+	}
+
+	private List<FeaturePointer> prepareMentionList(AccountVirement entity) {
+		List<FeaturePointer> mentions = new ArrayList<>();
+
+		FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
+		FeaturePointer fromContactPointer = FeatureUtils.getAccountFeaturePointer(entity.getFromAccount());
+		FeaturePointer toContactPointer = FeatureUtils.getAccountFeaturePointer(entity.getToAccount());
+
+		if (entity.getGroup() != null && entity.getGroup().isPersisted()) {
+			FeaturePointer groupPointer = FeatureUtils.getVoucherGroupPointer(entity);
+			mentions.add(groupPointer);
+		}
+
+		mentions.add(voucherPointer);
+		mentions.add(fromContactPointer);
+		mentions.add(toContactPointer);
+
+		return mentions;
+	}
+
 }

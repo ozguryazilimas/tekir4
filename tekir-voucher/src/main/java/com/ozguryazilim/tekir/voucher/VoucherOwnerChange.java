@@ -35,11 +35,6 @@ public class VoucherOwnerChange {
 
     public VoucherBase getPayload() {
         return payload;
-    }
-    
-    public String generateMessage(){
-        return "feeder.messages.OwnerChanged" + this.getFrom() + " -> " + this.getTo();
-    }
-            
+    }            
     
 }
