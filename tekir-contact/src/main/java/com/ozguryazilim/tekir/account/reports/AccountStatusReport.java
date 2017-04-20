@@ -1,13 +1,3 @@
-/*
- *   Copyleft 2013 IOVA SOFTWARE
- *   
- *  Distributable under LGPL license.
- *  See terms of license at gnu.org.
- *  http://www.gnu.org/licenses/lgpl.html
- *   
- *  www.openohs.com
- *  www.iova.com.tr
- */
 package com.ozguryazilim.tekir.account.reports;
 
 import com.ozguryazilim.tekir.contact.config.ContactPages;
