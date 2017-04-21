@@ -99,6 +99,12 @@ public interface ContactPages extends Pages {
 			implements
 				ContactPages {
 	}
+	
+ 	@SecuredPage
+ 	@View
+ 	@PageTitle("report.name.accountTxnReport")
+ 	class AccountTxnReport implements ContactPages {
+	}
 
         @SecuredPage("relatedContact") @View 
         class RelatedContactSubView implements Admin {};
