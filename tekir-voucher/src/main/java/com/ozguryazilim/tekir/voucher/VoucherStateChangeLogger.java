@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.tekir.voucher;
 
+import com.ozguryazilim.tekir.feed.AbstractFeeder;
 import com.ozguryazilim.telve.audit.AuditLogger;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.qualifiers.After;
@@ -14,12 +15,12 @@ import javax.enterprise.event.TransactionPhase;
 import javax.inject.Inject;
 
 /**
- * StateChange eventlerini dinleyerek bunları AuditLog'a gönderir.
+ * OwnerChange eventlerini dinleyerek bunları AuditLog'a gönderir.
  * 
- * @author Hakan Uygun
+ * @author Ceyhun Onur
  */
 @ApplicationScoped
-public class VoucherStateChangeLogger {
+public class VoucherStateChangeLogger extends AbstractFeeder<Object>{
 
     private static final String LOG_CATEGORY = "STATE_CHANGE";
     
@@ -29,7 +30,7 @@ public class VoucherStateChangeLogger {
     @Inject
     private AuditLogger auditLogger;
     
-    public void feed(@Observes(during = TransactionPhase.AFTER_SUCCESS) @After VoucherStateChange event) {
+    public void feed(@Observes(during = TransactionPhase.AFTER_SUCCESS) @After VoucherStateChange event) {   	
     
         auditLogger.actionLog( event.getPayload().getClass().getSimpleName(), 
                                event.getPayload().getId(), 

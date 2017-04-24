@@ -62,6 +62,9 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
     private Event<VoucherStateChange> stateChangeEvent;
 
     @Inject
+    private Event<VoucherOwnerChange> ownerChangeEvent;
+
+    @Inject
     private ViewNavigationHandler viewNavigationHandler;
 
     @Inject
@@ -238,13 +241,13 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
 
         //State değiştirip saklayalım
         getEntity().setState(toState);
-        
+
         //State reason yoksa eskisini silelim
-        if(!action.hasDialog()){
-        	getEntity().setStateReason(null);
-        	getEntity().setStateInfo(null);
+        if (!action.hasDialog()) {
+            getEntity().setStateReason(null);
+            getEntity().setStateInfo(null);
         }
-        
+
         try {
             Class<? extends ViewConfig> result = save();
 
@@ -267,9 +270,9 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
             return result;
         } catch (Exception ex) {
             getEntity().setState(fromState);
-            if(!action.hasDialog()){
-            	getEntity().setStateReason(fromStateReason);
-            	getEntity().setStateInfo(fromStateInfo);
+            if (!action.hasDialog()) {
+                getEntity().setStateReason(fromStateReason);
+                getEntity().setStateInfo(fromStateInfo);
             }
             throw ex;
         }
@@ -445,12 +448,16 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
         getEntity().setOwner(userName);
         save();
 
-        auditLogger.actionLog(getEntity().getClass().getSimpleName(), getEntity().getId(), getEntity().getVoucherNo(), "ACTION", "OWNER_CHANGE", identity.getLoginName(), oldOwner + " -> " + userName);
+        VoucherOwnerChange e = new VoucherOwnerChange(oldOwner, userName, getEntity());
+
+        ownerChangeEvent
+                .select(new FeatureQualifierLiteral(getFeatureClass()))
+                .select(new AfterLiteral())
+                .fire(e);
     }
 
     public VoucherStateConfig getStateConfig() {
         return stateConfig;
     }
-    
-    
+
 }

@@ -7,12 +7,15 @@ package com.ozguryazilim.tekir.opportunity;
 
 import com.ozguryazilim.tekir.account.AccountTxnService;
 import com.ozguryazilim.tekir.entities.Opportunity;
+import com.ozguryazilim.tekir.entities.VoucherBase;
 import com.ozguryazilim.tekir.entities.VoucherStateType;
 import com.ozguryazilim.tekir.feed.AbstractFeeder;
 import com.ozguryazilim.tekir.feed.Feeder;
+import com.ozguryazilim.tekir.voucher.VoucherOwnerChange;
 import com.ozguryazilim.tekir.voucher.VoucherStateChange;
 import com.ozguryazilim.tekir.voucher.process.ProcessService;
 import com.ozguryazilim.tekir.voucher.utils.FeatureUtils;
+import com.ozguryazilim.tekir.voucher.utils.FeederUtils;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureQualifier;
@@ -43,26 +46,13 @@ public class OpportunityFeeder extends AbstractFeeder<Opportunity> {
 	private ProcessService processService;
 
 	public void feed(@Observes(during = TransactionPhase.AFTER_SUCCESS) @FeatureQualifier(feauture = OpportunityFeature.class) @After VoucherStateChange event) {
-
-		// FIXME: acaba bunun için bir Qualifier yapabilir miyiz?
+			
 		if (event.getPayload() instanceof Opportunity) {
 
 			Opportunity entity = (Opportunity) event.getPayload();
-
-			List<FeaturePointer> mentions = new ArrayList<>();
-			FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
-			FeaturePointer contactPointer = FeatureUtils.getAccountFeaturePointer(entity);
-			FeaturePointer processPointer = FeatureUtils.getProcessPointer(entity);
-
-			if (entity.getGroup() != null && entity.getGroup().isPersisted()) {
-				FeaturePointer groupPointer = FeatureUtils.getVoucherGroupPointer(entity);
-				mentions.add(groupPointer);
-			}
-
-			mentions.add(processPointer);
-			mentions.add(contactPointer);
-			mentions.add(voucherPointer);
-
+		
+			List<FeaturePointer> mentions = prepareMentionList(entity);
+		
 			sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(),
 					entity.getTopic(), getMessage(event), mentions);
 
@@ -75,6 +65,20 @@ public class OpportunityFeeder extends AbstractFeeder<Opportunity> {
 				processService.decProcessUsage(entity.getProcess());
 			}
 
+		}
+	}
+	
+	public void feed(@Observes(during = TransactionPhase.AFTER_SUCCESS) @FeatureQualifier(feauture = OpportunityFeature.class) @After VoucherOwnerChange event) {
+
+		// FIXME: acaba bunun için bir Qualifier yapabilir miyiz?
+		if (event.getPayload() instanceof Opportunity) {
+
+			Opportunity entity = (Opportunity) event.getPayload();
+
+			List<FeaturePointer> mentions = prepareMentionList(entity);
+
+			sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(),
+					entity.getTopic(), FeederUtils.getEventMessage(event), mentions);
 		}
 	}
 
@@ -135,5 +139,24 @@ public class OpportunityFeeder extends AbstractFeeder<Opportunity> {
 			return "Opportunity created";
 		}
 	}
+	
+	private List<FeaturePointer> prepareMentionList(Opportunity entity){
+		// FIXME: acaba bunun için bir Qualifier yapabilir miyiz?
+		
+			List<FeaturePointer> mentions = new ArrayList<>();
+			FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
+			FeaturePointer contactPointer = FeatureUtils.getAccountFeaturePointer(entity);
+			FeaturePointer processPointer = FeatureUtils.getProcessPointer(entity);
 
+			if (entity.getGroup() != null && entity.getGroup().isPersisted()) {
+				FeaturePointer groupPointer = FeatureUtils.getVoucherGroupPointer(entity);
+				mentions.add(groupPointer);
+			}
+
+			mentions.add(processPointer);
+			mentions.add(contactPointer);
+			mentions.add(voucherPointer);
+			
+			return mentions;
+		}
 }

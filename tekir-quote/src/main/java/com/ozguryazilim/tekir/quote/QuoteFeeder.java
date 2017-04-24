@@ -10,9 +10,11 @@ import com.ozguryazilim.tekir.entities.Quote;
 import com.ozguryazilim.tekir.entities.VoucherStateType;
 import com.ozguryazilim.tekir.feed.AbstractFeeder;
 import com.ozguryazilim.tekir.feed.Feeder;
+import com.ozguryazilim.tekir.voucher.VoucherOwnerChange;
 import com.ozguryazilim.tekir.voucher.VoucherStateChange;
 import com.ozguryazilim.tekir.voucher.process.ProcessService;
 import com.ozguryazilim.tekir.voucher.utils.FeatureUtils;
+import com.ozguryazilim.tekir.voucher.utils.FeederUtils;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureQualifier;
@@ -33,84 +35,111 @@ import javax.inject.Inject;
 @Feeder
 public class QuoteFeeder extends AbstractFeeder<Quote> {
 
-    @Inject
-    private Identity identity;
+	@Inject
+	private Identity identity;
 
-    @Inject
-    private AccountTxnService accountTxnService;
+	@Inject
+	private AccountTxnService accountTxnService;
 
-    @Inject
-    private ProcessService processService;
+	@Inject
+	private ProcessService processService;
 
-    public void feed(@Observes(during = TransactionPhase.AFTER_SUCCESS) @FeatureQualifier(feauture = QuoteFeature.class) @After VoucherStateChange event) {
+	public void feed(
+			@Observes(during = TransactionPhase.AFTER_SUCCESS) @FeatureQualifier(feauture = QuoteFeature.class) @After VoucherStateChange event) {
 
-        //FIXME: acaba bunun için bir Qualifier yapabilir miyiz?
-        if (event.getPayload() instanceof Quote) {
+		// FIXME: acaba bunun için bir Qualifier yapabilir miyiz?
+		if (event.getPayload() instanceof Quote) {
 
-            List<FeaturePointer> mentions = new ArrayList<>();
-            Quote entity = (Quote) event.getPayload();
+			Quote entity = (Quote) event.getPayload();
 
-            FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
-            FeaturePointer contactPointer = FeatureUtils.getAccountFeaturePointer(entity);
-            FeaturePointer processPointer = FeatureUtils.getProcessPointer(entity);
+			List<FeaturePointer> mentions = prepareMentionList(entity);
 
-			if (entity.getGroup() != null && entity.getGroup().isPersisted()) {
-				FeaturePointer groupPointer = FeatureUtils.getVoucherGroupPointer(entity);
-				mentions.add(groupPointer);
+			sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(),
+					entity.getVoucherNo(), getMessage(event), mentions);
+
+			// Process feed
+			if ("OPEN".equals(event.getTo().getName()) && "DRAFT".equals(event.getFrom().getName())) {
+				processService.incProcessUsage(entity.getProcess());
 			}
 
-			mentions.add(processPointer);
-            mentions.add(contactPointer);
-            mentions.add(voucherPointer);
+			if (event.getTo().getType().equals(VoucherStateType.CLOSE)) {
+				processService.decProcessUsage(entity.getProcess());
+			}
+		}
+	}
 
-            sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(), entity.getVoucherNo(), getMessage(event), mentions);
+	public void feed(
+			@Observes(during = TransactionPhase.AFTER_SUCCESS) @FeatureQualifier(feauture = QuoteFeature.class) @After VoucherOwnerChange event) {
 
-            //Process feed
-            if ("OPEN".equals(event.getTo().getName()) && "DRAFT".equals(event.getFrom().getName())) {
-                processService.incProcessUsage(entity.getProcess());
-            }
+		// FIXME: acaba bunun için bir Qualifier yapabilir miyiz?
+		if (event.getPayload() instanceof Quote) {
 
-            if (event.getTo().getType().equals(VoucherStateType.CLOSE)) {
-                processService.decProcessUsage(entity.getProcess());
-            }
-        }
-    }
+			Quote entity = (Quote) event.getPayload();
 
-    public void feed(@Observes(during = TransactionPhase.IN_PROGRESS) @EntityQualifier(entity = Quote.class) @After EntityChangeEvent event) {
+			List<FeaturePointer> mentions = prepareMentionList(entity);
 
-        if (event.getAction() != EntityChangeAction.DELETE) {
-            Quote entity = (Quote) event.getEntity();
+			sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(),
+					entity.getVoucherNo(), FeederUtils.getEventMessage(event), mentions);
+		}
+	}
 
-            FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
+	public void feed(
+			@Observes(during = TransactionPhase.IN_PROGRESS) @EntityQualifier(entity = Quote.class) @After EntityChangeEvent event) {
 
-            accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getCode(), entity.getInfo(), Boolean.FALSE, Boolean.FALSE, entity.getCurrency(), entity.getTotal(), entity.getLocalAmount(), entity.getDate(), entity.getOwner(), entity.getProcess().getProcessNo(), entity.getState().toString(), entity.getStateReason());
-        }
+		if (event.getAction() != EntityChangeAction.DELETE) {
+			Quote entity = (Quote) event.getEntity();
 
-        //TODO: Delete edildiğinde de gidip txn'den silme yapılmalı.
-    }
+			FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
 
-    /**
-     * Geriye event bilgilerine bakarak feed body mesajını hazırlayıp döndürür.
-     *
-     * TODO: i18n problemi ve action / state karşılaştırması + const kullanımına
-     * ihtiyaç var.
-     *
-     * @param event
-     * @return
-     */
-    protected String getMessage(VoucherStateChange event) {
-        switch (event.getTo().getName()) {
-            case "OPEN":
-                return "Quote created";
-            case "CLOSE":
-                return "Quote Won. Congrats!";
-            case "LOST":
-                return "Quote lost! " + event.getPayload().getStateReason();
-            case "CANCELED":
-                return "Quote canceled. " + event.getPayload().getStateReason();
-            default:
-                return "Quote created";
-        }
-    }
+			accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getCode(), entity.getInfo(),
+					Boolean.FALSE, Boolean.FALSE, entity.getCurrency(), entity.getTotal(), entity.getLocalAmount(),
+					entity.getDate(), entity.getOwner(), entity.getProcess().getProcessNo(),
+					entity.getState().toString(), entity.getStateReason());
+		}
 
+		// TODO: Delete edildiğinde de gidip txn'den silme yapılmalı.
+	}
+
+	/**
+	 * Geriye event bilgilerine bakarak feed body mesajını hazırlayıp döndürür.
+	 *
+	 * TODO: i18n problemi ve action / state karşılaştırması + const kullanımına
+	 * ihtiyaç var.
+	 *
+	 * @param event
+	 * @return
+	 */
+	protected String getMessage(VoucherStateChange event) {
+		switch (event.getTo().getName()) {
+		case "OPEN":
+			return "Quote created";
+		case "CLOSE":
+			return "Quote Won. Congrats!";
+		case "LOST":
+			return "Quote lost! " + event.getPayload().getStateReason();
+		case "CANCELED":
+			return "Quote canceled. " + event.getPayload().getStateReason();
+		default:
+			return "Quote created";
+		}
+	}
+
+	private List<FeaturePointer> prepareMentionList(Quote entity) {
+		List<FeaturePointer> mentions = new ArrayList<>();
+
+		FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
+		FeaturePointer contactPointer = FeatureUtils.getAccountFeaturePointer(entity);
+		FeaturePointer processPointer = FeatureUtils.getProcessPointer(entity);
+
+		if (entity.getGroup() != null && entity.getGroup().isPersisted()) {
+			FeaturePointer groupPointer = FeatureUtils.getVoucherGroupPointer(entity);
+			mentions.add(groupPointer);
+		}
+
+		mentions.add(processPointer);
+		mentions.add(contactPointer);
+		mentions.add(voucherPointer);
+
+		return mentions;
+	}
 }
