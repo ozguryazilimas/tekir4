@@ -30,4 +30,10 @@
         </permission>
     </permissionGroup>
     </permissionGroup>
+     <permissionGroup name="Reports">
+     	<permission target="accountTxnReport">            
+     		<action name="select" scope="owner,group"/>
+     		<action name="exec" scope="owner,group"/>
+   		</permission>
+     </permissionGroup>
 </permissions>
