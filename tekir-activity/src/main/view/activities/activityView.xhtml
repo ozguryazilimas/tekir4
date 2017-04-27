@@ -70,7 +70,7 @@
             <p:commandLink action="#{activityWidget.edit(activityHome.entity)}" process="@this" styleClass="context-command">
                 <i class="fa fa-pencil" />
                 <h:outputText value=" #{messages['general.button.Edit']}" />
-                <p:ajax event="dialogReturn" update="viewarea" partialSubmit="true" process="@this" />   
+                <p:ajax event="dialogReturn" update="@all" partialSubmit="true" process="@this" />   
             </p:commandLink>
         </li>
 

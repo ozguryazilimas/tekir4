@@ -53,7 +53,7 @@
                         <li>
                             <p:commandLink action="#{activityWidget.createNew(act)}" process="@this" >
                                 <i class="#{messages['activity.button.icon.'.concat(act)]}" /> #{messages['activity.button.label.'.concat(act)]}
-                                <p:ajax event="dialogReturn" update="@([id$=results])" partialSubmit="true" process="@this" />   
+                                <p:ajax event="dialogReturn" listener="#{bean.search()}" update="@([id$=results])" partialSubmit="true" process="@this" />   
                             </p:commandLink>
                         </li>
                     </ui:repeat>
