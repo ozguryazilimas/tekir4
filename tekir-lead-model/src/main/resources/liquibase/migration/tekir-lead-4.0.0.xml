@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="muhammedf (generated)" id="1493825259447-1">
+        <createTable tableName="TLE_LEAD">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TLE_LEADPK"/>
+            </column>
+            <column name="CREATE_DATE" type="datetime"/>
+            <column name="UPDATE_DATE" type="datetime"/>
+            <column name="UPDATE_USER" type="VARCHAR(255)"/>
+            <column name="CODE" type="VARCHAR(30)"/>
+            <column name="TXNDATE" type="datetime"/>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="OWNER" type="VARCHAR(255)"/>
+            <column name="REFERENCE_NO" type="VARCHAR(30)"/>
+            <column name="FEATURE_BK" type="VARCHAR(255)"/>
+            <column name="FEATURE" type="VARCHAR(255)"/>
+            <column name="FEATURE_PK" type="BIGINT"/>
+            <column name="STATE" type="VARCHAR(255)"/>
+            <column name="STATE_INFO" type="VARCHAR(255)"/>
+            <column name="STATE_REASON" type="VARCHAR(255)"/>
+            <column name="TOPIC" type="VARCHAR(255)"/>
+            <column name="VOUCHER_NO" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="RELATED_ADDRESS" type="VARCHAR(255)"/>
+            <column name="RELATED_COMPANY_NAME" type="VARCHAR(255)"/>
+            <column name="RELATED_EMAIL" type="VARCHAR(255)"/>
+            <column name="RELATED_PERSON_NAME" type="VARCHAR(255)"/>
+            <column name="RELATED_PERSON_SURNAME" type="VARCHAR(255)"/>
+            <column name="RELATED_PHONE" type="VARCHAR(255)"/>
+            <column name="GROUP_ID" type="BIGINT"/>
+            <column name="INDUSTRY_ID" type="BIGINT"/>
+            <column name="LEAD_CATEGORY_ID" type="BIGINT"/>
+            <column name="LEAD_SOURCE_ID" type="BIGINT"/>
+            <column name="LOCATION_ID" type="BIGINT"/>
+            <column name="TERRITORY_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="muhammedf (generated)" id="1493825259447-2">
+        <createTable tableName="TLE_LEAD_CATEGORY">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TLE_LEAD_CATEGORYPK"/>
+            </column>
+            <column name="ISACTIVE" type="BOOLEAN"/>
+            <column name="CODE" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PATH" type="VARCHAR(255)"/>
+            <column name="PID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="muhammedf (generated)" id="1493825259447-3">
+        <createTable tableName="TLE_LEAD_SOURCE">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TLE_LEAD_SOURCEPK"/>
+            </column>
+            <column name="ISACTIVE" type="BOOLEAN"/>
+            <column name="CODE" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PATH" type="VARCHAR(255)"/>
+            <column name="PID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="muhammedf (generated)" id="1493825259447-4">
+        <addForeignKeyConstraint baseColumnNames="PID" baseTableName="TLE_LEAD_CATEGORY" constraintName="FK_3oyngyytnhnnhf7cs3lipnnju" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TLE_LEAD_CATEGORY"/>
+    </changeSet>
+    <changeSet author="muhammedf (generated)" id="1493825259447-5">
+        <addForeignKeyConstraint baseColumnNames="INDUSTRY_ID" baseTableName="TLE_LEAD" constraintName="FK_LEAD_INDUSTRY" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_INDUSTRY"/>
+    </changeSet>
+    <changeSet author="muhammedf (generated)" id="1493825259447-6">
+        <addForeignKeyConstraint baseColumnNames="LEAD_CATEGORY_ID" baseTableName="TLE_LEAD" constraintName="FK_LEAD_LECATEGORY" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TLE_LEAD_CATEGORY"/>
+    </changeSet>
+    <changeSet author="muhammedf (generated)" id="1493825259447-7">
+        <addForeignKeyConstraint baseColumnNames="LEAD_SOURCE_ID" baseTableName="TLE_LEAD" constraintName="FK_LEAD_LESOURCE" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TLE_LEAD_SOURCE"/>
+    </changeSet>
+    <changeSet author="muhammedf (generated)" id="1493825259447-8">
+        <addForeignKeyConstraint baseColumnNames="LOCATION_ID" baseTableName="TLE_LEAD" constraintName="FK_LEAD_LOC" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_LOCATION"/>
+    </changeSet>
+    <changeSet author="muhammedf (generated)" id="1493825259447-9">
+        <addForeignKeyConstraint baseColumnNames="TERRITORY_ID" baseTableName="TLE_LEAD" constraintName="FK_LEAD_TER" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_TERRITORY"/>
+    </changeSet>
+    <changeSet author="muhammedf (generated)" id="1493825259447-10">
+        <addForeignKeyConstraint baseColumnNames="GROUP_ID" baseTableName="TLE_LEAD" constraintName="FK_VOG_VOG" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TVO_GROUP"/>
+    </changeSet>
+    <changeSet author="muhammedf (generated)" id="1493825259447-11">
+        <addForeignKeyConstraint baseColumnNames="PID" baseTableName="TLE_LEAD_SOURCE" constraintName="FK_rnmj1udkxb64cucjs9aknup6n" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TLE_LEAD_SOURCE"/>
+    </changeSet>
+</databaseChangeLog>
