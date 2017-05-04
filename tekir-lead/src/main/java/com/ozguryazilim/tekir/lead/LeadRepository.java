@@ -83,8 +83,11 @@ public abstract class LeadRepository extends VoucherRepositoryBase<Lead, LeadVie
 				from.get(Lead_.relatedPhone), 
 				from.get(Lead_.relatedAddress),
 				from.get(Lead_.relatedEmail), 
-				from.get(Lead_.leadSource), 
-				from.get(Lead_.leadCategory));
+				from.get(Lead_.leadSource).get(LeadSource_.id),
+				from.get(Lead_.leadSource).get(TreeNodeEntityBase_.name),
+				from.get(Lead_.leadCategory).get(LeadCategory_.id),
+				from.get(Lead_.leadCategory).get(TreeNodeEntityBase_.name)
+				);
 	}
 
 	private void buildSearchTextControl(String searchText, CriteriaBuilder criteriaBuilder, List<Predicate> predicates,
