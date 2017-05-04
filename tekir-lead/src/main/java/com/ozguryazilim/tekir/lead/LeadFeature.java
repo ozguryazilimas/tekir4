@@ -1,5 +1,7 @@
 package com.ozguryazilim.tekir.lead;
 
-public class LeadFeature {
+import com.ozguryazilim.telve.feature.AbstractFeatureHandler;
+
+public class LeadFeature extends AbstractFeatureHandler {
 	
 }
