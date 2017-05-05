@@ -59,7 +59,7 @@ public class LeadBrowse extends BrowseBase<Lead, LeadViewModel> {
 
 	@Override
 	protected RepositoryBase<Lead, LeadViewModel> getRepository() {
-		return null;
+		return repository;
 	}
 
 }
