@@ -9,14 +9,17 @@ import com.ozguryazilim.telve.forms.BrowseBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.columns.DateColumn;
 import com.ozguryazilim.telve.query.columns.LinkColumn;
+import com.ozguryazilim.telve.query.columns.SubTextColumn;
 import com.ozguryazilim.telve.query.columns.TextColumn;
 import com.ozguryazilim.telve.query.filters.DateFilter;
 import com.ozguryazilim.telve.query.filters.StringFilter;
+import com.ozguryazilim.telve.query.filters.SubStringFilter;
+import com.ozguryazilim.tekir.entities.VoucherBase_;
+import com.ozguryazilim.tekir.entities.Lead_;
+import com.ozguryazilim.tekir.entities.LeadSource_;
+import com.ozguryazilim.tekir.entities.LeadCategory_;
 
-import com.ozguryazilim.tekir.entites.VoucherBase_;
-import com.ozguryazilim.tekir.entites.Lead_;
-import com.ozguryazilim.tekir.entites.LeadSource_;
-import com.ozguryazilim.tekir.entites.LeadCategory_;
+import com.ozguryazilim.telve.entities.TreeNodeEntityBase_;
 
 @Browse(feature = LeadFeature.class)
 public class LeadBrowse extends BrowseBase<Lead, LeadViewModel> {
@@ -38,8 +41,8 @@ public class LeadBrowse extends BrowseBase<Lead, LeadViewModel> {
 				.addFilter(new StringFilter<>(Lead_.relatedPhone, "lead.label.RelatedPhone"))
 				.addFilter(new StringFilter<>(Lead_.relatedAddress, "lead.label.RelatedAddress"))
 				.addFilter(new StringFilter<>(Lead_.relatedEmail, "lead.label.RelatedEmail"))
-				.addFilter(new StringFilter<>(LeadSource_.name, "lead.label.LeadSourceName"))
-				.addFilter(new StringFilter<>(LeadCategory_.name, "lead.label.LeadCategoryName"));
+				.addFilter(new SubStringFilter<>(Lead_.leadSource, TreeNodeEntityBase_.name, "lead.label.LeadSourceName"))
+				.addFilter(new SubStringFilter<>(Lead_.leadCategory, TreeNodeEntityBase_.name, "lead.label.LeadCategoryName"));
 
 		queryDefinition
 				.addColumn(new LinkColumn<>(VoucherBase_.voucherNo, "voucher.label.VoucherNo"), true)
@@ -52,8 +55,8 @@ public class LeadBrowse extends BrowseBase<Lead, LeadViewModel> {
 				.addColumn(new TextColumn<>(Lead_.relatedPhone, "lead.label.RelatedPhone"), false)
 				.addColumn(new TextColumn<>(Lead_.relatedAddress, "lead.label.RelatedAddress"), false)
 				.addColumn(new TextColumn<>(Lead_.relatedEmail, "lead.label.RelatedEmail"), false)
-				.addColumn(new TextColumn<>(LeadSource_.name, "lead.label.LeadSourceName"), false)
-				.addColumn(new TextColumn<>(LeadCategory_.name, "lead.label.LeadCategoryName"), false);
+				.addColumn(new SubTextColumn<>(Lead_.leadSource, TreeNodeEntityBase_.name, "lead.label.LeadSourceName"), false)
+				.addColumn(new SubTextColumn<>(Lead_.leadCategory, TreeNodeEntityBase_.name, "lead.label.LeadCategory"), false);
 
 	}
 
