@@ -16,9 +16,12 @@ import org.apache.deltaspike.data.api.Repository;
 import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.entities.Lead;
 import com.ozguryazilim.tekir.entities.Lead_;
+import com.ozguryazilim.tekir.entities.LeadSource_;
+import com.ozguryazilim.tekir.entities.LeadCategory_;
 import com.ozguryazilim.tekir.entities.VoucherBase_;
 import com.ozguryazilim.tekir.entities.VoucherGroup_;
 import com.ozguryazilim.tekir.voucher.VoucherRepositoryBase;
+import com.ozguryazilim.telve.entities.TreeNodeEntityBase_;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.filters.Filter;
 
