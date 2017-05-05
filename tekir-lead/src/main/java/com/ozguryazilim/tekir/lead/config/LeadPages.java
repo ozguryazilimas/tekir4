@@ -1,5 +1,7 @@
 package com.ozguryazilim.tekir.lead.config;
 
-public class LeadPages {
+import com.ozguryazilim.telve.feature.Pages;
+
+public interface LeadPages extends Pages {
 
 }
