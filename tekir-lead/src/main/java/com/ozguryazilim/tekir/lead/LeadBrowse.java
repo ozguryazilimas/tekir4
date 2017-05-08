@@ -56,7 +56,7 @@ public class LeadBrowse extends BrowseBase<Lead, LeadViewModel> {
 				.addColumn(new TextColumn<>(Lead_.relatedAddress, "lead.label.RelatedAddress"), false)
 				.addColumn(new TextColumn<>(Lead_.relatedEmail, "lead.label.RelatedEmail"), false)
 				.addColumn(new SubTextColumn<>(Lead_.leadSource, TreeNodeEntityBase_.name, "lead.label.LeadSourceName"), false)
-				.addColumn(new SubTextColumn<>(Lead_.leadCategory, TreeNodeEntityBase_.name, "lead.label.LeadCategory"), false);
+				.addColumn(new SubTextColumn<>(Lead_.leadCategory, TreeNodeEntityBase_.name, "lead.label.LeadCategoryName"), false);
 
 	}
 
