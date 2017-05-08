@@ -9,6 +9,18 @@
 	<artifactId>tekir-lead</artifactId>
 	<packaging>ejb</packaging>
 
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/view</directory>
+				<targetPath>META-INF/resources</targetPath>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+	</build>
+
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
