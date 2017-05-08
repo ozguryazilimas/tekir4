@@ -1,0 +1,16 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+	template="/layout/browseBase.xhtml">
+
+	<ui:param name="bean" value="#{leadBrowse}" />
+	<ui:param name="advanceEnabled" value="true" />
+	<ui:param name="saveEnabled" value="true" />
+	<ui:param name="filterEnabled" value="true" />
+	<ui:param name="permission" value="lead" />
+	<ui:param name="showQuickSearch" value="true" />
+	<ui:param name="showDetailPanel" value="true" />
+
+</ui:composition>
