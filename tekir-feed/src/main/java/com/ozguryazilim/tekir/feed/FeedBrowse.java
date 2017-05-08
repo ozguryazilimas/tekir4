@@ -7,6 +7,7 @@ import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.tekir.entities.Feed;
 import com.ozguryazilim.tekir.entities.Feed_;
 import com.ozguryazilim.telve.query.columns.DateColumn;
+import com.ozguryazilim.telve.query.columns.MessageColumn;
 import com.ozguryazilim.telve.query.columns.TextColumn;
 import com.ozguryazilim.telve.query.filters.DateFilter;
 import com.ozguryazilim.telve.query.filters.DateValueType;
@@ -43,6 +44,7 @@ public class FeedBrowse extends BrowseBase<Feed, Feed> {
                 .addColumn(new DateColumn<>(Feed_.date, "general.label.feed.date"), true)
                 .addColumn(new TextColumn<>(Feed_.subject, "general.label.feed.subject"), true)
                 .addColumn(new TextColumn<>(Feed_.body, "general.label.feed.body"), true);
+                //.addColumn(new MessageColumn<>(Feed_.body,"general.label.feed.body"),true);
     }
 
     @Override
