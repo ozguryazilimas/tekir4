@@ -5,6 +5,7 @@ import javax.enterprise.context.ApplicationScoped;
 import org.apache.deltaspike.jsf.api.config.view.Folder;
 import org.apache.deltaspike.jsf.api.config.view.View;
 
+import com.ozguryazilim.tekir.core.config.ParamNavigationSection;
 import com.ozguryazilim.tekir.core.config.SalesNavigationSection;
 import com.ozguryazilim.telve.auth.SecuredPage;
 import com.ozguryazilim.telve.nav.Navigation;
@@ -22,4 +23,10 @@ public interface LeadPages extends Pages {
 	class LeadBrowse implements LeadPages {
 	}
 
+	@View
+	@SecuredPage("leadSource")
+	@PageTitle("module.caption.LeadSource")
+	@Navigation(label = "module.caption.LeadSource", icon = "fa fa-sitemap", section = ParamNavigationSection.class)
+	class LeadSource implements LeadPages {
+	}
 }
