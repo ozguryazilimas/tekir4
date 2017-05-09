@@ -1,4 +1,4 @@
-package com.ozguryazilim.tekir.source;
+package com.ozguryazilim.tekir.lead.source;
 
 import javax.enterprise.context.Dependent;
 
