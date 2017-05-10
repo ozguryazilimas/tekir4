@@ -2,6 +2,8 @@ package com.ozguryazilim.tekir.lead;
 
 import java.util.Date;
 
+import com.ozguryazilim.tekir.entities.LeadCategory;
+import com.ozguryazilim.tekir.entities.LeadSource;
 import com.ozguryazilim.tekir.entities.VoucherGroup;
 import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.tekir.voucher.VoucherViewModel;
@@ -14,10 +16,8 @@ public class LeadViewModel extends VoucherViewModel {
 	private String relatedPhone;
 	private String relatedAddress;
 	private String relatedEmail;
-	private Long leadSourceId;
-	private String leadSourceName;
-	private Long leadCategoryId;
-	private String leadCategoryName;
+	private LeadSource leadSource;
+	private LeadCategory leadCategory;
 
 	public LeadViewModel(Long id, String code, String voucherNo, String info, String referenceNo, Date date,
 			String owner, VoucherState state, String stateReason, String stateInfo, Long groupId, String groupNo,
@@ -32,10 +32,14 @@ public class LeadViewModel extends VoucherViewModel {
 		this.relatedPhone = relatedPhone;
 		this.relatedAddress = relatedAddress;
 		this.relatedEmail = relatedEmail;
-		this.leadSourceId = leadSourceId;
-		this.leadSourceName = leadSourceName;
-		this.leadCategoryId = leadCategoryId;
-		this.leadCategoryName = leadCategoryName;
+
+		leadSource = new LeadSource();
+		leadSource.setId(leadSourceId);
+		leadSource.setName(leadSourceName);
+
+		leadCategory = new LeadCategory();
+		leadCategory.setId(leadCategoryId);
+		leadCategory.setName(leadCategoryName);
 	}
 
 	public LeadViewModel(Long id, String code, String voucherNo, String info, String referenceNo, Date date,
@@ -50,10 +54,14 @@ public class LeadViewModel extends VoucherViewModel {
 		this.relatedPhone = relatedPhone;
 		this.relatedAddress = relatedAddress;
 		this.relatedEmail = relatedEmail;
-		this.leadSourceId = leadSourceId;
-		this.leadSourceName = leadSourceName;
-		this.leadCategoryId = leadCategoryId;
-		this.leadCategoryName = leadCategoryName;
+		
+		leadSource = new LeadSource();
+		leadSource.setId(leadSourceId);
+		leadSource.setName(leadSourceName);
+
+		leadCategory = new LeadCategory();
+		leadCategory.setId(leadCategoryId);
+		leadCategory.setName(leadCategoryName);
 	}
 
 	public String getRelatedPersonName() {
@@ -104,36 +112,20 @@ public class LeadViewModel extends VoucherViewModel {
 		this.relatedEmail = relatedEmail;
 	}
 
-	public Long getLeadSourceId() {
-		return leadSourceId;
+	public LeadSource getLeadSource() {
+		return leadSource;
 	}
 
-	public void setLeadSourceId(Long leadSourceId) {
-		this.leadSourceId = leadSourceId;
+	public void setLeadSource(LeadSource leadSource) {
+		this.leadSource = leadSource;
 	}
 
-	public String getLeadSourceName() {
-		return leadSourceName;
+	public LeadCategory getLeadCategory() {
+		return leadCategory;
 	}
 
-	public void setLeadSourceName(String leadSourceName) {
-		this.leadSourceName = leadSourceName;
-	}
-
-	public Long getLeadCategoryId() {
-		return leadCategoryId;
-	}
-
-	public void setLeadCategoryId(Long leadCategoryId) {
-		this.leadCategoryId = leadCategoryId;
-	}
-
-	public String getLeadCategoryName() {
-		return leadCategoryName;
-	}
-
-	public void setLeadCategoryName(String leadCategoryName) {
-		this.leadCategoryName = leadCategoryName;
+	public void setLeadCategory(LeadCategory leadCategory) {
+		this.leadCategory = leadCategory;
 	}
 
 }
