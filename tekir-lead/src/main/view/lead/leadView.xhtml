@@ -1,0 +1,21 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+	template="/layout/voucherViewBase.xhtml">
+
+	<ui:param name="bean" value="#{leadHome}" />
+	<ui:param name="entityName" value="lead" />
+	<ui:param name="viewIdentifier" value="#{leadHome.entity.voucherNo}" />
+	<ui:param name="viewState"
+		value="#{leadHome.entity.state.name} #{leadHome.entity.stateReason}" />
+	<ui:param name="dontShowContentHeader" value="false" />
+
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{leadHome.id}" />
+        </f:metadata>
+    </ui:define>
+    
+</ui:composition>

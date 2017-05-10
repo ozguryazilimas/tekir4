@@ -44,13 +44,25 @@ public interface LeadPages extends Pages {
 
 	@View
 	@SecuredPage
-	class LeadCategoryLookup implements LeadPages{
+	class LeadCategoryLookup implements LeadPages {
 	}
 
 	@View
 	@SecuredPage("lead")
 	@PageTitle("module.caption.Lead")
 	class Lead implements LeadPages {
+	}
+
+	@View
+	@SecuredPage("lead")
+	@PageTitle("module.caption.Lead")
+	class LeadView implements LeadPages {
+	}
+
+	@View
+	@SecuredPage("lead")
+	@PageTitle("module.caption.Lead")
+	class LeadMasterView implements LeadPages{
 	}
 
 }

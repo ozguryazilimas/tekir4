@@ -10,6 +10,8 @@ import com.ozguryazilim.telve.feature.PageType;
 @Feature(permission = "lead", forEntity = Lead.class)
 @Page(type = PageType.BROWSE, page = LeadPages.LeadBrowse.class)
 @Page(type = PageType.EDIT, page = LeadPages.Lead.class)
+@Page(type = PageType.VIEW, page = LeadPages.LeadView.class)
+@Page(type = PageType.MASTER_VIEW, page = LeadPages.LeadMasterView.class)
 public class LeadFeature extends AbstractFeatureHandler {
 
 }
