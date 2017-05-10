@@ -36,4 +36,21 @@ public interface LeadPages extends Pages {
 	@Navigation(label = "module.caption.LeadCategory", icon = "fa fa-sitemap", section = ParamNavigationSection.class)
 	class LeadCategory implements LeadPages {
 	}
+
+	@View
+	@SecuredPage
+	class LeadSourceLookup implements LeadPages {
+	}
+
+	@View
+	@SecuredPage
+	class LeadCategoryLookup implements LeadPages{
+	}
+
+	@View
+	@SecuredPage("lead")
+	@PageTitle("module.caption.Lead")
+	class Lead implements LeadPages {
+	}
+
 }

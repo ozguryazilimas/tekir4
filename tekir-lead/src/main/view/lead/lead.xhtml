@@ -1,0 +1,108 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+	xmlns:p="http://primefaces.org/ui"
+	template="/layout/voucherEditBase.xhtml">
+
+	<ui:param name="homeBean" value="#{leadHome}" />
+	<ui:param name="entity" value="#{leadHome.entity}" />
+	<ui:param name="dontShowContentHeader" value="true" />
+
+	<ui:define name="form">
+		<div class="row">
+			<div class="col-md-6 col-xs-12">
+				<div class="row">
+
+					<t:inputText label="voucher.label.VoucherNo"
+						value="#{leadHome.entity.voucherNo}" required="true"
+						columnClass="col-xs-12" />
+
+					<t:inputText label="voucher.label.Code"
+						value="#{leadHome.entity.code}" columnClass="col-xs-12" />
+
+					<t:inputTextarea label="general.label.Info"
+						value="#{leadHome.entity.info}" columnClass="col-xs-12" />
+
+					<t:inputText label="voucher.label.Topic"
+						value="#{leadHome.entity.topic}" columnClass="col-xs-12" />
+
+					<t:inputText label="voucher.label.ReferenceNo"
+						value="#{leadHome.entity.referenceNo}" columnClass="col-xs-12" />
+
+					<t:inputDate label="voucher.label.Date"
+						value="#{leadHome.entity.date}" columnClass="col-xs-12" />
+
+					<t:inputText label="voucher.label.Owner"
+						value="#{leadHome.entity.owner}" columnClass="col-xs-12" />
+
+					<t:inputLookupDialog label="voucher.label.Group"
+						value="#{leadHome.entity.group}" caption="topic"
+						lookupBean="#{voucherGroupLookup}"
+						lookupListener="leadHome.entity.group"
+						placeholder="#{messages['general.info.VoucherGroup']}"
+						columnClass="col-xs-12" />
+
+				</div>
+			</div>
+
+			<div class="col-md-6 col-xs-12">
+				<div class="row">
+
+					<t:inputText label="lead.label.RelatedPersonName"
+						value="#{leadHome.entity.relatedPersonName}"
+						columnClass="col-xs-12" />
+					<t:inputText label="lead.label.RelatedPersonSurname"
+						value="#{leadHome.entity.relatedPersonSurname}" required="true"
+						columnClass="col-xs-12" />
+					<t:inputText label="lead.label.RelatedCompanyName"
+						value="#{leadHome.entity.relatedCompanyName}" required="true"
+						columnClass="col-xs-12" />
+					<t:inputText label="lead.label.RelatedPhone"
+						value="#{leadHome.entity.relatedPhone}" required="true"
+						columnClass="col-xs-12" />
+					<t:inputText label="lead.label.RelatedAddress"
+						value="#{leadHome.entity.relatedAddress}" required="true"
+						columnClass="col-xs-12" />
+					<t:inputText label="lead.label.RelatedEmail"
+						value="#{leadHome.entity.relatedEmail}" required="true"
+						columnClass="col-xs-12" />
+
+					<t:inputLookupDialog label="general.label.Industry"
+						value="#{leadHome.entity.industry}" lookupBean="#{industryLookup}"
+						lookupListener="leadHome.entity.industry"
+						placeholder="#{messages['general.info.Industry']}"
+						columnClass="col-xs-12" />
+
+					<t:inputLookupDialog label="general.label.Territory"
+						value="#{leadHome.entity.territory}"
+						lookupBean="#{territoryLookup}"
+						lookupListener="leadHome.entity.territory"
+						placeholder="#{messages['general.info.Territory']}"
+						columnClass="col-xs-12" />
+
+					<t:inputLookupDialog label="lead.label.LeadSource"
+						value="#{leadHome.entity.leadSource}"
+						lookupBean="#{leadSourceLookup}"
+						lookupListener="leadHome.entity.leadSource"
+						placeholder="#{messages['lead.info.Source']}"
+						columnClass="col-xs-12" />
+
+					<t:inputLookupDialog label="lead.label.LeadCategory"
+						value="#{leadHome.entity.leadCategory}"
+						lookupBean="#{leadCategoryLookup}"
+						lookupListener="leadHome.entity.leadCategory"
+						placeholder="#{messages['lead.info.Category']}"
+						columnClass="col-xs-12" />
+
+				</div>
+			</div>
+
+
+
+
+		</div>
+	</ui:define>
+
+</ui:composition>
