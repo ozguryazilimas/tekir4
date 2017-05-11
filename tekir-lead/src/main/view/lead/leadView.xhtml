@@ -11,11 +11,36 @@
 	<ui:param name="viewState"
 		value="#{leadHome.entity.state.name} #{leadHome.entity.stateReason}" />
 	<ui:param name="dontShowContentHeader" value="false" />
+	<ui:param name="showCaption" value="true" />
 
-    <ui:define name="metadata">
-        <f:metadata>
-            <f:viewParam name="eid" value="#{leadHome.id}" />
-        </f:metadata>
-    </ui:define>
-    
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="eid" value="#{leadHome.id}" />
+		</f:metadata>
+	</ui:define>
+
+	<ui:define name="caption">
+		<div class="row">
+			<div class="col-md-6 col-xs-12">
+				<t:outputText label="voucher.label.Topic"
+					value="#{leadHome.entity.topic}" />
+				<t:outputText label="general.label.Info"
+					value="#{leadHome.entity.info}" />
+				<t:outputText label="lead.label.LeadSourceName"
+					value="#{leadHome.entity.leadSource.name}" />
+				<t:outputText label="lead.label.LeadCategoryName"
+					value="#{leadHome.entity.leadCategory.name}" />
+			</div>
+
+			<div class="col-md-6 col-xs-12">
+				<t:outputText label="voucher.label.VoucherNo"
+					value="#{leadHome.entity.voucherNo}" />
+				<t:outputText label="voucher.label.ReferenceNo"
+					value="#{leadHome.entity.referenceNo}" />
+				<t:outputText label="general.label.Code"
+					value="#{leadHome.entity.code}" />
+			</div>
+		</div>
+	</ui:define>
+
 </ui:composition>
