@@ -15,6 +15,9 @@
 			<div class="col-md-6 col-xs-12">
 				<div class="row">
 
+					<t:inputText label="opportunity.label.Topic"
+						value="#{leadHome.entity.topic}" required="true"
+						columnClass="col-xs-12" />
 					<t:inputText label="lead.label.RelatedPersonName"
 						value="#{leadHome.entity.relatedPersonName}"
 						columnClass="col-xs-6" />
@@ -81,9 +84,6 @@
 						value="#{leadHome.entity.owner}" />
 					<t:inputText label="general.label.Code"
 						value="#{leadHome.entity.code}" />
-					<t:inputText label="opportunity.label.Topic"
-						value="#{leadHome.entity.topic}" required="true"
-						columnClass="col-xs-12" />
 					<t:inputTextarea label="general.label.Info"
 						value="#{leadHome.entity.info}" columnClass="col-xs-12" />
 
