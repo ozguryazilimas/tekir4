@@ -10,47 +10,44 @@
 
 		<div class="row">
 			<div class="col-md-4 col-xs-12">
-			
+
 				<t:accordion icon="fa fa-stack-exchange"
 					label="general.label.Summary" columnClass="col-xs-12">
+					<t:outputText label="general.label.Topic"
+						value="#{leadHome.entity.topic}" columnClass="col-xs-12" />
 					<t:outputText label="lead.label.RelatedPersonName"
 						value="#{leadHome.entity.relatedPersonName}"
-						columnClass="col-xs-12" />
-						<t:outputText label="lead.label.RelatedPersonSurname"
+						columnClass="col-xs-6" />
+					<t:outputText label="lead.label.RelatedPersonSurname"
 						value="#{leadHome.entity.relatedPersonSurname}"
-						columnClass="col-xs-12" />
-						<t:outputText label="lead.label.RelatedCompanyName"
+						columnClass="col-xs-6" />
+					<t:outputText label="lead.label.RelatedCompanyName"
 						value="#{leadHome.entity.relatedCompanyName}"
 						columnClass="col-xs-12" />
-						<t:outputText label="lead.label.RelatedPhone"
-						value="#{leadHome.entity.relatedPhone}"
-						columnClass="col-xs-12" />
-						<t:outputText label="lead.label.RelatedAddress"
-						value="#{leadHome.entity.relatedAddress}"
-						columnClass="col-xs-12" />
-						<t:outputText label="lead.label.RelatedEmail"
-						value="#{leadHome.entity.relatedEmail}"
-						columnClass="col-xs-12" />
+					<t:outputText label="lead.label.RelatedPhone"
+						value="#{leadHome.entity.relatedPhone}" columnClass="col-xs-6" />
+					<t:outputText label="lead.label.RelatedEmail"
+						value="#{leadHome.entity.relatedEmail}" columnClass="col-xs-6" />
+					<t:outputText label="lead.label.RelatedAddress"
+						value="#{leadHome.entity.relatedAddress}" columnClass="col-xs-12" />
 				</t:accordion>
 
 				<t:accordion icon="fa fa-file-text" label="general.label.Voucher"
 					columnClass="col-xs-12">
 					<t:outputText label="voucher.label.VoucherNo"
-						value="#{leadHome.entity.voucherNo}"
-						columnClass="col-xs-12" />
+						value="#{leadHome.entity.voucherNo}" columnClass="col-xs-6" />
 					<t:outputText label="voucher.label.ReferenceNo"
-						value="#{leadHome.entity.referenceNo}"
-						columnClass="col-xs-12" />
+						value="#{leadHome.entity.referenceNo}" columnClass="col-xs-6" />
 					<t:outputText label="voucher.label.Owner"
-						value="#{leadHome.entity.owner}" columnClass="col-xs-12" />
+						value="#{leadHome.entity.owner}" columnClass="col-xs-6" />
 					<t:outputText label="general.label.Code"
-						value="#{leadHome.entity.code}" columnClass="col-xs-12" />
+						value="#{leadHome.entity.code}" columnClass="col-xs-6" />
 					<t:outputText label="general.label.Info"
 						value="#{leadHome.entity.info}" columnClass="col-xs-12" />
 					<t:outputDate label="voucher.label.Date"
 						value="#{leadHome.entity.date}" columnClass="col-xs-12" />
 				</t:accordion>
-				
+
 			</div>
 		</div>
 
