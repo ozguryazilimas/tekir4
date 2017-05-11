@@ -17,17 +17,17 @@
 
 					<t:inputText label="lead.label.RelatedPersonName"
 						value="#{leadHome.entity.relatedPersonName}"
-						columnClass="col-md-6" />
+						columnClass="col-xs-6" />
 					<t:inputText label="lead.label.RelatedPersonSurname"
 						value="#{leadHome.entity.relatedPersonSurname}"
-						columnClass="col-md-6" />
+						columnClass="col-xs-6" />
 					<t:inputText label="lead.label.RelatedCompanyName"
 						value="#{leadHome.entity.relatedCompanyName}"
 						columnClass="col-xs-12" />
 					<t:inputText label="lead.label.RelatedPhone"
-						value="#{leadHome.entity.relatedPhone}" columnClass="col-md-6" />
+						value="#{leadHome.entity.relatedPhone}" columnClass="col-xs-6" />
 					<t:inputText label="lead.label.RelatedEmail"
-						value="#{leadHome.entity.relatedEmail}" columnClass="col-md-6" />
+						value="#{leadHome.entity.relatedEmail}" columnClass="col-xs-6" />
 					<t:inputTextarea label="lead.label.RelatedAddress"
 						value="#{leadHome.entity.relatedAddress}" columnClass="col-xs-12" />
 
@@ -35,28 +35,28 @@
 						value="#{leadHome.entity.industry}" lookupBean="#{industryLookup}"
 						lookupListener="leadHome.entity.industry"
 						placeholder="#{messages['general.info.Industry']}"
-						columnClass="col-md-6" />
+						columnClass="col-xs-6" />
 
 					<t:inputLookupDialog label="general.label.Territory"
 						value="#{leadHome.entity.territory}"
 						lookupBean="#{territoryLookup}"
 						lookupListener="leadHome.entity.territory"
 						placeholder="#{messages['general.info.Territory']}"
-						columnClass="col-md-6" />
+						columnClass="col-xs-6" />
 
 					<t:inputLookupDialog label="lead.label.LeadSource"
 						value="#{leadHome.entity.leadSource}"
 						lookupBean="#{leadSourceLookup}"
 						lookupListener="leadHome.entity.leadSource"
 						placeholder="#{messages['lead.info.Source']}"
-						columnClass="col-md-6" />
+						columnClass="col-xs-6" />
 
 					<t:inputLookupDialog label="lead.label.LeadCategory"
 						value="#{leadHome.entity.leadCategory}"
 						lookupBean="#{leadCategoryLookup}"
 						lookupListener="leadHome.entity.leadCategory"
 						placeholder="#{messages['lead.info.Category']}"
-						columnClass="col-md-6" />
+						columnClass="col-xs-6" />
 
 				</div>
 			</div>
@@ -65,12 +65,12 @@
 				<div class="row">
 
 					<t:inputDate label="voucher.label.Date"
-						value="#{leadHome.entity.date}" columnClass="col-md-4" />
+						value="#{leadHome.entity.date}" columnClass="col-xs-4" />
 					<t:inputText label="voucher.label.VoucherNo"
 						value="#{leadHome.entity.voucherNo}" required="true"
-						readonly="true" columnClass="col-md-4" />
+						readonly="true" columnClass="col-xs-4" />
 					<t:inputText label="voucher.label.ReferenceNo"
-						value="#{leadHome.entity.referenceNo}" columnClass="col-md-4" />
+						value="#{leadHome.entity.referenceNo}" columnClass="col-xs-4" />
 					<t:inputLookupDialog label="voucher.label.Group"
 						value="#{leadHome.entity.group}" caption="topic"
 						lookupBean="#{voucherGroupLookup}"
