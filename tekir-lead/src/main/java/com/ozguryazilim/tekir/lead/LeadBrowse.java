@@ -15,6 +15,7 @@ import com.ozguryazilim.telve.query.filters.DateFilter;
 import com.ozguryazilim.telve.query.filters.StringFilter;
 import com.ozguryazilim.telve.query.filters.SubStringFilter;
 import com.ozguryazilim.tekir.entities.VoucherBase_;
+import com.ozguryazilim.tekir.voucher.columns.VoucherStateColumn;
 import com.ozguryazilim.tekir.entities.Lead_;
 import com.ozguryazilim.tekir.entities.LeadSource_;
 import com.ozguryazilim.tekir.entities.LeadCategory_;
@@ -56,7 +57,10 @@ public class LeadBrowse extends BrowseBase<Lead, LeadViewModel> {
 				.addColumn(new TextColumn<>(Lead_.relatedAddress, "lead.label.RelatedAddress"), false)
 				.addColumn(new TextColumn<>(Lead_.relatedEmail, "lead.label.RelatedEmail"), false)
 				.addColumn(new SubTextColumn<>(Lead_.leadSource, TreeNodeEntityBase_.name, "lead.label.LeadSourceName"), false)
-				.addColumn(new SubTextColumn<>(Lead_.leadCategory, TreeNodeEntityBase_.name, "lead.label.LeadCategoryName"), false);
+				.addColumn(new SubTextColumn<>(Lead_.leadCategory, TreeNodeEntityBase_.name, "lead.label.LeadCategoryName"), false)
+				.addColumn(new TextColumn<>(VoucherBase_.stateReason, "voucher.label.StateReason"), false)
+                .addColumn(new TextColumn<>(VoucherBase_.stateInfo, "voucher.label.StateInfo"), false)
+                .addColumn(new VoucherStateColumn<>( VoucherBase_.state, "general.label.State"), false);
 
 	}
 
