@@ -49,6 +49,30 @@
 				</t:accordion>
 
 			</div>
+
+			<div class="col-md-4 col-xs-12" />
+
+			<div class="col-md-4 col-xs-12">
+
+					<ui:include src="/notes/noteWidget.xhtml">
+						<ui:param name="featurePointer"
+							value="#{leadHome.featurePointer}" />
+					</ui:include>
+
+					<ui:include src="/feeds/feedWidget.xhtml">
+						<ui:param name="feature"
+							value="#{leadHome.featureClass.simpleName}" />
+						<ui:param name="pk" value="#{leadHome.entity.id}" />
+					</ui:include>
+
+					<ui:include src="/voucher/voucherReleatedWidget.xhtml">
+						<ui:param name="featurePointer"
+							value="#{leadHome.featurePointer}" />
+						<ui:param name="groupNo"
+							value="#{leadHome.entity.group.groupNo}" />
+					</ui:include>
+
+			</div>
 		</div>
 
 	</ui:define>
