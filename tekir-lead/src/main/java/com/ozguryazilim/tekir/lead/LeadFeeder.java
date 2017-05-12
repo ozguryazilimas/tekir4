@@ -52,7 +52,7 @@ public class LeadFeeder extends AbstractFeeder<Lead> {
 
 		mentions.add(FeatureUtils.getFeaturePointer(entity));
 
-		if (entity.getGroup() != null && entity.isPersisted()) {
+		if (entity.getGroup() != null && entity.getGroup().isPersisted()) {
 			mentions.add(FeatureUtils.getVoucherGroupPointer(entity));
 		}
 
