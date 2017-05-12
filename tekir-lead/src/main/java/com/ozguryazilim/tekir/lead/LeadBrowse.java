@@ -39,9 +39,7 @@ public class LeadBrowse extends BrowseBase<Lead, LeadViewModel> {
 				.addFilter(new StringFilter<>(Lead_.relatedCompanyName, "lead.label.RelatedCompanyName"))
 				.addFilter(new StringFilter<>(Lead_.relatedPersonName, "lead.label.RelatedPersonName"))
 				.addFilter(new StringFilter<>(Lead_.relatedPersonSurname, "lead.label.RelatedPersonSurname"))
-				.addFilter(new StringFilter<>(Lead_.relatedPhone, "lead.label.RelatedPhone"))
 				.addFilter(new StringFilter<>(Lead_.relatedAddress, "lead.label.RelatedAddress"))
-				.addFilter(new StringFilter<>(Lead_.relatedEmail, "lead.label.RelatedEmail"))
 				.addFilter(new SubStringFilter<>(Lead_.leadSource, TreeNodeEntityBase_.name, "lead.label.LeadSourceName"))
 				.addFilter(new SubStringFilter<>(Lead_.leadCategory, TreeNodeEntityBase_.name, "lead.label.LeadCategoryName"));
 
