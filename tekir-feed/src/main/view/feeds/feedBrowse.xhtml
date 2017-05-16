@@ -10,10 +10,24 @@
     <ui:param name="filterEnabled" value="true" />
     <ui:param name="permission" value="feeds" />
     <ui:param name="showQuickSearch" value="true" />
-    
-    
+    <ui:param name="showDetailPanel" value="true" />
+
+
     <ui:define name="context-menu">
-        
+
     </ui:define>
 
+    <ui:define name="detailBar">
+        <div class="row">
+            <div class="text-muted col-xs-12">
+                #{messages['general.label.RegisteredVoucher']}
+                <ul class="list-inline">
+                    <ui:repeat value="#{feedBrowse.feed.mentions}" var="mention" >
+                        <li><t:cellOutputFeatureLink value="#{featureController.getFeatureLink(mention.featurePointer)}" />  </li> 
+                    </ui:repeat>
+                </ul>
+            </div>            
+        </div>
+
+    </ui:define>
 </ui:composition>

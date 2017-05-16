@@ -53,4 +53,13 @@ public class FeedBrowse extends BrowseBase<Feed, Feed> {
         return repository;
 
     }
+    
+     public Feed getFeed() {
+        if (getSelectedItem() != null) {
+            return repository.findBy(getSelectedItem().getId());
+        } else {
+            return null;
+        }
+    }
+    
 }
