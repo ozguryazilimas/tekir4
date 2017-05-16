@@ -61,13 +61,13 @@ public class LeadOpportunityLinker implements VoucherRedirectHandler {
 			person.setPrimaryPhone(phone);
 			phone.setContact(person);
 
-			person.setCode("");
+			person.setCode(leadHome.getEntity().getVoucherNo() + person.getName());
 			contactRepository.save(person);
 
 			Corporation corporation = new Corporation();
 			corporation.setOrganizastionName(leadHome.getEntity().getRelatedCompanyName());
 			corporation.setName(leadHome.getEntity().getRelatedCompanyName());
-			corporation.setCode("");
+			corporation.setCode(leadHome.getEntity().getVoucherNo() + corporation.getName());
 			corporation.setPrimaryContact(person);
 			contactRepository.save(corporation);
 
