@@ -109,6 +109,7 @@
         <module>tekir-finance</module>
         <module>tekir-lead-model</module>
         <module>tekir-lead</module>
+        <module>tekir-lead-opportunity-linker</module>
     </modules>
     
     
