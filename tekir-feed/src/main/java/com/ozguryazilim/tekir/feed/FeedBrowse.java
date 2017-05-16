@@ -31,20 +31,20 @@ public class FeedBrowse extends BrowseBase<Feed, Feed> {
     protected void buildQueryDefinition(QueryDefinition<Feed, Feed> queryDefinition) {
         
         queryDefinition
-                .addFilter(new StringFilter<>(Feed_.type, "general.label.type"))
-                .addFilter(new StringFilter<>(Feed_.feeder, "general.label.feed.feeder"))
-                .addFilter(new StringFilter<>(Feed_.user, "general.label.feed.user"))  
-                .addFilter(new DateFilter<>(Feed_.date, "general.label.feed.date",FilterOperand.All, DateValueType.LastMonth))
-                .addFilter(new StringFilter<>(Feed_.subject, "general.label.feed.subject"))
-                .addFilter(new StringFilter<>(Feed_.body, "general.label.feed.body"));
+                .addFilter(new StringFilter<>(Feed_.type, "general.label.Type"))
+                .addFilter(new StringFilter<>(Feed_.feeder, "general.label.Feeder"))
+                .addFilter(new StringFilter<>(Feed_.user, "general.label.User"))  
+                .addFilter(new DateFilter<>(Feed_.date, "general.label.Date",FilterOperand.All, DateValueType.LastMonth))
+                .addFilter(new StringFilter<>(Feed_.subject, "general.label.Subject"))
+                .addFilter(new StringFilter<>(Feed_.body, "general.label.Body"));
                 
         queryDefinition
-                .addColumn(new TextColumn<>(Feed_.type, "general.label.feed.type"), true)
-                .addColumn(new TextColumn<>(Feed_.feeder, "general.label.feed.feeder"), true)
-                .addColumn(new TextColumn<>(Feed_.user, "general.label.feed.user"), true)
-                .addColumn(new DateColumn<>(Feed_.date, "general.label.feed.date"), true)
-                .addColumn(new TextColumn<>(Feed_.subject, "general.label.feed.subject"), true)
-                .addColumn(new FormattedMessageColumn<>(Feed_.body, "general.label.feed.body"), true);
+                .addColumn(new TextColumn<>(Feed_.type, "general.label.Type"), true)
+                .addColumn(new TextColumn<>(Feed_.feeder, "general.label.Feeder"), true)
+                .addColumn(new TextColumn<>(Feed_.user, "general.label.User"), true)
+                .addColumn(new DateColumn<>(Feed_.date, "general.label.Date"), true)
+                .addColumn(new TextColumn<>(Feed_.subject, "general.label.Subject"), true)
+                .addColumn(new FormattedMessageColumn<>(Feed_.body, "general.label.Body"), true);
                 //.addColumn(new MessageColumn<>(Feed_.body,"general.label.feed.body"),true);
     }
 
