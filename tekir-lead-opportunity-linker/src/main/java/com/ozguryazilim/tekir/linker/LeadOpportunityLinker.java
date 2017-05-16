@@ -16,6 +16,7 @@ import com.ozguryazilim.tekir.lead.LeadHome;
 import com.ozguryazilim.tekir.opportunity.OpportunityHome;
 import com.ozguryazilim.tekir.voucher.VoucherRedirectHandler;
 import com.ozguryazilim.tekir.voucher.VoucherStateChange;
+import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureQualifier;
 
 @Dependent
@@ -31,9 +32,12 @@ public class LeadOpportunityLinker implements VoucherRedirectHandler {
 	@Inject
 	private OpportunityHome opportunityHome;
 
+	@Inject
+	private LeadFeature leadFeature;
+
 	@Override
 	public Class<? extends ViewConfig> redirect(VoucherStateChange event) {
-		
+
 		if ("WON".equals(event.getTo().getName())) {
 
 			Person person = new Person();
@@ -60,13 +64,18 @@ public class LeadOpportunityLinker implements VoucherRedirectHandler {
 			person.setCode("");
 			contactRepository.save(person);
 
-			
 			Corporation corporation = new Corporation();
 			corporation.setOrganizastionName(leadHome.getEntity().getRelatedCompanyName());
 			corporation.setName(leadHome.getEntity().getRelatedCompanyName());
 			corporation.setCode("");
 			corporation.setPrimaryContact(person);
 			contactRepository.save(corporation);
+
+			FeaturePointer fp = new FeaturePointer();
+			fp.setBusinessKey(leadHome.getEntity().getVoucherNo());
+			fp.setPrimaryKey(leadHome.getEntity().getId());
+			fp.setFeature(leadFeature.getName());
+			opportunityHome.getEntity().setStarter(fp);
 
 			Class<? extends ViewConfig> result = opportunityHome.create();
 
