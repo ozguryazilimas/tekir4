@@ -49,6 +49,8 @@ public abstract class LeadRepository extends VoucherRepositoryBase<Lead, LeadVie
 		decorateFilters(filters, predicates, criteriaBuilder, from);
 
 		buildSearchTextControl(queryDefinition.getSearchText(), criteriaBuilder, predicates, from);
+		
+		buildOwnerFilter(predicates, from);
 
 		criteriaQuery.where(predicates.toArray(new Predicate[] {}));
 

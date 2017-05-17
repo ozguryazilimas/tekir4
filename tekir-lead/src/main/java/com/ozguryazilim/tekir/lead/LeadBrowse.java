@@ -15,6 +15,9 @@ import com.ozguryazilim.telve.query.filters.DateFilter;
 import com.ozguryazilim.telve.query.filters.StringFilter;
 import com.ozguryazilim.telve.query.filters.SubStringFilter;
 import com.ozguryazilim.tekir.entities.VoucherBase_;
+import com.ozguryazilim.tekir.voucher.VoucherBrowseBase;
+import com.ozguryazilim.tekir.voucher.VoucherFormBase;
+import com.ozguryazilim.tekir.voucher.VoucherRepositoryBase;
 import com.ozguryazilim.tekir.voucher.columns.VoucherStateColumn;
 import com.ozguryazilim.tekir.entities.Lead_;
 import com.ozguryazilim.tekir.entities.LeadSource_;
@@ -23,10 +26,13 @@ import com.ozguryazilim.tekir.entities.LeadCategory_;
 import com.ozguryazilim.telve.entities.TreeNodeEntityBase_;
 
 @Browse(feature = LeadFeature.class)
-public class LeadBrowse extends BrowseBase<Lead, LeadViewModel> {
+public class LeadBrowse extends VoucherBrowseBase<Lead, LeadViewModel> {
 
 	@Inject
 	private LeadRepository repository;
+	
+	@Inject
+	private LeadHome home;
 
 	@Override
 	protected void buildQueryDefinition(QueryDefinition<Lead, LeadViewModel> queryDefinition) {
@@ -63,7 +69,12 @@ public class LeadBrowse extends BrowseBase<Lead, LeadViewModel> {
 	}
 
 	@Override
-	protected RepositoryBase<Lead, LeadViewModel> getRepository() {
+	public VoucherFormBase<Lead> getHome() {
+		return home;
+	}
+
+	@Override
+	public VoucherRepositoryBase<Lead, LeadViewModel> getVoucherRepository() {
 		return repository;
 	}
 
