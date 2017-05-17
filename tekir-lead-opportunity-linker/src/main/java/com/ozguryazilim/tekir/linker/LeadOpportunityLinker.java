@@ -18,6 +18,8 @@ import com.ozguryazilim.tekir.voucher.VoucherRedirectHandler;
 import com.ozguryazilim.tekir.voucher.VoucherStateChange;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureQualifier;
+import com.ozguryazilim.telve.messages.FacesMessages;
+import com.ozguryazilim.telve.messages.MessagesUtils;
 
 @Dependent
 @FeatureQualifier(feauture = LeadFeature.class)
@@ -83,6 +85,8 @@ public class LeadOpportunityLinker implements VoucherRedirectHandler {
 			opportunityHome.getEntity().setAccount(corporation);
 			opportunityHome.getEntity().setTopic(leadHome.getEntity().getTopic());
 			opportunityHome.getEntity().setGroup(leadHome.getEntity().getGroup());
+
+			FacesMessages.info(MessagesUtils.getMessage("lead-opportunity-linker.messages.WON"));
 
 			return result;
 		}
