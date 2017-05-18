@@ -6,11 +6,13 @@ import javax.inject.Inject;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
 
 import com.ozguryazilim.tekir.contact.ContactRepository;
+import com.ozguryazilim.tekir.core.territory.TerritoryRepository;
 import com.ozguryazilim.tekir.entities.ContactAddress;
 import com.ozguryazilim.tekir.entities.ContactEMail;
 import com.ozguryazilim.tekir.entities.ContactPhone;
 import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.Person;
+import com.ozguryazilim.tekir.entities.Territory;
 import com.ozguryazilim.tekir.lead.LeadFeature;
 import com.ozguryazilim.tekir.lead.LeadHome;
 import com.ozguryazilim.tekir.opportunity.OpportunityHome;
@@ -41,10 +43,31 @@ public class LeadOpportunityLinker implements VoucherRedirectHandler {
 	@Inject
 	private FormatedMessage formatedMessage;
 
+	@Inject
+	private TerritoryRepository territoryRepository;
+
 	@Override
 	public Class<? extends ViewConfig> redirect(VoucherStateChange event) {
 
 		if ("WON".equals(event.getTo().getName())) {
+
+			// Territory ve location beraber null ise null bırakılıyor, bir şey
+			// yapılmıyor.
+			Territory territory = leadHome.getEntity().getTerritory();
+			if (territory == null) {
+				// Territory nullken ve location null değilken yeni territory
+				// oluşturulup location buna ekleniyor.
+				if (leadHome.getEntity().getLocation() != null) {
+					territory = new Territory();
+					territory.getLocations().add(leadHome.getEntity().getLocation());
+					territoryRepository.save(territory);
+				}
+			}
+			// Territory ve location null değilken de location
+			// direkt territorye ekleniyor.
+			else if (leadHome.getEntity().getLocation() != null) {
+				territory.getLocations().add(leadHome.getEntity().getLocation());
+			}
 
 			Person person = new Person();
 			person.setFirstName(leadHome.getEntity().getRelatedPersonName());
@@ -68,6 +91,8 @@ public class LeadOpportunityLinker implements VoucherRedirectHandler {
 			phone.setContact(person);
 
 			person.setCode(leadHome.getEntity().getVoucherNo() + person.getName());
+			person.setTerritory(territory);
+			person.setIndustry(leadHome.getEntity().getIndustry());
 			contactRepository.save(person);
 
 			Corporation corporation = new Corporation();
@@ -75,6 +100,8 @@ public class LeadOpportunityLinker implements VoucherRedirectHandler {
 			corporation.setName(leadHome.getEntity().getRelatedCompanyName());
 			corporation.setCode(leadHome.getEntity().getVoucherNo() + corporation.getName());
 			corporation.setPrimaryContact(person);
+			corporation.setTerritory(territory);
+			corporation.setIndustry(leadHome.getEntity().getIndustry());
 			contactRepository.save(corporation);
 
 			FeaturePointer fp = new FeaturePointer();
