@@ -19,6 +19,7 @@ import com.ozguryazilim.tekir.voucher.VoucherStateChange;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureQualifier;
 import com.ozguryazilim.telve.messages.FacesMessages;
+import com.ozguryazilim.telve.messages.FormatedMessage;
 import com.ozguryazilim.telve.messages.MessagesUtils;
 
 @Dependent
@@ -36,6 +37,9 @@ public class LeadOpportunityLinker implements VoucherRedirectHandler {
 
 	@Inject
 	private LeadFeature leadFeature;
+
+	@Inject
+	private FormatedMessage formatedMessage;
 
 	@Override
 	public Class<? extends ViewConfig> redirect(VoucherStateChange event) {
@@ -86,7 +90,9 @@ public class LeadOpportunityLinker implements VoucherRedirectHandler {
 			opportunityHome.getEntity().setTopic(leadHome.getEntity().getTopic());
 			opportunityHome.getEntity().setGroup(leadHome.getEntity().getGroup());
 
-			FacesMessages.info(MessagesUtils.getMessage("lead-opportunity-linker.messages.WON"));
+			FacesMessages
+					.info(formatedMessage.getMessage(MessagesUtils.getMessage("lead-opportunity-linker.messages.WON"),
+							new Object[] { leadHome.getEntity().getVoucherNo() }));
 
 			return result;
 		}
