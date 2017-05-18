@@ -26,18 +26,15 @@
                 <i class="#{messages['activity.button.icon.'.concat(activityBrowse.selectedItem.class.simpleName)]}"/> 
                 #{activityBrowse.activity.subject}
                 <ul class="list-inline text-sm text-muted">
-                  
-                    <ui:repeat value="#{activityBrowse.activity.direction}" var="item" >
-                        <li><i class="fa fa-tag" /> #{messages['activity.direction.'.concat(item)]}</li>
-                    </ui:repeat>
-                    
-                    <ui:repeat value="#{activityBrowse.activity.status}" var="item" >
-                        <li><i class="fa fa-tag" /> #{messages['activity.status.'.concat(item)]}</li>
-                    </ui:repeat>
-                   
-                    <ui:repeat value="#{activityBrowse.activity.priority}" var="item" >
-                        <li><i class="fa fa-tag" /> #{messages['activity.priority.'.concat(item)]}</li>
-                    </ui:repeat>
+                    <ui:fragment rendered="#{activityBrowse.activity.direction != null}">
+                        <li><i class="fa fa-tag" /> #{messages['activity.direction.'.concat(activityBrowse.selectedItem.direction)]}</li>
+                    </ui:fragment>
+                    <ui:fragment rendered="#{activityBrowse.activity.direction != null}">
+                        <li><i class="fa fa-tag" /> #{messages['activity.status.'.concat(activityBrowse.selectedItem.status)]}</li>
+                    </ui:fragment>
+                    <ui:fragment rendered="#{activityBrowse.activity.direction != null}">
+                        <li><i class="fa fa-tag" /> #{messages['activity.priority.'.concat(activityBrowse.selectedItem.priority)]}</li>
+                    </ui:fragment>
                 </ul>
             </div>
         </div>
