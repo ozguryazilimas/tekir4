@@ -26,9 +26,18 @@
                 <i class="#{messages['activity.button.icon.'.concat(activityBrowse.selectedItem.class.simpleName)]}"/> 
                 #{activityBrowse.activity.subject}
                 <ul class="list-inline text-sm text-muted">
-                    <li><i class="fa fa-tag" /> #{messages['activity.direction.'.concat(activityBrowse.selectedItem.direction)]}</li>
-                    <li><i class="fa fa-tag" /> #{messages['activity.status.'.concat(activityBrowse.selectedItem.status)]}</li>
-                    <li><i class="fa fa-tag" /> #{messages['activity.priority.'.concat(activityBrowse.selectedItem.priority)]}</li>
+                  
+                    <ui:repeat value="#{activityBrowse.activity.direction}" var="item" >
+                        <li><i class="fa fa-tag" /> #{messages['activity.direction.'.concat(item)]}</li>
+                    </ui:repeat>
+                    
+                    <ui:repeat value="#{activityBrowse.activity.status}" var="item" >
+                        <li><i class="fa fa-tag" /> #{messages['activity.status.'.concat(item)]}</li>
+                    </ui:repeat>
+                   
+                    <ui:repeat value="#{activityBrowse.activity.priority}" var="item" >
+                        <li><i class="fa fa-tag" /> #{messages['activity.priority.'.concat(item)]}</li>
+                    </ui:repeat>
                 </ul>
             </div>
         </div>
@@ -39,26 +48,26 @@
 
 
     <ui:define name="context-menu">
-        
+
         <li class="dropdown">
-            
-                <a id="actNewMenu1" href="#" class="dropdown-toogle context-command" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-plus-circle"/>
-                    #{messages['general.button.Add']}
-                    <i class="fa fa-caret-down" />
-                </a>
-                <ul class="dropdown-menu" arai-labeledby="actNewMenu1" style="z-index: 5000">
-                    #{activityWidget.init(null, null, null, 'NONE')}
-                    <ui:repeat value="#{activityWidget.addableActivities}" var="act">
-                        <li>
-                            <p:commandLink action="#{activityWidget.createNew(act)}" process="@this" >
-                                <i class="#{messages['activity.button.icon.'.concat(act)]}" /> #{messages['activity.button.label.'.concat(act)]}
-                                <p:ajax event="dialogReturn" listener="#{bean.search()}" update="@([id$=results])" partialSubmit="true" process="@this" />   
-                            </p:commandLink>
-                        </li>
-                    </ui:repeat>
-                </ul>
-            
+
+            <a id="actNewMenu1" href="#" class="dropdown-toogle context-command" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-plus-circle"/>
+                #{messages['general.button.Add']}
+                <i class="fa fa-caret-down" />
+            </a>
+            <ul class="dropdown-menu" arai-labeledby="actNewMenu1" style="z-index: 5000">
+                #{activityWidget.init(null, null, null, 'NONE')}
+                <ui:repeat value="#{activityWidget.addableActivities}" var="act">
+                    <li>
+                        <p:commandLink action="#{activityWidget.createNew(act)}" process="@this" >
+                            <i class="#{messages['activity.button.icon.'.concat(act)]}" /> #{messages['activity.button.label.'.concat(act)]}
+                            <p:ajax event="dialogReturn" listener="#{bean.search()}" update="@([id$=results])" partialSubmit="true" process="@this" />   
+                        </p:commandLink>
+                    </li>
+                </ui:repeat>
+            </ul>
+
         </li>
 
     </ui:define>
