@@ -11,6 +11,7 @@
         <div class="row">
             <div class="col-md-4 col-xs-12">
                 <t:accordion icon="fa fa-stack-exchange" label="general.label.Summary" columnClass="col-xs-12">
+                    <t:outputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(opportunityHome.entity.starter)}" columnClass="col-xs-12"/>
                     <t:outputText label="opportunity.label.Topic" value="#{opportunityHome.entity.topic}"  columnClass="col-xs-12"/>
                     <ui:remove>
                         <t:outputCurrency label="general.label.Currency" value="#{opportunityHome.entity.currency}"  columnClass="col-xs-12"/>
