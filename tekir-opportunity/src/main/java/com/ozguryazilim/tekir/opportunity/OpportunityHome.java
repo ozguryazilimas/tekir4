@@ -5,6 +5,13 @@
  */
 package com.ozguryazilim.tekir.opportunity;
 
+import javax.inject.Inject;
+import javax.money.convert.CurrencyConversionException;
+
+import org.primefaces.context.RequestContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.ozguryazilim.tekir.account.AccountTxnService;
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.Opportunity;
@@ -19,12 +26,10 @@ import com.ozguryazilim.tekir.voucher.VoucherStateConfig;
 import com.ozguryazilim.tekir.voucher.process.ProcessService;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.forms.FormEdit;
+import com.ozguryazilim.telve.messages.FacesMessages;
+import com.ozguryazilim.telve.messages.FormatedMessage;
+import com.ozguryazilim.telve.messages.MessagesUtils;
 import com.ozguryazilim.telve.reports.JasperReportHandler;
-
-import javax.inject.Inject;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Opportunity View Conttroller
@@ -53,6 +58,9 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
     @Inject
     private JasperReportHandler reportHandler;
     
+    @Inject
+    private FormatedMessage formatedMessage;
+    
     @Override
     public void createNew() {
         super.createNew(); 
@@ -71,6 +79,14 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
 
     @Override
     public boolean onBeforeSave() {
+    	
+    	try {
+			getEntity().setLocalBudget(
+					currencyService.convert(getEntity().getCurrency(), getEntity().getBudget(), getEntity().getDate()));
+		} catch (CurrencyConversionException e) {
+			RequestContext.getCurrentInstance().execute("PF('noExchangeWarnDialog').show();");
+			return false;
+		}
         
         if( getEntity().getState().equals(VoucherState.DRAFT) && !getEntity().isPersisted()){
             getEntity().setState(VoucherState.OPEN);
@@ -81,8 +97,6 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
         if( getEntity().getProcess() == null ) {
             getEntity().setProcess(processService.createProcess(getEntity().getAccount(), getEntity().getTopic(), ProcessType.SALES));
         }
-        
-        getEntity().setLocalBudget(currencyService.convert(getEntity().getCurrency(), getEntity().getBudget(), getEntity().getDate()));
         
         return super.onBeforeSave(); //To change body of generated methods, choose Tools | Templates.
     }
@@ -101,6 +115,15 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
         config.addStateTypeAction(VoucherStateType.CLOSE, new VoucherPrintOutAction(this));
         
         return config;
+    }
+    
+    public void iDontWanna(){
+		FacesMessages.info(
+				formatedMessage.getMessage(
+						MessagesUtils.getMessage("opportunity.info.ExchangeRate"),
+						new Object[]{MessagesUtils.getMessage("module.caption.ExchangeRate")}
+						)
+				);
     }
 
 }
