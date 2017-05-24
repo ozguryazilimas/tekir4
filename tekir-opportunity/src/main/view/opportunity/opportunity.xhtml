@@ -59,7 +59,7 @@
         <p:confirmDialog
 			header="#{messages['opportunity.caption.ExchangeRateNoInformation']}"
 			widgetVar="noExchangeWarnDialog"
-			message="#{messages['opportunity.warning.ExchangeRateNoInformation']}"
+			message="#{formatedMessage.getMessageFromData('opportunity.warning.ExchangeRateNoInformation'.concat('$%&amp;').concat(entity.date))}"
 			showEffect="fade" hideEffect="fade">
 			<p:commandButton value="#{messages['general.button.Yes']}"
 				styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
