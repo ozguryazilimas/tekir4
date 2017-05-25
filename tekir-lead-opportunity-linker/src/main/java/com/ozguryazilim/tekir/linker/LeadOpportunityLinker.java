@@ -108,9 +108,10 @@ public class LeadOpportunityLinker implements VoucherRedirectHandler {
 			fp.setBusinessKey(leadHome.getEntity().getVoucherNo());
 			fp.setPrimaryKey(leadHome.getEntity().getId());
 			fp.setFeature(leadFeature.getName());
-			opportunityHome.getEntity().setStarter(fp);
-
+			
 			Class<? extends ViewConfig> result = opportunityHome.create();
+			
+			opportunityHome.getEntity().setStarter(fp);
 
 			opportunityHome.getEntity().setPrimaryContact(person);
 			opportunityHome.getEntity().setAccount(corporation);
