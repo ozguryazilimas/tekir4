@@ -1,0 +1,24 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+
+	<composite:interface>
+		<composite:attribute name="value" type="java.lang.Long" required="true" />
+		<composite:attribute name="label" required="false" default="general.label.Duration" />
+		<composite:attribute name="columnClass" required="false" default="col-xs-6" />
+	</composite:interface>
+
+	<composite:implementation>
+		<div id="#{cc.clientId}" class="disprop #{cc.attrs.columnClass}">
+			<p:outputLabel for="#{cc.id}_inp" value="#{messages[cc.attrs.label]} :" styleClass="name" />
+			<span class="value">
+				<h:outputText id="#{cc.id}_inp" value="#{cc.attrs.value}" converter="durationOutputConverter" />
+				<h:outputText value="." style="color: #FFF" rendered="#{cc.attrs.value eq null or cc.attrs.value eq ''}"/>
+			</span>
+		</div>
+	</composite:implementation>
+
+</ui:component>
