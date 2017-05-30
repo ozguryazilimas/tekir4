@@ -6,11 +6,14 @@
 package com.ozguryazilim.tekir.core.dialogs;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Map;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
+
+import org.apache.deltaspike.core.api.config.view.ViewConfig;
 import org.primefaces.context.RequestContext;
+
+import com.ozguryazilim.telve.view.DialogBase;
 
 /**
  * Belge sahipliğini değiştirmek için kullanıcı seçim dialoğu.
@@ -19,27 +22,19 @@ import org.primefaces.context.RequestContext;
  */
 @SessionScoped
 @Named
-public class ChangeOwnerDialog implements Serializable{
+public class ChangeOwnerDialog extends DialogBase implements Serializable{
     
     
     private String userName;
     
-    public void openDialog(){
-        userName = "";
-        
-        Map<String, Object> options = new HashMap<>();
-        
-        decorateDialog(options);
-        
-        RequestContext.getCurrentInstance().openDialog(getDialogName(), options, null);
+    @Override
+    public void beforeOpenDialog() {
+    	userName = "";
     }
     
+    @Override
     public void closeDialog(){
         RequestContext.getCurrentInstance().closeDialog(userName);
-    }
-    
-    public void cancelDialog(){
-        RequestContext.getCurrentInstance().closeDialog(null);
     }
     
     /**
@@ -49,11 +44,17 @@ public class ChangeOwnerDialog implements Serializable{
      * 
      * @param options 
      */
+    @Override
     protected void decorateDialog(Map<String, Object> options){
         options.put("modal", true);
         //options.put("draggable", false);  
         options.put("resizable", false);
         options.put("contentHeight", 450);
+    }
+    
+    @Override
+    public Class<? extends ViewConfig> getDialogViewConfig() {
+    	return null;
     }
 
     public String getDialogName() {
