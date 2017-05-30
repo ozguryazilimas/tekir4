@@ -8,15 +8,17 @@ package com.ozguryazilim.tekir.voucher;
 import com.ozguryazilim.tekir.entities.Commodity;
 import com.ozguryazilim.tekir.entities.Quantity;
 import com.ozguryazilim.tekir.entities.VoucherCommodityItemBase;
+import com.ozguryazilim.telve.view.DialogBase;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.Currency;
-import java.util.HashMap;
 import java.util.Map;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-import org.primefaces.context.RequestContext;
+
+import org.apache.deltaspike.core.api.config.view.ViewConfig;
 
 /**
  * Vocuher'lar için Commodity detay editorü.
@@ -29,7 +31,7 @@ import org.primefaces.context.RequestContext;
  */
 @SessionScoped
 @Named
-public class VoucherCommodityItemEditor implements Serializable{
+public class VoucherCommodityItemEditor extends DialogBase implements Serializable{
     
     private VoucherCommodityItemBase item;
     private VoucherCommodityItemEditorListener listener;
@@ -40,29 +42,19 @@ public class VoucherCommodityItemEditor implements Serializable{
         this.item = item;
         this.currency = currency;
         this.listener = listener;
-        
-        Map<String, Object> options = new HashMap<>();
-        
-        decorateDialog(options);
-        
-        RequestContext.getCurrentInstance().openDialog(getDialogName(), options, null);
+
+        openDialog();
     }
 
-    
+    @Override
     public void closeDialog() {
         //Aslında burada kendini çağıran VoucherHome instance'a bir mesaj fırlatmak lazım.
         //Ya da en azından callback yapmak lazım Bunun için de buraya parametre olarak bean ismi ya da belli bir interface'i implemente eden biş ialabiliriz sanki.
         listener.saveItem(item);
-        RequestContext.getCurrentInstance().closeDialog(null);
+        closeDialogWindow();
     }
 
-    /**
-     * Dialogu hiç bir şey seçmeden kapatır.
-     */
-    public void cancelDialog() {
-        RequestContext.getCurrentInstance().closeDialog(null);
-    }
-    
+    @Override
     protected void decorateDialog(Map<String, Object> options){
         options.put("modal", true);
         //options.put("draggable", false);  
@@ -70,7 +62,12 @@ public class VoucherCommodityItemEditor implements Serializable{
         options.put("contentHeight", 450);
     }
     
-    protected String getDialogName() {
+    @Override
+    public Class<? extends ViewConfig> getDialogViewConfig() {
+    	return null;
+    }
+    
+    public String getDialogName() {
         return "/dialogs/commodityItemEditor";
     }
 
