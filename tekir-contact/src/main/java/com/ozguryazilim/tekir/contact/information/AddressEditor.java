@@ -45,7 +45,7 @@ public class AddressEditor extends AbstractContactInformationEditor<ContactAddre
 
         primaryAddress = Boolean.TRUE;
 
-        openDialogImpl();
+        openDialog();
     }
     
     /**

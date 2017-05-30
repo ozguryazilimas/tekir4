@@ -44,7 +44,7 @@ public class BankEditor extends AbstractContactInformationEditor<ContactBank> {
 
         primaryBank = true;
         
-        openDialogImpl();
+        openDialog();
     }
 
     

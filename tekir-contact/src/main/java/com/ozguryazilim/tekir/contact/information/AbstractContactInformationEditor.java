@@ -7,25 +7,22 @@ package com.ozguryazilim.tekir.contact.information;
 
 import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.tekir.entities.ContactInformation;
+import com.ozguryazilim.telve.view.DialogBase;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
-import org.apache.deltaspike.core.api.config.view.metadata.ViewConfigResolver;
 import org.primefaces.context.RequestContext;
 
 /**
  * ContactInformationEditorler için taban sınıf
  * @author Hakan Uygun
  */
-public abstract class AbstractContactInformationEditor<E extends ContactInformation> implements Serializable{
-
-    @Inject
-    private ViewConfigResolver viewConfigResolver;
+public abstract class AbstractContactInformationEditor<E extends ContactInformation> extends DialogBase implements Serializable{
 
     @Inject
     private ContactInformationRepository contactInformationRepository;
@@ -37,9 +34,9 @@ public abstract class AbstractContactInformationEditor<E extends ContactInformat
 
     private Contact contact;
     
-    protected void openDialogImpl() {
-        Map<String, Object> options = new HashMap<>();
-        options.put("modal", true);
+    @Override
+    protected void decorateDialog(Map<String, Object> options) {
+    	options.put("modal", true);
         //options.put("draggable", false);  
         options.put("resizable", false);
         options.put("width", "780");
@@ -47,13 +44,12 @@ public abstract class AbstractContactInformationEditor<E extends ContactInformat
         //options.put("contentWidth", 780);
         options.put("contentHeight", 450);
         options.put("position", "center top");
-
-        RequestContext.getCurrentInstance().openDialog(getDialogName(), options, null);
     }
     
     /**
      * Dialogu OK ile kapatıyoruz.
      */
+    @Override
     public void closeDialog() {
         if( !onBeforeClose() ) return;
         
@@ -63,23 +59,10 @@ public abstract class AbstractContactInformationEditor<E extends ContactInformat
     protected boolean onBeforeClose(){
         return true;
     }
-
-    /**
-     * Bir şey yapmadan çık.
-     */
-    public void cancelDialog() {
-        RequestContext.getCurrentInstance().closeDialog(null);
-    }
     
-    /**
-     * Açılacak dialog adını döndürür.
-     *
-     * @return
-     */
-    public String getDialogName(){
-        Class<? extends ViewConfig> page = this.getClass().getAnnotation(ContactInformationEditor.class).page();
-        String viewId = viewConfigResolver.getViewConfigDescriptor(page).getViewId();
-        return viewId.substring(0, viewId.indexOf(".xhtml"));
+    @Override
+    public Class<? extends ViewConfig> getDialogViewConfig() {
+    	return this.getClass().getAnnotation(ContactInformationEditor.class).page();
     }
     
     
@@ -120,7 +103,7 @@ public abstract class AbstractContactInformationEditor<E extends ContactInformat
         setEntity( createNewModel());
         getEntity().setContact(contact);
 
-        openDialogImpl();
+        openDialog();
     }
 
     public void edit(E information){
@@ -129,7 +112,7 @@ public abstract class AbstractContactInformationEditor<E extends ContactInformat
         this.contact = information.getContact();
         setEntity(information );
 
-        openDialogImpl();
+        openDialog();
     }
 
     

@@ -48,7 +48,7 @@ public class EmailEditor extends AbstractContactInformationEditor<ContactEMail> 
 
         primaryEmail = Boolean.TRUE;
 
-        openDialogImpl();
+        openDialog();
     }
     
 

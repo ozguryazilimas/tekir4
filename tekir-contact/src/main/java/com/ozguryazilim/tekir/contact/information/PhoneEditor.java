@@ -50,7 +50,7 @@ public class PhoneEditor extends AbstractContactInformationEditor<ContactPhone> 
 
         primaryMobile = Boolean.TRUE;
 
-        openDialogImpl();
+        openDialog();
     }
 
     public void editPrimaryPhone(Contact contact, ContactPhone phone) {
@@ -70,7 +70,7 @@ public class PhoneEditor extends AbstractContactInformationEditor<ContactPhone> 
 
         primaryPhone = Boolean.TRUE;
 
-        openDialogImpl();
+        openDialog();
     }
 
     public void editPrimaryFax(Contact contact, ContactPhone phone) {
@@ -89,7 +89,7 @@ public class PhoneEditor extends AbstractContactInformationEditor<ContactPhone> 
 
         primaryFax = Boolean.TRUE;
 
-        openDialogImpl();
+        openDialog();
     }
 
     protected void init() {
