@@ -19,7 +19,7 @@ import javax.inject.Inject;
  *
  * @author oyas
  */
-@Lookup(dialogPage = VoucherPages.Group.VoucherGroupLookup.class)
+@Lookup(dialogPage = VoucherPages.Voucher.Group.VoucherGroupLookup.class)
 public class VoucherGroupLookup extends LookupTableControllerBase<VoucherGroup, VoucherGroup> {
 	
     @Inject

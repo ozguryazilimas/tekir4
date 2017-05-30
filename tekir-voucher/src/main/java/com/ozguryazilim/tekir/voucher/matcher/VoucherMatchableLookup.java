@@ -19,7 +19,7 @@ import javax.inject.Inject;
  *
  * @author oyas
  */
-@Lookup(dialogPage = VoucherPages.VoucherMatchableLookup.class)
+@Lookup(dialogPage = VoucherPages.Voucher.VoucherMatchableLookup.class)
 public class VoucherMatchableLookup extends
         LookupTableControllerBase<VoucherMatchable, VoucherMatchable> {
 

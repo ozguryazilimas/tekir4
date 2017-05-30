@@ -21,7 +21,7 @@ import javax.inject.Inject;
  *
  * @author oyas
  */
-@Lookup(dialogPage = VoucherPages.Process.ProcessLookup.class)
+@Lookup(dialogPage = VoucherPages.Voucher.Process.ProcessLookup.class)
 public class ProcessLookup extends LookupTableControllerBase<Process, Process> {
 
     @Inject
