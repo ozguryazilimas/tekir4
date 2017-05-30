@@ -19,10 +19,10 @@ import com.ozguryazilim.tekir.entities.Process;
  * @author Hakan Uygun
  */
 @Feature(permission = "process", forEntity = Process.class )
-@Page( type = PageType.BROWSE, page = VoucherPages.Voucher.Process.ProcessBrowse.class )
-@Page(type = PageType.EDIT, page = VoucherPages.Voucher.Process.ProcessView.class)
-@Page(type = PageType.VIEW, page = VoucherPages.Voucher.Process.ProcessView.class)
-@Page(type = PageType.MASTER_VIEW, page = VoucherPages.Voucher.Process.ProcessMasterView.class)
+@Page( type = PageType.BROWSE, page = VoucherPages.Process.ProcessBrowse.class )
+@Page(type = PageType.EDIT, page = VoucherPages.Process.ProcessView.class)
+@Page(type = PageType.VIEW, page = VoucherPages.Process.ProcessView.class)
+@Page(type = PageType.MASTER_VIEW, page = VoucherPages.Process.ProcessMasterView.class)
 @Default
 public class ProcessFeature extends AbstractFeatureHandler{
     

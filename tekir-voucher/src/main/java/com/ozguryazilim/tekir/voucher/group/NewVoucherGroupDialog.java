@@ -56,7 +56,7 @@ public class NewVoucherGroupDialog extends DialogBase implements Serializable {
 
 	@Override
 	public Class<? extends ViewConfig> getDialogViewConfig() {
-		return VoucherPages.Voucher.Group.NewVoucherGroupPopup.class;
+		return VoucherPages.Group.NewVoucherGroupPopup.class;
 	}
 
 	public VoucherGroup getEntity() {

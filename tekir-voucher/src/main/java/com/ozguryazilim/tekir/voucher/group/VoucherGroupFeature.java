@@ -20,10 +20,10 @@ import javax.enterprise.inject.Default;
  */
 
 @Feature(permission = "voucherGroup", forEntity = VoucherGroup.class )
-@Page(type = PageType.BROWSE, page = VoucherPages.Voucher.Group.VoucherGroupBrowse.class )
-@Page(type = PageType.VIEW, page = VoucherPages.Voucher.Group.VoucherGroupView.class)
-@Page(type = PageType.MASTER_VIEW, page = VoucherPages.Voucher.Group.VoucherGroupMasterView.class)
-@Page(type = PageType.EDIT, page = VoucherPages.Voucher.Group.VoucherGroup.class )
+@Page(type = PageType.BROWSE, page = VoucherPages.Group.VoucherGroupBrowse.class )
+@Page(type = PageType.VIEW, page = VoucherPages.Group.VoucherGroupView.class)
+@Page(type = PageType.MASTER_VIEW, page = VoucherPages.Group.VoucherGroupMasterView.class)
+@Page(type = PageType.EDIT, page = VoucherPages.Group.VoucherGroup.class )
 @Default
 public class VoucherGroupFeature extends AbstractFeatureHandler{
     
