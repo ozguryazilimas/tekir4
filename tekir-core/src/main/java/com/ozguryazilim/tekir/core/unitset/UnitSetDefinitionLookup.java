@@ -14,7 +14,7 @@ import javax.inject.Inject;
  * 
  * @author
  */
-@Lookup(dialogPage = CorePages.Core.UnitSetDefinitionLookup.class)
+@Lookup(dialogPage = CorePages.UnitSetDefinitionLookup.class)
 public class UnitSetDefinitionLookup
 		extends
 			LookupTableControllerBase<UnitSetDefinition, UnitSetDefinitionViewModel> {

@@ -18,7 +18,7 @@ import javax.inject.Inject;
  *
  * @author oyas
  */
-@Lookup(dialogPage = CorePages.Core.PaymentPlanLookup.class)
+@Lookup(dialogPage = CorePages.PaymentPlanLookup.class)
 public class PaymentPlanLookup extends
 			LookupTableControllerBase<PaymentPlan, PaymentPlanViewModel> {
 
