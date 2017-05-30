@@ -7,16 +7,16 @@ package com.ozguryazilim.tekir.contact;
 
 import com.ozguryazilim.tekir.contact.config.ContactPages;
 import com.ozguryazilim.tekir.entities.Corporation;
+import com.ozguryazilim.telve.view.DialogBase;
+
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.apache.deltaspike.core.api.config.view.metadata.ViewConfigResolver;
+
+import org.apache.deltaspike.core.api.config.view.ViewConfig;
 import org.apache.deltaspike.core.api.config.view.navigation.NavigationParameterContext;
 import org.apache.deltaspike.core.api.config.view.navigation.ViewNavigationHandler;
-import org.primefaces.context.RequestContext;
 
 /**
  * Yeni Kurum Tanım Popup Controller
@@ -24,11 +24,8 @@ import org.primefaces.context.RequestContext;
  */
 @Named
 @SessionScoped
-public class NewCorporationDialog implements Serializable{
+public class NewCorporationDialog extends DialogBase implements Serializable{
    
-    @Inject
-    private ViewConfigResolver viewConfigResolver;
-    
     @Inject
     private ViewNavigationHandler viewNavigationHandler;
     
@@ -41,32 +38,18 @@ public class NewCorporationDialog implements Serializable{
     
     private Corporation contact;
     
-    public void openDialog() {
-        contact = new Corporation();
+    @Override
+    public void beforeOpenDialog() {
+    	contact = new Corporation();
         
         contact.getContactRoles().add("CONTACT");
         contact.getContactRoles().add("CORPORATION");
-        
-        openDialogImpl();
-    }
-    
-    protected void openDialogImpl() {
-        Map<String, Object> options = new HashMap<>();
-        options.put("modal", true);
-        //options.put("draggable", false);  
-        options.put("resizable", false);
-        options.put("width", "780");
-        options.put("height", "430");
-        //options.put("contentWidth", 780);
-        options.put("contentHeight", 450);
-        options.put("position", "center top");
-
-        RequestContext.getCurrentInstance().openDialog(getDialogName(), options, null);
     }
     
     /**
      * Yeni person'ı save eder.
      */
+    @Override
     public void closeDialog() {
         repository.save(contact);
         
@@ -75,22 +58,10 @@ public class NewCorporationDialog implements Serializable{
         
         //RequestContext.getCurrentInstance().closeDialog(null);
     }
-
-    /**
-     * Bir şey yapmadan çık.
-     */
-    public void cancelDialog() {
-        RequestContext.getCurrentInstance().closeDialog(null);
-    }
     
-    /**
-     * startPopup dialog adını döndürür.
-     *
-     * @return
-     */
-    public String getDialogName() {
-        String viewId = viewConfigResolver.getViewConfigDescriptor(ContactPages.NewCorporationPopup.class).getViewId();
-        return viewId.substring(0, viewId.indexOf(".xhtml"));
+    @Override
+    public Class<? extends ViewConfig> getDialogViewConfig() {
+    	return ContactPages.NewCorporationPopup.class;
     }
 
     public Corporation getContact() {
