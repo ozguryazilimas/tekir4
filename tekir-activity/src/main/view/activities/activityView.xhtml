@@ -84,7 +84,7 @@
                 <t:outputEnum label="general.label.Status" itemLabel="activity.status." value="#{bean.entity.status}" columnClass="col-md-3 col-xs-12"/>
                 <t:outputText label="activity.label.Assignee" value="#{userLookup.getUserName(bean.entity.assignee)}" columnClass="col-md-3 col-xs-12"/>
                 <t:outputDateTime label="activity.label.DueDate" value="#{bean.entity.dueDate}" columnClass="col-md-3 col-xs-12"/>
-                <t:outputText label="activity.label.Duration" value="#{bean.entity.duration}" columnClass="col-md-3 col-xs-12"/>
+                <t:outputDuration value="#{bean.entity.duration}" columnClass="col-md-3 col-xs-12"/>
             </div>         
         </div>  
 
