@@ -6,15 +6,11 @@
 package com.ozguryazilim.tekir.core.dialogs;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-
-import org.apache.deltaspike.core.api.config.view.ViewConfig;
 import org.primefaces.context.RequestContext;
-
-import com.ozguryazilim.tekir.core.config.CorePages;
-import com.ozguryazilim.telve.view.DialogBase;
 
 /**
  * Belge sahipliğini değiştirmek için kullanıcı seçim dialoğu.
@@ -23,19 +19,27 @@ import com.ozguryazilim.telve.view.DialogBase;
  */
 @SessionScoped
 @Named
-public class ChangeOwnerDialog extends DialogBase implements Serializable{
+public class ChangeOwnerDialog implements Serializable{
     
     
     private String userName;
     
-    @Override
-    public void beforeOpenDialog(){
+    public void openDialog(){
         userName = "";
+        
+        Map<String, Object> options = new HashMap<>();
+        
+        decorateDialog(options);
+        
+        RequestContext.getCurrentInstance().openDialog(getDialogName(), options, null);
     }
     
-    @Override
     public void closeDialog(){
         RequestContext.getCurrentInstance().closeDialog(userName);
+    }
+    
+    public void cancelDialog(){
+        RequestContext.getCurrentInstance().closeDialog(null);
     }
     
     /**
@@ -45,7 +49,6 @@ public class ChangeOwnerDialog extends DialogBase implements Serializable{
      * 
      * @param options 
      */
-    @Override
     protected void decorateDialog(Map<String, Object> options){
         options.put("modal", true);
         //options.put("draggable", false);  
@@ -53,9 +56,8 @@ public class ChangeOwnerDialog extends DialogBase implements Serializable{
         options.put("contentHeight", 450);
     }
 
-    @Override
-    public Class<? extends ViewConfig> getDialogViewConfig() {
-    	return CorePages.Dialogs.ChangeOwnerDialog.class;
+    public String getDialogName() {
+        return "/dialogs/changeOwnerDialog";
     }
 
     public String getUserName() {
