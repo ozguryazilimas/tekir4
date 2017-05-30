@@ -12,15 +12,15 @@ import com.ozguryazilim.tekir.entities.Person;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
+import com.ozguryazilim.telve.view.DialogBase;
+
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import javax.inject.Inject;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
 import org.apache.deltaspike.core.api.config.view.metadata.ViewConfigResolver;
 import org.apache.deltaspike.core.util.ProxyUtils;
-import org.primefaces.context.RequestContext;
 
 /**
  * Activity Controller için taban sınıf.
@@ -28,7 +28,7 @@ import org.primefaces.context.RequestContext;
  * 
  * @author Hakan Uygun
  */
-public abstract class AbstractActivityController<E extends Activity> implements Serializable{
+public abstract class AbstractActivityController<E extends Activity> extends DialogBase implements Serializable{
     
     
     @Inject
@@ -93,16 +93,6 @@ public abstract class AbstractActivityController<E extends Activity> implements 
         this.entity = entity;
     }
     
-    
-    public void openDialog(){
-        Map<String, Object> options = new HashMap<>();
-        
-        decorateDialog(options);
-        
-        RequestContext.getCurrentInstance().openDialog(getDialogName(), options, null);
-    }
-
-    
     public void save() {
         //entity.setStatus(ActivityStatus.SCHEDULED);
         repository.save(entity);
@@ -114,7 +104,7 @@ public abstract class AbstractActivityController<E extends Activity> implements 
             if( entity.getStatus() == ActivityStatus.DRAFT){
                 entity.setStatus(ActivityStatus.SCHEDULED);
             }
-            RequestContext.getCurrentInstance().closeDialog(null);
+            closeDialogWindow();
         }
     }
     
@@ -129,7 +119,7 @@ public abstract class AbstractActivityController<E extends Activity> implements 
     }
     
     public void cancel() {
-        RequestContext.getCurrentInstance().closeDialog(null);
+    	closeDialogWindow();
     }
     
     /**
@@ -139,16 +129,21 @@ public abstract class AbstractActivityController<E extends Activity> implements 
      * 
      * @param options 
      */
+    @Override
     protected void decorateDialog(Map<String, Object> options){
         options.put("modal", true);
         //options.put("draggable", false);  
         options.put("resizable", false);
         options.put("contentHeight", 450);
     }
-
-    public String getDialogName() {
-        String viewId = getEditorPageViewId();
-        return viewId.substring(0, viewId.indexOf(".xhtml"));
+    
+    @Override
+    public Class<? extends ViewConfig> getDialogViewConfig() {
+    	return getEditorPage();
+    }
+    
+    @Override
+    public void closeDialog() {
     }
     
     public String getEditorPageViewId() {
