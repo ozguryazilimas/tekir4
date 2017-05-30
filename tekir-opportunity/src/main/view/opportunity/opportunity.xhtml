@@ -56,22 +56,6 @@
             </div>
         </div>
         
-        <p:confirmDialog
-			header="#{messages['opportunity.caption.ExchangeRateNoInformation']}"
-			widgetVar="noExchangeWarnDialog"
-			message="#{formatedMessage.getMessageFromData('opportunity.warning.ExchangeRateNoInformation'.concat('$%&amp;').concat(entity.date))}"
-			showEffect="fade" hideEffect="fade">
-			<p:commandButton value="#{messages['general.button.Yes']}"
-				styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
-				oncomplete="PF('noExchangeWarnDialog').hide();"
-				actionListener="#{exchangeRateHome.getTCMBRates()}"
-				action="#{homeBean.save()}" />
-			<p:commandButton value="#{messages['general.button.No']}"
-				styleClass="ui-confirmdialog-no" icon="ui-icon-close"
-				action="#{homeBean.iDontWanna()}"
-				oncomplete="PF('noExchangeWarnDialog').hide()" />
-		</p:confirmDialog>
-        
     </ui:define>
 
 </ui:composition>

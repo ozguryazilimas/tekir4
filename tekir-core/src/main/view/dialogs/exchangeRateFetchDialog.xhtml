@@ -1,0 +1,23 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/layout/dialogBase.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+	<ui:param name="title"
+		value="#{messages['opportunity.caption.ExchangeRateNoInformation']}" />
+
+	<ui:define name="form">
+		<h:outputText
+			value="reloaded #{formatedMessage.getMessageFromData('opportunity.warning.ExchangeRateNoInformation'.concat('$%&amp;').concat(entity.date))}" />
+		<h:form>
+			<p:commandButton value="#{messages['general.button.Yes']}"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+				actionListener="#{exchangeRateHome.getTCMBRates()}"
+				action="#{exchangeRateFetchDialog.closeDialog()}" />
+			<p:commandButton value="#{messages['general.button.No']}"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close"
+				action="#{exchangeRateFetchDialog.cancelDialog()}" />
+		</h:form>
+	</ui:define>
+
+</ui:composition>

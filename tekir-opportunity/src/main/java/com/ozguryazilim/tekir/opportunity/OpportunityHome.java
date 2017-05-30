@@ -8,12 +8,12 @@ package com.ozguryazilim.tekir.opportunity;
 import javax.inject.Inject;
 import javax.money.convert.CurrencyConversionException;
 
-import org.primefaces.context.RequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ozguryazilim.tekir.account.AccountTxnService;
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
+import com.ozguryazilim.tekir.core.dialogs.ExchangeRateFetchDialog;
 import com.ozguryazilim.tekir.entities.Opportunity;
 import com.ozguryazilim.tekir.entities.ProcessType;
 import com.ozguryazilim.tekir.entities.VoucherState;
@@ -61,6 +61,9 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
     @Inject
     private FormatedMessage formatedMessage;
     
+    @Inject
+    private ExchangeRateFetchDialog exchangeRateFetchDialog;
+    
     @Override
     public void createNew() {
         super.createNew(); 
@@ -84,7 +87,7 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
 			getEntity().setLocalBudget(
 					currencyService.convert(getEntity().getCurrency(), getEntity().getBudget(), getEntity().getDate()));
 		} catch (CurrencyConversionException e) {
-			RequestContext.getCurrentInstance().execute("PF('noExchangeWarnDialog').show();");
+			exchangeRateFetchDialog.openDialog(this);
 			return false;
 		}
         
