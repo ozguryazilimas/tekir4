@@ -14,7 +14,7 @@ import javax.inject.Inject;
  * 
  * @author
  */
-@Lookup(dialogPage = CorePages.TerritoryLookup.class)
+@Lookup(dialogPage = CorePages.Core.TerritoryLookup.class)
 public class TerritoryLookup
 		extends
 			LookupTableControllerBase<Territory, TerritoryViewModel> {

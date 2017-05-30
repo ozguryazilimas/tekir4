@@ -13,7 +13,7 @@ import javax.inject.Inject;
  * 
  * @author
  */
-@Lookup(dialogPage = CorePages.LocationLookup.class)
+@Lookup(dialogPage = CorePages.Core.LocationLookup.class)
 public class LocationLookup
 		extends
 			LookupTreeControllerBase<Location, Location> {

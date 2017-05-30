@@ -14,7 +14,7 @@ import javax.inject.Inject;
  * 
  * @author
  */
-@Lookup(dialogPage = CorePages.TaxDefinitionLookup.class)
+@Lookup(dialogPage = CorePages.Core.TaxDefinitionLookup.class)
 public class TaxDefinitionLookup
 		extends
 			LookupTableControllerBase<TaxDefinition, TaxDefinitionViewModel> {

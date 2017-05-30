@@ -15,7 +15,7 @@ import java.util.Map;
  * 
  * @author Hakan Uygun
  */
-@Lookup(dialogPage = CorePages.TekirFeatureLookup.class)
+@Lookup(dialogPage = CorePages.Core.TekirFeatureLookup.class)
 public class TekirFeatureLookup extends AbtsractFeatureLookup{
     
     private Boolean mineOnly = Boolean.TRUE;

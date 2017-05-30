@@ -13,7 +13,7 @@ import javax.inject.Inject;
  * 
  * @author
  */
-@Lookup(dialogPage = CorePages.IndustryLookup.class)
+@Lookup(dialogPage = CorePages.Core.IndustryLookup.class)
 public class IndustryLookup
 		extends
 			LookupTreeControllerBase<Industry, Industry> {

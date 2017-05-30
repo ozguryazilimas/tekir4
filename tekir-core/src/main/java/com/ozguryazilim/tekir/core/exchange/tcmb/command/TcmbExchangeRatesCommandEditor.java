@@ -13,7 +13,7 @@ import com.ozguryazilim.telve.messagebus.command.ui.CommandEditorBase;
  *
  * @author oyas
  */
-@CommandEditor(command = TcmbExchangeRatesCommand.class, page = CorePages.TcmbExchangeRatesCommand.class)
+@CommandEditor(command = TcmbExchangeRatesCommand.class, page = CorePages.Core.TcmbExchangeRatesCommand.class)
 public class TcmbExchangeRatesCommandEditor extends CommandEditorBase<TcmbExchangeRatesCommand>{
 
     @Override
