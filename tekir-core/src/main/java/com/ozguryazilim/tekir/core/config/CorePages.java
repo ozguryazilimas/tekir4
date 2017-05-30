@@ -22,6 +22,7 @@ import com.ozguryazilim.tekir.core.config.CorePages;
 @Folder(name = "./")
 public interface CorePages extends Pages {
 
+	@Folder
 	interface Core extends CorePages {
 
 		@SecuredPage()
