@@ -1,15 +1,12 @@
 package com.ozguryazilim.finance.account.reports;
 
-import com.ozguryazilim.tekir.contact.config.ContactPages;
-import com.ozguryazilim.telve.adminreport.AuditLogFilter;
+import com.ozguryazilim.finance.config.FinancePages;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
-
-import org.joda.time.DateTime;
 
 import com.ozguryazilim.telve.config.LocaleSelector;
 import com.ozguryazilim.telve.config.TelveConfigResolver;
@@ -18,7 +15,6 @@ import com.ozguryazilim.telve.query.filters.DateValueType;
 import com.ozguryazilim.telve.reports.JasperReportBase;
 import com.ozguryazilim.telve.reports.Report;
 import com.ozguryazilim.telve.reports.ReportDate;
-import com.ozguryazilim.telve.view.Pages;
 import net.sf.jasperreports.engine.JRParameter;
 
 /**
@@ -26,7 +22,7 @@ import net.sf.jasperreports.engine.JRParameter;
  *
  * @author Ceyhun Onur
  */
-@Report(filterPage = ContactPages.AccountTxnReport.class, permission = "financeAccountTxnReport", path = "/finance/account", template = "financeAccountTxnReport", resource = "financeAccountReports")
+@Report(filterPage = FinancePages.FinanceAccountTxnReport.class, permission = "financeAccountTxnReport", path = "/finance/account", template = "financeAccountTxnReport", resource = "financeAccountReports")
 public class FinanceAccountTxnReport extends JasperReportBase {
 
     @Inject
