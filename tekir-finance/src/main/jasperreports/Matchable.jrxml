@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-06-05T12:53:14 -->
+<!-- 2017-06-05T14:37:04 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Matchable" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="26ea160f-1cb9-4358-8be9-16a55cb6bc47">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Tekir"/>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT
 SUM(CASE WHEN mat.FEATURE='SalesInvoiceFeature' THEN mat.LOCAL_REMAINDER ELSE 0 END) Receivable,

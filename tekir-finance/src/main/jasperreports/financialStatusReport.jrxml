@@ -37,8 +37,8 @@
 	<queryString>
 		<![CDATA[SELECT
 acc.CODE, acc.NAME,
-SUM(CASE WHEN txn.DEBIT=false THEN txn.LOCAL_AMOUNT ELSE 0 END) Debit,
-SUM(CASE WHEN txn.DEBIT=true THEN txn.LOCAL_AMOUNT ELSE 0 END) Receivable
+SUM(CASE WHEN txn.DEBIT=false THEN txn.LOCAL_AMOUNT ELSE 0 END) Receivable,
+SUM(CASE WHEN txn.DEBIT=true THEN txn.LOCAL_AMOUNT ELSE 0 END) Debit
 FROM TFN_FINANCE_TXN txn INNER JOIN TFN_FINANCE_ACC acc ON acc.ID=txn.ACCOUNT_ID
 GROUP BY acc.ID]]>
 	</queryString>
@@ -145,9 +145,6 @@ GROUP BY acc.ID]]>
 			<subreport>
 				<reportElement x="0" y="0" width="80" height="60" uuid="e817af56-2090-4701-ab4e-b3111e1d3a11"/>
 				<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
-				<subreportParameter name="SUBREPORT_DIR">
-					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
-				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}.concat("Matchable.jasper")]]></subreportExpression>
 			</subreport>
