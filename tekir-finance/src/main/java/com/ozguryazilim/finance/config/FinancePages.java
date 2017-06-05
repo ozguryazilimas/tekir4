@@ -87,4 +87,10 @@ public interface FinancePages extends Pages {
             FinancePages {
     }
 
+    @SecuredPage
+    @View
+    @PageTitle("report.name.FinancialAccountTxnReport")
+    class FinancialStatusReport implements FinancePages {
+    }
+
 }
