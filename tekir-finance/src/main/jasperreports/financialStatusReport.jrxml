@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-06-05T12:52:37 -->
+<!-- 2017-06-05T14:25:02 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FinancialStatus" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8b487025-eaa5-478f-9628-b8de8539766f">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Tekir"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
@@ -38,8 +38,7 @@
 		<![CDATA[SELECT
 acc.CODE, acc.NAME,
 SUM(CASE WHEN txn.DEBIT=false THEN txn.LOCAL_AMOUNT ELSE 0 END) Debit,
-SUM(CASE WHEN txn.DEBIT=true THEN txn.LOCAL_AMOUNT ELSE 0 END) Receivable,
-SUM(CASE WHEN txn.DEBIT=false THEN txn.LOCAL_AMOUNT ELSE 0 END)-SUM(CASE WHEN txn.DEBIT=true THEN txn.LOCAL_AMOUNT ELSE 0 END) 
+SUM(CASE WHEN txn.DEBIT=true THEN txn.LOCAL_AMOUNT ELSE 0 END) Receivable
 FROM TFN_FINANCE_TXN txn INNER JOIN TFN_FINANCE_ACC acc ON acc.ID=txn.ACCOUNT_ID
 GROUP BY acc.ID]]>
 	</queryString>
@@ -47,7 +46,6 @@ GROUP BY acc.ID]]>
 	<field name="NAME" class="java.lang.String"/>
 	<field name="Debit" class="java.math.BigDecimal"/>
 	<field name="Receivable" class="java.math.BigDecimal"/>
-	<field name="SUM(CASE WHEN txn.DEBIT=false THEN txn.LOCAL_AMOUNT ELSE 0 END)-SUM(CASE WHEN txn.DEBIT=true THEN txn.LOCAL_AMOUNT ELSE 0 END)" class="java.math.BigDecimal"/>
 	<variable name="Sum" class="java.math.BigDecimal">
 		<variableExpression><![CDATA[$F{Receivable}.subtract( $F{Debit})]]></variableExpression>
 	</variable>
