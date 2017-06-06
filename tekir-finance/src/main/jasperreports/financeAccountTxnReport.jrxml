@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-06-06T13:04:17 -->
+<!-- 2017-06-06T16:28:14 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="financeAccountTxnReport" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="76b5a97f-b408-4bac-aaed-bcb9cdced953">
 	<property name="ireport.zoom" value="1.2100000000000002"/>
 	<property name="ireport.x" value="0"/>
@@ -96,20 +96,9 @@ ORDER BY tfa.NAME]]>
 					<textFieldExpression><![CDATA[$R{FinanceAccountTxnReport.Name}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="Kolon_basliklar" x="160" y="20" width="79" height="20" uuid="7d6118d3-ad1f-44c9-a2e0-a80a5249c9f4">
-						<property name="net.sf.jasperreports.export.csv.column.name" value="DEBIT"/>
-					</reportElement>
-					<box>
-						<bottomPen lineWidth="1.0" lineStyle="Double"/>
-					</box>
-					<textElement markup="none">
-						<font size="8" isBold="true" pdfEncoding="Cp1254"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$R{FinanceAccountTxnReport.Direction}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement style="Kolon_basliklar" x="239" y="20" width="79" height="20" uuid="3e4dd8dd-af48-49f5-a8b0-dbb287587a91">
+					<reportElement style="Kolon_basliklar" x="160" y="20" width="79" height="20" uuid="3e4dd8dd-af48-49f5-a8b0-dbb287587a91">
 						<property name="net.sf.jasperreports.export.csv.column.name" value="DATE"/>
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 					</reportElement>
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Double"/>
@@ -120,8 +109,9 @@ ORDER BY tfa.NAME]]>
 					<textFieldExpression><![CDATA[$R{FinanceAccountTxnReport.Date}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="Kolon_basliklar" x="318" y="20" width="79" height="20" uuid="45b3049a-fa6a-4948-a20a-6846b0104435">
+					<reportElement style="Kolon_basliklar" x="239" y="20" width="79" height="20" uuid="45b3049a-fa6a-4948-a20a-6846b0104435">
 						<property name="net.sf.jasperreports.export.csv.column.name" value="TYPE"/>
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 					</reportElement>
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Double"/>
@@ -132,8 +122,10 @@ ORDER BY tfa.NAME]]>
 					<textFieldExpression><![CDATA[$R{FinanceAccountTxnReport.VoucherType}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="Kolon_basliklar" x="397" y="20" width="79" height="20" uuid="778782dc-dc65-454a-9ec8-c6d7d98f1aef">
+					<reportElement style="Kolon_basliklar" x="0" y="20" width="81" height="20" uuid="778782dc-dc65-454a-9ec8-c6d7d98f1aef">
 						<property name="net.sf.jasperreports.export.csv.column.name" value="CODE"/>
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Double"/>
@@ -144,8 +136,9 @@ ORDER BY tfa.NAME]]>
 					<textFieldExpression><![CDATA[$R{FinanceAccountTxnReport.Code}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="Kolon_basliklar" x="476" y="20" width="79" height="20" uuid="a719e5bc-773e-4aba-b19b-47207b752c93">
+					<reportElement style="Kolon_basliklar" x="318" y="20" width="79" height="20" uuid="a719e5bc-773e-4aba-b19b-47207b752c93">
 						<property name="net.sf.jasperreports.export.csv.column.name" value="INFO"/>
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 					</reportElement>
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Double"/>
@@ -155,26 +148,14 @@ ORDER BY tfa.NAME]]>
 					</textElement>
 					<textFieldExpression><![CDATA[$R{FinanceAccountTxnReport.Info}]]></textFieldExpression>
 				</textField>
-				<textField>
-					<reportElement x="0" y="20" width="81" height="20" uuid="e331ac8f-2c82-4a4c-80b4-5e3ea6f75dec">
-						<property name="net.sf.jasperreports.export.csv.column.name" value="AMOUNT"/>
-					</reportElement>
-					<box>
-						<bottomPen lineWidth="1.0" lineStyle="Double"/>
-					</box>
-					<textElement markup="none">
-						<font size="8" isBold="true" pdfEncoding="Cp1254"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$R{FinanceAccountTxnReport.Amount}]]></textFieldExpression>
-				</textField>
-				<textField>
+				<textField isBlankWhenNull="true">
 					<reportElement style="Kolon_basliklar" x="320" y="0" width="123" height="20" isRemoveLineWhenBlank="true" uuid="c72006b5-0fa9-417e-9713-d9f29f81c407">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
 					<textElement markup="none">
 						<font size="8" isBold="true" pdfEncoding="Cp1254"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$R{FinanceAccountTxnReport.TakeOver}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$R{FinanceAccountTxnReport.Takeover}]]></textFieldExpression>
 				</textField>
 				<componentElement>
 					<reportElement x="444" y="0" width="110" height="20" uuid="817ee978-f92f-4c76-80fd-b194812737f3"/>
@@ -189,13 +170,39 @@ ORDER BY tfa.NAME]]>
 							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 						</datasetRun>
 						<jr:listContents height="20" width="110">
-							<textField>
+							<textField isBlankWhenNull="true">
 								<reportElement x="0" y="0" width="110" height="20" uuid="b710f2a1-615d-45a9-b0d6-2f0743f07780"/>
-								<textFieldExpression><![CDATA[$F{TAKEOVER}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{TAKEOVER}==null?0:$F{TAKEOVER}]]></textFieldExpression>
 							</textField>
 						</jr:listContents>
 					</jr:list>
 				</componentElement>
+				<textField isBlankWhenNull="true">
+					<reportElement x="476" y="20" width="79" height="20" uuid="e331ac8f-2c82-4a4c-80b4-5e3ea6f75dec">
+						<property name="net.sf.jasperreports.export.csv.column.name" value="AMOUNT"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<box>
+						<bottomPen lineWidth="1.0" lineStyle="Double"/>
+					</box>
+					<textElement markup="none">
+						<font size="8" isBold="true" pdfEncoding="Cp1254"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$R{FinanceAccountTxnReport.Amount}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Kolon_basliklar" x="397" y="20" width="79" height="20" uuid="7d6118d3-ad1f-44c9-a2e0-a80a5249c9f4">
+						<property name="net.sf.jasperreports.export.csv.column.name" value="DEBIT"/>
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					</reportElement>
+					<box>
+						<bottomPen lineWidth="1.0" lineStyle="Double"/>
+					</box>
+					<textElement markup="none">
+						<font size="8" isBold="true" pdfEncoding="Cp1254"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$R{FinanceAccountTxnReport.Direction}]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupHeader>
 		<groupFooter>
