@@ -1,19 +1,15 @@
 package com.ozguryazilim.finance.account.reports;
 
-import com.ozguryazilim.tekir.entities.ContactCategory;
-import com.ozguryazilim.tekir.entities.CorporationType;
-import com.ozguryazilim.tekir.entities.Industry;
-import com.ozguryazilim.tekir.entities.Territory;
 import com.ozguryazilim.telve.reports.ReportDate;
 import java.io.Serializable;
 
 /**
  * 
- * @author Ceyhun Onur 
+ * @author Ceyhun Onur
  */
 
 public class FinanceAccountTxnFilter implements Serializable {
-	
+
 	private ReportDate startDate;
 	private ReportDate endDate;
 
