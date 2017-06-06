@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-05-03T17:55:53 -->
+<!-- 2017-06-06T13:04:17 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="financeAccountTxnReport" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="76b5a97f-b408-4bac-aaed-bcb9cdced953">
 	<property name="ireport.zoom" value="1.2100000000000002"/>
 	<property name="ireport.x" value="0"/>
@@ -18,22 +18,19 @@
 	<style name="Detail" forecolor="#000000" backcolor="#FFFFFF" isBlankWhenNull="true" fontName="DejaVu Sans" fontSize="8" pdfEncoding="Cp1254"/>
 	<style name="Baslik" forecolor="#003366" backcolor="#FFFFFF" isBlankWhenNull="true" fontName="DejaVu Sans" fontSize="16" isBold="true" pdfEncoding="Cp1254"/>
 	<style name="Footer_Info" isBlankWhenNull="true" fontName="DejaVu Sans" fontSize="8" isBold="true" pdfEncoding="Cp1254"/>
-	<subDataset name="Takeover" uuid="fff963a4-f22b-4be5-8423-d023ea249274">
+	<subDataset name="Takeover" uuid="bc77fc6d-6708-4c90-9c05-7264ac819ba2">
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Tekir"/>
 		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-		<parameter name="START_DATE" class="java.util.Date"/>
 		<parameter name="ACCOUNT_ID" class="java.lang.Long"/>
+		<parameter name="START_DATE_FOR_TAKEOVER" class="java.sql.Date"/>
 		<queryString>
 			<![CDATA[SELECT SUM(CASE WHEN tft.DEBIT THEN tft.LOCAL_AMOUNT * -1 ELSE tft.LOCAL_AMOUNT END )
 TAKEOVER
 FROM TFN_FINANCE_TXN as tft
-WHERE tft.TXNDATE < $P{START_DATE} 
+WHERE tft.TXNDATE < $P{START_DATE_FOR_TAKEOVER} 
 AND tft.ACCOUNT_ID = $P{ACCOUNT_ID}]]>
 		</queryString>
 		<field name="TAKEOVER" class="java.math.BigDecimal"/>
-		<group name="Group1">
-			<groupExpression><![CDATA[$P{ACCOUNT_ID}]]></groupExpression>
-		</group>
 	</subDataset>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
@@ -180,23 +177,20 @@ ORDER BY tfa.NAME]]>
 					<textFieldExpression><![CDATA[$R{FinanceAccountTxnReport.TakeOver}]]></textFieldExpression>
 				</textField>
 				<componentElement>
-					<reportElement key="" style="Kolon_basliklar" positionType="FixRelativeToBottom" x="444" y="0" width="109" height="20" uuid="9e2ce588-cc26-4008-80fb-996f73fa1fc0"/>
-					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-						<datasetRun subDataset="Takeover" uuid="0e610c3a-0709-4dc8-b5c0-e479164d6b36">
-							<datasetParameter name="START_DATE">
-								<datasetParameterExpression><![CDATA[$P{START_DATE}]]></datasetParameterExpression>
-							</datasetParameter>
+					<reportElement x="444" y="0" width="110" height="20" uuid="817ee978-f92f-4c76-80fd-b194812737f3"/>
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="Takeover" uuid="e6831455-2c93-4c4b-9f8e-bc21d292c07e">
 							<datasetParameter name="ACCOUNT_ID">
 								<datasetParameterExpression><![CDATA[$F{ACCOUNT_ID}]]></datasetParameterExpression>
 							</datasetParameter>
+							<datasetParameter name="START_DATE_FOR_TAKEOVER">
+								<datasetParameterExpression><![CDATA[$P{START_DATE}]]></datasetParameterExpression>
+							</datasetParameter>
 							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 						</datasetRun>
-						<jr:listContents height="20" width="109">
+						<jr:listContents height="20" width="110">
 							<textField>
-								<reportElement style="Detail" x="0" y="0" width="100" height="20" printWhenGroupChanges="FinanceAccount" uuid="da4ed989-44f5-44d8-96d2-0375645c1077"/>
-								<box>
-									<bottomPen lineWidth="1.0" lineStyle="Dashed"/>
-								</box>
+								<reportElement x="0" y="0" width="110" height="20" uuid="b710f2a1-615d-45a9-b0d6-2f0743f07780"/>
 								<textFieldExpression><![CDATA[$F{TAKEOVER}]]></textFieldExpression>
 							</textField>
 						</jr:listContents>
