@@ -72,5 +72,6 @@ public class FinanceAccountTxnReport extends JasperReportBase {
     protected void decorateI18NParams(Map<String, Object> params) {
     	params.put(JRParameter.REPORT_LOCALE, LocaleSelector.instance().getLocale());
         params.put(JRParameter.REPORT_RESOURCE_BUNDLE, TelveResourceBundle.getBundle());
+		super.decorateI18NParams(params);
     }
 }
