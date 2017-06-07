@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-06-06T16:28:14 -->
+<!-- 2017-06-07T12:50:26 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="financeAccountTxnReport" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="76b5a97f-b408-4bac-aaed-bcb9cdced953">
 	<property name="ireport.zoom" value="1.2100000000000002"/>
 	<property name="ireport.x" value="0"/>
@@ -31,6 +31,9 @@ WHERE tft.TXNDATE < $P{START_DATE_FOR_TAKEOVER}
 AND tft.ACCOUNT_ID = $P{ACCOUNT_ID}]]>
 		</queryString>
 		<field name="TAKEOVER" class="java.math.BigDecimal"/>
+		<variable name="TAKEOVER_SUB" class="java.math.BigDecimal">
+			<variableExpression><![CDATA[$F{TAKEOVER}]]></variableExpression>
+		</variable>
 	</subDataset>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
@@ -69,14 +72,18 @@ ORDER BY tfa.NAME]]>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
 	<variable name="Amount" class="java.math.BigDecimal" resetType="None">
-		<variableExpression><![CDATA[$F{DEBIT} ? $F{LOCAL_AMOUNT}.negate() : $F{LOCAL_AMOUNT}]]></variableExpression>
+		<variableExpression><![CDATA[($F{DEBIT} ? $F{LOCAL_AMOUNT}.negate() : $F{LOCAL_AMOUNT})]]></variableExpression>
 	</variable>
 	<variable name="Feature" class="java.lang.String" resetType="Column">
 		<variableExpression><![CDATA[str("feature.caption."+$F{FEATURE}.toString())]]></variableExpression>
 	</variable>
 	<variable name="G_Balance" class="java.math.BigDecimal" resetType="Group" resetGroup="FinanceAccount" calculation="Sum">
 		<variableExpression><![CDATA[$V{Amount}]]></variableExpression>
-		<initialValueExpression><![CDATA[new BigDecimal(0)]]></initialValueExpression>
+		<initialValueExpression><![CDATA[$V{TAKEOVER_MAIN}]]></initialValueExpression>
+	</variable>
+	<variable name="TAKEOVER_MAIN" class="java.math.BigDecimal" calculation="System"/>
+	<variable name="TAKEOVER_SUM" class="java.math.BigDecimal" calculation="System">
+		<variableExpression><![CDATA[$V{TAKEOVER_SUM}]]></variableExpression>
 	</variable>
 	<group name="FinanceAccount">
 		<groupExpression><![CDATA[$F{ACCOUNT_ID}]]></groupExpression>
@@ -158,7 +165,9 @@ ORDER BY tfa.NAME]]>
 					<textFieldExpression><![CDATA[$R{FinanceAccountTxnReport.Takeover}]]></textFieldExpression>
 				</textField>
 				<componentElement>
-					<reportElement x="444" y="0" width="110" height="20" uuid="817ee978-f92f-4c76-80fd-b194812737f3"/>
+					<reportElement x="444" y="0" width="110" height="20" uuid="817ee978-f92f-4c76-80fd-b194812737f3">
+						<property name="net.sf.jasperreports.export.headertoolbar.table.name" value=""/>
+					</reportElement>
 					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
 						<datasetRun subDataset="Takeover" uuid="e6831455-2c93-4c4b-9f8e-bc21d292c07e">
 							<datasetParameter name="ACCOUNT_ID">
@@ -168,10 +177,13 @@ ORDER BY tfa.NAME]]>
 								<datasetParameterExpression><![CDATA[$P{START_DATE}]]></datasetParameterExpression>
 							</datasetParameter>
 							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+							<returnValue fromVariable="TAKEOVER_SUB" toVariable="TAKEOVER_MAIN"/>
+							<returnValue fromVariable="TAKEOVER_SUB" toVariable="TAKEOVER_SUM" calculation="Sum"/>
 						</datasetRun>
 						<jr:listContents height="20" width="110">
-							<textField isBlankWhenNull="true">
+							<textField pattern="#,##0.00#" isBlankWhenNull="true">
 								<reportElement x="0" y="0" width="110" height="20" uuid="b710f2a1-615d-45a9-b0d6-2f0743f07780"/>
+								<textElement textAlignment="Right"/>
 								<textFieldExpression><![CDATA[$F{TAKEOVER}==null?0:$F{TAKEOVER}]]></textFieldExpression>
 							</textField>
 						</jr:listContents>
@@ -225,7 +237,7 @@ ORDER BY tfa.NAME]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression><![CDATA[$V{G_Balance}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{G_Balance}.add($V{TAKEOVER_MAIN}==null?new BigDecimal(0):$V{TAKEOVER_MAIN})]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -383,7 +395,7 @@ ORDER BY tfa.NAME]]>
 					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$V{GT_Balance}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{GT_Balance}.add($V{TAKEOVER_SUM})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="Kolon_basliklar" x="318" y="5" width="126" height="20" uuid="a7fc19be-6411-4cb3-bb9f-cafa0341aad8"/>
