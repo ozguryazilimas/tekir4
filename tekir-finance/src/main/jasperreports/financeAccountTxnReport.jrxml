@@ -395,7 +395,7 @@ ORDER BY tfa.NAME]]>
 					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$V{GT_Balance}.add($V{TAKEOVER_SUM})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{GT_Balance}.add($V{TAKEOVER_SUM}==null?new BigDecimal(0):$V{TAKEOVER_SUM})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="Kolon_basliklar" x="318" y="5" width="126" height="20" uuid="a7fc19be-6411-4cb3-bb9f-cafa0341aad8"/>
