@@ -107,6 +107,7 @@
         <module>tekir-invoice-payment-linker</module>
         <module>tekir-finance-model</module>
         <module>tekir-finance</module>
+        <module>tekir-lead-model</module>
     </modules>
     
     
