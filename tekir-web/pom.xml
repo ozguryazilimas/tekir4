@@ -164,6 +164,13 @@
             <groupId>com.mattbertolini</groupId>
             <artifactId>liquibase-slf4j</artifactId>
         </dependency>
+        
+        <dependency>
+        	<groupId>com.ozguryazilim.mutfak</groupId>
+        	<artifactId>tekir-lead</artifactId>
+        	<version>${version.tekir}</version>
+        </dependency>
+        
     </dependencies>
 
     <build>

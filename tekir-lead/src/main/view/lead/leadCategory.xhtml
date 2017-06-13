@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+	xmlns:p="http://primefaces.org/ui"
+	template="/layout/treeParamEdit.xhtml">
+
+	<ui:param name="homeBean" value="#{leadCategoryHome}" />
+	<ui:param name="itemCaption" value="caption" />
+	<ui:param name="renderActive" value="true" />
+
+	<ui:define name="form">
+		<div class="row">
+			<t:inputText label="general.label.Name"
+				value="#{leadCategoryHome.entity.name}" required="true" />
+			<t:inputText label="general.label.Code"
+				value="#{leadCategoryHome.entity.code}" required="true" />
+		</div>
+		<div class="row">
+			<t:inputTextarea label="general.label.Info"
+				value="#{leadCategoryHome.entity.info}" required="false" />
+			<t:inputCheckboxGroup label="general.label.Status">
+				<p:selectBooleanCheckbox value="#{leadCategoryHome.entity.active}"
+					itemLabel="#{messages['general.label.Active']}" />
+			</t:inputCheckboxGroup>
+		</div>
+	</ui:define>
+
+</ui:composition>
