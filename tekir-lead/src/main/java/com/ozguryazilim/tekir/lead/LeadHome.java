@@ -8,9 +8,11 @@ import com.ozguryazilim.tekir.entities.VoucherStateType;
 import com.ozguryazilim.tekir.voucher.VoucherFormBase;
 import com.ozguryazilim.tekir.voucher.VoucherPrintOutAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateAction;
+import com.ozguryazilim.tekir.voucher.VoucherStateChange;
 import com.ozguryazilim.tekir.voucher.VoucherStateConfig;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.forms.FormEdit;
+import com.ozguryazilim.telve.messages.FacesMessages;
 
 @FormEdit(feature = LeadFeature.class)
 public class LeadHome extends VoucherFormBase<Lead> {
@@ -48,6 +50,23 @@ public class LeadHome extends VoucherFormBase<Lead> {
 		}
 
 		return super.onBeforeSave();
+	}
+
+	@Override
+	public boolean onBeforeTrigger(VoucherStateChange event) {
+
+		if ("WON".equals(event.getTo().getName())) {
+			if (getEntity().getRelatedPersonName().isEmpty() || getEntity().getRelatedPersonSurname().isEmpty()
+					|| getEntity().getRelatedCompanyName().isEmpty()) {
+
+				FacesMessages.warn("Bazı mecburi alanlar eksik olduğu için ipucunu kazanamıyorsunuz.",
+						"Bu alanlar şahıs adı, soyadı veya şirket isminden hepsi veya birkaçı olabilir.");
+
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 }

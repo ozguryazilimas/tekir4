@@ -170,7 +170,12 @@
         	<artifactId>tekir-lead</artifactId>
         	<version>${version.tekir}</version>
         </dependency>
-        
+
+        <dependency>
+        	<groupId>com.ozguryazilim.mutfak</groupId>
+        	<artifactId>tekir-lead-opportunity-linker</artifactId>
+        	<version>${version.tekir}</version>
+        </dependency>
     </dependencies>
 
     <build>
