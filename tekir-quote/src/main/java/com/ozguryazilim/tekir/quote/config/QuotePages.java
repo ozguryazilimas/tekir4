@@ -53,5 +53,9 @@ public interface QuotePages extends Pages {
 	@View @SecuredPage()
 	class QuoteLookup implements com.ozguryazilim.tekir.quote.config.QuotePages {
 	}
+        
+        @View @SecuredPage()
+	class QuoteReminderCommand implements com.ozguryazilim.tekir.quote.config.QuotePages {
+	}
 
 }
