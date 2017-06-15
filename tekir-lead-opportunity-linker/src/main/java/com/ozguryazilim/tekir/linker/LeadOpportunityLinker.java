@@ -90,6 +90,12 @@ public class LeadOpportunityLinker implements VoucherRedirectHandler {
 			person.setPrimaryPhone(phone);
 			phone.setContact(person);
 
+                        FeaturePointer sourcePointer = new FeaturePointer();
+			sourcePointer.setBusinessKey(leadHome.getEntity().getVoucherNo());
+			sourcePointer.setPrimaryKey(leadHome.getEntity().getId());
+			sourcePointer.setFeature(leadFeature.getName());
+                        person.setSourcePointer(sourcePointer);
+                        
 			person.setCode(leadHome.getEntity().getVoucherNo() + person.getName());
 			person.setTerritory(territory);
 			person.setIndustry(leadHome.getEntity().getIndustry());
