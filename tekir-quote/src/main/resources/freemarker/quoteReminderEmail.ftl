@@ -1,5 +1,5 @@
 <#ftl encoding="UTF-8">
-<#assign var_link = headers.linkDomain + "//quote/quoteView.jsf?eid="+ headers.VoucherId?string["#########"]>
+<#assign var_link = headers.linkDomain + "/quote/quoteView.jsf?eid="+ headers.VoucherId?string["#########"]>
     
 Aşağıda bilgileri verilen teklifin geçerlilik tarihi dolmak üzeredir.
 

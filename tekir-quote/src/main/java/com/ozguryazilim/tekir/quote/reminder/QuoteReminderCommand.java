@@ -19,7 +19,7 @@ public class QuoteReminderCommand extends AbstractStorableCommand{
      * Teklif geçerlilik süresinden ne kadar önce hatırlatma gönderecek?
      */
     private String interval;
-
+    
     public String getInterval() {
         return interval;
     }
