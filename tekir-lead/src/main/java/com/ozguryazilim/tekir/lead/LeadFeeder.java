@@ -30,7 +30,7 @@ public class LeadFeeder extends AbstractFeeder<Lead> {
 		if (event.getPayload() instanceof Lead) {
 			Lead entity = (Lead) event.getPayload();
 
-			sendFeed(entity.getState().getName(), entity.getClass().getSimpleName(), identity.getLoginName(),
+			sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(),
 					entity.getTopic(), getMessage(event), prepareMentionList(entity));
 		}
 	}
@@ -41,7 +41,7 @@ public class LeadFeeder extends AbstractFeeder<Lead> {
 		if (event.getPayload() instanceof Lead) {
 			Lead entity = (Lead) event.getPayload();
 
-			sendFeed(entity.getState().getName(), entity.getClass().getSimpleName(), identity.getLoginName(),
+			sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(),
 					entity.getTopic(), getMessage(event), prepareMentionList(entity));
 		}
 	}
