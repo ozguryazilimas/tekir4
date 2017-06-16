@@ -23,4 +23,40 @@
             <column name="SALARY_CCY" type="VARCHAR(255)"/>
         </addColumn>
     </changeSet>
+    
+    <changeSet author="oyas (generated)" id="1497632129981-1">
+        <createTable tableName="THR_LEAVE">
+            <column autoIncrement="true" name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="THR_LEAVEPK"/>
+            </column>
+            <column name="CREATE_DATE" type="datetime"/>
+            <column name="UPDATE_DATE" type="datetime"/>
+            <column name="UPDATE_USER" type="VARCHAR(255)"/>
+            <column name="CODE" type="VARCHAR(30)"/>
+            <column name="TXNDATE" type="datetime"/>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="OWNER" type="VARCHAR(255)"/>
+            <column name="REFERENCE_NO" type="VARCHAR(30)"/>
+            <column name="FEATURE_BK" type="VARCHAR(255)"/>
+            <column name="FEATURE" type="VARCHAR(255)"/>
+            <column name="FEATURE_PK" type="BIGINT"/>
+            <column name="STATE" type="VARCHAR(255)"/>
+            <column name="STATE_INFO" type="VARCHAR(255)"/>
+            <column name="STATE_REASON" type="VARCHAR(255)"/>
+            <column name="TOPIC" type="VARCHAR(255)"/>
+            <column name="VOUCHER_NO" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ANNUAL" type="BOOLEAN"/>
+            <column name="END_DATE" type="datetime"/>
+            <column name="LEAVE_DAY" type="INT"/>
+            <column name="PAID" type="BOOLEAN"/>
+            <column name="START_DATE" type="datetime"/>
+            <column name="GROUP_ID" type="BIGINT"/>
+            <column name="EMPLOYEE_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1497632129981-2">
+        <addForeignKeyConstraint baseColumnNames="EMPLOYEE_ID" baseTableName="THR_LEAVE" constraintName="FK_LEAVE_EMP" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+    </changeSet>
 </databaseChangeLog>
