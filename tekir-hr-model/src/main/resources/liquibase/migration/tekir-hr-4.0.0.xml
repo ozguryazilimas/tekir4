@@ -59,4 +59,54 @@
     <changeSet author="oyas (generated)" id="1497632129981-2">
         <addForeignKeyConstraint baseColumnNames="EMPLOYEE_ID" baseTableName="THR_LEAVE" constraintName="FK_LEAVE_EMP" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
     </changeSet>
+    
+    <changeSet author="oyas (generated)" id="1497633481705-1">
+        <createTable tableName="THR_SALARY_NOTE">
+            <column autoIncrement="true" name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="THR_SALARY_NOTEPK"/>
+            </column>
+            <column name="CREATE_DATE" type="datetime"/>
+            <column name="UPDATE_DATE" type="datetime"/>
+            <column name="UPDATE_USER" type="VARCHAR(255)"/>
+            <column name="CODE" type="VARCHAR(30)"/>
+            <column name="TXNDATE" type="datetime"/>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="OWNER" type="VARCHAR(255)"/>
+            <column name="REFERENCE_NO" type="VARCHAR(30)"/>
+            <column name="FEATURE_BK" type="VARCHAR(255)"/>
+            <column name="FEATURE" type="VARCHAR(255)"/>
+            <column name="FEATURE_PK" type="BIGINT"/>
+            <column name="STATE" type="VARCHAR(255)"/>
+            <column name="STATE_INFO" type="VARCHAR(255)"/>
+            <column name="STATE_REASON" type="VARCHAR(255)"/>
+            <column name="TOPIC" type="VARCHAR(255)"/>
+            <column name="VOUCHER_NO" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CCY" type="VARCHAR(255)"/>
+            <column name="PAYMENT_DATE" type="date"/>
+            <column name="GROUP_ID" type="BIGINT"/>
+            <column name="ACCOUNT_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1497633481705-2">
+        <createTable tableName="THR_SALARY_NOTE_ITEM">
+            <column autoIncrement="true" name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="THR_SALARY_NOTE_ITEMPK"/>
+            </column>
+            <column name="AMOUNT" type="DECIMAL(19, 2)"/>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="EMPLOYEE_ID" type="BIGINT"/>
+            <column name="MASTER_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1497633481705-3">
+        <addForeignKeyConstraint baseColumnNames="ACCOUNT_ID" baseTableName="THR_SALARY_NOTE" constraintName="FK_SALARY_ACC" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TFN_FINANCE_ACC"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1497633481705-4">
+        <addForeignKeyConstraint baseColumnNames="EMPLOYEE_ID" baseTableName="THR_SALARY_NOTE_ITEM" constraintName="FK_SALARY_EMP" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1497633481705-5">
+        <addForeignKeyConstraint baseColumnNames="MASTER_ID" baseTableName="THR_SALARY_NOTE_ITEM" constraintName="FK_SALIT_SAL" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="THR_SALARY_NOTE"/>
+    </changeSet>
 </databaseChangeLog>

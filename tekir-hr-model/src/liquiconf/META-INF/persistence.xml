@@ -9,6 +9,7 @@
             <jar-file>../tekir-core-model/target/classes</jar-file>
             <jar-file>../tekir-contact-model/target/classes</jar-file>
             <jar-file>../tekir-voucher-model/target/classes</jar-file>
+            <jar-file>../tekir-finance-model/target/classes</jar-file>
             <properties>
             <!-- Properties for Hibernate -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
