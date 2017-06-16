@@ -1,24 +1,27 @@
-package com.ozguryazilim.tekir.contact;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.ozguryazilim.tekir.hr.employee;
 
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
-import org.apache.deltaspike.data.api.Repository;
-import javax.enterprise.context.Dependent;
-import com.ozguryazilim.telve.data.RepositoryBase;
-import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
-import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.tekir.entities.ContactAddress;
 import com.ozguryazilim.tekir.entities.ContactEMail;
 import com.ozguryazilim.tekir.entities.ContactInformation_;
 import com.ozguryazilim.tekir.entities.ContactPhone;
 import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.tekir.entities.Corporation;
+import com.ozguryazilim.tekir.entities.Employee;
 import com.ozguryazilim.tekir.entities.Person;
+import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.filters.Filter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.enterprise.context.Dependent;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -26,38 +29,44 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.apache.deltaspike.data.api.Repository;
+import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
 
 /**
- * Repository Class
- *
- * @author
+ * Employee Repository.
+ * 
+ * Aslında Contact Reporsitory'nin neredeyse tamamen benzeri ve aynı modeller üzerinde işlem yapıyor.
+ * 
+ * Fakat burada odağımız sadece ve sadece Employee genel bir contact yapısı değil.
+ * 
+ * 
+ * @author Hakan Uygun
  */
 @Repository
 @Dependent
-public abstract class ContactRepository
-        extends
-        RepositoryBase<Contact, ContactViewModel>
+public abstract class EmployeeRepository extends
+        RepositoryBase<Employee, EmployeeViewModel>
         implements
-        CriteriaSupport<Contact> {
-
+        CriteriaSupport<Employee>{
+    
     private List<String> ownerFilter;
     
     @Override
-    public List<ContactViewModel> browseQuery(QueryDefinition queryDefinition) {
-        List<Filter<Contact, ?, ?>> filters = queryDefinition.getFilters();
+    public List<EmployeeViewModel> browseQuery(QueryDefinition queryDefinition) {
+        List<Filter<Employee, ?, ?>> filters = queryDefinition.getFilters();
 
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
         //Geriye PersonViewModel dönecek cq'yu ona göre oluşturuyoruz.
-        CriteriaQuery<ContactViewModel> criteriaQuery = criteriaBuilder.createQuery(ContactViewModel.class);
+        CriteriaQuery<EmployeeViewModel> criteriaQuery = criteriaBuilder.createQuery(EmployeeViewModel.class);
         
 
-        //From Tabii ki User
-        Root<Contact> from = criteriaQuery.from(Contact.class);
-        Join<Contact, ContactPhone> pm = from.join(Contact_.primaryMobile, JoinType.LEFT);
-        Join<Contact, ContactPhone> pp = from.join(Contact_.primaryPhone, JoinType.LEFT);
-        Join<Contact, ContactPhone> pf = from.join(Contact_.primaryFax, JoinType.LEFT);
-        Join<Contact, ContactEMail> pe = from.join(Contact_.primaryEmail, JoinType.LEFT);
-        Join<Contact, ContactAddress> pa = from.join(Contact_.primaryAddress, JoinType.LEFT);
+        //From Tabii ki Employee
+        Root<Employee> from = criteriaQuery.from(Employee.class);
+        Join<Employee, ContactPhone> pm = from.join(Contact_.primaryMobile, JoinType.LEFT);
+        Join<Employee, ContactPhone> pp = from.join(Contact_.primaryPhone, JoinType.LEFT);
+        Join<Employee, ContactPhone> pf = from.join(Contact_.primaryFax, JoinType.LEFT);
+        Join<Employee, ContactEMail> pe = from.join(Contact_.primaryEmail, JoinType.LEFT);
+        Join<Employee, ContactAddress> pa = from.join(Contact_.primaryAddress, JoinType.LEFT);
 
         //Sonuç filtremiz
         buildVieModelSelect(criteriaQuery, from);
@@ -79,13 +88,7 @@ public abstract class ContactRepository
             predicates.add(from.get(Contact_.owner).in(ownerFilter));
         }
         
-        //Sadece Person ve Corporation'lar gelecek. Employee v.b. farklı tipler gelmesin.
-        predicates.add(
-                criteriaBuilder.or( 
-                        criteriaBuilder.equal(from.type(), Person.class), 
-                        criteriaBuilder.equal(from.type(), Corporation.class)
-        ));
-        
+
         //Oluşan filtreleri sorgumuza ekliyoruz
         criteriaQuery.where(predicates.toArray(new Predicate[]{}));
 
@@ -97,25 +100,25 @@ public abstract class ContactRepository
         }
 
         //Haydi bakalım sonuçları alalım
-        TypedQuery<ContactViewModel> typedQuery = entityManager().createQuery(criteriaQuery);
+        TypedQuery<EmployeeViewModel> typedQuery = entityManager().createQuery(criteriaQuery);
         typedQuery.setMaxResults(queryDefinition.getResultLimit());
-        List<ContactViewModel> resultList = typedQuery.getResultList();
+        List<EmployeeViewModel> resultList = typedQuery.getResultList();
 
         return resultList;
     }
 
     
     @Override
-    public List<ContactViewModel> lookupQuery(String searchText) {
+    public List<EmployeeViewModel> lookupQuery(String searchText) {
         return lookupQuery(searchText, null, "");
     }
     
-    public List<ContactViewModel> lookupQuery(String searchText, String type) {
+    public List<EmployeeViewModel> lookupQuery(String searchText, String type) {
         return lookupQuery(searchText, type, "");
     }
     
     
-    public List<ContactViewModel> lookupQuery(String searchText, String type, String roles ) {
+    public List<EmployeeViewModel> lookupQuery(String searchText, String type, String roles ) {
         List<String> rls = Collections.emptyList();
         if( !Strings.isNullOrEmpty(roles)){
             rls = Splitter.on(',').omitEmptyStrings().trimResults().splitToList(roles);
@@ -133,11 +136,11 @@ public abstract class ContactRepository
      * @param roles virgüllerle ayrılmış olan rollere göre sorgu yapar. farklı değerleri and ile bağlar.
      * @return 
      */
-    public List<ContactViewModel> lookupQuery(String searchText, String type, List<String> roles ) {
+    public List<EmployeeViewModel> lookupQuery(String searchText, String type, List<String> roles ) {
 
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
         //Geriye PersonViewModel dönecek cq'yu ona göre oluşturuyoruz.
-        CriteriaQuery<ContactViewModel> criteriaQuery = criteriaBuilder.createQuery(ContactViewModel.class);
+        CriteriaQuery<EmployeeViewModel> criteriaQuery = criteriaBuilder.createQuery(EmployeeViewModel.class);
 
         //From Profile'a göre tip seçiyoruz...
         /*Root<? extends Contact> from = null;
@@ -158,11 +161,11 @@ public abstract class ContactRepository
             from = criteriaQuery.from(Contact.class);
         }*/
         
-        Root<Contact> from = criteriaQuery.from(Contact.class);
-        Join<Contact, ContactPhone> pm = from.join(Contact_.primaryMobile, JoinType.LEFT);
-        Join<Contact, ContactPhone> pp = from.join(Contact_.primaryPhone, JoinType.LEFT);
+        Root<Employee> from = criteriaQuery.from(Employee.class);
+        Join<Employee, ContactPhone> pm = from.join(Contact_.primaryMobile, JoinType.LEFT);
+        Join<Employee, ContactPhone> pp = from.join(Contact_.primaryPhone, JoinType.LEFT);
         //Join<Contact, ContactPhone> pf = from.join(Contact_.primaryFax, JoinType.LEFT);
-        Join<Contact, ContactEMail> pe = from.join(Contact_.primaryEmail, JoinType.LEFT);
+        Join<Employee, ContactEMail> pe = from.join(Contact_.primaryEmail, JoinType.LEFT);
         //Join<Contact, ContactAddress> pa = from.join(Contact_.primaryAddress, JoinType.LEFT);
 
         //Sonuç filtremiz
@@ -183,14 +186,6 @@ public abstract class ContactRepository
                     predicates.add(criteriaBuilder.equal(from.type(), Corporation.class));
                     break;
                 default : 
-                    //TODO: Buradan pek emin değilim. Özellikle ödeme taraflarında bu kısıt sorun çıkarabilir.
-                    /*
-                    predicates.add(
-                        criteriaBuilder.or( 
-                            criteriaBuilder.equal(from.type(), Person.class), 
-                            criteriaBuilder.equal(from.type(), Corporation.class)
-                        ));
-                    */
                     break;
             }
         }
@@ -211,19 +206,19 @@ public abstract class ContactRepository
         
 
         //Haydi bakalım sonuçları alalım
-        TypedQuery<ContactViewModel> typedQuery = entityManager().createQuery(criteriaQuery);
+        TypedQuery<EmployeeViewModel> typedQuery = entityManager().createQuery(criteriaQuery);
         typedQuery.setMaxResults(100);
-        List<ContactViewModel> resultList = typedQuery.getResultList();
+        List<EmployeeViewModel> resultList = typedQuery.getResultList();
 
         return resultList;
     }
     
     @Override
-    public List<Contact> suggestion(String searchText) {
+    public List<Employee> suggestion(String searchText) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    private void buildVieModelSelect(CriteriaQuery<ContactViewModel> criteriaQuery, Root<? extends Contact> from) {
+    private void buildVieModelSelect(CriteriaQuery<EmployeeViewModel> criteriaQuery, Root<? extends Employee> from) {
         criteriaQuery.multiselect(
                 from.get(Contact_.id),
                 from.get(Contact_.code),
@@ -244,7 +239,7 @@ public abstract class ContactRepository
         );
     }
 
-    private void buildSearchTextControl(String searchText, CriteriaBuilder criteriaBuilder, List<Predicate> predicates, Root<? extends Contact> from) {
+    private void buildSearchTextControl(String searchText, CriteriaBuilder criteriaBuilder, List<Predicate> predicates, Root<? extends Employee> from) {
         if (!Strings.isNullOrEmpty(searchText)) {
             predicates.add(criteriaBuilder.or(criteriaBuilder.like(from.get(Contact_.code), "%" + searchText + "%"),
                     criteriaBuilder.like(from.get(Contact_.name), "%" + searchText + "%")));

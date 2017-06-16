@@ -29,6 +29,10 @@
         <properties>
             <!-- Properties for Hibernate -->
             
+            <!-- WildFly için yeni Hibernate sürümü modülü yüklenirse...
+            <property name="jboss.as.jpa.providerModule" value="org.hibernate:5.2.10.Final" />
+            -->
+
             <property name="hibernate.dialect" value="${hibernate.dialect}"/>
             <property name="hibernate.hbm2ddl.auto" value="none"/>
             <property name="hibernate.show_sql" value="true"/>
@@ -41,6 +45,7 @@
             <!-- cache config -->
             <property name="hibernate.cache.use_second_level_cache" value="true" />
             <property name="hibernate.cache.use_query_cache" value="true" />
+            
             <!--
             <property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.infinispan.JndiInfinispanRegionFactory" />
             <property name="hibernate.cache.infinispan.cachemanager" value="java:CacheManager" /> 

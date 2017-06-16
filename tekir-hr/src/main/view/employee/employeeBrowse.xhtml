@@ -1,0 +1,85 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"               
+                xmlns:ui="http://java.sun.com/jsf/facelets"               
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"                
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/layout/browseBase.xhtml">
+
+    <ui:param name="bean" value="#{employeeBrowse}" />
+    <ui:param name="advanceEnabled" value="true" />
+    <ui:param name="saveEnabled" value="true" />
+    <ui:param name="filterEnabled" value="true" />
+    <ui:param name="permission" value="employee" />
+    <ui:param name="showQuickSearch" value="true" />
+    <ui:param name="showDetailPanel" value="true" />
+
+
+    <ui:define name="beforeColumns">
+        <p:column styleClass="actionColumn">
+            <ui:fragment rendered="#{item.contactType eq 'Person'}" >
+                <i class="fa fa-user" />
+            </ui:fragment>
+            <ui:fragment rendered="#{item.contactType eq 'Corporation'}" >
+                <i class="fa fa-building" />
+            </ui:fragment>
+        </p:column>
+    </ui:define>
+
+    <ui:define name="detailBar">
+        <div class="row">
+            <div class="text-muted col-xs-12">
+                <ui:fragment rendered="#{employeeBrowse.selectedItem.contactType eq 'Person'}" >
+                    <i class="fa fa-user" />
+                </ui:fragment>
+
+                <ui:fragment rendered="#{employeeBrowse.selectedItem.contactType eq 'Corporation'}" >
+                    <i class="fa fa-building" />
+                </ui:fragment>
+                #{employeeBrowse.employee.name}
+                <ul class="list-inline text-sm text-muted">
+                    <ui:repeat value="#{employeeBrowse.employee.contactRoles}" var="item" >
+                        <li><i class="fa fa-tag" /> #{messages['contact.role.'.concat(item)]}</li>
+                    </ui:repeat>
+                </ul>
+            </div>
+        </div>
+
+        
+            <div class="row">
+                <t:outputText label="general.label.FirstName" value="#{contactBrowse.contact.firstName}" columnClass="col-xs-12"/>
+                <t:outputText label="general.label.LastName" value="#{contactBrowse.contact.lastName}" columnClass="col-xs-12"/>
+                <t:outputText label="general.label.Info" value="#{contactBrowse.contact.info}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.info}"/>
+                <t:outputText label="contact.label.JobTitle" value="#{contactBrowse.contact.jobTitle}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.jobTitle}"/>
+                <t:outputText label="contact.label.CorporationName" value="#{contactBrowse.contact.corporationName}" rendered="#{empty contactBrowse.contact.corporation}" columnClass="col-xs-12"/>
+                <t:outputEntityLink label="general.label.Corporation" value="#{contactBrowse.contact.corporation}" view="/contact/contactView.xhtml" rendered="#{not empty contactBrowse.contact.corporation}" columnClass="col-xs-12"/>
+                <t:outputText label="contact.label.SSN" value="#{contactBrowse.contact.ssn}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.ssn}"/>
+            </div>            
+        
+
+        
+        <div class="row">
+            <t:outputText label="general.label.Category" value="#{employeeBrowse.employee.category.name}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.category}"/>
+            <t:outputText label="general.label.Industry" value="#{employeeBrowse.employee.industry.name}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.industry}"/>
+            <t:outputText label="general.label.Territory" value="#{employeeBrowse.employee.territory.name}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.territory}"/>
+        </div>
+
+        <div class="row">
+            <t:outputText label="contact.label.PrimaryMobile" value="#{employeeBrowse.employee.primaryMobile.caption}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.primaryMobile}"/>
+            <t:outputText label="contact.label.PrimaryPhone" value="#{employeeBrowse.employee.primaryPhone.caption}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.primaryPhone}"/>
+            <t:outputText label="contact.label.PrimaryEmail" value="#{employeeBrowse.employee.primaryEmail.caption}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.primaryEmail}"/>
+            <t:outputText label="contact.label.PrimaryAddress" value="#{employeeBrowse.employee.primaryAddress.caption}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.primaryAddress}"/>
+            <t:outputText label="contact.label.PrimaryFax" value="#{employeeBrowse.employee.primaryFax.caption}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.primaryFax}"/>
+        </div>
+
+    </ui:define>
+
+    <ui:define name="context-menu">
+        <li>
+            <p:commandLink action="#{employeeHome.newEmployee()}" styleClass="context-command" >
+                <i class="fa fa-user"></i>
+                <h:outputText value=" #{messages['general.button.AddEmployee']}" />
+            </p:commandLink>
+        </li>
+    </ui:define>
+
+</ui:composition>

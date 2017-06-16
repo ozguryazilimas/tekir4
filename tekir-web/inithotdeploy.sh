@@ -27,6 +27,8 @@ rm -rf WEB-INF/lib/tekir-invoice-4.0.0-SNAPSHOT.jar
 rm -rf WEB-INF/lib/tekir-payment-4.0.0-SNAPSHOT.jar
 rm -rf WEB-INF/lib/tekir-finance-4.0.0-SNAPSHOT.jar
 rm -rf WEB-INF/lib/tekir-lead-4.0.0-SNAPSHOT.jar
+rm -rf WEB-INF/lib/tekir-hr-4.0.0-SNAPSHOT.jar
+
 
 
 ln -s ~/git/telve4/telve-core/target/classes/ WEB-INF/lib/telve-core-4.0.0.Beta4.jar
@@ -54,6 +56,7 @@ ln -s ~/git/tekir4/tekir-invoice/target/classes/ WEB-INF/lib/tekir-invoice-4.0.0
 ln -s ~/git/tekir4/tekir-payment/target/classes/ WEB-INF/lib/tekir-payment-4.0.0-SNAPSHOT.jar
 ln -s ~/git/tekir4/tekir-finance/target/classes/ WEB-INF/lib/tekir-finance-4.0.0-SNAPSHOT.jar
 ln -s ~/git/tekir4/tekir-lead/target/classes/ WEB-INF/lib/tekir-lead-4.0.0-SNAPSHOT.jar
+ln -s ~/git/tekir4/tekir-hr/target/classes/ WEB-INF/lib/tekir-hr-4.0.0-SNAPSHOT.jar
 
 
 cd ..

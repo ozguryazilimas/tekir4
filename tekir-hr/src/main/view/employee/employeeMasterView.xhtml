@@ -1,0 +1,103 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"               
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                template="/layout/masterViewBase.xhtml">
+
+    <ui:define name="content">     
+
+
+        <div class="row">
+            <div class="col-md-4 col-xs-12">
+
+                <t:accordion icon="fa fa-stack-exchange" label="general.label.Summary" columnClass="col-xs-12">
+                    <div class="row">
+                        <t:outputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(employeeHome.entity.sourcePointer)}" columnClass="col-xs-12"/>
+                    </div>
+
+                    
+                        <div class="row">
+                            <t:outputText label="general.label.FirstName" value="#{employeeHome.entity.firstName}" columnClass="col-xs-12"/>
+                            <t:outputText label="general.label.LastName" value="#{employeeHome.entity.lastName}" columnClass="col-xs-12"/>
+                            <t:outputText label="contact.label.JobTitle" value="#{employeeHome.entity.jobTitle}" columnClass="col-xs-12"/>
+                            <t:outputText label="contact.label.SSN" value="#{employeeHome.entity.ssn}" columnClass="col-xs-12"/>
+                        </div>            
+
+                    <div class="row">
+                        <t:outputText label="general.label.Category" value="#{employeeHome.entity.category.name}" columnClass="col-xs-12"/>
+                        <t:outputText label="general.label.Industry" value="#{employeeHome.entity.industry.name}" columnClass="col-xs-12"/>
+                        <t:outputText label="general.label.Territory" value="#{employeeHome.entity.territory.name}" columnClass="col-xs-12"/>
+                    </div>
+                </t:accordion>
+                
+            </div>
+
+            <div class="col-md-4 col-xs-12">
+
+                <ui:include src="/notes/noteWidget.xhtml">
+                    <ui:param name="featurePointer" value="#{employeeHome.featurePointer}" />
+                </ui:include>
+                
+                <ui:include src="/feeds/feedWidget.xhtml">
+                    <ui:param name="feature" value="#{employeeHome.featureClass.simpleName}" />
+                    <ui:param name="pk" value="#{employeeHome.entity.id}" />
+                </ui:include>
+
+            </div>
+
+            <div class="col-md-4 col-xs-12">
+                <div class="row">
+                    <ui:include src="/contact/contactInfosFragment.xhtml">
+                        <ui:param name="contact" value="#{employeeHome.entity}" />
+                        <ui:param name="contactInformations" value="#{employeeHome.contactInformations}" />
+                    </ui:include>
+
+                    <ui:include src="/contact/relatedContactFragment.xhtml">
+                        <ui:param name="contact" value="#{employeeHome.entity}" />
+                        <ui:param name="relatedContacts" value="#{employeeHome.relatedContacts}" />
+                        <ui:param name="relatedContactsRevers" value="#{employeeHome.relatedContactsRevers}" />
+                    </ui:include>
+
+                    <t:accordion icon="fa fa-file" id="cx" label="general.label.ReleatedVouchers" columnClass="col-xs-12">
+                        <ui:remove>
+                            <div class="no-padding">
+                                <table class="table table-bordered">
+                                    <ui:repeat value="#{accountTxnService.getAccountOpenVouchers(employeeHome.entity)}" var="ci" >
+                                        <tr>
+                                            <td>
+                                                <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
+                                            </td>
+                                            <td>
+                                                #{ci.processId}
+                                            </td>
+                                            <td>
+                                                #{ci.info}
+                                            </td>
+                                        </tr>
+                                    </ui:repeat>
+                                </table>
+                            </div>
+                        </ui:remove>
+                        <ul class="products-list product-list-in-box">
+                            <ui:repeat value="#{accountTxnService.getAccountOpenVouchers(employeeHome.entity)}" var="ci" >
+                                <li class="item">
+                                    <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
+
+                                    <span class="text-muted pull-right"><h:outputText value="#{messages['voucherState.name.'.concat(ci.status)]}" styleClass="#{ ci.status.startsWith('OPEN', 0) ? 'label label-primary' : 'label label-warning' }" /> </span>
+
+                                    <div class="text-sm">
+                                        #{ci.info}
+                                    </div>
+
+                                </li>
+                            </ui:repeat>
+                        </ul>
+                    </t:accordion>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>
