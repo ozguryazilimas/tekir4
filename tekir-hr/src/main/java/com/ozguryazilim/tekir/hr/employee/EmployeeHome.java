@@ -56,7 +56,7 @@ public class EmployeeHome extends FormBase<Employee, Long> {
     public Class<? extends ViewConfig> newEmployee() {
         Employee p = new Employee();
         p.getContactRoles().add("EMPLOYEE");
-        p.getContactRoles().add("PERSON");
+        p.getContactRoles().add("ACCOUNT");
         p.setOwner(identity.getLoginName());
         setEntity(p);
         selectedRoles.clear();

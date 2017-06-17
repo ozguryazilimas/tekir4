@@ -59,6 +59,8 @@ public class ActivityWidget implements Serializable {
         //TODO: Feature'e göre arama da eklenecek
         switch( attached ){
             case "Person" : return repository.findByPerson(person, filter); 
+            case "ContactPerson" : return repository.findByPerson(person, filter); 
+            case "Employee" : return repository.findByPerson(person, filter); 
             case "Corporation" : return repository.findByCorporation(corporation, filter); 
             case "Feature" : return repository.findByFeature(featurePointer, filter); 
             default: return Collections.emptyList();

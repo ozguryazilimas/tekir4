@@ -6,7 +6,6 @@
 package com.ozguryazilim.tekir.entities;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
@@ -18,8 +17,7 @@ import javax.persistence.ManyToOne;
  * @author Hakan  Uygun
  */
 @Entity
-@DiscriminatorValue("PERSON")
-public class Person extends Contact{
+public abstract class Person extends Contact{
     
     
     @Column(name = "FIRST_NAME")

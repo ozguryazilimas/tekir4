@@ -7,6 +7,7 @@ import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.tekir.contact.config.ContactPages;
 import com.ozguryazilim.tekir.contact.information.ContactInformationRepository;
 import com.ozguryazilim.tekir.entities.ContactInformation;
+import com.ozguryazilim.tekir.entities.ContactPerson;
 import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.Person;
 import com.ozguryazilim.tekir.entities.RelatedContact;
@@ -53,7 +54,7 @@ public class ContactHome extends FormBase<Contact, Long> {
     private List<String> selectedRoles = new ArrayList<>();
 
     public Class<? extends ViewConfig> newPerson() {
-        Person p = new Person();
+        Person p = new ContactPerson();
         p.getContactRoles().add("CONTACT");
         p.getContactRoles().add("PERSON");
         p.setOwner(identity.getLoginName());
@@ -203,5 +204,21 @@ public class ContactHome extends FormBase<Contact, Long> {
         if( Strings.isNullOrEmpty(userName)) return;
         getEntity().setOwner(userName);
         save();
+    }
+    
+    public Person getPerson() {
+        if (getEntity() instanceof Person) {
+            return (Person) getEntity();
+        } else {
+            return ((Corporation) getEntity()).getPrimaryContact();
+        }
+    }
+
+    public Corporation getCorporation() {
+        if (getEntity()instanceof Corporation) {
+            return (Corporation) getEntity();
+        } else {
+            return ((Person) getEntity()).getCorporation();
+        }
     }
 }

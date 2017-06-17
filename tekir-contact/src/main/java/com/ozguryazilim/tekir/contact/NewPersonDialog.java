@@ -6,6 +6,7 @@
 package com.ozguryazilim.tekir.contact;
 
 import com.ozguryazilim.tekir.contact.config.ContactPages;
+import com.ozguryazilim.tekir.entities.ContactPerson;
 import com.ozguryazilim.tekir.entities.Person;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -35,7 +36,7 @@ public class NewPersonDialog implements Serializable{
     private Person contact;
     
     public void openDialog() {
-        contact = new Person();
+        contact = new ContactPerson();
         
         contact.getContactRoles().add("CONTACT");
         contact.getContactRoles().add("PERSON");

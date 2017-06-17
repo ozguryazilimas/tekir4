@@ -49,8 +49,8 @@
             <div class="col-md-4 col-xs-12">
 
                 <ui:include src="/activities/activityWidget.xhtml">
-                    <ui:param name="person" value="#{opportunityHome.entity.primaryContact}" />
-                    <ui:param name="corporation" value="#{opportunityHome.entity.account}" />
+                    <ui:param name="person" value="#{opportunityHome.person}" />
+                    <ui:param name="corporation" value="#{opportunityHome.corporation}" />
                     <ui:param name="feature" value="#{opportunityHome.featurePointer}" />
                     <ui:param name="attached" value="Feature" />
                 </ui:include>
