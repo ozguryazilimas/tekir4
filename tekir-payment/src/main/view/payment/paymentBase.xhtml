@@ -14,7 +14,7 @@
                 <p:outputPanel id="ddt" styleClass="row" layout="block">
                     <t:inputLookupDialog label="general.label.Account" value="#{homeBean.account}" 
                                          lookupBean="#{contactLookup}" lookupListener="#{homeBeanName}.account" 
-                                         lookupProfile="R:ACCOUNT;S:CUSTOMER"
+                                         lookupProfile="T:Contact;R:ACCOUNT;#{customerRoles}"
                                          placeholder="#{messages['general.info.Account']}" update=":form:prss, :form:ddt" required="true"
                                          disabled="#{homeBean.entity.state.name ne 'DRAFT'}"/>
 

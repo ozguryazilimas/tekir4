@@ -16,25 +16,14 @@
 
     <ui:define name="beforeColumns">
         <p:column styleClass="actionColumn">
-            <ui:fragment rendered="#{item.contactType eq 'Person'}" >
-                <i class="fa fa-user" />
-            </ui:fragment>
-            <ui:fragment rendered="#{item.contactType eq 'Corporation'}" >
-                <i class="fa fa-building" />
-            </ui:fragment>
+            <i class="fa fa-user" />
         </p:column>
     </ui:define>
 
     <ui:define name="detailBar">
         <div class="row">
             <div class="text-muted col-xs-12">
-                <ui:fragment rendered="#{employeeBrowse.selectedItem.contactType eq 'Person'}" >
-                    <i class="fa fa-user" />
-                </ui:fragment>
-
-                <ui:fragment rendered="#{employeeBrowse.selectedItem.contactType eq 'Corporation'}" >
-                    <i class="fa fa-building" />
-                </ui:fragment>
+                <i class="fa fa-user" />
                 #{employeeBrowse.employee.name}
                 <ul class="list-inline text-sm text-muted">
                     <ui:repeat value="#{employeeBrowse.employee.contactRoles}" var="item" >
@@ -46,29 +35,27 @@
 
         
             <div class="row">
-                <t:outputText label="general.label.FirstName" value="#{contactBrowse.contact.firstName}" columnClass="col-xs-12"/>
-                <t:outputText label="general.label.LastName" value="#{contactBrowse.contact.lastName}" columnClass="col-xs-12"/>
-                <t:outputText label="general.label.Info" value="#{contactBrowse.contact.info}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.info}"/>
-                <t:outputText label="contact.label.JobTitle" value="#{contactBrowse.contact.jobTitle}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.jobTitle}"/>
-                <t:outputText label="contact.label.CorporationName" value="#{contactBrowse.contact.corporationName}" rendered="#{empty contactBrowse.contact.corporation}" columnClass="col-xs-12"/>
-                <t:outputEntityLink label="general.label.Corporation" value="#{contactBrowse.contact.corporation}" view="/contact/contactView.xhtml" rendered="#{not empty contactBrowse.contact.corporation}" columnClass="col-xs-12"/>
-                <t:outputText label="contact.label.SSN" value="#{contactBrowse.contact.ssn}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.ssn}"/>
+                <t:outputText label="general.label.FirstName" value="#{employeeBrowse.employee.firstName}" columnClass="col-xs-12"/>
+                <t:outputText label="general.label.LastName" value="#{employeeBrowse.employee.lastName}" columnClass="col-xs-12"/>
+                <t:outputText label="general.label.Info" value="#{employeeBrowse.employee.info}" columnClass="col-xs-12" rendered="#{not empty employeeBrowse.employee.info}"/>
+                <t:outputText label="contact.label.JobTitle" value="#{employeeBrowse.employee.jobTitle}" columnClass="col-xs-12" rendered="#{not empty employeeBrowse.employee.jobTitle}"/>
+                <t:outputText label="contact.label.SSN" value="#{employeeBrowse.employee.ssn}" columnClass="col-xs-12" rendered="#{not empty employeeBrowse.employee.ssn}"/>
             </div>            
         
 
         
         <div class="row">
-            <t:outputText label="general.label.Category" value="#{employeeBrowse.employee.category.name}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.category}"/>
-            <t:outputText label="general.label.Industry" value="#{employeeBrowse.employee.industry.name}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.industry}"/>
-            <t:outputText label="general.label.Territory" value="#{employeeBrowse.employee.territory.name}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.territory}"/>
+            <t:outputText label="general.label.Category" value="#{employeeBrowse.employee.category.name}" columnClass="col-xs-12" rendered="#{not empty employeeBrowse.employee.category}"/>
+            <t:outputText label="general.label.Industry" value="#{employeeBrowse.employee.industry.name}" columnClass="col-xs-12" rendered="#{not empty employeeBrowse.employee.industry}"/>
+            <t:outputText label="general.label.Territory" value="#{employeeBrowse.employee.territory.name}" columnClass="col-xs-12" rendered="#{not empty employeeBrowse.employee.territory}"/>
         </div>
 
         <div class="row">
-            <t:outputText label="contact.label.PrimaryMobile" value="#{employeeBrowse.employee.primaryMobile.caption}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.primaryMobile}"/>
-            <t:outputText label="contact.label.PrimaryPhone" value="#{employeeBrowse.employee.primaryPhone.caption}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.primaryPhone}"/>
-            <t:outputText label="contact.label.PrimaryEmail" value="#{employeeBrowse.employee.primaryEmail.caption}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.primaryEmail}"/>
-            <t:outputText label="contact.label.PrimaryAddress" value="#{employeeBrowse.employee.primaryAddress.caption}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.primaryAddress}"/>
-            <t:outputText label="contact.label.PrimaryFax" value="#{employeeBrowse.employee.primaryFax.caption}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.primaryFax}"/>
+            <t:outputText label="contact.label.PrimaryMobile" value="#{employeeBrowse.employee.primaryMobile.caption}" columnClass="col-xs-12" rendered="#{not empty employeeBrowse.employee.primaryMobile}"/>
+            <t:outputText label="contact.label.PrimaryPhone" value="#{employeeBrowse.employee.primaryPhone.caption}" columnClass="col-xs-12" rendered="#{not empty employeeBrowse.employee.primaryPhone}"/>
+            <t:outputText label="contact.label.PrimaryEmail" value="#{employeeBrowse.employee.primaryEmail.caption}" columnClass="col-xs-12" rendered="#{not empty employeeBrowse.employee.primaryEmail}"/>
+            <t:outputText label="contact.label.PrimaryAddress" value="#{employeeBrowse.employee.primaryAddress.caption}" columnClass="col-xs-12" rendered="#{not empty employeeBrowse.employee.primaryAddress}"/>
+            <t:outputText label="contact.label.PrimaryFax" value="#{employeeBrowse.employee.primaryFax.caption}" columnClass="col-xs-12" rendered="#{not empty employeeBrowse.employee.primaryFax}"/>
         </div>
 
     </ui:define>

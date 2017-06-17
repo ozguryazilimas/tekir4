@@ -17,13 +17,13 @@ import javax.persistence.TemporalType;
 /**
  * Çalışan veri modeli.
  * 
- * Contact -> Person sınıfını miras alır diye düşündük ama Hibernate Bug'ı nedeniyle olmuyor. Bir birini miras alan Concrate sınıfları bulamıyor.
+ * Contact -> AbstractPerson sınıfını miras alır diye düşündük ama Hibernate Bug'ı nedeniyle olmuyor. Bir birini miras alan Concrate sınıfları bulamıyor.
  * 
  * @author Hakan Uygun
  */
 @Entity
 @DiscriminatorValue("EMPLOYEE")
-public class Employee extends Person{
+public class Employee extends AbstractPerson{
     
     /**
      * Sicil No

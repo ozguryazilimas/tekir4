@@ -7,9 +7,9 @@ import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.tekir.contact.config.ContactPages;
 import com.ozguryazilim.tekir.contact.information.ContactInformationRepository;
 import com.ozguryazilim.tekir.entities.ContactInformation;
-import com.ozguryazilim.tekir.entities.ContactPerson;
-import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.Person;
+import com.ozguryazilim.tekir.entities.Corporation;
+import com.ozguryazilim.tekir.entities.AbstractPerson;
 import com.ozguryazilim.tekir.entities.RelatedContact;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
@@ -54,7 +54,7 @@ public class ContactHome extends FormBase<Contact, Long> {
     private List<String> selectedRoles = new ArrayList<>();
 
     public Class<? extends ViewConfig> newPerson() {
-        Person p = new ContactPerson();
+        AbstractPerson p = new Person();
         p.getContactRoles().add("CONTACT");
         p.getContactRoles().add("PERSON");
         p.setOwner(identity.getLoginName());
@@ -76,8 +76,8 @@ public class ContactHome extends FormBase<Contact, Long> {
     @Override
     public boolean onBeforeSave() {
         //Eğer person ise name alanını düzeltmek lazım
-        if (getEntity() instanceof Person) {
-            getEntity().setName(((Person) getEntity()).getFirstName() + " " + ((Person) getEntity()).getLastName());
+        if (getEntity() instanceof AbstractPerson) {
+            getEntity().setName(((AbstractPerson) getEntity()).getFirstName() + " " + ((AbstractPerson) getEntity()).getLastName());
         }
 
         //Önce kullanıcı seçimli olmayan rolleri bir toparlayalım
@@ -97,8 +97,8 @@ public class ContactHome extends FormBase<Contact, Long> {
 
     @Override
     public boolean onAfterSave() {
-        if( getEntity() instanceof Person ){
-            personFeeder.feed((Person) getEntity());
+        if( getEntity() instanceof AbstractPerson ){
+            personFeeder.feed((AbstractPerson) getEntity());
         }
         return super.onAfterSave(); 
     }
@@ -206,9 +206,9 @@ public class ContactHome extends FormBase<Contact, Long> {
         save();
     }
     
-    public Person getPerson() {
-        if (getEntity() instanceof Person) {
-            return (Person) getEntity();
+    public AbstractPerson getPerson() {
+        if (getEntity() instanceof AbstractPerson) {
+            return (AbstractPerson) getEntity();
         } else {
             return ((Corporation) getEntity()).getPrimaryContact();
         }
@@ -218,7 +218,7 @@ public class ContactHome extends FormBase<Contact, Long> {
         if (getEntity()instanceof Corporation) {
             return (Corporation) getEntity();
         } else {
-            return ((Person) getEntity()).getCorporation();
+            return ((AbstractPerson) getEntity()).getCorporation();
         }
     }
 }

@@ -9,7 +9,6 @@ import com.ozguryazilim.tekir.contact.ContactRepository;
 import com.ozguryazilim.tekir.core.territory.TerritoryRepository;
 import com.ozguryazilim.tekir.entities.ContactAddress;
 import com.ozguryazilim.tekir.entities.ContactEMail;
-import com.ozguryazilim.tekir.entities.ContactPerson;
 import com.ozguryazilim.tekir.entities.ContactPhone;
 import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.Person;
@@ -70,7 +69,7 @@ public class LeadOpportunityLinker implements VoucherRedirectHandler {
 				territory.getLocations().add(leadHome.getEntity().getLocation());
 			}
 
-			Person person = new ContactPerson();
+			Person person = new Person();
 			person.setFirstName(leadHome.getEntity().getRelatedPersonName());
 			person.setLastName(leadHome.getEntity().getRelatedPersonSurname());
 			person.setName(

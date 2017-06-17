@@ -9,7 +9,7 @@ import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.AccountCreditNote;
 import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.tekir.entities.Corporation;
-import com.ozguryazilim.tekir.entities.Person;
+import com.ozguryazilim.tekir.entities.AbstractPerson;
 import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.tekir.entities.VoucherStateType;
 import com.ozguryazilim.tekir.voucher.VoucherFormBase;
@@ -83,9 +83,9 @@ public class AccountCreditNoteHome extends VoucherFormBase<AccountCreditNote>{
         return getEntity().getAccount();
     }
     
-    public Person getPerson() {
-        if (getAccount() instanceof Person) {
-            return (Person) getAccount();
+    public AbstractPerson getPerson() {
+        if (getAccount() instanceof AbstractPerson) {
+            return (AbstractPerson) getAccount();
         } else {
             return ((Corporation) getAccount()).getPrimaryContact();
         }
@@ -95,7 +95,7 @@ public class AccountCreditNoteHome extends VoucherFormBase<AccountCreditNote>{
         if (getAccount() instanceof Corporation) {
             return (Corporation) getAccount();
         } else {
-            return ((Person) getAccount()).getCorporation();
+            return ((AbstractPerson) getAccount()).getCorporation();
         }
     }
     

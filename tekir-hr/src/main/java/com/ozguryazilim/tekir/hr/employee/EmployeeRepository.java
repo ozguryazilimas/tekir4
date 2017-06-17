@@ -14,7 +14,7 @@ import com.ozguryazilim.tekir.entities.ContactPhone;
 import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.Employee;
-import com.ozguryazilim.tekir.entities.Person;
+import com.ozguryazilim.tekir.entities.AbstractPerson;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.filters.Filter;
@@ -132,7 +132,7 @@ public abstract class EmployeeRepository extends
      * rol listesini and ile bağlar : Account, Customer verildiyse ikisinin de role lisesinde olmasını kontrol eder.
      * 
      * @param searchText code ve ad içerisinde like ile aranır
-     * @param type Person/Corporation değerlerine göre tarama yapar
+     * @param type AbstractPerson/Corporation değerlerine göre tarama yapar
      * @param roles virgüllerle ayrılmış olan rollere göre sorgu yapar. farklı değerleri and ile bağlar.
      * @return 
      */
@@ -146,8 +146,8 @@ public abstract class EmployeeRepository extends
         /*Root<? extends Contact> from = null;
         if( !Strings.isNullOrEmpty(type)){
             switch( type ){
-                case "Person" : 
-                    from = criteriaQuery.from(Person.class);
+                case "AbstractPerson" : 
+                    from = criteriaQuery.from(AbstractPerson.class);
                     break;
                 case "Corporation" : 
                     from = criteriaQuery.from(Corporation.class);
@@ -180,7 +180,7 @@ public abstract class EmployeeRepository extends
         if( !Strings.isNullOrEmpty(type)){
             switch( type ){
                 case "Person" : 
-                    predicates.add(criteriaBuilder.equal(from.type(), Person.class));
+                    predicates.add(criteriaBuilder.equal(from.type(), AbstractPerson.class));
                     break;
                 case "Corporation" : 
                     predicates.add(criteriaBuilder.equal(from.type(), Corporation.class));
