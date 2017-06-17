@@ -8,7 +8,6 @@ package com.ozguryazilim.tekir.hr.config;
 import com.ozguryazilim.tekir.hr.employee.EmployeeFeature;
 import com.ozguryazilim.telve.auth.SecuredPage;
 import com.ozguryazilim.telve.nav.Navigation;
-import com.ozguryazilim.telve.nav.SideNavigationSection;
 import com.ozguryazilim.telve.view.PageTitle;
 import com.ozguryazilim.telve.view.Pages;
 import javax.enterprise.context.ApplicationScoped;
@@ -26,7 +25,7 @@ public interface EmployeePages extends Pages {
     @View
 	@SecuredPage("employee")
 	@PageTitle("module.caption.EmployeeBrowse")
-	@Navigation(label = "module.caption.EmployeeBrowse", feature = EmployeeFeature.class, section = SideNavigationSection.class)
+	@Navigation(label = "module.caption.EmployeeBrowse", feature = EmployeeFeature.class, section = HRNavigationSection.class)
 	class EmployeeBrowse implements EmployeePages {
 	}
 
