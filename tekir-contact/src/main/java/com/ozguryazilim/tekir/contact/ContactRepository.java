@@ -2,6 +2,7 @@ package com.ozguryazilim.tekir.contact;
 
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
+import com.ozguryazilim.tekir.entities.AbstractPerson;
 import org.apache.deltaspike.data.api.Repository;
 import javax.enterprise.context.Dependent;
 import com.ozguryazilim.telve.data.RepositoryBase;
@@ -79,7 +80,13 @@ public abstract class ContactRepository
             predicates.add(from.get(Contact_.owner).in(ownerFilter));
         }
         
-
+        //Sadece AbstractPerson ve Corporation'lar gelecek. Employee v.b. farklı tipler gelmesin.
+        predicates.add(
+                criteriaBuilder.or(
+                        criteriaBuilder.equal(from.type(), Person.class), 
+                        criteriaBuilder.equal(from.type(), Corporation.class)
+        ));
+        
         //Oluşan filtreleri sorgumuza ekliyoruz
         criteriaQuery.where(predicates.toArray(new Predicate[]{}));
 
@@ -123,7 +130,7 @@ public abstract class ContactRepository
      * rol listesini and ile bağlar : Account, Customer verildiyse ikisinin de role lisesinde olmasını kontrol eder.
      * 
      * @param searchText code ve ad içerisinde like ile aranır
-     * @param type Person/Corporation değerlerine göre tarama yapar
+     * @param type AbstractPerson/Corporation değerlerine göre tarama yapar
      * @param roles virgüllerle ayrılmış olan rollere göre sorgu yapar. farklı değerleri and ile bağlar.
      * @return 
      */
@@ -137,8 +144,8 @@ public abstract class ContactRepository
         /*Root<? extends Contact> from = null;
         if( !Strings.isNullOrEmpty(type)){
             switch( type ){
-                case "Person" : 
-                    from = criteriaQuery.from(Person.class);
+                case "AbstractPerson" : 
+                    from = criteriaQuery.from(AbstractPerson.class);
                     break;
                 case "Corporation" : 
                     from = criteriaQuery.from(Corporation.class);
@@ -170,17 +177,35 @@ public abstract class ContactRepository
         
         if( !Strings.isNullOrEmpty(type)){
             switch( type ){
+                case "AbstractPerson" : 
+                    predicates.add(criteriaBuilder.equal(from.type(), AbstractPerson.class));
+                    break;
                 case "Person" : 
                     predicates.add(criteriaBuilder.equal(from.type(), Person.class));
                     break;
                 case "Corporation" : 
                     predicates.add(criteriaBuilder.equal(from.type(), Corporation.class));
                     break;
+                //Her türlü Contact'ı istiyoruz.
+                case "Contact" :
+                    break;
                 default : 
+                    predicates.add(
+                        criteriaBuilder.or( 
+                            criteriaBuilder.equal(from.type(), Person.class), 
+                            criteriaBuilder.equal(from.type(), Corporation.class)
+                        ));
                     break;
             }
+        } else {
+            //Varsayılan olarak sadece Person ve Corporation geri dönecek.
+            predicates.add(
+                criteriaBuilder.or( 
+                    criteriaBuilder.equal(from.type(), Person.class), 
+                    criteriaBuilder.equal(from.type(), Corporation.class)
+            ));
         }
-     
+      
         /*
         Hibernate bug'ı yüzünden isim kullanıyor ve as ile arama yapıyoruz. Converter annotation'ı ile derdi var.
         https://hibernate.atlassian.net/browse/HHH-10464

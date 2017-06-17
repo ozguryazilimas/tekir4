@@ -7,7 +7,9 @@ package com.ozguryazilim.tekir.opportunity;
 
 import com.ozguryazilim.tekir.account.AccountTxnService;
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
+import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.Opportunity;
+import com.ozguryazilim.tekir.entities.Person;
 import com.ozguryazilim.tekir.entities.ProcessType;
 import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.tekir.entities.VoucherStateType;
@@ -101,6 +103,22 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
         config.addStateTypeAction(VoucherStateType.CLOSE, new VoucherPrintOutAction(this));
         
         return config;
+    }
+    
+    public Person getPerson() {
+        if (getEntity().getAccount() instanceof Person) {
+            return (Person) getEntity().getAccount();
+        } else {
+            return ((Corporation) getEntity().getAccount()).getPrimaryContact();
+        }
+    }
+
+    public Corporation getCorporation() {
+        if (getEntity().getAccount() instanceof Corporation) {
+            return (Corporation) getEntity().getAccount();
+        } else {
+            return ((Person) getEntity().getAccount()).getCorporation();
+        }
     }
 
 }

@@ -50,7 +50,7 @@ public class Activity extends EntityBase{
      */
     @ManyToOne
     @JoinColumn(name = "PERSON_ID", foreignKey = @ForeignKey(name = "FK_ACC_PER"))
-    private Person person;
+    private AbstractPerson person;
     /**
      * Hangi firma adına. 
      * Contact/Person zaman içinde farklı firmalarda çalışıyor olabilir.
@@ -157,11 +157,11 @@ public class Activity extends EntityBase{
         this.id = id;
     }
 
-    public Person getPerson() {
+    public AbstractPerson getPerson() {
         return person;
     }
 
-    public void setPerson(Person person) {
+    public void setPerson(AbstractPerson person) {
         this.person = person;
     }
 

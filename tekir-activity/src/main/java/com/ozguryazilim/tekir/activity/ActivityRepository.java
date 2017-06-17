@@ -6,11 +6,11 @@
 package com.ozguryazilim.tekir.activity;
 
 import com.google.common.base.Strings;
+import com.ozguryazilim.tekir.entities.AbstractPerson;
 import com.ozguryazilim.tekir.entities.Activity;
 import com.ozguryazilim.tekir.entities.ActivityStatus;
 import com.ozguryazilim.tekir.entities.Activity_;
 import com.ozguryazilim.tekir.entities.Corporation;
-import com.ozguryazilim.tekir.entities.Person;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
@@ -120,7 +120,7 @@ public abstract class ActivityRepository extends RepositoryBase<Activity, Activi
      * @param person
      * @return 
      */
-    public List<Activity> findByPerson( Person person, ActivityWidgetFilter filter ){
+    public List<Activity> findByPerson( AbstractPerson person, ActivityWidgetFilter filter ){
         Criteria<Activity,Activity> crit = criteria()
                 .eq(Activity_.person, person)
                 .orderDesc(Activity_.dueDate);

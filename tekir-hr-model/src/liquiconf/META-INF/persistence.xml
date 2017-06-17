@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+    <persistence-unit name="tekirCore">
+        <!-- If you are running in a production environment, add a managed
+        data source, this example data source is just for development and testing! -->
+        <!-- The datasource is deployed as WEB-INF/picketlink-quickstart-ds.xml, you
+        can find it in the source at src/main/webapp/WEB-INF/picketlink-quickstart-ds.xml -->
+        <jta-data-source>java:jboss/datasources/TekirDS</jta-data-source>
+            <jar-file>../tekir-core-model/target/classes</jar-file>
+            <jar-file>../tekir-contact-model/target/classes</jar-file>
+            <jar-file>../tekir-voucher-model/target/classes</jar-file>
+            <jar-file>../tekir-finance-model/target/classes</jar-file>
+            <properties>
+            <!-- Properties for Hibernate -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup"/>
+            <property name="hibernate.connection.release_mode" value="after_statement"/>
+            <!--
+            <property name="jboss.entity.manager.factory.jndi.name" value="java:/openOHSEntityManagerFactory"/>
+            -->
+        </properties>
+    </persistence-unit>
+  
+</persistence>

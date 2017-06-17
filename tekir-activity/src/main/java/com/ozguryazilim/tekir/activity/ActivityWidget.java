@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.tekir.activity;
 
+import com.ozguryazilim.tekir.entities.AbstractPerson;
 import com.ozguryazilim.tekir.entities.Activity;
 import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.Person;
@@ -33,7 +34,7 @@ public class ActivityWidget implements Serializable {
     @Inject
     private ViewConfigResolver viewConfigResolver;
 
-    private Person person;
+    private AbstractPerson person;
     private Corporation corporation;
     private FeaturePointer featurePointer;
     private String attached = "Person"; //Person | Corporation | Feature
@@ -47,7 +48,7 @@ public class ActivityWidget implements Serializable {
 
     }
 
-    public void init(Person person, Corporation corporation, FeaturePointer featurePointer, String attached ) {
+    public void init(AbstractPerson person, Corporation corporation, FeaturePointer featurePointer, String attached ) {
         this.person = person;
         this.corporation = corporation;
         this.featurePointer = featurePointer;
@@ -59,6 +60,8 @@ public class ActivityWidget implements Serializable {
         //TODO: Feature'e göre arama da eklenecek
         switch( attached ){
             case "Person" : return repository.findByPerson(person, filter); 
+            case "ContactPerson" : return repository.findByPerson(person, filter); 
+            case "Employee" : return repository.findByPerson(person, filter); 
             case "Corporation" : return repository.findByCorporation(corporation, filter); 
             case "Feature" : return repository.findByFeature(featurePointer, filter); 
             default: return Collections.emptyList();
