@@ -171,9 +171,9 @@
         <addColumn tableName="TAN_VIREMENT">
             <column name="LOCAL_AMOUNT" type="decimal(19, 2)"/>
         </addColumn>
-    </changeSet> 
+    </changeSet>
     
-	<changeSet author="oktay (generated)" id="1497628531346-1">
+    <changeSet author="oktay (generated)" id="1497628531346-1">
         <dropForeignKeyConstraint baseTableName="TAN_CREDIT_NOTE" constraintName="FK_ACN_ACC"/>
     </changeSet>
     <changeSet author="oktay (generated)" id="1497628531346-2">
