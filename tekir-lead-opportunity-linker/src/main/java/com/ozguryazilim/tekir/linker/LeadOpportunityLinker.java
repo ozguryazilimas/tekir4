@@ -70,6 +70,8 @@ public class LeadOpportunityLinker implements VoucherRedirectHandler {
 			}
 
 			Person person = new Person();
+			person.getContactRoles().add("CONTACT");
+			person.getContactRoles().add("PERSON");
 			person.setFirstName(leadHome.getEntity().getRelatedPersonName());
 			person.setLastName(leadHome.getEntity().getRelatedPersonSurname());
 			person.setName(
@@ -96,6 +98,8 @@ public class LeadOpportunityLinker implements VoucherRedirectHandler {
 			contactRepository.save(person);
 
 			Corporation corporation = new Corporation();
+			corporation.getContactRoles().add("CONTACT");
+			corporation.getContactRoles().add("CORPORATION");
 			corporation.setOrganizastionName(leadHome.getEntity().getRelatedCompanyName());
 			corporation.setName(leadHome.getEntity().getRelatedCompanyName());
 			corporation.setCode(leadHome.getEntity().getVoucherNo() + corporation.getName());
@@ -108,9 +112,9 @@ public class LeadOpportunityLinker implements VoucherRedirectHandler {
 			fp.setBusinessKey(leadHome.getEntity().getVoucherNo());
 			fp.setPrimaryKey(leadHome.getEntity().getId());
 			fp.setFeature(leadFeature.getName());
-			
+
 			Class<? extends ViewConfig> result = opportunityHome.create();
-			
+
 			opportunityHome.getEntity().setStarter(fp);
 
 			opportunityHome.getEntity().setPrimaryContact(person);
