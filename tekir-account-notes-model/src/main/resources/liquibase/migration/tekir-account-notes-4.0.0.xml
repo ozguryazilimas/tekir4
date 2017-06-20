@@ -184,5 +184,4 @@
     <changeSet author="oktay (generated)" id="1497628531346-4">
         <dropColumn columnName="PROCESS_ID" tableName="TAN_VIREMENT"/>
     </changeSet>
-
 </databaseChangeLog>
