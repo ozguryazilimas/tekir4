@@ -19,11 +19,14 @@ import com.ozguryazilim.tekir.entities.Lead_;
 import com.ozguryazilim.tekir.entities.LeadSource_;
 import com.ozguryazilim.tekir.entities.LeadCategory_;
 import com.ozguryazilim.tekir.entities.VoucherBase_;
+import com.ozguryazilim.tekir.entities.VoucherGroup;
 import com.ozguryazilim.tekir.entities.VoucherGroup_;
 import com.ozguryazilim.tekir.voucher.VoucherRepositoryBase;
 import com.ozguryazilim.telve.entities.TreeNodeEntityBase_;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.filters.Filter;
+import java.util.Date;
+import javax.persistence.criteria.Join;
 
 @Dependent
 @Repository
@@ -107,4 +110,48 @@ public abstract class LeadRepository extends VoucherRepositoryBase<Lead, LeadVie
 					);
 		}
 	}
+        
+        /**
+         * Belirtilen süreden sonra kapanmamış ipuçlarını veritabanında arar.
+         * 
+         * @param date İpuçlarının oluşturulma tarihinden itibaren geçecek süre
+         * @return Geçen süreden sonra kapanmamış olan ipuçları
+         * @see Lead
+         * @see Lead_
+         * @see LeadViewModel
+         */
+        public List<LeadViewModel> findUnclosedLeads(Date date) {
+            CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
+            //Geriye ViewModel dönecek cq'yu ona göre oluşturuyoruz.
+            CriteriaQuery<LeadViewModel> criteriaQuery = criteriaBuilder.createQuery(LeadViewModel.class);
+
+            //From 
+            Root<Lead> from = criteriaQuery.from(Lead.class);
+            
+            //Join
+            from.join(Lead_.leadSource, JoinType.LEFT);
+            from.join(Lead_.leadCategory, JoinType.LEFT);
+            from.join(Lead_.group, JoinType.LEFT);
+
+            //Sonuç filtremiz
+            buildVieModelSelect(criteriaQuery, from);
+
+            //Filtreleri ekleyelim.
+            List<Predicate> predicates = new ArrayList<>();
+
+            //Tarih verilen parametreden küçük ve eşit olanlar.
+            predicates.add(criteriaBuilder.lessThanOrEqualTo(from.get(Lead_.createDate), date));
+
+            //Olumlu ya da Olumsuz kapanmamış olanlar.
+            predicates.add(criteriaBuilder.notLike(from.get(VoucherBase_.state).as(String.class), "CLOSE-%"));
+
+            //Oluşan filtreleri sorgumuza ekliyoruz
+            criteriaQuery.where(predicates.toArray(new Predicate[]{}));
+
+            //Haydi bakalım sonuçları alalım
+            TypedQuery<LeadViewModel> typedQuery = entityManager().createQuery(criteriaQuery);
+            List<LeadViewModel> resultList = typedQuery.getResultList();
+
+            return resultList;
+        }
 }
