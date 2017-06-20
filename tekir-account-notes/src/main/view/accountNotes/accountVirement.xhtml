@@ -17,7 +17,7 @@
                 <div class="row">
                     <t:inputLookupDialog label="general.label.FromAccount" value="#{accountVirementHome.entity.fromAccount}" 
                                          lookupBean="#{contactLookup}" lookupListener="accountVirementHome.entity.fromAccount" 
-                                         lookupProfile="R:ACCOUNT;O:CUSTOMER,VENDOR"
+                                         lookupProfile="T:Contact;R:ACCOUNT;O:CUSTOMER,VENDOR"
                                          placeholder="#{messages['general.info.Account']}" />
                     <t:inputLookupDialog label="general.label.ToAccount" value="#{accountVirementHome.entity.toAccount}" 
                                          lookupBean="#{contactLookup}" lookupListener="accountVirementHome.entity.toAccount" 

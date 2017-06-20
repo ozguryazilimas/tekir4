@@ -5,10 +5,10 @@
  */
 package com.ozguryazilim.tekir.activity;
 
+import com.ozguryazilim.tekir.entities.AbstractPerson;
 import com.ozguryazilim.tekir.entities.Activity;
 import com.ozguryazilim.tekir.entities.ActivityStatus;
 import com.ozguryazilim.tekir.entities.Corporation;
-import com.ozguryazilim.tekir.entities.Person;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
@@ -64,7 +64,7 @@ public abstract class AbstractActivityController<E extends Activity> implements 
         openDialog();
     }
     
-    public void createNew( Person person, Corporation corporation, FeaturePointer featurePointer, Boolean followUp ){
+    public void createNew( AbstractPerson person, Corporation corporation, FeaturePointer featurePointer, Boolean followUp ){
         entity = createNewEntity();
         entity.setAssignee(identity.getLoginName());
         entity.setPerson(person);

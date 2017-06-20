@@ -4,7 +4,7 @@ import com.ozguryazilim.tekir.account.AccountTxnService;
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.tekir.entities.Corporation;
-import com.ozguryazilim.tekir.entities.Person;
+import com.ozguryazilim.tekir.entities.AbstractPerson;
 import com.ozguryazilim.tekir.entities.ProcessType;
 import com.ozguryazilim.telve.forms.FormEdit;
 import com.ozguryazilim.tekir.entities.Quote;
@@ -183,9 +183,9 @@ public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodit
 		}
 	}
 
-	public Person getPerson() {
-		if (getAccount() instanceof Person) {
-			return (Person) getAccount();
+	public AbstractPerson getPerson() {
+		if (getAccount() instanceof AbstractPerson) {
+			return (AbstractPerson) getAccount();
 		} else {
 			return ((Corporation) getAccount()).getPrimaryContact();
 		}
@@ -195,7 +195,7 @@ public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodit
 		if (getAccount() instanceof Corporation) {
 			return (Corporation) getAccount();
 		} else {
-			return ((Person) getAccount()).getCorporation();
+			return ((AbstractPerson) getAccount()).getCorporation();
 		}
 	}
 

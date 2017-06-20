@@ -64,8 +64,8 @@
                 </ui:include>
 
                 <ui:include src="/activities/activityWidget.xhtml">
-                    <ui:param name="person" value="#{contactHome.entity.class.simpleName eq 'Corporation' ? contactHome.entity.primaryContact : contactHome.entity}" />
-                    <ui:param name="corporation" value="#{contactHome.entity.class.simpleName eq 'Person' ? contactHome.entity.corporation : contactHome.entity}" />
+                    <ui:param name="person" value="#{contactHome.person}" />
+                    <ui:param name="corporation" value="#{contactHome.corporation}" />
                     <ui:param name="feature" value="#{null}" />
                     <ui:param name="attached" value="#{contactHome.entity.class.simpleName}" />
                 </ui:include>

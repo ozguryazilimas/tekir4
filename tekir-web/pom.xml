@@ -128,6 +128,12 @@
         
         <dependency>
             <groupId>com.ozguryazilim.mutfak</groupId>
+            <artifactId>tekir-hr</artifactId>
+            <version>${version.tekir}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.ozguryazilim.mutfak</groupId>
             <artifactId>tekir-opportunity-quote-linker</artifactId>
             <version>${version.tekir}</version>
         </dependency>
