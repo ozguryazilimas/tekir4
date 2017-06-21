@@ -1,5 +1,6 @@
 package com.ozguryazilim.finance.account.reports;
 
+import com.ozguryazilim.tekir.entities.FinanceAccount;
 import com.ozguryazilim.telve.reports.ReportDate;
 import java.io.Serializable;
 
@@ -12,6 +13,15 @@ public class FinanceAccountTxnFilter implements Serializable {
 
 	private ReportDate startDate;
 	private ReportDate endDate;
+        private FinanceAccount financeAccount;
+
+        public FinanceAccount getFinanceAccount() {
+            return financeAccount;
+        }
+
+        public void setFinanceAccount(FinanceAccount financeAccount) {
+            this.financeAccount = financeAccount;
+        }
 
 	public ReportDate getStartDate() {
 		return startDate;

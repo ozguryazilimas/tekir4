@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-06-07T12:50:26 -->
+<!-- 2017-06-21T17:59:48 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="financeAccountTxnReport" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="76b5a97f-b408-4bac-aaed-bcb9cdced953">
 	<property name="ireport.zoom" value="1.2100000000000002"/>
 	<property name="ireport.x" value="0"/>
@@ -42,6 +42,7 @@ AND tft.ACCOUNT_ID = $P{ACCOUNT_ID}]]>
 	<parameter name="FIRM_LOGO" class="java.awt.image.BufferedImage" isForPrompting="false"/>
 	<parameter name="END_DATE" class="java.util.Date"/>
 	<parameter name="START_DATE" class="java.util.Date"/>
+	<parameter name="ACCOUNT_ID" class="java.lang.Long"/>
 	<queryString>
 		<![CDATA[SELECT tft.ACCOUNT_ID, tft.CODE, tfa.NAME, tft.TXNDATE, tft.FEATURE, tft.INFO, tft.DEBIT, tft.LOCAL_AMOUNT
 FROM TFN_FINANCE_TXN tft
@@ -49,6 +50,7 @@ INNER JOIN TFN_FINANCE_ACC as tfa on tft.ACCOUNT_ID = tfa.ID
 WHERE
 tft.TXNDATE < $P{END_DATE} 
 AND tft.TXNDATE > $P{START_DATE} 
+AND ($P{ACCOUNT_ID}=0 OR tft.ACCOUNT_ID = $P{ACCOUNT_ID}) 
 ORDER BY tfa.NAME]]>
 	</queryString>
 	<field name="ACCOUNT_ID" class="java.lang.Long"/>
@@ -336,7 +338,7 @@ ORDER BY tfa.NAME]]>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Left">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{INFO}]]></textFieldExpression>

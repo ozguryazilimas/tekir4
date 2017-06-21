@@ -22,7 +22,7 @@ import net.sf.jasperreports.engine.JRParameter;
  *
  * @author Ceyhun Onur
  */
-@Report(filterPage = FinancePages.FinanceAccountTxnReport.class, permission = "financeAccountTxnReport", path = "/finance/account", template = "financeAccountTxnReport", resource = "financeAccountReports")
+@Report(filterPage = FinancePages.FinanceAccountTxnReport.class, permission = "financeAccountTxnReport", path = "/finance/account", template = "financeAccountTxnReport")
 public class FinanceAccountTxnReport extends JasperReportBase {
 
     @Inject
@@ -37,14 +37,14 @@ public class FinanceAccountTxnReport extends JasperReportBase {
         return filter;
     }
 
-    public void AccountTxnFilter(FinanceAccountTxnFilter filter) {
+    public void setFilter(FinanceAccountTxnFilter filter) {
         this.filter = filter;
     }
 
     public void buildFilter() {
         filter = new FinanceAccountTxnFilter();                
         filter.setEndDate(new ReportDate(DateValueType.Today));
-        filter.setStartDate(new ReportDate(DateValueType.TenDaysBefore));
+        filter.setStartDate(new ReportDate(DateValueType.FirstDayOfMonth));
     }
 
     @Override
@@ -65,6 +65,9 @@ public class FinanceAccountTxnReport extends JasperReportBase {
         params.put("FIRM_TITLE", title);        
         params.put("START_DATE", getFilter().getStartDate());
         params.put("END_DATE", getFilter().getEndDate());
+        params.put("ACCOUNT_ID", getFilter().getFinanceAccount() == null ? 
+                0 : getFilter().getFinanceAccount().getId());
+
         return true;
     }
 
@@ -72,6 +75,6 @@ public class FinanceAccountTxnReport extends JasperReportBase {
     protected void decorateI18NParams(Map<String, Object> params) {
     	params.put(JRParameter.REPORT_LOCALE, LocaleSelector.instance().getLocale());
         params.put(JRParameter.REPORT_RESOURCE_BUNDLE, TelveResourceBundle.getBundle());
-		super.decorateI18NParams(params);
+        //super.decorateI18NParams(params);
     }
 }
