@@ -22,8 +22,12 @@
                             <t:outputText label="general.label.FirstName" value="#{contactHome.entity.firstName}" columnClass="col-xs-12"/>
                             <t:outputText label="general.label.LastName" value="#{contactHome.entity.lastName}" columnClass="col-xs-12"/>
                             <t:outputText label="contact.label.JobTitle" value="#{contactHome.entity.jobTitle}" columnClass="col-xs-12"/>
-                            <t:outputText label="contact.label.CorporationName" value="#{contactHome.entity.corporationName}" rendered="#{empty contactHome.entity.corporation}" columnClass="col-xs-12"/>
-                            <t:outputEntityLink label="general.label.Corporation" value="#{contactHome.entity.corporation}" view="/contact/contactView.xhtml" rendered="#{not empty contactHome.entity.corporation}" columnClass="col-xs-12"/>
+                            <t:outputText label="contact.label.CorporationName" value="#{contactHome.entity.corporationName}" rendered="#{empty contactHome.entity.corporation}" columnClass="col-xs-12"/> 
+                            
+                            <t:outputFeatureLink label="general.label.Corporation" 
+                            	value="#{featureController.getFeatureLink(contactHome.getAllFeaturePointer(contactHome.entity))}" 
+                            	rendered="#{not empty contactHome.entity.corporation}" columnClass="col-xs-12"/>
+           
                             <t:outputText label="contact.label.SSN" value="#{contactHome.entity.ssn}" columnClass="col-xs-12"/>
                         </div>            
                     </ui:fragment>
@@ -32,8 +36,15 @@
                         <div class="row">
                             <t:outputText label="general.label.OrganizationName" value="#{contactHome.entity.organizastionName}" columnClass="col-xs-12"/>
                             <t:outputText label="contact.label.CorporationType" value="#{contactHome.entity.corporationType.name}"  columnClass="col-xs-12"/>
-                            <t:outputEntityLink label="contact.label.PrimaryContact" value="#{contactHome.entity.primaryContact}" view="/contact/contactView.xhtml" columnClass="col-xs-12"/>
-                            <t:outputEntityLink label="contact.label.ParentCorporation" value="#{contactHome.entity.parentCorporation}" view="/contact/contactView.xhtml" columnClass="col-xs-12"/>
+                          
+                            <t:outputFeatureLink label="contact.label.PrimaryContact" 
+                            	value="#{featureController.getFeatureLink(contactHome.getAllFeaturePointer(contactHome.entity.primaryContact))}" 
+                            	rendered="#{not empty contactHome.entity.primaryContact}" columnClass="col-xs-12"/>
+
+                            <t:outputFeatureLink label="contact.label.ParentCorporation" 
+                            	value="#{featureController.getFeatureLink(contactHome.getAllFeaturePointer(contactHome.entity.parentCorporation))}" 
+                            	rendered="#{not empty contactHome.entity.parentCorporation}" columnClass="col-xs-12"/>
+           
                         </div>            
                     </ui:fragment>
 
