@@ -6,6 +6,7 @@
 package com.ozguryazilim.finance.config;
 
 import com.ozguryazilim.finance.virement.FinanceAccountVirementFeature;
+import com.ozguryazilim.tekir.contact.config.ContactPages;
 import com.ozguryazilim.tekir.core.config.ParamNavigationSection;
 import com.ozguryazilim.telve.auth.SecuredPage;
 import com.ozguryazilim.telve.nav.Navigation;
@@ -86,5 +87,11 @@ public interface FinancePages extends Pages {
             implements
             FinancePages {
     }
+    
+	@SecuredPage
+	@View
+	@PageTitle("report.name.financeAccountTxnReport")
+	class FinanceAccountTxnReport implements FinancePages {
+	}
 
 }
