@@ -228,4 +228,42 @@ public abstract class ActivityRepository extends RepositoryBase<Activity, Activi
         
     }
     
+    /**
+     * Belirtilen süreden sonra kapanmamış aktiviteleri veritabanında arar.
+     *
+     * @param date Aktivitelerin bitiş tarihinden itibaren geçecek süre
+     * @return Geçen süreden sonra kapanmamış olan aktiviteler
+     * @see Activity
+     * @see Activity_
+     */
+    public List<Activity> findExpiredActivities(Date date) {
+        CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
+        //Geriye ViewModel dönecek cq'yu ona göre oluşturuyoruz.
+        CriteriaQuery<Activity> criteriaQuery = criteriaBuilder.createQuery(Activity.class);
+
+        //From 
+        Root<Activity> from = criteriaQuery.from(Activity.class);
+
+        //Sonuç filtremiz : Zaten sınıfın kendisi döner.
+        //buildVieModelSelect(criteriaQuery, from);
+
+        //Filtreleri ekleyelim.
+        List<Predicate> predicates = new ArrayList<>();
+
+        //Tarih verilen parametreden küçük ve eşit olanlar.
+        predicates.add(criteriaBuilder.lessThanOrEqualTo(from.get(Activity_.dueDate), date));
+
+        //Olumlu ya da Olumsuz kapanmamış olanlar.
+        predicates.add(criteriaBuilder.notLike(from.get(Activity_.status).as(String.class), "SUCCESS"));
+
+        //Oluşan filtreleri sorgumuza ekliyoruz
+        criteriaQuery.where(predicates.toArray(new Predicate[]{}));
+
+        //Haydi bakalım sonuçları alalım
+        TypedQuery<Activity> typedQuery = entityManager().createQuery(criteriaQuery);
+        List<Activity> resultList = typedQuery.getResultList();
+
+        return resultList;
+    }
+    
 }

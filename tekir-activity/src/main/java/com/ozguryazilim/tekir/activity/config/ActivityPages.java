@@ -41,7 +41,10 @@ public interface ActivityPages extends Pages{
     @SecuredPage()
     @PageTitle("module.caption.Activity")
     class ActivityMasterView implements ActivityPages {}
-
+    
+    @View 
+    @SecuredPage()
+    class ActivityReminderCommand implements ActivityPages {}
     
     @SecuredPage()
     interface Phone extends ActivityPages{
