@@ -13,15 +13,15 @@
 				<t:accordion icon="fa fa-stack-exchange" label="general.label.Summary"
 					columnClass="col-xs-12">
 					<div class="row">
-						<t:outputEntityLink label="general.label.Category"
-							value="#{commodityHome.entity.category}"
-							view="/commodity/commodityCategory" columnClass="col-xs-12" />
+						<t:outputText label="general.label.Category"
+							value="#{commodityHome.entity.category.name}"  columnClass="col-xs-12"/>
+					
 					</div>
 
 					<div class="row">
-						<t:outputEntityLink label="general.label.UnitSet"
-							value="#{commodityHome.entity.unitSet}" view="/core/unitSetDefinition"
-							columnClass="col-xs-12" />
+						<t:outputText label="general.label.UnitSet"
+							value="#{commodityHome.entity.unitSet.name}"  columnClass="col-xs-12"/>
+
 						<t:outputText label="general.label.Unit"
 							value="#{commodityHome.entity.unitName}" columnClass="col-xs-12" />
 					</div>
@@ -43,8 +43,8 @@
 					<ui:repeat var="it" value="#{commodityHome.getTaxList()}" varStatus="ctr">
 						<t:accordion icon="fa flaticon-tax" label="general.label.Tax#{ctr.index+1}">
 							<div class="row">
-								<t:outputEntityLink label="general.label.Tax" value="#{it}"
-									view="/core/taxDefinition" columnClass="col-md-6 col-xs-12" />
+								<t:outputText label="general.label.Tax"
+									value="#{it.name}"  columnClass="col-md-6 col-xs-12"/>
 
 								<t:outputText label="taxDefinition.label.TaxType"
 									itemLabel="taxDefinition.type" value="#{it.type}"
