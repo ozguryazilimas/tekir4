@@ -189,4 +189,47 @@ public abstract class OpportunityRepository extends VoucherRepositoryBase<Opport
 		return cr.createQuery().getResultList();
 		
 	}
+        
+        /**
+         * Belirtilen süreden sonra kapanmamış fırsatları veritabanında arar.
+         * 
+         * @param date Fırsatların oluşturulma tarihinden itibaren geçecek süre
+         * @return Geçen süreden sonra kapanmamış olan fırsatlar
+         * @see Opportunity
+         * @see Opportunity_
+         * @see OpportunityViewModel
+         */
+        public List<OpportunityViewModel> findUnclosedOpportunities(Date date) {
+            CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
+            //Geriye ViewModel dönecek cq'yu ona göre oluşturuyoruz.
+            CriteriaQuery<OpportunityViewModel> criteriaQuery = criteriaBuilder.createQuery(OpportunityViewModel.class);
+
+            //From 
+            Root<Opportunity> from = criteriaQuery.from(Opportunity.class);
+            
+            //Join
+            from.join(Opportunity_.group, JoinType.LEFT);
+
+            //Sonuç filtremiz
+            buildVieModelSelect(criteriaQuery, from);
+
+            //Filtreleri ekleyelim.
+            List<Predicate> predicates = new ArrayList<>();
+
+            //Tarih verilen parametreden küçük ve eşit olanlar.
+            predicates.add(criteriaBuilder.lessThanOrEqualTo(from.get(Opportunity_.createDate), date));
+
+            //Olumlu ya da Olumsuz kapanmamış olanlar.
+            predicates.add(criteriaBuilder.notLike(from.get(VoucherBase_.state).as(String.class), "CLOSE-%"));
+
+            //Oluşan filtreleri sorgumuza ekliyoruz
+            criteriaQuery.where(predicates.toArray(new Predicate[]{}));
+
+            //Haydi bakalım sonuçları alalım
+            TypedQuery<OpportunityViewModel> typedQuery = entityManager().createQuery(criteriaQuery);
+            List<OpportunityViewModel> resultList = typedQuery.getResultList();
+
+            return resultList;
+        }
+        
 }
