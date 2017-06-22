@@ -46,6 +46,11 @@ public interface LeadPages extends Pages {
 	@SecuredPage
 	class LeadCategoryLookup implements LeadPages {
 	}
+        
+        @View
+        @SecuredPage
+        class LeadReminderCommand implements LeadPages{
+        }
 
 	@View
 	@SecuredPage("lead")
@@ -64,5 +69,5 @@ public interface LeadPages extends Pages {
 	@PageTitle("module.caption.Lead")
 	class LeadMasterView implements LeadPages{
 	}
-
+                
 }
