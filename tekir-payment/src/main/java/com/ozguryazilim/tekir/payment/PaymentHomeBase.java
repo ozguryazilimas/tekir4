@@ -21,6 +21,9 @@ import com.ozguryazilim.tekir.voucher.VoucherStateAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateConfig;
 import com.ozguryazilim.tekir.voucher.matcher.VoucherMatcherService;
 import com.ozguryazilim.tekir.voucher.process.ProcessService;
+import com.ozguryazilim.telve.entities.EntityBase;
+import com.ozguryazilim.telve.entities.FeaturePointer;
+import com.ozguryazilim.telve.feature.FeatureUtils;
 import com.ozguryazilim.telve.messages.FacesMessages;
 import com.ozguryazilim.telve.reports.JasperReportHandler;
 
@@ -170,4 +173,8 @@ public abstract class PaymentHomeBase<E extends PaymentBase> extends VoucherForm
     
     protected abstract ProcessType getProcessType();
     
+    // FeatureLink yönlendirmesi
+    public FeaturePointer getAllFeaturePointer(EntityBase contact){
+    		return FeatureUtils.getFeaturePointer(contact);
+    }
 }

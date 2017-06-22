@@ -22,7 +22,9 @@
     <ui:define name="caption">
         <div class="row">
             <div class="col-md-6 col-xs-12">
-                <t:outputEntityLink label="general.label.Account" value="#{quoteHome.entity.account}" view="/contact/contactView.xhtml" />
+              <t:outputFeatureLink label="general.label.Account" 
+                            	value="#{featureController.getFeatureLink(quoteHome.getAllFeaturePointer(quoteHome.entity.account))}" 
+                            	rendered="#{not empty quoteHome.entity.account}" columnClass="col-xs-12"/>             
                 <t:outputMoney label="general.label.TotalAmount" value="#{quoteHome.entity.total}" currency="#{quoteHome.entity.currency}" />
                 <t:outputText label="quote.label.Revision" value="#{quoteHome.entity.revision}"  />
                 <t:outputDate label="general.label.ExpireDate" value="#{quoteHome.entity.expireDate}"  />

@@ -25,7 +25,7 @@
                             <t:outputText label="contact.label.CorporationName" value="#{contactHome.entity.corporationName}" rendered="#{empty contactHome.entity.corporation}" columnClass="col-xs-12"/> 
                             
                             <t:outputFeatureLink label="general.label.Corporation" 
-                            	value="#{featureController.getFeatureLink(contactHome.getAllFeaturePointer(contactHome.entity))}" 
+                            	value="#{featureController.getFeatureLink(contactHome.getAllFeaturePointer(contactHome.entity.corporation))}" 
                             	rendered="#{not empty contactHome.entity.corporation}" columnClass="col-xs-12"/>
            
                             <t:outputText label="contact.label.SSN" value="#{contactHome.entity.ssn}" columnClass="col-xs-12"/>

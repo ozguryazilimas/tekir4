@@ -14,10 +14,10 @@
                     <ui:remove>
                         bir output account input account seti mi hazırlasak?
                     </ui:remove>
-                    <t:outputEntityLink label="general.label.Account" value="#{purchaseInvoiceHome.entity.account}" view="/contact/contactView.xhtml" columnClass="col-xs-12"/>
-
+                    <t:outputFeatureLink label="general.label.Account" 
+                            value="#{featureController.getFeatureLink(contactBrowse.getAllFeaturePointer(purchaseInvoiceHome.entity.account))}" 
+                            rendered="#{not empty purchaseInvoiceHome.entity.account}" columnClass="col-xs-12"/>   
                     <t:outputMoney label="general.label.TotalAmount" value="#{purchaseInvoiceHome.entity.total}" currency="#{purchaseInvoiceHome.entity.currency}" columnClass="col-xs-12"/>
-                    
                     <t:outputText label="general.label.PaymentPlan" value="#{purchaseInvoiceHome.entity.paymentPlan.name}"  columnClass="col-xs-12"/>
                     <t:outputDate label="general.label.ShippingDate" value="#{purchaseInvoiceHome.entity.shippingDate}"  columnClass="col-xs-12"/>
                     <t:outputText label="general.label.ShippingNote" value="#{purchaseInvoiceHome.entity.shippingNote}"  columnClass="col-xs-12"/>

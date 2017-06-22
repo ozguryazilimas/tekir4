@@ -7,7 +7,9 @@ package com.ozguryazilim.tekir.activity;
 
 import com.ozguryazilim.tekir.entities.Activity;
 import com.ozguryazilim.telve.data.RepositoryBase;
+import com.ozguryazilim.telve.entities.EntityBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
+import com.ozguryazilim.telve.feature.FeatureUtils;
 import com.ozguryazilim.telve.forms.FormBase;
 import com.ozguryazilim.telve.forms.FormEdit;
 import javax.inject.Inject;
@@ -46,5 +48,9 @@ public class ActivityHome extends FormBase<Activity, Long>{
         result.setFeature(getFeatureClass().getSimpleName());
         result.setPrimaryKey(getEntity().getId());
         return result;
+    }
+    // FeatureLink yönlendirmesi
+    public FeaturePointer getAllFeaturePointer(EntityBase contact){
+    		return FeatureUtils.getFeaturePointer(contact);
     }
 }

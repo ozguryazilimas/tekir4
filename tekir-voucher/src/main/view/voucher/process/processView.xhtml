@@ -122,8 +122,11 @@
     <ui:define name="caption">
         <div class="row">
             <div>
-            	<t:outputText label="voucher.label.Topic" value="#{bean.entity.topic}" />
-                <t:outputEntityLink label="general.label.Account" value="#{bean.entity.account}" view="/contact/contactView.xhtml" />
+            	<t:outputText label="voucher.label.Topic" value="#{bean.entity.topic}" />                          
+                <t:outputFeatureLink label="general.label.Account" 
+                            	value="#{featureController.getFeatureLink(bean.getAllFeaturePointer(bean.entity.account))}" 
+                            	rendered="#{not empty bean.entity.account}" columnClass="col-xs-12"/>                                         	
+                
                 <t:outputEnum label="general.label.Type" itemLabel="processType." value="#{bean.entity.type}"/>
                 <t:outputEnum label="general.label.Status" itemLabel="processStatus." value="#{bean.entity.status}"/>
                 <t:outputText label="voucher.label.ProcessNo" value="#{bean.entity.processNo}" />

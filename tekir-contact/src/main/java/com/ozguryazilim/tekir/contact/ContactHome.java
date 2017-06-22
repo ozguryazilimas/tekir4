@@ -188,11 +188,10 @@ public class ContactHome extends FormBase<Contact, Long> {
         result.setPrimaryKey(getEntity().getId());
         return result;
     }
-    
+    // FeatureLink yönlendirmesi
     public FeaturePointer getAllFeaturePointer(EntityBase contact){
     		return FeatureUtils.getFeaturePointer(contact);
     }
-    
     /**
      * Belge sahipliğini değiştirme yetkisi var mı?
      * @return 
