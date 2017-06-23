@@ -29,22 +29,30 @@
             <div class="col-md-6 col-xs-12">
                 <div class="row">
                     <t:inputText label="general.label.Code" value="#{employeeHome.entity.code}" columnClass="col-xs-6" required="true"/>
+               		<t:inputText label="general.label.FirstName" value="#{employeeHome.entity.firstName}" columnClass="col-xs-6" required="true"/>
+                    
                 </div>
 
                 <div class="row">
-                    <t:inputText label="general.label.FirstName" value="#{employeeHome.entity.firstName}" columnClass="col-xs-6" required="true"/>
-                    <t:inputText label="general.label.LastName" value="#{employeeHome.entity.lastName}" columnClass="col-xs-6" required="true"/>
+                 	<t:inputText label="general.label.SecondName" value="#{employeeHome.entity.secondName}" columnClass="col-xs-6" />
+                   <t:inputText label="general.label.LastName" value="#{employeeHome.entity.lastName}" columnClass="col-xs-6" required="true"/>
 
                 </div>  
-
+                
                 <div class="row">
                     <t:inputText label="contact.label.SSN" value="#{employeeHome.entity.ssn}" columnClass="col-xs-6" required="false"/>
-                    <t:inputText label="contact.label.JobTitle" value="#{employeeHome.entity.jobTitle}" columnClass="col-xs-6" required="false"/>
-
+                 	<t:inputText label="hr.label.EmployeeNo" value="#{employeeHome.entity.employeeNo}" columnClass="col-xs-6" />
+              
+                </div> 
+                
+           		<div class="row">
+                  	<t:inputLookupDialog label="general.label.Industry" value="#{employeeHome.entity.industry}" lookupBean="#{industryLookup}" lookupListener="employeeHome.entity.industry" placeholder="#{messages['general.info.Industry']}" />
+					<t:inputLookupDialog label="general.label.Territory" value="#{employeeHome.entity.territory}" lookupBean="#{territoryLookup}" lookupListener="employeeHome.entity.territory" placeholder="#{messages['general.info.Territory']}" /> 	
+                	
                 </div>  
 
                 <div class="row">
-                    <t:accordion label="employee.label.ContactInformations" >
+                    <t:accordion label="hr.label.ContactInformations" >
                         <div class="row">
                             <t:inputDialog label="contact.label.PrimaryMobile" value="#{employeeHome.entity.primaryMobile.caption}" action="#{phoneEditor.editPrimaryMobile(employeeHome.entity, employeeHome.entity.primaryMobile)}" icon="fa fa-mobile"/>
                             <t:inputDialog label="contact.label.PrimaryPhone" value="#{employeeHome.entity.primaryPhone.caption}" action="#{phoneEditor.editPrimaryPhone(employeeHome.entity, employeeHome.entity.primaryPhone)}" icon="fa fa-phone"/>
@@ -57,9 +65,31 @@
                 </div>
             </div>
             <div class="col-md-6 col-xs-12">
-                <div class="row">
-                    <t:inputTextarea label="general.label.Info" value="#{employeeHome.entity.info}" columnClass="col-xs-12"/>
+               <div class="row">
+                    <t:accordion label="hr.label.JobInformations" >
+                    
+                        <div class="row"> 
+                        	<t:inputLookupDialog label="general.label.Corparation" value="#{employeeHome.entity.corporation}" lookupBean="#{contactLookup}" lookupListener="employeeHome.entity.corporation" placeholder="#{messages['general.info.Corparation']}" lookupProfile="T:Corporation"/>	               		
+                           	<t:inputText label="contact.label.JobTitle" value="#{employeeHome.entity.jobTitle}" columnClass="col-xs-6" />
+                        	<t:inputMoney label="hr.label.SalaryAmount" value="#{employeeHome.entity.salaryAmount}"  
+                    			currency="#{employeeHome.entity.salaryCurrency}" columnClass="col-xs-6"/>
+                  			<t:inputCurrency label="hr.label.SalaryCurrency" value="#{employeeHome.entity.salaryCurrency}" columnClass="col-xs-6" />                
+			               </div>
+                        
+                        <div class="row">
+		                	<t:inputText label="hr.label.SgkNo" value="#{employeeHome.entity.sgkNo}" columnClass="col-xs-6" required="false"/>
+		                	<t:inputText label="hr.label.AnualLeaveDay" value="#{employeeHome.entity.anualLeaveDay}" columnClass="col-xs-6" />
+		                 	<t:inputDate label="hr.label.RecruitmentDate" value="#{employeeHome.entity.recruitmentDate}" columnClass="col-xs-6"/>
+		                    <t:inputDate label="hr.label.TerminationDate" value="#{employeeHome.entity.terminationDate}" columnClass="col-xs-6"/>	                   
+               			</div> 
+               			 
+                    </t:accordion>
                 </div>
+                
+           		<div class="row">
+           		 <t:inputTextarea label="general.label.Info" value="#{employeeHome.entity.info}" columnClass="col-xs-12"/>	
+           		
+           		</div>
             </div>
         </div>
 
