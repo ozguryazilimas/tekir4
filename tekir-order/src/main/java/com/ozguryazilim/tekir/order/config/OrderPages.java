@@ -85,5 +85,10 @@ public interface OrderPages extends Pages {
 			implements
 				Purchase {
 	}
+        
+        @View
+        @SecuredPage()
+        class PurchaseOrderReminderCommand implements Purchase {
+        }
     }
 }
