@@ -24,8 +24,7 @@
         <div class="row">
             <div class="col-md-6 col-xs-12">
                 <t:outputFeatureLink label="general.label.Account" 
-                            value="#{featureController.getFeatureLink(accountCreditNoteHome.getAllFeaturePointer(accountCreditNoteHome.entity.account))}" 
-                            rendered="#{not empty accountCreditNoteHome.entity.account}" columnClass="col-xs-12"/>
+                            value="#{featureController.getFeatureLink(accountCreditNoteHome.getAllFeaturePointer(accountCreditNoteHome.entity.account))}" columnClass="col-xs-12"/>
              
                 <t:outputMoney label="general.label.Amount" value="#{accountCreditNoteHome.entity.amount}" currency="#{accountCreditNoteHome.entity.currency}" />
                 <t:outputText label="general.label.Info" value="#{accountCreditNoteHome.entity.info}" columnClass="col-xs-12"/>

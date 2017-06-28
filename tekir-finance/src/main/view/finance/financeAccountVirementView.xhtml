@@ -26,10 +26,10 @@
           		<t:outputEnum label="finance.label.VirementType" itemLabel="virementtype." value="#{financeAccountVirementHome.entity.virementType}" columnClass="col-xs-12" />
                 <t:outputFeatureLink label="finance.label.FromAccount" 
                             value="#{featureController.getFeatureLink(financeAccountVirementHome.getAllFeaturePointer(financeAccountVirementHome.entity.fromAccount))}" 
-                            rendered="#{not empty financeAccountVirementHome.entity.fromAccount}" columnClass="col-xs-12"/>
+                            columnClass="col-xs-12"/>
                 <t:outputFeatureLink label="finance.label.ToAccount" 
                             value="#{featureController.getFeatureLink(financeAccountVirementHome.getAllFeaturePointer(financeAccountVirementHome.entity.toAccount))}" 
-                            rendered="#{not empty financeAccountVirementHome.entity.toAccount}" columnClass="col-xs-12"/>
+                            columnClass="col-xs-12"/>
                 <t:outputMoney label="general.label.FromAmount" value="#{financeAccountVirementHome.entity.fromAmount}" currency="#{financeAccountVirementHome.entity.fromCurrency}" columnClass="col-xs-12"/>
                 <t:outputMoney label="general.label.ToAmount" value="#{financeAccountVirementHome.entity.toAmount}" currency="#{financeAccountVirementHome.entity.toCurrency}" columnClass="col-xs-12"/>
                 <t:outputText label="general.label.Info" value="#{financeAccountVirementHome.entity.info}" columnClass="col-xs-12"/>

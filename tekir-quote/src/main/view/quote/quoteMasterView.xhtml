@@ -14,9 +14,9 @@
                     <ui:remove>
                         bir output account input account seti mi hazırlasak?
                     </ui:remove>
-					<t:outputFeatureLink label="general.label.Account" 
+                    <t:outputFeatureLink label="general.label.Account" 
                             	value="#{featureController.getFeatureLink(quoteHome.getAllFeaturePointer(quoteHome.entity.account))}" 
-                            	rendered="#{not empty quoteHome.entity.account}" columnClass="col-xs-12"/>                                         	
+                            	columnClass="col-xs-12"/>                                         	
                     <t:outputMoney label="general.label.TotalAmount" value="#{quoteHome.entity.total}" currency="#{quoteHome.entity.currency}" columnClass="col-xs-12"/>
                     <t:outputText label="quote.label.Revision" value="#{quoteHome.entity.revision}"  columnClass="col-xs-12"/>
                     <t:outputDate label="general.label.PaymentPlan" value="#{quoteHome.entity.paymentPlan.name}"  columnClass="col-xs-12"/>

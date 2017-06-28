@@ -50,12 +50,8 @@
                 <t:outputText label="general.label.LastName" value="#{contactBrowse.contact.lastName}" columnClass="col-xs-12"/>
                 <t:outputText label="general.label.Info" value="#{contactBrowse.contact.info}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.info}"/>
                 <t:outputText label="contact.label.JobTitle" value="#{contactBrowse.contact.jobTitle}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.jobTitle}"/>
-                <t:outputText label="contact.label.CorporationName" value="#{contactBrowse.contact.corporationName}" rendered="#{empty contactBrowse.contact.corporation}" columnClass="col-xs-12"/>
-
- 				<t:outputFeatureLink label="general.label.Corporation" 
-                            value="#{featureController.getFeatureLink(contactBrowse.getAllFeaturePointer(contactBrowse.contact.corporation))}" 
-                            rendered="#{not empty contactBrowse.contact.corporation}" columnClass="col-xs-12"/>                
-                
+                <t:outputText label="contact.label.CorporationName" value="#{contactBrowse.contact.corporationName}" rendered="#{not empty contactBrowse.contact.corporation}" columnClass="col-xs-12"/>
+                <t:outputFeatureLink label="general.label.Corporation" value="#{featureController.getFeatureLink(contactBrowse.getAllFeaturePointer(contactBrowse.contact.corporation))}" rendered="#{not empty contactBrowse.contact.corporation}" columnClass="col-xs-12"/>                
                 <t:outputText label="contact.label.SSN" value="#{contactBrowse.contact.ssn}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.ssn}"/>
             </div>            
         </ui:fragment>

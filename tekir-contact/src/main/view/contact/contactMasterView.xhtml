@@ -22,11 +22,11 @@
                             <t:outputText label="general.label.FirstName" value="#{contactHome.entity.firstName}" columnClass="col-xs-12"/>
                             <t:outputText label="general.label.LastName" value="#{contactHome.entity.lastName}" columnClass="col-xs-12"/>
                             <t:outputText label="contact.label.JobTitle" value="#{contactHome.entity.jobTitle}" columnClass="col-xs-12"/>
-                            <t:outputText label="contact.label.CorporationName" value="#{contactHome.entity.corporationName}" rendered="#{empty contactHome.entity.corporation}" columnClass="col-xs-12"/> 
+                            <t:outputText label="contact.label.CorporationName" value="#{contactHome.entity.corporationName}" columnClass="col-xs-12"/> 
                             
                             <t:outputFeatureLink label="general.label.Corporation" 
                             	value="#{featureController.getFeatureLink(contactHome.getAllFeaturePointer(contactHome.entity.corporation))}" 
-                            	rendered="#{not empty contactHome.entity.corporation}" columnClass="col-xs-12"/>
+                            	columnClass="col-xs-12"/>
            
                             <t:outputText label="contact.label.SSN" value="#{contactHome.entity.ssn}" columnClass="col-xs-12"/>
                         </div>            
@@ -39,11 +39,11 @@
                           
                             <t:outputFeatureLink label="contact.label.PrimaryContact" 
                             	value="#{featureController.getFeatureLink(contactHome.getAllFeaturePointer(contactHome.entity.primaryContact))}" 
-                            	rendered="#{not empty contactHome.entity.primaryContact}" columnClass="col-xs-12"/>
+                            	columnClass="col-xs-12"/>
 
                             <t:outputFeatureLink label="contact.label.ParentCorporation" 
                             	value="#{featureController.getFeatureLink(contactHome.getAllFeaturePointer(contactHome.entity.parentCorporation))}" 
-                            	rendered="#{not empty contactHome.entity.parentCorporation}" columnClass="col-xs-12"/>
+                            	columnClass="col-xs-12"/>
            
                         </div>            
                     </ui:fragment>

@@ -16,7 +16,7 @@
                     </ui:remove>
                  	<t:outputFeatureLink label="general.label.Account" 
                             	value="#{featureController.getFeatureLink(salesInvoiceHome.getAllFeaturePointer(salesInvoiceHome.entity.account))}" 
-                            	rendered="#{not empty salesInvoiceHome.entity.account}" columnClass="col-xs-12"/>
+                            	columnClass="col-xs-12"/>
                     <t:outputMoney label="general.label.TotalAmount" value="#{salesInvoiceHome.entity.total}" currency="#{salesInvoiceHome.entity.currency}" columnClass="col-xs-12"/>                    
                     <t:outputText label="general.label.PaymentPlan" value="#{salesInvoiceHome.entity.paymentPlan.name}"  columnClass="col-xs-12"/>
                     <t:outputDate label="general.label.ShippingDate" value="#{salesInvoiceHome.entity.shippingDate}"  columnClass="col-xs-12"/>

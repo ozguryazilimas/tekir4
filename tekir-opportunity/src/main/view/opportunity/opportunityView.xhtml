@@ -26,10 +26,10 @@
                 <t:outputMoney label="opportunity.label.Budget" value="#{opportunityHome.entity.budget}" currency="#{opportunityHome.entity.currency}" />
                 <t:outputFeatureLink label="general.label.Account" 
                             value="#{featureController.getFeatureLink(opportunityHome.getAllFeaturePointer(opportunityHome.entity.account))}" 
-                            rendered="#{not empty opportunityHome.entity.account}" columnClass="col-xs-12"/>          
+                            columnClass="col-xs-12"/>          
                 <t:outputFeatureLink label="contact.label.PrimaryContact" 
                             value="#{featureController.getFeatureLink(opportunityHome.getAllFeaturePointer(opportunityHome.entity.primaryContact))}" 
-                            rendered="#{not empty opportunityHome.entity.primaryContact}" columnClass="col-xs-12"/>
+                            columnClass="col-xs-12"/>
                 <t:outputText label="general.label.Info" value="#{opportunityHome.entity.info}" columnClass="col-xs-12"/>
             </div>
             <div class="col-md-6 col-xs-12">

@@ -24,7 +24,7 @@
             <div class="col-md-6 col-xs-12">           
                 <t:outputFeatureLink label="general.label.Account" 
                             value="#{featureController.getFeatureLink(salesInvoiceHome.getAllFeaturePointer(salesInvoiceHome.entity.account))}" 
-                            rendered="#{not empty salesInvoiceHome.entity.account}" columnClass="col-xs-12"/>              
+                            columnClass="col-xs-12"/>              
                 <t:outputMoney label="general.label.TotalAmount" value="#{salesInvoiceHome.entity.total}" currency="#{salesInvoiceHome.entity.currency}" />
                 <ui:remove>
                 <t:outputText label="salesInvoice.label.Revision" value="#{salesInvoiceHome.entity.revision}"  />

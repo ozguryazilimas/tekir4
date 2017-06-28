@@ -25,11 +25,11 @@
             <div class="col-md-6 col-xs-12">          
                 <t:outputFeatureLink label="general.label.FromAccount" 
                             value="#{featureController.getFeatureLink(accountVirementHome.getAllFeaturePointer(accountVirementHome.entity.fromAccount))}" 
-                            rendered="#{not empty accountVirementHome.entity.fromAccount}" columnClass="col-xs-12"/>
+                            columnClass="col-xs-12"/>
 
                 <t:outputFeatureLink label="general.label.ToAccount" 
                             value="#{featureController.getFeatureLink(accountVirementHome.getAllFeaturePointer(accountVirementHome.entity.toAccount))}" 
-                            rendered="#{not empty accountVirementHome.entity.toAccount}" columnClass="col-xs-12"/>
+                            columnClass="col-xs-12"/>
                                         
                 <t:outputMoney label="general.label.Amount" value="#{accountVirementHome.entity.amount}" currency="#{accountVirementHome.entity.currency}" />
                 <t:outputText label="general.label.Info" value="#{accountVirementHome.entity.info}" columnClass="col-xs-12"/>

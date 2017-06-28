@@ -24,10 +24,10 @@
             <div class="col-md-6 col-xs-12">
                 <t:outputFeatureLink label="general.label.Account" 
                 			value="#{featureController.getFeatureLink(paymentHome.getAllFeaturePointer(paymentHome.entity.account))}" 
-                            rendered="#{not empty paymentHome.entity.account}" columnClass="col-xs-12"/>                              
+                                        columnClass="col-xs-12"/>                              
                 <t:outputFeatureLink label="general.label.FinanceAccount" 
-                			value="#{featureController.getFeatureLink(paymentHome.getAllFeaturePointer(paymentHome.entity.financeAccount))}" 
-                            rendered="#{not empty paymentHome.entity.financeAccount}" columnClass="col-xs-12"/>               	            
+                                        value="#{featureController.getFeatureLink(paymentHome.getAllFeaturePointer(paymentHome.entity.financeAccount))}" 
+                                        columnClass="col-xs-12"/>               	            
                 <t:outputMoney label="general.label.Amount" value="#{paymentHome.entity.amount}" currency="#{paymentHome.entity.currency}" />
             </div>
             <div class="col-md-6 col-xs-12">
