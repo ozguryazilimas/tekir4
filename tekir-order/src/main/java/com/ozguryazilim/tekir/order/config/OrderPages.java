@@ -50,6 +50,11 @@ public interface OrderPages extends Pages {
 			implements
 				Sales {
 	}
+        
+        @View
+        @SecuredPage()
+        class SalesOrderReminderCommand implements Sales {
+        }
 
     }
     

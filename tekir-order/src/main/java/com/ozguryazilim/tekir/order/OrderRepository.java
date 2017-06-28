@@ -11,6 +11,7 @@ import com.ozguryazilim.tekir.entities.Order;
 import com.ozguryazilim.tekir.entities.Order_;
 import com.ozguryazilim.tekir.entities.Process_;
 import com.ozguryazilim.tekir.entities.PurchaseOrder_;
+import com.ozguryazilim.tekir.entities.SalesOrder;
 import com.ozguryazilim.tekir.entities.VoucherBase_;
 import com.ozguryazilim.tekir.entities.VoucherGroup;
 import com.ozguryazilim.tekir.entities.VoucherGroup_;
@@ -20,6 +21,7 @@ import com.ozguryazilim.tekir.voucher.VoucherRepositoryBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.filters.Filter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -125,4 +127,45 @@ public abstract class OrderRepository<E extends Order, V extends VoucherProcessV
             );
         }
     }
+    
+    /**
+     * Belirtilen süreden sonra kapanmamış satış siparişlerini veritabanında arar.
+     *
+     * @param date Satış Siparişlerinin bitiş tarihinden itibaren geçecek süre
+     * @return Geçen süreden sonra kapanmamış olan satış siparişleri
+     * @see Order_
+     * @see SalesOrder
+     * @see PurchaseOrder
+     * @see VoucherBase_
+     */
+    public List<E> findExpiredOrder(Date date) {
+        CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
+        //Geriye ViewModel dönecek cq'yu ona göre oluşturuyoruz.
+        CriteriaQuery<E> criteriaQuery = criteriaBuilder.createQuery(getEntityClass());
+
+        //From 
+        Root<E> from = criteriaQuery.from(getEntityClass());
+
+        //Sonuç filtremiz : Zaten sınıfın kendisi döner.
+        //buildVieModelSelect(criteriaQuery, from);
+
+        //Filtreleri ekleyelim.
+        List<Predicate> predicates = new ArrayList<>();
+
+        //Tarih verilen parametreden küçük ve eşit olanlar.
+        predicates.add(criteriaBuilder.lessThanOrEqualTo(from.get(Order_.shippingDate), date));
+
+        //Olumlu ya da Olumsuz kapanmamış olanlar.
+        predicates.add(criteriaBuilder.notLike(from.get(VoucherBase_.state).as(String.class), "CLOSE-%"));
+
+        //Oluşan filtreleri sorgumuza ekliyoruz
+        criteriaQuery.where(predicates.toArray(new Predicate[]{}));
+
+        //Haydi bakalım sonuçları alalım
+        TypedQuery<E> typedQuery = entityManager().createQuery(criteriaQuery);
+        List<E> resultList = typedQuery.getResultList();
+
+        return resultList;
+    }
+
 }
