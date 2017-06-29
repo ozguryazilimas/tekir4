@@ -12,11 +12,11 @@ package com.ozguryazilim.tekir.entities;
  * 
  * @author Hakan Uygun
  */
-public enum LocationType {
-    
+public enum LocationType {    
+	LOCATION,
     COUNTRY,
     TERRITORY,
     CITY,
-    DISTRICT,
-    TOWN    
+    TOWN,
+    DISTRICT,       
 }
