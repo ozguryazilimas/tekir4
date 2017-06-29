@@ -15,8 +15,8 @@ package com.ozguryazilim.tekir.entities;
 public enum LocationType {
     
     COUNTRY,
+    TERRITORY,
     CITY,
-    PROVINCE,
-    TERRITORY
-    
+    DISTRICT,
+    TOWN    
 }

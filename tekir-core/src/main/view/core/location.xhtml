@@ -20,6 +20,7 @@
             <t:inputCheckboxGroup label="general.label.Status">
                 <p:selectBooleanCheckbox value="#{locationHome.entity.active}" itemLabel="#{messages['general.label.Active']}" />
             </t:inputCheckboxGroup>
+            <t:inputEnum label="general.label.LocationType" hasNullValue="false" itemLabel="location.type." value="#{locationHome.entity.type}" required="true" />	
         </div>  
     </ui:define> 
     
