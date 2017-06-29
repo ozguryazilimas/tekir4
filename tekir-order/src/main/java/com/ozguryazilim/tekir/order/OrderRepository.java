@@ -129,16 +129,16 @@ public abstract class OrderRepository<E extends Order, V extends VoucherProcessV
     }
     
     /**
-     * Belirtilen süreden sonra kapanmamış satış siparişlerini veritabanında arar.
+     * Belirtilen süreden önce veya sonra kapanmamış satış siparişlerini veritabanında arar.
      *
-     * @param date Satış Siparişlerinin bitiş tarihinden itibaren geçecek süre
+     * @param date Siparişlerin ship date tarihinden itibaren geçmiş veya önceki tarih
      * @return Geçen süreden sonra kapanmamış olan satış siparişleri
      * @see Order_
      * @see SalesOrder
      * @see PurchaseOrder
      * @see VoucherBase_
      */
-    public List<E> findExpiredOrder(Date date) {
+    public List<E> findUnclosedOrder(Date date) {
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
         //Geriye ViewModel dönecek cq'yu ona göre oluşturuyoruz.
         CriteriaQuery<E> criteriaQuery = criteriaBuilder.createQuery(getEntityClass());
@@ -152,9 +152,18 @@ public abstract class OrderRepository<E extends Order, V extends VoucherProcessV
         //Filtreleri ekleyelim.
         List<Predicate> predicates = new ArrayList<>();
 
-        //Tarih verilen parametreden küçük ve eşit olanlar.
-        predicates.add(criteriaBuilder.lessThanOrEqualTo(from.get(Order_.shippingDate), date));
-
+        //Tarih verilen parametre ile şimdiki zaman arasında olanlar
+        Date now = new Date();
+        
+        if (now.after(date)) {
+            predicates.add(criteriaBuilder.greaterThanOrEqualTo(from.get(Order_.shippingDate), date));
+            predicates.add(criteriaBuilder.lessThanOrEqualTo(from.get(Order_.shippingDate), now));
+        } 
+        else {
+            predicates.add(criteriaBuilder.greaterThanOrEqualTo(from.get(Order_.shippingDate), now));
+            predicates.add(criteriaBuilder.lessThanOrEqualTo(from.get(Order_.shippingDate), date));
+        }
+        
         //Olumlu ya da Olumsuz kapanmamış olanlar.
         predicates.add(criteriaBuilder.notLike(from.get(VoucherBase_.state).as(String.class), "CLOSE-%"));
 

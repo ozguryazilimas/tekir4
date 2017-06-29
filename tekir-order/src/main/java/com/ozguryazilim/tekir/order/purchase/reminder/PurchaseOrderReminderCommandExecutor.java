@@ -59,7 +59,7 @@ public class PurchaseOrderReminderCommandExecutor extends AbstractCommandExecute
      * {@inheritDoc}
      * 
      * {@link PurchaseOrderReminderCommand#getInterval()}'dan gelen süreden sonra
-     * {@link PurchaseOrderRepository#findExpiredOrder(java.util.Date)} metodundan
+     * {@link PurchaseOrderRepository#findUnclosedOrder(java.util.Date)} metodundan
      * elde edilen kapanmamış olan satın alım siparişleri web kanalı ve mail olarak 
      * {@link FormatedMessage#getFormatedMessage(java.lang.String, java.lang.Object...)} ile biçimlendirilmiş
      * {@link CommandSender#sendCommand(com.ozguryazilim.telve.messagebus.command.Command)}
@@ -70,7 +70,7 @@ public class PurchaseOrderReminderCommandExecutor extends AbstractCommandExecute
      * @see NotificationCommand
      * @see PurchaseOrderReminderCommand#getInterval() 
      * @see DateUtils#getDateBeforePeriod(java.lang.String, java.util.Date)
-     * @see PurchaseOrderRepository#findExpiredOrder(java.util.Date) 
+     * @see PurchaseOrderRepository#findUnclosedOrder(java.util.Date) 
      * @see FormatedMessage#getFormatedMessage(java.lang.String, java.lang.Object[]) 
      * @see CommandSender#sendCommand(com.ozguryazilim.telve.messagebus.command.Command) 
      */
@@ -82,7 +82,7 @@ public class PurchaseOrderReminderCommandExecutor extends AbstractCommandExecute
 
         Date date = DateUtils.getDateAfterPeriod(command.getInterval(), new Date());
 
-        List<PurchaseOrder> ls = repository.findExpiredOrder(date);
+        List<PurchaseOrder> ls = repository.findUnclosedOrder(date);
 
         //TODO: Owner dışında aslında grubun tamamına göndermek de bir başka seçenek ( ki bu tercih edilebilir )
         // Owner dışı gruba önderme de sorun var. Grup bir ağaç ve nereye kadar gönderileceği biraz dertli. Belki manager'a gönderme yöntemi seçilebilir.

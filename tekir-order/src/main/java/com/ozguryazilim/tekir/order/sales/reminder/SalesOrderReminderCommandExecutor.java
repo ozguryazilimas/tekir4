@@ -5,8 +5,8 @@
  */
 package com.ozguryazilim.tekir.order.sales.reminder;
 
+import com.ozguryazilim.tekir.order.reminder.OrderReminderCommandProperty;
 import com.ozguryazilim.tekir.entities.SalesOrder;
-import com.ozguryazilim.tekir.order.config.OrderPages.Sales;
 import com.ozguryazilim.tekir.order.sales.SalesOrderRepository;
 import com.ozguryazilim.telve.messagebus.command.AbstractCommandExecuter;
 import com.ozguryazilim.telve.messagebus.command.CommandExecutor;
@@ -59,7 +59,7 @@ public class SalesOrderReminderCommandExecutor extends AbstractCommandExecuter<S
      * {@inheritDoc}
      * 
      * {@link SalesOrderReminderCommand#getInterval()}'dan gelen süreden sonra
-     * {@link SalesOrderRepository#findExpiredOrder(java.util.Date)} metodundan
+     * {@link SalesOrderRepository#findUnclosedOrder(java.util.Date)} metodundan
      * elde edilen kapanmamış olan satış siparişleri web kanalı ve mail olarak 
      * {@link FormatedMessage#getFormatedMessage(java.lang.String, java.lang.Object...)} ile biçimlendirilmiş
      * {@link CommandSender#sendCommand(com.ozguryazilim.telve.messagebus.command.Command)}
@@ -70,7 +70,9 @@ public class SalesOrderReminderCommandExecutor extends AbstractCommandExecuter<S
      * @see NotificationCommand
      * @see SalesOrderReminderCommand#getInterval() 
      * @see DateUtils#getDateBeforePeriod(java.lang.String, java.util.Date)
-     * @see SalesOrderRepository#findExpiredOrder(java.util.Date) 
+     * @see DateUtils#getDateAfterPeriod(java.lang.String, java.util.Date)
+     * @see OrderReminderCommandProperty
+     * @see SalesOrderRepository#findUnclosedOrder(java.util.Date) 
      * @see FormatedMessage#getFormatedMessage(java.lang.String, java.lang.Object[]) 
      * @see CommandSender#sendCommand(com.ozguryazilim.telve.messagebus.command.Command) 
      */
@@ -79,10 +81,17 @@ public class SalesOrderReminderCommandExecutor extends AbstractCommandExecuter<S
 
         //Toplu bildirim için biriktirme alanı. Kullanıcı ve gönderilecek listesi.
         Map<String, List<SalesOrder>> cumulatives = new HashMap<>();
+        
+        Date date = null;
+        
+        if(OrderReminderCommandProperty.UPCOMING == command.getProperty()) {
+            date = DateUtils.getDateAfterPeriod(command.getInterval(), new Date());
+        } 
+        else if(OrderReminderCommandProperty.EXPIRED == command.getProperty()) {
+            date = DateUtils.getDateBeforePeriod(command.getInterval(), new Date());
+        }
 
-        Date date = DateUtils.getDateAfterPeriod(command.getInterval(), new Date());
-
-        List<SalesOrder> ls = repository.findExpiredOrder(date);
+        List<SalesOrder> ls = repository.findUnclosedOrder(date);
 
         //TODO: Owner dışında aslında grubun tamamına göndermek de bir başka seçenek ( ki bu tercih edilebilir )
         // Owner dışı gruba önderme de sorun var. Grup bir ağaç ve nereye kadar gönderileceği biraz dertli. Belki manager'a gönderme yöntemi seçilebilir.
