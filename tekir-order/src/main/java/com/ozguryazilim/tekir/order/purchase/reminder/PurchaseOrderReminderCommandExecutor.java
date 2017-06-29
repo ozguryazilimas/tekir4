@@ -6,8 +6,8 @@
 package com.ozguryazilim.tekir.order.purchase.reminder;
 
 import com.ozguryazilim.tekir.entities.PurchaseOrder;
-import com.ozguryazilim.tekir.order.config.OrderPages.Purchase;
 import com.ozguryazilim.tekir.order.purchase.PurchaseOrderRepository;
+import com.ozguryazilim.tekir.order.reminder.OrderReminderCommandProperty;
 import com.ozguryazilim.telve.messagebus.command.AbstractCommandExecuter;
 import com.ozguryazilim.telve.messagebus.command.CommandExecutor;
 import com.ozguryazilim.telve.messagebus.command.CommandSender;
@@ -80,7 +80,14 @@ public class PurchaseOrderReminderCommandExecutor extends AbstractCommandExecute
         //Toplu bildirim için biriktirme alanı. Kullanıcı ve gönderilecek listesi.
         Map<String, List<PurchaseOrder>> cumulatives = new HashMap<>();
 
-        Date date = DateUtils.getDateAfterPeriod(command.getInterval(), new Date());
+        Date date = null;
+        
+        if(OrderReminderCommandProperty.UPCOMING == command.getProperty()) {
+            date = DateUtils.getDateAfterPeriod(command.getInterval(), new Date());
+        } 
+        else if(OrderReminderCommandProperty.EXPIRED == command.getProperty()) {
+            date = DateUtils.getDateBeforePeriod(command.getInterval(), new Date());
+        }
 
         List<PurchaseOrder> ls = repository.findUnclosedOrder(date);
 

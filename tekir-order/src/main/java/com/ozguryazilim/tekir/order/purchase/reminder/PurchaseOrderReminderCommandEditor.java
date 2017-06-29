@@ -6,6 +6,7 @@
 package com.ozguryazilim.tekir.order.purchase.reminder;
 
 import com.ozguryazilim.tekir.order.config.OrderPages;
+import com.ozguryazilim.tekir.order.reminder.OrderReminderCommandProperty;
 import com.ozguryazilim.telve.messagebus.command.ui.CommandEditor;
 import com.ozguryazilim.telve.messagebus.command.ui.CommandEditorBase;
 
@@ -31,7 +32,8 @@ public class PurchaseOrderReminderCommandEditor extends CommandEditorBase<Purcha
      * {@inheritDoc}
      * 
      * Geçecek varsayılan süre 3d olarak {@link PurchaseOrderReminderCommand#setInterval(java.lang.String)}
-     * metodu ile ayarlanmıştır.
+     * Özellik varsayılanda UPCOMING olarak {@link PurchaseOrderReminderCommand#setProperty(com.ozguryazilim.tekir.order.sales.reminder.OrderReminderCommandProperty) }
+     * metodları ile ayarlanmıştır.
      * 
      * @return Oluşturulan satın alım siparişi komutu
      * @see PurchaseOrderReminderCommand
@@ -41,6 +43,7 @@ public class PurchaseOrderReminderCommandEditor extends CommandEditorBase<Purcha
         PurchaseOrderReminderCommand result = new PurchaseOrderReminderCommand();
         
         result.setInterval("3d");
+        result.setProperty(OrderReminderCommandProperty.UPCOMING);
         
         return result;
     }
