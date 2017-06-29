@@ -22,7 +22,9 @@
     <ui:define name="caption">
         <div class="row">
             <div class="col-md-6 col-xs-12">
-                <t:outputEntityLink label="general.label.Account" value="#{salesOrderHome.entity.account}" view="/contact/contactView.xhtml" />
+                <t:outputFeatureLink label="general.label.Account" 
+            			value="#{featureController.getFeatureLink(salesOrderHome.getAllFeaturePointer(salesOrderHome.entity.account))}" 
+                                columnClass="col-xs-12"/>
                 <t:outputMoney label="general.label.TotalAmount" value="#{salesOrderHome.entity.total}" currency="#{salesOrderHome.entity.currency}" />
                 <ui:remove>
                 <t:outputText label="salesOrder.label.Revision" value="#{salesOrderHome.entity.revision}"  />

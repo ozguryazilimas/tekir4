@@ -13,9 +13,11 @@ import com.ozguryazilim.tekir.entities.AbstractPerson;
 import com.ozguryazilim.tekir.entities.RelatedContact;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
+import com.ozguryazilim.telve.entities.EntityBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureHandler;
 import com.ozguryazilim.telve.feature.FeatureRegistery;
+import com.ozguryazilim.telve.feature.FeatureUtils;
 import com.ozguryazilim.telve.messages.FacesMessages;
 import java.util.ArrayList;
 import java.util.List;
@@ -186,7 +188,10 @@ public class ContactHome extends FormBase<Contact, Long> {
         result.setPrimaryKey(getEntity().getId());
         return result;
     }
-    
+    // FeatureLink yönlendirmesi
+    public FeaturePointer getAllFeaturePointer(EntityBase contact){
+    		return FeatureUtils.getFeaturePointer(contact);
+    }
     /**
      * Belge sahipliğini değiştirme yetkisi var mı?
      * @return 

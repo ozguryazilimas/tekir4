@@ -20,8 +20,12 @@
 
             <div class="col-md-4 col-xs-12">
                 <t:accordion icon="fa fa-file" id="cx" label="general.label.ReleatedVouchers" columnClass="col-xs-12">
-                    <t:outputEntityLink label="general.label.Corporation" value="#{activityHome.entity.corporation}" view="/contact/contactView.xhtml" rendered="#{not empty activityHome.entity.corporation}" columnClass="col-xs-12"/>
-                    <t:outputEntityLink label="general.label.Person" value="#{activityHome.entity.person}" view="/contact/contactView.xhtml" rendered="#{not empty activityHome.entity.person}" columnClass="col-xs-12"/>
+                <t:outputFeatureLink label="general.label.Corporation" 
+                            value="#{featureController.getFeatureLink(activityHome.getAllFeaturePointer(activityHome.entity.corporation))}" 
+                            rendered="#{not empty activityHome.entity.corporation}" columnClass="col-xs-12"/>
+                <t:outputFeatureLink label="general.label.Person" 
+                            value="#{featureController.getFeatureLink(activityHome.getAllFeaturePointer(activityHome.entity.person))}" 
+                            rendered="#{not empty activityHome.entity.person}" columnClass="col-xs-12"/>
                     <t:outputFeatureLink label="activity.label.Regarding" value="#{featureController.getFeatureLink(activityHome.entity.regarding)}" rendered="#{not empty activityHome.entity.regarding}" columnClass="col-xs-12"/>
                 </t:accordion>
                 

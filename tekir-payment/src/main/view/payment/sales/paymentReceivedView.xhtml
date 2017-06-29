@@ -22,8 +22,12 @@
     <ui:define name="caption">
         <div class="row">
             <div class="col-md-6 col-xs-12">
-                <t:outputEntityLink label="general.label.Account" value="#{paymentReceivedHome.entity.account}" view="/contact/contactView.xhtml" />
-                <t:outputEntityLink label="financeAccount.label.Account" value="#{paymentReceivedHome.entity.financeAccount}" view="/finance/financeAccountView.xhtml" />                
+               <t:outputFeatureLink label="general.label.Account" 
+                            	value="#{featureController.getFeatureLink(paymentReceivedHome.getAllFeaturePointer(paymentReceivedHome.entity.account))}" 
+                                columnClass="col-xs-12"/>             
+                <t:outputFeatureLink label="general.label.FinanceAccount" 
+                                    value="#{featureController.getFeatureLink(paymentReceivedHome.getAllFeaturePointer(paymentReceivedHome.entity.financeAccount))}" 
+                                    columnClass="col-xs-12"/>               	            
                 <t:outputMoney label="general.label.Amount" value="#{paymentReceivedHome.entity.amount}" currency="#{paymentReceivedHome.entity.currency}" />
             </div>
             <div class="col-md-6 col-xs-12">

@@ -23,9 +23,10 @@
 				<div class="row">
 					<t:outputText label="general.label.Name"
 						value="#{commodityHome.entity.name}" columnClass="col-xs-8" />
-					<t:outputEntityLink label="general.label.Category"
-						value="#{commodityHome.entity.category}"
-						view="/commodity/commodityCategory" columnClass="col-xs-8" />
+					
+					<t:outputText label="general.label.Category"
+						value="#{commodityHome.entity.category.name}"  columnClass="col-xs-8" />
+
 				</div>
 			</div>
 

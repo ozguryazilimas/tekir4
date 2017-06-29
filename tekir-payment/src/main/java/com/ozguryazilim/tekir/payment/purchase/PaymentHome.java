@@ -10,6 +10,9 @@ import com.ozguryazilim.tekir.entities.ProcessType;
 import com.ozguryazilim.tekir.payment.PaymentHomeBase;
 import com.ozguryazilim.tekir.payment.PaymentMatcherViewModel;
 import com.ozguryazilim.telve.data.RepositoryBase;
+import com.ozguryazilim.telve.entities.EntityBase;
+import com.ozguryazilim.telve.entities.FeaturePointer;
+import com.ozguryazilim.telve.feature.FeatureUtils;
 import com.ozguryazilim.telve.forms.FormEdit;
 import java.math.BigDecimal;
 import java.util.List;
@@ -97,7 +100,5 @@ public class PaymentHome extends PaymentHomeBase<Payment>{
     @Override
     protected ProcessType getProcessType() {
         return ProcessType.PURCHASE;
-    }
-
-    
+    } 
 }

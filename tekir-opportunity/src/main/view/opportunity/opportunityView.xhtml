@@ -24,8 +24,12 @@
             <div class="col-md-6 col-xs-12">
                 <t:outputText label="opportunity.label.Topic" value="#{opportunityHome.entity.topic}" />
                 <t:outputMoney label="opportunity.label.Budget" value="#{opportunityHome.entity.budget}" currency="#{opportunityHome.entity.currency}" />
-                <t:outputEntityLink label="general.label.Account" value="#{opportunityHome.entity.account}" view="/contact/contactView.xhtml" />
-                <t:outputEntityLink label="contact.label.PrimaryContact" value="#{opportunityHome.entity.primaryContact}" view="/contact/contactView.xhtml" />
+                <t:outputFeatureLink label="general.label.Account" 
+                            value="#{featureController.getFeatureLink(opportunityHome.getAllFeaturePointer(opportunityHome.entity.account))}" 
+                            columnClass="col-xs-12"/>          
+                <t:outputFeatureLink label="contact.label.PrimaryContact" 
+                            value="#{featureController.getFeatureLink(opportunityHome.getAllFeaturePointer(opportunityHome.entity.primaryContact))}" 
+                            columnClass="col-xs-12"/>
                 <t:outputText label="general.label.Info" value="#{opportunityHome.entity.info}" columnClass="col-xs-12"/>
             </div>
             <div class="col-md-6 col-xs-12">
@@ -35,7 +39,6 @@
                 <t:outputText label="general.label.Code" value="#{opportunityHome.entity.code}" />
             </div>
         </div>  
-
 
     </ui:define>
 
