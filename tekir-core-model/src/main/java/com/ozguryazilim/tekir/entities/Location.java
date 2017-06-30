@@ -50,7 +50,7 @@ public class Location extends TreeNodeEntityBase<Location> {
     
     @Enumerated
     @Column( name = "TYPE")
-    private LocationType type;
+    private LocationType type = LocationType.LOCATION;
     
     //Lat-Lon biçminde? Bu sayede harita gösterilebilir?
     @Column( name = "LAT")

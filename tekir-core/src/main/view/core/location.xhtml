@@ -8,7 +8,9 @@
 
     <ui:param name="homeBean" value="#{locationHome}" />
     <ui:param name="itemCaption" value="caption" />
-    <ui:param name="renderActive" value="true" />
+    <ui:param name="renderActive" value="true" />    
+    <ui:param name="nodeTypes" value="'location' : { 'icon' : 'fa fa-map-marker'}, 'country' : { 'icon' : 'fa fa-flag-o'}, 'territory' : { 'icon' : 'fw-territory'}, 'city' : { 'icon' : 'fw-city'}, 'town' : { 'icon' : 'fw-town'}, 'district' : { 'icon' : 'fw-district'}" />
+
 
     <ui:define name="form">
         <div class="row">
@@ -20,7 +22,10 @@
             <t:inputCheckboxGroup label="general.label.Status">
                 <p:selectBooleanCheckbox value="#{locationHome.entity.active}" itemLabel="#{messages['general.label.Active']}" />
             </t:inputCheckboxGroup>
-            <t:inputEnum label="general.label.LocationType" hasNullValue="false" itemLabel="location.type." value="#{locationHome.entity.type}" required="true" />	
+            
+            <t:inputCombobox label="general.label.LocationType" value="#{locationHome.entity.type}" columnClass="col-xs-12">
+                <f:selectItems value="#{locationHome.getAvailableTypes()}" var="it" itemLabel="#{messages['location.type.'.concat(it)]}" itemValue="#{it}" />
+            </t:inputCombobox>            
         </div>  
     </ui:define> 
     
