@@ -1,0 +1,47 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"                
+                template="/layout/voucherEditBase.xhtml">
+
+    <ui:param name="homeBean" value="#{employeeCreditNoteHome}" />
+    <ui:param name="homeBeanName" value="employeeCreditNoteHome" />
+    <ui:param name="entity" value="#{employeeCreditNoteHome.entity}" />
+    <ui:param name="dontShowContentHeader" value="true" />
+
+
+    <ui:define name="form">
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <t:inputLookupDialog label="hr.label.Employee" value="#{homeBean.entity.employee}" 
+                                         lookupBean="#{employeeLookup}" lookupListener="#{homeBeanName}.entity.employee" 
+                                         lookupProfile="T:Employee" placeholder="#{messages['hr.info.Employee']}" required="true" />
+                    <t:inputLookupDialog label="general.label.FinanceAccount" value="#{homeBean.entity.financeAccount}" 
+                                         lookupBean="#{financeAccountLookup}" lookupListener="#{homeBeanName}.entity.financeAccount" 
+                                         placeholder="#{messages['general.info.FinanceAccount']}" required="true"/>
+                    <t:inputText label="voucher.label.Topic" value="#{quoteHome.entity.topic}" columnClass="col-xs-12"/>
+                    <t:inputCurrency label="general.label.Currency" value="#{homeBean.entity.currency}"  required="true"/>
+                    <t:inputMoney label="general.label.Amount" value="#{homeBean.entity.amount}"  currency="#{homeBean.entity.currency}" required="true"/>
+                    <t:inputDate label="voucher.label.Date" value="#{homeBean.entity.date}"/>
+                    <t:inputDate label="hr.label.PaymentDate" value="#{homeBean.entity.paymentDate}"/>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <t:inputText label="general.label.Code" value="#{homeBean.entity.code}" columnClass="col-md-4"/>
+                    <t:inputText label="voucher.label.VoucherNo" value="#{homeBean.entity.voucherNo}"  required="true" readonly="true" columnClass="col-md-4"/>
+                    <t:inputText label="voucher.label.ReferenceNo" value="#{homeBean.entity.referenceNo}" columnClass="col-md-4"/>
+                    <t:inputEnum label="employeeCreditNote.label.Type" value="#{homeBean.entity.type}" itemLabel="employeeCreditNote.type.label." hasNullValue="false" required="true"/>
+                    <t:inputLookupDialog label="voucher.label.Group" value="#{homeBean.entity.group}" caption="topic" lookupBean="#{voucherGroupLookup}" lookupListener="#{homeBeanName}.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" />
+                    <t:inputTextarea label="general.label.Info" value="#{homeBean.entity.info}" columnClass="col-xs-12"/>
+                </div>
+            </div>
+
+        </div>
+    </ui:define>
+
+</ui:composition>
