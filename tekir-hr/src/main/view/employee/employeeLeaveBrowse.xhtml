@@ -1,9 +1,10 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
-	xmlns:h="http://java.sun.com/jsf/html"
-	template="/layout/browseBase.xhtml">
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"                
+                template="/layout/voucherBrowseBase.xhtml">
 
 	<ui:param name="bean" value="#{employeeLeaveBrowse}" />
 	<ui:param name="advanceEnabled" value="true" />
@@ -15,55 +16,43 @@
 
 	<ui:define name="beforeColumns">
 		<p:column styleClass="actionColumn">
-			<i class="fa fa-user" />
+		    <ui:fragment rendered="#{employeeLeaveBrowse.employeeLeave ne null}">
+                <i class="fa fa-user" />
+            </ui:fragment>	
 		</p:column>
 	</ui:define>
 
-	<ui:define name="detailBar">
-		<div class="row">
-			<div class="text-muted col-xs-12">
-				<i class="fa fa-user" /> #{employeeLeaveBrowse.employee.name}
-				<ul class="list-inline text-sm text-muted">
-					<ui:repeat value="#{employeeLeaveBrowse.employee.contactRoles}"
-						var="item">
-						<li><i class="fa fa-tag" />
-							#{messages['contact.role.'.concat(item)]}</li>
-					</ui:repeat>
-				</ul>
-			</div>
-		</div>
-
-		<div class="row">
-			<t:outputText label="general.label.FirstName" value="#{employeeLeaveBrowse.employee.firstName}"  columnClass="col-xs-12" />
-			<t:outputText label="general.label.LastName" value="#{employeeLeaveBrowse.employee.lastName}" columnClass="col-xs-12"/>
-			<t:outputText label="general.label.Info" value="#{employeeLeaveBrowse.employee.info}" columnClass="col-xs-12" rendered="#{not empty employeeLeaveBrowse.employee.info}"/>
-            <t:outputText label="contact.label.JobTitle" value="#{employeeLeaveBrowse.employee.jobTitle}" columnClass="col-xs-12" rendered="#{not empty employeeLeaveBrowse.employee.jobTitle}"/>
-            <t:outputText label="contact.label.SSN" value="#{employeeLeaveBrowse.employee.ssn}" columnClass="col-xs-12" rendered="#{not empty employeeLeaveBrowse.employee.ssn}"/>
-           
-		</div>
-
-		<div class="row">
-			<t:outputText label="general.label.Category" value="#{employeeLeaveBrowse.employee.category.name}" columnClass="col-xs-12" rendered="#{not empty employeeLeaveBrowse.employee.category}" />
-			<t:outputText label="general.label.Industry" value="#{employeeLeaveBrowse.employee.industry.name}" columnClass="col-xs-12" rendered="#{not empty employeeLeaveBrowse.employee.industry}" />
-			<t:outputText label="general.label.Territory" value="#{employeeLeaveBrowse.employee.territory.name}" columnClass="col-xs-12" rendered="#{not empty employeeLeaveBrowse.employee.territory}" />
-		
-		</div>
+    <ui:define name="detailBar">
+        <div class="row">
+            <div class="text-muted col-xs-12">
+                <ui:fragment rendered="#{employeeLeaveBrowse.employeeLeave ne null}">
+	                <i class="fa fa-user" />
+	            </ui:fragment>	
+            </div>
+        </div>
 		
         <div class="row">
-            <t:outputText label="contact.label.PrimaryMobile" value="#{employeeLeaveBrowse.employee.primaryMobile.caption}" columnClass="col-xs-12" rendered="#{not empty employeeLeaveBrowse.employee.primaryMobile}"/>
-            <t:outputText label="contact.label.PrimaryPhone" value="#{employeeLeaveBrowse.employee.primaryPhone.caption}" columnClass="col-xs-12" rendered="#{not empty employeeLeaveBrowse.employee.primaryPhone}"/>
-            <t:outputText label="contact.label.PrimaryEmail" value="#{employeeLeaveBrowse.employee.primaryEmail.caption}" columnClass="col-xs-12" rendered="#{not empty employeeLeaveBrowse.employee.primaryEmail}"/>
-            <t:outputText label="contact.label.PrimaryAddress" value="#{employeeLeaveBrowse.employee.primaryAddress.caption}" columnClass="col-xs-12" rendered="#{not empty employeeLeaveBrowse.employee.primaryAddress}"/>
-            <t:outputText label="contact.label.PrimaryFax" value="#{employeeLeaveBrowse.employee.primaryFax.caption}" columnClass="col-xs-12" rendered="#{not empty employeeLeaveBrowse.employee.primaryFax}"/>
-        </div>
-    </ui:define>
-
-    <ui:define name="context-menu">
-        <li>
-            <p:commandLink action="#{employeeLeaveHome.newEmployeeLeave()}" styleClass="context-command" >
-                <h:outputText value=" #{messages['general.button.AddEmployeeLeave']}" />
-            </p:commandLink>
-        </li>
+        	<t:outputFeatureLink label="general.label.Name" 
+                            value="#{featureController.getFeatureLink(employeeLeaveBrowse.getAllFeaturePointer(employeeLeaveBrowse.employeeLeave.employee))}" 
+                            rendered="#{not empty employeeLeaveBrowse.employeeLeave.employee}" columnClass="col-xs-12"/>          
+	        <t:outputText label="contact.label.JobTitle" value="#{employeeLeaveBrowse.employeeLeave.employee.jobTitle}" columnClass="col-xs-12" rendered="#{not empty employeeLeaveBrowse.employeeLeave.employee.jobTitle}"/>
+			<t:outputText label="contact.label.SSN" value="#{employeeLeaveBrowse.employeeLeave.employee.ssn}" columnClass="col-xs-12" rendered="#{not empty employeeLeaveBrowse.employeeLeave.employee.ssn}"/>
+      	
+      	</div>   
+      	
+      	<div class="row">
+            <t:outputText label="general.label.Category" value="#{employeeLeaveBrowse.employeeLeave.employee.category.name}" columnClass="col-xs-12" rendered="#{not empty employeeLeaveBrowse.employeeLeave.employee.category}"/>
+            <t:outputText label="general.label.Industry" value="#{employeeLeaveBrowse.employeeLeave.employee.industry.name}" columnClass="col-xs-12" rendered="#{not empty employeeLeaveBrowse.employeeLeave.employee.industry}"/>
+            <t:outputText label="general.label.Territory" value="#{employeeLeaveBrowse.employeeLeave.employee.territory.name}" columnClass="col-xs-12" rendered="#{not empty employeeLeaveBrowse.employeeLeave.employee.territory}"/>
+        </div> 
+        
+       	<div class="row">
+            <t:outputText label="contact.label.PrimaryMobile" value="#{employeeLeaveBrowse.employeeLeave.employee.primaryMobile.caption}" columnClass="col-xs-12" rendered="#{not empty employeeLeaveBrowse.employeeLeave.employee.primaryMobile}"/>
+            <t:outputText label="contact.label.PrimaryPhone" value="#{employeeLeaveBrowse.employeeLeave.employee.primaryPhone.caption}" columnClass="col-xs-12" rendered="#{not empty employeeLeaveBrowse.employeeLeave.employee.primaryPhone}"/>
+            <t:outputText label="contact.label.PrimaryEmail" value="#{employeeLeaveBrowse.employeeLeave.employee.primaryEmail.caption}" columnClass="col-xs-12" rendered="#{not empty employeeLeaveBrowse.employeeLeave.employee.primaryEmail}"/>
+            <t:outputText label="contact.label.PrimaryAddress" value="#{employeeLeaveBrowse.employeeLeave.employee.primaryAddress.caption}" columnClass="col-xs-12" rendered="#{not empty employeeLeaveBrowse.employeeLeave.employee.primaryAddress}"/>
+      </div>                		
+		
     </ui:define>
 
 

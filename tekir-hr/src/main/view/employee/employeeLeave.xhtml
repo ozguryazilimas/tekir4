@@ -1,30 +1,24 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
-	xmlns:p="http://primefaces.org/ui" template="/layout/editBase.xhtml">
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"                
+                template="/layout/voucherEditBase.xhtml">
 
-	<ui:param name="leaveBean" value="#{employeeLeaveHome}" />
+	<ui:param name="homeBean" value="#{employeeLeaveHome}" />
 	<ui:param name="entity" value="#{employeeLeaveHome.entity}" />
 	<ui:param name="dontShowContentHeader" value="true" />
 
-	<ui:define name="customHeader">
-		<section class="content-header">
-			<ui:fragment rendered="#{viewState ne ''}">
-				<div class="pull-right">#{viewState}</div>
-			</ui:fragment>
-			<small class="text-muted">#{
-				messages[pageTitleResolver.pageTitle] }</small>
-			<h1>#{messages['contact.class.'.concat(employeeLeaveHome.entity.class.simpleName)]}</h1>
-		</section>
-	</ui:define>
+	
 	<ui:define name="form">
 		<div class="row">
 			<div class="col-md-6 col-xs-12">
 				<div class="row">
-					 <t:inputLookupDialog label="hr.label.Employee" value="#{employeeLeaveHome.entity.employee}" lookupBean="#{contactLookup}" lookupListener="employeeLeaveHome.entity.employee" placeholder="#{messages['hr.info.Person']}" lookupProfile="T:Employee"/>	               		
-                     <t:inputText label="hr.label.LeaveDay" value="#{employeeLeaveHome.entity.leaveDay}" columnClass="col-xs-6" required="true"/>
+					 <t:inputLookupDialog label="hr.label.Employee" value="#{employeeLeaveHome.entity.employee}" 
+					 lookupBean="#{employeeLookup}" lookupListener="employeeLeaveHome.entity.employee" 
+					 placeholder="#{messages['hr.info.Employee']}" lookupProfile="T:Employee"  required="true"/>	               		
+                     <t:inputNumber label="hr.label.LeaveDay" value="#{employeeLeaveHome.entity.leaveDay}" columnClass="col-xs-6" required="true"/>
 		              
 				</div>
 				
@@ -33,7 +27,32 @@
 		            <t:inputDate label="hr.label.EndDate" value="#{employeeLeaveHome.entity.endDate}" columnClass="col-xs-6" required="true"/>
 		                   
 		   		</div> 
+						   		
+		   		<div class="row">
+		           	<t:inputCheckboxGroup label="hr.label.Paid" columnClass="col-xs-6">
+	        			<p:selectBooleanCheckbox value="#{employeeLeaveHome.entity.paid}" itemLabel="#{messages['general.label.Active']}"/>
+	        		</t:inputCheckboxGroup> 
+	        		<t:inputCheckboxGroup label="hr.label.Annual" columnClass="col-xs-6">
+	        			<p:selectBooleanCheckbox value="#{employeeLeaveHome.entity.annual}" itemLabel="#{messages['general.label.Active']}"/>
+	        		</t:inputCheckboxGroup>
+	        		
+		   		</div>
+			</div>    
+			 
+			<div class="col-md-6 col-xs-12">
+                <div class="row">
+                	<t:inputText label="voucher.label.ReferenceNo" value="#{employeeLeaveHome.entity.referenceNo}" columnClass="col-md-6"/>
+                	<t:inputText label="general.label.Code" value="#{employeeLeaveHome.entity.code}" />
+                    <t:inputLookupDialog label="voucher.label.Group" value="#{employeeLeaveHome.entity.group}" caption="topic" lookupBean="#{voucherGroupLookup}" lookupListener="employeeLeaveHome.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" columnClass="col-xs-6"/>
+                    <t:inputDate label="voucher.label.Date" value="#{opportunityHome.entity.date}" columnClass="col-md-6"/>
+                    <t:inputTextarea label="general.label.Info" value="#{employeeLeaveHome.entity.info}" columnClass="col-xs-12"/>
+                    <ui:remove>
+                    <t:inputText label="voucher.label.Process" value="#{employeeLeaveHome.entity.process.processNo}" columnClass="col-xs-6"/>
+                    </ui:remove>
+                   
+                </div>
 			</div>
+			
 		</div>
 	</ui:define>
 </ui:composition>
