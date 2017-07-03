@@ -1,0 +1,39 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+	xmlns:p="http://primefaces.org/ui" template="/layout/editBase.xhtml">
+
+	<ui:param name="leaveBean" value="#{employeeLeaveHome}" />
+	<ui:param name="entity" value="#{employeeLeaveHome.entity}" />
+	<ui:param name="dontShowContentHeader" value="true" />
+
+	<ui:define name="customHeader">
+		<section class="content-header">
+			<ui:fragment rendered="#{viewState ne ''}">
+				<div class="pull-right">#{viewState}</div>
+			</ui:fragment>
+			<small class="text-muted">#{
+				messages[pageTitleResolver.pageTitle] }</small>
+			<h1>#{messages['contact.class.'.concat(employeeLeaveHome.entity.class.simpleName)]}</h1>
+		</section>
+	</ui:define>
+	<ui:define name="form">
+		<div class="row">
+			<div class="col-md-6 col-xs-12">
+				<div class="row">
+					 <t:inputLookupDialog label="hr.label.Employee" value="#{employeeLeaveHome.entity.employee}" lookupBean="#{contactLookup}" lookupListener="employeeLeaveHome.entity.employee" placeholder="#{messages['hr.info.Person']}" lookupProfile="T:Employee"/>	               		
+                     <t:inputText label="hr.label.LeaveDay" value="#{employeeLeaveHome.entity.leaveDay}" columnClass="col-xs-6" required="true"/>
+		              
+				</div>
+				
+				<div class="row">
+		         	<t:inputDate label="hr.label.StartDate" value="#{employeeLeaveHome.entity.startDate}" columnClass="col-xs-6" required="true"/>
+		            <t:inputDate label="hr.label.EndDate" value="#{employeeLeaveHome.entity.endDate}" columnClass="col-xs-6" required="true"/>
+		                   
+		   		</div> 
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
