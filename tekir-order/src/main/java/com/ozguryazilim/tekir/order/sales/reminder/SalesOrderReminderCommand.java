@@ -5,7 +5,7 @@
  */
 package com.ozguryazilim.tekir.order.sales.reminder;
 
-import com.ozguryazilim.tekir.order.reminder.OrderReminderCommandProperty;
+import com.ozguryazilim.tekir.order.reminder.OrderReminderCommandType;
 import com.ozguryazilim.telve.messagebus.command.AbstractStorableCommand;
 
 /**
@@ -17,7 +17,7 @@ import com.ozguryazilim.telve.messagebus.command.AbstractStorableCommand;
  * @version 4.0.0
  * @since 2017-06-28
  * @see AbstractStorableCommand
- * @see OrderReminderCommandProperty
+ * @see OrderReminderCommandType
  */
 public class SalesOrderReminderCommand extends AbstractStorableCommand{
     
@@ -27,24 +27,24 @@ public class SalesOrderReminderCommand extends AbstractStorableCommand{
     private String interval;
     
     /**
-     * Satış siparişinin yaklaşan veya geçen siparişler için özelliği
+     * Satış siparişinin yaklaşan veya geçen siparişler durumu için tip
      */
-    private OrderReminderCommandProperty property;
+    private OrderReminderCommandType type;
     
     /**
-     * Satış Siparişi özelliğinin alınması
-     * @return {@link SalesOrderReminderCommand#property}
+     * Satış Siparişi tipinin alınması
+     * @return {@link SalesOrderReminderCommand#type}
      */
-    public OrderReminderCommandProperty getProperty() {
-        return property;
+    public OrderReminderCommandType getType() {
+        return type;
     }
     
     /**
-     * Satış Siparişi özelliğinin ayarlanması
+     * Satış Siparişi tipinin ayarlanması
      * @param interval {@link SalesOrderReminderCommand#interval}
      */
-    public void setProperty(OrderReminderCommandProperty property) {
-        this.property = property;
+    public void setType(OrderReminderCommandType type) {
+        this.type = type;
     }
     
     /**

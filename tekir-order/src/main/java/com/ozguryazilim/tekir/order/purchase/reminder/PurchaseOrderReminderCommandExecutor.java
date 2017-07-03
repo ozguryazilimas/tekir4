@@ -7,7 +7,7 @@ package com.ozguryazilim.tekir.order.purchase.reminder;
 
 import com.ozguryazilim.tekir.entities.PurchaseOrder;
 import com.ozguryazilim.tekir.order.purchase.PurchaseOrderRepository;
-import com.ozguryazilim.tekir.order.reminder.OrderReminderCommandProperty;
+import com.ozguryazilim.tekir.order.reminder.OrderReminderCommandType;
 import com.ozguryazilim.telve.messagebus.command.AbstractCommandExecuter;
 import com.ozguryazilim.telve.messagebus.command.CommandExecutor;
 import com.ozguryazilim.telve.messagebus.command.CommandSender;
@@ -70,6 +70,8 @@ public class PurchaseOrderReminderCommandExecutor extends AbstractCommandExecute
      * @see NotificationCommand
      * @see PurchaseOrderReminderCommand#getInterval() 
      * @see DateUtils#getDateBeforePeriod(java.lang.String, java.util.Date)
+     * @see DateUtils#getDateAfterPeriod(java.lang.String, java.util.Date)
+     * @see OrderReminderCommandType
      * @see PurchaseOrderRepository#findUnclosedOrder(java.util.Date) 
      * @see FormatedMessage#getFormatedMessage(java.lang.String, java.lang.Object[]) 
      * @see CommandSender#sendCommand(com.ozguryazilim.telve.messagebus.command.Command) 
@@ -82,10 +84,12 @@ public class PurchaseOrderReminderCommandExecutor extends AbstractCommandExecute
 
         Date date = null;
         
-        if(OrderReminderCommandProperty.UPCOMING == command.getProperty()) {
+        // Sipariş komutu tipi ve aralığına göre şimdiki zamanla hangi tarihin arasında
+        // arama yapılacağını hesaplıyoruz.
+        if(OrderReminderCommandType.UPCOMING == command.getType()) {
             date = DateUtils.getDateAfterPeriod(command.getInterval(), new Date());
         } 
-        else if(OrderReminderCommandProperty.EXPIRED == command.getProperty()) {
+        else if(OrderReminderCommandType.EXPIRED == command.getType()) {
             date = DateUtils.getDateBeforePeriod(command.getInterval(), new Date());
         }
 

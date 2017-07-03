@@ -5,7 +5,7 @@
  */
 package com.ozguryazilim.tekir.order.sales.reminder;
 
-import com.ozguryazilim.tekir.order.reminder.OrderReminderCommandProperty;
+import com.ozguryazilim.tekir.order.reminder.OrderReminderCommandType;
 import com.ozguryazilim.tekir.entities.SalesOrder;
 import com.ozguryazilim.tekir.order.sales.SalesOrderRepository;
 import com.ozguryazilim.telve.messagebus.command.AbstractCommandExecuter;
@@ -71,7 +71,7 @@ public class SalesOrderReminderCommandExecutor extends AbstractCommandExecuter<S
      * @see SalesOrderReminderCommand#getInterval() 
      * @see DateUtils#getDateBeforePeriod(java.lang.String, java.util.Date)
      * @see DateUtils#getDateAfterPeriod(java.lang.String, java.util.Date)
-     * @see OrderReminderCommandProperty
+     * @see OrderReminderCommandType
      * @see SalesOrderRepository#findUnclosedOrder(java.util.Date) 
      * @see FormatedMessage#getFormatedMessage(java.lang.String, java.lang.Object[]) 
      * @see CommandSender#sendCommand(com.ozguryazilim.telve.messagebus.command.Command) 
@@ -84,10 +84,12 @@ public class SalesOrderReminderCommandExecutor extends AbstractCommandExecuter<S
         
         Date date = null;
         
-        if(OrderReminderCommandProperty.UPCOMING == command.getProperty()) {
+        // Sipariş komutu tipi ve aralığına göre şimdiki zamanla hangi tarihin arasında
+        // arama yapılacağını hesaplıyoruz.
+        if(OrderReminderCommandType.UPCOMING == command.getType()) {
             date = DateUtils.getDateAfterPeriod(command.getInterval(), new Date());
         } 
-        else if(OrderReminderCommandProperty.EXPIRED == command.getProperty()) {
+        else if(OrderReminderCommandType.EXPIRED == command.getType()) {
             date = DateUtils.getDateBeforePeriod(command.getInterval(), new Date());
         }
 
