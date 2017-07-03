@@ -14,13 +14,14 @@
 	<ui:param name="showQuickSearch" value="true" />
 	<ui:param name="showDetailPanel" value="true" />
 
-	<ui:define name="beforeColumns">
-		<p:column styleClass="actionColumn">
-		    <ui:fragment rendered="#{employeeLeaveBrowse.employeeLeave ne null}">
-                <i class="fa fa-user" />
-            </ui:fragment>	
-		</p:column>
-	</ui:define>
+    <ui:define name="beforeColumns">
+        <p:column styleClass="actionColumn">
+            <i class="fa #{item.state.type eq 'CLOSE' ? 'fa-lock' : 'fa-unlock-alt' }" />
+        </p:column>
+        <p:column styleClass="actionColumn">
+            <i class="fa #{item.state.effect eq 'POSITIVE' ? 'fa-check' : item.state.effect eq 'NEGATIVE' ? 'fa-ban' : '' } #{item.state.effect eq 'POSITIVE' ? 'text-success' : item.state.effect eq 'NEGATIVE' ? 'text-danger' : '' }" />
+        </p:column>
+    </ui:define>
 
     <ui:define name="detailBar">
         <div class="row">

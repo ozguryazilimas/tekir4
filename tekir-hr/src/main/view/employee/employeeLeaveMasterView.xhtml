@@ -16,8 +16,8 @@
                       		value="#{featureController.getFeatureLink(employeeLeaveHome.getAllFeaturePointer(employeeLeaveHome.entity.employee))}" columnClass="col-xs-12"/>      
 		        		<t:outputDate label="hr.label.StartDate" value="#{employeeLeaveHome.entity.startDate}" columnClass="col-xs-12"/>
 			         	<t:outputDate label="hr.label.EndDate" value="#{employeeLeaveHome.entity.endDate}" columnClass="col-xs-12"/>
-			            <t:outputBoolean label="hr.label.Paid" itemLabel="general.boolean.active."  value="#{employeeLeaveHome.entity.paid}" columnClass="col-xs-12"/>
-			            <t:outputBoolean label="hr.label.Annual" itemLabel="general.boolean.active."  value="#{employeeLeaveHome.entity.annual}" columnClass="col-xs-12"/>	
+			            <t:outputBoolean label="hr.label.Paid" itemLabel="general.boolean.yesno."  value="#{employeeLeaveHome.entity.paid}" columnClass="col-xs-12"/>
+			            <t:outputBoolean label="hr.label.Annual" itemLabel="general.boolean.yesno."  value="#{employeeLeaveHome.entity.annual}" columnClass="col-xs-12"/>	
 	      				<t:outputText label="hr.label.LeaveDay" value="#{employeeLeaveHome.entity.leaveDay}" columnClass="col-xs-12"/>
 		       
 		        </t:accordion>   
