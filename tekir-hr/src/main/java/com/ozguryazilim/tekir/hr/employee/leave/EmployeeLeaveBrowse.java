@@ -25,6 +25,9 @@ import com.ozguryazilim.tekir.hr.employee.EmployeeViewModel;
 import com.ozguryazilim.tekir.voucher.VoucherBrowseBase;
 import com.ozguryazilim.tekir.voucher.VoucherFormBase;
 import com.ozguryazilim.tekir.voucher.VoucherRepositoryBase;
+import com.ozguryazilim.tekir.voucher.columns.VoucherStateColumn;
+import com.ozguryazilim.tekir.voucher.filter.VoucherStateFilter;
+import com.ozguryazilim.tekir.voucher.filter.VoucherStateTypeFilter;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.EntityBase;
@@ -46,6 +49,7 @@ import com.ozguryazilim.telve.query.filters.FilterOperand;
 import com.ozguryazilim.telve.query.filters.NumberFilter;
 import com.ozguryazilim.telve.query.filters.StringFilter;
 import com.ozguryazilim.telve.query.filters.SubStringFilter;
+import com.ozguryazilim.telve.query.filters.UserFilter;
 
 /**
  *
@@ -66,24 +70,47 @@ public class EmployeeLeaveBrowse extends VoucherBrowseBase<EmployeeLeave, Employ
 	@Override
 	protected void buildQueryDefinition(QueryDefinition<EmployeeLeave, EmployeeLeaveViewModel> queryDefinition) {
 		
-		BooleanFilter bf = new BooleanFilter<>(EmployeeLeave_.annual, "hr.label.Annual", "general.boolean.yes.");
-		bf.setOperand(FilterOperand.All);		
+		BooleanFilter p = new BooleanFilter<>(EmployeeLeave_.paid, "hr.label.Paid", "general.boolean.yesno.");
+		p.setOperand(FilterOperand.All);		
+		BooleanFilter an = new BooleanFilter<>(EmployeeLeave_.annual, "hr.label.Annual", "general.boolean.yesno.");
+		an.setOperand(FilterOperand.All);		
 		
         queryDefinition
+        		.addFilter(new StringFilter<>(EmployeeLeave_.voucherNo, "voucher.label.VoucherNo"))
         		.addFilter(new SubStringFilter<>(EmployeeLeave_.employee, Contact_.name,  "hr.label.Employee"))
+        		.addFilter(p)
+        		.addFilter(an)
         		.addFilter(new DateFilter<>(EmployeeLeave_.startDate, "hr.label.StartDate",FilterOperand.All,DateValueType.LastMonth))
         		.addFilter(new DateFilter<>(EmployeeLeave_.endDate, "hr.label.EndDate",FilterOperand.All,DateValueType.NextMonth))	
-        		.addFilter(bf)
-        		.addFilter(new IntegerFilter<>(EmployeeLeave_.leaveDay,"hr.label.LeaveDay"));
+        		.addFilter(new IntegerFilter<>(EmployeeLeave_.leaveDay,"hr.label.LeaveDay"))
+        		.addFilter(new StringFilter<>(VoucherBase_.code, "voucher.label.Code"))
+        		.addFilter(new StringFilter<>(VoucherBase_.info, "voucher.label.Info"))
+        		.addFilter(new StringFilter<>(VoucherBase_.topic, "voucher.label.Topic"))
+                .addFilter(new VoucherStateFilter<>(VoucherBase_.state, getHome().getStateConfig().getStates(), "general.label.State"))
+                .addFilter(new VoucherStateTypeFilter<>(VoucherBase_.state, "voucher.label.StateType"))
+                .addFilter(new StringFilter<>(VoucherBase_.stateReason, "voucher.label.StateReason"))
+                .addFilter(new UserFilter<>(VoucherBase_.owner, "voucher.label.Owner"))
+        		.addFilter(new DateFilter<>(VoucherBase_.date, "voucher.label.Date",FilterOperand.All,DateValueType.NextMonth));
         		
 		queryDefinition
 				.addColumn(new LinkColumn<>(EmployeeLeave_.voucherNo, "voucher.label.VoucherNo"), true)
 				.addColumn(new SubTextColumn<>(EmployeeLeave_.employee, Contact_.name, "general.label.Name"), true)
-				.addColumn(new BooleanColumn<>(EmployeeLeave_.paid, "hr.label.Paid", "general.boolean.active."),true)
-				.addColumn(new BooleanColumn<>(EmployeeLeave_.annual, "hr.label.Annual", "general.boolean.active."),true)
+				.addColumn(new BooleanColumn<>(EmployeeLeave_.paid, "hr.label.Paid", "general.boolean.yesno."),false)
+				.addColumn(new BooleanColumn<>(EmployeeLeave_.annual, "hr.label.Annual", "general.boolean.yesno."),false)
 				.addColumn(new DateColumn<>(EmployeeLeave_.startDate, "hr.label.StartDate"), true)
 				.addColumn(new DateColumn<>(EmployeeLeave_.endDate, "hr.label.EndDate"), true)
-				.addColumn(new TextColumn<>(EmployeeLeave_.leaveDay, "hr.label.LeaveDay"), true);
+				.addColumn(new TextColumn<>(EmployeeLeave_.leaveDay, "hr.label.LeaveDay"), true)
+                .addColumn(new VoucherStateColumn<>( VoucherBase_.state, "general.label.State"), false)
+		        .addColumn(new TextColumn<>(VoucherBase_.stateReason, "voucher.label.StateReason"), false)
+	            .addColumn(new TextColumn<>(VoucherBase_.stateInfo, "voucher.label.StateInfo"), false)
+				.addColumn(new TextColumn<>(VoucherBase_.owner, "voucher.label.Owner"), false)
+				.addColumn(new TextColumn<>(VoucherBase_.referenceNo, "voucher.label.ReferenceNo"), false)
+                .addColumn(new TextColumn<>(VoucherBase_.code, "voucher.label.Code"), false)
+                .addColumn(new TextColumn<>(VoucherBase_.info, "voucher.label.Info"), false)
+                .addColumn(new TextColumn<>(VoucherBase_.stateReason, "voucher.label.StateReason"), false)
+                .addColumn(new TextColumn<>(VoucherBase_.stateInfo, "voucher.label.StateInfo"), false);
+    
+				
 
 	}
 
