@@ -52,7 +52,6 @@ public class Location extends TreeNodeEntityBase<Location> {
     @Column( name = "TYPE")
     private LocationType type = LocationType.LOCATION;
     
-    //Lat-Lon biçminde? Bu sayede harita gösterilebilir?
     @Column( name = "LAT")
     private Double latitude;
     

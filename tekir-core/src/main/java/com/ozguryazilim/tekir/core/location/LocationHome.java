@@ -38,7 +38,6 @@ public class LocationHome extends TreeBase<Location> {
         
         @Override
 	public String getNodeType(Location node) {
-		// TODO Auto-generated method stub
 		return node.getType().toString().toLowerCase();
 	}
 }
