@@ -49,7 +49,8 @@
             <div class="col-md-4 col-xs-12">
         
                 <ui:include src="/activities/activityWidget.xhtml">
-                    <ui:param name="employee" value="#{employeeLeaveHome.employee}" />
+                    <ui:param name="person" value="#{employeeLeaveHome.entity.employee}" />    
+                    <ui:param name="corporation" value="#{employeeLeaveHome.entity.employee.corporation}" />        
                     <ui:param name="feature" value="#{employeeLeaveHome.featurePointer}" />
                     <ui:param name="attached" value="Feature" />
                 </ui:include>
@@ -60,13 +61,10 @@
 
                 <ui:include src="/feeds/feedWidget.xhtml">
                     <ui:param name="feature" value="#{employeeLeaveHome.featureClass.simpleName}" />
-                    <ui:param name="pk" value="#{opportunityHome.entity.id}" />
+                    <ui:param name="pk" value="#{employeeLeaveHome.entity.id}" />
                 </ui:include>
-
+				
             </div>
-
-
-			 
 		</div>
 				 
 	</ui:define>
