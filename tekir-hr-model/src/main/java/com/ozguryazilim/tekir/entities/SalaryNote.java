@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.tekir.entities;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Date;
@@ -59,6 +60,12 @@ public class SalaryNote extends VoucherBase{
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<SalaryNoteItem> items = new ArrayList<>();
 
+    @Column(name = "TOT_AMT")
+    private BigDecimal total = BigDecimal.ZERO;
+    
+    @Column(name = "LOCAL_AMOUNT")
+    private BigDecimal localAmount = BigDecimal.ZERO;
+    
     public Long getId() {
         return id;
     }
@@ -98,7 +105,20 @@ public class SalaryNote extends VoucherBase{
     public void setItems(List<SalaryNoteItem> items) {
         this.items = items;
     }
-    
-    
-    
+
+	public BigDecimal getTotal() {
+		return total;
+	}
+
+	public void setTotal(BigDecimal total) {
+		this.total = total;
+	}
+
+	public BigDecimal getLocalAmount() {
+		return localAmount;
+	}
+
+	public void setLocalAmount(BigDecimal localAmount) {
+		this.localAmount = localAmount;
+	}
 }
