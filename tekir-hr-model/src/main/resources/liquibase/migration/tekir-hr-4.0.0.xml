@@ -109,4 +109,14 @@
     <changeSet author="oyas (generated)" id="1497633481705-5">
         <addForeignKeyConstraint baseColumnNames="MASTER_ID" baseTableName="THR_SALARY_NOTE_ITEM" constraintName="FK_SALIT_SAL" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="THR_SALARY_NOTE"/>
     </changeSet>
+   	<changeSet author="oktay (generated)" id="1499260052946-1">
+        <addColumn tableName="THR_SALARY_NOTE">
+            <column name="LOCAL_AMOUNT" type="decimal(19, 2)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oktay (generated)" id="1499260052946-2">
+        <addColumn tableName="THR_SALARY_NOTE">
+            <column name="TOT_AMT" type="decimal(19, 2)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
