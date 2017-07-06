@@ -59,7 +59,7 @@ public interface EmployeePages extends Pages {
 	}
     
 	@View
-	@SecuredPage("salaryNoteBrowse")
+	@SecuredPage("salaryNote")
 	@PageTitle("module.caption.SalaryNoteBrowse")
 	@Navigation(label = "module.caption.SalaryNoteBrowse", feature = SalaryNoteFeature.class, section = HRNavigationSection.class)
 	class SalaryNoteBrowse implements EmployeePages {
