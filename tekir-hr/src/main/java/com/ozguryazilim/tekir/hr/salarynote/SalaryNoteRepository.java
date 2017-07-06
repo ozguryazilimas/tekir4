@@ -151,36 +151,4 @@ public abstract class SalaryNoteRepository extends VoucherRepositoryBase<SalaryN
 
     }
     
-    public List<SalaryNoteViewModel> findExiperedSalesNotes(Date date) {
-        CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
-        //Geriye ViewModel dönecek cq'yu ona göre oluşturuyoruz.
-        CriteriaQuery<SalaryNoteViewModel> criteriaQuery = criteriaBuilder.createQuery(SalaryNoteViewModel.class);
-
-        //From 
-        Root<SalaryNote> from = criteriaQuery.from(SalaryNote.class);
-        Join<SalaryNote, VoucherGroup> joinGroup = from.join(SalaryNote_.group, JoinType.LEFT);
-        Join<SalaryNote, FinanceAccount> joinFinancAccount = from.join(SalaryNote_.financeAccount, JoinType.LEFT);
-
-        //Sonuç filtremiz
-        buildVieModelSelect(criteriaQuery, from);
-
-        //Filtreleri ekleyelim.
-        List<Predicate> predicates = new ArrayList<>();
-
-        //Tarih verilen parametreden küçük ve eşit olanlar.
-        predicates.add(criteriaBuilder.lessThanOrEqualTo(from.get(VoucherBase_.date), date));
-        
-        //Olumlu ya da Olumsuz kapanmamış olanlar.
-        predicates.add(criteriaBuilder.notLike(from.get(VoucherBase_.state).as(String.class), "CLOSE-%"));
-        
-        //Oluşan filtreleri sorgumuza ekliyoruz
-        criteriaQuery.where(predicates.toArray(new Predicate[]{}));
-
-        //Haydi bakalım sonuçları alalım
-        TypedQuery<SalaryNoteViewModel> typedQuery = entityManager().createQuery(criteriaQuery);
-        List<SalaryNoteViewModel> resultList = typedQuery.getResultList();
-
-        return resultList;
-    }
-    
 }
