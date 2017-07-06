@@ -1,0 +1,25 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+	xmlns:p="http://primefaces.org/ui"
+	template="/layout/voucherBrowseBase.xhtml">
+
+	<ui:param name="bean" value="#{salaryNoteBrowse}" />
+    <ui:param name="advanceEnabled" value="true" />
+    <ui:param name="saveEnabled" value="true" />
+    <ui:param name="filterEnabled" value="true" />
+    <ui:param name="permission" value="salaryNote" />
+    <ui:param name="showQuickSearch" value="true" />
+
+    <ui:define name="beforeColumns">
+        <p:column styleClass="actionColumn">
+            <i class="fa #{item.state.type eq 'CLOSE' ? 'fa-lock' : 'fa-unlock-alt' }" />
+        </p:column>
+        <p:column styleClass="actionColumn">
+            <i class="fa #{item.state.effect eq 'POSITIVE' ? 'fa-check' : item.state.effect eq 'NEGATIVE' ? 'fa-ban' : '' } #{item.state.effect eq 'POSITIVE' ? 'text-success' : item.state.effect eq 'NEGATIVE' ? 'text-danger' : '' }" />
+        </p:column>
+    </ui:define>
+    
+</ui:composition>
