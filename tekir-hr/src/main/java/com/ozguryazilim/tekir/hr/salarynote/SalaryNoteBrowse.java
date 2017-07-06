@@ -7,16 +7,16 @@ package com.ozguryazilim.tekir.hr.salarynote;
 
 import javax.inject.Inject;
 
+import com.ozguryazilim.tekir.entities.FinanceAccount_;
 import com.ozguryazilim.tekir.entities.SalaryNote;
 import com.ozguryazilim.tekir.entities.SalaryNote_;
-import com.ozguryazilim.tekir.entities.VoucherGroup_;
 import com.ozguryazilim.tekir.entities.VoucherBase_;
-import com.ozguryazilim.tekir.entities.FinanceAccount_;
 import com.ozguryazilim.tekir.voucher.VoucherBrowseBase;
 import com.ozguryazilim.tekir.voucher.VoucherFormBase;
 import com.ozguryazilim.tekir.voucher.VoucherRepositoryBase;
 import com.ozguryazilim.tekir.voucher.columns.VoucherStateColumn;
 import com.ozguryazilim.telve.auth.Identity;
+import com.ozguryazilim.telve.forms.Browse;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.columns.LinkColumn;
 import com.ozguryazilim.telve.query.columns.MoneyColumn;
@@ -26,19 +26,19 @@ import com.ozguryazilim.telve.query.filters.DateFilter;
 import com.ozguryazilim.telve.query.filters.DateValueType;
 import com.ozguryazilim.telve.query.filters.FilterOperand;
 import com.ozguryazilim.telve.query.filters.StringFilter;
-import com.ozguryazilim.telve.query.filters.UserFilter;
 
 /**
  * @author oktay
  *
  */
+@Browse( feature=SalaryNoteFeature.class )
 public class SalaryNoteBrowse extends VoucherBrowseBase<SalaryNote , SalaryNoteViewModel>{
 
 	@Inject
 	private Identity identity;
 
 	@Inject
-	SalaryNoteRepository repository;
+	private SalaryNoteRepository repository;
 	
 	@Inject
 	private SalaryNoteHome home;
