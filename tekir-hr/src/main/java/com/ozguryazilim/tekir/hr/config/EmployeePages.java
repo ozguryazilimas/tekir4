@@ -6,6 +6,7 @@
 package com.ozguryazilim.tekir.hr.config;
 
 import com.ozguryazilim.tekir.hr.employee.EmployeeFeature;
+import com.ozguryazilim.tekir.hr.salarynote.SalaryNoteFeature;
 import com.ozguryazilim.telve.auth.SecuredPage;
 import com.ozguryazilim.telve.nav.Navigation;
 import com.ozguryazilim.telve.view.PageTitle;
@@ -57,4 +58,16 @@ public interface EmployeePages extends Pages {
 				EmployeePages {
 	}
     
+	@View
+	@SecuredPage("salaryNoteBrowse")
+	@PageTitle("module.caption.SalaryNoteBrowse")
+	@Navigation(label = "module.caption.SalaryNoteBrowse", feature = SalaryNoteFeature.class, section = HRNavigationSection.class)
+	class SalaryNoteBrowse implements EmployeePages {
+	}
+
+	@View
+	@SecuredPage("salaryNote")
+	@PageTitle("module.caption.salaryNote")
+	class SalaryNote implements EmployeePages {
+	}
 }
