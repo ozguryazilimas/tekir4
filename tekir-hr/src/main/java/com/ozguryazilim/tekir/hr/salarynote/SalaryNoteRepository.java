@@ -31,8 +31,6 @@ import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.tekir.entities.SalaryNote_;
 import com.ozguryazilim.tekir.entities.VoucherGroup_;
 import com.ozguryazilim.tekir.entities.VoucherBase_;
-import com.ozguryazilim.tekir.entities.Contact_;
-import com.ozguryazilim.tekir.entities.Process_;
 import com.ozguryazilim.tekir.entities.FinanceAccount_;
 import com.ozguryazilim.tekir.voucher.VoucherRepositoryBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
@@ -132,7 +130,7 @@ public abstract class SalaryNoteRepository extends VoucherRepositoryBase<SalaryN
             predicates.add(
                     criteriaBuilder.or(
                             criteriaBuilder.like(from.get(VoucherBase_.topic), "%" + searchText + "%"),
-                            criteriaBuilder.like(from.get(VoucherBase_.voucherNo), "%" + searchText + "%"))
+                            criteriaBuilder.like(from.get(SalaryNote_.voucherNo), "%" + searchText + "%"))
             );
         }
 
@@ -160,7 +158,7 @@ public abstract class SalaryNoteRepository extends VoucherRepositoryBase<SalaryN
 
         //From 
         Root<SalaryNote> from = criteriaQuery.from(SalaryNote.class);
-        Join<SalaryNote, VoucherGroup> joinGroup = from.join(VoucherBase_.group, JoinType.LEFT);
+        Join<SalaryNote, VoucherGroup> joinGroup = from.join(SalaryNote_.group, JoinType.LEFT);
         Join<SalaryNote, FinanceAccount> joinFinancAccount = from.join(SalaryNote_.financeAccount, JoinType.LEFT);
 
         //Sonuç filtremiz
