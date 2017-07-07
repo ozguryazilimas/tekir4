@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"                
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"               
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/voucherViewBase.xhtml">
+
+    <ui:param name="bean" value="#{salaryNoteHome}" />
+    <ui:param name="entityName" value="salaryNote" />
+    <ui:param name="viewIdentifier" value="#{salaryNoteHome.entity.voucherNo}" />
+    <ui:param name="viewState" value="#{salaryNoteHome.entity.state.name} #{salaryNoteHome.entity.stateReason}" />
+    <ui:param name="showCaption" value="true"/>
+    <ui:param name="dontShowContentHeader" value="false" />
+
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{salaryNoteHome.id}" />
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="caption">
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+              	<t:outputFeatureLink label="general.label.FinanceAccount" 
+                            	value="#{featureController.getFeatureLink(salaryNoteHome.getAllFeaturePointer(salaryNoteHome.entity.financeAccount))}" />             
+                <t:outputDate label="hr.label.PaymentDate" value="#{salaryNoteHome.entity.paymentDate}"  />
+                <t:outputMoney label="general.label.TotalAmount" value="#{salaryNoteHome.entity.total}" currency="#{salaryNoteHome.entity.currency}" />
+              
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <t:outputText label="voucher.label.VoucherNo" value="#{salaryNoteHome.entity.voucherNo}"  />
+                <t:outputText label="voucher.label.ReferenceNo" value="#{salaryNoteHome.entity.referenceNo}" />
+                <t:outputText label="general.label.Code" value="#{salaryNoteHome.entity.code}" />
+            </div>
+        </div>  
+    </ui:define>
+
+
+</ui:composition>
