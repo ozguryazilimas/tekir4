@@ -9,7 +9,6 @@ import com.ozguryazilim.telve.feature.AbstractFeatureHandler;
 import com.ozguryazilim.telve.feature.Feature;
 import com.ozguryazilim.telve.feature.Page;
 import com.ozguryazilim.telve.feature.PageType;
-import com.ozguryazilim.telve.feature.search.Search;
 
 /**
  * @author oktay
@@ -17,6 +16,8 @@ import com.ozguryazilim.telve.feature.search.Search;
  */
 @Feature(permission = "salaryNote", forEntity = SalaryNote.class )
 @Page( type = PageType.BROWSE, page = EmployeePages.SalaryNoteBrowse.class )
+@Page( type = PageType.VIEW, page = EmployeePages.SalaryNoteView.class )
+@Page( type = PageType.MASTER_VIEW, page = EmployeePages.SalaryNoteMasterView.class )
 @Page( type = PageType.EDIT, page = EmployeePages.SalaryNote.class )
 public class SalaryNoteFeature extends AbstractFeatureHandler{
 }

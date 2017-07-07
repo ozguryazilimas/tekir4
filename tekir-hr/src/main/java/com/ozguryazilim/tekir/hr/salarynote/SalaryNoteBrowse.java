@@ -15,6 +15,8 @@ import com.ozguryazilim.tekir.voucher.VoucherBrowseBase;
 import com.ozguryazilim.tekir.voucher.VoucherFormBase;
 import com.ozguryazilim.tekir.voucher.VoucherRepositoryBase;
 import com.ozguryazilim.tekir.voucher.columns.VoucherStateColumn;
+import com.ozguryazilim.tekir.voucher.filter.VoucherStateFilter;
+import com.ozguryazilim.tekir.voucher.filter.VoucherStateTypeFilter;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.forms.Browse;
 import com.ozguryazilim.telve.query.QueryDefinition;
@@ -26,6 +28,8 @@ import com.ozguryazilim.telve.query.filters.DateFilter;
 import com.ozguryazilim.telve.query.filters.DateValueType;
 import com.ozguryazilim.telve.query.filters.FilterOperand;
 import com.ozguryazilim.telve.query.filters.StringFilter;
+import com.ozguryazilim.telve.query.filters.SubStringFilter;
+import com.ozguryazilim.telve.query.filters.UserFilter;
 
 /**
  * @author oktay
@@ -49,21 +53,24 @@ public class SalaryNoteBrowse extends VoucherBrowseBase<SalaryNote , SalaryNoteV
 		queryDefinition
 		.addFilter(new StringFilter<>(SalaryNote_.voucherNo, "voucher.label.VoucherNo"))
 		.addFilter(new DateFilter<>(SalaryNote_.paymentDate, "hr.label.PaymentDate",FilterOperand.All,DateValueType.LastMonth))
+		.addFilter(new SubStringFilter<>(SalaryNote_.financeAccount, FinanceAccount_.name,  "general.label.FinanceAccount"))
 		.addFilter(new StringFilter<>(VoucherBase_.code, "voucher.label.Code"))
 		.addFilter(new StringFilter<>(VoucherBase_.info, "voucher.label.Info"))
 		.addFilter(new StringFilter<>(VoucherBase_.topic, "voucher.label.Topic"))
-
-		;
+        .addFilter(new VoucherStateTypeFilter<>(VoucherBase_.state, "voucher.label.StateType"))
+        .addFilter(new StringFilter<>(VoucherBase_.stateReason, "voucher.label.StateReason"))
+        .addFilter(new UserFilter<>(VoucherBase_.owner, "voucher.label.Owner"))
+		.addFilter(new DateFilter<>(VoucherBase_.date, "voucher.label.Date",FilterOperand.All,DateValueType.NextMonth));
 		
 		queryDefinition
 		.addColumn(new LinkColumn<>(SalaryNote_.voucherNo, "voucher.label.VoucherNo"), true)
-		.addColumn(new SubTextColumn<>(SalaryNote_.financeAccount, FinanceAccount_.name, "general.label.Name"), true)
-		.addColumn(new LinkColumn<>(SalaryNote_.paymentDate, "hr.label.PaymentDate"), true)
+		.addColumn(new SubTextColumn<>(SalaryNote_.financeAccount, FinanceAccount_.name, "general.label.FinanceAccount"), true)
+		.addColumn(new TextColumn<>(SalaryNote_.paymentDate, "hr.label.PaymentDate"), true)
 		.addColumn(new MoneyColumn<>(SalaryNote_.total, SalaryNote_.currency, "general.label.Total"), true)
         .addColumn(new VoucherStateColumn<>( VoucherBase_.state, "general.label.State"), true)
         .addColumn(new TextColumn<>(VoucherBase_.stateReason, "voucher.label.StateReason"), false)
         .addColumn(new TextColumn<>(VoucherBase_.stateInfo, "voucher.label.StateInfo"), false)
-		.addColumn(new TextColumn<>(VoucherBase_.owner, "voucher.label.Owner"), false)
+		.addColumn(new TextColumn<>(VoucherBase_.owner, "voucher.label.Owner"), true)
 		.addColumn(new TextColumn<>(VoucherBase_.referenceNo, "voucher.label.ReferenceNo"), false)
         .addColumn(new TextColumn<>(VoucherBase_.code, "voucher.label.Code"), false)
         .addColumn(new TextColumn<>(VoucherBase_.info, "voucher.label.Info"), false)
