@@ -1,0 +1,38 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+	xmlns:p="http://primefaces.org/ui" template="/layout/dialogBase.xhtml">
+
+
+	<ui:param name="title" value="dialog.caption.SalaryNoteLineEditor" />
+	<ui:define name="form">
+        <h:form id="vciEditor">
+            <div class="row">
+                 <t:inputLookupDialog label="hr.label.Employee" value="#{salaryNoteItemEditor.employee}" 
+					 lookupBean="#{employeeLookup}" lookupListener="salaryNoteItemEditor.employee" 
+					 placeholder="#{messages['hr.info.Employee']}" lookupProfile="T:Employee"  required="true"/>	
+				 <t:inputNumber label="general.label.Amount" value="#{salaryNoteItemEditor.item.amount}" columnClass="col-xs-6" required="true"/>
+				 <t:inputTextarea label="general.label.Info" value="#{salaryNoteItemEditor.item.info}" columnClass="col-xs-6"/>
+           	</div>	
+
+		<h:panelGroup styleClass="row" layout="block"
+			style="padding-top: 8px;">
+			<div class="col-xs-12">
+				<div class="pull-right">
+					<ui:insert name="actionButtons" />
+					<p:commandButton id="save"
+						value="#{messages['general.button.Save']}" icon="fa fa-save"
+						action="#{salaryNoteItemEditor.closeDialog()}"
+						validateClient="true" styleClass="btn-primary" />
+					<p:commandButton id="close"
+						value="#{messages['general.button.Cancel']}" icon="ui-icon-close"
+						action="#{salaryNoteItemEditor.cancelDialog()}"
+						partialSubmit="true" process="@this" />
+                    </div>
+                </div>
+            </h:panelGroup>
+        </h:form>
+    </ui:define> 
+</ui:composition>

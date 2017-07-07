@@ -1,0 +1,46 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <t:accordion icon="fa fa-cube" id="ca1" label="general.label.SalaryNotes" columnClass="col-xs-12">
+
+        <div class="row">
+            <p:dataTable id="its" value="#{bean.entity.items}" var="item" reflow="true" styleClass="col-xs-12">
+                <p:column headerText="#{messages['widget.label.Employee']}">
+                    <h:outputText value="#{item.employee.name}" />
+                </p:column>
+                <p:column headerText="#{messages['widget.label.Description']}">
+                    <h:outputText value="#{item.info}" />
+                </p:column>
+                <p:column headerText="#{messages['widget.label.Amount']}" >
+                        <h:outputText value=" #{item.amount}" />
+                </p:column>
+		  		<p:column styleClass="actionColumnDouble" rendered="#{editable}">
+                    <f:facet name="header">
+
+                        <p:commandLink action="#{bean.addItem()}" process="@this" >
+                            <i class="fa fa-plus"/>
+                            <p:ajax event="dialogReturn" partialSubmit="true" 
+                                    process="@this" update="@([id$=its]) @([id$=sms])"/>   
+                        </p:commandLink>
+
+                    </f:facet>
+
+                    <p:commandLink action="#{bean.editItem(item)}" process="@this" >
+                        <i class="fa fa-pencil"/>
+                        <p:ajax event="dialogReturn" partialSubmit="true" 
+                                process="@this" update="@([id$=its]) @([id$=sms])"/>   
+                    </p:commandLink>
+                    <p:commandLink action="#{bean.removeItem(item)}" process="@this" update="@([id$=its]) @([id$=sms])">
+                        <i class="fa fa-trash"/>
+                    </p:commandLink>
+                </p:column>
+                
+		  </p:dataTable>
+		</div>  
+    </t:accordion>
+</ui:composition>
