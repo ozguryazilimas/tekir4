@@ -6,12 +6,13 @@
 	xmlns:p="http://primefaces.org/ui"
 	template="/layout/voucherBrowseBase.xhtml">
 
-	<ui:param name="bean" value="#{salaryNoteBrowse}" />
+    <ui:param name="bean" value="#{salaryNoteBrowse}" />
     <ui:param name="advanceEnabled" value="true" />
     <ui:param name="saveEnabled" value="true" />
     <ui:param name="filterEnabled" value="true" />
     <ui:param name="permission" value="salaryNote" />
     <ui:param name="showQuickSearch" value="true" />
+    <ui:param name="showDetailPanel" value="false" />
 
     <ui:define name="beforeColumns">
         <p:column styleClass="actionColumn">

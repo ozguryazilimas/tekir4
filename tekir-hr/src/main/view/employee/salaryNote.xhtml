@@ -5,9 +5,39 @@
 	xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
 	xmlns:p="http://primefaces.org/ui"
 	template="/layout/voucherEditBase.xhtml">
-	
+
 	<ui:param name="homeBean" value="#{salaryNoteHome}" />
 	<ui:param name="entity" value="#{salaryNoteHome.entity}" />
 	<ui:param name="dontShowContentHeader" value="true" />
 
+	
+<ui:define name="form">
+		<div class="row">
+			<div class="col-md-6 col-xs-12">
+					<t:inputLookupDialog label="general.label.FinanceAccount" value="#{salaryNoteHome.entity.financeAccount}" 
+					 	lookupBean="#{financeAccountLookup}"  lookupProfile="R:PAYMENT;O:MULTI_CURRENCY"
+					 	placeholder="#{messages['general.info.Account']}" lookupListener="salaryNoteHome.entity.financeAccount" required="true"/>	               		
+		            <t:inputCurrency label="general.label.Currency" value="#{salaryNoteHome.entity.currency}" required="true"/>
+		            <t:inputDate label="hr.label.PaymentDate" value="#{salaryNoteHome.entity.paymentDate}" columnClass="col-xs-6"/>
+		                   
+		   		</div> 
+		 	
+		 	<div class="col-md-6 col-xs-12">
+                    <t:inputDate label="voucher.label.Date" value="#{salaryNoteHome.entity.date}" columnClass="col-md-4"/>
+                    <t:inputText label="voucher.label.VoucherNo" value="#{salaryNoteHome.entity.voucherNo}"  required="true" readonly="true" columnClass="col-md-4"/>
+                    <t:inputText label="voucher.label.ReferenceNo" value="#{salaryNoteHome.entity.referenceNo}" columnClass="col-md-4"/>
+                 	<t:inputLookupDialog label="voucher.label.Group" value="#{salaryNoteHome.entity.group}" caption="topic" lookupBean="#{voucherGroupLookup}" lookupListener="salaryNoteHome.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" columnClass="col-xs-6"/>
+                    <t:inputText label="general.label.Code" value="#{salaryNoteHome.entity.code}" />
+                    <t:inputTextarea label="general.label.Info" value="#{salaryNoteHome.entity.info}" columnClass="col-xs-12"/>
+                    
+               
+            </div>
+		</div>    
+        <div class="row" style="padding-top: 8px;">
+            <ui:include src="/employee/salaryNoteWidget.xhtml">
+                <ui:param name="bean" value="#{salaryNoteHome}" />
+                <ui:param name="editable" value="#{true}" />
+            </ui:include>
+        </div>
+	</ui:define>
 </ui:composition>
