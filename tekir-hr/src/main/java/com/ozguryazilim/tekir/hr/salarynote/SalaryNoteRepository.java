@@ -58,7 +58,7 @@ public abstract class SalaryNoteRepository extends VoucherRepositoryBase<SalaryN
 
 	        //From 
 	        Root<SalaryNote> from = criteriaQuery.from(SalaryNote.class);
-	        Join<SalaryNote, VoucherGroup> joinGroup = from.join(SalaryNote_.group, JoinType.LEFT);
+	        Join<SalaryNote, VoucherGroup> joinGroup = from.join(VoucherBase_.group, JoinType.LEFT);
 	        Join<SalaryNote, FinanceAccount> joinFinancAccount = from.join(SalaryNote_.financeAccount, JoinType.LEFT);
 	        
 	        //Sonuç filtremiz
@@ -115,8 +115,6 @@ public abstract class SalaryNoteRepository extends VoucherRepositoryBase<SalaryN
                 from.get(VoucherBase_.topic),
                 from.get(SalaryNote_.financeAccount).get(FinanceAccount_.id),
                 from.get(SalaryNote_.financeAccount).get(FinanceAccount_.name),
-                from.get(SalaryNote_.financeAccount).get(FinanceAccount_.bank),
-                from.get(SalaryNote_.financeAccount).get(FinanceAccount_.iban),
                 from.get(SalaryNote_.paymentDate),
                 from.get(SalaryNote_.currency),
                 from.get(SalaryNote_.total)         

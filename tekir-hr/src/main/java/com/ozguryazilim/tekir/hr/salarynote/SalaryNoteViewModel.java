@@ -42,16 +42,14 @@ public class SalaryNoteViewModel extends VoucherViewModel{
 
 	public SalaryNoteViewModel(Long id, String code, String voucherNo, String info, String referenceNo,Date date,
 			String owner, VoucherState state, String stateReason, String stateInfo, Long groupId,
-			String groupNo, String topic,Long financeAccountId,String financeAccountName, String financeAccountBank,
-			String financeAccountIban, Date paymentDate, BigDecimal total, Currency currency) {
+			String groupNo, String topic,Long financeAccountId,String financeAccountName, 
+			Date paymentDate, Currency currency, BigDecimal total) {
 		super(id, code, voucherNo, info, referenceNo, date, owner, state, stateReason, stateInfo, groupId, groupNo, topic);
 		
 		
 		this.financeAccount = new FinanceAccount();
 		this.financeAccount.setId(financeAccountId);
 		this.financeAccount.setName(financeAccountName);
-		this.financeAccount.setBank(financeAccountBank);
-		this.financeAccount.setIban(financeAccountIban);
 		
 		this.paymentDate = paymentDate;
 		this.currency = currency;
