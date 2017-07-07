@@ -16,14 +16,18 @@ import com.ozguryazilim.tekir.voucher.VoucherFormBase;
 import com.ozguryazilim.tekir.voucher.VoucherPrintOutAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateConfig;
+import com.ozguryazilim.telve.config.LocaleSelector;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.EntityBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureUtils;
 import com.ozguryazilim.telve.forms.FormEdit;
+import com.ozguryazilim.telve.messages.TelveResourceBundle;
 import com.ozguryazilim.telve.reports.JasperReportHandler;
 import com.ozguryazilim.telve.sequence.SequenceManager;
+import java.util.Map;
 import javax.inject.Inject;
+import net.sf.jasperreports.engine.JRParameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -79,6 +83,12 @@ public class EmployeeCreditNoteHome extends VoucherFormBase<EmployeeCreditNote>{
         config.addStateTypeAction(VoucherStateType.CLOSE, new VoucherPrintOutAction(this));
         
         return config;
+    }
+    
+    @Override
+    protected void decoratePrintOutParams(Map<String, Object> params) {
+        params.put(JRParameter.REPORT_LOCALE, LocaleSelector.instance().getLocale());
+        params.put(JRParameter.REPORT_RESOURCE_BUNDLE, TelveResourceBundle.getBundle());
     }
 
     @Override
