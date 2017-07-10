@@ -26,5 +26,7 @@ public interface SalaryNoteItemEditorListener <E extends SalaryNoteItem>{
      * @param item 
      */
     void saveItem( E item );
+    
+    public void calculateSummaries();
 
 }

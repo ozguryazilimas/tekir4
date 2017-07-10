@@ -5,17 +5,23 @@
  */
 package com.ozguryazilim.tekir.hr.salarynote;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
+import com.ozguryazilim.tekir.entities.Employee;
 import com.ozguryazilim.tekir.entities.SalaryNote;
 import com.ozguryazilim.tekir.entities.SalaryNoteItem;
 import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.tekir.entities.VoucherStateEffect;
 import com.ozguryazilim.tekir.entities.VoucherStateType;
+import com.ozguryazilim.tekir.hr.employee.EmployeeViewModel;
 import com.ozguryazilim.tekir.voucher.VoucherFormBase;
 import com.ozguryazilim.tekir.voucher.VoucherPrintOutAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateAction;
@@ -65,6 +71,7 @@ public class SalaryNoteHome extends VoucherFormBase<SalaryNote> implements Salar
             item.setMaster(getEntity());
             getEntity().getItems().add(item);
         }
+        calculateSummaries();
 	}
 	
 	@Override
@@ -81,6 +88,7 @@ public class SalaryNoteHome extends VoucherFormBase<SalaryNote> implements Salar
 	@Override
 	public void removeItem(SalaryNoteItem item) {
 		getEntity().getItems().remove(item);
+		calculateSummaries();
 	}
 	
     @Override
@@ -117,6 +125,15 @@ public class SalaryNoteHome extends VoucherFormBase<SalaryNote> implements Salar
 
 	public FeaturePointer getAllFeaturePointer(EntityBase contact){
    		return FeatureUtils.getFeaturePointer(contact);
+	}
+
+	public void calculateSummaries() {
+		List<SalaryNoteItem> items = getEntity().getItems();	
+    	BigDecimal t = BigDecimal.ZERO;
+    	for(SalaryNoteItem item : items){
+    		t.add(item.getAmount());
+    	}
+    	getEntity().setTotal(t);
 	}
 
 }
