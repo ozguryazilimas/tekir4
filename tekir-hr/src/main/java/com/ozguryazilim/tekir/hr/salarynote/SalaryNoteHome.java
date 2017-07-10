@@ -21,6 +21,7 @@ import com.ozguryazilim.tekir.entities.SalaryNoteItem;
 import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.tekir.entities.VoucherStateEffect;
 import com.ozguryazilim.tekir.entities.VoucherStateType;
+import com.ozguryazilim.tekir.hr.employee.EmployeeRepository;
 import com.ozguryazilim.tekir.hr.employee.EmployeeViewModel;
 import com.ozguryazilim.tekir.voucher.VoucherFormBase;
 import com.ozguryazilim.tekir.voucher.VoucherPrintOutAction;
@@ -48,6 +49,9 @@ public class SalaryNoteHome extends VoucherFormBase<SalaryNote> implements Salar
 
 	@Inject
 	private SalaryNoteRepository repository;
+	
+	@Inject
+	private EmployeeRepository employeeRepository;
 	
 	@Inject
 	private SalaryNoteItemEditor salaryNoteItemEditor;
@@ -89,6 +93,11 @@ public class SalaryNoteHome extends VoucherFormBase<SalaryNote> implements Salar
 	public void removeItem(SalaryNoteItem item) {
 		getEntity().getItems().remove(item);
 		calculateSummaries();
+	}
+	
+	public List<Employee> getEmployee(){
+		return employeeRepository.getEmployee();
+		
 	}
 	
     @Override
@@ -135,5 +144,5 @@ public class SalaryNoteHome extends VoucherFormBase<SalaryNote> implements Salar
     	}
     	getEntity().setTotal(t);
 	}
-
+	
 }

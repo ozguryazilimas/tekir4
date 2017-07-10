@@ -253,5 +253,18 @@ public abstract class EmployeeRepository extends
     public void setOwnerFilter(List<String> ownerFilter) {
         this.ownerFilter = ownerFilter;
     }
+
+
+	public List<Employee> getEmployee() {
+        CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
+        CriteriaQuery<Employee> criteriaQuery = criteriaBuilder.createQuery(Employee.class);
+
+        Root<Employee> from = criteriaQuery.from(Employee.class);	
+        Join<Employee, ContactPhone> pm = from.join(Contact_.primaryMobile, JoinType.LEFT);
+
+        TypedQuery<Employee> typedQuery = entityManager().createQuery(criteriaQuery);
+        List<Employee> resultList = typedQuery.getResultList();
+        return resultList;
+	}
     
 }
