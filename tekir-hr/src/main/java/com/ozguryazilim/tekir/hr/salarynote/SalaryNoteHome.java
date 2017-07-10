@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.apache.deltaspike.core.api.config.view.navigation.ViewNavigationHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +32,8 @@ import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.EntityBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
+import com.ozguryazilim.telve.feature.FeatureHandler;
+import com.ozguryazilim.telve.feature.FeatureRegistery;
 import com.ozguryazilim.telve.feature.FeatureUtils;
 import com.ozguryazilim.telve.forms.FormEdit;
 import com.ozguryazilim.telve.reports.JasperReportHandler;
@@ -59,9 +62,16 @@ public class SalaryNoteHome extends VoucherFormBase<SalaryNote> implements Salar
 	@Inject
 	private CurrencyService currencyService;
 
+    @Inject
+    private ViewNavigationHandler viewNavigationHandler;
+	
 	@Inject
 	private JasperReportHandler reportHandler;
 
+	
+    public Class<? extends FeatureHandler> getFeatureClass(){
+        return FeatureRegistery.getFeatureClass(getEntity().getClass());
+    }
 	
 	@Override
 	protected RepositoryBase<SalaryNote, ?> getRepository() {
