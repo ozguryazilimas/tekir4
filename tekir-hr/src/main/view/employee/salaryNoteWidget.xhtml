@@ -13,11 +13,20 @@
                 <p:column headerText="#{messages['widget.label.Employee']}">
                     <h:outputText value="#{item.employee.name}" />
                 </p:column>
+                <p:column headerText="#{messages['widget.label.SalaryAmount']}">
+                    <t:cellOutputMoney value="#{item.employee.salaryAmount}" currency="#{item.employee.salaryCurrency}"/>
+                </p:column>
+                <p:column headerText="#{messages['widget.label.PrimaryMobile']}">
+                    <h:outputText value="#{item.employee.primaryMobile.caption}" />
+                </p:column>
+                <p:column headerText="#{messages['widget.label.anualLeaveDay']}">
+                    <h:outputText value="#{item.employee.anualLeaveDay}" />
+                </p:column>
                 <p:column headerText="#{messages['widget.label.Description']}">
                     <h:outputText value="#{item.info}" />
                 </p:column>
                 <p:column headerText="#{messages['widget.label.Amount']}" >
-                        <h:outputText value=" #{item.amount}" />
+                    <t:cellOutputMoney value="#{item.amount}" currency="#{bean.entity.currency}"/>
                 </p:column>
 		  		<p:column styleClass="actionColumnDouble" rendered="#{editable}">
                     <f:facet name="header">
