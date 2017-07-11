@@ -77,9 +77,8 @@ public class SalaryNoteHome extends VoucherFormBase<SalaryNote> implements Salar
     		SalaryNoteItem item = new SalaryNoteItem();
     		item.setEmployee(emp);
     		item.setAmount(getEntity().getTotal());
-    		getEntity().getItems().add(item);
+    		saveItem(item);
     	}
-    	calculateSummaries();
     }
 
 	@Override
