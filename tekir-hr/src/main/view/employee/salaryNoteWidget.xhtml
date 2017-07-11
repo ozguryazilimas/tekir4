@@ -14,7 +14,7 @@
                     <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(bean.getAllFeaturePointer(item.employee))}"  />
                 </p:column>
                  <p:column headerText="#{messages['widget.label.Amount']}" >
-                    <t:cellOutputMoney value="#{item.employee.salaryAmount}" currency="#{item.employee.salaryCurrency}"/>
+                    <t:cellOutputMoney value="#{item.amount}" currency="#{item.employee.salaryCurrency}"/>
                 </p:column>
                 <p:column headerText="#{messages['widget.label.Description']}">
                     <h:outputText value="#{item.info}" />

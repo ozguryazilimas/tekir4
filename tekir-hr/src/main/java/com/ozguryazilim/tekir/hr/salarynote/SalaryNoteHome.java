@@ -76,9 +76,11 @@ public class SalaryNoteHome extends VoucherFormBase<SalaryNote> implements Salar
     	for(Employee emp : emps){
     		SalaryNoteItem item = new SalaryNoteItem();
     		item.setEmployee(emp);
-    		item.setAmount(getEntity().getTotal());
-    		saveItem(item);
+    		item.setAmount(emp.getSalaryAmount());
+    	    item.setMaster(getEntity());
+            getEntity().getItems().add(item);
     	}
+        calculateSummaries();
     }
 
 	@Override
@@ -152,7 +154,7 @@ public class SalaryNoteHome extends VoucherFormBase<SalaryNote> implements Salar
 		List<SalaryNoteItem> items = getEntity().getItems();	
     	BigDecimal t = BigDecimal.ZERO;
     	for(SalaryNoteItem item : items){
-    		t=t.add(item.getEmployee().getSalaryAmount());
+    		t=t.add(item.getAmount());
     	}
     	getEntity().setTotal(t);
 	}
