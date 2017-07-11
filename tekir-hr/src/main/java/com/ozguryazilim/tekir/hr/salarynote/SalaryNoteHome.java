@@ -6,12 +6,10 @@
 package com.ozguryazilim.tekir.hr.salarynote;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import org.apache.deltaspike.core.api.config.view.navigation.ViewNavigationHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,22 +60,27 @@ public class SalaryNoteHome extends VoucherFormBase<SalaryNote> implements Salar
 	@Inject
 	private CurrencyService currencyService;
 
-    @Inject
-    private ViewNavigationHandler viewNavigationHandler;
-	
 	@Inject
 	private JasperReportHandler reportHandler;
 
-	
-    public Class<? extends FeatureHandler> getFeatureClass(){
-        return FeatureRegistery.getFeatureClass(getEntity().getClass());
-    }
 	
 	@Override
 	protected RepositoryBase<SalaryNote, ?> getRepository() {
 		return repository;
 	}
 	
+	@Override
+    public void createNew() {
+		super.createNew();
+		List<Employee> emps =getEmployees();
+    	for(Employee emp : emps){
+    		SalaryNoteItem item = new SalaryNoteItem();
+    		item.setEmployee(emp);
+    		item.setAmount(getEntity().getTotal());
+    		getEntity().getItems().add(item);
+    	}
+    	calculateSummaries();
+    }
 
 	@Override
 	public void saveItem(SalaryNoteItem item) {
@@ -105,8 +108,8 @@ public class SalaryNoteHome extends VoucherFormBase<SalaryNote> implements Salar
 		calculateSummaries();
 	}
 	
-	public List<Employee> getEmployee(){
-		return employeeRepository.getEmployee();
+	public List<Employee> getEmployees(){
+		return employeeRepository.getEmployees();
 		
 	}
 	
@@ -150,7 +153,7 @@ public class SalaryNoteHome extends VoucherFormBase<SalaryNote> implements Salar
 		List<SalaryNoteItem> items = getEntity().getItems();	
     	BigDecimal t = BigDecimal.ZERO;
     	for(SalaryNoteItem item : items){
-    		t.add(item.getAmount());
+    		t=t.add(item.getEmployee().getSalaryAmount());
     	}
     	getEntity().setTotal(t);
 	}

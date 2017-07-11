@@ -11,32 +11,22 @@
         <div class="row">
             <p:dataTable id="its" value="#{bean.entity.items}" var="item" reflow="true" styleClass="col-xs-12">
                 <p:column headerText="#{messages['widget.label.Employee']}">
-                    <h:outputText value="#{item.employee.name}" />
+                    <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(bean.getAllFeaturePointer(item.employee))}"  />
                 </p:column>
-                <p:column headerText="#{messages['widget.label.SalaryAmount']}">
+                 <p:column headerText="#{messages['widget.label.Amount']}" >
                     <t:cellOutputMoney value="#{item.employee.salaryAmount}" currency="#{item.employee.salaryCurrency}"/>
-                </p:column>
-                <p:column headerText="#{messages['widget.label.PrimaryMobile']}">
-                    <h:outputText value="#{item.employee.primaryMobile.caption}" />
-                </p:column>
-                <p:column headerText="#{messages['widget.label.anualLeaveDay']}">
-                    <h:outputText value="#{item.employee.anualLeaveDay}" />
                 </p:column>
                 <p:column headerText="#{messages['widget.label.Description']}">
                     <h:outputText value="#{item.info}" />
                 </p:column>
-                <p:column headerText="#{messages['widget.label.Amount']}" >
-                    <t:cellOutputMoney value="#{item.amount}" currency="#{bean.entity.currency}"/>
-                </p:column>
 		  		<p:column styleClass="actionColumnDouble" rendered="#{editable}">
+                    
                     <f:facet name="header">
-
                         <p:commandLink action="#{bean.addItem()}" process="@this" >
                             <i class="fa fa-plus"/>
                             <p:ajax event="dialogReturn" partialSubmit="true" 
                                     process="@this" update="@([id$=its]) @([id$=sms])"/>   
                         </p:commandLink>
-
                     </f:facet>
 
                     <p:commandLink action="#{bean.editItem(item)}" process="@this" >

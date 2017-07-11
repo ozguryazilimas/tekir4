@@ -14,6 +14,7 @@ import com.ozguryazilim.tekir.entities.ContactPhone;
 import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.Employee;
+import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.tekir.entities.AbstractPerson;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
@@ -29,7 +30,9 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
 import org.apache.deltaspike.data.api.Repository;
+import org.apache.deltaspike.data.api.criteria.Criteria;
 import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
 
 /**
@@ -254,17 +257,11 @@ public abstract class EmployeeRepository extends
         this.ownerFilter = ownerFilter;
     }
 
-
-	public List<Employee> getEmployee() {
-        CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
-        CriteriaQuery<Employee> criteriaQuery = criteriaBuilder.createQuery(Employee.class);
-
-        Root<Employee> from = criteriaQuery.from(Employee.class);	
-        Join<Employee, ContactPhone> pm = from.join(Contact_.primaryMobile, JoinType.LEFT);
-
-        TypedQuery<Employee> typedQuery = entityManager().createQuery(criteriaQuery);
-        List<Employee> resultList = typedQuery.getResultList();
-        return resultList;
+	public List<Employee> getEmployees(){
+		Criteria<Employee, Employee> cr = criteria();
+		System.out.println(cr.createQuery().getResultList());
+		return cr.createQuery().getResultList();
+		
 	}
-    
+	
 }
