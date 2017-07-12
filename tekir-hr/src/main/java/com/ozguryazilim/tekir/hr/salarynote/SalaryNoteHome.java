@@ -21,7 +21,6 @@ import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.tekir.entities.VoucherStateEffect;
 import com.ozguryazilim.tekir.entities.VoucherStateType;
 import com.ozguryazilim.tekir.hr.employee.EmployeeRepository;
-import com.ozguryazilim.tekir.hr.employee.EmployeeViewModel;
 import com.ozguryazilim.tekir.voucher.VoucherFormBase;
 import com.ozguryazilim.tekir.voucher.VoucherPrintOutAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateAction;
@@ -72,7 +71,8 @@ public class SalaryNoteHome extends VoucherFormBase<SalaryNote> implements Salar
 	@Override
     public void createNew() {
 		super.createNew();
-		List<Employee> emps =getEmployees();
+		
+		List<Employee> emps =getEmployees();	
     	for(Employee emp : emps){
     		SalaryNoteItem item = new SalaryNoteItem();
     		item.setEmployee(emp);
@@ -103,10 +103,12 @@ public class SalaryNoteHome extends VoucherFormBase<SalaryNote> implements Salar
 		salaryNoteItemEditor.openDialog(item, getEntity().getCurrency(), this);
 	}
 
+
 	@Override
-	public void removeItem(SalaryNoteItem item) {
-		getEntity().getItems().remove(item);
+	public void removeItem(int index) {
+		getEntity().getItems().remove(index);
 		calculateSummaries();
+		
 	}
 	
 	public List<Employee> getEmployees(){
@@ -158,5 +160,5 @@ public class SalaryNoteHome extends VoucherFormBase<SalaryNote> implements Salar
     	}
     	getEntity().setTotal(t);
 	}
-	
+
 }

@@ -18,7 +18,7 @@ public interface SalaryNoteItemEditorListener <E extends SalaryNoteItem>{
     
     public void editItem(E item);
     
-    public void removeItem(E item);
+    public void removeItem(int index);
     
     /**
      * Editor sonucu editlenen değer.
