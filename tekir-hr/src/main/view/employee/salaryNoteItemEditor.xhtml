@@ -15,7 +15,7 @@
 					 placeholder="#{messages['hr.info.Employee']}" lookupProfile="T:Employee"  required="true"/>	
 	
 				 <t:inputMoney label="general.label.Amount" value="#{salaryNoteItemEditor.item.amount}"  
-                    			currency="#{bean.entity.currency}" columnClass="col-xs-6"/>
+                    			currency="#{salaryNoteItemEditor.item.employee.salaryCurrency}" columnClass="col-xs-6"/>
 				 
 				 <t:inputTextarea label="general.label.Info" value="#{salaryNoteItemEditor.item.info}" columnClass="col-xs-6"/>
            	</div>	

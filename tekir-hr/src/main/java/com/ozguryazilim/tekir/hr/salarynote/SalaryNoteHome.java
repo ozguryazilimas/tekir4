@@ -7,6 +7,7 @@ package com.ozguryazilim.tekir.hr.salarynote;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -71,7 +72,7 @@ public class SalaryNoteHome extends VoucherFormBase<SalaryNote> implements Salar
 	@Override
     public void createNew() {
 		super.createNew();
-		
+        getEntity().setCurrency(currencyService.getReportCurrency());
 		List<Employee> emps =getEmployees();	
     	for(Employee emp : emps){
     		SalaryNoteItem item = new SalaryNoteItem();
@@ -95,12 +96,12 @@ public class SalaryNoteHome extends VoucherFormBase<SalaryNote> implements Salar
 	@Override
 	public void addItem() {
 		SalaryNoteItem item = new SalaryNoteItem();
-		salaryNoteItemEditor.openDialog(item, getEntity().getCurrency(), this);
+		salaryNoteItemEditor.openDialog(item, this);
 	}
 
 	@Override
 	public void editItem(SalaryNoteItem item) {
-		salaryNoteItemEditor.openDialog(item, getEntity().getCurrency(), this);
+		salaryNoteItemEditor.openDialog(item, this);
 	}
 
 
@@ -115,6 +116,14 @@ public class SalaryNoteHome extends VoucherFormBase<SalaryNote> implements Salar
 		return employeeRepository.getEmployees();
 		
 	}
+	
+	@Override
+    public boolean onBeforeSave() {
+        
+        getEntity().setLocalAmount(currencyService.convert(getEntity().getCurrency(), getEntity().getTotal(), getEntity().getDate()));
+        return super.onBeforeSave();
+    }
+
 	
     @Override
     protected VoucherStateConfig buildStateConfig() {
@@ -155,8 +164,13 @@ public class SalaryNoteHome extends VoucherFormBase<SalaryNote> implements Salar
 	public void calculateSummaries() {
 		List<SalaryNoteItem> items = getEntity().getItems();	
     	BigDecimal t = BigDecimal.ZERO;
+        
+  		System.out.println("calcurrencyService :"+currencyService.getReportCurrency());
+		System.out.println("calentity currency :"+getEntity().getCurrency());
+    	
     	for(SalaryNoteItem item : items){
-    		t=t.add(item.getAmount());
+    		t=t.add(currencyService.convert(item.getEmployee().getSalaryCurrency(), 
+    				item.getAmount(),getEntity().getCurrency() , getEntity().getDate()));
     	}
     	getEntity().setTotal(t);
 	}

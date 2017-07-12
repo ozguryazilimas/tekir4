@@ -25,12 +25,10 @@ import com.ozguryazilim.tekir.entities.SalaryNoteItem;
 public class SalaryNoteItemEditor implements Serializable {
 	private SalaryNoteItem item;
 	private SalaryNoteItemEditorListener listener;
-	private Currency currency;
 	
-	public void openDialog( SalaryNoteItem item, Currency currency, SalaryNoteItemEditorListener listener ){
+	public void openDialog( SalaryNoteItem item, SalaryNoteItemEditorListener listener ){
 	        
 	        this.item = item;
-	        this.currency = currency;
 	        this.listener = listener;
 	        
 	        Map<String, Object> options = new HashMap<>();
@@ -81,14 +79,6 @@ public class SalaryNoteItemEditor implements Serializable {
 		this.listener = listener;
 	}
 
-	public Currency getCurrency() {
-		return currency;
-	}
-
-	public void setCurrency(Currency currency) {
-		this.currency = currency;
-	}
-	
     public Employee getEmployee() {
         return item.getEmployee();
     }
