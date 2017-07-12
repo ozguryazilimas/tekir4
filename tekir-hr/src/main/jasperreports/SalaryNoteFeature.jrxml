@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 6.4.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SalaryNoteFeature" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bef2f2f9-749e-4663-8a18-f1a6e0654361">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<parameter name="EID" class="java.lang.Long">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT *
+FROM THR_SALARY_NOTE
+	LEFT JOIN THR_SALARY_NOTE_ITEM ON 
+	 THR_SALARY_NOTE.ID = THR_SALARY_NOTE_ITEM.MASTER_ID 
+	LEFT JOIN TCC_CONTACT ON 
+	 THR_SALARY_NOTE_ITEM.EMPLOYEE_ID = tekir.TCC_CONTACT.ID 
+	LEFT JOIN TFN_FINANCE_ACC ON 
+	 THR_SALARY_NOTE.ACCOUNT_ID = TFN_FINANCE_ACC.ID
+	 where THR_SALARY_NOTE.ID =  $P{EID}]]>
+	</queryString>
+	<field name="ID" class="java.lang.Long"/>
+	<field name="CREATE_DATE" class="java.sql.Timestamp"/>
+	<field name="UPDATE_DATE" class="java.sql.Timestamp"/>
+	<field name="UPDATE_USER" class="java.lang.String"/>
+	<field name="CODE" class="java.lang.String"/>
+	<field name="TXNDATE" class="java.sql.Timestamp"/>
+	<field name="INFO" class="java.lang.String"/>
+	<field name="OWNER" class="java.lang.String"/>
+	<field name="REFERENCE_NO" class="java.lang.String"/>
+	<field name="FEATURE_BK" class="java.lang.String"/>
+	<field name="FEATURE" class="java.lang.String"/>
+	<field name="FEATURE_PK" class="java.lang.Long"/>
+	<field name="STATE" class="java.lang.String"/>
+	<field name="STATE_INFO" class="java.lang.String"/>
+	<field name="STATE_REASON" class="java.lang.String"/>
+	<field name="TOPIC" class="java.lang.String"/>
+	<field name="VOUCHER_NO" class="java.lang.String"/>
+	<field name="CCY" class="java.lang.String"/>
+	<field name="PAYMENT_DATE" class="java.sql.Date"/>
+	<field name="GROUP_ID" class="java.lang.Long"/>
+	<field name="ACCOUNT_ID" class="java.lang.Long"/>
+	<field name="LOCAL_AMOUNT" class="java.math.BigDecimal"/>
+	<field name="TOT_AMT" class="java.math.BigDecimal"/>
+	<field name="COLUMN_24" class="java.lang.Long"/>
+	<field name="AMOUNT" class="java.math.BigDecimal"/>
+	<field name="COLUMN_26" class="java.lang.String"/>
+	<field name="EMPLOYEE_ID" class="java.lang.Long"/>
+	<field name="MASTER_ID" class="java.lang.Long"/>
+	<field name="CONTACT_TYPE" class="java.lang.String"/>
+	<field name="COLUMN_30" class="java.lang.Long"/>
+	<field name="COLUMN_31" class="java.sql.Timestamp"/>
+	<field name="COLUMN_32" class="java.sql.Timestamp"/>
+	<field name="COLUMN_33" class="java.lang.String"/>
+	<field name="ISACTIVE" class="java.lang.Boolean"/>
+	<field name="CHANNELS" class="java.lang.String"/>
+	<field name="ROLES" class="java.lang.String"/>
+	<field name="COLUMN_37" class="java.lang.String"/>
+	<field name="NAME" class="java.lang.String"/>
+	<field name="COLUMN_39" class="java.lang.String"/>
+	<field name="OWNER_ORG" class="java.lang.String"/>
+	<field name="COLUMN_41" class="java.lang.String"/>
+	<field name="SOURCE" class="java.lang.String"/>
+	<field name="STATUS" class="java.lang.String"/>
+	<field name="STATUS_REASON" class="java.lang.String"/>
+	<field name="OWNER_TEAM" class="java.lang.String"/>
+	<field name="ORG_NAME" class="java.lang.String"/>
+	<field name="COMPANY_TITLE" class="java.lang.String"/>
+	<field name="FIRST_NAME" class="java.lang.String"/>
+	<field name="GENDER" class="java.lang.String"/>
+	<field name="JOB_TITLE" class="java.lang.String"/>
+	<field name="LAST_NAME" class="java.lang.String"/>
+	<field name="SECOND_NAME" class="java.lang.String"/>
+	<field name="SSN" class="java.lang.String"/>
+	<field name="USE_NAME" class="java.lang.String"/>
+	<field name="CAT_ID" class="java.lang.Long"/>
+	<field name="INDUSTRY_ID" class="java.lang.Long"/>
+	<field name="ADDR_ID" class="java.lang.Long"/>
+	<field name="EMAIL_ID" class="java.lang.Long"/>
+	<field name="FAX_ID" class="java.lang.Long"/>
+	<field name="MOBILE_ID" class="java.lang.Long"/>
+	<field name="PHONE_ID" class="java.lang.Long"/>
+	<field name="TERRITORY_ID" class="java.lang.Long"/>
+	<field name="TYPE_ID" class="java.lang.Long"/>
+	<field name="PARENT_ID" class="java.lang.Long"/>
+	<field name="CONTACT_ID" class="java.lang.Long"/>
+	<field name="CORP_ID" class="java.lang.Long"/>
+	<field name="BANK_ACCOUNT" class="java.lang.String"/>
+	<field name="COLUMN_68" class="java.lang.String"/>
+	<field name="TAX_NUMBER" class="java.lang.String"/>
+	<field name="TAX_OFFICE" class="java.lang.String"/>
+	<field name="SOURCE_FP" class="java.lang.String"/>
+	<field name="SOURCE_BK" class="java.lang.String"/>
+	<field name="SOURCE_PK" class="java.lang.Long"/>
+	<field name="BANK_ID" class="java.lang.Long"/>
+	<field name="VAT_WITHHOLDING" class="java.lang.Boolean"/>
+	<field name="EMPLOYEE_NO" class="java.lang.String"/>
+	<field name="SGK_NO" class="java.lang.String"/>
+	<field name="RECRUITMENT_DT" class="java.sql.Date"/>
+	<field name="TERMINATION_DT" class="java.sql.Date"/>
+	<field name="LEAVE_DAY" class="java.lang.Integer"/>
+	<field name="SALARY_AMOUNT" class="java.math.BigDecimal"/>
+	<field name="SALARY_CCY" class="java.lang.String"/>
+	<field name="COLUMN_83" class="java.lang.Long"/>
+	<field name="COLUMN_84" class="java.sql.Timestamp"/>
+	<field name="COLUMN_85" class="java.sql.Timestamp"/>
+	<field name="COLUMN_86" class="java.lang.String"/>
+	<field name="ACCOUNT_NO" class="java.lang.String"/>
+	<field name="COLUMN_88" class="java.lang.String"/>
+	<field name="BANK" class="java.lang.String"/>
+	<field name="BRANCH" class="java.lang.String"/>
+	<field name="CLOSE_DATE" class="java.sql.Date"/>
+	<field name="COLUMN_92" class="java.lang.String"/>
+	<field name="COLUMN_93" class="java.lang.String"/>
+	<field name="IBAN" class="java.lang.String"/>
+	<field name="COLUMN_95" class="java.lang.String"/>
+	<field name="COLUMN_96" class="java.lang.String"/>
+	<field name="OPEN_DATE" class="java.sql.Date"/>
+	<field name="COLUMN_98" class="java.lang.String"/>
+	<field name="COLUMN_99" class="java.lang.String"/>
+	<field name="TYPE" class="java.lang.String"/>
+	<field name="COLUMN_101" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="190" y="20" width="190" height="30" uuid="6de70c48-cb1d-4555-b68f-79dd5ae833dd"/>
+				<textElement textAlignment="Center">
+					<font size="22"/>
+				</textElement>
+				<text><![CDATA[Maaş  Fişi]]></text>
+			</staticText>
+			<textField pattern="dd.MM.yyyy">
+				<reportElement x="430" y="49" width="100" height="30" uuid="ebd2e974-a765-4df0-8fa4-2ab3bfa368a7"/>
+				<textFieldExpression><![CDATA[$F{TXNDATE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="69" splitType="Stretch">
+			<textField>
+				<reportElement x="120" y="0" width="140" height="30" uuid="9bea1690-0f32-434b-9f68-f3b6810ee1ea"/>
+				<textFieldExpression><![CDATA[$F{COLUMN_96}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="430" y="4" width="100" height="30" uuid="ab4a4a0e-bbe8-4ce9-b730-d1603416919e"/>
+				<textFieldExpression><![CDATA[$F{VOUCHER_NO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="0" width="100" height="30" uuid="4c014854-01e2-4861-80b7-cb0adf5a75d8"/>
+				<textFieldExpression><![CDATA["Banka Hesabı"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="39" width="140" height="30" uuid="fc4a7605-16f0-427b-ab58-7da45d455a31"/>
+				<textFieldExpression><![CDATA[$F{VOUCHER_NO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="39" width="100" height="28" uuid="71d365dc-8824-42db-976f-5a113271cea8"/>
+				<textFieldExpression><![CDATA["Maaş Fişi"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="56" splitType="Stretch">
+			<textField>
+				<reportElement x="460" y="10" width="100" height="30" uuid="ee8d9307-c11d-4962-a3e0-c8a566bb5cf2"/>
+				<textFieldExpression><![CDATA[$F{CCY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="350" y="10" width="100" height="30" uuid="039eff88-8942-437d-b8ec-41908c7f3554"/>
+				<textFieldExpression><![CDATA[$F{AMOUNT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="10" width="330" height="30" uuid="f23953ac-2284-4488-8894-d70d8cef0a11"/>
+				<textFieldExpression><![CDATA[$F{TOPIC}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="10" y="17" width="530" height="30" uuid="592b9d07-66d8-4f27-9469-207a49b4df50"/>
+				<textFieldExpression><![CDATA[$F{INFO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="350" y="10" width="100" height="30" uuid="30eeb28a-00bc-4395-af42-e3cac0f52b1f"/>
+				<textFieldExpression><![CDATA[$F{TOT_AMT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="10" width="100" height="30" uuid="5cb0be1d-9fd5-40c8-b2a8-6e163b0d8ef1"/>
+				<textFieldExpression><![CDATA[$F{VOUCHER_NO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
