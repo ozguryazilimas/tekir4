@@ -86,5 +86,12 @@ public interface EmployeePages extends Pages {
                 implements
                 EmployeePages {
         }
+        
+        @View
+        @SecuredPage 
+	class EmployeeCreditNoteCommand
+			implements
+				EmployeePages {
+	}
     
 }
