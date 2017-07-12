@@ -1,4 +1,5 @@
 package com.ozguryazilim.tekir.hr.salarynote;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -6,20 +7,21 @@ import javax.enterprise.event.Observes;
 import javax.enterprise.event.TransactionPhase;
 import javax.inject.Inject;
 
-import com.ozguryazilim.tekir.account.AccountTxnService;
+import com.ozguryazilim.finance.account.FinanceAccountFeature;
+import com.ozguryazilim.finance.account.txn.FinanceAccountTxnService;
+import com.ozguryazilim.tekir.entities.ProcessType;
 import com.ozguryazilim.tekir.entities.SalaryNote;
-import com.ozguryazilim.tekir.entities.VoucherStateType;
+import com.ozguryazilim.tekir.entities.SalaryNoteItem;
 import com.ozguryazilim.tekir.feed.AbstractFeeder;
+import com.ozguryazilim.tekir.feed.Feeder;
 import com.ozguryazilim.tekir.hr.salarynote.SalaryNoteFeature;
 import com.ozguryazilim.tekir.voucher.VoucherOwnerChange;
 import com.ozguryazilim.tekir.voucher.VoucherStateChange;
-import com.ozguryazilim.tekir.voucher.process.ProcessService;
 import com.ozguryazilim.tekir.voucher.utils.FeatureUtils;
 import com.ozguryazilim.tekir.voucher.utils.FeederUtils;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureQualifier;
-import com.ozguryazilim.telve.feature.FeatureRegistery;
 import com.ozguryazilim.telve.forms.EntityChangeAction;
 import com.ozguryazilim.telve.forms.EntityChangeEvent;
 import com.ozguryazilim.telve.qualifiers.After;
@@ -29,16 +31,38 @@ import com.ozguryazilim.telve.qualifiers.EntityQualifier;
  * @author oktay
  *
  */
-public class SalaryNoteFeeder extends AbstractFeeder<SalaryNote>{
+@Feeder
+public class SalaryNoteFeeder extends AbstractFeeder<SalaryNote> {
 
 	@Inject
 	private Identity identity;
-
+	
 	@Inject
-	private AccountTxnService accountTxnService;
+	private FinanceAccountTxnService financeAccountTxnService;
 
-	@Inject
-	private ProcessService processService;
+
+	private List<FeaturePointer> prepareMentionList(SalaryNote entity) {
+		List<FeaturePointer> mentions = new ArrayList<>();
+		
+		List<SalaryNoteItem> items = entity.getItems();
+    	for(SalaryNoteItem item : items){
+    		FeaturePointer contactPointer = FeatureUtils.getAccountFeaturePointer(item.getEmployee());
+    		mentions.add(contactPointer);
+    	}
+    	
+		FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
+
+		if (entity.getGroup() != null && entity.getGroup().isPersisted()) {
+			FeaturePointer groupPointer = FeatureUtils.getVoucherGroupPointer(entity);
+			mentions.add(groupPointer);
+		}
+		
+		mentions.add(voucherPointer);
+		mentions.add(FeatureUtils.getFeaturePointer(FinanceAccountFeature.class, entity.getFinanceAccount().getName(),
+				entity.getFinanceAccount().getId()));
+		
+		return mentions;
+	}
 
 	public void feed(
 			@Observes(during = TransactionPhase.AFTER_SUCCESS) @FeatureQualifier(feauture = SalaryNoteFeature.class) @After VoucherStateChange event) {
@@ -78,7 +102,13 @@ public class SalaryNoteFeeder extends AbstractFeeder<SalaryNote>{
 			SalaryNote entity = (SalaryNote) event.getEntity();
 
 			FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
+			
+			financeAccountTxnService.saveFeature(voucherPointer, entity.getFinanceAccount(), entity.getCode(),
+					entity.getInfo(), Boolean.FALSE, Boolean.FALSE, entity.getCurrency(),
+					entity.getTotal(), entity.getLocalAmount(), entity.getDate(), entity.getOwner(),
+					null, entity.getState().toString(), entity.getStateReason());
 		}
+		
 	}
 
 	/**
@@ -91,35 +121,31 @@ public class SalaryNoteFeeder extends AbstractFeeder<SalaryNote>{
 	 * @return
 	 */
 	protected String getMessage(VoucherStateChange event) {
+		switch (event.getAction().getName()) {
+		case "CREATE":
+			return "feeder.messages.SalaryNoteFeeder.CREATE$%&" + identity.getUserName() + "$%&"
+					+ event.getPayload().getVoucherNo();
+		case "publish":
+			return "Salary note created.";
+		case "approved":
+			return "feeder.messages.SalaryNoteFeeder.WON$%&" + identity.getUserName() + "$%&"
+					+ event.getPayload().getVoucherNo();
+		case "cancel":
+			return "feeder.messages.SalaryNoteFeeder.CANCEL$%&" + identity.getUserName() + "$%&"
+					+ event.getPayload().getVoucherNo() + "$%&" + event.getPayload().getStateReason();
+
+		}
+
 		switch (event.getTo().getName()) {
 		case "OPEN":
 			return "Salary note created";
 		case "CLOSE":
-			return "Salary note approved";
-		case "LOST":
-			return "Salary note not approved! " + event.getPayload().getStateReason();
+			return "Salary note deposited.";
 		case "CANCELED":
 			return "Salary note canceled. " + event.getPayload().getStateReason();
 		default:
 			return "Salary note created";
 		}
-	}
+	} 
 
-	private List<FeaturePointer> prepareMentionList(SalaryNote entity) {
-		List<FeaturePointer> mentions = new ArrayList<>();
-
-		FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
-		FeaturePointer contactPointer = FeatureUtils.getFeaturePointer(entity);
-
-		if (entity.getGroup() != null && entity.getGroup().isPersisted()) {
-			FeaturePointer groupPointer = FeatureUtils.getVoucherGroupPointer(entity);
-			mentions.add(groupPointer);
-		}
-
-		mentions.add(contactPointer);
-		mentions.add(voucherPointer);
-
-		return mentions;
-	}
 }
-
