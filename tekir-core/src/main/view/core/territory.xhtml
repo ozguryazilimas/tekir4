@@ -24,7 +24,7 @@
         </div>    
         
         <p:outputPanel id="dets" layout="block" styleClass="row" style="margin-top: 8px;">        
-            <p:dataTable id="its" value="#{territoryHome.entity.items}" var="item" styleClass="col-xs-12" reflow="true">
+            <p:dataTable id="its" value="#{territoryHome.entity.items}" rowIndexVar="rowKey" var="item" styleClass="col-xs-12" reflow="true">
                 <p:column headerText="general.label.Location">
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{item.location.name}" /></f:facet>
@@ -39,14 +39,12 @@
                             <p:ajax event="dialogReturn" listener="#{territoryHome.onLocationSelect}" partialSubmit="true" 
                                     process="@this" update="@([id$=its])"/>   
                         </p:commandLink>
-                    </f:facet>
-                    <ui:remove
+                    </f:facet>                 
                     <p:commandLink action="#{territoryHome.removeLocation( rowKey )}" 
                                    update="@([id$=its])" styleClass="fa fa-trash-o btn-delete" process="@this" 
                                    title="#{messages['general.label.Delete']}">
                             <p:confirm header="#{messages['general.caption.Confirm']}" message="#{messages['general.message.confirm.Delete']}" icon="ui-icon-alert" />
-                    </p:commandLink>
-                </ui:remove>
+                    </p:commandLink>            
                 </p:column>   
             </p:dataTable>
         </p:outputPanel>
