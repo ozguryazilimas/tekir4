@@ -3,6 +3,7 @@ package com.ozguryazilim.tekir.hr.salarynote;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.enterprise.context.Dependent;
 import javax.enterprise.event.Observes;
 import javax.enterprise.event.TransactionPhase;
 import javax.inject.Inject;
@@ -12,11 +13,13 @@ import com.ozguryazilim.finance.account.txn.FinanceAccountTxnService;
 import com.ozguryazilim.tekir.entities.ProcessType;
 import com.ozguryazilim.tekir.entities.SalaryNote;
 import com.ozguryazilim.tekir.entities.SalaryNoteItem;
+import com.ozguryazilim.tekir.entities.VoucherStateType;
 import com.ozguryazilim.tekir.feed.AbstractFeeder;
 import com.ozguryazilim.tekir.feed.Feeder;
 import com.ozguryazilim.tekir.hr.salarynote.SalaryNoteFeature;
 import com.ozguryazilim.tekir.voucher.VoucherOwnerChange;
 import com.ozguryazilim.tekir.voucher.VoucherStateChange;
+import com.ozguryazilim.tekir.voucher.matcher.VoucherMatcherService;
 import com.ozguryazilim.tekir.voucher.utils.FeatureUtils;
 import com.ozguryazilim.tekir.voucher.utils.FeederUtils;
 import com.ozguryazilim.telve.auth.Identity;
@@ -32,10 +35,14 @@ import com.ozguryazilim.telve.qualifiers.EntityQualifier;
  *
  */
 @Feeder
-public class SalaryNoteFeeder extends AbstractFeeder<SalaryNote> {
+@Dependent
+public class SalaryNoteFeeder <E extends SalaryNote> extends AbstractFeeder<E> {
 
 	@Inject
 	private Identity identity;
+	
+	@Inject
+	private VoucherMatcherService matcherService;
 	
 	@Inject
 	private FinanceAccountTxnService financeAccountTxnService;
@@ -63,6 +70,20 @@ public class SalaryNoteFeeder extends AbstractFeeder<SalaryNote> {
 		
 		return mentions;
 	}
+	
+	/*
+	public void feedMatcherService(VoucherStateChange event) {
+		// TODO: Burada sadece publish olduğunda matcherservise gitmeli.
+		// TODO: Eğer üzerinde bir matcher varsa edite izin verilmemeli.
+		if ("OPEN".equals(event.getTo().getName())) {
+			if (event.getPayload() instanceof SalaryNote) {
+				E entity = (E) event.getPayload();
+				matcherService.register(entity, entity.getCurrency(), entity.getTotal(), entity.getLocalAmount());
+			}
+		}
+
+	}
+	 */
 
 	public void feed(
 			@Observes(during = TransactionPhase.AFTER_SUCCESS) @FeatureQualifier(feauture = SalaryNoteFeature.class) @After VoucherStateChange event) {
@@ -103,10 +124,6 @@ public class SalaryNoteFeeder extends AbstractFeeder<SalaryNote> {
 
 			FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
 			
-			financeAccountTxnService.saveFeature(voucherPointer, entity.getFinanceAccount(), entity.getCode(),
-					entity.getInfo(), Boolean.FALSE, Boolean.FALSE, entity.getCurrency(),
-					entity.getTotal(), entity.getLocalAmount(), entity.getDate(), entity.getOwner(),
-					null, entity.getState().toString(), entity.getStateReason());
 		}
 		
 	}
