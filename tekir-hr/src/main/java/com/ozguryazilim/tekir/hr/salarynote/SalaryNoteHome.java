@@ -137,9 +137,9 @@ public class SalaryNoteHome extends VoucherFormBase<SalaryNote> implements Salar
         VoucherStateAction paidAction = new VoucherStateAction("paid");
         VoucherStateAction partialPaidAction = new VoucherStateAction("partial");
         
-        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("approved", "fa fa-check" ), VoucherState.WON);
+        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("Pay", "fa fa-check" ), VoucherState.WON);
         config.addTranstion(VoucherState.DRAFT, new VoucherStateAction("publish", "fa fa-check"), VoucherState.OPEN);
-        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("loss", "fa fa-close", true), unpaid);
+        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("NotPay", "fa fa-close", true), unpaid);
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("cancel", "fa fa-ban", true), VoucherState.CLOSE);
         config.addTranstion(VoucherState.OPEN, partialPaidAction, partialPaid);
         config.addTranstion(VoucherState.OPEN, paidAction, paid);
