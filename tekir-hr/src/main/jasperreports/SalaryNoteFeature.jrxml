@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 6.4.1  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SalaryNoteFeature" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bef2f2f9-749e-4663-8a18-f1a6e0654361">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SalaryNoteFeature" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Error" uuid="bef2f2f9-749e-4663-8a18-f1a6e0654361">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
 	<parameter name="EID" class="java.lang.Long">
@@ -8,14 +8,14 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT *
-FROM THR_SALARY_NOTE
-	LEFT JOIN THR_SALARY_NOTE_ITEM ON 
-	 THR_SALARY_NOTE.ID = THR_SALARY_NOTE_ITEM.MASTER_ID 
-	LEFT JOIN TCC_CONTACT ON 
-	 THR_SALARY_NOTE_ITEM.EMPLOYEE_ID = tekir.TCC_CONTACT.ID 
-	LEFT JOIN TFN_FINANCE_ACC ON 
-	 THR_SALARY_NOTE.ACCOUNT_ID = TFN_FINANCE_ACC.ID
-	 where THR_SALARY_NOTE.ID =  $P{EID}]]>
+FROM THR_SALARY_NOTE thr
+	LEFT JOIN THR_SALARY_NOTE_ITEM thi ON 
+	 thr.ID = thi.MASTER_ID 
+	LEFT JOIN TCC_CONTACT c ON 
+	 thi.EMPLOYEE_ID = c.ID 
+	LEFT JOIN TFN_FINANCE_ACC f ON 
+	 thr.ACCOUNT_ID = f.ID
+	 where thr.ID =  $P{EID}]]>
 	</queryString>
 	<field name="ID" class="java.lang.Long"/>
 	<field name="CREATE_DATE" class="java.sql.Timestamp"/>
@@ -150,14 +150,6 @@ FROM THR_SALARY_NOTE
 				<reportElement x="10" y="0" width="100" height="30" uuid="4c014854-01e2-4861-80b7-cb0adf5a75d8"/>
 				<textFieldExpression><![CDATA["Banka Hesabı"]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="120" y="39" width="140" height="30" uuid="fc4a7605-16f0-427b-ab58-7da45d455a31"/>
-				<textFieldExpression><![CDATA[$F{VOUCHER_NO}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="10" y="39" width="100" height="28" uuid="71d365dc-8824-42db-976f-5a113271cea8"/>
-				<textFieldExpression><![CDATA["Maaş Fişi"]]></textFieldExpression>
-			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -173,8 +165,12 @@ FROM THR_SALARY_NOTE
 				<reportElement x="350" y="10" width="100" height="30" uuid="039eff88-8942-437d-b8ec-41908c7f3554"/>
 				<textFieldExpression><![CDATA[$F{AMOUNT}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="230" y="10" width="100" height="30" uuid="7d1a75b2-85b4-459d-96f3-8f2712153943"/>
+				<textFieldExpression><![CDATA[$F{NAME}]]></textFieldExpression>
+			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="10" y="10" width="330" height="30" uuid="f23953ac-2284-4488-8894-d70d8cef0a11"/>
+				<reportElement x="-10" y="10" width="220" height="30" uuid="f23953ac-2284-4488-8894-d70d8cef0a11"/>
 				<textFieldExpression><![CDATA[$F{TOPIC}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -183,26 +179,27 @@ FROM THR_SALARY_NOTE
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch">
+		<band height="47" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="10" y="17" width="530" height="30" uuid="592b9d07-66d8-4f27-9469-207a49b4df50"/>
+				<reportElement x="10" y="10" width="534" height="30" uuid="592b9d07-66d8-4f27-9469-207a49b4df50"/>
 				<textFieldExpression><![CDATA[$F{INFO}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="350" y="10" width="100" height="30" uuid="30eeb28a-00bc-4395-af42-e3cac0f52b1f"/>
-				<textFieldExpression><![CDATA[$F{TOT_AMT}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="460" y="10" width="100" height="30" uuid="5cb0be1d-9fd5-40c8-b2a8-6e163b0d8ef1"/>
-				<textFieldExpression><![CDATA[$F{VOUCHER_NO}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="240" y="10" width="100" height="30" uuid="7d1a75b2-85b4-459d-96f3-8f2712153943"/>
-				<textFieldExpression><![CDATA[$F{NAME}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band height="42" splitType="Stretch">
+			<textField>
+				<reportElement x="340" y="3" width="100" height="30" uuid="30eeb28a-00bc-4395-af42-e3cac0f52b1f"/>
+				<textFieldExpression><![CDATA[$F{TOT_AMT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="0" width="100" height="30" uuid="5cb0be1d-9fd5-40c8-b2a8-6e163b0d8ef1"/>
+				<textFieldExpression><![CDATA[$F{VOUCHER_NO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="230" y="0" width="100" height="30" uuid="249f8e5a-ae0a-4fd4-b11c-df89de1fab13"/>
+				<textFieldExpression><![CDATA["Toplam :"]]></textFieldExpression>
+			</textField>
+		</band>
 	</summary>
 </jasperReport>
