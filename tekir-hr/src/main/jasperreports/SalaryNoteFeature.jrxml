@@ -196,6 +196,10 @@ FROM THR_SALARY_NOTE
 				<reportElement x="460" y="10" width="100" height="30" uuid="5cb0be1d-9fd5-40c8-b2a8-6e163b0d8ef1"/>
 				<textFieldExpression><![CDATA[$F{VOUCHER_NO}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="240" y="10" width="100" height="30" uuid="7d1a75b2-85b4-459d-96f3-8f2712153943"/>
+				<textFieldExpression><![CDATA[$F{NAME}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageFooter>
 	<summary>
