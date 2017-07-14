@@ -25,7 +25,7 @@
         
         <p:outputPanel id="dets" layout="block" styleClass="row" style="margin-top: 8px;">        
             <p:dataTable id="its" value="#{territoryHome.entity.items}" rowIndexVar="rowKey" var="item" styleClass="col-xs-12" reflow="true">
-                <p:column headerText="general.label.Location">
+                <p:column headerText="#{messages['general.label.Location']}">
                     <h:outputText value="#{territoryHome.locationTree(item.location)}" />
                 </p:column>
                 
