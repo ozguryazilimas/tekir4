@@ -26,14 +26,12 @@
         <p:outputPanel id="dets" layout="block" styleClass="row" style="margin-top: 8px;">        
             <p:dataTable id="its" value="#{territoryHome.entity.items}" rowIndexVar="rowKey" var="item" styleClass="col-xs-12" reflow="true">
                 <p:column headerText="general.label.Location">
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{item.location.name}" /></f:facet>
-                    </p:cellEditor>
+                   <h:outputText value="#{item.location.name}" />
                 </p:column>
                 
                 <p:column styleClass="actionColumn">
                     <f:facet name="header">
-                        <p:commandLink action="#{locationLookup.openDialog(false, '' )}" style="text-decoration:none;padding:4px;"
+                        <p:commandLink action="#{locationLookup.openDialog(true, '')}" style="text-decoration:none;padding:4px;"
                                        partialSubmit="true" process="@this" styleClass="fa fa-plus-circle btn-add"
                                        title="#{messages['general.label.Add']}">
                             <p:ajax event="dialogReturn" listener="#{territoryHome.onLocationSelect}" partialSubmit="true" 

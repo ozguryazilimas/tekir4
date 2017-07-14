@@ -7,6 +7,9 @@ import com.ozguryazilim.telve.forms.ParamBase;
 import com.ozguryazilim.tekir.entities.Territory;
 import com.ozguryazilim.tekir.entities.TerritoryItem;
 import com.ozguryazilim.telve.lookup.LookupSelectTuple;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.inject.Inject;
 import org.primefaces.event.SelectEvent;
 
@@ -38,19 +41,39 @@ public class TerritoryHome extends ParamBase<Territory, Long> {
          *
          * @param event
          */
+        
         public void onLocationSelect(SelectEvent event) {
             LookupSelectTuple tuple = (LookupSelectTuple) event.getObject();
+            
+            List<Location> ls = new ArrayList<>();
             if(tuple != null){
-                Location loc = (Location) tuple.getValue();
-                System.out.println(loc.getName());
-                if (!isLocationAdded(loc)){
-                    TerritoryItem ti = new TerritoryItem();
-                    ti.setParent(getEntity());
-                    ti.setLocation(loc);
-                    getEntity().getItems().add(ti);
+                if(tuple.getValue() instanceof List) {
+                    ls.addAll((List<Location>) tuple.getValue());
+                } else {
+                    ls.add((Location) tuple.getValue());
+                }
+                
+                for(Location loc: ls) {
+                    if (!isLocationAdded(loc)){
+                        TerritoryItem ti = new TerritoryItem();
+                        ti.setParent(getEntity());
+                        ti.setLocation(loc);
+                        getEntity().getItems().add(ti);
+                    }
                 }
             }
-       }
+        }
+        
+        /**
+         * Territory elemanları için seçili olan location'ları döndürür.
+         * 
+         * @return TerritoryItems'ların location bilgileri
+         *         
+        public List<Location> getItemsLocations() {
+            return getEntity().getItems().stream().map(x -> x.getLocation()).collect(Collectors.toList());
+        }
+        
+        */
 
         /**
          * Verilen yerin daha önce listeye eklenip eklenmediğine bakar.
