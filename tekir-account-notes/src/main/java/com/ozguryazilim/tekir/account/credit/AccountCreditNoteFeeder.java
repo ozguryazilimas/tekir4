@@ -5,17 +5,23 @@
  */
 package com.ozguryazilim.tekir.account.credit;
 
+import com.ozguryazilim.tekir.account.AccountTxnService;
 import com.ozguryazilim.tekir.entities.AccountCreditNote;
 import com.ozguryazilim.tekir.feed.AbstractFeeder;
 import com.ozguryazilim.tekir.feed.Feeder;
 import com.ozguryazilim.tekir.voucher.VoucherOwnerChange;
 import com.ozguryazilim.tekir.voucher.VoucherStateChange;
+import com.ozguryazilim.tekir.voucher.group.VoucherGroupTxnService;
 import com.ozguryazilim.tekir.voucher.utils.FeatureUtils;
 import com.ozguryazilim.tekir.voucher.utils.FeederUtils;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureQualifier;
+import com.ozguryazilim.telve.forms.EntityChangeAction;
+import com.ozguryazilim.telve.forms.EntityChangeEvent;
 import com.ozguryazilim.telve.qualifiers.After;
+import com.ozguryazilim.telve.qualifiers.EntityQualifier;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.event.Observes;
@@ -31,6 +37,12 @@ public class AccountCreditNoteFeeder extends AbstractFeeder<AccountCreditNote> {
 
 	@Inject
 	private Identity identity;
+	
+    @Inject
+    private AccountTxnService accountTxnService;
+    
+	@Inject
+	private VoucherGroupTxnService voucherGroupTxnService;
 
 	public void feed(@Observes(during = TransactionPhase.AFTER_SUCCESS) @FeatureQualifier(feauture = AccountCreditNoteFeature.class) @After VoucherStateChange event) {
 
@@ -58,6 +70,22 @@ public class AccountCreditNoteFeeder extends AbstractFeeder<AccountCreditNote> {
 					FeederUtils.getEventMessage(event), mentions);
 		}
 	}
+	
+    public void feed(@Observes(during = TransactionPhase.IN_PROGRESS) @EntityQualifier(entity = AccountCreditNote.class) @After EntityChangeEvent event) {
+        
+        if( event.getAction() != EntityChangeAction.DELETE   ) {
+            AccountCreditNote entity = (AccountCreditNote) event.getEntity();
+            
+            FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
+            
+			if( entity.getGroup()!=null){
+				voucherGroupTxnService.saveFeature(voucherPointer, entity.getGroup(), entity.getOwner(), entity.getTopic(),
+						entity.getDate(), entity.getState());
+			}
+        }
+        //TODO: Delete edildiğinde de gidip txn'den silme yapılmalı.
+            
+    }
 
 	/**
 	 * Geriye event bilgilerine bakarak feed body mesajını hazırlayıp döndürür.

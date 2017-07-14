@@ -11,12 +11,18 @@ import com.ozguryazilim.tekir.feed.AbstractFeeder;
 import com.ozguryazilim.tekir.feed.Feeder;
 import com.ozguryazilim.tekir.voucher.VoucherOwnerChange;
 import com.ozguryazilim.tekir.voucher.VoucherStateChange;
+import com.ozguryazilim.tekir.voucher.group.VoucherGroupTxnService;
 import com.ozguryazilim.tekir.voucher.utils.FeatureUtils;
 import com.ozguryazilim.tekir.voucher.utils.FeederUtils;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureQualifier;
+import com.ozguryazilim.telve.forms.EntityChangeAction;
+import com.ozguryazilim.telve.forms.EntityChangeEvent;
 import com.ozguryazilim.telve.qualifiers.After;
+import com.ozguryazilim.telve.qualifiers.EntityQualifier;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.event.Observes;
@@ -32,6 +38,9 @@ public class FinanceAccountVirementFeeder extends AbstractFeeder<FinanceAccountV
 
 	@Inject
 	private Identity identity;
+	
+	@Inject
+	private VoucherGroupTxnService voucherGroupTxnService;
 
 	public void feed(
 			@Observes(during = TransactionPhase.AFTER_SUCCESS) @FeatureQualifier(feauture = FinanceAccountVirementFeature.class) @After VoucherStateChange event) {
@@ -61,6 +70,23 @@ public class FinanceAccountVirementFeeder extends AbstractFeeder<FinanceAccountV
 					FeederUtils.getEventMessage(event), mentions);
 
 		}
+	}
+	
+	public void feed(@Observes(during = TransactionPhase.IN_PROGRESS) @EntityQualifier(entity = FinanceAccountVirement.class) @After EntityChangeEvent event) {
+
+		if( event.getAction() != EntityChangeAction.DELETE   ) {
+			FinanceAccountVirement entity = (FinanceAccountVirement) event.getEntity();
+
+			FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
+
+			if( entity.getGroup()!=null){
+				voucherGroupTxnService.saveFeature(voucherPointer, entity.getGroup(), entity.getOwner(), entity.getTopic(),
+						entity.getDate(), entity.getState());
+			}
+		}
+		
+		//TODO: Delete edildiğinde de gidip txn'den silme yapılmalı.
+		
 	}
 
 	/**
