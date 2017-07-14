@@ -100,4 +100,37 @@
             <column name="TOPIC" type="varchar(255)"/>
         </addColumn>
     </changeSet>
+    
+   	<changeSet author="oktay (generated)" id="1500022081320-1">
+        <createTable tableName="TVO_GROUP_TXN">
+            <column autoIncrement="true" name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TVO_GROUP_TXNPK"/>
+            </column>
+            <column name="TXNDATE" type="datetime"/>
+            <column name="FEATURE_BK" type="VARCHAR(255)"/>
+            <column name="FEATURE" type="VARCHAR(255)"/>
+            <column name="FEATURE_PK" type="BIGINT"/>
+            <column name="OWNER" type="VARCHAR(255)"/>
+            <column name="TOPIC" type="VARCHAR(255)"/>
+            <column name="CONTACT_ID" type="BIGINT"/>
+            <column name="GROUP_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oktay (generated)" id="1500022081320-2">
+        <addForeignKeyConstraint baseColumnNames="CONTACT_ID" baseTableName="TVO_GROUP_TXN" constraintName="FK_TCCTXN_TCC" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+    </changeSet>
+    <changeSet author="oktay (generated)" id="1500022081320-3">
+        <addForeignKeyConstraint baseColumnNames="GROUP_ID" baseTableName="TVO_GROUP_TXN" constraintName="FK_TVOTXN_TVO" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TVO_GROUP"/>
+    </changeSet>
+    <changeSet author="oktay (generated)" id="1500023023934-1">
+        <addColumn tableName="TVO_GROUP_TXN">
+            <column name="STATE" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+   	<changeSet author="oktay (generated)" id="1500029222036-1">
+        <dropForeignKeyConstraint baseTableName="TVO_GROUP_TXN" constraintName="FK_TCCTXN_TCC"/>
+    </changeSet>
+    <changeSet author="oktay (generated)" id="1500029222036-2">
+        <dropColumn columnName="CONTACT_ID" tableName="TVO_GROUP_TXN"/>
+    </changeSet>
 </databaseChangeLog>
