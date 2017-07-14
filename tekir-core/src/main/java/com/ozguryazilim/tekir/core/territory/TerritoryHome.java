@@ -65,6 +65,24 @@ public class TerritoryHome extends ParamBase<Territory, Long> {
         }
         
         /**
+         * Verilen location için hiyerarşik path oluşturur.
+         * 
+         * @param loc Ağaç şeklinde biçimlendirilecek location
+         * @return Ağaç şeklinde biçimlendirilmiş location path'i
+         */
+        public String locationTree(Location loc) {
+            
+            String path = loc.getName();
+            
+            while (loc.getParent() != null) {
+                loc = loc.getParent();
+                path = loc.getName() + " ⇒ " + path;
+            }
+            
+            return path;
+        }
+        
+        /**
          * Territory elemanları için seçili olan location'ları döndürür.
          * 
          * @return TerritoryItems'ların location bilgileri
