@@ -1,0 +1,203 @@
+[
+    {
+        "name": "Taslak (Tarihe göre ters sıralı)",
+        "resultLimit": 200,
+        "rowLimit": 20,
+        "columns": ["voucherNo", "date", "topic", "owner", "relatedCompanyName"],
+        "filters": ["voucherNo", "date", "topic", "owner", "relatedCompanyName", "relatedPersonName", "relatedPersonSurname", "relatedAddress", "leadSource", "leadCategory", "state"],
+        "filterValues": {
+            "voucherNo": "All::null",
+            "date": "All::Today::20170718T0000::Today::null",
+            "owner": "All::",
+            "relatedPersonName": "All::",
+            "relatedAddress": "All::",
+            "leadCategory": "All::",
+            "leadSource": "All::",
+            "topic": "All::",
+            "relatedCompanyName": "All::",
+            "relatedPersonSurname": "All::",
+            "state": "Equal::DRAFT-NEUTRAL-DRAFT"
+        },
+        "sorters": ["date", "voucherNo"],
+        "sorterValues": {
+            "date": "D",
+            "voucherNo": "D"
+        }
+    },
+    {
+        "name": "Açık (Tarihe göre ters sıralı)",
+        "resultLimit": 200,
+        "rowLimit": 20,
+        "columns": ["voucherNo", "date", "topic", "owner", "relatedCompanyName"],
+        "filters": ["voucherNo", "date", "topic", "owner", "relatedCompanyName", "relatedPersonName", "relatedPersonSurname", "relatedAddress", "leadSource", "leadCategory", "state"],
+        "filterValues": {
+            "voucherNo": "All::null",
+            "date": "All::Today::20170718T0000::Today::null",
+            "owner": "All::",
+            "relatedPersonName": "All::",
+            "relatedAddress": "All::",
+            "leadCategory": "All::",
+            "leadSource": "All::",
+            "topic": "All::",
+            "relatedCompanyName": "All::",
+            "relatedPersonSurname": "All::",
+            "state": "Equal::OPEN-NEUTRAL-OPEN"
+        },
+        "sorters": ["date", "voucherNo"],
+        "sorterValues": {
+            "date": "D",
+            "voucherNo": "D"
+        }
+    },
+    {
+        "name": "Başarılı (Tarihe göre ters sıralı)",
+        "resultLimit": 200,
+        "rowLimit": 20,
+        "columns": ["voucherNo", "date", "topic", "owner", "relatedCompanyName"],
+        "filters": ["voucherNo", "date", "topic", "owner", "relatedCompanyName", "relatedPersonName", "relatedPersonSurname", "relatedAddress", "leadSource", "leadCategory", "state"],
+        "filterValues": {
+            "voucherNo": "All::null",
+            "date": "All::Today::20170718T0000::Today::null",
+            "owner": "All::",
+            "relatedPersonName": "All::",
+            "relatedAddress": "All::",
+            "leadCategory": "All::",
+            "leadSource": "All::",
+            "topic": "All::",
+            "relatedCompanyName": "All::",
+            "relatedPersonSurname": "All::",
+            "state": "Equal::CLOSE-POSITIVE-WON"
+        },
+        "sorters": ["date", "voucherNo"],
+        "sorterValues": {
+            "date": "D",
+            "voucherNo": "D"
+        }
+    },
+    {
+        "name": "Başarısız (Tarihe göre ters sıralı)",
+        "resultLimit": 200,
+        "rowLimit": 20,
+        "columns": ["voucherNo", "date", "topic", "owner", "relatedCompanyName"],
+        "filters": ["voucherNo", "date", "topic", "owner", "relatedCompanyName", "relatedPersonName", "relatedPersonSurname", "relatedAddress", "leadSource", "leadCategory", "state"],
+        "filterValues": {
+            "voucherNo": "All::null",
+            "date": "All::Today::20170718T0000::Today::null",
+            "owner": "All::",
+            "relatedPersonName": "All::",
+            "relatedAddress": "All::",
+            "leadCategory": "All::",
+            "leadSource": "All::",
+            "topic": "All::",
+            "relatedCompanyName": "All::",
+            "relatedPersonSurname": "All::",
+            "state": "Equal::CLOSE-NEGATIVE-LOSS"
+        },
+        "sorters": ["date", "voucherNo"],
+        "sorterValues": {
+            "date": "D",
+            "voucherNo": "D"
+        }
+    },
+    {
+        "name": "Bugün (Tarihe göre ters sıralı)",
+        "resultLimit": 200,
+        "rowLimit": 20,
+        "columns": ["voucherNo", "date", "topic", "owner", "relatedCompanyName"],
+        "filters": ["voucherNo", "date", "topic", "owner", "relatedCompanyName", "relatedPersonName", "relatedPersonSurname", "relatedAddress", "leadSource", "leadCategory", "state"],
+        "filterValues": {
+            "voucherNo": "All::null",
+            "date": "Equal::Today::20170718T0000::Today::null",
+            "owner": "All::",
+            "relatedPersonName": "All::",
+            "relatedAddress": "All::",
+            "leadCategory": "All::",
+            "leadSource": "All::",
+            "topic": "All::",
+            "relatedCompanyName": "All::",
+            "relatedPersonSurname": "All::",
+            "state": "All::CLOSE-NEUTRAL-CLOSE"
+        },
+        "sorters": ["date", "voucherNo"],
+        "sorterValues": {
+            "date": "D",
+            "voucherNo": "D"
+        }
+    },
+    {
+        "name": "Hepsi (Tarihe göre ters sıralı)",
+        "resultLimit": 200,
+        "rowLimit": 20,
+        "columns": ["voucherNo", "date", "topic", "owner", "relatedCompanyName"],
+        "filters": ["voucherNo", "date", "topic", "owner", "relatedCompanyName", "relatedPersonName", "relatedPersonSurname", "relatedAddress", "leadSource", "leadCategory", "state"],
+        "filterValues": {
+            "voucherNo": "All::null",
+            "date": "All::Today::20170718T0000::Today::null",
+            "owner": "All::",
+            "relatedPersonName": "All::",
+            "relatedAddress": "All::",
+            "leadCategory": "All::",
+            "leadSource": "All::",
+            "topic": "All::",
+            "relatedCompanyName": "All::",
+            "relatedPersonSurname": "All::",
+            "state": "All::CLOSE-NEGATIVE-LOSS"
+        },
+        "sorters": ["date", "voucherNo"],
+        "sorterValues": {
+            "date": "D",
+            "voucherNo": "D"
+        }
+    },
+    {
+        "name": "Kapalı (Tarihe göre ters sıralı)",
+        "resultLimit": 200,
+        "rowLimit": 20,
+        "columns": ["voucherNo", "date", "topic", "owner", "relatedCompanyName"],
+        "filters": ["voucherNo", "date", "topic", "owner", "relatedCompanyName", "relatedPersonName", "relatedPersonSurname", "relatedAddress", "leadSource", "leadCategory", "state"],
+        "filterValues": {
+            "voucherNo": "All::null",
+            "date": "All::Today::20170718T0000::Today::null",
+            "owner": "All::",
+            "relatedPersonName": "All::",
+            "relatedAddress": "All::",
+            "leadCategory": "All::",
+            "leadSource": "All::",
+            "topic": "All::",
+            "relatedCompanyName": "All::",
+            "relatedPersonSurname": "All::",
+            "state": "Equal::CLOSE-NEUTRAL-CLOSE"
+        },
+        "sorters": ["date", "voucherNo"],
+        "sorterValues": {
+            "date": "D",
+            "voucherNo": "D"
+        }
+    },
+    {
+        "name": "Son 10 gün (Tarihe göre ters sıralı)",
+        "resultLimit": 200,
+        "rowLimit": 20,
+        "columns": ["voucherNo", "date", "topic", "owner", "relatedCompanyName"],
+        "filters": ["voucherNo", "date", "topic", "owner", "relatedCompanyName", "relatedPersonName", "relatedPersonSurname", "relatedAddress", "leadSource", "leadCategory", "state"],
+        "filterValues": {
+            "voucherNo": "All::null",
+            "date": "In::LastTenDays::20170708T0000::Today::20170718T0000",
+            "owner": "All::",
+            "relatedPersonName": "All::",
+            "relatedAddress": "All::",
+            "leadCategory": "All::",
+            "leadSource": "All::",
+            "topic": "All::",
+            "relatedCompanyName": "All::",
+            "relatedPersonSurname": "All::",
+            "state": "All::CLOSE-NEUTRAL-CLOSE"
+        },
+        "sorters": ["date", "voucherNo"],
+        "sorterValues": {
+            "date": "D",
+            "voucherNo": "D"
+        }
+    }
+
+]
