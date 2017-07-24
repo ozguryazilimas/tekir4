@@ -44,7 +44,9 @@
                                     </ui:remove>
                                     <td>#{ci.topic}</td>
                                     <td><t:cellOutputDate value="#{ci.date}"/></td>
-                             		<td>#{ci.state}</td>
+                             		<td>
+                                        <h:outputText value="#{messages['voucherState.name.'.concat(ci.status)]}" styleClass="#{ ci.status.contains('WON') ? 'label label-success' : ci.status.contains('LOSS') ? 'label label-danger' : ci.status.startsWith('CLOSE', 0) ? 'label label-primary' : 'label label-warning' }" />
+                                    </td>
                                 </tr>
                             </ui:repeat>
                         </table>
