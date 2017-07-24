@@ -7,6 +7,7 @@ package com.ozguryazilim.tekir.voucher.group;
 
 import java.io.Serializable;
 
+import com.ozguryazilim.tekir.entities.AccountTxn;
 import com.ozguryazilim.tekir.entities.VoucherGroup;
 import com.ozguryazilim.tekir.entities.VoucherGroupTxn;
 import com.ozguryazilim.tekir.entities.VoucherState;
@@ -52,4 +53,8 @@ public class VoucherGroupTxnService implements Serializable{
             repository.save(txn);
     }
 
+    public List<VoucherGroupTxn> getGroupVouchers( String groupId ){
+        return repository.findByGroupId(groupId);
+    }
+    
 }

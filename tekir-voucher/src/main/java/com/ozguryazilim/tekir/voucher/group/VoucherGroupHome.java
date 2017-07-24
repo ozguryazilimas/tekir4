@@ -5,26 +5,17 @@
  */
 package com.ozguryazilim.tekir.voucher.group;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javax.inject.Inject;
-import org.primefaces.model.diagram.Connection;
-import org.primefaces.model.diagram.DefaultDiagramModel;
-import org.primefaces.model.diagram.DiagramModel;
-import org.primefaces.model.diagram.Element;
-import org.primefaces.model.diagram.endpoint.BlankEndPoint;
-import org.primefaces.model.diagram.endpoint.EndPoint;
-import org.primefaces.model.diagram.endpoint.EndPointAnchor;
 import com.ozguryazilim.telve.data.RepositoryBase;
+import com.ozguryazilim.telve.entities.EntityBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureLinkController;
+import com.ozguryazilim.telve.feature.FeatureUtils;
 import com.ozguryazilim.telve.forms.FormBase;
 import com.ozguryazilim.telve.forms.FormEdit;
-import com.ozguryazilim.tekir.account.AccountTxnRepository;
-import com.ozguryazilim.tekir.entities.AccountTxn;
-import com.ozguryazilim.tekir.entities.Process;
 import com.ozguryazilim.tekir.entities.VoucherGroup;
+import com.ozguryazilim.tekir.entities.VoucherGroupTxn;
 
 /**
  * Voucher Group View Controller
@@ -35,17 +26,34 @@ public class VoucherGroupHome extends FormBase<VoucherGroup, Long>{
 
 	@Inject
 	private VoucherGroupRepository repository;
+	
+	@Inject
+	private VoucherGroupTxnRepository voucherGroupTxnRepository;
 
 	@Inject
 	private VoucherGroupService voucherGroupService;
-
-	@Inject
-	private FeatureLinkController featureController;
-
+	
+	private List<VoucherGroupTxn> txnList;
+	
 	@Override
 	protected RepositoryBase<VoucherGroup, ?> getRepository() {
 		return repository;
 	}	
+
+    public boolean onAfterLoad() {
+        setTxnList(null);
+        refreshTxn();
+        return super.onAfterLoad();
+    }
+
+    protected void refreshTxn() {
+        txnList = voucherGroupTxnRepository.findByGroupId(getEntity().getGroupNo());
+  
+    }
+
+	public boolean showDelete() {
+        return txnList.isEmpty();
+    }
 
 	public FeaturePointer getFeaturePointer() {
 		FeaturePointer result = new FeaturePointer();
@@ -54,7 +62,7 @@ public class VoucherGroupHome extends FormBase<VoucherGroup, Long>{
 		result.setPrimaryKey(getEntity().getId());
 		return result;
 	}
-	
+
 	@Override
 	protected VoucherGroup getNewEntity() {
 		// TODO Auto-generated method stub
@@ -64,5 +72,14 @@ public class VoucherGroupHome extends FormBase<VoucherGroup, Long>{
 		return e;
 	}
 
+    public List<VoucherGroupTxn> getTxnList() {
+        if (txnList == null) {
+            refreshTxn();
+        }
+        return txnList;
+    }
 
+    public void setTxnList(List<VoucherGroupTxn> txnList) {
+        this.txnList = txnList;
+    }
 }

@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ozguryazilim.tekir.entities.AccountTxn;
+import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.tekir.entities.VoucherGroup;
 import com.ozguryazilim.tekir.entities.VoucherGroup_;
@@ -40,16 +40,15 @@ import com.ozguryazilim.telve.data.RepositoryBase;
 
 /**
  * VoucherGroup Txn için repository sınıfı.
+ * 
  * @author oktay
  *
  */
 @Repository
 @Dependent
-public abstract class VoucherGroupTxnRepository extends
-RepositoryBase< VoucherGroupTxn,  VoucherGroupTxn>
-implements
-CriteriaSupport<VoucherGroupTxn>{
-	
+public abstract class VoucherGroupTxnRepository extends RepositoryBase<VoucherGroupTxn, VoucherGroupTxn>
+		implements CriteriaSupport<VoucherGroupTxn> {
+
 	private VoucherGroup group;
 
 	public VoucherGroup getGroup() {
@@ -59,48 +58,54 @@ CriteriaSupport<VoucherGroupTxn>{
 	public void setGroup(VoucherGroup group) {
 		this.group = group;
 	}
+
+	public abstract VoucherGroupTxn findOptionalByFeature(FeaturePointer feature);
+
+	public abstract VoucherGroupTxn findOptionalByFeatureAndGroup(FeaturePointer feature, VoucherGroup group);
+
+	public List<VoucherGroupTxn> findByGroupId(String groupId){
+		Criteria<VoucherGroupTxn, VoucherGroupTxn> cr = criteria();
+		return cr.createQuery().getResultList();
+
+	}
 	
-    public abstract VoucherGroupTxn findOptionalByFeature(FeaturePointer feature);
-    
-    public abstract VoucherGroupTxn findOptionalByFeatureAndGroup(FeaturePointer feature, VoucherGroup group);
+	@Override
+	public List<VoucherGroupTxn> browseQuery(QueryDefinition queryDefinition) {
+		List<Filter<VoucherGroupTxn, ?, ?>> filters = queryDefinition.getFilters();
+
+		CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
+
+		CriteriaQuery<VoucherGroupTxn> criteriaQuery = criteriaBuilder.createQuery(VoucherGroupTxn.class);
+
+		Root<VoucherGroupTxn> from = criteriaQuery.from(VoucherGroupTxn.class);
+
+		// Filtreleri ekleyelim.
+		List<Predicate> predicates = new ArrayList<>();
+
+		decorateFilters(filters, predicates, criteriaBuilder, from);
+
+		// Hem source hem de target üzerinde olanlar gelsin.
+		if (group != null) {
+			predicates
+					.add(criteriaBuilder.equal(from.get(VoucherGroupTxn_.group).get(VoucherGroup_.id), group.getId()));
+		}
+
+		// filtremize ekledik.
+		criteriaQuery.where(predicates.toArray(new Predicate[] {}));
+
+		// Öncelikle default sıralama verelim eğer kullanıcı tarafından tanımlı
+		// sıralama var ise onu setleyelim
+		if (queryDefinition.getSorters().isEmpty()) {
+			criteriaQuery.orderBy(criteriaBuilder.desc(from.get(VoucherGroupTxn_.date)));
+		} else {
+			criteriaQuery.orderBy(decorateSorts(queryDefinition.getSorters(), criteriaBuilder, from));
+		}
+
+		// Haydi bakalım sonuçları alalım
+		TypedQuery<VoucherGroupTxn> typedQuery = entityManager().createQuery(criteriaQuery);
+		List<VoucherGroupTxn> resultList = typedQuery.getResultList();
+
+		return resultList;
+	}
 	
-	 @Override
-	    public List<VoucherGroupTxn> browseQuery(QueryDefinition queryDefinition) {
-	        List<Filter<VoucherGroupTxn, ?, ?>> filters = queryDefinition.getFilters();
-
-	        CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
-	        
-	        CriteriaQuery<VoucherGroupTxn> criteriaQuery = criteriaBuilder.createQuery(VoucherGroupTxn.class);
-
-	        Root<VoucherGroupTxn> from = criteriaQuery.from(VoucherGroupTxn.class);
-
-
-	        //Filtreleri ekleyelim.
-	        List<Predicate> predicates = new ArrayList<>();
-
-	        decorateFilters(filters, predicates, criteriaBuilder, from);
-
-	        //Hem source hem de target üzerinde olanlar gelsin.
-	        if (group != null) {
-	            predicates.add(criteriaBuilder.equal(from.get(VoucherGroupTxn_.group).get(VoucherGroup_.id), group.getId()));
-	        }
-	        
-	        //filtremize ekledik.
-	        criteriaQuery.where(predicates.toArray(new Predicate[]{}));
-
-	        // Öncelikle default sıralama verelim eğer kullanıcı tarafından tanımlı sıralama var ise onu setleyelim
-	        if (queryDefinition.getSorters().isEmpty()) {
-	            criteriaQuery.orderBy(criteriaBuilder.desc(from.get(VoucherGroupTxn_.date)));
-	        } else {
-	            criteriaQuery.orderBy(decorateSorts(queryDefinition.getSorters(), criteriaBuilder, from));
-	        }
-
-	        //Haydi bakalım sonuçları alalım
-	        TypedQuery<VoucherGroupTxn> typedQuery = entityManager().createQuery(criteriaQuery);
-	        List<VoucherGroupTxn> resultList = typedQuery.getResultList();
-
-	        return resultList;
-	    }
-
-
 }
