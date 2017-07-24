@@ -47,7 +47,7 @@ public class VoucherGroupHome extends FormBase<VoucherGroup, Long>{
     }
 
     protected void refreshTxn() {
-        txnList = voucherGroupTxnRepository.findByGroupId(getEntity().getGroupNo());
+        txnList = voucherGroupTxnRepository.findByGroupId(getEntity());
   
     }
 

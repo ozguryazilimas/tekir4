@@ -63,12 +63,15 @@ public abstract class VoucherGroupTxnRepository extends RepositoryBase<VoucherGr
 
 	public abstract VoucherGroupTxn findOptionalByFeatureAndGroup(FeaturePointer feature, VoucherGroup group);
 
-	public List<VoucherGroupTxn> findByGroupId(String groupId){
+	//public abstract List<VoucherGroupTxn> findByGroupId(VoucherGroup voucherGroup);
+	
+	public List<VoucherGroupTxn> findByGroupId(VoucherGroup voucherGroup){
 		Criteria<VoucherGroupTxn, VoucherGroupTxn> cr = criteria();
+		cr.eq(VoucherGroupTxn_.group,voucherGroup); 
 		return cr.createQuery().getResultList();
 
 	}
-	
+
 	@Override
 	public List<VoucherGroupTxn> browseQuery(QueryDefinition queryDefinition) {
 		List<Filter<VoucherGroupTxn, ?, ?>> filters = queryDefinition.getFilters();

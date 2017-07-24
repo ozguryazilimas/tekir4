@@ -12,6 +12,9 @@ import com.ozguryazilim.tekir.entities.VoucherGroup;
 import com.ozguryazilim.tekir.entities.VoucherGroupTxn;
 import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.telve.entities.FeaturePointer;
+
+import javafx.geometry.VPos;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Currency;
@@ -53,8 +56,8 @@ public class VoucherGroupTxnService implements Serializable{
             repository.save(txn);
     }
 
-    public List<VoucherGroupTxn> getGroupVouchers( String groupId ){
-        return repository.findByGroupId(groupId);
+    public List<VoucherGroupTxn> getGroupVouchers(VoucherGroup voucherGroup ){
+        return repository.findByGroupId(voucherGroup);
     }
     
 }
