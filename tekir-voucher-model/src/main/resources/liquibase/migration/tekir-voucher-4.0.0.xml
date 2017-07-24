@@ -133,4 +133,9 @@
     <changeSet author="oktay (generated)" id="1500029222036-2">
         <dropColumn columnName="CONTACT_ID" tableName="TVO_GROUP_TXN"/>
     </changeSet>
+    <changeSet author="oktay (generated)" id="1500904265182-1">
+        <addColumn tableName="TVO_GROUP_TXN">
+            <column name="STATUS" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

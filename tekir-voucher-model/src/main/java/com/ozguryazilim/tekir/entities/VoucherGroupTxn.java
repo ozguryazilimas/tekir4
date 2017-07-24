@@ -75,6 +75,9 @@ public class VoucherGroupTxn extends EntityBase{
     @Column(name="STATE")
     private VoucherState state;
     
+    @Column(name="STATUS")
+    private String status;
+    
 	public Long getId() {
 		return id;
 	}
@@ -129,6 +132,14 @@ public class VoucherGroupTxn extends EntityBase{
 
 	public void setState(VoucherState state) {
 		this.state = state;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 }
