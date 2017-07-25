@@ -58,7 +58,7 @@ public class EmployeeHome extends FormBase<Employee, Long> {
     
     private List<String> selectedRoles = new ArrayList<>();
     
-    public Integer usedLeaveDay=null;
+    private Integer usedLeaveDay=0;
 
     public Class<? extends ViewConfig> newEmployee() {
         Employee p = new Employee();
