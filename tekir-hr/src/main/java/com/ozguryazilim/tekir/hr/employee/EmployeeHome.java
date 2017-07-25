@@ -112,10 +112,12 @@ public class EmployeeHome extends FormBase<Employee, Long> {
 
     public void calculateLeaveDay() {
 			List<EmployeeLeave> empls =getEmployeeLeaves();
+			int temp=0;
 			for(EmployeeLeave empl : empls){
 				System.out.println("emp :"+empl.getEmployee()+" gün :"+empl.getLeaveDay());
-				usedLeaveDay+=empl.getLeaveDay();
+				temp+=empl.getLeaveDay();
 	    	}
+			setUsedLeaveDay(temp);
     }
     
     @Override
