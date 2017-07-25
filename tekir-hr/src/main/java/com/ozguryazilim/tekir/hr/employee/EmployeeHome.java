@@ -105,13 +105,12 @@ public class EmployeeHome extends FormBase<Employee, Long> {
         selectedRoles = getEntity().getContactRoles().stream()
                             .filter(p -> getContactRoles().contains(p))
                             .collect(Collectors.toList());
-        hesapla();
+        calculateLeaveDay();
         return super.onAfterLoad();
     }
     
 
-    public void hesapla() {
-
+    public void calculateLeaveDay() {
 			List<EmployeeLeave> empls =getEmployeeLeaves();
 			for(EmployeeLeave empl : empls){
 				System.out.println("emp :"+empl.getEmployee()+" gün :"+empl.getLeaveDay());
