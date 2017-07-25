@@ -19,6 +19,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.apache.deltaspike.data.api.Repository;
+import org.apache.deltaspike.data.api.criteria.Criteria;
 import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
 
 import com.google.common.base.Splitter;
@@ -208,4 +209,11 @@ public abstract class EmployeeLeaveRepository extends VoucherRepositoryBase<Empl
 		this.ownerFilter = ownerFilter;
 	}
 
+	public  List<EmployeeLeave> getEmployeeLeaves(Employee empl){
+		Criteria<EmployeeLeave, EmployeeLeave> cr = criteria();
+		cr.eq(EmployeeLeave_.employee,empl); 
+		System.out.println("izinler :"+ cr.createQuery().getResultList());
+		return cr.createQuery().getResultList();
+		
+	}
 }
