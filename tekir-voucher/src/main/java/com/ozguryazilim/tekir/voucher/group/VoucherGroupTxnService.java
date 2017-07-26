@@ -7,17 +7,11 @@ package com.ozguryazilim.tekir.voucher.group;
 
 import java.io.Serializable;
 
-import com.ozguryazilim.tekir.entities.AccountTxn;
 import com.ozguryazilim.tekir.entities.VoucherGroup;
 import com.ozguryazilim.tekir.entities.VoucherGroupTxn;
 import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 
-import javafx.geometry.VPos;
-
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Currency;
 import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
