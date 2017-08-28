@@ -10,6 +10,7 @@ import com.ozguryazilim.telve.entities.FeaturePointer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Embedded;
@@ -24,9 +25,12 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  * Bir contact ile gerçekleştirilen her hangi bir iletişim aktivitesini tanımlar.
@@ -147,6 +151,10 @@ public class Activity extends EntityBase{
     @ManyToOne
     @JoinColumn(name = "FOLLOWUP_ID", foreignKey = @ForeignKey(name = "FK_ACC_FOLL"))
     private Activity followup;
+    
+    @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<ActivityMention> mentions = new ArrayList<>();
 
     @Override
     public Long getId() {
@@ -295,5 +303,14 @@ public class Activity extends EntityBase{
         
         return ls;
     }
+
+    public List<ActivityMention> getMentions() {
+        return mentions;
+    }
+
+    public void setMentions(List<ActivityMention> mentions) {
+        this.mentions = mentions;
+    }
+
     
 }

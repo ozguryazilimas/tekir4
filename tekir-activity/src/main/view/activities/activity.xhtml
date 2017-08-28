@@ -1,0 +1,133 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/editBase.xhtml">
+
+    <ui:param name="homeBean" value="#{activityHome}" />
+    <ui:param name="entity" value="#{activityHome.entity}" />
+    <ui:param name="dontShowContentHeader" value="true" />
+
+    <ui:define name="customHeader">
+        <section class="content-header">
+            <p:outputPanel id="states">
+                <ul class="states pull-right">
+                    <li role="presentation">
+                        <div style="font-weight: bold;">#{messages['activity.label.Assignee']}</div>
+                        <div >
+                            #{userLookup.getUserName(activityHome.entity.assignee)}
+                        </div>
+                    </li>
+                </ul>
+            </p:outputPanel>
+            <i class="fa fa-3x #{messages['activity.button.icon.'.concat(activityHome.entity.class.simpleName)]} pull-left"/> 
+            <small class="text-muted">#{ messages[pageTitleResolver.pageTitle] }</small>
+            <h1>#{messages['activity.class.'.concat(activityHome.entity.class.simpleName)]}  <small>#{ viewIdentifier }</small></h1> 
+        </section>
+    </ui:define>
+
+
+    <ui:define name="form">
+        <div class="row">
+            <div class="col-md-8 col-sm-12">
+
+                <div class="row">
+                    <t:inputEnum value="#{activityHome.entity.direction}" label="activity.label.Direction" itemLabel="activity.direction." hasNullValue="false" columnClass="col-xs-6" disabled="#{activityHome.entity.direction eq 'NONE'}"/>
+                    <t:inputEnum value="#{activityHome.entity.priority}" label="activity.label.Priority" itemLabel="activity.priority." hasNullValue="false" columnClass="col-xs-6"/>
+                </div>
+
+                <ui:include src="#{activityHome.editFragment}" />
+
+                <div class="row">
+                    <t:inputDateTime label="activity.label.DueDate" value="#{activityHome.entity.dueDate}" columnClass="col-sm-6"/>
+                    <t:inputDuration value="#{activityHome.entity.duration}" columnClass="col-sm-6" />
+                </div>
+
+            </div>
+            <t:accordion label="general.label.Regarding" columnClass="col-md-4">
+
+                <div class="row">
+                    <t:inputLookupDialog label="general.label.Person" value="#{activityHome.entity.person}" lookupBean="#{contactLookup}" lookupListener="activityHome.entity.person" placeholder="#{messages['contact.info.Person']}" lookupProfile="T:Person" columnClass="col-sm-6"/>
+                    <t:inputLookupDialog label="general.label.Corporation" value="#{activityHome.entity.corporation}" lookupBean="#{contactLookup}" lookupListener="activityHome.entity.corporation" placeholder="#{messages['general.info.Corparation']}" lookupProfile="T:Corporation" columnClass="col-sm-6"/>
+                    <t:inputFeature label="activity.label.Regarding" value="#{activityHome.entity.regarding}" lookupBean="#{tekirFeatureLookup}" lookupListener="activityHome.entity.regarding" columnClass="col-sm-6"/>
+                    <t:inputUser label="general.label.Assignee" value="#{activityHome.entity.assignee}" hasNotSelected="true" required="true"  columnClass="col-sm-6"/>
+                </div>
+
+
+                <p:dataTable id="mentions" value="#{activityHome.entity.mentions}" var="mention" style="margin-top: 10px;" rowIndexVar="rowKey">
+                    <p:column headerText="general.label.Regardings">
+                        #{mention.featurePointer.businessKey}
+                    </p:column>
+                    <p:column styleClass="actionColumn">
+                        <f:facet name="header">
+                            <p:commandLink action="#{contactLookup.openDialog( true, false, false, '', ' . ' )}" 
+                                           partialSubmit="true" process="@this" styleClass="fa fa-plus"
+                                           style="display: inline-block"
+                                           title="#{messages['general.label.Add']}">
+
+                                <p:ajax event="dialogReturn" listener="#{activityHome.onContactSelect}" partialSubmit="true" 
+                                        process="@this" update="mentions"/>   
+
+                            </p:commandLink>
+                        </f:facet>
+                        <p:commandLink action="#{activityHome.removeMention( rowKey )}" 
+                                       update="mentions" styleClass="fa fa-trash-o btn-delete" process="@this" 
+                                       title="#{messages['general.label.DeleteLine']}">
+                            <ui:remove>
+                                <p:confirm header="#{messages['general.caption.Confirm']}" message="#{messages['general.message.confirm.Delete']}" icon="ui-icon-alert" />
+                            </ui:remove>
+                        </p:commandLink>
+                    </p:column>
+                </p:dataTable>
+
+                <ui:remove>
+                    Bu bilgiler kapanış dialoğu için
+                    <div class="row">
+                        <t:inputSuggestion label="general.label.Reason" value="#{activityHome.entity.statusReason}" group="#{activityHome.entity.class.simpleName}" listener="" columnClass="col-xs-12"/>
+                        <t:inputTextarea label="general.label.Info" value="#{activityHome.entity.info}" columnClass="col-xs-12"/>
+                        <t:inputTextarea label="general.label.ResultNote" value="#{activityHome.entity.resultNote}" columnClass="col-xs-12"/>
+                    </div>
+                </ui:remove>
+            </t:accordion>
+
+        </div>
+
+    </ui:define>
+
+    <ui:define name="context-menu">
+        <li>
+            <p:commandLink title="#{messages['general.button.Save']}" onclick="jQuery('#form\\:save').click();return false;" rendered="#{not hideSave and (( not empty entity.id and homeBean.hasUpdatePermission()) or ( empty entity.id and homeBean.hasInsertPermission()))}">
+                <i class="fa fa-save"></i>
+                <h:outputText value=" #{messages['general.button.Save']}" />
+            </p:commandLink>
+        </li>
+        <li>
+            <p:commandLink title="#{messages['activity.button.Success']}" onclick="jQuery('#form\\:success').click();return false;" rendered="#{not hideSave and (( not empty entity.id and homeBean.hasUpdatePermission()) or ( empty entity.id and homeBean.hasInsertPermission()))}">
+                <i class="fa fa-check"></i>
+                <h:outputText value=" #{messages['activity.button.Success']}" />
+            </p:commandLink>
+        </li>
+        <li>
+            <p:commandLink title="#{messages['general.button.Delete']}" action="#{homeBean.delete()}" rendered="#{not hideDelete and not empty entity.id and homeBean.hasDeletePermission() }">
+                <i class="fa fa-trash-o"></i>
+                <h:outputText value=" #{messages['general.button.Delete']}" />
+                <p:confirm header="#{messages['general.caption.Confirm']}" message="#{messages['general.message.confirm.Delete']}" icon="ui-icon-alert" />
+            </p:commandLink>
+        </li>
+    </ui:define>
+
+    <ui:define name="extraButtons">
+        <p:commandButton id="success" 
+                         value="#{messages['activity.button.Success']}" 
+                         action="#{homeBean.closeSuccess()}"
+                         rendered="#{not hideSave and (( not empty entity.id and homeBean.hasUpdatePermission()) or ( empty entity.id and homeBean.hasInsertPermission()))}"
+                         ajax="true"
+                         process="@form"
+                         validateClient="true"
+                         styleClass="btn-success"
+                         icon="fa fa-save" />  
+    </ui:define>
+
+</ui:composition>

@@ -45,4 +45,19 @@
     <changeSet author="oyas (generated)" id="1469625097267-5">
         <addForeignKeyConstraint baseColumnNames="PERSON_ID" baseTableName="TCA_ACTIVITY" constraintName="FK_ACC_PER" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
     </changeSet>
+    <changeSet author="oyas (generated)" id="1503931845102-1">
+        <createTable tableName="TCA_ACT_MENTION">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TCA_ACT_MENTIONPK"/>
+            </column>
+            <column name="FEATURE_BK" type="VARCHAR(255)"/>
+            <column name="FEATURE" type="VARCHAR(255)"/>
+            <column name="FEATURE_PK" type="BIGINT"/>
+            <column name="TYPE" type="VARCHAR(255)"/>
+            <column name="ACTIVITY_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1503931845102-2">
+        <addForeignKeyConstraint baseColumnNames="ACTIVITY_ID" baseTableName="TCA_ACT_MENTION" constraintName="FK_ACTIVITY_FEED" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCA_ACTIVITY"/>
+    </changeSet>
 </databaseChangeLog>

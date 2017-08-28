@@ -10,25 +10,54 @@
         <div class="row">
             <div class="col-md-8 col-xs-12">
                 <ui:include src="#{activityHome.viewFragment}" />
-                
+
                 <ui:remove>
                     <t:outputText label="activity.label.Subject" value="#{bean.entity.subject}" columnClass="col-xs-12"/>
                     <t:outputText label="activity.label.Body" value="#{bean.entity.body}" columnClass="col-xs-12"/>
                 </ui:remove>
-                
+
             </div>
 
             <div class="col-md-4 col-xs-12">
-                <t:accordion icon="fa fa-file" id="cx" label="general.label.ReleatedVouchers" columnClass="col-xs-12">
-                <t:outputFeatureLink label="general.label.Corporation" 
-                            value="#{featureController.getFeatureLink(activityHome.getAllFeaturePointer(activityHome.entity.corporation))}" 
-                            rendered="#{not empty activityHome.entity.corporation}" columnClass="col-xs-12"/>
-                <t:outputFeatureLink label="general.label.Person" 
-                            value="#{featureController.getFeatureLink(activityHome.getAllFeaturePointer(activityHome.entity.person))}" 
-                            rendered="#{not empty activityHome.entity.person}" columnClass="col-xs-12"/>
-                    <t:outputFeatureLink label="activity.label.Regarding" value="#{featureController.getFeatureLink(activityHome.entity.regarding)}" rendered="#{not empty activityHome.entity.regarding}" columnClass="col-xs-12"/>
+                <t:accordion icon="fa fa-file" id="cx" label="general.label.Regardings" columnClass="col-xs-12">
+                    <ul class="products-list product-list-in-box">
+                        <ui:fragment rendered="#{not empty activityHome.entity.corporation}">
+                            <li class="item">
+                                <strong>
+                                    <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(activityHome.getAllFeaturePointer(activityHome.entity.corporation))}" />
+                                </strong>
+                            </li>
+                        </ui:fragment>
+                        <ui:fragment rendered="#{not empty activityHome.entity.person}">
+
+                            <li class="item">
+                                <strong>
+                                    <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(activityHome.getAllFeaturePointer(activityHome.entity.person))}" />
+                                </strong>
+                            </li>
+
+                        </ui:fragment>
+                        <ui:fragment rendered="#{not empty activityHome.entity.regarding}">
+
+                            <li class="item">
+                                <strong>
+                                    <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(activityHome.entity.regarding)}" />
+                                </strong>
+                            </li>
+                        </ui:fragment>
+
+                        <p:repeat value="#{activityHome.entity.mentions}" var="mention" >
+                            <ui:fragment rendered="#{mention.type eq 'NORMAL'}">
+                                <li class="item">
+                                    <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(mention.featurePointer)}" columnClass="col-xs-12"/>
+                                </li>
+                            </ui:fragment>
+                        </p:repeat>
+                    </ul>
                 </t:accordion>
-                
+
+
+
                 <ui:include src="/notes/noteWidget.xhtml">
                     <ui:param name="featurePointer" value="#{activityHome.featurePointer}" />
                 </ui:include>
@@ -36,7 +65,7 @@
 
         </div>
 
-        
+
 
         <ui:remove>
             <div class="row">

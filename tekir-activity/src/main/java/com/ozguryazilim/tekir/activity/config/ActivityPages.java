@@ -35,6 +35,11 @@ public interface ActivityPages extends Pages{
     @View
     @SecuredPage()
     @PageTitle("module.caption.Activity")
+    class Activity implements ActivityPages {}
+    
+    @View
+    @SecuredPage()
+    @PageTitle("module.caption.Activity")
     class ActivityView implements ActivityPages {}
     
     @View

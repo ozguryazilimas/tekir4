@@ -53,9 +53,8 @@
                 <ul class="dropdown-menu dropdown-menu-right" arai-labeledby="actDropMenu1" style="z-index: 5000">
                     <ui:repeat value="#{activityWidget.addableActivities}" var="act">
                         <li>
-                            <p:commandLink action="#{activityWidget.createNew(act)}" process="@this">
+                            <p:commandLink action="#{activityWidget.createNew(act)}" process="@this" >
                                 <i class="#{messages['activity.button.icon.'.concat(act)]}" /> #{messages['activity.button.label.'.concat(act)]}
-                                <p:ajax event="dialogReturn" update=":actW:actWL" partialSubmit="true" process="@this" />   
                             </p:commandLink>
                         </li>
                     </ui:repeat>
@@ -85,14 +84,6 @@
                                 <h:link value="" outcome="/activities/activityView.xhtml?eid=#{act.id}" styleClass="btn btn-box-tool">
                                     <i class="fa fa-external-link-square"></i>
                                 </h:link>
-                                <p:commandLink action="#{activityWidget.edit(act)}" process="@this" styleClass="btn btn-box-tool">
-                                    <i class="fa fa-pencil" />
-                                    <p:ajax event="dialogReturn" update=":actW:actWL" partialSubmit="true" process="@this" />   
-                                </p:commandLink>
-                                <p:commandLink action="#{activityWidget.delete(act)}" process="@this" styleClass="btn btn-box-tool" update=":actW:actWL">
-                                    <i class="fa fa-trash" />
-                                    <p:confirm header="#{messages['general.caption.Confirm']}" message="#{messages['general.message.confirm.Delete']}" icon="fa fa-2x fa-exclamation-triangle btn-delete" />
-                                </p:commandLink>
                             </div>
                             <ui:remove>
                                 <span class="label #{ act.status eq 'SCHEDULED' ? 'label-default' : act.status eq 'SUCCESS' ? 'label-success' : 'label-danger' }  pull-right"><i class="fa #{ act.status eq 'SCHEDULED' ? 'fa-calendar' : act.status eq 'SUCCESS' ? 'fa-check' : 'fa-ban' }" title="#{messages['activity.status.'.concat(act.status)]}"/> </span>
