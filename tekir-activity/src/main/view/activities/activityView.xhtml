@@ -89,15 +89,6 @@
             </p:commandLink>
         </li>
         
-        
-        
-        <li>
-            <p:commandLink action="#{bean.closeFaild()}" title="#{messages['activity.button.Faild']}" ajax="false" rendered="#{bean.hasUpdatePermission() and bean.entity.status eq 'SCHEDULED'}">
-                <i class="fa fa-close"></i>
-                <h:outputText value=" #{messages['activity.button.Faild']}" />
-            </p:commandLink>
-        </li>
-        
         <li>
             <p:commandLink title="#{messages['general.button.Delete']}" action="#{bean.delete()}" rendered="#{not empty bean.entity.id and bean.hasDeletePermission() }">
                 <i class="fa fa-trash-o"></i>

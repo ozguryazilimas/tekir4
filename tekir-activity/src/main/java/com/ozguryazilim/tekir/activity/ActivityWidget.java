@@ -125,5 +125,12 @@ public class ActivityWidget implements Serializable {
         this.filter = filter;
     }
 
+    public String getAttached() {
+        return attached;
+    }
+
+    public void setAttached(String attached) {
+        this.attached = attached;
+    }
 
 }

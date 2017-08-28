@@ -104,7 +104,7 @@
             </p:commandLink>
         </li>
         <li>
-            <p:commandLink title="#{messages['activity.button.Success']}" onclick="jQuery('#form\\:success').click();return false;" rendered="#{not hideSave and (( not empty entity.id and homeBean.hasUpdatePermission()) or ( empty entity.id and homeBean.hasInsertPermission()))}">
+            <p:commandLink title="#{messages['activity.button.Success']}" onclick="jQuery('#form\\:success').click();return false;" rendered="#{not hideSave and (( not empty entity.id and homeBean.hasUpdatePermission()) or ( empty entity.id and homeBean.hasInsertPermission())) and entity.status eq 'DRAFT'}">
                 <i class="fa fa-check"></i>
                 <h:outputText value=" #{messages['activity.button.Success']}" />
             </p:commandLink>

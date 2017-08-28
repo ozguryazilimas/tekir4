@@ -37,7 +37,7 @@
                             </span>
                         </div>
                         <div class="product-info">
-                            <div class="dropdown pull-right">
+                            <div class="box-tools dropdown pull-right">
                                 <button id="feedDropMenu" class="btn btn-box-tool dropdown-toogle" data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">
                                     <i class="fa fa-external-link-square"/>
                                 </button>
@@ -48,13 +48,13 @@
                                 </ul>
                             </div>
                             
-                            <span class="product-title">#{feed.subject}</span>
-                            <span class="product-description text-sm">
+                            <span class="product-title text-muted">#{feed.subject}</span>
+                            <span class="product-description ">
                                 <h:outputText value="#{formatedMessage.getMessageFromData(feed.body)}" escape="false" />
                             </span>
 
                             <ui:remove>
-                            <span class="product-description text-sm">
+                            <span class="product-description">
                                 <ul class="list-inline">
                                     <ui:repeat value="#{feed.mentions}" var="mention" >
                                         <li><t:cellOutputFeatureLink value="#{featureController.getFeatureLink(mention.featurePointer)}" /></li>
@@ -64,7 +64,7 @@
                                 </ui:remove>
 
                             <span class="product-description text-sm"></span>
-                            <span class="product-description text-sm">
+                            <span class="product-description text-sm" style="color:silver">
                                 <i class="fa fa-user margin-r-5"/>#{userLookup.getUserName(feed.user)} 
                                 <i class="fa  fa-clock-o margin-r-5"/><t:cellOutputDateTime value="#{feed.date}"/></span>
                         </div>

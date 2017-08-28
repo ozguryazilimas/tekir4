@@ -94,9 +94,9 @@
                             </span>
                             
                             <span class="product-description text-sm">
-                                <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(act.regarding)}" />
+                                <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(act.regarding)}" rendered="#{activityWidget.attached ne 'Feature'}"/>
                             </span>
-                            <span class="product-description text-sm">
+                            <span class="product-description text-sm" style="color:silver">
                                 <i class="fa fa-user margin-r-5"/>#{userLookup.getUserName(act.assignee)} 
                                 <i class="fa  fa-clock-o margin-r-5"/><t:cellOutputDateTime value="#{act.dueDate}"/></span>
                         </div>
