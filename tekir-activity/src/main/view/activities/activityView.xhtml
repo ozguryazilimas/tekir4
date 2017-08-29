@@ -9,7 +9,7 @@
     <ui:param name="bean" value="#{activityHome}" />
     <ui:param name="entityName" value="activity" />
     <ui:param name="viewIdentifier" value="#{bean.entity.subject}" />
-    <ui:param name="showCaption" value="true"/>
+    <ui:param name="showCaption" value="false"/>
     <ui:param name="dontShowContentHeader" value="false" />
 
     <ui:define name="metadata">
@@ -22,14 +22,32 @@
         <section class="content-header">
             <p:outputPanel id="states">
                 <ul class="states pull-right">
+                    <ui:fragment rendered="#{activityHome.entity.direction ne 'NONE'}">
                     <li role="presentation">
-                        <div style="font-weight: bold;">#{messages['activity.status.'.concat(activityHome.entity.status)]} </div>
+                        <div class="text-sm text-muted">#{messages['activity.label.Direction']} </div>
+                        <div>#{messages['activity.direction.'.concat(activityHome.entity.direction)]} </div>
+                    </li>
+                    </ui:fragment>
+                    
+                    <li role="presentation">
+                        <div class="text-sm text-muted">#{messages['activity.label.Priority']} </div>
+                        <div class="#{activityHome.entity.priority eq 'HIGH' ? 'text-danger' : ''}">#{messages['activity.priority.'.concat(activityHome.entity.priority)]} </div>
+                    </li>
+                    
+                    <li role="presentation">
+                        <div class="text-sm text-muted">#{messages['activity.label.DueDate']} </div>
+                        <div><t:cellOutputDateTime value="#{bean.entity.dueDate}" /></div>
+                    </li>
+                    
+                    <li role="presentation">
+                        <div class="text-sm text-muted">Durum</div>
+                        <div class="#{activityHome.entity.status eq 'SUCCESS' ? 'text-success' : activityHome.entity.status eq 'FAILED' ? 'text-danger' :'' }" style="font-weight: bold;">#{messages['activity.status.'.concat(activityHome.entity.status)]} </div>
                         <div >#{activityHome.entity.statusReason}</div>
                     </li>
                     
                     <li role="presentation">
-                        <div style="font-weight: bold;">#{messages['activity.label.Assignee']}</div>
-                        <div >
+                        <div class="text-sm text-muted">#{messages['activity.label.Assignee']}</div>
+                        <div style="font-weight: bold;">
                             #{userLookup.getUserName(activityHome.entity.assignee)}
                         </div>
                     </li>

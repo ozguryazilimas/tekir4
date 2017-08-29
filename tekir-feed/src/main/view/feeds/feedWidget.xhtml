@@ -49,9 +49,9 @@
                                 </ul>
                             </span>
                                 </ui:remove>
-                            <span class="product-description text-sm">
+                            <span class="product-description text-sm" style="color:silver">
                                 <i class="fa fa-user margin-r-5"/>#{userLookup.getUserName(feed.user)} 
-                                <i class="fa  fa-clock-o margin-r-5"/><t:cellOutputDateTime value="#{feed.date}"/></span>
+                                <i class="fa  fa-clock-o margin-r-5"/><t:cellOutputPrettyTime value="#{feed.date}"/></span>
                         </div>
                     </li>
                 </ui:repeat>
