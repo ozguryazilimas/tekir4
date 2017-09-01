@@ -100,6 +100,7 @@
                     
                     <ui:include src="/attachment/simpleAttachmentWidget.xhtml">
                         <ui:param name="featurePointer" value="#{contactHome.featurePointer}" />
+                        <ui:param name="payload" value="#{contactHome.entity}" />
                     </ui:include>
 
                     <t:accordion icon="fa fa-file" id="cx" label="general.label.ReleatedVouchers" >

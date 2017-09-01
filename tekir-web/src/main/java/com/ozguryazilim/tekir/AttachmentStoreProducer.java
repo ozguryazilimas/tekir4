@@ -5,11 +5,9 @@
  */
 package com.ozguryazilim.tekir;
 
-import com.ozguryazilim.telve.attachment.AttachmentContextRootBuilder;
 import com.ozguryazilim.telve.attachment.AttachmentException;
 import com.ozguryazilim.telve.attachment.AttachmentStore;
 import com.ozguryazilim.telve.attachment.AttachmentStoreConfig;
-import com.ozguryazilim.telve.attachment.DefaultAttachmentContextRootBuilder;
 import com.ozguryazilim.telve.attachment.modeshape.AttachmentModeShapeStore;
 import com.ozguryazilim.telve.attachment.qualifiers.FileStore;
 
@@ -56,10 +54,4 @@ public class AttachmentStoreProducer {
     }
     
     
-    @Produces
-    @FileStore
-    @ApplicationScoped
-    public AttachmentContextRootBuilder rootBuilderProducer(){
-        return new DefaultAttachmentContextRootBuilder();
-    }
 }

@@ -19,6 +19,7 @@ import com.ozguryazilim.tekir.voucher.VoucherPrintOutAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateConfig;
 import com.ozguryazilim.tekir.voucher.process.ProcessService;
+import com.ozguryazilim.telve.attachment.AttachmentContext;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.EntityBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
@@ -126,5 +127,17 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
     // FeatureLink yönlendirmesi
     public FeaturePointer getAllFeaturePointer(EntityBase contact){
     		return FeatureUtils.getFeaturePointer(contact);
+    }
+
+    public AttachmentContext getContext() {
+        AttachmentContext result = new AttachmentContext();
+        
+        String accountRoot = getEntity().getAccount().getName() + "[" + getEntity().getAccount().getCode() + "]";
+        FeaturePointer fp = getFeaturePointer();
+        result.setRoot( accountRoot + "/" + fp.getFeature() + "/" + fp.getBusinessKey());
+        result.setUsername("Bişi");
+        result.setFeaturePointer(getFeaturePointer());
+        
+        return result;
     }
 }
