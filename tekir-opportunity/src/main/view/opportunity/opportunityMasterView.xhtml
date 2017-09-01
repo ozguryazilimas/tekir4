@@ -59,6 +59,10 @@
                     <ui:param name="featurePointer" value="#{opportunityHome.featurePointer}" />
                 </ui:include>
 
+                <ui:include src="/attachment/attachmentWidget.xhtml">
+                    <ui:param name="featurePointer" value="#{opportunityHome.featurePointer}" />
+                </ui:include>
+                
                 <ui:include src="/feeds/feedWidget.xhtml">
                     <ui:param name="feature" value="#{opportunityHome.featureClass.simpleName}" />
                     <ui:param name="pk" value="#{opportunityHome.entity.id}" />

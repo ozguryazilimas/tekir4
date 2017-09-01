@@ -11,6 +11,11 @@
             <div class="col-md-8 col-sm-12">
                 <ui:include src="#{activityHome.viewFragment}" />
 
+                <ui:include src="/notes/noteWidget.xhtml">
+                    <ui:param name="columnClass" value="no-col" />
+                    <ui:param name="featurePointer" value="#{activityHome.featurePointer}" />
+                </ui:include>
+
                 <ui:remove>
                     <t:outputText label="activity.label.Subject" value="#{bean.entity.subject}" columnClass="col-xs-12"/>
                     <t:outputText label="activity.label.Body" value="#{bean.entity.body}" columnClass="col-xs-12"/>
@@ -20,6 +25,7 @@
 
             <div class="col-md-4 col-xs-12">
                 <t:accordion icon="fa fa-file" id="cx" label="general.label.Regardings" columnClass="col-xs-12">
+                    <p:outputPanel deferred="true">
                     <ul class="products-list product-list-in-box">
                         <ui:fragment rendered="#{not empty activityHome.entity.corporation}">
                             <li class="item">
@@ -54,23 +60,17 @@
                             </ui:fragment>
                         </p:repeat>
                     </ul>
+                        </p:outputPanel>
                 </t:accordion>
 
+                <ui:include src="/attachment/attachmentWidget.xhtml">
+                    <ui:param name="permissionDomain" value="activity" />
+                    <ui:param name="featurePointer" value="#{activityHome.featurePointer}" />
+                </ui:include>
 
-
-                
             </div>   		
 
         </div>
-        <div class="row">
-            
-                <ui:include src="/notes/noteWidget.xhtml">
-                    <ui:param name="columnClass" value="col-md-8" />
-                    <ui:param name="featurePointer" value="#{activityHome.featurePointer}" />
-                </ui:include>
-            
-        </div>
-
 
         <ui:remove>
             <div class="row">
