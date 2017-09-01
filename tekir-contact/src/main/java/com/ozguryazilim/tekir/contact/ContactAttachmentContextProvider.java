@@ -63,7 +63,7 @@ public class ContactAttachmentContextProvider implements AttachmentContextProvid
         if( payload instanceof Contact){
             Contact contact = (Contact)payload;
             
-            result.setRoot( "/" + contact.getName() + "[" + contact.getCode() +"]/" );
+            result.setRoot( "/" + contact.getName() + " [" + contact.getCode() +"]/" );
             //Varsa parametrede setliyoruz.
             result.setFeaturePointer(featurePointer);
         } else {

@@ -12,6 +12,7 @@ import com.ozguryazilim.telve.attachment.AttachmentContext;
 import com.ozguryazilim.telve.attachment.AttachmentContextProvider;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.entities.FeaturePointer;
+import com.ozguryazilim.telve.messages.Messages;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
@@ -58,7 +59,7 @@ public class VoucherAttachmentContextProvider implements AttachmentContextProvid
         if( payload instanceof VoucherProcessBase){
             //Account Aware bir Voucher bu
             VoucherProcessBase o = (VoucherProcessBase)payload;
-            base = "/" + o.getAccount().getName() + "[" + o.getAccount().getCode() +"]";
+            base = "/" + o.getAccount().getName() + " [" + o.getAccount().getCode() +"]";
         }
         
         if( payload instanceof VoucherBase){
@@ -71,7 +72,8 @@ public class VoucherAttachmentContextProvider implements AttachmentContextProvid
             }
             
             //FIXME: i18n feature ismi için. Amma application local kullanmak lazım.
-            result.setRoot( base + "/" + fp.getFeature() + "/" + fp.getBusinessKey());
+            String fps = Messages.getMessage("feature.plural.caption." + fp.getFeature());
+            result.setRoot( base + "/" + fps + "/" + fp.getBusinessKey());
             result.setFeaturePointer(fp);
         } else {
             throw new RuntimeException("Yanlış provider!");

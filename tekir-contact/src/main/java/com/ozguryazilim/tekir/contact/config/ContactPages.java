@@ -112,6 +112,9 @@ public interface ContactPages extends Pages {
         @SecuredPage("accountTxn") @View 
         class AccountTxnSubView implements Admin {};
         
+        @SecuredPage("document") @View 
+        class DocumentSubView implements Admin {};
+        
         @SecuredPage() @View
 	class NewPersonPopup
 			implements
