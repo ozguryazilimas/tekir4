@@ -55,13 +55,12 @@
                     </div>
                 </t:accordion>
                 <ui:fragment rendered="#{contactHome.isAccount}">
-                    <t:accordion icon="fa fa-file-text" label="contact.label.Account" columnClass="col-xs-12">
+                    <t:accordion icon="fa fa-file-text" label="contact.label.Account" >
                         <div class="row">
                             <t:outputText label="contact.label.TaxOffice" value="#{contactHome.entity.taxOffice}" columnClass="col-xs-12"/>
                             <t:outputText label="contact.label.TaxNumber" value="#{contactHome.entity.taxNumber}" columnClass="col-xs-12"/>
-                            <t:outputText label="contact.label.BankAccount" value="#{contactHome.entity.bankAccount}" columnClass="col-xs-12"/>
-                            <t:outputText label="contact.label.Currency" value="#{contactHome.entity.currency}" columnClass="col-xs-12"/>
-           	                <t:outputBoolean label="contact.label.VatWithholding" value="#{contactHome.entity.vatWithholding}" itemLabel="contact.applicable." columnClass="col-xs-12" />                      	
+                            <t:outputText label="general.label.Currency" value="#{contactHome.entity.currency}" columnClass="col-xs-12"/>
+           	            <t:outputBoolean label="contact.label.VatWithholding" value="#{contactHome.entity.vatWithholding}" itemLabel="contact.applicable." columnClass="col-xs-12" />                      	
                         </div>
                     </t:accordion>
                 </ui:fragment>
@@ -88,7 +87,6 @@
             </div>
 
             <div class="col-md-4 col-xs-12">
-                <div class="row">
                     <ui:include src="/contact/contactInfosFragment.xhtml">
                         <ui:param name="contact" value="#{contactHome.entity}" />
                         <ui:param name="contactInformations" value="#{contactHome.contactInformations}" />
@@ -100,7 +98,7 @@
                         <ui:param name="relatedContactsRevers" value="#{contactHome.relatedContactsRevers}" />
                     </ui:include>
                     
-                    <ui:include src="/attachment/attachmentWidget.xhtml">
+                    <ui:include src="/attachment/simpleAttachmentWidget.xhtml">
                         <ui:param name="featurePointer" value="#{contactHome.featurePointer}" />
                     </ui:include>
 
@@ -139,7 +137,6 @@
                             </ui:repeat>
                         </ul>
                     </t:accordion>
-                </div>
             </div>
         </div>
     </ui:define>

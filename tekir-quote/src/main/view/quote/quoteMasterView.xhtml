@@ -9,7 +9,7 @@
     <ui:define name="content">     
         <div class="row">
             <div class="col-md-3 col-xs-12">
-                <t:accordion icon="fa fa-stack-exchange" label="general.label.Summary" columnClass="col-xs-12">
+                <t:accordion icon="fa fa-stack-exchange" label="general.label.Summary" >
                     <t:outputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(quoteHome.entity.starter)}" columnClass="col-xs-12"/>
                     <ui:remove>
                         bir output account input account seti mi hazırlasak?
@@ -23,7 +23,7 @@
                     <t:outputDate label="general.label.ExpireDate" value="#{quoteHome.entity.expireDate}"  columnClass="col-xs-12"/>
                 </t:accordion>
 
-                <t:accordion icon="fa fa-file-text" label="general.label.Voucher" columnClass="col-xs-12">
+                <t:accordion icon="fa fa-file-text" label="general.label.Voucher" >
                     <t:outputText label="voucher.label.VoucherNo" value="#{quoteHome.entity.voucherNo}"  columnClass="col-xs-12"/>
                     <t:outputText label="voucher.label.ReferenceNo" value="#{quoteHome.entity.referenceNo}" columnClass="col-xs-12"/>
                     <t:outputText label="voucher.label.Process" value="#{quoteHome.entity.process.processNo}" columnClass="col-xs-12"/>
@@ -122,6 +122,10 @@
             <div class="col-md-3 col-xs-12">
 
                 <ui:include src="/notes/noteWidget.xhtml">
+                    <ui:param name="featurePointer" value="#{quoteHome.featurePointer}" />
+                </ui:include>
+                
+                <ui:include src="/attachment/simpleAttachmentWidget.xhtml">
                     <ui:param name="featurePointer" value="#{quoteHome.featurePointer}" />
                 </ui:include>
                 
