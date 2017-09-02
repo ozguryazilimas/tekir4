@@ -65,7 +65,7 @@ public class ActivityHome extends FormBase<Activity, Long> {
 
     public FeaturePointer getFeaturePointer() {
         FeaturePointer result = new FeaturePointer();
-        result.setBusinessKey(getEntity().getSubject());
+        result.setBusinessKey(getEntity().getActivityNo());
         result.setFeature(getFeatureClass().getSimpleName());
         result.setPrimaryKey(getEntity().getId());
         return result;

@@ -60,4 +60,9 @@
     <changeSet author="oyas (generated)" id="1503931845102-2">
         <addForeignKeyConstraint baseColumnNames="ACTIVITY_ID" baseTableName="TCA_ACT_MENTION" constraintName="FK_ACTIVITY_FEED" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCA_ACTIVITY"/>
     </changeSet>
+    <changeSet author="oyas (generated)" id="1504351557656-1">
+        <addColumn tableName="TCA_ACTIVITY">
+            <column name="ACT_NO" type="varchar(20)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

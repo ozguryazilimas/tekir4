@@ -12,6 +12,7 @@ import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
+import com.ozguryazilim.telve.sequence.SequenceManager;
 import java.io.Serializable;
 import java.util.Date;
 import javax.faces.context.FacesContext;
@@ -47,6 +48,9 @@ public abstract class AbstractActivityController<E extends Activity> implements 
     @Inject
     private ActivityHome activityHome;
     
+    @Inject
+    private SequenceManager sequenceManager;
+    
     private E entity;
     
     protected abstract RepositoryBase<E, E> getRepository();
@@ -78,7 +82,7 @@ public abstract class AbstractActivityController<E extends Activity> implements 
         entity.setCorporation(corporation);
         entity.setRegarding(featurePointer);
         entity.setDueDate(new Date());
-        
+        entity.setActivityNo(sequenceManager.getNewSerialNumber("ACT", 6));
         activityHome.setEntity(entity);
         activityHome.setReturnPage(viewConfigResolver.getViewConfigDescriptor(FacesContext.getCurrentInstance().getViewRoot().getViewId()).getConfigClass());
         

@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.tekir.entities;
 
+import com.ozguryazilim.telve.annotations.BizKey;
 import com.ozguryazilim.telve.entities.EntityBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import java.util.ArrayList;
@@ -48,6 +49,9 @@ public class Activity extends EntityBase{
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "genericSeq")
     @Column(name = "ID")
     private Long id;
+    
+    @Column(name = "ACT_NO") @BizKey
+    private String activityNo;
     
     /**
      * Kimle : bir aktivite aslında hep bir person ile olacak.
@@ -310,6 +314,14 @@ public class Activity extends EntityBase{
 
     public void setMentions(List<ActivityMention> mentions) {
         this.mentions = mentions;
+    }
+
+    public String getActivityNo() {
+        return activityNo;
+    }
+
+    public void setActivityNo(String activityNo) {
+        this.activityNo = activityNo;
     }
 
     
