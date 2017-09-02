@@ -8,7 +8,22 @@
                 template="/layout/containerViewTabBase.xhtml">
 
     <ui:param name="viewState" value="" />
+    <ui:param name="viewIdentifier" value="#{bean.entity.voucherNo} - #{bean.entity.topic}" />
 
+    <ui:define name="caption">
+        <ul class="caption-states">
+            <ui:insert name="caption-states" />
+            <ui:fragment rendered="#{process ne 'false'}">
+            <t:stateOutputText label="voucher.label.Process" value="#{bean.entity.process.processNo}" />
+            </ui:fragment>
+            <t:stateOutputText label="voucher.label.ReferenceNo" value="#{bean.entity.referenceNo}" />
+            <t:stateOutputText label="general.label.Code" value="#{bean.entity.code}" />
+        </ul>
+        <ui:fragment rendered="#{bean.entity.info ne ''}">
+            <p><i class="fa fa-info"/> #{bean.entity.info}</p>
+        </ui:fragment>
+    </ui:define>
+    
     <ui:define name="context-menu-2">
         <ui:repeat value="#{bean.permittedStateTransitionActions}" var="act">
             <li>

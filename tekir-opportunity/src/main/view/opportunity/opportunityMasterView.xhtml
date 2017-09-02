@@ -9,72 +9,75 @@
     <ui:define name="content">     
 
         <div class="row">
-            <div class="col-md-4 col-xs-12">
-                <t:accordion icon="fa fa-stack-exchange" label="general.label.Summary" columnClass="col-xs-12">
-                    <t:outputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(opportunityHome.entity.starter)}" columnClass="col-xs-12"/>
-                    <t:outputText label="opportunity.label.Topic" value="#{opportunityHome.entity.topic}"  columnClass="col-xs-12"/>
-                    <ui:remove>
-                        <t:outputCurrency label="general.label.Currency" value="#{opportunityHome.entity.currency}"  columnClass="col-xs-12"/>
-                    </ui:remove>
-                    <t:outputMoney label="opportunity.label.Budget" value="#{opportunityHome.entity.budget}" currency="#{opportunityHome.entity.currency}" columnClass="col-xs-12"/>
-                    <t:outputText label="opportunity.label.Probability" value="%#{opportunityHome.entity.probability}" columnClass="col-xs-12"/>
-                    <t:outputText label="opportunity.label.Sitiuation" value="#{opportunityHome.entity.situation}" columnClass="col-xs-12"/>
-                    <t:outputText label="opportunity.label.CustomerNeed" value="#{opportunityHome.entity.customerNeed}" columnClass="col-xs-12"/>
-                    <t:outputText label="opportunity.label.Solution" value="#{opportunityHome.entity.solution}" columnClass="col-xs-12"/>
-                </t:accordion>
+            <div class="col-lg-4 col-md-12">
+                <div class="row">
+                    <t:accordion icon="fa fa-stack-exchange" label="general.label.Summary" columnClass="col-lg-12 col-md-6">
+                        <t:outputText label="opportunity.label.Topic" value="#{opportunityHome.entity.topic}"  columnClass="col-xs-12"/>
+                        <ui:remove>
+                            <t:outputCurrency label="general.label.Currency" value="#{opportunityHome.entity.currency}"  columnClass="col-xs-12"/>
+                        </ui:remove>
+                        <t:outputMoney label="opportunity.label.Budget" value="#{opportunityHome.entity.budget}" currency="#{opportunityHome.entity.currency}" columnClass="col-sm-6"/>
+                        <t:outputText label="opportunity.label.Probability" value="%#{opportunityHome.entity.probability}" columnClass="col-sm-6"/>
+                        <t:outputText label="opportunity.label.Sitiuation" value="#{opportunityHome.entity.situation}" columnClass="col-xs-12"/>
+                        <t:outputText label="opportunity.label.CustomerNeed" value="#{opportunityHome.entity.customerNeed}" columnClass="col-xs-12"/>
+                        <t:outputText label="opportunity.label.Solution" value="#{opportunityHome.entity.solution}" columnClass="col-xs-12"/>
+                    </t:accordion>
 
-                <t:accordion icon="fa fa-file-text" label="general.label.Voucher" columnClass="col-xs-12">
-                    <t:outputText label="voucher.label.VoucherNo" value="#{opportunityHome.entity.voucherNo}"  columnClass="col-xs-12"/>
-                    <t:outputText label="voucher.label.ReferenceNo" value="#{opportunityHome.entity.referenceNo}" columnClass="col-xs-12"/>
-                    <t:outputText label="voucher.label.Process" value="#{opportunityHome.entity.process.processNo}" columnClass="col-xs-12"/>
-                    <t:outputText label="voucher.label.Owner" value="#{opportunityHome.entity.owner}" columnClass="col-xs-12"/>
-                    <t:outputText label="general.label.Code" value="#{opportunityHome.entity.code}" columnClass="col-xs-12"/>
-                    <t:outputText label="general.label.Info" value="#{opportunityHome.entity.info}" columnClass="col-xs-12"/>
-                    <t:outputDate label="voucher.label.Date" value="#{opportunityHome.entity.date}" columnClass="col-xs-12"/>
-                </t:accordion>
+                    <ui:include src="/voucher/voucherInfoWidget.xhtml">
+                        <ui:param name="columnClass" value="col-lg-12 col-md-6" />
+                        <ui:param name="homeBean" value="#{opportunityHome}" />
+                    </ui:include>
+
+                </div>
             </div>
 
-            <div class="col-md-4 col-xs-12">
-                <t:accordion icon="fa fa-comments" id="ca1" label="general.label.Details" columnClass="col-xs-12">
-                    İlgilenilen ürünler
-                </t:accordion>
+            <div class="col-lg-5 col-md-12">
+                <div class="row">
+                    <t:accordion icon="fa fa-comments" id="ca1" label="general.label.Details" >
+                        İlgilenilen ürünler
+                    </t:accordion>
 
-                <t:accordion icon="fa fa-users" id="ca2" label="general.label.Stakeholders" columnClass="col-xs-12">
-                    Karar Vericiler
-                </t:accordion>
-
+                    <t:accordion icon="fa fa-users" id="ca2" label="general.label.Stakeholders" >
+                        Karar Vericiler
+                    </t:accordion>
+                </div>
 
             </div>
 
-            <div class="col-md-4 col-xs-12">
+            <div class="col-lg-3 col-md-12">
+                <div class="row">
+                    <ui:include src="/activities/activityWidget.xhtml">
+                        <ui:param name="columnClass" value="col-lg-12 col-md-6" />
+                        <ui:param name="person" value="#{opportunityHome.person}" />
+                        <ui:param name="corporation" value="#{opportunityHome.corporation}" />
+                        <ui:param name="feature" value="#{opportunityHome.featurePointer}" />
+                        <ui:param name="attached" value="Feature" />
+                    </ui:include>
 
-                <ui:include src="/activities/activityWidget.xhtml">
-                    <ui:param name="person" value="#{opportunityHome.person}" />
-                    <ui:param name="corporation" value="#{opportunityHome.corporation}" />
-                    <ui:param name="feature" value="#{opportunityHome.featurePointer}" />
-                    <ui:param name="attached" value="Feature" />
-                </ui:include>
+                    <ui:include src="/notes/noteWidget.xhtml">
+                        <ui:param name="columnClass" value="col-lg-12 col-md-6" />
+                        <ui:param name="featurePointer" value="#{opportunityHome.featurePointer}" />
+                    </ui:include>
 
-                <ui:include src="/notes/noteWidget.xhtml">
-                    <ui:param name="featurePointer" value="#{opportunityHome.featurePointer}" />
-                </ui:include>
+                    <ui:include src="/attachment/simpleAttachmentWidget.xhtml">
+                        <ui:param name="columnClass" value="col-lg-12 col-md-6" />
+                        <ui:param name="payload" value="#{opportunityHome.entity}" />
+                        <ui:param name="featurePointer" value="#{opportunityHome.featurePointer}" />
+                    </ui:include>
 
-                <ui:include src="/attachment/simpleAttachmentWidget.xhtml">
-                    <ui:param name="payload" value="#{opportunityHome.entity}" />
-                    <ui:param name="featurePointer" value="#{opportunityHome.featurePointer}" />
-                </ui:include>
-                
-                <ui:include src="/feeds/feedWidget.xhtml">
-                    <ui:param name="feature" value="#{opportunityHome.featureClass.simpleName}" />
-                    <ui:param name="pk" value="#{opportunityHome.entity.id}" />
-                </ui:include>
+                    <ui:include src="/feeds/feedWidget.xhtml">
+                        <ui:param name="columnClass" value="col-lg-12 col-md-6" />
+                        <ui:param name="feature" value="#{opportunityHome.featureClass.simpleName}" />
+                        <ui:param name="pk" value="#{opportunityHome.entity.id}" />
+                    </ui:include>
 
-                <ui:include src="/voucher/voucherReleatedWidget.xhtml">
-                    <ui:param name="featurePointer" value="#{opportunityHome.featurePointer}" />
-                    <ui:param name="processNo" value="#{opportunityHome.entity.process.processNo}" />
-                    <ui:param name="groupNo" value="#{opportunityHome.entity.group.groupNo}" />
-                </ui:include>
-
+                    <ui:include src="/voucher/voucherReleatedWidget.xhtml">
+                        <ui:param name="columnClass" value="col-lg-12 col-md-6" />
+                        <ui:param name="featurePointer" value="#{opportunityHome.featurePointer}" />
+                        <ui:param name="processNo" value="#{opportunityHome.entity.process.processNo}" />
+                        <ui:param name="groupNo" value="#{opportunityHome.entity.group.groupNo}" />
+                    </ui:include>
+                </div>
             </div>
 
 

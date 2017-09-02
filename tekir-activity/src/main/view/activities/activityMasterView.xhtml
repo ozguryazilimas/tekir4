@@ -24,117 +24,54 @@
             </div>
 
             <div class="col-md-4 col-xs-12">
-                <t:accordion icon="fa fa-file" id="cx" label="general.label.Regardings" columnClass="col-xs-12">
-                    <p:outputPanel deferred="true">
-                    <ul class="products-list product-list-in-box">
-                        <ui:fragment rendered="#{not empty activityHome.entity.corporation}">
-                            <li class="item">
-                                <strong>
-                                    <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(activityHome.getAllFeaturePointer(activityHome.entity.corporation))}" />
-                                </strong>
-                            </li>
-                        </ui:fragment>
-                        <ui:fragment rendered="#{not empty activityHome.entity.person}">
+                <div class="row">
+                    <t:accordion icon="fa fa-file" id="cx" label="general.label.Regardings" columnClass="col-xs-12" contentClass="">
+                        <p:outputPanel deferred="true">
+                            <ul class="products-list product-list-in-box">
+                                <ui:fragment rendered="#{not empty activityHome.entity.corporation}">
+                                    <li class="item">
+                                        <strong>
+                                            <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(activityHome.getAllFeaturePointer(activityHome.entity.corporation))}" />
+                                        </strong>
+                                    </li>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{not empty activityHome.entity.person}">
 
-                            <li class="item">
-                                <strong>
-                                    <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(activityHome.getAllFeaturePointer(activityHome.entity.person))}" />
-                                </strong>
-                            </li>
+                                    <li class="item">
+                                        <strong>
+                                            <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(activityHome.getAllFeaturePointer(activityHome.entity.person))}" />
+                                        </strong>
+                                    </li>
 
-                        </ui:fragment>
-                        <ui:fragment rendered="#{not empty activityHome.entity.regarding}">
+                                </ui:fragment>
+                                <ui:fragment rendered="#{not empty activityHome.entity.regarding}">
 
-                            <li class="item">
-                                <strong>
-                                    <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(activityHome.entity.regarding)}" />
-                                </strong>
-                            </li>
-                        </ui:fragment>
+                                    <li class="item">
+                                        <strong>
+                                            <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(activityHome.entity.regarding)}" />
+                                        </strong>
+                                    </li>
+                                </ui:fragment>
 
-                        <p:repeat value="#{activityHome.entity.mentions}" var="mention" >
-                            <ui:fragment rendered="#{mention.type eq 'NORMAL'}">
-                                <li class="item">
-                                    <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(mention.featurePointer)}" columnClass="col-xs-12"/>
-                                </li>
-                            </ui:fragment>
-                        </p:repeat>
-                    </ul>
+                                <p:repeat value="#{activityHome.entity.mentions}" var="mention" >
+                                    <ui:fragment rendered="#{mention.type eq 'NORMAL'}">
+                                        <li class="item">
+                                            <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(mention.featurePointer)}" columnClass="col-xs-12"/>
+                                        </li>
+                                    </ui:fragment>
+                                </p:repeat>
+                            </ul>
                         </p:outputPanel>
-                </t:accordion>
+                    </t:accordion>
 
-                <ui:include src="/attachment/simpleAttachmentWidget.xhtml">
-                    <ui:param name="permissionDomain" value="activity" />
-                    <ui:param name="featurePointer" value="#{activityHome.featurePointer}" />
-                </ui:include>
-
+                    <ui:include src="/attachment/simpleAttachmentWidget.xhtml">
+                        <ui:param name="permissionDomain" value="activity" />
+                        <ui:param name="featurePointer" value="#{activityHome.featurePointer}" />
+                    </ui:include>
+                </div>
             </div>   		
 
         </div>
-
-        <ui:remove>
-            <div class="row">
-                <div class="col-md-8 col-xs-12">
-                    <t:accordion icon="fa fa-file" id="cx" label="general.label.ReleatedVouchers" columnClass="col-xs-12">
-                        <ui:remove>
-                            <ul class="products-list product-list-in-box">
-                                <ui:repeat value="#{activityHome.txnList}" var="ci" >
-                                    <li class="item">
-                                        <t:cellOutputFeatureLink label="#{ci.feature.feature}" value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
-                                        <span class="text-muted pull-right">#{ci.feature.businessKey}</span>
-                                        <div class="text-sm">
-                                            #{ci.info}
-                                        </div>
-                                        <div class="text-sm">
-                                            #{ci.date}
-                                        </div>
-                                    </li>
-                                </ui:repeat>
-                            </ul>
-                        </ui:remove>
-                        <div class="table-responsive no-padding">
-                            <table class="table table-condensed table-hover">
-                                <tr>
-                                    <th style="color:#555;">#{messages['general.label.Voucher']}</th>
-                                    <th style="color:#555;">#{messages['general.label.Info']}</th>
-                                    <th style="color:#555;">#{messages['general.label.Date']}</th>
-                                    <th style="color:#555;">#{messages['general.label.Amount']}</th>
-                                    <th style="color:#555;">#{messages['general.label.State']}</th>
-                                    <th style="color:#555;">#{messages['general.label.Reason']}</th>
-                                </tr>
-                                <ui:repeat value="#{activityHome.txnList}" var="ci" >
-                                    <tr>
-                                        <td>
-                                            <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
-                                        </td>
-                                        <ui:remove>
-                                            <td>#{ci.feature.businessKey}</td>
-                                        </ui:remove>
-                                        <td>#{ci.info}</td>
-                                        <td><t:cellOutputDate value="#{ci.date}"/></td>
-                                        <td><t:cellOutputMoney value="#{ci.amount}" currency="#{ci.currency}"/></td>
-                                        <td>
-                                            <h:outputText value="#{messages['voucherState.name.'.concat(ci.status)]}" styleClass="#{ ci.status.contains('POSITIVE') ? 'label label-success' : ci.status.contains('NEGATIVE') ? 'label label-danger' : ci.status.startsWith('CLOSE', 0) ? 'label label-primary' : 'label label-warning' }" />
-                                        </td>
-                                        <td>#{ci.statusReason}</td>
-                                    </tr>
-                                </ui:repeat>
-                            </table>
-                        </div>
-                    </t:accordion>  
-                </div>
-
-                <div class="col-md-4 col-xs-12">
-                    <ui:include src="/notes/noteWidget.xhtml">
-                        <ui:param name="featurePointer" value="#{activityHome.featurePointer}" />
-                    </ui:include>
-
-                    <ui:include src="/feeds/feedWidget.xhtml">
-                        <ui:param name="feature" value="#{activityHome.featureClass.simpleName}" />
-                        <ui:param name="pk" value="#{activityHome.entity.id}" />
-                    </ui:include>
-                </div>   		
-            </div>
-        </ui:remove>
+      
     </ui:define>
 </ui:composition>

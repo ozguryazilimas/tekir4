@@ -19,27 +19,10 @@
         </f:metadata>
     </ui:define>
 
-    <ui:define name="caption">
-        <div class="row">
-            <div class="col-md-6 col-xs-12">
-                <t:outputFeatureLink label="general.label.Account" 
-            			value="#{featureController.getFeatureLink(salesOrderHome.getAllFeaturePointer(salesOrderHome.entity.account))}" 
-                                columnClass="col-xs-12"/>
-                <t:outputMoney label="general.label.TotalAmount" value="#{salesOrderHome.entity.total}" currency="#{salesOrderHome.entity.currency}" />
-                <ui:remove>
-                <t:outputText label="salesOrder.label.Revision" value="#{salesOrderHome.entity.revision}"  />
-                
-                <t:outputDate label="general.label.ExpireDate" value="#{salesOrderHome.entity.expireDate}"  />
-                </ui:remove>
-
-            </div>
-            <div class="col-md-6 col-xs-12">
-                <t:outputText label="voucher.label.VoucherNo" value="#{salesOrderHome.entity.voucherNo}"  />
-                <t:outputText label="voucher.label.ReferenceNo" value="#{salesOrderHome.entity.referenceNo}" />
-                <t:outputText label="voucher.label.Process" value="#{salesOrderHome.entity.process.processNo}" />
-                <t:outputText label="general.label.Code" value="#{salesOrderHome.entity.code}" />
-            </div>
-        </div>  
+    <ui:define name="caption-states">
+        <t:stateOutputFeatureLink label="general.label.Account" value="#{featureController.getFeatureLink(salesOrderHome.getAllFeaturePointer(salesOrderHome.entity.account))}"  />
+        <t:stateOutputMoney label="general.label.TotalAmount" value="#{salesOrderHome.entity.total}" currency="#{salesOrderHome.entity.currency}" />
+        <t:stateOutputDate label="general.label.ShippingDate" value="#{salesOrderHome.entity.shippingDate}"/>
     </ui:define>
 
 

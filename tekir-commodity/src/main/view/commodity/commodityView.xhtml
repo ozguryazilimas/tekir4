@@ -10,6 +10,7 @@
 	<ui:param name="viewIdentifier" value="#{commodityHome.entity.name}" />
 	<ui:param name="showCaption" value="true" />
 	<ui:param name="dontShowContentHeader" value="false" />
+        <ui:param name="viewState" value="#{commodityHome.entity.active ? messages['general.boolean.active.True'] : messages['general.boolean.active.False']}" />
 
 	<ui:define name="metadata">
 		<f:metadata>
@@ -18,40 +19,16 @@
 	</ui:define>
 
 	<ui:define name="caption">
-		<div class="row">
-			<div class="col-md-4 col-xs-12">
-				<div class="row">
-					<t:outputText label="general.label.Name"
-						value="#{commodityHome.entity.name}" columnClass="col-xs-8" />
+            <ul class="caption-states">
+                <t:stateOutputText label="general.label.Code" value="#{commodityHome.entity.code}" />
+                <t:stateOutputText label="general.label.Category" value="#{commodityHome.entity.category.name}" />
+                <t:stateOutputMoney label="general.label.Price" value="#{commodityHome.entity.price}" currency="#{commodityHome.entity.defaultCurrency}" />					
+            </ul>
+            
+            <ui:fragment rendered="#{not empty commodityHome.entity.info}">
+            <p><i class="fa fa-info"/> #{commodityHome.entity.info}</p>
+            </ui:fragment>
 					
-					<t:outputText label="general.label.Category"
-						value="#{commodityHome.entity.category.name}"  columnClass="col-xs-8" />
-
-				</div>
-			</div>
-
-			<div class="col-md-4 col-xs-12">
-				<div class="row">
-					<t:outputMoney label="general.label.Price"
-						value="#{commodityHome.entity.price}"
-						currency="#{commodityHome.entity.defaultCurrency}" columnClass="col-xs-8" />					
-				</div>
-			</div>
-
-			<div class="col-md-4 col-xs-12">
-				<div class="row">
-					<t:outputText label="general.label.Code"
-						value="#{commodityHome.entity.code}" required="true"
-						columnClass="col-xs-8" />
-					<t:outputBoolean label="general.label.Status"
-						value="#{commodityHome.entity.active}" itemLabel="general.boolean.active."
-						columnClass="col-xs-4" />
-					<t:outputText label="general.label.Info"
-						value="#{commodityHome.entity.info}" required="false"
-						columnClass="col-xs-12" />
-				</div>
-			</div>
-		</div>
 	</ui:define>
 
 </ui:composition>
