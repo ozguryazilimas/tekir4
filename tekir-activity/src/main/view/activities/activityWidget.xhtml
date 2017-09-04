@@ -53,7 +53,7 @@
                 <ul class="dropdown-menu dropdown-menu-right" arai-labeledby="actDropMenu1" style="z-index: 5000">
                     <ui:repeat value="#{activityWidget.addableActivities}" var="act">
                         <li>
-                            <p:commandLink action="#{activityWidget.createNew(act)}" process="@this" >
+                            <p:commandLink action="#{activityWidget.createNewQuickRecord(act)}" process="@this" oncomplete="quickPanelToogle();" update="quickPanelContent">
                                 <i class="#{messages['activity.button.icon.'.concat(act)]}" /> #{messages['activity.button.label.'.concat(act)]}
                             </p:commandLink>
                         </li>

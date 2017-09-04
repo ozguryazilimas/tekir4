@@ -11,6 +11,7 @@ import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.Person;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureUtils;
+import com.ozguryazilim.telve.quick.QuickRecordController;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
@@ -34,6 +35,9 @@ public class ActivityWidget implements Serializable {
 
     @Inject
     private ViewConfigResolver viewConfigResolver;
+    
+    @Inject 
+    private QuickRecordController quickRecordController;
 
     private AbstractPerson person;
     private Corporation corporation;
@@ -101,6 +105,14 @@ public class ActivityWidget implements Serializable {
         //FIXME: NPE Kontrolü yapılacak
         AbstractActivityController ctrl = ActivityRegistery.getControllerInstance(activity);
         return ctrl.createActivity( person, corporation, featurePointer, false);
+    }
+    
+    public void createNewQuickRecord( String activity ){
+        AbstractActivityController ctrl = ActivityRegistery.getControllerInstance(activity);
+        ctrl.createActivity( person, corporation, featurePointer, false);
+        
+        //QuickRecord Controller'ına menü değil activityRecord acmasını söylüyor.
+        quickRecordController.setName("activityQuickRecord");
     }
     
     /**

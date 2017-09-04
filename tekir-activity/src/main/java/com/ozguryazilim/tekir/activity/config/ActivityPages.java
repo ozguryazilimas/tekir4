@@ -51,6 +51,10 @@ public interface ActivityPages extends Pages{
     @SecuredPage()
     class ActivityReminderCommand implements ActivityPages {}
     
+    @View 
+    @SecuredPage()
+    class ActivityQuickPanel implements ActivityPages {}
+    
     @SecuredPage()
     interface Phone extends ActivityPages{
         
