@@ -20,6 +20,7 @@ import com.ozguryazilim.telve.lookup.LookupSelectTuple;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
 import org.apache.deltaspike.core.api.config.view.metadata.ViewConfigResolver;
@@ -38,6 +39,9 @@ public class ActivityHome extends FormBase<Activity, Long> {
     @Inject
     private ActivityRepository repository;
 
+    @Inject
+    private Event<ActivityMentionEvent> event;
+    
     private Class<? extends ViewConfig> returnPage;
 
     @Override
@@ -204,11 +208,24 @@ public class ActivityHome extends FormBase<Activity, Long> {
 
         }
         
-        //Corporation kontrolü
+        //Regarding kontrolü
         if (getEntity().getRegarding() != null) {
-
             checkPrimaryMention(getEntity().getRegarding(), "REGARDING");
-
+        }
+        
+        
+        //Şimdi başka mention eklemek isteyen varsa ekleyebilsin diye event fırlatıyoruz.
+        ActivityMentionEvent mentionEvent = new ActivityMentionEvent(getEntity());
+        event.fire(mentionEvent);
+        
+        //Şimdi geriye gelenleri ekliyoruz.
+        for( FeaturePointer fp : mentionEvent.getMentionList()){
+            if (!isMentionAdded(fp)) {
+                ActivityMention mention = new ActivityMention();
+                mention.setActivity(getEntity());
+                mention.setFeaturePointer(fp);
+                getEntity().getMentions().add(mention);
+            }
         }
         
         //Eğer yeni kayıt ise state'i düzeltelim.

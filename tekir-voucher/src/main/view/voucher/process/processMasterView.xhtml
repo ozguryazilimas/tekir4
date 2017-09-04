@@ -62,6 +62,13 @@
                         <ui:param name="featurePointer" value="#{processHome.featurePointer}" />
                     </ui:include>
 
+                    <ui:include src="/activities/activityWidget.xhtml">
+                        <ui:param name="readonly" value="true" />
+                        <ui:param name="corporation" value="#{processHome.entity.account}" />
+                        <ui:param name="feature" value="#{processHome.featurePointer}" />
+                        <ui:param name="attached" value="Feature" />
+                    </ui:include>
+                    
                     <ui:include src="/feeds/feedWidget.xhtml">
                         <ui:param name="feature" value="#{processHome.featureClass.simpleName}" />
                         <ui:param name="pk" value="#{processHome.entity.id}" />

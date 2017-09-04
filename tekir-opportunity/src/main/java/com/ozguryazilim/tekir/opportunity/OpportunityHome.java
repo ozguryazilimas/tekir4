@@ -6,6 +6,8 @@
 package com.ozguryazilim.tekir.opportunity;
 
 import com.ozguryazilim.tekir.account.AccountTxnService;
+import com.ozguryazilim.tekir.activity.ActivityFeature;
+import com.ozguryazilim.tekir.activity.ActivityHome;
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.Opportunity;
@@ -28,6 +30,7 @@ import com.ozguryazilim.telve.forms.FormEdit;
 import com.ozguryazilim.telve.reports.JasperReportHandler;
 
 import javax.inject.Inject;
+import org.apache.deltaspike.core.api.provider.BeanProvider;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,6 +95,26 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
         
         return super.onBeforeSave(); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public boolean onAfterCreate() {
+        //Eğer Source bir activity ise geri mention bağlayalım.
+        if( getEntity().getStarter() != null && getEntity().getStarter().getFeature().equals(ActivityFeature.class.getSimpleName())){
+            //FIXME: Bir servis haline getirmek lazım activityHome ile yaptığımız şeyi
+            //Bizim FeaturePointer'ımızıbir alalım
+            FeaturePointer fp = getFeaturePointer();
+            
+            ActivityHome activityHome =  BeanProvider.getContextualReference(ActivityHome.class, true);
+            activityHome.setId(getEntity().getStarter().getPrimaryKey());
+            activityHome.getEntity().setRegarding(fp);
+            
+            activityHome.save();
+            
+        }
+        return super.onAfterCreate(); 
+    }
+
+    
 
     @Override
     protected VoucherStateConfig buildStateConfig() {

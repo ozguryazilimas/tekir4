@@ -1,0 +1,61 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"                
+                template="/layout/quickRecordPanelBase.xhtml">
+
+
+    <ui:param name="bean" value="#{quickContactSetRecord}" />
+
+    <ui:define name="header-info">
+        <div class="text-sm text-muted"><i class="fa fa-info margin-r-5"/>Aynı anda bir biri ile bağlantılı kişi ve kurum kartı oluşturur</div>
+    </ui:define>
+    <ui:define name="content">
+        <div class="row">
+            <div class="col-md-6">
+                <i class="fa #{messages['feature.icon.PersonFeature']}" /> #{messages['feature.caption.PersonFeature']}
+                <div class="row">
+                    <t:inputText label="general.label.FirstName" value="#{bean.firstName}" columnClass="col-sm-6" required="true"/>
+                    <t:inputText label="general.label.LastName" value="#{bean.lastName}" columnClass="col-sm-6" required="true"/>
+                </div>  
+
+                <div class="row">
+                    <t:inputText label="contact.label.PrimaryMobile" value="#{bean.mobile}" columnClass="col-sm-6" required="false"/>
+                    <t:inputText label="contact.label.PrimaryEmail" value="#{bean.email}" columnClass="col-sm-6" required="false"/>
+                </div>  
+                
+                
+
+                <div class="row">
+                    <t:inputText label="contact.label.JobTitle" value="#{bean.jobTitle}" columnClass="col-sm-6" required="false"/>
+                    
+                </div>
+
+
+            </div>
+            <div class="col-md-6">
+                <i class="fa #{messages['feature.icon.CorporationFeature']}" /> #{messages['feature.caption.CorporationFeature']}
+                <div class="row">
+                    <t:inputText label="contact.label.CorporationName" value="#{bean.corporationName}" columnClass="col-sm-6" required="true"/>
+                    <t:inputText label="general.label.OrganizationName" value="#{bean.corporationFullName}" columnClass="col-sm-6" required="true"/>
+                </div>
+                <div class="row">
+                    <t:inputText label="contact.label.PrimaryPhone" value="#{bean.corporationPhone}" columnClass="col-sm-6" required="false"/>
+                    <t:inputText label="contact.label.PrimaryEmail" value="#{bean.corporationEmail}" columnClass="col-sm-6" required="false"/>
+                </div>  
+                <div class="row">
+                    
+                    <t:inputLookupDialog label="contact.label.CorparationType" value="#{quickContactSetRecord.corporationType}" lookupBean="#{corporationTypeLookup}" lookupListener="quickContactSetRecord.corporationType" placeholder="#{messages['contact.info.CorporationType']}" />
+                    <t:inputLookupDialog label="general.label.Category" value="#{quickContactSetRecord.category}" lookupBean="#{contactCategoryLookup}" lookupListener="quickContactSetRecord.category" placeholder="#{messages['general.info.Category']}" />
+                    <ui:remove>
+                    <t:inputText label="general.label.Code" value="#{bean.code}" columnClass="col-md-6" required="true"/>
+                    <t:inputTextarea label="general.label.Info" value="#{bean.info}" columnClass="col-md-12"/>
+                    </ui:remove>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>
