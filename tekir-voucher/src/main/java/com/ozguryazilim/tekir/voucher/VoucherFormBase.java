@@ -7,9 +7,11 @@ package com.ozguryazilim.tekir.voucher;
 
 import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.entities.VoucherBase;
+import com.ozguryazilim.tekir.entities.VoucherProcessBase;
 import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.tekir.entities.VoucherStateType;
 import com.ozguryazilim.tekir.voucher.number.VoucherSerialService;
+import com.ozguryazilim.tekir.voucher.process.ProcessFeature;
 import com.ozguryazilim.telve.audit.AuditLogger;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.entities.FeaturePointer;
@@ -315,6 +317,25 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
         fp.setFeature(getFeature().getName());
         return fp;
     }
+    
+    /**
+     * Eğer VoucherProcessBase den türüyen bir Voucher ise ProcessFeturePointer'ı döndürür.
+     * Aksi halde null döner.
+     * @return 
+     */
+    public FeaturePointer getProcessFeaturePointer() {
+        if( getEntity() instanceof VoucherProcessBase){
+            VoucherProcessBase vp = (VoucherProcessBase) getEntity();
+            FeaturePointer fp = new FeaturePointer();
+            fp.setBusinessKey(vp.getProcess().getProcessNo());
+            fp.setPrimaryKey(vp.getProcess().getId());
+            fp.setFeature(ProcessFeature.class.getSimpleName());
+            return fp;
+        }
+        
+        return null;
+    }
+    
 
     /**
      * Action name üzerinden trigger tetikler.

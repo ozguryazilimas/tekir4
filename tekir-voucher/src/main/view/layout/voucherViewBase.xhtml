@@ -14,7 +14,7 @@
         <ul class="caption-states">
             <ui:insert name="caption-states" />
             <ui:fragment rendered="#{process ne 'false'}">
-            <t:stateOutputText label="voucher.label.Process" value="#{bean.entity.process.processNo}" />
+            <t:stateOutputFeatureLink label="voucher.label.Process" value="#{featureController.getFeatureLink(bean.processFeaturePointer)}" />
             </ui:fragment>
             <t:stateOutputText label="voucher.label.ReferenceNo" value="#{bean.entity.referenceNo}" />
             <t:stateOutputText label="general.label.Code" value="#{bean.entity.code}" />
