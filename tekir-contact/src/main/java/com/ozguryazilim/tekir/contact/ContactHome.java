@@ -1,5 +1,6 @@
 package com.ozguryazilim.tekir.contact;
 
+import com.ozguryazilim.tekir.contact.relation.RelatedContactRepository;
 import com.google.common.base.Strings;
 import com.ozguryazilim.telve.forms.FormEdit;
 import com.ozguryazilim.telve.forms.FormBase;

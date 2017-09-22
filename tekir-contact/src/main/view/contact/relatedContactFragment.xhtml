@@ -19,6 +19,16 @@
                             <p:ajax event="dialogReturn" update=":rc:relConts" partialSubmit="true" process="@this" />   
                         </p:commandLink>
                     </li>
+                    
+                    <p:repeat value="" var="" >
+                    <li>
+                        <p:commandLink id="ap" action="#{phoneEditor.create(contact)}" process="@this">
+                            <i class="fa fa-phone" /> #{messages['contact.button.AddPhone']}
+                            <p:ajax event="dialogReturn" update=":rc:relConts" partialSubmit="true" process="@this" />   
+                        </p:commandLink>
+                    </li>
+                    </p:repeat>
+                    
                 </ul>
             </div>
 
