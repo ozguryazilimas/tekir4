@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.tekir.voucher;
 
+import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.entities.VoucherBase;
 import com.ozguryazilim.tekir.entities.VoucherProcessBase;
@@ -195,10 +196,26 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
 
         return null;
     }
+    
+    @Transactional
+    public Class<? extends ViewConfig> triggerExec(String action, String param ) {
+        for (VoucherStateAction act : stateConfig.getStateActions(getCurrentState())) {
+            if (act.getName().equals(action)) {
+                return act.execute(param);
+            }
+        }
+
+        return null;
+    }
 
     @Transactional
     public Class<? extends ViewConfig> triggerExec(VoucherStateAction action) {
         return triggerExec(action.getName());
+    }
+    
+    @Transactional
+    public Class<? extends ViewConfig> triggerExec(VoucherStateAction action, String param) {
+        return triggerExec(action.getName(), param);
     }
 
     /**
@@ -421,16 +438,24 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
     /**
      * ClassPath üzerinde jasper bularak onu çalıştırır.
      *
+     * Parametre olarak çağırılacak olan jasper ismi gelir. 
+     * 
+     * Eğer boş ya da null ise default arar : 
+     * 
      * printout.featureName keyi ile arama yapar. Bulamaz ise featureName.jasper
      * arar.
      *
+     * @param param jasperReport isimi
      */
-    protected void printOut() {
+    protected void printOut( String param ) {
 
-        String fhn = getFeature().getName();
-
-        String jasperName = ConfigResolver.getPropertyValue("printout." + fhn, fhn);
-
+        String jasperName = param;
+        
+        if( Strings.isNullOrEmpty(param)){
+            String fhn = getFeature().getName();
+            jasperName = ConfigResolver.getPropertyValue("printout." + fhn, fhn);
+        }
+        
         Map<String, Object> params = new HashMap<>();
 
         params.put("EID", getEntity().getId());
@@ -444,6 +469,27 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
         }
 
         auditLogger.actionLog(getEntity().getClass().getSimpleName(), getEntity().getId(), getEntity().getVoucherNo(), "ACTION", "PRINT_OUT", identity.getLoginName(), jasperName);
+    }
+    
+    /**
+     * Sistem ayarlarından çıktı isimlerini toparlar.
+     * 
+     * Config'de printout.{featureName} formatında jasper isimleri aranır.
+     * 
+     * Birden fazla iseler virgüller ile ayrılırlar.
+     * 
+     * eğer hiç yoksa default fatureName.jasper olarak aranacak.
+     * 
+     * @return 
+     */
+    public List<String> getPrintOutNames(){
+        String fhn = getFeature().getName();
+
+        String vals = ConfigResolver.getPropertyValue("printout." + fhn,  fhn );
+        
+        List<String> results = Splitter.on(',').trimResults().omitEmptyStrings().splitToList(vals);
+        
+        return results;
     }
 
     /**
