@@ -5,9 +5,6 @@
  */
 package com.ozguryazilim.tekir.voucher.config;
 
-import com.ozguryazilim.tekir.contact.config.ContactPages;
-import com.ozguryazilim.tekir.core.config.ParamNavigationSection;
-import com.ozguryazilim.tekir.core.config.SalesNavigationSection;
 import com.ozguryazilim.telve.auth.SecuredPage;
 import com.ozguryazilim.telve.nav.Navigation;
 import com.ozguryazilim.telve.nav.SideNavigationSection;
@@ -91,6 +88,6 @@ public interface VoucherPages extends Pages {
 
     
     @SecuredPage("voucherSerial") @View
-    @Navigation(label = "module.caption.VoucherSerial", icon = "fa fa-book", section = ParamNavigationSection.class)
+    //@Navigation(label = "module.caption.VoucherSerial", icon = "fa fa-book", section = ParamNavigationSection.class)
     class VoucherSerial implements VoucherPages {}
 }

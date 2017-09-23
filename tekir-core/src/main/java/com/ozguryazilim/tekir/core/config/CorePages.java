@@ -65,8 +65,8 @@ public interface CorePages extends Pages {
 
 	@View
 	@SecuredPage("currencyDefinition")
-	@PageTitle("module.caption.CurrencyDefinition")
-	@Navigation(label = "module.caption.CurrencyDefinition", icon = "flaticon-exchange-1", section = FinanceParamNavigationSection.class)
+	//@PageTitle("module.caption.CurrencyDefinition")
+	//@Navigation(label = "module.caption.CurrencyDefinition", icon = "flaticon-exchange-1", section = FinanceParamNavigationSection.class)
 	class CurrencyDefinition implements CorePages {
 	}
         
