@@ -33,8 +33,16 @@
 
             <div class="col-lg-5 col-md-12">
                 <div class="row">
-                    <t:accordion icon="fa fa-comments" id="ca1" label="general.label.Details" >
-                        İlgilenilen ürünler
+                    <t:accordion icon="fa fa-cubes" id="ca1" label="general.label.Details" columnClass="col-lg-12 col-md-6" contentClass="">
+                        <p:dataTable id="items" value="#{opportunityHome.entity.items}" var="item">
+
+                            <p:column headerText="#{messages['general.label.Commodity']}">
+                                #{item.commodity.name}
+                            </p:column>
+                            <p:column headerText="#{messages['general.label.Info']}">
+                                #{item.info}
+                            </p:column>
+                        </p:dataTable>
                     </t:accordion>
 
                     <ui:include src="/voucher/process/stakeholderWidget.xhtml">

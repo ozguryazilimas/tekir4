@@ -11,6 +11,7 @@ import com.ozguryazilim.tekir.activity.ActivityHome;
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.Opportunity;
+import com.ozguryazilim.tekir.entities.OpportunityItem;
 import com.ozguryazilim.tekir.entities.Person;
 import com.ozguryazilim.tekir.entities.ProcessType;
 import com.ozguryazilim.tekir.entities.VoucherState;
@@ -61,6 +62,9 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
     
     @Inject
     private JasperReportHandler reportHandler;
+    
+    private OpportunityItem selectedItem;
+    private boolean itemEdit = false;
     
     @Override
     public void createNew() {
@@ -163,4 +167,36 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
         
         return result;
     }
+
+    public OpportunityItem getSelectedItem() {
+        return selectedItem;
+    }
+
+    public void setSelectedItem(OpportunityItem selectedItem) {
+        this.selectedItem = selectedItem;
+    }
+    
+    public void createItem(){
+        selectedItem = new OpportunityItem();
+        itemEdit = false;
+    }
+    
+    public void editItem(Integer ix){
+        selectedItem = getEntity().getItems().get(ix);
+        itemEdit = true;
+    }
+    
+    public void deleteItem(Integer ix){
+        getEntity().getItems().remove(ix.intValue());
+    }
+    
+    public void saveItem(){
+        if( !itemEdit ){
+            selectedItem.setMaster(getEntity());
+            getEntity().getItems().add(selectedItem);
+        } 
+        
+        itemEdit = false;
+    }
+    
 }
