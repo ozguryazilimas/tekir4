@@ -37,11 +37,11 @@
                         İlgilenilen ürünler
                     </t:accordion>
 
-                    <t:accordion icon="fa fa-users" id="ca2" label="general.label.Stakeholders" >
-                        Karar Vericiler
-                    </t:accordion>
+                    <ui:include src="/voucher/process/stakeholderWidget.xhtml">
+                        <ui:param name="columnClass" value="col-lg-12 col-md-6" />
+                        <ui:param name="process" value="#{opportunityHome.entity.process}" />
+                    </ui:include>
                 </div>
-
             </div>
 
             <div class="col-lg-3 col-md-12">

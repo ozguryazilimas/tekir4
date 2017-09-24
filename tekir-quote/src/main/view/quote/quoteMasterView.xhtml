@@ -53,6 +53,11 @@
                         <ui:param name="payload" value="#{quoteHome.entity}" />
                     </ui:include>
 
+                    <ui:include src="/voucher/process/stakeholderWidget.xhtml">
+                        <ui:param name="columnClass" value="col-lg-12 col-md-6" />
+                        <ui:param name="process" value="#{quoteHome.entity.process}" />
+                    </ui:include>
+                    
                     <ui:include src="/activities/activityWidget.xhtml">
                         <ui:param name="columnClass" value="col-lg-12 col-md-6" />
                         <ui:param name="person" value="#{quoteHome.person}" />

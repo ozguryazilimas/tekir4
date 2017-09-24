@@ -62,6 +62,11 @@
                         <ui:param name="featurePointer" value="#{processHome.featurePointer}" />
                     </ui:include>
 
+                    <ui:include src="/voucher/process/stakeholderWidget.xhtml">
+                        <ui:param name="columnClass" value="col-lg-12 col-md-6" />
+                        <ui:param name="process" value="#{processHome.entity}" />
+                    </ui:include>
+                    
                     <ui:include src="/activities/activityWidget.xhtml">
                         <ui:param name="readonly" value="true" />
                         <ui:param name="corporation" value="#{processHome.entity.account}" />
