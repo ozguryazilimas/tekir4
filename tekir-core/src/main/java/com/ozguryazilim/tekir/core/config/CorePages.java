@@ -128,5 +128,9 @@ public interface CorePages extends Pages {
     @SecuredPage()
     @View
     class CorporateOptionPane implements CorePages {}
+    
+    @SecuredPage()
+    @View
+    class AutoCodeOptionPane implements CorePages {}
         
 }

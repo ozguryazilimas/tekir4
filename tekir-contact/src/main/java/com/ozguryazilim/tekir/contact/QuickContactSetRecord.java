@@ -8,6 +8,7 @@ package com.ozguryazilim.tekir.contact;
 import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.contact.config.ContactPages;
 import com.ozguryazilim.tekir.contact.information.ContactInformationConsts;
+import com.ozguryazilim.tekir.core.code.AutoCodeService;
 import com.ozguryazilim.tekir.entities.ContactCategory;
 import com.ozguryazilim.tekir.entities.ContactEMail;
 import com.ozguryazilim.tekir.entities.ContactPhone;
@@ -33,6 +34,9 @@ public class QuickContactSetRecord extends QuickRecordBase{
     
     @Inject
     private Identity identity;
+    
+    @Inject
+    private AutoCodeService codeService;
     
     private String corporationName;
     private String corporationFullName;
@@ -162,6 +166,7 @@ public class QuickContactSetRecord extends QuickRecordBase{
         p.getContactRoles().add("CONTACT");
         p.getContactRoles().add("CORPORATION");
         p.setOwner(identity.getLoginName());
+        p.setCode(codeService.getNewSerialNumber(Corporation.class.getSimpleName()));
         return p;
     }
     
@@ -170,6 +175,7 @@ public class QuickContactSetRecord extends QuickRecordBase{
         p.getContactRoles().add("CONTACT");
         p.getContactRoles().add("PERSON");
         p.setOwner(identity.getLoginName());
+        p.setCode(codeService.getNewSerialNumber(Person.class.getSimpleName()));
         return p;
     }
     
@@ -208,7 +214,7 @@ public class QuickContactSetRecord extends QuickRecordBase{
             corp.setInfo(info);
             corp.setCorporationType(corporationType);
             corp.setCategory(category);
-            corp.setCode(code + "C");
+            //corp.setCode(code + "C");
             
             
             //PrimaryMobile and EMail
@@ -235,7 +241,7 @@ public class QuickContactSetRecord extends QuickRecordBase{
             person.setLastName(lastName);
             person.setName(firstName + " " + lastName);
             person.setJobTitle(jobTitle);
-            person.setCode(code + "P");
+            //person.setCode(code + "P");
             
             //PrimaryMobile and EMail
             if( !Strings.isNullOrEmpty(mobile)){

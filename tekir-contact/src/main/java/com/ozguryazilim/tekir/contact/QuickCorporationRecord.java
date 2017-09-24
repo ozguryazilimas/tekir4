@@ -8,6 +8,7 @@ package com.ozguryazilim.tekir.contact;
 import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.contact.config.ContactPages;
 import com.ozguryazilim.tekir.contact.information.ContactInformationConsts;
+import com.ozguryazilim.tekir.core.code.AutoCodeService;
 import com.ozguryazilim.tekir.entities.ContactEMail;
 import com.ozguryazilim.tekir.entities.ContactPhone;
 import com.ozguryazilim.tekir.entities.Corporation;
@@ -31,6 +32,9 @@ public class QuickCorporationRecord extends QuickRecordBase{
     @Inject
     private Identity identity;
     
+    @Inject
+    private AutoCodeService codeService;
+    
     private Corporation entity;
     
     private String email;
@@ -42,6 +46,7 @@ public class QuickCorporationRecord extends QuickRecordBase{
         p.getContactRoles().add("CONTACT");
         p.getContactRoles().add("CORPORATION");
         p.setOwner(identity.getLoginName());
+        p.setCode(codeService.getNewSerialNumber(Corporation.class.getSimpleName()));
         return p;
     }
     
