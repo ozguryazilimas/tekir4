@@ -1,0 +1,12 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui">
+
+<div class="row">
+        <t:outputText label="activity.label.Subject" value="#{bean.entity.subject}" columnClass="col-xs-12"/>
+        <t:outputTextarea label="activity.label.Body" value="#{bean.entity.body}" columnClass="col-xs-12"/>
+    </div>
+</ui:composition>

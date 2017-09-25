@@ -94,4 +94,14 @@ public interface ActivityPages extends Pages{
         @SecuredPage() @View
         class TaskActivityFragment implements Task {}
     }
+    
+    @SecuredPage()
+    interface Comment extends ActivityPages{
+        
+        @SecuredPage() @View
+        class CommentActivityEditor implements Comment {}
+
+        @SecuredPage() @View
+        class CommentActivityFragment implements Comment {}
+    }
 }
