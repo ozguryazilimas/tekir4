@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ozguryazilim.tekir.activity.phone.email;
+package com.ozguryazilim.tekir.activity.email;
 
 import com.ozguryazilim.tekir.activity.AbstractActivityController;
 import com.ozguryazilim.tekir.activity.ActivityController;
