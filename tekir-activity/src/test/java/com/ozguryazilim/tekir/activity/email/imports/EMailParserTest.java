@@ -58,10 +58,14 @@ public class EMailParserTest {
         
         
         
-        InputStream messageStream = this.getClass().getResourceAsStream("/test15.eml");
+        InputStream messageStream = this.getClass().getResourceAsStream("/test6.eml");
         
         EMailParser instance = new EMailParser();
-        instance.parse(messageStream);
+        EMailMessage result = instance.parse(messageStream);
+        
+        System.out.println(result);
+        
+        System.out.println(result.getContent());
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
