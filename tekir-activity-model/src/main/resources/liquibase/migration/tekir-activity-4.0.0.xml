@@ -65,4 +65,39 @@
             <column name="ACT_NO" type="varchar(20)"/>
         </addColumn>
     </changeSet>
+    <changeSet author="oyas (generated)" id="1506975677459-1">
+        <addColumn tableName="TCA_ACTIVITY">
+            <column name="EM_BCC" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1506975677459-2">
+        <addColumn tableName="TCA_ACTIVITY">
+            <column name="EM_CC" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1506975677459-3">
+        <addColumn tableName="TCA_ACTIVITY">
+            <column name="EM_FID" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1506975677459-4">
+        <addColumn tableName="TCA_ACTIVITY">
+            <column name="EM_FROM" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1506975677459-5">
+        <addColumn tableName="TCA_ACTIVITY">
+            <column name="EM_MID" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1506975677459-6">
+        <addColumn tableName="TCA_ACTIVITY">
+            <column name="EM_RID" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1506975677459-7">
+        <addColumn tableName="TCA_ACTIVITY">
+            <column name="EM_TO" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

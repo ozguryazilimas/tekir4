@@ -52,8 +52,8 @@ public class EMailParser {
 
     private EMailMessage result;
 
-    public void parse(String messages) throws MessagingException, IOException {
-        parse(new ByteArrayInputStream(messages.getBytes()));
+    public EMailMessage parse(String messages) throws MessagingException, IOException {
+        return parse(new ByteArrayInputStream(messages.getBytes()));
     }
 
     public EMailMessage parse(InputStream messageStream) throws MessagingException, IOException {
