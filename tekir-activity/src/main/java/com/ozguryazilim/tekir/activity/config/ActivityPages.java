@@ -53,7 +53,15 @@ public interface ActivityPages extends Pages{
     
     @View 
     @SecuredPage()
+    class EMailFetchCommand implements ActivityPages {}
+    
+    @View 
+    @SecuredPage()
     class ActivityQuickPanel implements ActivityPages {}
+    
+    @View 
+    @SecuredPage()
+    class EMailImportOptionPane implements ActivityPages {}
     
     @SecuredPage()
     interface Phone extends ActivityPages{

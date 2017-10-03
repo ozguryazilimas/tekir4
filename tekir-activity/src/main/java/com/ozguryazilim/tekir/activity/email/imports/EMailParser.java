@@ -5,6 +5,8 @@
  */
 package com.ozguryazilim.tekir.activity.email.imports;
 
+import com.ozguryazilim.tekir.activity.email.imports.model.EMailMessage;
+import com.ozguryazilim.tekir.activity.email.imports.model.EMailAttacment;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import java.io.ByteArrayInputStream;

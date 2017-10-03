@@ -13,6 +13,7 @@ import com.ozguryazilim.tekir.entities.ActivityMention_;
 import com.ozguryazilim.tekir.entities.ActivityStatus;
 import com.ozguryazilim.tekir.entities.Activity_;
 import com.ozguryazilim.tekir.entities.Corporation;
+import com.ozguryazilim.tekir.entities.EMailActivity;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
@@ -28,6 +29,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.apache.deltaspike.data.api.Query;
 import org.apache.deltaspike.data.api.Repository;
 import org.apache.deltaspike.data.api.criteria.Criteria;
 import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
@@ -297,5 +299,8 @@ public abstract class ActivityRepository extends RepositoryBase<Activity, Activi
 
         return resultList;
     }
+ 
     
+    @Query("select c from EMailActivity c where MessageId = ?1")
+    public abstract List<EMailActivity> findByMessageId( String messageId);
 }

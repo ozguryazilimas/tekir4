@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.tekir.activity.email.imports;
 
+import com.ozguryazilim.tekir.activity.email.imports.model.EMailMessage;
 import java.io.InputStream;
 import org.junit.After;
 import org.junit.AfterClass;
