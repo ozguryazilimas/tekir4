@@ -25,6 +25,7 @@ import com.ozguryazilim.telve.attachment.qualifiers.FileStore;
 import com.ozguryazilim.telve.auth.UserService;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureRegistery;
+import com.ozguryazilim.telve.sequence.SequenceManager;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
@@ -61,6 +62,9 @@ public class EMailActivityImporter implements Serializable {
     private AttacmentContextProviderSelector providerSelector;
     
     @Inject
+    private SequenceManager sequenceManager;
+    
+    @Inject
     @FileStore
     private AttachmentStore store;
 
@@ -72,6 +76,8 @@ public class EMailActivityImporter implements Serializable {
 
             EMailActivity activity = new EMailActivity();
 
+            activity.setActivityNo( sequenceManager.getNewSerialNumber("ACT", 6));
+                    
             activity.setMessageId(message.getMessageId());
             activity.setReplyId(message.getReplyId());
             activity.setForwardId(message.getForwardId());
@@ -110,9 +116,10 @@ public class EMailActivityImporter implements Serializable {
             }
                                     
             
+            //FIXME: doğru kullanıcıya atanacak.
             //Hangi kullanıcıya assign edileceği gene from/to kısmından bulunmalı ( yöne bağlı olarak )
             //String userName = userService.getUsersByEmail("from/to");
-            //activity.setAssignee(userName);
+            activity.setAssignee("telve");
             
             
             
@@ -174,6 +181,7 @@ public class EMailActivityImporter implements Serializable {
             pp.setFeature(FeatureRegistery.getFeatureClass(info.getContact().getClass()).getSimpleName());
 
             mention.setFeaturePointer(pp);
+            mention.setActivity(activity);
 
             activity.getMentions().add(mention);
         }

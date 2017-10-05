@@ -42,7 +42,7 @@ public abstract class ContactInformationRepository extends
      * @param email
      * @return 
      */
-    @Query("select c from ContactEMail c where address = ?1")
+    @Query("select c from ContactEMail c where address like concat( '%', ?1, '%' )")
     public abstract List<ContactEMail> findByEmail( String email  );
     
     

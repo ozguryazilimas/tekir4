@@ -58,13 +58,17 @@ public class EMailFetchCommandExecutor extends AbstractCommandExecuter<EMailFetc
         LOG.debug("EMail Import Process Begin");
         try {
             //Burada kahveden okuma yapılacak
-            Store store = getSession().getStore(kahve.get(MAIL_PROTOCOL, "imap").getAsString());
+            Store store = getSession().getStore("imaps");
 
             //FIXME: parola kahvede hashli saklanacak
-            store.connect(kahve.get(MAIL_HOST, "mail.host").getAsString(), kahve.get(MAIL_USER, "user").getAsString(), kahve.get(MAIL_PASS, "pass").getAsString());
+            String host = kahve.get(MAIL_HOST, "mail.host").getAsString();
+            String user = kahve.get(MAIL_USER, "user").getAsString();
+            String pass = kahve.get(MAIL_PASS, "pass").getAsString();
+            int port = kahve.get(MAIL_PORT, "993").getAsInteger();
+            store.connect( host, port, user, pass );
             
             //FIXME: Hangi folder? Kahveden alınacak
-            Folder emailFolder = store.getFolder(kahve.get(MAIL_HOST, "INBOX").getAsString());
+            Folder emailFolder = store.getFolder(kahve.get(MAIL_FOLDER, "INBOX").getAsString());
 
             emailFolder.open(Folder.READ_ONLY);
 
@@ -77,7 +81,7 @@ public class EMailFetchCommandExecutor extends AbstractCommandExecuter<EMailFetc
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
                 message.writeTo(out);
                 String eml = out.toString();
-                LOG.debug("Message : {}",eml);
+                LOG.trace("Message : {}",eml);
                 
                 EMailImportCommand importCommand = new EMailImportCommand();
                 importCommand.setEml(eml);
@@ -113,8 +117,9 @@ public class EMailFetchCommandExecutor extends AbstractCommandExecuter<EMailFetc
         Properties properties = new Properties();
         properties.put("mail.store.protocol", protocol);
         properties.put("mail." + protocol + ".host", kahve.get(MAIL_HOST, "mail.host").getAsString());
-        properties.put("mail." + protocol + ".imap.port", kahve.get(MAIL_PORT, "993").getAsString());
-        properties.put("mail." + protocol + ".imap.starttls.enable", kahve.get(MAIL_SSL, "true").getAsString());
+        properties.put("mail." + protocol + ".port", kahve.get(MAIL_PORT, "993").getAsString());
+        properties.put("mail." + protocol + ".starttls.enable", kahve.get(MAIL_SSL, "true").getAsString());
+        properties.put("mail.imap.connectiontimeout", "1000");
         
         Session emailSession = Session.getDefaultInstance(properties);
         // emailSession.setDebug(true);

@@ -301,6 +301,6 @@ public abstract class ActivityRepository extends RepositoryBase<Activity, Activi
     }
  
     
-    @Query("select c from EMailActivity c where MessageId = ?1")
+    @Query("select c from EMailActivity c where messageId = ?1")
     public abstract List<EMailActivity> findByMessageId( String messageId);
 }

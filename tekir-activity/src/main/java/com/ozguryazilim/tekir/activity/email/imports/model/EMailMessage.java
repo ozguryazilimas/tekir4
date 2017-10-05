@@ -68,7 +68,7 @@ public class EMailMessage implements Serializable{
     }
     
     public boolean isReply(){
-        return Strings.isNullOrEmpty(replyId);
+        return !Strings.isNullOrEmpty(replyId);
     }
 
     public String getForwardId() {
@@ -80,7 +80,7 @@ public class EMailMessage implements Serializable{
     }
 
     public boolean isForwarded(){
-        return Strings.isNullOrEmpty(forwardId);
+        return !Strings.isNullOrEmpty(forwardId);
     }
     
     public InternetAddress getFrom() {

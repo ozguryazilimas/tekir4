@@ -62,17 +62,17 @@ public class EMailParser {
 
         result = new EMailMessage();
 
-        LOG.info("Stream Parse Begin");
+        LOG.debug("Stream Parse Begin");
 
         Session s = Session.getDefaultInstance(new Properties());
         MimeMessage message = new MimeMessage(s, messageStream);
 
-        //if( LOG.isDebugEnabled() ){
-        for (Enumeration<Header> e = message.getAllHeaders(); e.hasMoreElements();) {
-            Header h = e.nextElement();
-            LOG.info("{}:{}", h.getName(), h.getValue());
+        if (LOG.isDebugEnabled()) {
+            for (Enumeration<Header> e = message.getAllHeaders(); e.hasMoreElements();) {
+                Header h = e.nextElement();
+                LOG.debug("{}:{}", h.getName(), h.getValue());
+            }
         }
-        //}
 
         result.setMessageId(message.getMessageID());
         result.setSubject(message.getSubject());
@@ -96,7 +96,7 @@ public class EMailParser {
         //From bir tane mi olacak?
         Address[] from = message.getFrom();
         if (from != null && from.length > 0) {
-            LOG.info("Address: {}", from[0]);
+            LOG.debug("Address: {}", from[0]);
             result.setFrom(new InternetAddress(from[0].toString()));
         }
     }
@@ -106,7 +106,7 @@ public class EMailParser {
         Address[] toa = message.getRecipients(Message.RecipientType.TO);
         if (toa != null) {
             for (Address adr : toa) {
-                LOG.info("Address: {}", adr);
+                LOG.debug("Address: {}", adr);
                 result.getToList().add(new InternetAddress(adr.toString()));
             }
         }
@@ -117,7 +117,7 @@ public class EMailParser {
         Address[] toa = message.getRecipients(Message.RecipientType.CC);
         if (toa != null) {
             for (Address adr : toa) {
-                LOG.info("Address: {}", adr);
+                LOG.debug("Address: {}", adr);
                 result.getCcList().add(new InternetAddress(adr.toString()));
             }
         }
@@ -128,7 +128,7 @@ public class EMailParser {
         Address[] toa = message.getRecipients(Message.RecipientType.BCC);
         if (toa != null) {
             for (Address adr : toa) {
-                LOG.info("Address: {}", adr);
+                LOG.debug("Address: {}", adr);
                 result.getBccList().add(new InternetAddress(adr.toString()));
             }
         }
@@ -159,7 +159,7 @@ public class EMailParser {
             tmp = tmp.replaceAll("\n", " ");
             tmp = tmp.replaceAll("\r", " ");
             List<String> ls = Splitter.on(' ').trimResults().omitEmptyStrings().splitToList(tmp);
-            LOG.info("References: {}", ls);
+            LOG.debug("References: {}", ls);
             result.getReferences().addAll(ls);
         }
     }
@@ -196,10 +196,15 @@ public class EMailParser {
     }
 
     protected void parsePlain(String content) throws MessagingException, IOException {
-        LOG.debug("Content: {}", content);
-        if( result.isReply()){
-            LOG.info("Reply Content: {}", EMailReplyParser.parse(content));
+        LOG.trace("Content: {}", content);
+        /*
+        if (result.isReply()) {
+            LOG.trace("Reply Content: {}", EMailReplyParser.parse(content));
+            result.setContent(EMailReplyParser.parse(content));
+        } else {
+            result.setContent(content);
         }
+        */
         result.setContent(content);
     }
 
@@ -224,7 +229,7 @@ public class EMailParser {
             EMailAttacment attachment = new EMailAttacment();
             //ContentType mime peşinden isim içeriyor
             String mimeType = part.getContentType().substring(0, part.getContentType().indexOf(";"));
-            LOG.info("File : {}, MIME-Type: {}", part.getFileName(), mimeType);
+            LOG.debug("File : {}, MIME-Type: {}", part.getFileName(), mimeType);
 
             attachment.setName(part.getFileName());
             attachment.setMimeType(mimeType);
