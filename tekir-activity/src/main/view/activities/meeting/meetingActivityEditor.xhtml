@@ -3,49 +3,16 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
-                xmlns:p="http://primefaces.org/ui"                
-                template="/activities/activityEditorBase.xhtml">
+                xmlns:p="http://primefaces.org/ui">
 
-    <ui:param name="title" value="#{messages['meetingActivityEditor.label.Title']} - #{ messages['activity.status.'.concat(meetingActivityController.entity.status)]}" />
-    <ui:param name="bean" value="#{meetingActivityController}" />
+    <div class="row">
+        <t:inputText label="activity.label.Subject" value="#{activityHome.entity.subject}" required="true" columnClass="col-sm-12"/>
+        <t:inputText label="activity.label.Location" value="#{activityHome.entity.location}" columnClass="col-sm-12"/>
+        <t:inputTextarea label="activity.label.Attendees" value="#{activityHome.entity.attendees}" columnClass="col-sm-12"/>
+        <t:inputTextarea label="activity.label.Body" value="#{activityHome.entity.body}" columnClass="col-sm-12"/>
+    </div>
 
-    <ui:define name="editorContent">
-        <div class="row">
-            <t:inputText label="activity.label.Location" value="#{bean.entity.location}" />
-            <t:inputTextarea label="activity.label.Attendees" value="#{bean.entity.attendees}" />
-            <t:inputTextarea label="activity.label.MeetingMinutes" value="#{bean.entity.meetingMinutes}" />
-        </div>
-    </ui:define> 
-    
-    <ui:define name="assignment">
-        <div class="row">
-            <t:inputLookupDialog label="general.label.Person" value="#{meetingActivityController.entity.person}" lookupBean="#{contactLookup}" lookupListener="meetingActivityController.entity.person" placeholder="#{messages['contact.info.Person']}" lookupProfile="T:Person" columnClass="col-xs-6"/>
-            <t:inputLookupDialog label="general.label.Corporation" value="#{meetingActivityController.entity.corporation}" lookupBean="#{contactLookup}" lookupListener="meetingActivityController.entity.corporation" placeholder="#{messages['general.info.Corparation']}" lookupProfile="T:Corporation" columnClass="col-xs-6"/>
-            <t:inputFeature label="activity.label.Regarding" value="#{meetingActivityController.entity.regarding}" lookupBean="#{tekirFeatureLookup}" lookupListener="meetingActivityController.entity.regarding" columnClass="col-xs-6"/>
-            <t:inputUser label="general.label.Assignee" value="#{bean.entity.assignee}" hasNotSelected="true" required="true"  columnClass="col-xs-6"/>
-        </div>
-
-        <div class="row">
-            <t:inputDateTime label="activity.label.DueDate" value="#{bean.entity.dueDate}" columnClass="col-xs-6"/>
-            <t:inputDuration value="#{bean.entity.duration}" columnClass="col-xs-6" />
-        </div>
-
-    </ui:define>
-    
-    <ui:define name="actionButtons">
-        <p:commandButton id="complete" 
-                         value="#{messages['activity.button.Complete']}" 
-                         icon="fa fa-check" 
-                         action="#{bean.complete()}" 
-                         validateClient="true"
-                         styleClass="btn-success" />
-
-        <p:commandButton id="faild" 
-                         value="#{messages['activity.button.Failed']}" 
-                         icon="fa fa-ban" 
-                         action="#{bean.failed()}" 
-                         validateClient="true"
-                         styleClass="btn-danger" />
-
-    </ui:define>
+    <div class="row">
+        <t:inputTextarea label="activity.label.MeetingMinutes" value="#{activityHome.entity.meetingMinutes}" columnClass="col-sm-12"/>
+    </div>
 </ui:composition>

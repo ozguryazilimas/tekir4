@@ -28,7 +28,7 @@ public class StringListConverter implements AttributeConverter<List<String>, Str
     
     @Override
     public List<String> convertToEntityAttribute(String field) {
-        String f = field.trim();
+        String f = field == null ? "" : field.trim();
         if( f.isEmpty() ){
             return new ArrayList<>();
         } 

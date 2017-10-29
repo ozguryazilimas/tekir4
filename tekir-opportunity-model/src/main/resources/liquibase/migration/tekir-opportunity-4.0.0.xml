@@ -91,4 +91,23 @@
             <column name="LOCAL_BUDGET" type="decimal(19, 2)"/>
         </addColumn>
     </changeSet>
+    <changeSet author="oyas (generated)" id="1506279953350-1">
+        <createTable tableName="TCO_OPPOTUNITY_ITEM">
+            <column autoIncrement="true" name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TCO_OPPOTUNITY_ITEMPK"/>
+            </column>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="COMMODITY_ID" type="BIGINT"/>
+            <column name="OPPORTUNITY_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1506279953350-2">
+        <addForeignKeyConstraint baseColumnNames="COMMODITY_ID" baseTableName="TCO_OPPOTUNITY_ITEM" constraintName="FK_OPP_COMM" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_COMMOTITY"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1506279953350-3">
+        <addForeignKeyConstraint baseColumnNames="OPPORTUNITY_ID" baseTableName="TCO_OPPOTUNITY_ITEM" constraintName="FK_OPP_OPP" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_OPPOTUNITY"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1506279953350-4">
+        <addForeignKeyConstraint baseColumnNames="PROCESS_ID" baseTableName="TCO_OPPOTUNITY" constraintName="FK_PROSS_VOG" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TVO_PROCESS"/>
+    </changeSet>
 </databaseChangeLog>

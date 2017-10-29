@@ -1,0 +1,19 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui">
+
+    <t:accordion icon="fa fa-file-text" label="general.label.Voucher" columnClass="#{columnClass}">
+        <t:outputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(homeBean.entity.starter)}" columnClass="col-sm-12"/>
+        <t:outputText label="voucher.label.VoucherNo" value="#{homeBean.entity.voucherNo}"  columnClass="col-sm-6"/>
+        <t:outputText label="voucher.label.ReferenceNo" value="#{homeBean.entity.referenceNo}" columnClass="col-sm-6"/>
+        <t:outputText label="voucher.label.Process" value="#{homeBean.entity.process.processNo}" columnClass="col-sm-6"/>
+        <t:outputText label="voucher.label.Group" value="#{homeBean.entity.group.groupNo}" columnClass="col-sm-6"/>
+        <t:outputText label="voucher.label.Owner" value="#{userLookup.getUserName(homeBean.entity.owner)}" columnClass="col-sm-6"/>
+        <t:outputText label="general.label.Code" value="#{homeBean.entity.code}" columnClass="col-sm-6"/>
+        <t:outputDate label="voucher.label.Date" value="#{homeBean.entity.date}" columnClass="col-sm-6"/>
+    </t:accordion>
+
+</ui:composition>

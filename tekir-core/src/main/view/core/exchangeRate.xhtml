@@ -5,7 +5,7 @@
 	xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions"
-	template="/layout/primeTemplate.xhtml">
+	template="#{themeManager.layoutTemplate}">
 
 	<ui:define name="context-menu">
 		<li><p:commandLink action="#{exchangeRateHome.getTCMBRates()}"

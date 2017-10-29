@@ -6,9 +6,12 @@
 package com.ozguryazilim.tekir.opportunity;
 
 import com.ozguryazilim.tekir.account.AccountTxnService;
+import com.ozguryazilim.tekir.activity.ActivityFeature;
+import com.ozguryazilim.tekir.activity.ActivityHome;
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.Opportunity;
+import com.ozguryazilim.tekir.entities.OpportunityItem;
 import com.ozguryazilim.tekir.entities.Person;
 import com.ozguryazilim.tekir.entities.ProcessType;
 import com.ozguryazilim.tekir.entities.VoucherState;
@@ -19,6 +22,7 @@ import com.ozguryazilim.tekir.voucher.VoucherPrintOutAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateConfig;
 import com.ozguryazilim.tekir.voucher.process.ProcessService;
+import com.ozguryazilim.telve.attachment.AttachmentContext;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.EntityBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
@@ -27,6 +31,7 @@ import com.ozguryazilim.telve.forms.FormEdit;
 import com.ozguryazilim.telve.reports.JasperReportHandler;
 
 import javax.inject.Inject;
+import org.apache.deltaspike.core.api.provider.BeanProvider;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,6 +62,9 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
     
     @Inject
     private JasperReportHandler reportHandler;
+    
+    private OpportunityItem selectedItem;
+    private boolean itemEdit = false;
     
     @Override
     public void createNew() {
@@ -93,6 +101,26 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
     }
 
     @Override
+    public boolean onAfterCreate() {
+        //Eğer Source bir activity ise geri mention bağlayalım.
+        if( getEntity().getStarter() != null && getEntity().getStarter().getFeature().equals(ActivityFeature.class.getSimpleName())){
+            //FIXME: Bir servis haline getirmek lazım activityHome ile yaptığımız şeyi
+            //Bizim FeaturePointer'ımızıbir alalım
+            FeaturePointer fp = getFeaturePointer();
+            
+            ActivityHome activityHome =  BeanProvider.getContextualReference(ActivityHome.class, true);
+            activityHome.setId(getEntity().getStarter().getPrimaryKey());
+            activityHome.getEntity().setRegarding(fp);
+            
+            activityHome.save();
+            
+        }
+        return super.onAfterCreate(); 
+    }
+
+    
+
+    @Override
     protected VoucherStateConfig buildStateConfig() {
         VoucherStateConfig config = new VoucherStateConfig();        
         
@@ -127,4 +155,48 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
     public FeaturePointer getAllFeaturePointer(EntityBase contact){
     		return FeatureUtils.getFeaturePointer(contact);
     }
+
+    public AttachmentContext getContext() {
+        AttachmentContext result = new AttachmentContext();
+        
+        String accountRoot = getEntity().getAccount().getName() + "[" + getEntity().getAccount().getCode() + "]";
+        FeaturePointer fp = getFeaturePointer();
+        result.setRoot( accountRoot + "/" + fp.getFeature() + "/" + fp.getBusinessKey());
+        result.setUsername("Bişi");
+        result.setFeaturePointer(getFeaturePointer());
+        
+        return result;
+    }
+
+    public OpportunityItem getSelectedItem() {
+        return selectedItem;
+    }
+
+    public void setSelectedItem(OpportunityItem selectedItem) {
+        this.selectedItem = selectedItem;
+    }
+    
+    public void createItem(){
+        selectedItem = new OpportunityItem();
+        itemEdit = false;
+    }
+    
+    public void editItem(Integer ix){
+        selectedItem = getEntity().getItems().get(ix);
+        itemEdit = true;
+    }
+    
+    public void deleteItem(Integer ix){
+        getEntity().getItems().remove(ix.intValue());
+    }
+    
+    public void saveItem(){
+        if( !itemEdit ){
+            selectedItem.setMaster(getEntity());
+            getEntity().getItems().add(selectedItem);
+        } 
+        
+        itemEdit = false;
+    }
+    
 }

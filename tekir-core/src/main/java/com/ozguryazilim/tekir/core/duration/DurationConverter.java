@@ -10,7 +10,7 @@ import javax.faces.convert.FacesConverter;
 
 import com.google.common.base.Strings;
 import com.ozguryazilim.telve.messages.FacesMessages;
-import com.ozguryazilim.telve.messages.MessagesUtils;
+import com.ozguryazilim.telve.messages.Messages;
 
 @FacesConverter("durationConverter")
 public class DurationConverter implements Converter {
@@ -22,11 +22,11 @@ public class DurationConverter implements Converter {
 			return null;
 		}
 
-		String hourAcr = MessagesUtils.getMessage("general.acronym.Hour");
-		String minuteAcr = MessagesUtils.getMessage("general.acronym.Minute");
+		String hourAcr = Messages.getMessage("general.acronym.Hour");
+		String minuteAcr = Messages.getMessage("general.acronym.Minute");
 
 		if (!Pattern.compile("([0-9]+?" + hourAcr + "){0,1}([0-9]+?" + minuteAcr + "){0,1}").matcher(value).matches()) {
-			FacesMessages.error(MessagesUtils.getMessage("general.message.InvalidDuration"));
+			FacesMessages.error(Messages.getMessage("general.message.InvalidDuration"));
 			throw new ConverterException();
 		}
 
@@ -54,8 +54,8 @@ public class DurationConverter implements Converter {
 
 		if (value instanceof Long) {
 
-			String hourAcr = MessagesUtils.getMessage("general.acronym.Hour");
-			String minuteAcr = MessagesUtils.getMessage("general.acronym.Minute");
+			String hourAcr = Messages.getMessage("general.acronym.Hour");
+			String minuteAcr = Messages.getMessage("general.acronym.Minute");
 
 			Long duration = (Long) value;
 

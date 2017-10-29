@@ -8,7 +8,7 @@
 
     #{activityWidget.init(person, corporation, feature, attached)}
 
-    <t:accordion icon="fa fa-comments" id="actW" label="general.label.Activities" columnClass="col-xs-12">
+    <t:accordion icon="fa fa-comments" id="actW" label="general.label.Activities" columnClass="#{columnClass}" contentClass="">
 
         <f:facet name="toolbar">
             <div class="dropdown pull-right">
@@ -45,7 +45,7 @@
                 </ul>
             </div>
 
-            
+            <ui:fragment rendered="#{readonly ne 'true'}">
             <div class="dropdown pull-right" >
                 <button id="actDropMenu1" class="btn btn-box-tool dropdown-toogle" data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-plus"/>
@@ -53,15 +53,14 @@
                 <ul class="dropdown-menu dropdown-menu-right" arai-labeledby="actDropMenu1" style="z-index: 5000">
                     <ui:repeat value="#{activityWidget.addableActivities}" var="act">
                         <li>
-                            <p:commandLink action="#{activityWidget.createNew(act)}" process="@this">
+                            <p:commandLink action="#{activityWidget.createNewQuickRecord(act)}" process="@this" oncomplete="quickPanelToogle();" update="quickPanelContent">
                                 <i class="#{messages['activity.button.icon.'.concat(act)]}" /> #{messages['activity.button.label.'.concat(act)]}
-                                <p:ajax event="dialogReturn" update=":actW:actWL" partialSubmit="true" process="@this" />   
                             </p:commandLink>
                         </li>
                     </ui:repeat>
                 </ul>
             </div>
-
+            </ui:fragment>
         </f:facet>
 
 
@@ -85,14 +84,6 @@
                                 <h:link value="" outcome="/activities/activityView.xhtml?eid=#{act.id}" styleClass="btn btn-box-tool">
                                     <i class="fa fa-external-link-square"></i>
                                 </h:link>
-                                <p:commandLink action="#{activityWidget.edit(act)}" process="@this" styleClass="btn btn-box-tool">
-                                    <i class="fa fa-pencil" />
-                                    <p:ajax event="dialogReturn" update=":actW:actWL" partialSubmit="true" process="@this" />   
-                                </p:commandLink>
-                                <p:commandLink action="#{activityWidget.delete(act)}" process="@this" styleClass="btn btn-box-tool" update=":actW:actWL">
-                                    <i class="fa fa-trash" />
-                                    <p:confirm header="#{messages['general.caption.Confirm']}" message="#{messages['general.message.confirm.Delete']}" icon="fa fa-2x fa-exclamation-triangle btn-delete" />
-                                </p:commandLink>
                             </div>
                             <ui:remove>
                                 <span class="label #{ act.status eq 'SCHEDULED' ? 'label-default' : act.status eq 'SUCCESS' ? 'label-success' : 'label-danger' }  pull-right"><i class="fa #{ act.status eq 'SCHEDULED' ? 'fa-calendar' : act.status eq 'SUCCESS' ? 'fa-check' : 'fa-ban' }" title="#{messages['activity.status.'.concat(act.status)]}"/> </span>
@@ -103,11 +94,11 @@
                             </span>
                             
                             <span class="product-description text-sm">
-                                <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(act.regarding)}" />
+                                <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(act.regarding)}" rendered="#{activityWidget.attached ne 'Feature'}"/>
                             </span>
-                            <span class="product-description text-sm">
+                            <span class="product-description text-sm" style="color:silver">
                                 <i class="fa fa-user margin-r-5"/>#{userLookup.getUserName(act.assignee)} 
-                                <i class="fa  fa-clock-o margin-r-5"/><t:cellOutputDateTime value="#{act.dueDate}"/></span>
+                                <i class="fa  fa-clock-o margin-r-5"/><t:cellOutputPrettyTime value="#{act.dueDate}"/></span>
                         </div>
                     </li>
                 </ui:repeat>

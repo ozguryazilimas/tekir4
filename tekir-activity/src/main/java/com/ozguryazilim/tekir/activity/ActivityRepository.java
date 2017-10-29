@@ -8,9 +8,12 @@ package com.ozguryazilim.tekir.activity;
 import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.entities.AbstractPerson;
 import com.ozguryazilim.tekir.entities.Activity;
+import com.ozguryazilim.tekir.entities.ActivityMention;
+import com.ozguryazilim.tekir.entities.ActivityMention_;
 import com.ozguryazilim.tekir.entities.ActivityStatus;
 import com.ozguryazilim.tekir.entities.Activity_;
 import com.ozguryazilim.tekir.entities.Corporation;
+import com.ozguryazilim.tekir.entities.EMailActivity;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
@@ -26,6 +29,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.apache.deltaspike.data.api.Query;
 import org.apache.deltaspike.data.api.Repository;
 import org.apache.deltaspike.data.api.criteria.Criteria;
 import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
@@ -191,6 +195,36 @@ public abstract class ActivityRepository extends RepositoryBase<Activity, Activi
     }
     
     
+    /**
+     * Verilen FeaturePointer mentionlanmış activity listesini döndürür.
+     * 
+     * @param featurePointer
+     * @param filter
+     * @return 
+     */
+    public List<Activity> findByMention( FeaturePointer featurePointer, ActivityWidgetFilter filter ){
+        Criteria<Activity,Activity> crit = criteria()
+                .join(Activity_.mentions,
+                    where(ActivityMention.class)
+                        .eq(ActivityMention_.featurePointer, featurePointer)
+                )
+                .orderDesc(Activity_.dueDate);
+                
+        
+        switch( filter ){
+            case MINE : crit.eq(Activity_.assignee, identity.getLoginName()); break;
+            case OVERDUE : crit.gt(Activity_.dueDate, new Date()); break;
+            case SCHEDULED : crit.eq( Activity_.status, ActivityStatus.SCHEDULED); break;
+            case SUCCESS : crit.eq( Activity_.status, ActivityStatus.SUCCESS); break;
+            case FAILED : crit.eq( Activity_.status, ActivityStatus.FAILED); break;
+            case FOLLOWUP : break; //TODO:
+        }
+
+        //Criteria üzerinde pagein limit yok
+        return crit.createQuery().setMaxResults(5).getResultList();
+                
+    }
+    
     public List<Activity> findForCalendarSource( String assignee, Date beginDate, Date endDate, Class<? extends Activity> clazz, Boolean showClocedEvents){
         
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
@@ -265,5 +299,8 @@ public abstract class ActivityRepository extends RepositoryBase<Activity, Activi
 
         return resultList;
     }
+ 
     
+    @Query("select c from EMailActivity c where messageId = ?1")
+    public abstract List<EMailActivity> findByMessageId( String messageId);
 }

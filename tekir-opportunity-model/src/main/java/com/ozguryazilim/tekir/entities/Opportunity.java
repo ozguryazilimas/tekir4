@@ -6,8 +6,11 @@
 package com.ozguryazilim.tekir.entities;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -16,12 +19,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
- * Fırsat fişi veri modeli
+ * Fırsat fişi veri modeli.
+ * 
+ * TODO: Fırsat için durum bilgisi : Bilgi Toplama, Stratejik olarak yapılmayacak? : Aslında bunlar statusReason gibi duruyor. Örneğin Open için : Bilgi Toplama, Strateji Kararı Bekleme, Yapılabilirlik Bekleme gibi
  * 
  * @author Hakan Uygun
  */
@@ -99,6 +107,10 @@ public class Opportunity extends VoucherProcessBase{
     @Column(name="SOLUTION")
     private String solution;
 
+    @OneToMany(mappedBy = "master", cascade = CascadeType.ALL, orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<OpportunityItem> items = new ArrayList<>();
+    
     @Override
     public Long getId() {
         return id;
@@ -188,14 +200,13 @@ public class Opportunity extends VoucherProcessBase{
         this.localBudget = localBudget;
     }
 
-    
-    
-    
-    /**
-     * Fırsat için durum bilgisi : Bilgi Toplama, Stratejik olarak yapılmayacak? : Aslında bunlar statusReason gibi duruyor. Örneğin Open için : Bilgi Toplama, Strateji Kararı Bekleme, Yapılabilirlik Bekleme gibi
-     */
-    //private String status;
-    
-    
+    public List<OpportunityItem> getItems() {
+        return items;
+    }
+
+    public void setItems(List<OpportunityItem> items) {
+        this.items = items;
+    }
+
     
 }

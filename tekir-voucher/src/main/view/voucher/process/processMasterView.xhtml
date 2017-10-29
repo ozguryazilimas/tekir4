@@ -7,9 +7,8 @@
 
     <ui:define name="content">
         <div class="row">
-            <div class="col-md-8 col-xs-12">
-                <t:accordion icon="fa fa-file" id="cx" label="general.label.ReleatedVouchers" columnClass="col-xs-12">
-                    <ui:remove>
+            <t:accordion icon="fa fa-file" id="cx" label="general.label.ReleatedVouchers" columnClass="col-md-8" contentClass="">
+                <ui:remove>
                     <ul class="products-list product-list-in-box">
                         <ui:repeat value="#{processHome.txnList}" var="ci" >
                             <li class="item">
@@ -24,48 +23,62 @@
                             </li>
                        	</ui:repeat>
                     </ul>
-                    </ui:remove>
-                    <div class="table-responsive no-padding">
-                        <table class="table table-condensed table-hover">
+                </ui:remove>
+                <div class="table-responsive no-padding">
+                    <table class="table table-condensed table-hover">
+                        <tr>
+                            <th style="color:#555;">#{messages['general.label.Voucher']}</th>
+                            <th style="color:#555;">#{messages['general.label.Info']}</th>
+                            <th style="color:#555;">#{messages['general.label.Date']}</th>
+                            <th style="color:#555;">#{messages['general.label.Amount']}</th>
+                            <th style="color:#555;">#{messages['general.label.State']}</th>
+                            <th style="color:#555;">#{messages['general.label.Reason']}</th>
+                        </tr>
+                        <p:repeat value="#{processHome.txnList}" var="ci" >
                             <tr>
-                                <th style="color:#555;">#{messages['general.label.Voucher']}</th>
-                                <th style="color:#555;">#{messages['general.label.Info']}</th>
-                                <th style="color:#555;">#{messages['general.label.Date']}</th>
-                                <th style="color:#555;">#{messages['general.label.Amount']}</th>
-                                <th style="color:#555;">#{messages['general.label.State']}</th>
-                                <th style="color:#555;">#{messages['general.label.Reason']}</th>
-                            </tr>
-                            <ui:repeat value="#{processHome.txnList}" var="ci" >
-                                <tr>
-                                    <td>
-                                        <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
-                                    </td>
-                                    <ui:remove>
+                                <td>
+                                    <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
+                                </td>
+                                <ui:remove>
                                     <td>#{ci.feature.businessKey}</td>
-                                    </ui:remove>
-                                    <td>#{ci.info}</td>
-                                    <td><t:cellOutputDate value="#{ci.date}"/></td>
-                                    <td><t:cellOutputMoney value="#{ci.amount}" currency="#{ci.currency}"/></td>
-                                    <td>
-                                        <h:outputText value="#{messages['voucherState.name.'.concat(ci.status)]}" styleClass="#{ ci.status.contains('POSITIVE') ? 'label label-success' : ci.status.contains('NEGATIVE') ? 'label label-danger' : ci.status.startsWith('CLOSE', 0) ? 'label label-primary' : 'label label-warning' }" />
-                                    </td>
-                                    <td>#{ci.statusReason}</td>
-                                </tr>
-                            </ui:repeat>
-                        </table>
-                    </div>
-                </t:accordion>  
-            </div>
+                                </ui:remove>
+                                <td>#{ci.info}</td>
+                                <td><t:cellOutputDate value="#{ci.date}"/></td>
+                                <td><t:cellOutputMoney value="#{ci.amount}" currency="#{ci.currency}"/></td>
+                                <td>
+                                    <h:outputText value="#{messages['voucherState.name.'.concat(ci.status)]}" styleClass="#{ ci.status.contains('POSITIVE') ? 'label label-success' : ci.status.contains('NEGATIVE') ? 'label label-danger' : ci.status.startsWith('CLOSE', 0) ? 'label label-primary' : 'label label-warning' }" />
+                                </td>
+                                <td>#{ci.statusReason}</td>
+                            </tr>
+                        </p:repeat>
+                    </table>
+                </div>
+            </t:accordion>  
 
-            <div class="col-md-4 col-xs-12">
-                <ui:include src="/notes/noteWidget.xhtml">
-                    <ui:param name="featurePointer" value="#{processHome.featurePointer}" />
-                </ui:include>
 
-                <ui:include src="/feeds/feedWidget.xhtml">
-                    <ui:param name="feature" value="#{processHome.featureClass.simpleName}" />
-                    <ui:param name="pk" value="#{processHome.entity.id}" />
-                </ui:include>
+            <div class="col-md-4">
+                <div class="row">
+                    <ui:include src="/notes/noteWidget.xhtml">
+                        <ui:param name="featurePointer" value="#{processHome.featurePointer}" />
+                    </ui:include>
+
+                    <ui:include src="/voucher/process/stakeholderWidget.xhtml">
+                        <ui:param name="columnClass" value="col-lg-12 col-md-6" />
+                        <ui:param name="process" value="#{processHome.entity}" />
+                    </ui:include>
+                    
+                    <ui:include src="/activities/activityWidget.xhtml">
+                        <ui:param name="readonly" value="true" />
+                        <ui:param name="corporation" value="#{processHome.entity.account}" />
+                        <ui:param name="feature" value="#{processHome.featurePointer}" />
+                        <ui:param name="attached" value="Feature" />
+                    </ui:include>
+                    
+                    <ui:include src="/feeds/feedWidget.xhtml">
+                        <ui:param name="feature" value="#{processHome.featureClass.simpleName}" />
+                        <ui:param name="pk" value="#{processHome.entity.id}" />
+                    </ui:include>
+                </div>
             </div>   		
         </div>
     </ui:define>

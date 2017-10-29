@@ -21,19 +21,19 @@
 
     <ui:define name="context-menu">
         <li>
-            <p:commandLink action="#{financeAccountHome.newCashAccount()}" styleClass="context-command" >
+            <p:commandLink action="#{financeAccountHome.newCashAccount()}" styleClass="context-command" rendered="#{bean.hasInsertPermission()}">
                 <i class="fa fa-money"></i>
                 <h:outputText value=" #{messages['general.button.AddCashAccount']}" />
             </p:commandLink>
         </li>
         <li>
-            <p:commandLink action="#{financeAccountHome.newBankAccount()}" styleClass="context-command" >
+            <p:commandLink action="#{financeAccountHome.newBankAccount()}" styleClass="context-command" rendered="#{bean.hasInsertPermission()}">
                 <i class="fa fa-bank"></i>
                 <h:outputText value=" #{messages['general.button.AddBankAccount']}" />
             </p:commandLink>
         </li>
         <li>
-            <p:commandLink action="#{financeAccountHome.newCreditCardAccount()}" styleClass="context-command" >
+            <p:commandLink action="#{financeAccountHome.newCreditCardAccount()}" styleClass="context-command" rendered="#{bean.hasInsertPermission()}">
                 <i class="fa fa-credit-card"></i>
                 <h:outputText value=" #{messages['general.button.AddCreditCardAccount']}" />
             </p:commandLink>
