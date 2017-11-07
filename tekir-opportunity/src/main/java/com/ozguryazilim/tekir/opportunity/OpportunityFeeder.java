@@ -113,7 +113,7 @@ public class OpportunityFeeder extends AbstractFeeder<Opportunity> {
 			return "feeder.messages.OpportunityFeeder.CREATE$%&" + identity.getUserName() + "$%&"
 					+ event.getPayload().getVoucherNo();
 		case "publish":
-			return "Opportunity published";
+			return "feeder.messages.OpportunityFeeder.PUBLISH$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo();
 		case "won":
 			return "feeder.messages.OpportunityFeeder.WON$%&" + identity.getUserName() + "$%&"
 					+ event.getPayload().getVoucherNo();
@@ -123,20 +123,8 @@ public class OpportunityFeeder extends AbstractFeeder<Opportunity> {
 		case "cancel":
 			return "feeder.messages.OpportunityFeeder.CANCEL$%&" + identity.getUserName() + "$%&"
 					+ event.getPayload().getVoucherNo() + "$%&" + event.getPayload().getStateReason();
-
-		}
-
-		switch (event.getTo().getName()) {
-		case "OPEN":
-			return "Opportunity created";
-		case "CLOSE":
-			return "Opportunity Won. Congrats!";
-		case "LOST":
-			return "Opportunity lost! " + event.getPayload().getStateReason();
-		case "CANCELED":
-			return "Opportunity canceled. " + event.getPayload().getStateReason();
 		default:
-			return "Opportunity created";
+			return "feeder.messages.OpportunityFeeder.DEFAULT$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo();
 		}
 	}
 	

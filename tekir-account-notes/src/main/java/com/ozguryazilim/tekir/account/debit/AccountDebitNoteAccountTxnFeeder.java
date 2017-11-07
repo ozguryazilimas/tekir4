@@ -32,7 +32,7 @@ public class AccountDebitNoteAccountTxnFeeder implements Serializable{
     
     public void feed(@Observes(during = TransactionPhase.IN_PROGRESS) @EntityQualifier(entity = AccountDebitNote.class) @After EntityChangeEvent event) {
         
-        if( event.getAction() != EntityChangeAction.DELETE   ) {
+        if( event.getAction() != EntityChangeAction.DELETE) {
             AccountDebitNote entity = (AccountDebitNote) event.getEntity();
             
             FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);

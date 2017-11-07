@@ -75,29 +75,13 @@ public class FinanceAccountVirementFeeder extends AbstractFeeder<FinanceAccountV
 	protected String getMessage(VoucherStateChange event) {
 		switch (event.getAction().getName()) {
 		case "CREATE":
-			return "Credit Note created";
-		case "Publish":
-			return "Credit Note published";
-		case "Won":
-			return "Credit Note";
-		case "Loss":
-			return "Opportunity Lost" + event.getPayload().getStateReason();
-		case "Cancel":
-			return "Opportunity canceled. " + event.getPayload().getStateReason();
-
-		}
-
-		switch (event.getTo().getName()) {
-		case "OPEN":
-			return "Opportunity created";
-		case "CLOSE":
-			return "Opportunity Won. Congrats!";
-		case "LOST":
-			return "Opportunity lost! " + event.getPayload().getStateReason();
-		case "CANCELED":
-			return "Opportunity canceled. " + event.getPayload().getStateReason();
-		default:
-			return "Opportunity created";
+			return "feeder.messages.FinanceAccountVirementFeeder.CREATE$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo();
+		case "publish":
+			return "feeder.messages.FinanceAccountVirementFeeder.PUBLISH$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo();
+        case "reopen":
+            return "feeder.messages.FinanceAccountVirementFeeder.REOPEN$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo() + "$%&" + event.getPayload().getStateReason();
+        default:
+            return "feeder.messages.FinanceAccountVirementFeeder.DEFAULT$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo();
 		}
 	}
 
