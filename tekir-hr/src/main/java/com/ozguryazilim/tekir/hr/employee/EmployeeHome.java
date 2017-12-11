@@ -6,11 +6,15 @@
 package com.ozguryazilim.tekir.hr.employee;
 
 import com.google.common.base.Strings;
+import com.ozguryazilim.tekir.contact.relation.RelatedContactRepository;
 import com.ozguryazilim.tekir.contact.ContactRoleRegistery;
 import com.ozguryazilim.tekir.contact.information.ContactInformationRepository;
 import com.ozguryazilim.tekir.entities.ContactInformation;
 import com.ozguryazilim.tekir.entities.Employee;
+import com.ozguryazilim.tekir.entities.EmployeeLeave;
+import com.ozguryazilim.tekir.entities.RelatedContact;
 import com.ozguryazilim.tekir.hr.config.EmployeePages;
+import com.ozguryazilim.tekir.hr.employee.leave.EmployeeLeaveRepository;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
@@ -44,9 +48,17 @@ public class EmployeeHome extends FormBase<Employee, Long> {
     private EmployeeRepository repository;
 
     @Inject
+    private EmployeeLeaveRepository employeeLeaveRepository;
+    
+    @Inject
     private ContactInformationRepository informationRepository;
+    
+    @Inject
+    private RelatedContactRepository relatedContactRepository;
 
     private List<String> selectedRoles = new ArrayList<>();
+    
+    private Integer usedLeaveDay=0;
 
     public Class<? extends ViewConfig> newEmployee() {
         Employee p = new Employee();
@@ -93,11 +105,20 @@ public class EmployeeHome extends FormBase<Employee, Long> {
         selectedRoles = getEntity().getContactRoles().stream()
                             .filter(p -> getContactRoles().contains(p))
                             .collect(Collectors.toList());
-        
+        calculateLeaveDay();
         return super.onAfterLoad();
     }
-
     
+
+    public void calculateLeaveDay() {
+			List<EmployeeLeave> empls =getEmployeeLeaves();
+			int temp=0;
+			for(EmployeeLeave empl : empls){
+				System.out.println("emp :"+empl.getEmployee()+" gün :"+empl.getLeaveDay());
+				temp+=empl.getLeaveDay();
+	    	}
+			setUsedLeaveDay(temp);
+    }
     
     @Override
     protected RepositoryBase<Employee, EmployeeViewModel> getRepository() {
@@ -113,6 +134,19 @@ public class EmployeeHome extends FormBase<Employee, Long> {
         return informationRepository.findByContact(getEntity());
     }
 
+    
+    public List<RelatedContact> getRelatedContacts() {
+        return relatedContactRepository.findBySourceContact( getEntity());
+    }
+    
+    //TODO:Method ismini düzeltelim
+    public List<RelatedContact> getRelatedContactsRevers() {
+        return relatedContactRepository.findByTargetContact( getEntity());
+    }
+    
+	public List<EmployeeLeave> getEmployeeLeaves(){
+		return employeeLeaveRepository.getEmployeeLeaves( getEntity());
+	}
     
     public List<String> getContactRoles() {
         return ContactRoleRegistery.getSelectableContactRoles();
@@ -156,4 +190,14 @@ public class EmployeeHome extends FormBase<Employee, Long> {
         getEntity().setOwner(userName);
         save();
     }
+
+	public Integer getUsedLeaveDay() {
+		return usedLeaveDay;
+	}
+
+	public void setUsedLeaveDay(Integer usedLeaveDay) {
+		this.usedLeaveDay = usedLeaveDay;
+	}
+    
+    
 }
