@@ -1,0 +1,1140 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+CS-XML V3, Schema Document
+
+*Schema içerisindeki elemanlar ve komplesk tiplerin UBL karşılıkları ve gerekli minimum seviyede bilgiye satır commentlerinin içerisinden ulaşabilirsiniz. 
+Daha fazla bilgi için schema açıklama dokumanlarına başvurabilirsiniz.
+
+*UBL equivalents of elements and complex types and required minimum expalanations can be found in inline comments. 
+Additional information can be found in schema manual document and other helper documents.
+
+*************************
+DEĞİŞİKLİKLER / CHANGE LOG
+
+1. 2015-06-29 - Schema ilk sürüm / Initial release
+*************************
+ -->
+ 
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="fatura">
+    <xs:complexType>
+      <xs:sequence>
+        <!--UBL KARSILIGI YOK - CS-XML'in versionunu iceriyor-->
+        <xs:element name="xsdVersion" type="xs:string" minOccurs="0" />
+        <!--cbc:UBLVerisonID - Giden faturada boş gönderilir ise 2.1 değeri ile UBL oluşturulur, dolu gonderilir ise buradaki değeri ile UBL oluşturulur kullanılmaz, gelen faturanın UBL versionunu belirtir. örn: 2.0, 2.1-->
+        <xs:element name="ublVersionNumarasi" type="xs:string" minOccurs="0" />
+        <!--cbc:CustomizationID - Giden faturada boş gönderilir ise TR1.2 değeri ile UBL oluşturulur, dolu gonderilir ise buradaki değeri ile UBL oluşturulur, faturanın özelleştirme numarasını belirtir. örn: TR1.0, TR1.2-->
+        <xs:element name="ublOzellestirmeNumarasi" type="xs:string" minOccurs="0" />
+        <!-- UBL KARSILIGI YOK - giden fatura için tercih edilen faturaNo ön eki. A veya B veya C ile başlamayan 2 karakter. Orn: RR girildiüinde RRA2014000000001 gibi bir faturano oluşacaktır -->
+        <xs:element name="tercihEdilenSeriNo" type="xs:string" minOccurs="0" />
+        <!-- cbc:ProfileID - GIB fatura senaryosu, temel fatura veya ticari fatura [TEMELFATURA, TICARIFATURA]-->
+        <xs:element name="faturaTuru" type="xs:string" />
+        <!--cbc:ID - giden fatura icin yerel fatura no, gelen fatura icin fatura no-->
+        <xs:element name="faturaNo" type="xs:string" minOccurs="0" />
+        <!--cbc:CopyIndicator - Asıl Suret bilgisi, true olarak doldurulur ise "suret" anlamina gelir, default değeri false'dir-->
+        <xs:element name="suret" type="xs:boolean" minOccurs="0" />
+        <!-- cbc:UUID - giden fatura için boş olmalı, gelen fatura için ETTN (uuid)-->
+        <xs:element name="faturaId" type="xs:string" minOccurs="0" />
+        <!-- cbc:IssueDate - invoice issue date format=yyyy-mm-dd -->
+        <xs:element name="faturaTarihi" type="tarihTipi" />
+        <!-- cbc:IssueTime -  invoice issue time format=hh:mm:ss-->
+        <xs:element name="faturaZamani" type="zamanTipi" minOccurs="0" />
+        <!-- cbc:InvoiceTypeCode - invoice type code determined by revenue adminstration [SATIS, ISTISNA, OZELMATRAH, ARACTESCIL, TEVKIFAT, IADE]-->
+        <xs:element name="faturaTipi" type="xs:string" />
+        <!--  cbc:Note - note -->
+        <xs:element name="faturaNot" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+        <!-- cbc:DocumentCurrencyCode - currency code -->
+        <xs:element name="paraBirimi" type="xs:string" />
+        <!-- cbc:TaxCurrencyCode -->
+        <xs:element name="vergiParaBirimi" type="xs:string" minOccurs="0" />
+        <!--cbc:PricingCurrencyCode-->
+        <xs:element name="fiyatlandirmaParaBirimi" type="xs:string" minOccurs="0" />
+        <!--cbc:PaymentCurrencyCode-->
+        <xs:element name="odemeParaBirimi" type="xs:string" minOccurs="0" />
+        <!-- cbc:PaymentAlternativeCurrencyCode -->
+        <xs:element name="alternatifOdemeParaBirimi" type="xs:string" minOccurs="0" />
+        <!--cbc:AccountingCost - Alt fatura Tipi-->
+        <xs:element name="altFaturaTipi" type="xs:string" minOccurs="0" />
+        <!--cac:InvoicePeriod-->
+        <xs:element name="faturaDonemi" type="donemTipi" minOccurs="0" />
+        <!--cac:OrderReference-->
+        <xs:element name="siparisBilgileri" type="siparisBilgileriTipi" minOccurs="0" />
+        <!--cac:BillingReference-->
+        <xs:element name="faturaReferansBilgileri" type="faturaReferansBilgileriTipi" minOccurs="0" maxOccurs="unbounded" />
+        <!--cac:DespatchDocumentReference-->
+        <xs:element name="irsaliyeBilgileri" type="dokumanBilgileriTipi" minOccurs="0" maxOccurs="unbounded" />
+        <!--cac:ReceiptDocumentReference-->
+        <xs:element name="malKabulBilgileri" type="dokumanBilgileriTipi" minOccurs="0" maxOccurs="unbounded" />
+        <!--cac:OriginatorDocumentReference-->
+        <xs:element name="baslangicDokumanBilgileri" type="dokumanBilgileriTipi" minOccurs="0" maxOccurs="unbounded" />
+        <!--cac:ContractDocumentReference-->
+        <xs:element name="kontratDokumanBilgileri" type="dokumanBilgileriTipi" minOccurs="0" maxOccurs="unbounded" />
+        <!--cac:AdditionalDocumentReference-->
+        <xs:element name="ilaveDokuman" type="dokumanBilgileriTipi" minOccurs="0" maxOccurs="unbounded" />
+        <!--cac:AccountingSupplierParty-->
+        <xs:element name="satici" type="tarafBilgileriTipi" />
+        <!--cac:AccountingCustomerParty-->
+        <xs:element name="alici" type="tarafBilgileriTipi" />
+        <!--cac:BuyerCustomerParty-->
+        <xs:element name="hizmetiAlan" type="tarafBilgileriTipi" minOccurs="0" />
+        <!--cac:SellerSupplierParty-->
+        <xs:element name="hizmetiSaglayan" type="tarafBilgileriTipi" minOccurs="0" />
+        <!--cac:TaxRepresentativeParty-->
+        <xs:element name="vergiSorumlusu" type="tarafBilgileriTipi" minOccurs="0" />
+        <!--cac:Delivery-->
+        <xs:element name="gonderimSevkiyatTasimaBilgileri" type="gonderimSevkiyatTasimaBilgileriTipi" minOccurs="0" maxOccurs="unbounded" />
+        <!--cac:PaymentMeans-->
+        <xs:element name="odemeSekli" type="odemeSekliTipi" minOccurs="0" maxOccurs="unbounded" />
+        <!--cac:PaymentTerms-->
+        <xs:element name="odemeKosullari" type="odemeKosulTipi" minOccurs="0" />
+        <!--cac:AllowanceCharge-->
+        <xs:element name="iskontoArtirim" type="iskontoArtirimTipi" minOccurs="0" maxOccurs="unbounded" />
+        <!--TaxExchangeRate - cac:ExchangeRate-->
+        <xs:element name="vergiDovizKuru" type="dovizKuruTipi" minOccurs="0" />
+        <!--PricingExchangeRate - cac:ExchangeRate-->
+        <xs:element name="fiyatlandirmaDovizKuru" type="dovizKuruTipi" minOccurs="0" />
+        <!--PaymentExchangeRate - cac:ExchangeRate-->
+        <xs:element name="odemeDovizKuru" type="dovizKuruTipi" minOccurs="0" />
+        <!--PaymentAlternativeExchangeRate - cac:ExchangeRate-->
+        <xs:element name="alternatifOdemeDovizKuru" type="dovizKuruTipi" minOccurs="0" />
+        <!--cac:TaxTotal-->
+        <xs:element name="vergiler" type="vergilerTipi" maxOccurs="unbounded" />
+        <!--cbc:WithholingtaxTotal-->
+        <xs:element name="tevkifatlar" type="vergilerTipi" minOccurs="0" maxOccurs="unbounded" />
+        <!--cac:LegalMonateryTotal-->
+        <xs:element name="parasalToplamlar" type="parasalToplamlarTipi" />
+        <!--cac:InvoiceLine-->
+        <xs:element name="faturaSatir" type="faturaSatirTipi" maxOccurs="unbounded" />
+        <!--UBL KARSILIGI YOK - Ek bilgileri içeriyor-->
+        <xs:element name="ekBilgiler" type="ekBilgi" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!--DocumentReferenceType-->
+  <xs:complexType name="dokumanBilgileriTipi">
+    <xs:sequence>
+      <!--cbc:ID-->
+      <xs:element name="belgeNo" type="idTipi" />
+      <!--cbc:IssueDate-->
+      <xs:element name="belgeTarihi" type="tarihTipi" />
+      <!--cbc:DocumentTypeCode-->
+      <xs:element name="belgeTuruKodu" type="xs:string" minOccurs="0" />
+      <!--cbc:DocumentType-->
+      <xs:element name="belgeTuru" type="xs:string" minOccurs="0" />
+      <!--cbc:Documentdescription-->
+      <xs:element name="dokumanAciklamasi" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      <!--cbc:attachment-->
+      <xs:element name="ekliDosya" type="ekliDosyaTipi" minOccurs="0" />
+      <!--cac:ValidityPeriod-->
+      <xs:element name="gecerlilikDonemi" type="donemTipi" minOccurs="0" />
+      <!--cac:IssuerParty-->
+      <xs:element name="ilgiliTarafBilgileri" type="tarafBilgileriTipi" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--LineReferenceType-->
+  <xs:complexType name="satirReferansiTipi">
+    <xs:sequence>
+      <!--cbc:LineID-->
+      <xs:element name="kalemNumarasi" type="idTipi" />
+      <!--cbc:LineStatusCode-->
+      <xs:element name="kalemDurumu" type="xs:string" minOccurs="0" />
+      <!--cac:DocumentReference-->
+      <xs:element name="belgeBilgileri" type="dokumanBilgileriTipi" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--PartyType-->
+  <xs:complexType name="tarafBilgileriTipi">
+    <xs:sequence>
+      <!--cbc:WebSiteURI-->
+      <xs:element name="webSitesi" type="xs:string" minOccurs="0" />
+      <!--cbc:IndustryClassificationCode-->
+      <xs:element name="naceKodu" type="xs:string" minOccurs="0" />
+      <!--cac:PartyIdentification-->
+      <xs:element name="aliciSaticiTanimi" type="idTipi" maxOccurs="unbounded" />
+      <!--cac:PartyName-->
+      <xs:element name="unvan" type="xs:string" minOccurs="0" />
+      <!--cac:PostalAddress-->
+      <xs:element name="postaAdresi" type="adresTipi" />
+      <!--cac:PartyTaxScheme-->
+      <xs:element name="vergiDairesi" type="xs:string" minOccurs="0" />
+      <!--cac:PartyLegalEntity-->
+      <xs:element name="sicilBilgileri" type="sicilBilgileriTipi" minOccurs="0" maxOccurs="unbounded" />
+      <!--cac:Contact-->
+      <xs:element name="irtibatBilgileri" type="irtibatBilgileriTipi" minOccurs="0" />
+      <!--cac:Person-->
+      <xs:element name="kisibilgileri" type="kisiBilgileriTipi" minOccurs="0" />
+      <!--cac:AgentParty-->
+      <xs:element name="subeBilgileri" type="tarafBilgileriTipi" minOccurs="0" />
+      <!-- UBL'de INVOICE ICINDE KARSILIGI YOK sender/receiver identifier -->
+      <xs:element name="etiket" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!--OrderReferenceType-->
+  <xs:complexType name="siparisBilgileriTipi">
+    <xs:sequence>
+      <!--cbc:Id-->
+      <xs:element name="siparisNo" type="idTipi" />
+      <!--cbc:SalesOrderID-->
+      <xs:element name="saticiSiparisNo" type="idTipi" minOccurs="0" />
+      <!--cbc:IssueDate-->
+      <xs:element name="siparisTarihi" type="tarihTipi" />
+      <!--cbc:OrderTypeCode-->
+      <xs:element name="siparisTipi" type="xs:string" minOccurs="0" />
+      <!--cbc:DocumentReference-->
+      <xs:element name="siparisDokumani" type="dokumanBilgileriTipi" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--OrderLineReferenceType-->
+  <xs:complexType name="siparisKalemiReferansiTipi">
+    <xs:sequence>
+      <!--cbc:LineID-->
+      <xs:element name="kalemNumarasi" type="idTipi" />
+      <!--cbc:SalesOrderLineID-->
+      <xs:element name="saticiKalemNumarasi" type="idTipi" minOccurs="0" />
+      <!--cbc:UUID-->
+      <xs:element name="ETTN" type="xs:string" minOccurs="0" />
+      <!--cbc:LineStatusCode-->
+      <xs:element name="kalemDurumu" type="xs:string" minOccurs="0" />
+      <!--cac:OrderReference-->
+      <xs:element name="siparisBelgesi" type="siparisBilgileriTipi" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--BillingReferenceType-->
+  <xs:complexType name="faturaReferansBilgileriTipi">
+    <xs:sequence>
+      <!--cac:InvoiceDocumentReference-->
+      <xs:element name="ilgiliFatura" type="dokumanBilgileriTipi" minOccurs="0" />
+      <!--cac:SelfBilledInvoiceDocumentReference-->
+      <xs:element name="kendineFatura" type="dokumanBilgileriTipi" minOccurs="0" />
+      <!--cac:CreditNoteDocumentReference-->
+      <xs:element name="alacakDekontu" type="dokumanBilgileriTipi" minOccurs="0" />
+      <!--cac:SelfBilledCreditNoteDocumentReference-->
+      <xs:element name="kendineAlacakDekontu" type="dokumanBilgileriTipi" minOccurs="0" />
+      <!--cac:DebitNoteDocumentReference-->
+      <xs:element name="borcDekontu" type="dokumanBilgileriTipi" minOccurs="0" />
+      <!--cac:ReminderDocumentReference-->
+      <xs:element name="hatirlatmaBelgesi" type="dokumanBilgileriTipi" minOccurs="0" />
+      <!--cac:AdditionalDocumentReference-->
+      <xs:element name="KalemReferansi" type="faturaKalemReferansBilgileriTipi" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--BillingReferenceLineType-->
+  <xs:complexType name="faturaKalemReferansBilgileriTipi">
+    <xs:sequence>
+      <!--cbc:ID-->
+      <xs:element name="kalemNo" type="idTipi" />
+      <!--cbc:Amount-->
+      <xs:element name="tutar" type="tutarTipi" minOccurs="0" />
+      <!--cbc:AllowanceCharge-->
+      <xs:element name="iskontoArtirim" type="iskontoArtirimTipi" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--AllowanceChargeType-->
+  <xs:complexType name="iskontoArtirimTipi">
+    <xs:sequence>
+      <!--cbc:ChargeIndicator-->
+      <xs:element name="artirim" type="xs:boolean" />
+      <!--cbc:AllowanceChargeReason-->
+      <xs:element name="neden" type="xs:string" minOccurs="0" />
+      <!--cbc:MultiplierFactorNumeric-->
+      <xs:element name="oran" type="xs:decimal" minOccurs="0" />
+      <!--cbc:SequenceNumeric-->
+      <xs:element name="siraNumarasi" type="xs:decimal" minOccurs="0" />
+      <!--cbc:Amount-->
+      <xs:element name="tutar" type="tutarTipi" />
+      <!--cbc:BaseAmount-->
+      <xs:element name="uygulandigiTutar" type="tutarTipi" minOccurs="0" />
+      <!--cbc:PerUnitAmount-->
+      <xs:element name="uygulananUrunMiktari" type="tutarTipi" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--cac:PostalAddress-->
+  <xs:complexType name="adresTipi">
+    <xs:sequence>
+      <!--cbc:ID-->
+      <xs:element name="sabitTanimlamaNumarasi" type="idTipi" minOccurs="0" />
+      <!--cbc:PostalBox-->
+      <xs:element name="postaKutusu" type="xs:string" minOccurs="0" />
+      <!--cbc:Room-->
+      <xs:element name="kapiNo" type="xs:string" minOccurs="0" />
+      <!--cbc:StreetName-->
+      <xs:element name="caddeSokak" type="xs:string" minOccurs="0" />
+      <!--cbc:blockName-->
+      <xs:element name="blok" type="xs:string" minOccurs="0" />
+      <!--cbc:BuildingName-->
+      <xs:element name="binaAdi" type="xs:string" minOccurs="0" />
+      <!--cbc:BuildingNumber-->
+      <xs:element name="binaNo" type="xs:string" minOccurs="0" />
+      <!--cbc:CitySubdivisionName-->
+      <xs:element name="ilce" type="xs:string" />
+      <!--cbc:CityName-->
+      <xs:element name="sehir" type="xs:string" />
+      <!--cbc:PostalZone-->
+      <xs:element name="postaKodu" type="xs:string" minOccurs="0" />
+      <!--cbc:Region-->
+      <xs:element name="kasabaKoy" type="xs:string" minOccurs="0" />
+      <!--cbc:District-->
+      <xs:element name="mahalle" type="xs:string" minOccurs="0" />
+      <!--cac:Country-->
+      <xs:element name="ulke" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--cac:PartyLegalEntity-->
+  <xs:complexType name="sicilBilgileriTipi">
+    <xs:sequence>
+      <!--cbc:RegistrationName-->
+      <xs:element name="kayitAdi" type="xs:string" minOccurs="0" />
+      <!--cbc:CompanyID-->
+      <xs:element name="kayitNumarasi" type="idTipi" minOccurs="0" />
+      <!--cbc:RegistrationDate-->
+      <xs:element name="kayitTarihi" type="tarihTipi" minOccurs="0" />
+      <!--cbc:SoleProprietorshipIndicator-->
+      <xs:element name="tekKisiyeAit" type="xs:boolean" minOccurs="0" />
+      <!--cbc:CorporateStockAmount-->
+      <xs:element name="odenmisSermaye" type="tutarTipi" minOccurs="0" />
+      <!--cbc:FullyPaidSharesIndicator-->
+      <xs:element name="halkaAcik" type="xs:boolean" minOccurs="0" />
+      <!--cac:CorporateRegistrationScheme-->
+      <xs:element name="kurumBilgileri" type="kurumsalSicilSemasiTipi" minOccurs="0" />
+      <!--cac:HeadOfficeParty-->
+      <xs:element name="merkezBilgisi" type="tarafBilgileriTipi" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--CorporateRegistrationSchemeType-->
+  <xs:complexType name="kurumsalSicilSemasiTipi">
+    <xs:sequence>
+      <!--cbc:ID-->
+      <xs:element name="kayitYeriNumarasi" type="idTipi" minOccurs="0" />
+      <!--cbc:Name-->
+      <xs:element name="kayitYeriIsmi" type="xs:string" minOccurs="0" />
+      <!--cbc:CorporateRegistrationTypeCode-->
+      <xs:element name="kayitTipiKodu" type="xs:string" minOccurs="0" />
+      <!--cac:JurisdictionRegionAddress-->
+      <xs:element name="kayitYeriAdresi" type="adresTipi" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!--ContactType-->
+  <xs:complexType name="irtibatBilgileriTipi">
+    <xs:sequence>
+      <!--cbc:Telephone-->
+      <xs:element name="tel" type="xs:string" minOccurs="0" />
+      <!--cbc:Telefax-->
+      <xs:element name="fax" type="xs:string" minOccurs="0" />
+      <!--cbc:ElectronicMail-->
+      <xs:element name="eposta" type="xs:string" minOccurs="0" />
+      <!--cbc:Note-->
+      <xs:element name="not" type="xs:string" minOccurs="0" />
+      <!--cac:otherCommunication-->
+      <xs:element name="digerIrtibatKanaliBilgisi" type="irtibatKanaliBilgisiTipi" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--CommunicationType-->
+  <xs:complexType name="irtibatKanaliBilgisiTipi">
+    <xs:sequence>
+      <!--cbc:ChannelCode-->
+      <xs:element name="kanalKodu" type="xs:string" />
+      <!--cbc:Channel-->
+      <xs:element name="kanalAdi" type="xs:string" minOccurs="0" />
+      <!--cbc:Value-->
+      <xs:element name="irtibatAdresi" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--PersonType-->
+  <xs:complexType name="kisiBilgileriTipi">
+    <xs:sequence>
+      <!--cbc:FirstName-->
+      <xs:element name="adi" type="xs:string" />
+      <!--cbc:FamilyName-->
+      <xs:element name="soyadi" type="xs:string" />
+      <!--cbc:Title-->
+      <xs:element name="unvan" type="xs:string" minOccurs="0" />
+      <!--cbc:MiddleName-->
+      <xs:element name="gobekAdi" type="xs:string" minOccurs="0" />
+      <!--cbc:NameSuffix-->
+      <xs:element name="adOnEki" type="xs:string" minOccurs="0" />
+      <!--cbc:NationalityID-->
+      <xs:element name="uyruk" type="idTipi" minOccurs="0" />
+      <!--cac:FinancialAccount-->
+      <xs:element name="hesapBilgisi" type="hesapBilgileriTipi" minOccurs="0" />
+      <!--cac:IdentityDocumentReference-->
+      <xs:element name="kimlikDokumani" type="dokumanBilgileriTipi" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--FinancialAccountType-->
+  <xs:complexType name="hesapBilgileriTipi">
+    <xs:sequence>
+      <!--cbc:ID-->
+      <xs:element name="hesapNo" type="idTipi" />
+      <!--cbc:CurrencyCode-->
+      <xs:element name="hesapDovizBirimi" type="xs:string" minOccurs="0" />
+      <!--cbc:PaymentNote-->
+      <xs:element name="aciklama" type="xs:string" minOccurs="0" />
+      <!--cac:FinancialInstitutionBranch/cbc:Name-->
+      <xs:element name="sube" type="xs:string" minOccurs="0" />
+      <!--cac:FinancialInstitutionBranch/cac:FinancialInstitution-->
+      <xs:element name="banka" type="xs:string" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--AttachmentType-->
+  <xs:complexType name="ekliDosyaTipi">
+    <xs:sequence>
+      <!--cbc:EmbeddedDocumentBinaryObject-->
+      <xs:element name="gomulu" type="gomuluEkliDosyaTipi" minOccurs="0" />
+      <!--cac:ExternalReference-->
+      <xs:element name="referans" type="xs:string" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--EmbeddedDocumentBinaryObjectType-->
+  <xs:complexType name="gomuluEkliDosyaTipi">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <!--format-->
+        <xs:attribute name="format" type="xs:string" use="optional" />
+        <!--mimeCode-->
+        <xs:attribute name="mimeType" type="xs:string" use="required" />
+        <!--encodingCode-->
+        <xs:attribute name="encodingCode" type="xs:string" use="optional" />
+        <!--characterSetCode-->
+        <xs:attribute name="charactersetCode" type="xs:string" use="optional" />
+        <!--uri-->
+        <xs:attribute name="uri" type="xs:string" use="optional" />
+        <!--fileName-->
+        <xs:attribute name="fileName" type="xs:string" use="optional" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <!--DeliveryType-->
+  <xs:complexType name="gonderimSevkiyatTasimaBilgileriTipi">
+    <xs:sequence>
+      <!--cbc:ID-->
+      <xs:element name="id" type="idTipi" minOccurs="0" />
+      <!--cbc:Quantity-->
+      <xs:element name="urunMiktari" type="miktarTipi" minOccurs="0" />
+      <!--cbc:ActualDeliveryDate-->
+      <xs:element name="gerceklesenTeslimTarihi" type="tarihTipi" minOccurs="0" />
+      <!--cbc:ActualDeliveryTime-->
+      <xs:element name="gerceklesenTeslimZamani" type="zamanTipi" minOccurs="0" />
+      <!--cbc:LatestDeliveryDate-->
+      <xs:element name="sonTeslimTarihi" type="tarihTipi" minOccurs="0" />
+      <!--cbc:LatestDeliveryTime-->
+      <xs:element name="sonTeslimZamani" type="zamanTipi" minOccurs="0" />
+      <!--cbc:TrackingID-->
+      <xs:element name="takipNumarasi" type="idTipi" minOccurs="0" />
+      <!--cac:DeliveryAddress-->
+      <xs:element name="teslimatAdresi" type="adresTipi" minOccurs="0" />
+      <!--cac:AlternativeDeliveryLocation-->
+      <xs:element name="alternatifTeslimatLokasyonu" type="lokasyonTipi" minOccurs="0" />
+      <!--cac:EstimatedDeliveryPeriod-->
+      <xs:element name="tahminiTeslimatDonemi" type="donemTipi" minOccurs="0" />
+      <!--cac:CarrierParty-->
+      <xs:element name="tasiyiciTaraf" type="tarafBilgileriTipi" minOccurs="0" />
+      <!--cac:DeliveryParty-->
+      <xs:element name="teslimatYapilacakTaraf" type="tarafBilgileriTipi" minOccurs="0" />
+      <!--cac:Despatch-->
+      <xs:element name="gonderiBilgileri" type="gonderiBilgileriTipi" minOccurs="0" />
+      <!--cac:DeliveryTerms-->
+      <xs:element name="teslimatKosulari" type="teslimatKosullariTipi" minOccurs="0" maxOccurs="unbounded" />
+      <!--cac:Shipment-->
+      <xs:element name="kargoBilgileri" type="kargoBilgileriTipi" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--DespatchType-->
+  <xs:complexType name="gonderiBilgileriTipi">
+    <xs:sequence>
+      <!--cbc:ID-->
+      <xs:element name="id" type="idTipi" minOccurs="0" />
+      <!--cbc:ActualDespatchDate-->
+      <xs:element name="gerceklesenGonderimTarihi" type="tarihTipi" minOccurs="0" />
+      <!--cbc:ActualDespatchTime-->
+      <xs:element name="gerceklesenGonderimZamani" type="zamanTipi" minOccurs="0" />
+      <!--cbc:Instructions-->
+      <xs:element name="talimatlar" type="xs:string" minOccurs="0" />
+      <!--cac:DespatchAddress-->
+      <xs:element name="gonderimAdresi" type="adresTipi" minOccurs="0" />
+      <!--cac:DespatchParty-->
+      <xs:element name="teslimAlan" type="tarafBilgileriTipi" minOccurs="0" />
+      <!--cac:Contact-->
+      <xs:element name="teslimAlanIrtibatBilgileri" type="irtibatBilgileriTipi" minOccurs="0" />
+      <!--cac:EstimatedDespatchPeriod-->
+      <xs:element name="tahminiTeslimAlisDonemi" type="donemTipi" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--DeliveryTermsType-->
+  <xs:complexType name="teslimatKosullariTipi">
+    <xs:sequence>
+      <!--cbc:ID-->
+      <xs:element name="id" type="idTipi" minOccurs="0" />
+      <!--cbc:SpecialTerms-->
+      <xs:element name="kosul" type="xs:string" minOccurs="0" />
+      <!--cbc:Amount-->
+      <xs:element name="kapsananTutar" type="tutarTipi" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--ShipmentType-->
+  <xs:complexType name="kargoBilgileriTipi">
+    <xs:sequence>
+      <!--cbc:ID-->
+      <xs:element name="id" type="idTipi" />
+      <!--cbc:HandlingCode-->
+      <xs:element name="paketlenmeSekliKodu" type="xs:string" minOccurs="0" />
+      <!--cbc:HandlingInstructions-->
+      <xs:element name="paketlenmeSekliAciklamasi" type="xs:string" minOccurs="0" />
+      <!--cbc:GrossWeightMeasure-->
+      <xs:element name="brutAgirlik" type="miktarTipi" minOccurs="0" />
+      <!--cbc:NetWeightMeasure-->
+      <xs:element name="netAgirlik" type="miktarTipi" minOccurs="0" />
+      <!--cbc:GrossVolumeMeasure-->
+      <xs:element name="brutHacim" type="miktarTipi" minOccurs="0" />
+      <!--cbc:NetVolumeMeasure-->
+      <xs:element name="netHacim" type="miktarTipi" minOccurs="0" />
+      <!--cbc:TotalGoodsItemQuantity-->
+      <xs:element name="toplamMalMiktari" type="miktarTipi" minOccurs="0" />
+      <!--cbc:TotalTransportHandlingUnitQuantity-->
+      <xs:element name="toplamTasimaUnitesiMiktari" type="miktarTipi" minOccurs="0" />
+      <!--cbc:InsuranceValueAmount-->
+      <xs:element name="sigortaTutari" type="tutarTipi" minOccurs="0" />
+      <!--cbc:DeclaredCustomsValueAmount-->
+      <xs:element name="beyanEdilenGumrukDegeri" type="tutarTipi" minOccurs="0" />
+      <!--cbc:DeclaredForCarriageValueAmount-->
+      <xs:element name="beyanEdilenTasimaUcreti" type="tutarTipi" minOccurs="0" />
+      <!--cbc:DeclaredStatisticsValueAmount-->
+      <xs:element name="GTIPKiymetDegeri" type="tutarTipi" minOccurs="0" />
+      <!--cbc:FreeOnBoardValueAmount-->
+      <xs:element name="FOBDegeri" type="tutarTipi" minOccurs="0" />
+      <!--cbc:SpecialInstructions-->
+      <xs:element name="ozelTalimatlar" type="xs:string" minOccurs="0" maxOccurs="unbounded" />	  
+	  <!--cac:GoodsItem-->
+      <xs:element name="tasinanMalBilgileri" type="tasinanMalBilgileriTipi" minOccurs="0" maxOccurs="unbounded" />
+	  <!--cac:ShipmentStage-->
+	  <xs:element name="gonderiFazlari" type="gonderiFazlariTipi" minOccurs="0" maxOccurs="unbounded" />	  	  
+      <!--cac:TransportHandlingUnit-->
+      <xs:element name="tasimaUnitesiBilgileri" type="tasimaUnitesiBilgileriTipi" minOccurs="0" maxOccurs="unbounded" />
+      <!--cac:ReturnAddress-->
+      <xs:element name="geriIadeAdresi" type="adresTipi" minOccurs="0" />
+      <!--cac:FirstArrivalPortLocation-->
+      <xs:element name="ilkUlasimLimani" type="lokasyonTipi" minOccurs="0" />
+      <!--cac:LastExitPortLocation-->
+      <xs:element name="sonUlasimLimani" type="lokasyonTipi" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType> 
+  <!--ShipmentStageType-->
+  <xs:complexType name="gonderiFazlariTipi">
+	<xs:sequence>
+		<!--cbc:ID-->
+		<xs:element name="id" type="idTipi" minOccurs="0" />
+		<!--cbc:TransportModeCode-->
+		<xs:element name="tasimaModu" type="xs:string" minOccurs="0" />
+		<!--cbc:TransportMeansTypeCode-->
+		<xs:element name="tasimaAracKodu" type="xs:string" minOccurs="0" />
+		<!--cbc:TransitDirectionCode-->
+		<xs:element name="tasimaGuzergahKodu" type="xs:string" minOccurs="0" />
+		<!--cbc:Instructions-->
+		<xs:element name="detayBilgiler" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+		<!--cbc:TransitPeriod-->
+		<xs:element name="gerceklesmeZamani" type="donemTipi" minOccurs="0" />
+		<!--cac:TransportMeans-->
+		<xs:element name="vasitaDetayBilgileri" type="tasimaSekliBilgileriTipi" minOccurs="0" />
+		<!--cac:DriverPerson-->
+		<xs:element name="soforBilgileri" type="kisiBilgileriTipi" minOccurs="0" maxOccurs="unbounded"/>				
+	</xs:sequence>
+  </xs:complexType>  
+  <!--TransportHandlingUnitType-->
+  <xs:complexType name="tasimaUnitesiBilgileriTipi">
+    <xs:sequence>
+      <!--cbc:ID-->
+      <xs:element name="id" type="idTipi" minOccurs="0" />
+      <!--cbc:TransportHandlingUnitTypeCode-->
+      <xs:element name="tipKodu" type="xs:string" minOccurs="0" />
+      <!--cbc:HandlingCode-->
+      <xs:element name="paketlenmeSekliKodu" type="xs:string" minOccurs="0" />
+      <!--cbc:HandlingInstructions-->
+      <xs:element name="paketlenmeSekliAciklamasi" type="xs:string" minOccurs="0" />
+      <!--cbc:HazardousRiskIndicator-->
+      <xs:element name="tehlikeliMadde" type="xs:boolean" minOccurs="0" />
+      <!--cbc:TotalGoodsItemQuantity-->
+      <xs:element name="urunMiktari" type="miktarTipi" minOccurs="0" />
+      <!--cbc:TotalPackageQuantity-->
+      <xs:element name="paketMiktari" type="miktarTipi" minOccurs="0" />
+      <!--cbc:DamageRemarks-->
+      <xs:element name="zararBilgisi" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      <!--cbc:TraceID-->
+      <xs:element name="takipNumarasi" type="idTipi" minOccurs="0" />
+      <!--cac:ActualPackage-->
+      <xs:element name="paketBilgileri" type="paketBilgileriTipi" minOccurs="0" maxOccurs="unbounded" />
+      <!--cac:TransportEquipment-->
+      <xs:element name="tasimaEkipmani" type="tasimaEkipmaniTipi" minOccurs="0" maxOccurs="unbounded" />
+      <!--cac:TransportMeans-->
+      <xs:element name="tasimaSekliBilgileri" type="tasimaSekliBilgileriTipi" minOccurs="0" maxOccurs="unbounded" />
+      <!--cac:HazardousGoodsTransit-->
+      <xs:element name="tehlikeliMaddeBilgileri" type="tehlikeliMaddeBilgileriTipi" minOccurs="0" maxOccurs="unbounded" />
+      <!--cac:MeasurementDimension-->
+      <xs:element name="olcu" type="boyutTipi" minOccurs="0" maxOccurs="unbounded" />
+      <!--cac:MinimumTemperature-->
+      <xs:element name="minimumSicaklik" type="sicaklikBilgileriTipi" minOccurs="0" />
+      <!--cac:MaximumTemperature-->
+      <xs:element name="maksimumSicaklik" type="sicaklikBilgileriTipi" minOccurs="0" />
+      <!--cac:FloorSpaceMeasurementDimension-->
+      <xs:element name="yerdeKaplananAlan" type="boyutTipi" minOccurs="0" />
+      <!--cac:PalletSpaceMeasurementDimension-->
+      <xs:element name="paletteKaplananAlan" type="boyutTipi" minOccurs="0" />
+      <!--cac:ShipmentDocumentReference-->
+      <xs:element name="gonderiBelgesi" type="dokumanBilgileriTipi" minOccurs="0" maxOccurs="unbounded" />
+      <!--cac:CustomsDeclaration-->
+      <xs:element name="gumrukNumaralandirmaBilgileri" type="gumrukNumaralandirmaBilgileriTipi" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--CustomsDeclarationType-->
+  <xs:complexType name="gumrukNumaralandirmaBilgileriTipi">
+    <xs:sequence>
+      <!--cbc:ID-->
+      <xs:element name="gumrukNumarasi" type="idTipi" />
+      <!--cac:IssuerParty-->
+      <xs:element name="kurum" type="tarafBilgileriTipi" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!--PackageType-->
+  <xs:complexType name="paketBilgileriTipi">
+    <xs:sequence>
+      <!--cbc:ID-->
+      <xs:element name="id" type="idTipi" minOccurs="0" />
+      <!--cbc:Quantity-->
+      <xs:element name="paketAdeti" type="miktarTipi" minOccurs="0" />
+      <!--cbc:ReturnableMaterialIndicator-->
+      <xs:element name="paketGeriDonusumlu" type="xs:boolean" minOccurs="0" />
+      <!--cbc:PackageLevelCode-->
+      <xs:element name="paketlemeSeviyesi" type="xs:string" minOccurs="0" />
+      <!--cbc:PackagingTypeCode-->
+      <xs:element name="paketlemeTipi" type="xs:string" minOccurs="0" />
+      <!--cbc:PackingMaterial-->
+      <xs:element name="paketlemeMateryali" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      <!--cac:ContainedPackage-->
+      <xs:element name="icerilenPaketBilgileri" type="paketBilgileriTipi" minOccurs="0" maxOccurs="unbounded" />
+      <!--cac:GoodsItem-->
+      <xs:element name="icerilenUrunBilgileri" type="tasinanMalBilgileriTipi" minOccurs="0" maxOccurs="unbounded" />
+      <!--cac:MeasurementDimension-->
+      <xs:element name="paketBoyutlari" type="boyutTipi" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--GoodsItemType-->
+  <xs:complexType name="tasinanMalBilgileriTipi">
+    <xs:sequence>
+      <!--cbc:ID-->
+      <xs:element name="id" type="idTipi" minOccurs="0" />
+      <!--cbc:Description-->
+      <xs:element name="aciklama" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      <!--cbc:HazardousRiskIndicator-->
+      <xs:element name="tehlikeliMadde" type="xs:boolean" minOccurs="0" />
+      <!--cbc:DeclaredCustomsValueAmount-->
+      <xs:element name="gumrukDegeri" type="tutarTipi" minOccurs="0" />
+      <!--cbc:DeclaredForCarriageValueAmount-->
+      <xs:element name="nakliyeTutari" type="tutarTipi" minOccurs="0" />
+      <!--cbc:DeclaredStatisticsValueAmount-->
+      <xs:element name="GTIPKiymetDegeri" type="tutarTipi" minOccurs="0" />
+      <!--cbc:FreeOnBoardValueAmount-->
+      <xs:element name="FOBDegeri" type="tutarTipi" minOccurs="0" />
+      <!--cbc:InsuranceValueAmount-->
+      <xs:element name="sigortaTutari" type="tutarTipi" minOccurs="0" />
+      <!--cbc:ValueAmount-->
+      <xs:element name="urunDegeri" type="tutarTipi" minOccurs="0" />
+      <!--cbc:GrossWeightMeasure-->
+      <xs:element name="brutAgirlik" type="miktarTipi" minOccurs="0" />
+      <!--cbc:NetWeightMeasure-->
+      <xs:element name="netAgirlik" type="miktarTipi" minOccurs="0" />
+      <!--cbc:ChargeableWeightMeasure-->
+      <xs:element name="ucretlendirilebilirBrutAgirlik" type="miktarTipi" minOccurs="0" />
+      <!--cbc:GrossVolumeMeasure-->
+      <xs:element name="brutHacim" type="miktarTipi" minOccurs="0" />
+      <!--cbc:NetVolumeMeasure-->
+      <xs:element name="netHacim" type="miktarTipi" minOccurs="0" />
+      <!--cbc:Quantity-->
+      <xs:element name="miktar" type="miktarTipi" minOccurs="0" />
+      <!--cbc:RequiredCustomsID-->
+      <xs:element name="GTIPNumarasi" type="idTipi" minOccurs="0" />
+      <!--cbc:CustomsStatusCode-->
+      <xs:element name="gumrukDurumKodu" type="xs:string" minOccurs="0" />
+      <!--cbc:CustomsTariffQuantity-->
+      <xs:element name="gumrukMalMiktari" type="miktarTipi" minOccurs="0" />
+      <!--cbc:CustomsImportClassifiedIndicator-->
+      <xs:element name="ithalatIcinSiniflandirilmis" type="xs:boolean" minOccurs="0" />
+      <!--cbc:ChargeableQuantity-->
+      <xs:element name="ucretlendirilebilirMiktar" type="miktarTipi" minOccurs="0" />
+      <!--cbc:ReturnableQuantity-->
+      <xs:element name="iadeEdilebilirMiktar" type="miktarTipi" minOccurs="0" />
+      <!--cbc:TraceID-->
+      <xs:element name="takipNumarasi" type="idTipi" minOccurs="0" />
+      <!--cac:Item-->
+      <xs:element name="malHizmetBilgileri" type="malHizmetBilgileriTipi" minOccurs="0" maxOccurs="unbounded" />
+      <!--cac:FreightAllowanceCharge-->
+      <xs:element name="tasimaBedeliIskontoArtirimi" type="iskontoArtirimTipi" minOccurs="0" maxOccurs="unbounded" />
+      <!--cac:Temperature-->
+      <xs:element name="sevkiyatSicaklikBilgileri" type="sicaklikBilgileriTipi" minOccurs="0" maxOccurs="unbounded" />
+      <!--cac:OriginAddress-->
+      <xs:element name="uretimAdresi" type="adresTipi" minOccurs="0" />
+      <!--cac:MeasurementDimension-->
+      <xs:element name="digerOlcumler" type="boyutTipi" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--HazardousGoodsTransitType-->
+  <xs:complexType name="tehlikeliMaddeBilgileriTipi">
+    <xs:sequence>
+      <!--cbc:TransportEmergencyCardCode-->
+      <xs:element name="acilDurumMudahaleKodu" type="xs:string" minOccurs="0" />
+      <!--cbc:PackingCriteriaCode-->
+      <xs:element name="paketlemeKriteriKodu" type="xs:string" minOccurs="0" />
+      <!--cbc:HazardousRegulationCode-->
+      <xs:element name="tasimaKuralKodu" type="xs:string" minOccurs="0" />
+      <!--cbc:InhalationToxicityZoneCode-->
+      <xs:element name="solumaToksisitesiBolgesiKodu" type="xs:string" minOccurs="0" />
+      <!--cbc:TransportAuthorizationCode-->
+      <xs:element name="tasimaYetkiKodu" type="xs:string" minOccurs="0" />
+      <!--cac:MaximumTemperature-->
+      <xs:element name="minimumSicaklik" type="sicaklikBilgileriTipi" minOccurs="0" />
+      <!--cac:MinimumTemperature-->
+      <xs:element name="maksimumSicaklik" type="sicaklikBilgileriTipi" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--InvoiceLineType-->
+  <xs:complexType name="faturaSatirTipi">
+    <xs:sequence>
+      <!--cbc:ID-->
+      <xs:element name="siraNo" type="idTipi" />
+      <!--cbc:Note-->
+      <xs:element name="not" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      <!--cbc:InvoicedQuantity-->
+      <xs:element name="miktar" type="miktarTipi" />
+      <!--cbc:LineExtensionAmount-->
+      <xs:element name="malHizmetMiktari" type="tutarTipi" />
+      <!--cac:OrderLineReference-->
+      <xs:element name="siparisKalemiReferansi" type="siparisKalemiReferansiTipi" minOccurs="0" maxOccurs="unbounded" />
+      <!--cac:DespatchLineReference-->
+      <xs:element name="irsaliyeKalemiReferansi" type="satirReferansiTipi" minOccurs="0" maxOccurs="unbounded" />
+      <!--cac:ReceiptLineReference-->
+      <xs:element name="malKabulKalemiReferansi" type="satirReferansiTipi" minOccurs="0" maxOccurs="unbounded" />
+      <!--cac:Delivery-->
+      <xs:element name="gonderimSevkiyatTasimaBilgileri" type="gonderimSevkiyatTasimaBilgileriTipi" minOccurs="0" maxOccurs="unbounded" />
+      <!--cac:AllowanceCharge-->
+      <xs:element name="iskontoArtirim" type="iskontoArtirimTipi" minOccurs="0" maxOccurs="unbounded" />
+      <!--cac:TaxTotal-->
+      <xs:element name="vergiler" type="vergilerTipi" minOccurs="0" />
+      <!--cac:WithholdingTaxTotal-->
+      <xs:element name="tevkifatlar" type="vergilerTipi" minOccurs="0" maxOccurs="unbounded" />
+      <!--cac:Item-->
+      <xs:element name="malHizmetBilgileri" type="malHizmetBilgileriTipi" />
+      <!--cac:Price-->
+      <xs:element name="birimFiyat" type="tutarTipi" />
+      <!--cac:SubInvoiceLine-->
+      <xs:element name="altFaturaSatiri" type="faturaSatirTipi" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--ItemType-->
+  <xs:complexType name="malHizmetBilgileriTipi">
+    <xs:sequence>
+      <!--cbc:Description-->
+      <xs:element name="aciklama" type="xs:string" minOccurs="0" />
+      <!--cbc:Name-->
+      <xs:element name="adi" type="xs:string" />
+      <!--cbc:Keyword-->
+      <xs:element name="anahtarKelime" type="xs:string" minOccurs="0" />
+      <!--cbc:BrandName-->
+      <xs:element name="markaAdi" type="xs:string" minOccurs="0" />
+      <!--cbc:ModelName-->
+      <xs:element name="modelAdi" type="xs:string" minOccurs="0" />
+      <!--cac:BuyersItemIdentification-->
+      <xs:element name="aliciUrunKodu" type="idTipi" minOccurs="0" />
+      <!--cac:SellersItemIdentification-->
+      <xs:element name="saticiUrunKodu" type="idTipi" minOccurs="0" />
+      <!--cac:ManufacturersItemIdentification-->
+      <xs:element name="ureticiUrunKodu" type="idTipi" minOccurs="0" />
+      <!--cac:AdditionalItemIdentification-->
+      <xs:element name="alternatifUrunKodu" type="idTipi" minOccurs="0" maxOccurs="unbounded" />
+      <!--cac:CommodityClassification-->
+      <xs:element name="emtiaSiniflandirmaBilgisi" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      <!--cac:ItemInstance-->
+      <xs:element name="kalemAyrintilari" type="kalemAyrintilariTipi" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--ItemInstanceType-->
+  <xs:complexType name="kalemAyrintilariTipi">
+    <xs:sequence>
+      <!--cbc:ProductTraceID-->
+      <xs:element name="urunTakipNo" type="idTipi" minOccurs="0" />
+      <!--cbc:ManufactureDate-->
+      <xs:element name="uretimTarihi" type="tarihTipi" minOccurs="0" />
+      <!--cbc:ManufactureTime-->
+      <xs:element name="uretimZamani" type="zamanTipi" minOccurs="0" />
+      <!--cbc:BestBeforeDate-->
+      <xs:element name="sonTuketimTarihi" type="tarihTipi" minOccurs="0" />
+      <!--cbc:RegistrationID-->
+      <xs:element name="kayitNumarasi" type="idTipi" minOccurs="0" />
+      <!--cbc:SerialID-->
+      <xs:element name="seriNumarasi" type="idTipi" minOccurs="0" />
+      <!--cac:AdditionalItemProperty-->
+      <xs:element name="alternatifKalemAyrintisi" type="alternatifKalemBilgileriTipi" minOccurs="0" maxOccurs="unbounded" />
+      <!--cac:LotIdentification-->
+      <xs:element name="lotBilgileri" type="lotBilgileriTipi" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--ItemPropertyType-->
+  <xs:complexType name="alternatifKalemBilgileriTipi">
+    <xs:sequence>
+      <!--cbc:ID-->
+      <xs:element name="id" type="idTipi" minOccurs="0" />
+      <!--cbc:Name-->
+      <xs:element name="adi" type="xs:string" />
+      <!--cbc:NameCode-->
+      <xs:element name="kodu" type="xs:string" minOccurs="0" />
+      <!--cbc:TestMethod-->
+      <xs:element name="testMetodu" type="xs:string" minOccurs="0" />
+      <!--cbc:Value-->
+      <xs:element name="deger" type="xs:string" minOccurs="0" />
+      <!--cbc:ValueQuantity-->
+      <xs:element name="degerMiktari" type="miktarTipi" minOccurs="0" />
+      <!--cbc:ValueQualifier-->
+      <xs:element name="degerNiteleyici" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      <!--cbc:ImportanceCode-->
+      <xs:element name="onemKodu" type="xs:string" minOccurs="0" />
+      <!--cbc:ListValue-->
+      <xs:element name="listeDegeri" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      <!--cac:UsabilityPeriod-->
+      <xs:element name="kullanilabilirlikDonemi" type="donemTipi" minOccurs="0" />
+      <!--cac:ItemPropertyGroup-->
+      <xs:element name="kalemOzelligiGrubu" type="kalemOzelligiGrubuTipi" minOccurs="0" maxOccurs="unbounded" />
+      <!--cac:RangeDimension-->
+      <xs:element name="boyutAraligi" type="boyutTipi" minOccurs="0" />
+      <!--cac:ItemPropertyRange-->
+      <xs:element name="degerAraligi" type="degerAraligiTipi" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--TransportEquipmentType-->
+  <xs:complexType name="tasimaEkipmaniTipi">
+    <xs:sequence>
+      <!--cbc:ID-->
+      <xs:element name="id" type="idTipi" minOccurs="0" />
+      <!--cbc:TransportEquipmentTypeCode-->
+      <xs:element name="ekipmanKodu" type="xs:string" minOccurs="0" />
+      <!--cbc:Description-->
+      <xs:element name="aciklama" type="xs:string" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--StowageType-->
+  <xs:complexType name="istiflemeBilgileriTipi">
+    <xs:sequence>
+      <!--cbc:LocationID-->
+      <xs:element name="lokasyonId" type="idTipi" minOccurs="0" />
+      <!--cbc:Location-->
+      <xs:element name="lokasyon" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      <!--cac:MeasurementDimension-->
+      <xs:element name="istifYeriOlculeri" type="boyutTipi" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--TransportMeansType-->
+  <xs:complexType name="tasimaSekliBilgileriTipi">
+    <xs:sequence>
+      <!--cbc:JourneyID-->
+      <xs:element name="seferNumarasi" type="idTipi" minOccurs="0" />
+      <!--cbc:RegistrationNationalityID-->
+      <xs:element name="kayitliUlkeKodu" type="idTipi" minOccurs="0" />
+      <!--cbc:RegistrationNationality-->
+      <xs:element name="kayitliUlkeAdi" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      <!--cbc:DirectionCode-->
+      <xs:element name="yon" type="xs:string" minOccurs="0" />
+      <!--cbc:TransportMeansTypeCode-->
+      <xs:element name="tasimaSekliKodu" type="xs:string" minOccurs="0" />
+      <!--cbc:TradeServiceCode-->
+      <xs:element name="ticaretServisiKodu" type="xs:string" minOccurs="0" />
+      <!--cac:Stowage-->
+      <xs:element name="istiflemeBilgileri" type="istiflemeBilgileriTipi" minOccurs="0" />
+      <!--cac:AirTransport/cbc:AircraftID-->
+      <xs:element name="ucakNumarasi" type="idTipi" minOccurs="0" />
+      <!--cac:RoadTransport/cbc:LicensePlateID-->
+      <xs:element name="plakaNumarasi" type="idTipi" minOccurs="0" />
+      <!--cac:RailTransport/cbc:TrainID-->
+      <xs:element name="trenNumarasi" type="idTipi" minOccurs="0" />
+      <!--cac:RailTransport/cbc:railCarID-->
+      <xs:element name="trenVagonNumarasi" type="idTipi" minOccurs="0" />
+      <!--cac:MaritimeTransport-->
+      <xs:element name="gemiBilgileri" type="denizTasimaciligiBilgileriTipi" minOccurs="0" />
+      <!--cac:OwnerParty-->
+      <xs:element name="aracSahibi" type="tarafBilgileriTipi" minOccurs="0" />
+      <!--cac:DriverParty-->
+      <xs:element name="surucu" type="tarafBilgileriTipi" minOccurs="0" maxOccurs="unbounded" />
+      <!--cac:PassengerParty-->
+      <xs:element name="yolcu" type="tarafBilgileriTipi" minOccurs="0" maxOccurs="unbounded" />
+      <!--cac:ReportingParty-->
+      <xs:element name="raportor" type="tarafBilgileriTipi" minOccurs="0" />
+      <!--cac:MeasurementDimension-->
+      <xs:element name="olcumBilgileri" type="boyutTipi" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--MaritimeTransportType-->
+  <xs:complexType name="denizTasimaciligiBilgileriTipi">
+    <xs:sequence>
+      <!--cbc:VesselID-->
+      <xs:element name="gemiNumarasi" type="idTipi" minOccurs="0" />
+      <!--cbc:VesselName-->
+      <xs:element name="gemiAdi" type="xs:string" minOccurs="0" />
+      <!--cbc:RadioCallSignID-->
+      <xs:element name="gemiRadyoCagriAdi" type="idTipi" minOccurs="0" />
+      <!--cbc:ShipsRequirements-->
+      <xs:element name="gemiGereksinimleri" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      <!--cbc:GrossTonnageMeasure-->
+      <xs:element name="grosTonaj" type="miktarTipi" minOccurs="0" />
+      <!--cbc:NetTonnageMeasure-->
+      <xs:element name="netTonaj" type="miktarTipi" minOccurs="0" />
+      <!--cac:RegistryCertificateDocumentReference-->
+      <xs:element name="kayitDokumaniBilgileri" type="dokumanBilgileriTipi" minOccurs="0" />
+      <!--cac:RegistryPortLocation-->
+      <xs:element name="kayitLimani" type="lokasyonTipi" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--DimensionType-->
+  <xs:complexType name="boyutTipi">
+    <xs:sequence>
+      <!--cbc:AttributeID-->
+      <xs:element name="olculenBoyut" type="idTipi" />
+      <!--cbc:Measure-->
+      <xs:element name="olcum" type="miktarTipi" minOccurs="0" />
+      <!--cbc:Description-->
+      <xs:element name="aciklama" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      <!--cbc:MinimumMeasure-->
+      <xs:element name="minimumOlcu" type="miktarTipi" minOccurs="0" />
+      <!--cbc:MaximumMeasure-->
+      <xs:element name="maksimumOlcu" type="miktarTipi" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--ItemPropertyRangeType-->
+  <xs:complexType name="degerAraligiTipi">
+    <xs:sequence>
+      <!--cbc:MinimumValue-->
+      <xs:element name="minimumDeger" type="xs:string" minOccurs="0" />
+      <!--cbc:MaximumValue-->
+      <xs:element name="maksimumDeger" type="xs:string" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--ItemPropertyGroupType-->
+  <xs:complexType name="kalemOzelligiGrubuTipi">
+    <xs:sequence>
+      <!--cbc:ID-->
+      <xs:element name="id" type="idTipi" />
+      <!--cbc:Name-->
+      <xs:element name="adi" type="xs:string" minOccurs="0" />
+      <!--cbc:ImportanceCode-->
+      <xs:element name="onemKodu" type="xs:string" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--LotIdentificationType-->
+  <xs:complexType name="lotBilgileriTipi">
+    <xs:sequence>
+      <!--cbc:LotNumberID-->
+      <xs:element name="lotNumarasi" type="idTipi" minOccurs="0" />
+      <!--cbc:ExpiryDate-->
+      <xs:element name="sonKullanimTarihi" type="tarihTipi" minOccurs="0" />
+      <!--cac:AdditionalItemProperty-->
+      <xs:element name="alternatifKalemBilgileri" type="alternatifKalemBilgileriTipi" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--PaymentMeansType-->
+  <xs:complexType name="odemeSekliTipi">
+    <xs:sequence>
+      <!--cbc:PaymentMeansCode-->
+      <xs:element name="kod" type="xs:string" />
+      <!--cbc:PaymentDueDate-->
+      <xs:element name="odemeTarihi" type="tarihTipi" minOccurs="0" />
+      <!--cbc:PaymentChannelCode-->
+      <xs:element name="odemeKanali" type="xs:string" minOccurs="0" />
+      <!--cbc:InstructionNote-->
+      <xs:element name="not" type="xs:string" minOccurs="0" />
+      <!--cac:PayerFinancialAccount-->
+      <xs:element name="odeyenHesapBilgileri" type="hesapBilgileriTipi" minOccurs="0" />
+      <!--cac:PayeeFinancialAccount-->
+      <xs:element name="aliciHesapBilgileri" type="hesapBilgileriTipi" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--PaymentTermsType-->
+  <xs:complexType name="odemeKosulTipi">
+    <xs:sequence>
+      <!--cbc:Note-->
+      <xs:element name="not" type="xs:string" minOccurs="0" />
+      <!--cbc:PenaltySurchargePercent-->
+      <xs:element name="gecikmeZamYuzdesi" type="xs:decimal" minOccurs="0" />
+      <!--cbc:Amount-->
+      <xs:element name="tutar" type="tutarTipi" minOccurs="0" />
+      <!--cbc:PenaltyAmount-->
+      <xs:element name="gecikmeCezaTutari" type="tutarTipi" minOccurs="0" />
+      <!--cbc:PaymentDueDate-->
+      <xs:element name="sonOdemeTarihi" type="tarihTipi" minOccurs="0" />
+      <!--cac:SettlementPeriod-->
+      <xs:element name="odemeDonemi" type="donemTipi" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--ExchangeRateType-->
+  <xs:complexType name="dovizKuruTipi">
+    <xs:sequence>
+      <!--cbc:Source-->
+      <xs:element name="kaynak" type="xs:string" />
+      <!--cbc:target-->
+      <xs:element name="hedef" type="xs:string" />
+      <!--cbc:CalculationRate-->
+      <xs:element name="kur" type="xs:decimal" />
+      <!--cbc:Date-->
+      <xs:element name="tarih" type="tarihTipi" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--TaxTotalType-->
+  <xs:complexType name="vergilerTipi">
+    <xs:sequence>
+      <!--cbc:TaxAmount-->
+      <xs:element name="toplamVergiTutari" type="tutarTipi" />
+      <!--cac:TaxSubtotal-->
+      <xs:element name="vergi" type="vergiTipi" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--TaxSubtotalType-->
+  <xs:complexType name="vergiTipi">
+    <xs:sequence>
+      <!--cbc:TaxableAmount-->
+      <xs:element name="matrah" type="tutarTipi" minOccurs="0" />
+      <!--cbc:TaxAmount-->
+      <xs:element name="vergiTutari" type="tutarTipi" />
+      <!--cbc:CalculationSequenceNumeric-->
+      <xs:element name="sira" type="xs:decimal" minOccurs="0" />
+      <!--cbc:TransactionCurrencyTaxAmount-->
+      <xs:element name="belgeParaBilirmiVergiTutari" type="tutarTipi" minOccurs="0" />
+      <!--cbc:Percent-->
+      <xs:element name="oran" type="xs:decimal" minOccurs="0" />
+      <!--cbc:BaseUnitMeasure-->
+      <xs:element name="miktarTarifeBilgisi" type="miktarTipi" minOccurs="0" />
+      <!--cbc:PerUnitAmount-->
+      <xs:element name="tutarTarifeBilgisi" type="tutarTipi" minOccurs="0" />
+      <!--cac:TaxCategory-->
+      <xs:element name="vergiTuru" type="vergiTuruTipi" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--TaxCategoryType-->
+  <xs:complexType name="vergiTuruTipi">
+    <xs:sequence>
+      <!--cbc:Name-->
+      <xs:element name="vergiTuruAdi" type="xs:string" minOccurs="0" />
+      <!--cbc:TaxExemptionReasonCode-->
+      <xs:element name="muafiyetSebebiKodu" type="xs:string" minOccurs="0" />
+      <!--cbc:TaxExemptionReason-->
+      <xs:element name="muafiyetSebebi" type="xs:string" minOccurs="0" />
+      <!--cac:TaxScheme/cbc:Name - Vergi adı-->
+      <xs:element name="vergiAdi" type="xs:string" minOccurs="0" />
+      <!--cac:TaxScheme/cbc:TaxTypeCode - vergi kodu-->
+      <xs:element name="vergikodu" type="xs:string" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--MonetaryTotalType-->
+  <xs:complexType name="parasalToplamlarTipi">
+    <xs:sequence>
+      <!--cbc:LineExtensionAmount-->
+      <xs:element name="toplamMalHizmetTutari" type="tutarTipi" />
+      <!--cbc:TaxExclusiveAmount-->
+      <xs:element name="vergiHaricTutar" type="tutarTipi" />
+      <!--cbc:TaxInclusiveAmount-->
+      <xs:element name="vergiDahilTutar" type="tutarTipi" />
+      <!--cbc:AllowanceTotalAmount-->
+      <xs:element name="toplamIskontoTutari" type="tutarTipi" minOccurs="0" />
+      <!--cbc:ChargeTotalAmount-->
+      <xs:element name="toplamArtirimTutari" type="tutarTipi" minOccurs="0" />
+      <!--cbc:PayableRoundingAmount-->
+      <xs:element name="yuvarlamaTutari" type="tutarTipi" minOccurs="0" />
+      <!--cbc:PayableAmount-->
+      <xs:element name="odenecekTutar" type="tutarTipi" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--LocationType-->
+  <xs:complexType name="lokasyonTipi">
+    <xs:sequence>
+      <!--cbc:ID-->
+      <xs:element name="id" type="idTipi" minOccurs="0" />
+      <!--cac:Address-->
+      <xs:element name="adres" type="adresTipi" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!--Period-->
+  <xs:complexType name="donemTipi">
+    <xs:sequence>
+      <!--cbc:startDate-->
+      <xs:element name="baslangicTarihi" type="tarihTipi" minOccurs="0" />
+      <!--cbc:StartTime-->
+      <xs:element name="baslangicZamani" type="zamanTipi" minOccurs="0" />
+      <!--cbc:endDate-->
+      <xs:element name="bitisTarihi" type="tarihTipi" minOccurs="0" />
+      <!--cbc:ENDTime-->
+      <xs:element name="bitisZamani" type="zamanTipi" minOccurs="0" />
+      <!--cbc:DurationMeasure-->
+      <xs:element name="donemSuresi" type="donemAraligiTipi" minOccurs="0" />
+      <!--cbc:Description-->
+      <xs:element name="aciklama" type="xs:string" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <!--TemperatureType-->
+  <xs:complexType name="sicaklikBilgileriTipi">
+    <xs:sequence>
+      <!--cbc:AttributeID-->
+      <xs:element name="sicaklikNitelikNumarasi" type="idTipi" />
+      <!--cbc:Measure-->
+      <xs:element name="olcum" type="miktarTipi" />
+      <!--cbc:Description-->
+      <xs:element name="aciklama" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="donemAraligiTipi">
+    <xs:simpleContent>
+      <!--Value-->
+      <xs:extension base="xs:decimal">
+        <!--unitCode-->
+        <xs:attribute name="birim" type="xs:string" use="required" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <!--DateType-->
+  <xs:simpleType name="tarihTipi">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{4}-[0-9]{2}-[0-9]{2}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <!--TimeType-->
+  <xs:simpleType name="zamanTipi">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{2}:[0-9]{2}:[0-9]{2}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <!--IdentitiferType-->
+  <xs:complexType name="idTipi">
+    <xs:simpleContent>
+      <!--Value-->
+      <xs:extension base="xs:string">
+        <!--schemeID-->
+        <xs:attribute name="schemeId" type="xs:string" use="optional" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <!--AmountType-->
+  <xs:complexType name="tutarTipi">
+    <xs:simpleContent>
+      <xs:extension base="xs:decimal">
+        <!--currencyID-->
+        <xs:attribute name="paraBirimi" type="xs:string" use="required" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="miktarTipi">
+    <xs:simpleContent>
+      <!--Value-->
+      <xs:extension base="xs:decimal">
+        <!--unitCode-->
+        <xs:attribute name="birimKodu" type="xs:string" use="optional" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="ekBilgi">
+    <xs:sequence>
+      <xs:element name="anahtar" type="xs:string"/>
+      <xs:element name="deger" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
