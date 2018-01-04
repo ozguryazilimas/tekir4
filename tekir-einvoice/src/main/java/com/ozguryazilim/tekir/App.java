@@ -35,7 +35,7 @@ public class App {
         headers.put("Cookie", cookie);
         bpc.getRequestContext().put(MessageContext.HTTP_REQUEST_HEADERS, headers);
 
-        File file = new File("calisanTaslak.xml");
+        File file = new File("tekir-einvoice/src/main/resources/calisanTaslak.xml");
         byte[] bytesArray = new byte[(int) file.length()];
         FileInputStream fis = new FileInputStream(file);
         fis.read(bytesArray);

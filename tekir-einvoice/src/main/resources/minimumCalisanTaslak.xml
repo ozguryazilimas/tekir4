@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<fatura>
+	<faturaTuru>TICARIFATURA</faturaTuru>
+	<faturaTarihi>2015-07-10</faturaTarihi>
+	<faturaTipi>SATIS</faturaTipi>
+	<paraBirimi>TRL</paraBirimi>
+	<satici>
+		<aliciSaticiTanimi schemeId="VKN">6930329621</aliciSaticiTanimi>
+		<unvan>AAA Anonim Şirketi</unvan>
+		<postaAdresi>
+			<ilce>Beşiktaş</ilce>
+			<sehir>İstanbul</sehir>
+			<ulke>Türkiye</ulke>
+		</postaAdresi>
+	</satici>
+	<alici>
+		<aliciSaticiTanimi schemeId="VKN">6930329622</aliciSaticiTanimi>
+		<unvan>BBB Limited  Şirketi</unvan>
+		<postaAdresi>
+            <ilce>Kızılay</ilce>
+			<sehir>Ankara</sehir>
+			<ulke>Türkiye</ulke>
+		</postaAdresi>
+	</alici>
+	<vergiler>
+		<toplamVergiTutari paraBirimi="TRL">4538.97</toplamVergiTutari>
+		<vergi>
+			<vergiTutari paraBirimi="TRL">4538.97</vergiTutari>
+			<vergiTuru>
+				<vergikodu>0015</vergikodu>
+			</vergiTuru>
+		</vergi>
+	</vergiler>
+	<parasalToplamlar>
+		<toplamMalHizmetTutari paraBirimi="TRL">26003.40</toplamMalHizmetTutari>
+		<vergiHaricTutar paraBirimi="TRL">25216.50</vergiHaricTutar>
+		<vergiDahilTutar paraBirimi="TRL">29755.47</vergiDahilTutar>
+		<odenecekTutar paraBirimi="TRL">29755.47</odenecekTutar>
+	</parasalToplamlar>
+	<faturaSatir>
+		<siraNo>1</siraNo>
+		<miktar birimKodu="NIU">12</miktar>
+		<malHizmetMiktari paraBirimi="TRL">9906</malHizmetMiktari>
+		<vergiler>
+			<toplamVergiTutari paraBirimi="TRL">1693.93</toplamVergiTutari>
+			<vergi>
+				<vergiTutari paraBirimi="TRL">1693.93</vergiTutari>
+				<vergiTuru>
+					<vergikodu>0015</vergikodu>
+				</vergiTuru>
+			</vergi>
+		</vergiler>
+		<malHizmetBilgileri>
+			<adi>Masa Üstü Bilgisayar</adi>
+		</malHizmetBilgileri>
+		<birimFiyat paraBirimi="TRL">825.5</birimFiyat>
+	</faturaSatir>
+	<faturaSatir>
+		<siraNo>2</siraNo>
+		<miktar birimKodu="NIU">8</miktar>
+		<malHizmetMiktari paraBirimi="TRL">9720</malHizmetMiktari>
+		<vergiler>
+			<toplamVergiTutari paraBirimi="TRL">1697.11</toplamVergiTutari>
+			<vergi>
+				<vergiTutari paraBirimi="TRL">1697.11</vergiTutari>
+				<vergiTuru>
+					<vergikodu>0015</vergikodu>
+				</vergiTuru>
+			</vergi>
+		</vergiler>
+		<malHizmetBilgileri>
+			<adi>Notebook Bilgisayar</adi>
+		</malHizmetBilgileri>
+		<birimFiyat paraBirimi="TRL">1215</birimFiyat>
+	</faturaSatir>
+	<faturaSatir>
+		<siraNo>3</siraNo>
+		<miktar birimKodu="NIU">18</miktar>
+		<malHizmetMiktari paraBirimi="TRL">688.5</malHizmetMiktari>
+		<vergiler>
+			<toplamVergiTutari paraBirimi="TRL">123.93</toplamVergiTutari>
+			<vergi>
+				<vergiTutari paraBirimi="TRL">123.93</vergiTutari>
+				<vergiTuru>
+					<vergikodu>0015</vergikodu>
+				</vergiTuru>
+			</vergi>
+		</vergiler>
+		<malHizmetBilgileri>
+			<adi>Notebook Çantası</adi>
+		</malHizmetBilgileri>
+		<birimFiyat paraBirimi="TRL">38.25</birimFiyat>
+	</faturaSatir>
+	<faturaSatir>
+		<siraNo>4</siraNo>
+		<miktar birimKodu="NIU">13</miktar>
+		<malHizmetMiktari paraBirimi="TRL">1576.9</malHizmetMiktari>
+		<vergiler>
+			<toplamVergiTutari paraBirimi="TRL">283.84</toplamVergiTutari>
+			<vergi>
+				<vergiTutari paraBirimi="TRL">283.84</vergiTutari>
+				<vergiTuru>
+					<vergikodu>0015</vergikodu>
+				</vergiTuru>
+			</vergi>
+		</vergiler>
+		<malHizmetBilgileri>
+			<adi>Yazıcı </adi>
+		</malHizmetBilgileri>
+		<birimFiyat paraBirimi="TRL">121.3</birimFiyat>
+	</faturaSatir>
+	<faturaSatir>
+		<siraNo>5</siraNo>
+		<miktar birimKodu="BX">200</miktar>
+		<malHizmetMiktari paraBirimi="TRL">1400</malHizmetMiktari>
+		<vergiler>
+			<toplamVergiTutari paraBirimi="TRL">252</toplamVergiTutari>
+			<vergi>
+				<vergiTutari paraBirimi="TRL">252</vergiTutari>
+				<vergiTuru>
+					<vergikodu>0015</vergikodu>
+				</vergiTuru>
+			</vergi>
+		</vergiler>
+		<malHizmetBilgileri>
+			<adi>CD-R 2*56</adi>
+		</malHizmetBilgileri>
+		<birimFiyat paraBirimi="TRL">7</birimFiyat>
+	</faturaSatir>
+	<faturaSatir>
+		<siraNo>6</siraNo>
+		<miktar birimKodu="BX">200</miktar>
+		<malHizmetMiktari paraBirimi="TRL">2200</malHizmetMiktari>
+		<vergiler>
+			<toplamVergiTutari paraBirimi="TRL">396</toplamVergiTutari>
+			<vergi>
+				<vergiTutari paraBirimi="TRL">396</vergiTutari>
+				<vergiTuru>
+					<vergikodu>0015</vergikodu>
+				</vergiTuru>
+			</vergi>
+		</vergiler>
+		<malHizmetBilgileri>
+			<adi>DVD-R</adi>
+		</malHizmetBilgileri>
+		<birimFiyat paraBirimi="TRL">11</birimFiyat>
+	</faturaSatir>
+	<faturaSatir>
+		<siraNo>7</siraNo>
+		<miktar birimKodu="NIU">80</miktar>
+		<malHizmetMiktari paraBirimi="TRL">340</malHizmetMiktari>
+		<vergiler>
+			<toplamVergiTutari paraBirimi="TRL">61.2</toplamVergiTutari>
+			<vergi>
+				<vergiTutari paraBirimi="TRL">61.2</vergiTutari>
+				<vergiTuru>
+					<vergikodu>0015</vergikodu>
+				</vergiTuru>
+			</vergi>
+		</vergiler>
+		<malHizmetBilgileri>
+			<adi>Dolma Kalem</adi>
+		</malHizmetBilgileri>
+		<birimFiyat paraBirimi="TRL">4.25</birimFiyat>
+	</faturaSatir>
+	<faturaSatir>
+		<siraNo>8</siraNo>
+		<miktar birimKodu="NIU">80</miktar>
+		<malHizmetMiktari paraBirimi="TRL">172</malHizmetMiktari>
+		<vergiler>
+			<toplamVergiTutari paraBirimi="TRL">30.96</toplamVergiTutari>
+			<vergi>
+				<vergiTutari paraBirimi="TRL">30.96</vergiTutari>
+				<vergiTuru>
+					<vergikodu>0015</vergikodu>
+				</vergiTuru>
+			</vergi>
+		</vergiler>
+		<malHizmetBilgileri>
+			<adi>Tükenmez Kalem</adi>
+		</malHizmetBilgileri>
+		<birimFiyat paraBirimi="TRL">2.15</birimFiyat>
+	</faturaSatir>
+</fatura>
