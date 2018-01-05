@@ -16,27 +16,35 @@ import javax.persistence.ManyToOne;
 
 /**
  * Gerçek adress bilgisi
- * 
- * @author Hakan Uygun 
+ *
+ * @author Hakan Uygun
  */
 @Entity
 @DiscriminatorValue(value = "ADR")
-public class ContactAddress extends ContactInformation{
+public class ContactAddress extends ContactInformation {
 
+    @Column(name = "COUNTY")
+    private String county;
 
-    @Column( name = "ZIP")
+    @Column(name = "PROVINCE")
+    private String province;
+
+    @Column(name = "COUNTRY")
+    private String country;
+
+    @Column(name = "ZIP")
     private String zipCode;
-    
+
     //Gerçek adresler için lazım alanlar : alt seviye bir location alınır. Gerisi onun üzerinden çözümlenir.
     @ManyToOne
     @JoinColumn(name = "LOCATION_ID", foreignKey = @ForeignKey(name = "FK_CONADDR_LOC"))
     private Location location;
-    
-        //Lat-Lon biçminde? Bu sayede harita gösterilebilir?
-    @Column( name = "LAT")
+
+    //Lat-Lon biçminde? Bu sayede harita gösterilebilir?
+    @Column(name = "LAT")
     private Double latitude;
-    
-    @Column( name = "LON")
+
+    @Column(name = "LON")
     private Double longitude;
 
     public Location getLocation() {
@@ -70,30 +78,67 @@ public class ContactAddress extends ContactInformation{
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
-    
+
+    public String getCounty() {
+        return county;
+    }
+
+    public void setCounty(String county) {
+        this.county = county;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
     @Override
     public List<String> getAcceptedSubTypes() {
         List<String> ls = new ArrayList<>();
-        
+
         ls.add("INVOICE");
         ls.add("SHIPMENT");
-        
+
         return ls;
     }
 
     @Override
-    public String getCaption(){
+    public String getCaption() {
         //FIXME: Burada satır kırma işini nasıl yaparız?
         StringBuilder sb = new StringBuilder();
         sb.append(getAddress());
-        if( getZipCode() != null && getZipCode().length() > 0 ){
-            sb.append(" ").append(getZipCode());
+
+        if (getCounty() != null && getCounty().length() > 0) {
+            sb.append(" ").append(getCounty());
         }
-        
-        if( getLocation() != null ){
+
+        if (getProvince() != null && getProvince().length() > 0) {
+            sb.append(" ").append(getProvince());
+        }
+
+        if (getCountry() != null && getCountry().length() > 0) {
+            sb.append(" ").append(getCountry());
+        }
+
+        if (getLocation() != null) {
             sb.append(" ").append(getLocation().getName());
         }
         
+        if (getZipCode() != null && getZipCode().length() > 0) {
+            sb.append(" ").append(getZipCode());
+        }
+
         return sb.toString();
     }
 
@@ -101,4 +146,6 @@ public class ContactAddress extends ContactInformation{
     public String getIcon() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+
 }

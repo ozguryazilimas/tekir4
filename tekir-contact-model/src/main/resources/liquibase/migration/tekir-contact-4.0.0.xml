@@ -89,6 +89,9 @@
             <column name="LAT" type="DOUBLE precision"/>
             <column name="LON" type="DOUBLE precision"/>
             <column name="ZIP" type="VARCHAR(255)"/>
+            <column name="COUNTY" type="VARCHAR(255)"/>
+            <column name="PROVINCE" type="VARCHAR(255)"/>
+            <column name="COUNTRY" type="VARCHAR(255)"/>
             <column name="CONTACT_ID" type="BIGINT"/>
             <column name="LOCATION_ID" type="BIGINT"/>
         </createTable>

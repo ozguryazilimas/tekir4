@@ -12,6 +12,11 @@
     <ui:define name="editorContent">
         <div class="row">
             <t:inputText label="general.label.Address" value="#{bean.entity.address}" />
+            <h:panelGrid columns="3">
+                <t:inputText label="general.label.Country" value="#{bean.entity.country}"/>
+                <t:inputText label="general.label.Province" value="#{bean.entity.province}"/>
+                <t:inputText label="general.label.County" value="#{bean.entity.county}"/>
+            </h:panelGrid>
             <t:inputText label="general.label.ZipCode" value="#{bean.entity.zipCode}" />
             <t:inputLookupDialog label="general.label.Location" value="#{addressEditor.entity.location}" lookupBean="#{locationLookup}" lookupListener="addressEditor.entity.location" columnClass="col-md-6 col-xs-12"/>
         </div>
