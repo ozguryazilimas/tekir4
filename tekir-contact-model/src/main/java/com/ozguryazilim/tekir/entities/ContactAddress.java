@@ -131,14 +131,14 @@ public class ContactAddress extends ContactInformation {
             sb.append(" ").append(getCountry());
         }
 
-        if (getLocation() != null) {
-            sb.append(" ").append(getLocation().getName());
-        }
-        
         if (getZipCode() != null && getZipCode().length() > 0) {
             sb.append(" ").append(getZipCode());
         }
 
+        if (getLocation() != null) {
+            sb.append(" ").append(getLocation().getName());
+        }
+        
         return sb.toString();
     }
 
