@@ -20,10 +20,10 @@
             <t:inputText label="general.label.BaseUnit" value="#{unitSetDefinitionHome.entity.baseUnit}" required="true" >
                 <p:ajax event="blur" update=":form:dets" />
             </t:inputText>
-            <h:outputLink id="einvoiceTooltip" value="#">
-                <t:inputText label="general.label.einvoiceCode" value="#{unitSetDefinitionHome.entity.einvoiceCode}" />
+            <h:outputLink id="einvoiceTaxTooltip" value="#">
+                <t:inputText label="general.label.einvoiceTaxCode" value="#{unitSetDefinitionHome.entity.einvoiceCode}" />
             </h:outputLink>
-            <p:tooltip for="einvoiceTooltip" value="#{messages['general.info.einvoiceCode']}"/>
+            <p:tooltip for="einvoiceTaxTooltip" value="#{messages['general.info.einvoiceTaxCode']}"/>
 
         </div>            
         <div class="row">        
