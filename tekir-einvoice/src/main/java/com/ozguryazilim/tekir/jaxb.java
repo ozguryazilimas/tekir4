@@ -1,12 +1,14 @@
 package com.ozguryazilim.tekir;
 
-import generated.*;
+import com.ozguryazilim.tekir.einvoice.model.*;
+
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import java.io.File;
 
 public class jaxb {
+
     public static void main(String[] args) throws Exception {
         Fatura fatura = new Fatura();
         TarafBilgileriTipi tarafBilgileriTipi = new TarafBilgileriTipi();
@@ -18,6 +20,7 @@ public class jaxb {
         FaturaSatirTipi faturaSatirTipi = new FaturaSatirTipi();
         MiktarTipi miktarTipi = new MiktarTipi();
         MalHizmetBilgileriTipi malHizmetBilgileriTipi = new MalHizmetBilgileriTipi();
+
 
         fatura.setFaturaTarihi("2018-12-29");
         fatura.setFaturaTuru("TICARIFATURA");

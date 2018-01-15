@@ -41,6 +41,9 @@ public class UnitSetDefinition extends ParamEntityBase{
 
     @Column( name = "BASE_UNIT")
     private String baseUnit;
+
+    @Column( name = "EINVOICE_CODE")
+    private String einvoiceCode;
     
     @OneToMany(mappedBy = "master", cascade = CascadeType.ALL, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -69,6 +72,13 @@ public class UnitSetDefinition extends ParamEntityBase{
     public void setItems(List<UnitSetItem> items) {
         this.items = items;
     }
-    
-    
+
+
+    public String getEinvoiceCode() {
+        return einvoiceCode;
+    }
+
+    public void setEinvoiceCode(String einvoiceCode) {
+        this.einvoiceCode = einvoiceCode;
+    }
 }

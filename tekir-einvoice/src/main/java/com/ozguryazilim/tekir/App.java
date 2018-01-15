@@ -35,7 +35,7 @@ public class App {
         headers.put("Cookie", cookie);
         bpc.getRequestContext().put(MessageContext.HTTP_REQUEST_HEADERS, headers);
 
-        File file = new File("tekir-einvoice/src/main/resources/calisanTaslak.xml");
+        File file = new File("tekir-einvoice/src/main/resources/calisanTaslakTest.xml");
         byte[] bytesArray = new byte[(int) file.length()];
         FileInputStream fis = new FileInputStream(file);
         fis.read(bytesArray);
@@ -49,7 +49,7 @@ public class App {
         byte[] hash = messageDigest.digest();
         String hashString = DatatypeConverter.printHexBinary(hash).toUpperCase();
 
-        String belgeOid = connector.belgeGonder("6930329621", "FATURA", "8", bytesArray, hashString, "application/xml", "3.0");
+        String belgeOid = connector.belgeGonder("6930329621", "FATURA", "9", bytesArray, hashString, "application/xml", "3.0");
         System.out.println(belgeOid);
 
     }

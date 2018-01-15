@@ -14,6 +14,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="BASE_UNIT" type="VARCHAR(255)"/>
+            <column name="EINVOICE_CODE" type="VARCHAR(255)"/>
         </createTable>
     </changeSet>
     <changeSet author="oyas (generated)" id="1470428884610-2">

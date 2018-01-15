@@ -31,7 +31,7 @@ public class Sorgula {
         headers.put("Cookie", cookie);
         bpc.getRequestContext().put(MessageContext.HTTP_REQUEST_HEADERS, headers);
 
-        String belgeOidOld = "0njbc3smzm11k8";
+        String belgeOidOld = "0njbc3smzm127z";
         GidenBelgeDurum status = connector.gidenBelgeDurumSorgula("6930329621", belgeOidOld);
         System.out.println(status.getDurum());
         System.out.println(status.getAciklama());
