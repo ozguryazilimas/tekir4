@@ -16,6 +16,7 @@
             <column name="FROM_DATE" type="date"/>
             <column name="RATE" type="DECIMAL(19, 2)"/>
             <column name="TO_DATE" type="date"/>
+            <column name="EINVOICE_CODE" type="VARCHAR(255)"/>
             <column name="TYPE" type="VARCHAR(255)"/>
         </createTable>
     </changeSet>

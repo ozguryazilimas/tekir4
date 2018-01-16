@@ -60,6 +60,9 @@ public class TaxDefinition extends ParamEntityBase{
     @Temporal(TemporalType.DATE)
     private Date toDate;
 
+    @Column( name = "EINVOICE_CODE")
+    private String einvoiceCode;
+
     public Long getId() {
         return id;
     }
@@ -100,7 +103,12 @@ public class TaxDefinition extends ParamEntityBase{
         this.toDate = toDate;
     }
 
-    
 
-    
+    public String getEinvoiceCode() {
+        return einvoiceCode;
+    }
+
+    public void setEinvoiceCode(String einvoiceCode) {
+        this.einvoiceCode = einvoiceCode;
+    }
 }
