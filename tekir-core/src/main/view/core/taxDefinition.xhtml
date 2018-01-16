@@ -17,6 +17,10 @@
             <t:inputText label="general.label.Name" value="#{taxDefinitionHome.entity.name}" required="true" />
             <t:inputText label="general.label.Code" value="#{taxDefinitionHome.entity.code}" required="true" />
             <t:inputNumber label="taxDefinition.label.Rate" value="#{taxDefinitionHome.entity.rate}" required="true" />
+            <h:outputLink id="einvoiceTaxTooltip" value="#">
+                <t:inputText label="general.label.EinvoiceTaxCode" value="#{taxDefinitionHome.entity.einvoiceCode}" />
+            </h:outputLink>
+            <p:tooltip for="einvoiceTaxTooltip" value="#{messages['general.info.EinvoiceTaxCode']}"/>
             <ui:remove>
             <t:inputDate label="general.label.StartDate" value="#{taxDefinitionHome.entity.fromDate}" required="true" />
             <t:inputDate label="general.label.EndDate" value="#{taxDefinitionHome.entity.toDate}" required="true" />
