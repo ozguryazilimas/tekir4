@@ -20,6 +20,11 @@
             <t:inputText label="general.label.BaseUnit" value="#{unitSetDefinitionHome.entity.baseUnit}" required="true" >
                 <p:ajax event="blur" update=":form:dets" />
             </t:inputText>
+            <h:outputLink id="einvoiceUnitTooltip" value="#">
+                <t:inputText label="general.label.EinvoiceUnitCode" value="#{unitSetDefinitionHome.entity.einvoiceCode}" />
+            </h:outputLink>
+            <p:tooltip for="einvoiceUnitTooltip" value="#{messages['general.info.EinvoiceUnitCode']}"/>
+
         </div>            
         <div class="row">        
             <t:inputTextarea label="general.label.Info" value="#{unitSetDefinitionHome.entity.info}" required="false" />                                            
