@@ -19,19 +19,19 @@ import javax.persistence.Table;
 
 /**
  * Contact'lar arası ilişki tipi.
- * 
+ *
  * Kaynak ve Hedef ilişkinin iki ucunu temsil ediyor. Ve bu uçlarda nasıl bir contact olabilir ContactRole filtresi ile belirleniyor.
- * 
+ *
  * VectorName Source'dan Target'a olan ilişkinin ismini tanımlıyor
  * RaversName Target'dan Source'a olan ilişkinin ( tersine vector ) ismini tanımlıyor
  *
  * Bu bilgi ilişki tablosunda @see RelatedContact :
- * 
- * 
+ *
+ *
  * source, relation, target biçmine bürünecek. burada ilişkinin yönü kaynaktan hedefe olacak. Daima ilişkinin tanımladığı şekilde kaynak ve hadef bilgisi yazılacak.
- * 
- * 
- * 
+ *
+ *
+ *
  * @author Hakan Uygun
  */
 @Entity
@@ -57,23 +57,25 @@ public class ContactRelation extends ParamEntityBase {
     @Column(name = "TARGET_ROLES")
     @Convert(converter = StringListConverter.class)
     private List<String> targetRoles = new ArrayList<>();
-    
+
     /**
      * İlişkinin ismi source -> target
      */
+    @Column(name="VECTOR_NAME")
     private String vectorName;
-    
+
     /**
-     * İlişkinin ismi target -> source ( Yani ters ilişkinin ismi ) 
+     * İlişkinin ismi target -> source ( Yani ters ilişkinin ismi )
      */
-    private String reversName;
-    
+    @Column(name="REVERSE_NAME")
+    private String reverseName;
+
     /**
      * Sıralama için bu iliişkinin ağırlığı
      */
     @Column(name = "WEIGHT")
     private Integer weigth = 0;
-    
+
     public Long getId() {
         return id;
     }
@@ -106,12 +108,12 @@ public class ContactRelation extends ParamEntityBase {
         this.vectorName = vectorName;
     }
 
-    public String getReversName() {
-        return reversName;
+    public String getReverseName() {
+        return reverseName;
     }
 
-    public void setReversName(String reversName) {
-        this.reversName = reversName;
+    public void setReverseName(String reversName) {
+        this.reverseName = reversName;
     }
 
     public Integer getWeigth() {
@@ -122,6 +124,6 @@ public class ContactRelation extends ParamEntityBase {
         this.weigth = weigth;
     }
 
-    
+
 
 }

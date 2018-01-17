@@ -8,7 +8,6 @@
         <jta-data-source>java:jboss/datasources/TekirDS</jta-data-source>
             <properties>
             <!-- Properties for Hibernate -->
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
             <property name="hibernate.hbm2ddl.auto" value="create"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>

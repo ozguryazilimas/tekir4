@@ -338,7 +338,7 @@ public class ContactRelationService implements Serializable {
         ContactRelationViewModel result = new ContactRelationViewModel();
         result.setId(contactRelation.getId());
         result.setCode(contactRelation.getCode());
-        result.setName(contactRelation.getReversName());
+        result.setName(contactRelation.getReverseName());
         result.setRevers(Boolean.TRUE);
         result.setWeigth(contactRelation.getWeigth());
         result.setTargetRoles(Joiner.on(',').join(contactRelation.getSourceRoles()));

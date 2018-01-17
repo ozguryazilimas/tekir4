@@ -9,7 +9,6 @@
             <jar-file>../tekir-core-model/target/classes</jar-file>
             <properties>
             <!-- Properties for Hibernate -->
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
             <property name="hibernate.hbm2ddl.auto" value="create"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>

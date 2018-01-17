@@ -69,7 +69,7 @@ public class ContactRelationHome extends ParamBase<ContactRelation, Long> {
         }
 
         //Vector ve Revers bileşiminden parametre ismi oluşturuyoruz.
-        getEntity().setName(getEntity().getVectorName() + "/" + getEntity().getReversName());
+        getEntity().setName(getEntity().getVectorName() + "/" + getEntity().getReverseName());
 
         return result;
     }
