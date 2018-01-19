@@ -31,7 +31,7 @@ public class PersonFeeder extends AbstractFeeder<AbstractPerson>{
         contactPointer.setPrimaryKey(entity.getId());
         contactPointer.setFeature("AbstractPerson");
         
-        sendFeed("FEED", "PersonFeeder", identity.getLoginName(), "AbstractPerson hede hede", "Uuuuu <a href='#'>Başka bir yer</a> linki verelim bakalım. burası daha da uzun", contactPointer, null );
+        sendFeed("FEED", getClass().getSimpleName(), identity.getLoginName(), "Person hede hede", "Uuuuu <a href='#'>Başka bir yer</a> linki verelim bakalım. burası daha da uzun", contactPointer, null );
         */
     }
     

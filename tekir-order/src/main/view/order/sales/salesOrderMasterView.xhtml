@@ -8,68 +8,73 @@
 
     <ui:define name="content">     
         <div class="row">
-            <div class="col-md-3 col-xs-12">
-                <t:accordion icon="fa fa-stack-exchange" label="general.label.Summary" columnClass="col-xs-12">
-                    <t:outputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(salesOrderHome.entity.starter)}" columnClass="col-xs-12"/>
-                    <ui:remove>
-                        bir output account input account seti mi hazırlasak?
-                    </ui:remove>
-					<t:outputFeatureLink label="general.label.Account" 
-            					value="#{featureController.getFeatureLink(salesOrderHome.getAllFeaturePointer(salesOrderHome.entity.account))}" 
-                    			rendered="#{not empty salesOrderHome.entity.account}" columnClass="col-xs-12"/>             
-                    <t:outputMoney label="general.label.TotalAmount" value="#{salesOrderHome.entity.total}" currency="#{salesOrderHome.entity.currency}" columnClass="col-xs-12"/>                    
-                    <t:outputText label="general.label.PaymentPlan" value="#{salesOrderHome.entity.paymentPlan.name}"  columnClass="col-xs-12"/>
-                    <t:outputDate label="general.label.ShippingDate" value="#{salesOrderHome.entity.shippingDate}"  columnClass="col-xs-12"/>
-                    <t:outputText label="general.label.ShippingNote" value="#{salesOrderHome.entity.shippingNote}"  columnClass="col-xs-12"/>
-                </t:accordion>
+            <div class="col-lg-3 col-md-12">
+                <div class="row">
+                    <t:accordion icon="fa fa-stack-exchange" label="general.label.Summary" columnClass="col-lg-12 col-md-6">
+                        <t:outputFeatureLink label="general.label.Account" 
+                                             value="#{featureController.getFeatureLink(salesOrderHome.getAllFeaturePointer(salesOrderHome.entity.account))}" 
+                                             columnClass="col-sm-12"/>             
+                        <t:outputMoney label="general.label.TotalAmount" value="#{salesOrderHome.entity.total}" currency="#{salesOrderHome.entity.currency}" columnClass="col-sm-12"/>                    
+                        <t:outputText label="general.label.PaymentPlan" value="#{salesOrderHome.entity.paymentPlan.name}"  columnClass="col-sm-12"/>
+                        <t:outputDate label="general.label.ShippingDate" value="#{salesOrderHome.entity.shippingDate}"  columnClass="col-sm-12"/>
+                        <t:outputText label="general.label.ShippingNote" value="#{salesOrderHome.entity.shippingNote}"  columnClass="col-sm-12"/>
+                    </t:accordion>
 
-                <t:accordion icon="fa fa-file-text" label="general.label.Voucher" columnClass="col-xs-12">
-                    <t:outputText label="voucher.label.VoucherNo" value="#{salesOrderHome.entity.voucherNo}"  columnClass="col-xs-12"/>
-                    <t:outputText label="voucher.label.ReferenceNo" value="#{salesOrderHome.entity.referenceNo}" columnClass="col-xs-12"/>
-                    <t:outputText label="voucher.label.Process" value="#{salesOrderHome.entity.process.processNo}" columnClass="col-xs-12"/>
-                    <t:outputText label="voucher.label.Owner" value="#{salesOrderHome.entity.owner}" columnClass="col-xs-12"/>
-                    <t:outputText label="general.label.Code" value="#{salesOrderHome.entity.code}" columnClass="col-xs-12"/>
-                    <t:outputText label="general.label.Info" value="#{salesOrderHome.entity.info}" columnClass="col-xs-12"/>
-                    <t:outputDate label="voucher.label.Date" value="#{salesOrderHome.entity.date}" columnClass="col-xs-12"/>
-                </t:accordion>
+                    <ui:include src="/voucher/voucherInfoWidget.xhtml">
+                        <ui:param name="columnClass" value="col-lg-12 col-md-6" />
+                        <ui:param name="homeBean" value="#{salesOrderHome}" />
+                    </ui:include>
+                </div>
             </div>
 
-            <div class="col-md-6 col-xs-12">
-
-                <ui:include src="/voucher/voucherCommodityWidget.xhtml">
-                    <ui:param name="bean" value="#{salesOrderHome}" />
-                </ui:include>
-
+            <div class="col-lg-6 col-md-12">
+                <div class="row">
+                    <ui:include src="/voucher/voucherCommodityWidget.xhtml">
+                        <ui:param name="bean" value="#{salesOrderHome}" />
+                    </ui:include>
+                </div>
             </div>
 
-            <div class="col-md-3 col-xs-12">
+            <div class="col-lg-3 col-md-12">
+                <div class="row">
+                    <ui:include src="/notes/noteWidget.xhtml">
+                        <ui:param name="columnClass" value="col-lg-12 col-md-6" />
+                        <ui:param name="featurePointer" value="#{salesOrderHome.featurePointer}" />
+                    </ui:include>
 
-                <ui:include src="/notes/noteWidget.xhtml">
-                    <ui:param name="featurePointer" value="#{salesOrderHome.featurePointer}" />
-                </ui:include>
-                
-                <ui:include src="/activities/activityWidget.xhtml">
-                    <ui:param name="person" value="#{salesOrderHome.person}" />
-                    <ui:param name="corporation" value="#{salesOrderHome.corporation}" />
-                    <ui:param name="feature" value="#{salesOrderHome.featurePointer}" />
-                    <ui:param name="attached" value="Feature" />
-                </ui:include>
+                    <ui:include src="/attachment/simpleAttachmentWidget.xhtml">
+                        <ui:param name="columnClass" value="col-lg-12 col-md-6" />
+                        <ui:param name="featurePointer" value="#{salesOrderHome.featurePointer}" />
+                        <ui:param name="payload" value="#{salesOrderHome.entity}" />
+                    </ui:include>
 
-                <ui:include src="/voucher/voucherReleatedWidget.xhtml">
-                    <ui:param name="featurePointer" value="#{salesOrderHome.featurePointer}" />
-                    <ui:param name="processNo" value="#{salesOrderHome.entity.process.processNo}" />
-                    <ui:param name="groupNo" value="#{salesOrderHome.entity.group.groupNo}" />
-                </ui:include>
+                    <ui:include src="/voucher/process/stakeholderWidget.xhtml">
+                        <ui:param name="columnClass" value="col-lg-12 col-md-6" />
+                        <ui:param name="process" value="#{salesOrderHome.entity.process}" />
+                    </ui:include>
+                    
+                    <ui:include src="/activities/activityWidget.xhtml">
+                        <ui:param name="columnClass" value="col-lg-12 col-md-6" />
+                        <ui:param name="person" value="#{salesOrderHome.person}" />
+                        <ui:param name="corporation" value="#{salesOrderHome.corporation}" />
+                        <ui:param name="feature" value="#{salesOrderHome.featurePointer}" />
+                        <ui:param name="attached" value="Feature" />
+                    </ui:include>
 
-                <ui:include src="/feeds/feedWidget.xhtml">
-                    <ui:param name="feature" value="#{salesOrderHome.featureClass.simpleName}" />
-                    <ui:param name="pk" value="#{salesOrderHome.entity.id}" />
-                </ui:include>
+                    <ui:include src="/voucher/voucherReleatedWidget.xhtml">
+                        <ui:param name="columnClass" value="col-lg-12 col-md-6" />
+                        <ui:param name="featurePointer" value="#{salesOrderHome.featurePointer}" />
+                        <ui:param name="processNo" value="#{salesOrderHome.entity.process.processNo}" />
+                        <ui:param name="groupNo" value="#{salesOrderHome.entity.group.groupNo}" />
+                    </ui:include>
 
+                    <ui:include src="/feeds/feedWidget.xhtml">
+                        <ui:param name="columnClass" value="col-lg-12 col-md-6" />
+                        <ui:param name="feature" value="#{salesOrderHome.featureClass.simpleName}" />
+                        <ui:param name="pk" value="#{salesOrderHome.entity.id}" />
+                    </ui:include>
+                </div>
             </div>
-
-
-
         </div>
 
     </ui:define>

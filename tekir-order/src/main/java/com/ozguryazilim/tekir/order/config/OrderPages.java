@@ -50,6 +50,11 @@ public interface OrderPages extends Pages {
 			implements
 				Sales {
 	}
+        
+        @View
+        @SecuredPage()
+        class SalesOrderReminderCommand implements Sales {
+        }
 
     }
     
@@ -80,5 +85,10 @@ public interface OrderPages extends Pages {
 			implements
 				Purchase {
 	}
+        
+        @View
+        @SecuredPage()
+        class PurchaseOrderReminderCommand implements Purchase {
+        }
     }
 }

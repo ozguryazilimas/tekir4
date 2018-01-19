@@ -54,11 +54,14 @@
                         <ui:param name="contactInformations" value="#{employeeHome.contactInformations}" />
                     </ui:include>
 
+                    <ui:remove>
+                        //TODO: Çalışanlar için related contact yapısına ihtiyaç var mı?
                     <ui:include src="/contact/relatedContactFragment.xhtml">
                         <ui:param name="contact" value="#{employeeHome.entity}" />
                         <ui:param name="relatedContacts" value="#{employeeHome.relatedContacts}" />
                         <ui:param name="relatedContactsRevers" value="#{employeeHome.relatedContactsRevers}" />
                     </ui:include>
+                    </ui:remove>
 
                     <t:accordion icon="fa fa-file" id="cx" label="general.label.ReleatedVouchers" columnClass="col-xs-12">
                         <ui:remove>

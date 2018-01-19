@@ -39,8 +39,8 @@ public class FeedBrowse extends BrowseBase<Feed, Feed> {
                 .addFilter(new StringFilter<>(Feed_.body, "general.label.Body"));
                 
         queryDefinition
-                .addColumn(new TextColumn<>(Feed_.type, "general.label.Type"), true)
-                .addColumn(new TextColumn<>(Feed_.feeder, "general.label.Feeder"), true)
+                .addColumn(new MessageColumn<>(Feed_.type, "general.label.Type", "feed.type.label."), true)
+                .addColumn(new MessageColumn<>(Feed_.feeder, "general.label.Feeder", "feeder.name."), true)
                 .addColumn(new TextColumn<>(Feed_.user, "general.label.User"), true)
                 .addColumn(new DateColumn<>(Feed_.date, "general.label.Date"), true)
                 .addColumn(new TextColumn<>(Feed_.subject, "general.label.Subject"), true)

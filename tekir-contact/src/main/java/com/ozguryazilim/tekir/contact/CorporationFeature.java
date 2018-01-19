@@ -6,6 +6,7 @@
 package com.ozguryazilim.tekir.contact;
 
 import com.ozguryazilim.tekir.contact.config.ContactPages;
+import com.ozguryazilim.tekir.core.code.AutoCode;
 import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.telve.feature.AbstractFeatureHandler;
 import com.ozguryazilim.telve.feature.Feature;
@@ -20,6 +21,7 @@ import com.ozguryazilim.telve.feature.PageType;
 @Page( type = PageType.BROWSE, page = ContactPages.ContactBrowse.class )
 @Page( type = PageType.VIEW, page = ContactPages.ContactView.class )
 @Page( type = PageType.EDIT, page = ContactPages.Contact.class )
+@AutoCode(cosumer = "Corporation", caption = "feature.caption.CorporationFeature", serial = "CORP" )
 public class CorporationFeature extends AbstractFeatureHandler{
     
 }

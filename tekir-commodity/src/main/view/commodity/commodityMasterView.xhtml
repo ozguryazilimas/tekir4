@@ -1,72 +1,61 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
-	template="/layout/masterViewBase.xhtml">
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                template="/layout/masterViewBase.xhtml">
 
-	<ui:define name="content">
+    <ui:define name="content">
+        <div class="row">
+            <t:accordion icon="fa fa-stack-exchange" label="general.label.Summary" columnClass="col-md-4">
 
-		<div class="row">
-			<div class="col-md-4 col-xs-12">
+                <t:outputText label="general.label.Category" value="#{commodityHome.entity.category.name}"  columnClass="col-sm-12"/>
+                <t:outputText label="general.label.UnitSet" value="#{commodityHome.entity.unitSet.name}"  columnClass="col-sm-12"/>
+                <t:outputText label="general.label.Unit" value="#{commodityHome.entity.unitName}" columnClass="col-sm-12" />
+                <t:outputCurrency label="general.label.Currency" value="#{commodityHome.entity.defaultCurrency}" columnClass="col-md-6" />
+                <t:outputMoney label="general.label.Price" value="#{commodityHome.entity.price}" currency="#{commodityHome.entity.defaultCurrency}" columnClass="col-md-6" />
+            </t:accordion>
 
-				<t:accordion icon="fa fa-stack-exchange" label="general.label.Summary"
-					columnClass="col-xs-12">
-					<div class="row">
-						<t:outputText label="general.label.Category"
-							value="#{commodityHome.entity.category.name}"  columnClass="col-xs-12"/>
-					
-					</div>
+            <t:accordion icon="fa flaticon-tax" label="general.label.Taxes" columnClass="col-md-4" contentClass="">
 
-					<div class="row">
-						<t:outputText label="general.label.UnitSet"
-							value="#{commodityHome.entity.unitSet.name}"  columnClass="col-xs-12"/>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>#{messages['general.label.Tax']}</th>
+                        <th>#{messages['taxDefinition.label.TaxType']}</th>
+                        <th>#{messages['taxDefinition.label.Rate']}</th>
+                    </tr>
+                    <p:repeat var="it" value="#{commodityHome.getTaxList()}" varStatus="ctr">
+                        <tr>
+                            <td>
+                                <h:outputText value="#{it.name}"/>
+                            </td>
+                            <td>
+                                <h:outputText value="#{messages['taxDefinition.type.'.concat(it.type)]}" />
+                            </td>
+                            <td>
+                                <h:outputText value="#{it.rate div 100}">
+                                    <f:convertNumber type="percent" />
+                                </h:outputText>
+                            </td>
+                        </tr>
+                    </p:repeat>
+                </table>
+            </t:accordion>
 
-						<t:outputText label="general.label.Unit"
-							value="#{commodityHome.entity.unitName}" columnClass="col-xs-12" />
-					</div>
+            <div class="col-md-4 col-xs-12">
+                <div class="row">
+                    <ui:include src="/notes/noteWidget.xhtml">
+                        <ui:param name="featurePointer" value="#{commodityHome.featurePointer}" />
+                    </ui:include>
 
-					<div class="row">
-						<t:outputCurrency label="general.label.Currency"
-							value="#{commodityHome.entity.defaultCurrency}"
-							columnClass="col-md-6 col-xs-12" />
-						<t:outputMoney label="general.label.Price"
-							value="#{commodityHome.entity.price}"
-							currency="#{commodityHome.entity.defaultCurrency}"
-							columnClass="col-md-6 col-xs-12" />
-					</div>
-				</t:accordion>
-			</div>
-			<div class="col-md-4 col-xs-12">
-				<t:accordion icon="fa flaticon-tax" label="general.label.Taxes"
-					columnClass="col-xs-12">
-					<ui:repeat var="it" value="#{commodityHome.getTaxList()}" varStatus="ctr">
-						<t:accordion icon="fa flaticon-tax" label="general.label.Tax#{ctr.index+1}">
-							<div class="row">
-								<t:outputText label="general.label.Tax"
-									value="#{it.name}"  columnClass="col-md-6 col-xs-12"/>
-
-								<t:outputText label="taxDefinition.label.TaxType"
-									itemLabel="taxDefinition.type" value="#{it.type}"
-									columnClass="col-md-6 col-xs-12" />
-
-								<t:outputBoolean label="general.label.Status"
-									itemLabel="general.boolean.active." value="#{it.active}" />
-
-								<t:outputPercentage label="taxDefinition.label.Rate" value="#{it.rate div 100}"
-									columnClass="col-md-6 col-xs-12" />
-							</div>
-						</t:accordion>
-					</ui:repeat>
-				</t:accordion>
-			</div>
-			<div class="col-md-4 col-xs-12">
-				<ui:include src="/notes/noteWidget.xhtml">
-					<ui:param name="featurePointer" value="#{commodityHome.featurePointer}" />
-				</ui:include>
-			</div>
-		</div>
-	</ui:define>
+                    <ui:include src="/attachment/simpleAttachmentWidget.xhtml">
+                        <ui:param name="payload" value="#{commodityHome.entity}" />
+                        <ui:param name="featurePointer" value="#{commodityHome.featurePointer}" />
+                    </ui:include>                    
+                </div>
+            </div>
+        </div>
+    </ui:define>
 
 
 </ui:composition>

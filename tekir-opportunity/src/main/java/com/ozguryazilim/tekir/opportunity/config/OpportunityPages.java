@@ -50,4 +50,9 @@ public interface OpportunityPages extends Pages {
             implements
             OpportunityPages {
     }
+    
+    @View 
+    @SecuredPage()
+    class OpportunityReminderCommand implements OpportunityPages {
+    }
 }

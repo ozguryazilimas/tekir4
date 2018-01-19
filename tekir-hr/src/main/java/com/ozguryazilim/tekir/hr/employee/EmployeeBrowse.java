@@ -9,11 +9,13 @@ import com.ozguryazilim.tekir.entities.ContactEMail_;
 import com.ozguryazilim.tekir.entities.ContactPhone_;
 import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.tekir.entities.Employee;
+import com.ozguryazilim.tekir.entities.Employee_;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.forms.Browse;
 import com.ozguryazilim.telve.forms.BrowseBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
+import com.ozguryazilim.telve.query.columns.DateColumn;
 import com.ozguryazilim.telve.query.columns.LinkColumn;
 import com.ozguryazilim.telve.query.columns.SubTextColumn;
 import com.ozguryazilim.telve.query.columns.TextColumn;
@@ -39,11 +41,17 @@ public class EmployeeBrowse extends BrowseBase<Employee, EmployeeViewModel>{
 	protected void buildQueryDefinition(QueryDefinition<Employee, EmployeeViewModel> queryDefinition) {
                 queryDefinition
                     .addFilter(new StringFilter<>(Contact_.code, "general.label.Code"))
-                    .addFilter(new StringFilter<>(Contact_.name, "general.label.Name"));
+                    .addFilter(new StringFilter<>(Contact_.name, "general.label.Name"))
+                    .addFilter(new StringFilter<>(Employee_.employeeNo, "hr.label.EmployeeNo"))
+            		.addFilter(new StringFilter<>(Employee_.sgkNo, "hr.label.SgkNo"));
                 
                 queryDefinition
                     .addColumn(new LinkColumn<>(Contact_.code, "general.label.Code"), true)
                     .addColumn(new LinkColumn<>(Contact_.name, "general.label.Name"), true)
+                    .addColumn(new TextColumn<>(Employee_.employeeNo, "hr.label.EmployeeNo"), true)
+                    .addColumn(new TextColumn<>(Employee_.sgkNo, "hr.label.SgkNo"), true)
+                    .addColumn(new DateColumn<>(Employee_.recruitmentDate, "hr.label.RecruitmentDate"), false)
+                    .addColumn(new DateColumn<>(Employee_.terminationDate, "hr.label.TerminationDate"), false)
                     .addColumn(new SubTextColumn<>(Contact_.primaryMobile, ContactPhone_.address, "contact.label.PrimaryMobile"), true)
                     .addColumn(new SubTextColumn<>(Contact_.primaryPhone, ContactPhone_.address, "contact.label.PrimaryPhone"), true)
                     .addColumn(new SubTextColumn<>(Contact_.primaryEmail, ContactEMail_.address, "contact.label.PrimaryEmail"), true)

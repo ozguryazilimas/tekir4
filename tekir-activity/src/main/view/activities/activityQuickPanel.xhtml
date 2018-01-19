@@ -1,0 +1,46 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"                
+                template="/layout/quickRecordPanelBase.xhtml">
+
+
+    <ui:param name="bean" value="#{activityQuickRecord}" />
+    <ui:param name="showDefaultHeader" value="false" />
+    <ui:param name="showDefaultActions" value="false" />
+
+    <ui:define name="header-info">
+        <div class="text-sm text-muted"><i class="fa fa-info margin-r-5"/>Aynı anda bir biri ile bağlantılı kişi ve kurum kartı oluşturur</div>
+    </ui:define>
+
+    <ui:define name="custom-header">
+        <i class="fa #{messages['activity.button.icon.'.concat(activityHome.entity.class.simpleName)]}"/> 
+        #{messages['activity.class.'.concat(activityHome.entity.class.simpleName)]}
+    </ui:define>
+
+    <ui:define name="content">
+        <ui:include src="/activities/activityEditor.xhtml" />
+    </ui:define>
+
+    <ui:define name="custom-actions">
+        <p:commandLink action="#{activityQuickRecord.closeSuccess()}" ajax="true" process="@form" 
+                       oncomplete="if (!args.validationFailed){quickPanelToogle();}" update="quickPanelContent"
+                       validateClient="true" styleClass="btn btn-success">
+            <i class="fa fa-check"></i> #{messages['activity.button.Success']}
+        </p:commandLink>
+        
+        <p:commandLink action="#{activityQuickRecord.closePlanned()}" ajax="true" process="@form" 
+                       oncomplete="if (!args.validationFailed){quickPanelToogle();}" update="quickPanelContent"
+                       validateClient="true" styleClass="btn btn-primary">
+            <i class="fa fa-save"></i> #{messages['general.button.Save']}
+        </p:commandLink>
+
+        <p:commandLink action="#{activityQuickRecord.cancel()}" ajax="true" process="@this" 
+                       oncomplete="quickPanelToogle();" update="quickPanelContent" styleClass="btn btn-default">
+            <i class="fa fa-close"></i> #{messages['general.button.Cancel']}
+        </p:commandLink>
+    </ui:define>
+
+</ui:composition>

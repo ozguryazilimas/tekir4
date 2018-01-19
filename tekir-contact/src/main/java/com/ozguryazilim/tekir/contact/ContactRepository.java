@@ -27,6 +27,7 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.apache.deltaspike.data.api.Query;
 
 /**
  * Repository Class
@@ -270,4 +271,20 @@ public abstract class ContactRepository
         this.ownerFilter = ownerFilter;
     }
     
+    
+    /**
+     * ParentCorporation değeri verilen contact olan contactları bulur
+     * @param contact
+     * @return 
+     */
+    @Query("select c from Corporation c where parentCorporation = ?1")
+    public abstract List<Contact> findByParentCorporation( Contact contact);
+    
+    /**
+     * Corporation bilgisi verilen contact olan contactları bulur
+     * @param contact
+     * @return 
+     */
+    @Query("select c from Person c where corporation = ?1")
+    public abstract List<Contact> findByCorporation( Contact contact);
 }

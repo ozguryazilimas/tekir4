@@ -1,11 +1,10 @@
 package com.ozguryazilim.tekir.core.duration;
 
+import com.ozguryazilim.telve.messages.Messages;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-
-import com.ozguryazilim.telve.messages.MessagesUtils;
 
 @FacesConverter("durationOutputConverter")
 public class DurationOutputConverter implements Converter {
@@ -20,8 +19,8 @@ public class DurationOutputConverter implements Converter {
 
 		if (value instanceof Long) {
 
-			String hourExp = MessagesUtils.getMessage("general.expansion.Hour");
-			String minuteExp = MessagesUtils.getMessage("general.expansion.Minute");
+			String hourExp = Messages.getMessage("general.expansion.Hour");
+			String minuteExp = Messages.getMessage("general.expansion.Minute");
 
 			Long duration = (Long) value;
 

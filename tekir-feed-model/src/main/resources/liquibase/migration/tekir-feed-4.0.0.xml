@@ -34,7 +34,7 @@
     <changeSet author="hakan" id="20160714-3">
         <createTable tableName="TFF_FEED_MENTION">
             <column name="ID" type="BIGINT">
-                <constraints primaryKey="true" primaryKeyName="TFF_FEEDFOLLOWPK"/>
+                <constraints primaryKey="true" primaryKeyName="TFF_FEEDMENTIONPK"/>
             </column>
             <column name="FEATURE" type="VARCHAR(255)"/>
             <column name="FEATURE_BK" type="VARCHAR(255)"/>

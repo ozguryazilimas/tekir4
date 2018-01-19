@@ -19,12 +19,20 @@
         </f:metadata>
     </ui:define>
 
-    <ui:define name="caption">
+    <ui:define name="caption-states">
+        <t:stateOutputFeatureLink label="general.label.Account" value="#{featureController.getFeatureLink(quoteHome.getAllFeaturePointer(quoteHome.entity.account))}" />
+        
+        <t:stateOutputMoney label="general.label.TotalAmount" value="#{quoteHome.entity.total}" currency="#{quoteHome.entity.currency}" />
+        
+        <t:stateOutputText label="quote.label.Revision" value="#{quoteHome.entity.revision}"  />
+        <t:stateOutputDate label="quote.label.ExpireDate" value="#{quoteHome.entity.expireDate}"  />
+        
+        <ui:remove>
         <div class="row">
             <div class="col-md-6 col-xs-12">
               <t:outputFeatureLink label="general.label.Account" 
                             	value="#{featureController.getFeatureLink(quoteHome.getAllFeaturePointer(quoteHome.entity.account))}" 
-                            	rendered="#{not empty quoteHome.entity.account}" columnClass="col-xs-12"/>             
+                            	columnClass="col-xs-12"/>             
                 <t:outputMoney label="general.label.TotalAmount" value="#{quoteHome.entity.total}" currency="#{quoteHome.entity.currency}" />
                 <t:outputText label="quote.label.Revision" value="#{quoteHome.entity.revision}"  />
                 <t:outputDate label="general.label.ExpireDate" value="#{quoteHome.entity.expireDate}"  />
@@ -37,6 +45,7 @@
                 <t:outputText label="general.label.Code" value="#{quoteHome.entity.code}" />
             </div>
         </div>  
+        </ui:remove>
     </ui:define>
 
 

@@ -1,5 +1,6 @@
 package com.ozguryazilim.tekir.commodity;
 
+import com.ozguryazilim.tekir.core.code.AutoCodeService;
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.telve.forms.FormEdit;
 import com.ozguryazilim.telve.forms.FormBase;
@@ -9,10 +10,8 @@ import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.unit.UnitName;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 
 import javax.inject.Inject;
 
@@ -30,12 +29,16 @@ public class CommodityHome extends FormBase<Commodity, Long> {
 	@Inject
 	private CommodityRepository repository;
 
+        @Inject
+        private AutoCodeService codeService;
+        
 	private List<TaxDefinition> taxList;
 
 	@Override
 	public void createNew() {
 		super.createNew(); 
 		getEntity().setDefaultCurrency(currencyService.getDefaultCurrency());
+                getEntity().setCode(codeService.getNewSerialNumber(Commodity.class.getSimpleName()));
 	}
 		
 	@Override

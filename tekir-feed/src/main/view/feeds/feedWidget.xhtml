@@ -5,7 +5,7 @@
                 xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
                 xmlns:p="http://primefaces.org/ui">
 
-    <t:accordion icon="fa fa-feed" id="feedW" label="general.label.Feed" columnClass="col-xs-12">
+    <t:accordion icon="fa fa-feed" id="feedW" label="general.label.Feed" columnClass="#{columnClass}" contentClass="">
 
         <f:facet name="toolbar">
 
@@ -25,7 +25,7 @@
                         </div>
                         <div class="product-info">
 
-                            <div class="dropdown pull-right">
+                            <div class="box-tools dropdown pull-right">
                                 <button id="feedDropMenu" class="btn btn-box-tool dropdown-toogle" data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">
                                     <i class="fa fa-external-link-square"/>
                                 </button>
@@ -49,9 +49,9 @@
                                 </ul>
                             </span>
                                 </ui:remove>
-                            <span class="product-description text-sm">
+                            <span class="product-description text-sm" style="color:silver">
                                 <i class="fa fa-user margin-r-5"/>#{userLookup.getUserName(feed.user)} 
-                                <i class="fa  fa-clock-o margin-r-5"/><t:cellOutputDateTime value="#{feed.date}"/></span>
+                                <i class="fa  fa-clock-o margin-r-5"/><t:cellOutputPrettyTime value="#{feed.date}"/></span>
                         </div>
                     </li>
                 </ui:repeat>

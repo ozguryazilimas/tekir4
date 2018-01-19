@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<arquillian xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://jboss.org/schema/arquillian"
+    xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+
+    <container qualifier="chameleon" default="true">
+        <configuration>
+            <property name="chameleonTarget">wildfly:10.0.0.Final:remote</property>
+            <!--
+            <property name="serverConfig">standalone-full.xml</property>
+            -->
+            <property name="managementAddress">localhost</property>
+            <property name="managementPort">9990</property>
+            <!--
+            <property name="username">${jboss.admin.user}</property>
+            <property name="password">${jboss.admin.password}!</property>
+            -->
+        </configuration>
+    </container>
+</arquillian>

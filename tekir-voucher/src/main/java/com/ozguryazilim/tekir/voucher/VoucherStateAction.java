@@ -5,6 +5,8 @@
  */
 package com.ozguryazilim.tekir.voucher;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
 
@@ -29,6 +31,7 @@ public class VoucherStateAction {
     private final String permission;
     private Integer order = 50;
     private Boolean silence = Boolean.FALSE;
+    private Boolean hasSubactions = Boolean.FALSE;
 
     public VoucherStateAction(String name, String icon, Boolean needDialog, String permission) {
         this.name = name;
@@ -60,6 +63,14 @@ public class VoucherStateAction {
         this.icon = icon;
         this.needDialog = Boolean.FALSE;
         this.permission = name;
+    }
+    
+    public VoucherStateAction(String name, String icon, Boolean hasSubactions, Boolean needDialog ) {
+        this.name = name;
+        this.icon = icon;
+        this.needDialog = needDialog;
+        this.permission = name;
+        this.hasSubactions = hasSubactions;
     }
 
     /**
@@ -105,8 +116,41 @@ public class VoucherStateAction {
         return silence;
     }
 
+    public Boolean getHasSubactions() {
+        return hasSubactions;
+    }
+
+    public void setHasSubactions(Boolean hasSubactions) {
+        this.hasSubactions = hasSubactions;
+    }
+
+    /**
+     * Eğer Subactions true ise bu liste ile alt action ismi döner.
+     * 
+     * Altsınıfın bu methodu override etmesi gerek.
+     * 
+     * UI için de i18n stringleri doldurulmalı.
+     * 
+     * @return 
+     */
+    public List<String> getSubactionNames(){
+        return Collections.emptyList();
+    }
+
     
     public Class<? extends ViewConfig> execute(){
+        return null;
+    }
+    
+    /**
+     * subaction varsa çağırılır.
+     * 
+     * parametre olarak subaction ismi verilir.
+     * 
+     * @param param
+     * @return 
+     */
+    public Class<? extends ViewConfig> execute( String param ){
         return null;
     }
     

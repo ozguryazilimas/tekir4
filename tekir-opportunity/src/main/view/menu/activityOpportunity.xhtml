@@ -1,0 +1,15 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"               
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents">
+
+    <li>
+        <p:commandLink action="#{opportunityActivityMenuAction.newOpportunity()}" styleClass="context-command" rendered="#{identity.hasPermission('opportunity', 'insert')}">
+            <i class="fa fa-lightbulb-o"></i>
+            <h:outputText value=" #{messages['opportunity.button.NewOpportunity']}" />
+        </p:commandLink>
+    </li>
+
+</ui:composition>

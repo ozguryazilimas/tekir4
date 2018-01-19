@@ -45,4 +45,77 @@
     <changeSet author="oyas (generated)" id="1469625097267-5">
         <addForeignKeyConstraint baseColumnNames="PERSON_ID" baseTableName="TCA_ACTIVITY" constraintName="FK_ACC_PER" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
     </changeSet>
+    <changeSet author="oyas (generated)" id="1503931845102-1">
+        <createTable tableName="TCA_ACT_MENTION">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TCA_ACT_MENTIONPK"/>
+            </column>
+            <column name="FEATURE_BK" type="VARCHAR(255)"/>
+            <column name="FEATURE" type="VARCHAR(255)"/>
+            <column name="FEATURE_PK" type="BIGINT"/>
+            <column name="TYPE" type="VARCHAR(255)"/>
+            <column name="ACTIVITY_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1503931845102-2">
+        <addForeignKeyConstraint baseColumnNames="ACTIVITY_ID" baseTableName="TCA_ACT_MENTION" constraintName="FK_ACTIVITY_FEED" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCA_ACTIVITY"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1504351557656-1">
+        <addColumn tableName="TCA_ACTIVITY">
+            <column name="ACT_NO" type="varchar(20)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1506975677459-1">
+        <addColumn tableName="TCA_ACTIVITY">
+            <column name="EM_BCC" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1506975677459-2">
+        <addColumn tableName="TCA_ACTIVITY">
+            <column name="EM_CC" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1506975677459-3">
+        <addColumn tableName="TCA_ACTIVITY">
+            <column name="EM_FID" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1506975677459-4">
+        <addColumn tableName="TCA_ACTIVITY">
+            <column name="EM_FROM" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1506975677459-5">
+        <addColumn tableName="TCA_ACTIVITY">
+            <column name="EM_MID" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1506975677459-6">
+        <addColumn tableName="TCA_ACTIVITY">
+            <column name="EM_RID" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1506975677459-7">
+        <addColumn tableName="TCA_ACTIVITY">
+            <column name="EM_TO" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1507112519400-3">
+        <modifyDataType 
+                columnName="BODY"
+                newDataType="TEXT"
+                tableName="TCA_ACTIVITY"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1507112519400-4">
+        <modifyDataType 
+                columnName="EM_CC"
+                newDataType="varchar(2000)"
+                tableName="TCA_ACTIVITY"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1507112519400-5">
+        <modifyDataType 
+                columnName="EM_TO"
+                newDataType="varchar(2000)"
+                tableName="TCA_ACTIVITY"/>
+    </changeSet>
 </databaseChangeLog>

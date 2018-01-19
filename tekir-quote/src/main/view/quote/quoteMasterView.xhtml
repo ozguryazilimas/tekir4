@@ -8,141 +8,77 @@
 
     <ui:define name="content">     
         <div class="row">
-            <div class="col-md-3 col-xs-12">
-                <t:accordion icon="fa fa-stack-exchange" label="general.label.Summary" columnClass="col-xs-12">
-                    <t:outputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(quoteHome.entity.starter)}" columnClass="col-xs-12"/>
-                    <ui:remove>
-                        bir output account input account seti mi hazırlasak?
-                    </ui:remove>
-					<t:outputFeatureLink label="general.label.Account" 
-                            	value="#{featureController.getFeatureLink(quoteHome.getAllFeaturePointer(quoteHome.entity.account))}" 
-                            	rendered="#{not empty quoteHome.entity.account}" columnClass="col-xs-12"/>                                         	
-                    <t:outputMoney label="general.label.TotalAmount" value="#{quoteHome.entity.total}" currency="#{quoteHome.entity.currency}" columnClass="col-xs-12"/>
-                    <t:outputText label="quote.label.Revision" value="#{quoteHome.entity.revision}"  columnClass="col-xs-12"/>
-                    <t:outputDate label="general.label.PaymentPlan" value="#{quoteHome.entity.paymentPlan.name}"  columnClass="col-xs-12"/>
-                    <t:outputDate label="general.label.ExpireDate" value="#{quoteHome.entity.expireDate}"  columnClass="col-xs-12"/>
-                </t:accordion>
+            <div class="col-lg-3">
+                <div class="row">
+                    <t:accordion icon="fa fa-stack-exchange" label="general.label.Summary" columnClass="col-lg-12 col-md-6">
+                        <t:outputFeatureLink label="general.label.Account" 
+                                             value="#{featureController.getFeatureLink(quoteHome.getAllFeaturePointer(quoteHome.entity.account))}" 
+                                             columnClass="col-sm-12"/>                                         	
+                        <t:outputMoney label="general.label.TotalAmount" value="#{quoteHome.entity.total}" currency="#{quoteHome.entity.currency}" columnClass="col-md-6 col-sm-12"/>
 
-                <t:accordion icon="fa fa-file-text" label="general.label.Voucher" columnClass="col-xs-12">
-                    <t:outputText label="voucher.label.VoucherNo" value="#{quoteHome.entity.voucherNo}"  columnClass="col-xs-12"/>
-                    <t:outputText label="voucher.label.ReferenceNo" value="#{quoteHome.entity.referenceNo}" columnClass="col-xs-12"/>
-                    <t:outputText label="voucher.label.Process" value="#{quoteHome.entity.process.processNo}" columnClass="col-xs-12"/>
-                    <t:outputText label="voucher.label.Owner" value="#{quoteHome.entity.owner}" columnClass="col-xs-12"/>
-                    <t:outputText label="general.label.Code" value="#{quoteHome.entity.code}" columnClass="col-xs-12"/>
-                    <t:outputText label="general.label.Info" value="#{quoteHome.entity.info}" columnClass="col-xs-12"/>
-                    <t:outputDate label="voucher.label.Date" value="#{quoteHome.entity.date}" columnClass="col-xs-12"/>
-                </t:accordion>
+                        <t:outputDate label="general.label.PaymentPlan" value="#{quoteHome.entity.paymentPlan.name}"  columnClass="col-md-6 col-sm-12"/>
+                        <t:outputText label="quote.label.Revision" value="#{quoteHome.entity.revision}"  columnClass="col-sm-6"/>
+                        <t:outputDate label="quote.label.ExpireDate" value="#{quoteHome.entity.expireDate}"  columnClass="col-sm-6"/>
+                        
+                    </t:accordion>
+
+                    <ui:include src="/voucher/voucherInfoWidget.xhtml">
+                        <ui:param name="columnClass" value="col-lg-12 col-md-6" />
+                        <ui:param name="homeBean" value="#{quoteHome}" />
+                    </ui:include>
+
+                </div>
             </div>
 
-            <div class="col-md-6 col-xs-12">
-
-                <ui:include src="/voucher/voucherCommodityWidget.xhtml">
-                    <ui:param name="bean" value="#{quoteHome}" />
-                </ui:include>
-                <ui:remove>
-                <t:accordion icon="fa fa-cube" id="ca1" label="general.label.Commodities" columnClass="col-xs-12">
-
-                    <p:dataTable id="its" value="#{quoteHome.entity.items}" var="item" reflow="true">
-                        <p:column headerText="Emtia">
-                            <h:outputText value="#{item.commodity.name}" />
-                        </p:column>
-                        <p:column headerText="Açıklama">
-                            <h:outputText value="#{item.info}" />
-                        </p:column>
-                        <p:column headerText="Miktar" >
-                            <div style="text-align: right;">
-                            <t:cellOutputNumber minFraction="2" value="#{item.quantity.amount}" />
-                            <h:outputText value=" #{item.quantity.unitName.name}" />
-                            </div>
-                        </p:column>
-                        <p:column headerText="Birim Fiyat" >
-                            <t:cellOutputMoney value="#{item.price}" currency="#{quoteHome.entity.currency}" />
-                        </p:column>
-                        <p:column headerText="Tutar" >
-                            <t:cellOutputMoney value="#{item.total}" currency="#{quoteHome.entity.currency}" />
-                        </p:column>
-                        <ui:remove>
-                        <p:column headerText="İndirim" style="text-align: right; width: 6em;">
-                            <t:cellOutputMoney value="#{item.total}" currency="#{quoteHome.entity.currency}" />
-                        </p:column>
-                        <p:column headerText="Toplam" style=" width: 6em;">
-                            <t:cellOutputMoney value="#{item.total}" currency="#{quoteHome.entity.currency}" />
-                        </p:column>
-                            </ui:remove>
-                    </p:dataTable>
-
-                    <ui:remove>
-                        <p:dataTable id="sums" value="#{quoteHome.entity.summaries.entrySet()}" var="item" reflow="true">
-                            <p:column>
-                                #{item.value.rowKey}
-                            </p:column>
-                            <p:column>
-                                #{item.value.info}
-                            </p:column>
-                            <p:column>
-                                <t:cellOutputMoney value="#{item.value.amount}" currency="#{quoteHome.entity.currency}" />
-                            </p:column>
-                        </p:dataTable>
-                    </ui:remove>
-
-                    <table class="table table-bordered" style="margin-top: 5px;">
-                        <tr>
-                            <th>Toplam</th>
-                            <td><t:cellOutputMoney value="#{quoteHome.entity.summaries['BeforeTaxTotal'].amount}" currency="#{quoteHome.entity.currency}" /></td>
-                        </tr>
-                        <ui:fragment rendered="#{not empty quoteHome.entity.summaries['Discount']}">
-                            <tr>
-                                <th>İndirim ( - )</th>
-                                <td><t:cellOutputMoney value="#{quoteHome.entity.summaries['Discount'].amount}" currency="#{quoteHome.entity.currency}" /></td>
-                            </tr>
-                        </ui:fragment>
-
-
-                        <tr>
-                            <th>Vergi ( + )</th>
-                            <td><t:cellOutputMoney value="#{quoteHome.entity.summaries['TaxTotal'].amount}" currency="#{quoteHome.entity.currency}" /></td>
-                        </tr>
-                        <ui:repeat value="#{quoteHome.getTaxes()}" var="ent">
-                            <tr>
-                                <td>#{ent.info}</td>
-                                <td><t:cellOutputMoney value="#{ent.amount}" currency="#{quoteHome.entity.currency}" /></td>
-                            </tr>
-                        </ui:repeat>
-                        <tr>
-                            <th>Genel Toplam</th>
-                            <th><t:cellOutputMoney value="#{quoteHome.entity.summaries['GrandTotal'].amount}" currency="#{quoteHome.entity.currency}" /></th>
-                        </tr>
-                    </table>
-
-                </t:accordion>
-
-                    </ui:remove>
+            
+            <div class="col-lg-6 col-md-12">
+                <div class="row">
+                    <ui:include src="/voucher/voucherCommodityWidget.xhtml">
+                        <ui:param name="bean" value="#{quoteHome}" />
+                    </ui:include>
+                </div>
             </div>
+            
 
-            <div class="col-md-3 col-xs-12">
+            <div class="col-lg-3 col-md-12">
+                <div class="row">
+                    <ui:include src="/notes/noteWidget.xhtml">
+                        <ui:param name="columnClass" value="col-lg-12 col-md-6" />
+                        <ui:param name="featurePointer" value="#{quoteHome.featurePointer}" />
+                    </ui:include>
 
-                <ui:include src="/notes/noteWidget.xhtml">
-                    <ui:param name="featurePointer" value="#{quoteHome.featurePointer}" />
-                </ui:include>
-                
-                <ui:include src="/activities/activityWidget.xhtml">
-                    <ui:param name="person" value="#{quoteHome.person}" />
-                    <ui:param name="corporation" value="#{quoteHome.corporation}" />
-                    <ui:param name="feature" value="#{quoteHome.featurePointer}" />
-                    <ui:param name="attached" value="Feature" />
-                </ui:include>
+                    <ui:include src="/attachment/simpleAttachmentWidget.xhtml">
+                        <ui:param name="columnClass" value="col-lg-12 col-md-6" />
+                        <ui:param name="featurePointer" value="#{quoteHome.featurePointer}" />
+                        <ui:param name="payload" value="#{quoteHome.entity}" />
+                    </ui:include>
 
-                <ui:include src="/voucher/voucherReleatedWidget.xhtml">
-                    <ui:param name="featurePointer" value="#{quoteHome.featurePointer}" />
-                    <ui:param name="processNo" value="#{quoteHome.entity.process.processNo}" />
-                    <ui:param name="groupNo" value="#{quoteHome.entity.group.groupNo}" />
-                </ui:include>
+                    <ui:include src="/voucher/process/stakeholderWidget.xhtml">
+                        <ui:param name="columnClass" value="col-lg-12 col-md-6" />
+                        <ui:param name="process" value="#{quoteHome.entity.process}" />
+                    </ui:include>
+                    
+                    <ui:include src="/activities/activityWidget.xhtml">
+                        <ui:param name="columnClass" value="col-lg-12 col-md-6" />
+                        <ui:param name="person" value="#{quoteHome.person}" />
+                        <ui:param name="corporation" value="#{quoteHome.corporation}" />
+                        <ui:param name="feature" value="#{quoteHome.featurePointer}" />
+                        <ui:param name="attached" value="Feature" />
+                    </ui:include>
 
-                <ui:include src="/feeds/feedWidget.xhtml">
-                    <ui:param name="feature" value="#{quoteHome.featureClass.simpleName}" />
-                    <ui:param name="pk" value="#{quoteHome.entity.id}" />
-                </ui:include>
+                    <ui:include src="/voucher/voucherReleatedWidget.xhtml">
+                        <ui:param name="columnClass" value="col-lg-12 col-md-6" />
+                        <ui:param name="featurePointer" value="#{quoteHome.featurePointer}" />
+                        <ui:param name="processNo" value="#{quoteHome.entity.process.processNo}" />
+                        <ui:param name="groupNo" value="#{quoteHome.entity.group.groupNo}" />
+                    </ui:include>
 
+                    <ui:include src="/feeds/feedWidget.xhtml">
+                        <ui:param name="columnClass" value="col-lg-12 col-md-6" />
+                        <ui:param name="feature" value="#{quoteHome.featureClass.simpleName}" />
+                        <ui:param name="pk" value="#{quoteHome.entity.id}" />
+                    </ui:include>
+                </div>
             </div>
 
 

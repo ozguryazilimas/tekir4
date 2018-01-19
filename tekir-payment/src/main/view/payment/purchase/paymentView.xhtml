@@ -19,24 +19,11 @@
         </f:metadata>
     </ui:define>
 
-    <ui:define name="caption">
-        <div class="row">
-            <div class="col-md-6 col-xs-12">
-                <t:outputFeatureLink label="general.label.Account" 
-                			value="#{featureController.getFeatureLink(paymentHome.getAllFeaturePointer(paymentHome.entity.account))}" 
-                            rendered="#{not empty paymentHome.entity.account}" columnClass="col-xs-12"/>                              
-                <t:outputFeatureLink label="general.label.FinanceAccount" 
-                			value="#{featureController.getFeatureLink(paymentHome.getAllFeaturePointer(paymentHome.entity.financeAccount))}" 
-                            rendered="#{not empty paymentHome.entity.financeAccount}" columnClass="col-xs-12"/>               	            
-                <t:outputMoney label="general.label.Amount" value="#{paymentHome.entity.amount}" currency="#{paymentHome.entity.currency}" />
-            </div>
-            <div class="col-md-6 col-xs-12">
-                <t:outputText label="voucher.label.VoucherNo" value="#{paymentHome.entity.voucherNo}"  />
-                <t:outputText label="voucher.label.ReferenceNo" value="#{paymentHome.entity.referenceNo}" />
-                <t:outputText label="voucher.label.Process" value="#{paymentHome.entity.process.processNo}" />
-                <t:outputText label="general.label.Code" value="#{paymentHome.entity.code}" />
-            </div>
-        </div>  
+    <ui:define name="caption-states">
+        <t:stateOutputFeatureLink label="general.label.Account" value="#{featureController.getFeatureLink(paymentHome.getAllFeaturePointer(paymentHome.entity.account))}"  />
+        <t:stateOutputFeatureLink label="general.label.FinanceAccount" value="#{featureController.getFeatureLink(paymentHome.getAllFeaturePointer(paymentHome.entity.financeAccount))}"/>
+        <t:stateOutputMoney label="general.label.Amount" value="#{paymentHome.entity.amount}" currency="#{paymentHome.entity.currency}"/>
+        <t:stateOutputDate label="general.label.Date" value="#{paymentHome.entity.date}"/>
     </ui:define>
 
 

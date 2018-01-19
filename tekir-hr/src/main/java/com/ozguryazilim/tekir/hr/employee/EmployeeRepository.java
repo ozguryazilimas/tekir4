@@ -14,6 +14,7 @@ import com.ozguryazilim.tekir.entities.ContactPhone;
 import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.Employee;
+import com.ozguryazilim.tekir.entities.Employee_;
 import com.ozguryazilim.tekir.entities.AbstractPerson;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
@@ -223,6 +224,10 @@ public abstract class EmployeeRepository extends
                 from.get(Contact_.id),
                 from.get(Contact_.code),
                 from.get(Contact_.name),
+                from.get(Employee_.employeeNo),
+                from.get(Employee_.sgkNo),
+                from.get(Employee_.recruitmentDate),
+                from.get(Employee_.terminationDate),
                 from.get(Contact_.info),
                 from.get(Contact_.active),
                 from.type(),
@@ -242,6 +247,8 @@ public abstract class EmployeeRepository extends
     private void buildSearchTextControl(String searchText, CriteriaBuilder criteriaBuilder, List<Predicate> predicates, Root<? extends Employee> from) {
         if (!Strings.isNullOrEmpty(searchText)) {
             predicates.add(criteriaBuilder.or(criteriaBuilder.like(from.get(Contact_.code), "%" + searchText + "%"),
+            		criteriaBuilder.like(from.get(Employee_.employeeNo), "%" + searchText + "%"),
+            		criteriaBuilder.like(from.get(Employee_.sgkNo), "%" + searchText + "%"),
                     criteriaBuilder.like(from.get(Contact_.name), "%" + searchText + "%")));
         }
     }

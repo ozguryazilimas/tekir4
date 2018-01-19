@@ -10,14 +10,16 @@ import com.ozguryazilim.tekir.entities.Activity;
 import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.Person;
 import com.ozguryazilim.telve.entities.FeaturePointer;
+import com.ozguryazilim.telve.feature.FeatureUtils;
+import com.ozguryazilim.telve.quick.QuickRecordController;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.apache.deltaspike.core.api.config.view.ViewConfig;
 import org.apache.deltaspike.core.api.config.view.metadata.ViewConfigResolver;
 import org.apache.deltaspike.core.api.scope.GroupedConversationScoped;
-import org.apache.deltaspike.jpa.api.transaction.Transactional;
 
 /**
  * Temel Activity Listesini yöneten controller.
@@ -33,6 +35,9 @@ public class ActivityWidget implements Serializable {
 
     @Inject
     private ViewConfigResolver viewConfigResolver;
+    
+    @Inject 
+    private QuickRecordController quickRecordController;
 
     private AbstractPerson person;
     private Corporation corporation;
@@ -57,13 +62,23 @@ public class ActivityWidget implements Serializable {
 
     public List<Activity> getActivityList() {
 
-        //TODO: Feature'e göre arama da eklenecek
+        
+        FeaturePointer fp;
         switch( attached ){
-            case "Person" : return repository.findByPerson(person, filter); 
-            case "ContactPerson" : return repository.findByPerson(person, filter); 
-            case "Employee" : return repository.findByPerson(person, filter); 
-            case "Corporation" : return repository.findByCorporation(corporation, filter); 
-            case "Feature" : return repository.findByFeature(featurePointer, filter); 
+            case "Person" : 
+                fp = FeatureUtils.getFeaturePointer(person);
+                return repository.findByMention(fp, filter); 
+            case "ContactPerson" : 
+                fp = FeatureUtils.getFeaturePointer(person);
+                return repository.findByMention(fp, filter); 
+            case "Employee" : 
+                fp = FeatureUtils.getFeaturePointer(person);
+                return repository.findByMention(fp, filter); 
+            case "Corporation" : 
+                fp = FeatureUtils.getFeaturePointer(corporation);
+                return repository.findByMention(fp, filter); 
+            case "Feature" : 
+                return repository.findByMention(featurePointer, filter); 
             default: return Collections.emptyList();
         }
     }
@@ -86,42 +101,20 @@ public class ActivityWidget implements Serializable {
      *
      * @param activity
      */
-    public void createNew(String activity) {
+    public Class<? extends ViewConfig> createNew(String activity) {
         //FIXME: NPE Kontrolü yapılacak
         AbstractActivityController ctrl = ActivityRegistery.getControllerInstance(activity);
-        ctrl.createNew( person, corporation, featurePointer, false);
+        return ctrl.createActivity( person, corporation, featurePointer, false);
     }
     
-    public void createNewFollowup(String activity) {
-        //FIXME: NPE Kontrolü yapılacak
+    public void createNewQuickRecord( String activity ){
         AbstractActivityController ctrl = ActivityRegistery.getControllerInstance(activity);
-        ctrl.createNew( person, corporation, featurePointer, true);
+        ctrl.createActivity( person, corporation, featurePointer, false);
+        
+        //QuickRecord Controller'ına menü değil activityRecord acmasını söylüyor.
+        quickRecordController.setName("activityQuickRecord");
     }
-
-    /**
-     * Verilen activity için gerekli editorü bulup açar
-     *
-     * @param activity
-     */
-    public void edit(Activity activity) {
-        //FIXME: NPE Kontrolü yapılacak
-        AbstractActivityController ctrl = ActivityRegistery.getControllerInstance(activity);
-        ctrl.edit(activity);
-    }
-
-    /**
-     * Verilen activity'i siler.
-     *
-     * TODO: Yetki kontrolü? Kendininkileri siler, başkasının kileri siler,
-     * sadece şu iş ile ilgili olanları siler?
-     *
-     * @param activity
-     */
-    @Transactional
-    public void delete(Activity activity) {
-        repository.remove(activity);
-    }
-
+    
     /**
      * UI üzerinde activity sunumu için kullanılack olan fragment view id'sini
      * döndürür.
@@ -144,5 +137,12 @@ public class ActivityWidget implements Serializable {
         this.filter = filter;
     }
 
+    public String getAttached() {
+        return attached;
+    }
+
+    public void setAttached(String attached) {
+        this.attached = attached;
+    }
 
 }

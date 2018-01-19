@@ -7,19 +7,20 @@ package com.ozguryazilim.tekir.voucher.number;
 
 import com.ozguryazilim.mutfak.kahve.Kahve;
 import com.ozguryazilim.tekir.voucher.Voucher;
+import com.ozguryazilim.tekir.voucher.config.VoucherPages;
+import com.ozguryazilim.telve.config.AbstractOptionPane;
+import com.ozguryazilim.telve.config.OptionPane;
+import com.ozguryazilim.telve.config.OptionPaneType;
 import com.ozguryazilim.telve.feature.FeatureHandler;
 import com.ozguryazilim.telve.messages.FacesMessages;
 import com.ozguryazilim.telve.view.Pages;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
-import javax.inject.Named;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
 
 /**
@@ -31,9 +32,10 @@ import org.apache.deltaspike.core.api.config.view.ViewConfig;
  * 
  * @author Hakan Uygun
  */
-@Named
-@SessionScoped
-public class VoucherSerialController implements Serializable{
+//@Named
+//@SessionScoped
+@OptionPane( permission = "voucherSerial", optionPage = VoucherPages.VoucherSerial.class, type = OptionPaneType.System)
+public class VoucherSerialController extends AbstractOptionPane{
     
     @Inject @Voucher
     private Instance<FeatureHandler> featureHandlers;
@@ -67,6 +69,7 @@ public class VoucherSerialController implements Serializable{
         
     }
 
+    @Override
     public void save(){
         
         for( Map.Entry<String,String> ve : serials.entrySet()){

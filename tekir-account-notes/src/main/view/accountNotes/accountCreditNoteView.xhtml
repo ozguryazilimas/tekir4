@@ -12,6 +12,7 @@
     <ui:param name="viewState" value="#{accountCreditNoteHome.entity.state.name} #{accountCreditNoteHome.entity.stateReason}" />
     <ui:param name="showCaption" value="true"/>
     <ui:param name="dontShowContentHeader" value="false" />
+    <ui:param name="process" value="false" />
 
     <ui:define name="metadata">
         <f:metadata>
@@ -20,24 +21,10 @@
     </ui:define>
 
 
-    <ui:define name="caption">
-        <div class="row">
-            <div class="col-md-6 col-xs-12">
-                <t:outputFeatureLink label="general.label.Account" 
-                            value="#{featureController.getFeatureLink(accountCreditNoteHome.getAllFeaturePointer(accountCreditNoteHome.entity.account))}" 
-                            rendered="#{not empty accountCreditNoteHome.entity.account}" columnClass="col-xs-12"/>
-             
-                <t:outputMoney label="general.label.Amount" value="#{accountCreditNoteHome.entity.amount}" currency="#{accountCreditNoteHome.entity.currency}" />
-                <t:outputText label="general.label.Info" value="#{accountCreditNoteHome.entity.info}" columnClass="col-xs-12"/>
-                
-            </div>
-            <div class="col-md-6 col-xs-12">
-                <t:outputText label="voucher.label.VoucherNo" value="#{accountCreditNoteHome.entity.voucherNo}"  />
-                <t:outputText label="voucher.label.ReferenceNo" value="#{accountCreditNoteHome.entity.referenceNo}" />
-                <t:outputText label="general.label.Code" value="#{accountCreditNoteHome.entity.code}" />
-            </div>
-        </div>  
-
+    <ui:define name="caption-states">
+        <t:stateOutputFeatureLink label="general.label.Account" value="#{featureController.getFeatureLink(accountCreditNoteHome.getAllFeaturePointer(accountCreditNoteHome.entity.account))}" />
+        <t:stateOutputMoney label="general.label.Amount" value="#{accountCreditNoteHome.entity.amount}" currency="#{accountCreditNoteHome.entity.currency}" />
+        <t:stateOutputDate label="voucher.label.Date" value="#{accountCreditNoteHome.entity.date}"/>
     </ui:define>
 
 </ui:composition>

@@ -8,7 +8,7 @@
 
     <ui:param name="bean" value="#{processHome}" />
     <ui:param name="entityName" value="process" />
-    <ui:param name="viewIdentifier" value="#{bean.entity.processNo}" />
+    <ui:param name="viewIdentifier" value="#{bean.entity.processNo} - #{bean.entity.topic}" />
     <ui:param name="showCaption" value="true"/>
     <ui:param name="dontShowContentHeader" value="false" />
 
@@ -17,20 +17,20 @@
             <f:viewParam name="eid" value="#{processHome.id}" />
         </f:metadata>
     </ui:define>
-    
+
     <ui:define name="context-menu">
-		<li>
+        <li>
             <p:commandLink title="#{messages['general.button.Delete']}" action="#{bean.delete()}" 
                            rendered="#{bean.showDelete() and not empty bean.entity.id and bean.hasDeletePermission() }">
                 <i class="fa fa-trash-o"></i>
                 <h:outputText value=" #{messages['general.button.Delete']}" />
             </p:commandLink>
         </li>
-	</ui:define>
+    </ui:define>
 
     <ui:define name="state-header">
-        
-                <style>
+
+        <style>
 
 
             .ribbon-state { 
@@ -97,7 +97,7 @@
             .ribbon-state li a.POSITIVE:after { border-left-color: #00a65a; }
             .ribbon-state li a.NEGATIVE       { background:        #d33724; }
             .ribbon-state li a.NEGATIVE:after { border-left-color: #d33724; }
-            
+
 
             .ribbon-state li:last-child a {
                 pointer-events: none;
@@ -110,31 +110,43 @@
 
         </style>
 
-        
+
         <ul class="ribbon-state pull-right">
 
-                    <ui:repeat value="#{processHome.processSteps}" var="ms">
-                        <li ><a href="#" class="#{processHome.steps[ms]}">#{messages['feature.caption.'.concat(ms)]}</a></li>
-                    </ui:repeat>
-                </ul>
+            <ui:repeat value="#{processHome.processSteps}" var="ms">
+                <li ><a href="#" class="#{processHome.steps[ms]}">#{messages['feature.caption.'.concat(ms)]}</a></li>
+            </ui:repeat>
+        </ul>
     </ui:define>
-    
+
     <ui:define name="caption">
-        <div class="row">
-            <div>
-            	<t:outputText label="voucher.label.Topic" value="#{bean.entity.topic}" />                          
+        <ul class="caption-states">
+            <t:stateOutputFeatureLink label="general.label.Account" 
+                                      value="#{featureController.getFeatureLink(bean.getAllFeaturePointer(bean.entity.account))}" />                                        	
+            <t:stateOutputEnum label="general.label.Type" itemLabel="processType." value="#{bean.entity.type}"/>
+            <t:stateOutputAny label="voucher.label.Counter" >
+                <t:cellOutputNumber value="#{bean.entity.counter}" maxFraction="0" minFraction="0" />
+            </t:stateOutputAny>
+
+            <t:stateOutputEnum label="general.label.Status" itemLabel="processStatus." value="#{bean.entity.status}"/>
+        </ul>
+    </ui:define>
+
+    <ui:remove>
+        <ui:define name="caption">
+            <div class="row">
+                <t:outputText label="voucher.label.Topic" value="#{bean.entity.topic}" columnClass="col-md-6"/>                          
                 <t:outputFeatureLink label="general.label.Account" 
-                            	value="#{featureController.getFeatureLink(bean.getAllFeaturePointer(bean.entity.account))}" 
-                            	rendered="#{not empty bean.entity.account}" columnClass="col-xs-12"/>                                         	
-                
+                                     value="#{featureController.getFeatureLink(bean.getAllFeaturePointer(bean.entity.account))}" 
+                                     columnClass="col-md-6"/>                                        	
                 <t:outputEnum label="general.label.Type" itemLabel="processType." value="#{bean.entity.type}"/>
                 <t:outputEnum label="general.label.Status" itemLabel="processStatus." value="#{bean.entity.status}"/>
                 <t:outputText label="voucher.label.ProcessNo" value="#{bean.entity.processNo}" />
                 <t:outputNumber label="voucher.label.Counter" value="#{bean.entity.counter}" maxFraction="0" minFraction="0" />
-            </div>         
-        </div>  
+            </div>  
 
 
-    </ui:define>   
+        </ui:define>   
+    </ui:remove>
 
 </ui:composition>
