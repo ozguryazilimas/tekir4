@@ -41,6 +41,7 @@ import com.ozguryazilim.telve.messages.MessagesUtils;
 import com.ozguryazilim.telve.reports.JasperReportHandler;
 
 import javax.inject.Inject;
+
 import org.apache.deltaspike.core.api.provider.BeanProvider;
 
 import org.slf4j.Logger;
@@ -48,13 +49,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Opportunity View Conttroller
+ *
  * @author Hakan Uygun
  */
-@FormEdit(feature=OpportunityFeature.class)
-public class OpportunityHome extends VoucherFormBase<Opportunity>{
-	
+@FormEdit(feature = OpportunityFeature.class)
+public class OpportunityHome extends VoucherFormBase<Opportunity> {
+
     private static Logger LOG = LoggerFactory.getLogger(OpportunityHome.class);
-    
+
     @Inject
     private OpportunityRepository repository;
 
@@ -63,16 +65,16 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
 
     @Inject
     private CurrencyService currencyService;
-    
+
     @Inject
     private AccountTxnService accountTxnService;
-    
+
     @Inject
     private ProcessService processService;
-    
+
     @Inject
     private JasperReportHandler reportHandler;
-    
+
     private OpportunityItem selectedItem;
     private boolean itemEdit = false;
 
@@ -84,15 +86,14 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
 
     @Override
     public void createNew() {
-        super.createNew(); 
-        
+        super.createNew();
+
         getEntity().setCurrency(currencyService.getDefaultCurrency());
         getEntity().setProbability(50);
-        
+
     }
-    
-    
-    
+
+
     @Override
     protected RepositoryBase<Opportunity, ?> getRepository() {
         return repository;
@@ -101,21 +102,21 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
     @Override
     public boolean onBeforeSave() {
 
-    	try {
-			getEntity().setLocalBudget(
-					currencyService.convert(getEntity().getCurrency(), getEntity().getBudget(), getEntity().getDate()));
-		} catch (CurrencyConversionException e) {
-			exchangeRateFetchDialog.openDialog(this);
-			return false;
-		}
+        try {
+            getEntity().setLocalBudget(
+                    currencyService.convert(getEntity().getCurrency(), getEntity().getBudget(), getEntity().getDate()));
+        } catch (CurrencyConversionException e) {
+            exchangeRateFetchDialog.openDialog(this);
+            return false;
+        }
 
-        if( getEntity().getState().equals(VoucherState.DRAFT) && !getEntity().isPersisted()){
+        if (getEntity().getState().equals(VoucherState.DRAFT) && !getEntity().isPersisted()) {
             getEntity().setState(VoucherState.OPEN);
         }
-        
+
         //Opportunity'de bir process id'si doğal olarak olmayacak. Satış süreci ilk kez buradan başlar :)
         //Eğer daha önce bir process alınmamış ise yeni bir tane oluştur.
-        if( getEntity().getProcess() == null ) {
+        if (getEntity().getProcess() == null) {
             getEntity().setProcess(processService.createProcess(getEntity().getAccount(), getEntity().getTopic(), ProcessType.SALES));
         }
 
@@ -125,12 +126,12 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
     @Override
     public boolean onAfterCreate() {
         //Eğer Source bir activity ise geri mention bağlayalım.
-        if( getEntity().getStarter() != null && getEntity().getStarter().getFeature().equals(ActivityFeature.class.getSimpleName())){
+        if (getEntity().getStarter() != null && getEntity().getStarter().getFeature().equals(ActivityFeature.class.getSimpleName())) {
             //FIXME: Bir servis haline getirmek lazım activityHome ile yaptığımız şeyi
             //Bizim FeaturePointer'ımızıbir alalım
             FeaturePointer fp = getFeaturePointer();
 
-            ActivityHome activityHome =  BeanProvider.getContextualReference(ActivityHome.class, true);
+            ActivityHome activityHome = BeanProvider.getContextualReference(ActivityHome.class, true);
             activityHome.setId(getEntity().getStarter().getPrimaryKey());
             activityHome.getEntity().setRegarding(fp);
 
@@ -141,30 +142,29 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
     }
 
 
-
     @Override
     protected VoucherStateConfig buildStateConfig() {
-        VoucherStateConfig config = new VoucherStateConfig();        
-        
-        config.addTranstion(VoucherState.DRAFT, new VoucherStateAction("publish", "fa fa-check" ), VoucherState.OPEN);
-        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("won", "fa fa-check" ), VoucherState.WON);
-        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("loss", "fa fa-close", true ), VoucherState.LOSS);
-        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("cancel", "fa fa-ban", true ), VoucherState.CLOSE);
-        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("revise", "fa fa-unlock", true ), VoucherState.DRAFT);
-        
+        VoucherStateConfig config = new VoucherStateConfig();
+
+        config.addTranstion(VoucherState.DRAFT, new VoucherStateAction("publish", "fa fa-check"), VoucherState.OPEN);
+        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("won", "fa fa-check"), VoucherState.WON);
+        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("loss", "fa fa-close", true), VoucherState.LOSS);
+        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("cancel", "fa fa-ban", true), VoucherState.CLOSE);
+        config.addTranstion(VoucherState.OPEN, new VoucherStateAction("revise", "fa fa-unlock", true), VoucherState.DRAFT);
+
         config.addStateTypeAction(VoucherStateType.OPEN, new VoucherPrintOutAction(this));
         config.addStateTypeAction(VoucherStateType.CLOSE, new VoucherPrintOutAction(this));
-        
+
         return config;
     }
 
-    public void iDontWanna(){
-		FacesMessages.info(
-				formatedMessage.getMessage(
-						MessagesUtils.getMessage("opportunity.info.ExchangeRate"),
-						new Object[]{MessagesUtils.getMessage("module.caption.ExchangeRate")}
-						)
-				);
+    public void iDontWanna() {
+        FacesMessages.info(
+                formatedMessage.getMessage(
+                        MessagesUtils.getMessage("opportunity.info.ExchangeRate"),
+                        new Object[]{MessagesUtils.getMessage("module.caption.ExchangeRate")}
+                )
+        );
     }
 
 
@@ -183,9 +183,10 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
             return ((Person) getEntity().getAccount()).getCorporation();
         }
     }
+
     // FeatureLink yönlendirmesi
-    public FeaturePointer getAllFeaturePointer(EntityBase contact){
-    		return FeatureUtils.getFeaturePointer(contact);
+    public FeaturePointer getAllFeaturePointer(EntityBase contact) {
+        return FeatureUtils.getFeaturePointer(contact);
     }
 
     public AttachmentContext getContext() {
@@ -193,7 +194,7 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
 
         String accountRoot = getEntity().getAccount().getName() + "[" + getEntity().getAccount().getCode() + "]";
         FeaturePointer fp = getFeaturePointer();
-        result.setRoot( accountRoot + "/" + fp.getFeature() + "/" + fp.getBusinessKey());
+        result.setRoot(accountRoot + "/" + fp.getFeature() + "/" + fp.getBusinessKey());
         result.setUsername("Bişi");
         result.setFeaturePointer(getFeaturePointer());
 
@@ -208,22 +209,22 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
         this.selectedItem = selectedItem;
     }
 
-    public void createItem(){
+    public void createItem() {
         selectedItem = new OpportunityItem();
         itemEdit = false;
     }
 
-    public void editItem(Integer ix){
+    public void editItem(Integer ix) {
         selectedItem = getEntity().getItems().get(ix);
         itemEdit = true;
     }
 
-    public void deleteItem(Integer ix){
+    public void deleteItem(Integer ix) {
         getEntity().getItems().remove(ix.intValue());
     }
 
-    public void saveItem(){
-        if( !itemEdit ){
+    public void saveItem() {
+        if (!itemEdit) {
             selectedItem.setMaster(getEntity());
             getEntity().getItems().add(selectedItem);
         }
