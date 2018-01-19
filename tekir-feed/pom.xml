@@ -36,6 +36,11 @@
             <artifactId>telve-core</artifactId>
             <version>${version.telve}</version>
         </dependency>
+        <dependency>
+            <groupId>com.ozguryazilim.mutfak</groupId>
+            <artifactId>telve-dashboard</artifactId>
+            <version>${version.telve}</version>
+        </dependency>
         <!--
         <dependency>
             <groupId>com.ozguryazilim.mutfak</groupId>

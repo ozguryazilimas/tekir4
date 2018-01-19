@@ -19,25 +19,10 @@
         </f:metadata>
     </ui:define>
 
-    <ui:define name="caption">
-        <div class="row">
-            <div class="col-md-6 col-xs-12">
-                <t:outputEntityLink label="general.label.Account" value="#{purchaseInvoiceHome.entity.account}" view="/contact/contactView.xhtml" />
-                <t:outputMoney label="general.label.TotalAmount" value="#{purchaseInvoiceHome.entity.total}" currency="#{purchaseInvoiceHome.entity.currency}" />
-                <ui:remove>
-                <t:outputText label="purchaseInvoice.label.Revision" value="#{purchaseInvoiceHome.entity.revision}"  />
-                
-                <t:outputDate label="general.label.ExpireDate" value="#{purchaseInvoiceHome.entity.expireDate}"  />
-                </ui:remove>
-
-            </div>
-            <div class="col-md-6 col-xs-12">
-                <t:outputText label="voucher.label.VoucherNo" value="#{purchaseInvoiceHome.entity.voucherNo}"  />
-                <t:outputText label="voucher.label.ReferenceNo" value="#{purchaseInvoiceHome.entity.referenceNo}" />
-                <t:outputText label="voucher.label.Process" value="#{purchaseInvoiceHome.entity.process.processNo}" />
-                <t:outputText label="general.label.Code" value="#{purchaseInvoiceHome.entity.code}" />
-            </div>
-        </div>  
+    <ui:define name="caption-states">
+        <t:stateOutputFeatureLink label="general.label.Account" value="#{featureController.getFeatureLink(contactBrowse.getAllFeaturePointer(purchaseInvoiceHome.entity.account))}"  />
+        <t:stateOutputMoney label="general.label.TotalAmount" value="#{purchaseInvoiceHome.entity.total}" currency="#{purchaseInvoiceHome.entity.currency}" />
+        <t:stateOutputDate label="general.label.ShippingDate" value="#{purchaseInvoiceHome.entity.shippingDate}"/>
     </ui:define>
 
 

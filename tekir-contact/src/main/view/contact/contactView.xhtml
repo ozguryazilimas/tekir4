@@ -8,7 +8,7 @@
 
     <ui:param name="bean" value="#{contactHome}" />
     <ui:param name="entityName" value="contact" />
-    <ui:param name="viewIdentifier" value="#{contactHome.entity.name}" />
+    <ui:param name="viewIdentifier" value="#{contactHome.entity.name} [#{contactHome.entity.code}]" />
     <ui:param name="showCaption" value="true"/>
     <ui:param name="dontShowContentHeader" value="true" />
 
@@ -28,6 +28,12 @@
                         #{userLookup.getUserName(contactHome.entity.owner)}
                     </div>
                 </li>
+                <li role="presentation">
+                    <div style="font-weight: bold;">#{messages['general.label.Status']}</div>
+                    <div >
+                        <t:cellOutputBoolean itemLabel="general.boolean.active." value="#{contactHome.entity.active}" />
+                    </div>
+                </li>
                 <ui:remove>
                     Buraya Puanlama v.b. gelebilir mi? Bu bizim için değerli bir müşteridir v.b.
                 <li role="presentation">
@@ -44,24 +50,33 @@
     </ui:define>
 
     <ui:define name="caption">
-        <div class="row">
-            <t:outputText label="general.label.Name" value="#{contactHome.entity.name}" />
-            <t:outputText label="general.label.Code" value="#{contactHome.entity.code}" />
-        </div>            
-        <div class="row">        
-            <t:outputText label="general.label.Info" value="#{contactHome.entity.info}" />
-            <t:outputBoolean label="general.label.Status" itemLabel="general.boolean.active." value="#{contactHome.entity.active}" />
-        </div>  
-        <div class="row">        
-            <div class="col-md-6 col-xs-12">
-                <ul class="list-inline text-sm text-muted">
-                    <ui:repeat value="#{contactHome.entity.contactRoles}" var="item" >
-                        <li><i class="fa fa-tag" /> #{messages['contact.role.'.concat(item)]}</li>
-                    </ui:repeat>
-                </ul>
-            </div>
-        </div>
+        <ul class="caption-states">
+            <ui:fragment rendered="#{contactHome.entity.class.simpleName eq 'Person'}">
+                <t:stateOutputFeatureLink label="general.label.Corporation" value="#{featureController.getFeatureLink(contactHome.getAllFeaturePointer(contactHome.entity.corporation))}" />
+                <t:stateOutputText label="contact.label.CorporationName" value="#{contactHome.entity.corporationName}" /> 
+                <t:stateOutputText label="contact.label.JobTitle" value="#{contactHome.entity.jobTitle}" />
+            </ui:fragment>
+            <ui:fragment rendered="#{contactHome.entity.class.simpleName eq 'Corporation'}">
+                <t:stateOutputFeatureLink label="contact.label.PrimaryContact" 
+                            	value="#{featureController.getFeatureLink(contactHome.getAllFeaturePointer(contactHome.entity.primaryContact))}" />
 
+                <t:stateOutputFeatureLink label="contact.label.ParentCorporation" 
+                            	value="#{featureController.getFeatureLink(contactHome.getAllFeaturePointer(contactHome.entity.parentCorporation))}" />
+            </ui:fragment>
+            <t:stateOutputText label="contact.label.PrimaryMobile" value="#{contactHome.entity.primaryMobile.number}" />
+            <t:stateOutputText label="contact.label.PrimaryPhone" value="#{contactHome.entity.primaryPhone.number}" />
+            <t:stateOutputText label="contact.label.PrimaryEmail" value="#{contactHome.entity.primaryEmail.address}" />
+        </ul>
+        
+        <ui:fragment rendered="#{not empty contactHome.entity.info}">
+            <p><i class="fa fa-info"/> #{contactHome.entity.info}</p>
+        </ui:fragment>
+        
+        <ul class="list-inline text-sm text-muted">
+            <ui:repeat value="#{contactHome.entity.contactRoles}" var="item" >
+                <li><i class="fa fa-tag" /> #{messages['contact.role.'.concat(item)]}</li>
+            </ui:repeat>
+        </ul>
     </ui:define>
 
     <ui:define name="context-menu">

@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                template="/layout/optionPaneBase.xhtml">
+
+    <ui:param name="bean" value="#{corporateOptionPane}" />
+    <ui:define name="content">
+
+        <div class="row">
+            <t:inputText label="corporateOption.label.name" value="#{corporateOptionPane.name}" columnClass="col-sm-12"/>
+
+            <t:inputTextarea label="corporateOption.label.address" value="#{corporateOptionPane.invoiceAddress}" columnClass="col-sm-12"/>
+        </div>
+        <div class="row">
+            <t:inputText label="corporateOption.label.taxOffice" value="#{corporateOptionPane.taxOffice}" />
+            <t:inputText label="corporateOption.label.taxNumber" value="#{corporateOptionPane.taxNumber}" />
+        </div>
+
+    </ui:define>
+
+
+
+
+
+</ui:composition>

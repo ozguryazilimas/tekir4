@@ -120,17 +120,19 @@ public abstract class InvoiceFeeder<E extends Invoice> extends AbstractFeeder<E>
 	 * @return
 	 */
 	protected String getMessage(VoucherStateChange event) {
-		switch (event.getTo().getName()) {
-		case "OPEN":
-			return getProcessType() + " invoice created";
-		case "CLOSE":
-			return getProcessType() + " invoice Won. Congrats!";
-		case "LOST":
-			return getProcessType() + " invoice lost! " + event.getPayload().getStateReason();
-		case "CANCELED":
-			return getProcessType() + " invoice canceled. " + event.getPayload().getStateReason();
+		switch (event.getAction().getName()) {
+		case "CREATE":
+			return "feeder.messages.InvoiceFeeder.CREATE$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo();
+		case "publish":
+			return "feeder.messages.InvoiceFeeder.PUBLISH$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo();
+		case "revise":
+			return "feeder.messages.InvoiceFeeder.REVISE$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo() + "$%&" + event.getPayload().getStateReason();
+		case "loss":
+			return "feeder.messages.InvoiceFeeder.LOST$%&" + event.getPayload().getVoucherNo() + "$%&" + event.getPayload().getStateReason();
+		case "cancel":
+			return "feeder.messages.InvoiceFeeder.CANCEL$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo() + "$%&" + event.getPayload().getStateReason();
 		default:
-			return getProcessType() + " invoice created";
+			return "feeder.messages.InvoiceFeeder.DEFAULT$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo();
 		}
 	}
 

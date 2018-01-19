@@ -110,17 +110,21 @@ public class QuoteFeeder extends AbstractFeeder<Quote> {
 	 * @return
 	 */
 	protected String getMessage(VoucherStateChange event) {
-		switch (event.getTo().getName()) {
-		case "OPEN":
-			return "Quote created";
-		case "CLOSE":
-			return "Quote Won. Congrats!";
-		case "LOST":
-			return "Quote lost! " + event.getPayload().getStateReason();
-		case "CANCELED":
-			return "Quote canceled. " + event.getPayload().getStateReason();
+		switch (event.getAction().getName()) {
+		case "CREATE":
+			return "feeder.messages.QuoteFeeder.CREATE$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo();
+		case "publish":
+			return "feeder.messages.QuoteFeeder.PUBLISH$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo();
+		case "revise":
+			return "feeder.messages.QuoteFeeder.REVISE$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo() + "$%&" + event.getPayload().getStateReason();
+		case "won":
+			return "feeder.messages.QuoteFeeder.WON$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo();
+		case "loss":
+			return "feeder.messages.QuoteFeeder.LOST$%&" + event.getPayload().getVoucherNo() + "$%&" + event.getPayload().getStateReason();
+		case "cancel":
+			return "feeder.messages.QuoteFeeder.CANCEL$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo() + "$%&" + event.getPayload().getStateReason();
 		default:
-			return "Quote created";
+			return "feeder.messages.QuoteFeeder.DEFAULT$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo();
 		}
 	}
 

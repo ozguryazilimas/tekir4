@@ -15,9 +15,15 @@
 		</permission>
 	</permissionGroup>
 	<permissionGroup name="Reports">
-		<permission target="financialStatusReport">
+		<permission target="financeAccountTxnReport">
 			<action name="select" scope="owner,group" />
 			<action name="exec" scope="owner,group" />
 		</permission>
 	</permissionGroup>
+    <permissionGroup name="Reports">
+        <permission target="financialStatusReport">
+            <action name="select" scope="owner,group" />
+            <action name="exec" scope="owner,group" />
+        </permission>
+    </permissionGroup>
 </permissions>

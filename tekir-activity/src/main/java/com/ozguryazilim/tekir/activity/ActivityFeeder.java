@@ -11,8 +11,13 @@ import com.ozguryazilim.tekir.feed.Feeder;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureRegistery;
+import com.ozguryazilim.telve.forms.EntityChangeEvent;
+import com.ozguryazilim.telve.qualifiers.After;
+import com.ozguryazilim.telve.qualifiers.EntityQualifier;
 import java.util.ArrayList;
 import java.util.List;
+import javax.enterprise.event.Observes;
+import javax.enterprise.event.TransactionPhase;
 import javax.inject.Inject;
 
 /**
@@ -25,8 +30,9 @@ public class ActivityFeeder extends AbstractFeeder<Activity> {
     @Inject
     private Identity identity;
 
-    public void feed(Activity entity) {
-
+    public void feed(@Observes(during = TransactionPhase.IN_PROGRESS) @EntityQualifier(entity = Activity.class) @After EntityChangeEvent event) {
+        Activity entity = (Activity) event.getEntity();
+        
         List<FeaturePointer> mentions = new ArrayList<>();
 
         if (entity.getCorporation() != null) {
@@ -57,9 +63,14 @@ public class ActivityFeeder extends AbstractFeeder<Activity> {
         mentions.add(fp);
 
         //TODO: Hatta planlanan bir görüşme ise User'ı da mentiona katmak lazım
-        
         //TODO: Aslında mesajları activity status'e göre düzenlemek lazım. Mesela başarız görüşme. Şu kişi için görüşme planlaması v.b.
-        sendFeed(entity.getDirection().name(), getClass().getSimpleName() + "." + entity.getClass().getSimpleName(), identity.getLoginName(), entity.getAssignee() + " " + entity.getSubject(), entity.getBody(), mentions);
+        //FIXME: Burada activity body'si yerine aslında daha doğru bir metin feed etmek lazım. Ne oldu? Ne yapıyoruz gibi.
+        sendFeed(entity.getDirection().name(), 
+                getClass().getSimpleName() + "." + entity.getClass().getSimpleName(), 
+                identity.getLoginName(), 
+                "[" + event.getAction() + "] " + entity.getSubject(),  //FIXME: i18n
+                entity.getBody(), 
+                mentions);
 
     }
 }

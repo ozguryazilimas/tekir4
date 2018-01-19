@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"
+       bean-discovery-mode="annotated">
+    
+    <!--
+    <interceptors>
+        <class>org.apache.deltaspike.jpa.impl.transaction.TransactionalInterceptor</class>
+    </interceptors>
+    -->
+    <alternatives>
+        <!-- class>com.ozguryazilim.telve.sequence.SequenceMemoryStore</class -->
+        <!-- class>org.apache.deltaspike.jpa.impl.transaction.BeanManagedUserTransactionStrategy</class -->
+        <!-- class>com.ozguryazilim.telve.TelveUserTransactionStrategy</class -->
+    </alternatives>
+    
+</beans>

@@ -18,71 +18,96 @@
         </f:metadata>
     </ui:define>
 
-    
+
     <ui:define name="customHeader">
         <section class="content-header">
-          <p:outputPanel id="states">
-            <ul class="states pull-right">
-                <li class="#{financeAccountHome.balance lt 0 ? 'text-red' : ''}">
-                    <div style="font-weight: bold;">#{messages['general.label.Balance']}</div>
-                    <div ><t:cellOutputMoney value="#{financeAccountHome.balance}" currency="#{currencyService.reportCurrency}" styleClass="#{financeAccountHome.balance lt 0 ? 'text-red' : ''}" /></div>
-                </li>
-                <li role="presentation">
-                    <div style="font-weight: bold;"> #{messages['account.label.Owner']}</div>
-                    <div >
-                        #{userLookup.getUserName(financeAccountHome.entity.owner)}
-                    </div>
-                </li>
-                <li role="presentation">
-                    <div style="font-weight: bold;">#{financeAccountHome.entity.status} </div>
-                    <div >#{financeAccountHome.entity.statusReason}</div>
-                </li>
+            <p:outputPanel id="states">
+                <ul class="states pull-right">
+                    <li class="#{financeAccountHome.balance lt 0 ? 'text-danger' : ''}">
+                        <div style="font-weight: bold;">#{messages['general.label.Balance']}</div>
+                        <div ><t:cellOutputMoney value="#{financeAccountHome.balance}" currency="#{currencyService.reportCurrency}" styleClass="#{financeAccountHome.balance lt 0 ? 'text-red' : ''}" /></div>
+                    </li>
+                    <li role="presentation">
+                        <div style="font-weight: bold;"> #{messages['account.label.Owner']}</div>
+                        <div >
+                            #{userLookup.getUserName(financeAccountHome.entity.owner)}
+                        </div>
+                    </li>
+                    <li role="presentation">
+                        <div style="font-weight: bold;">#{financeAccountHome.entity.status} </div>
+                        <div >#{financeAccountHome.entity.statusReason}</div>
+                    </li>
 
-            </ul>
-            	</p:outputPanel>
+                </ul>
+            </p:outputPanel>
             <i class="fa fa-3x #{messages['account.type.icon.'.concat(financeAccountHome.entity.type)]} pull-left" />
             <small class="text-muted">#{ messages[pageTitleResolver.pageTitle] }</small>
             <h1>#{messages['account.type.caption.'.concat(financeAccountHome.entity.type)]}  <small>#{ viewIdentifier }</small></h1> 
         </section>
     </ui:define>
-	
-	
-	<ui:define name="context-menu-2">
-		<li>		
-		 	<p:commandLink action="#{changeOwnerDialog.openDialog()}" styleClass="context-command" 
- 						   ajax="false" rendered="#{financeAccountHome.hasChangeOwnerPermission()}">
-		 		<i class="fa fa-random"></i>
- 		 		<h:outputText value=" #{messages['general.button.ChangeOwner']}" />
-       	 		<p:ajax event="dialogReturn" listener="#{financeAccountHome.onOwnerChange}" update=":states" />
-         	</p:commandLink>        
+
+
+    <ui:define name="context-menu">
+        <li>
+            <p:commandLink action="#{financeAccountHome.newCashAccount()}" styleClass="context-command" rendered="#{bean.hasInsertPermission()}">
+                <i class="fa fa-money"></i>
+                <h:outputText value=" #{messages['general.button.AddCashAccount']}" />
+            </p:commandLink>
+        </li>
+        <li>
+            <p:commandLink action="#{financeAccountHome.newBankAccount()}" styleClass="context-command" rendered="#{bean.hasInsertPermission()}">
+                <i class="fa fa-bank"></i>
+                <h:outputText value=" #{messages['general.button.AddBankAccount']}" />
+            </p:commandLink>
+        </li>
+        <li>
+            <p:commandLink action="#{financeAccountHome.newCreditCardAccount()}" styleClass="context-command" rendered="#{bean.hasInsertPermission()}">
+                <i class="fa fa-credit-card"></i>
+                <h:outputText value=" #{messages['general.button.AddCreditCardAccount']}" />
+            </p:commandLink>
+        </li>        
+        <li>
+            <p:commandLink action="#{bean.edit()}" title="#{messages['general.button.Edit']}" ajax="false" rendered="#{bean.hasUpdatePermission()}">
+                <i class="fa fa-pencil"></i>
+                <h:outputText value=" #{messages['general.button.Edit']}" />
+            </p:commandLink>
+        </li>
+        <li>		
+            <p:commandLink action="#{changeOwnerDialog.openDialog()}" styleClass="context-command" 
+                           ajax="false" rendered="#{financeAccountHome.hasChangeOwnerPermission()}">
+                <i class="fa fa-random"></i>
+                <h:outputText value=" #{messages['general.button.ChangeOwner']}" />
+                <p:ajax event="dialogReturn" listener="#{financeAccountHome.onOwnerChange}" update=":states" />
+            </p:commandLink>        
        	</li>
+
+
     </ui:define>
-   
 
     <ui:define name="caption">
         <div class="row">
-            <div class="col-md-6 col-xs-12">
+            <div class="col-md-6">
                 <div class="row">
-                <t:outputText label="general.label.Code" value="#{financeAccountHome.entity.code}" />
-                <t:outputText label="general.label.Name" value="#{financeAccountHome.entity.name}" />
-                <t:outputText label="general.label.Bank" value="#{financeAccountHome.entity.bank}" rendered="#{financeAccountHome.entity.type ne 'CASH'}"/>
-                <t:outputText label="general.label.BankBranch" value="#{financeAccountHome.entity.branch}" rendered="#{financeAccountHome.entity.type eq 'BANK'}"/>
-                <t:outputText label="general.label.AccountNo" value="#{financeAccountHome.entity.accountNo}" rendered="#{financeAccountHome.entity.type ne 'CASH'}"/>
-                <t:outputText label="general.label.IBAN" value="#{financeAccountHome.entity.iban}" rendered="#{financeAccountHome.entity.type eq 'BANK'}"/>
+                    <t:outputText label="general.label.Code" value="#{financeAccountHome.entity.code}" columnClass="col-sm-6"/>
+                    <t:outputText label="general.label.Name" value="#{financeAccountHome.entity.name}" columnClass="col-sm-6"/>
+                    <t:outputText label="general.label.Bank" value="#{financeAccountHome.entity.bank}" rendered="#{financeAccountHome.entity.type ne 'CASH'}" columnClass="col-sm-6"/>
+                    <t:outputText label="general.label.BankBranch" value="#{financeAccountHome.entity.branch}" rendered="#{financeAccountHome.entity.type eq 'BANK'}" columnClass="col-sm-6"/>
+                    <t:outputText label="general.label.AccountNo" value="#{financeAccountHome.entity.accountNo}" rendered="#{financeAccountHome.entity.type ne 'CASH'}" columnClass="col-sm-6"/>
+                    <t:outputText label="general.label.IBAN" value="#{financeAccountHome.entity.iban}" rendered="#{financeAccountHome.entity.type eq 'BANK'}" columnClass="col-sm-6"/>
                 </div>
-                
+
             </div>
-            <div class="col-md-6 col-xs-12">
+            <div class="col-md-6">
                 <div class="row">
-                <t:outputDate label="general.label.OpenDate" value="#{financeAccountHome.entity.openDate}" />
-                <t:outputDate label="general.label.CloseDate" value="#{financeAccountHome.entity.closeDate}" />
-                <t:outputText label="general.label.Info" value="#{financeAccountHome.entity.info}" columnClass="col-xs-12" />
+                    <t:outputDate label="general.label.OpenDate" value="#{financeAccountHome.entity.openDate}" columnClass="col-sm-6"/>
+                    <t:outputDate label="general.label.CloseDate" value="#{financeAccountHome.entity.closeDate}" columnClass="col-sm-6"/>
+                    <t:outputText label="general.label.Info" value="#{financeAccountHome.entity.info}" columnClass="col-sm-12" />
                 </div>
             </div>
         </div>  
         <div class="row">        
-            <div class="col-md-12 col-xs-12">
-                <ul class="list-inline text-sm text-muted">
+            <div class="col-sm-12">
+                <ul class="list-inline text-sm text-muted" style="padding-top: 8px;">
                     <ui:repeat value="#{financeAccountHome.entity.accountRoles}" var="item" >
                         <li><i class="fa fa-tag" /> #{messages['account.role.'.concat(item)]}</li>
                     </ui:repeat>

@@ -1,0 +1,16 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents">
+
+    
+    <div class="row">
+        <t:inputText label="command.label.interval" value="#{purchaseOrderReminderCommandEditor.command.interval}" required="true" placeholder="2g3s v.b. bir period giriniz" />
+        <t:inputEnum label="command.order.label.type" value="#{purchaseOrderReminderCommandEditor.command.type}" itemLabel="command.order.type." hasNullValue="false"/>
+    </div>
+    
+    
+</ui:composition>

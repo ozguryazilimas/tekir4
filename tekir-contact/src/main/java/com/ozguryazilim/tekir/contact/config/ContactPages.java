@@ -112,6 +112,9 @@ public interface ContactPages extends Pages {
         @SecuredPage("accountTxn") @View 
         class AccountTxnSubView implements Admin {};
         
+        @SecuredPage("document") @View 
+        class DocumentSubView implements Admin {};
+        
         @SecuredPage() @View
 	class NewPersonPopup
 			implements
@@ -159,5 +162,14 @@ public interface ContactPages extends Pages {
 	@PageTitle("report.name.accountStatusReport")
 	class AccountStatusReport implements ContactPages {
 	}
+        
+        @SecuredPage() @View	
+        class QuickPersonPanel implements ContactPages {	}
+        
+        @SecuredPage() @View	
+        class QuickCorporationPanel implements ContactPages {}
+        
+        @SecuredPage() @View	
+        class QuickContactSetPanel implements ContactPages {}
 
 }

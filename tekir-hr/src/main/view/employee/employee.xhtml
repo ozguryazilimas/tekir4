@@ -1,0 +1,69 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"                
+                template="/layout/editBase.xhtml">
+
+    <ui:param name="homeBean" value="#{employeeHome}" />
+    <ui:param name="entity" value="#{employeeHome.entity}" />
+    <ui:param name="dontShowContentHeader" value="true" />
+
+
+    <ui:define name="customHeader">
+        <section class="content-header">
+            <ui:fragment rendered="#{viewState ne ''}" >
+                <div class="pull-right">
+                    #{viewState}
+                </div>
+            </ui:fragment>
+            <small class="text-muted">#{ messages[pageTitleResolver.pageTitle] }</small>
+            <h1>#{messages['contact.class.'.concat(employeeHome.entity.class.simpleName)]}</h1> 
+        </section>
+    </ui:define>
+
+    <ui:define name="form">
+
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <t:inputText label="general.label.Code" value="#{employeeHome.entity.code}" columnClass="col-xs-6" required="true"/>
+                </div>
+
+                <div class="row">
+                    <t:inputText label="general.label.FirstName" value="#{employeeHome.entity.firstName}" columnClass="col-xs-6" required="true"/>
+                    <t:inputText label="general.label.LastName" value="#{employeeHome.entity.lastName}" columnClass="col-xs-6" required="true"/>
+
+                </div>  
+
+                <div class="row">
+                    <t:inputText label="contact.label.SSN" value="#{employeeHome.entity.ssn}" columnClass="col-xs-6" required="false"/>
+                    <t:inputText label="contact.label.JobTitle" value="#{employeeHome.entity.jobTitle}" columnClass="col-xs-6" required="false"/>
+
+                </div>  
+
+                <div class="row">
+                    <t:accordion label="employee.label.ContactInformations" >
+                        <div class="row">
+                            <t:inputDialog label="contact.label.PrimaryMobile" value="#{employeeHome.entity.primaryMobile.caption}" action="#{phoneEditor.editPrimaryMobile(employeeHome.entity, employeeHome.entity.primaryMobile)}" icon="fa fa-mobile"/>
+                            <t:inputDialog label="contact.label.PrimaryPhone" value="#{employeeHome.entity.primaryPhone.caption}" action="#{phoneEditor.editPrimaryPhone(employeeHome.entity, employeeHome.entity.primaryPhone)}" icon="fa fa-phone"/>
+                            <t:inputDialog label="contact.label.PrimaryFax" value="#{employeeHome.entity.primaryFax.caption}" action="#{phoneEditor.editPrimaryFax(employeeHome.entity, employeeHome.entity.primaryFax)}" icon="fa fa-fax"/>
+                            <t:inputDialog label="contact.label.PrimaryEmail" value="#{employeeHome.entity.primaryEmail.caption}" action="#{emailEditor.editPrimaryEmail(employeeHome.entity, employeeHome.entity.primaryEmail)}" icon="fa fa-envelope-o"/>
+                            <t:inputDialog label="contact.label.PrimaryAddress" value="#{employeeHome.entity.primaryAddress.caption}" action="#{addressEditor.editPrimaryAddress(employeeHome.entity, employeeHome.entity.primaryAddress)}" icon="fa fa-map-o"/>
+                            <t:inputDialog label="contact.label.PrimaryBank" value="#{employeeHome.entity.primaryBank.caption}" action="#{bankEditor.editPrimaryBank(employeeHome.entity, employeeHome.entity.primaryBank)}" icon="fa fa-bank"/>
+                        </div>
+                    </t:accordion>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <t:inputTextarea label="general.label.Info" value="#{employeeHome.entity.info}" columnClass="col-xs-12"/>
+                </div>
+            </div>
+        </div>
+
+    </ui:define> 
+
+
+</ui:composition>

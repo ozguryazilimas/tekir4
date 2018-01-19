@@ -7,10 +7,10 @@ package com.ozguryazilim.tekir.payment;
 
 import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
+import com.ozguryazilim.tekir.entities.AbstractPerson;
 import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.PaymentBase;
-import com.ozguryazilim.tekir.entities.Person;
 import com.ozguryazilim.tekir.entities.ProcessType;
 import com.ozguryazilim.tekir.entities.VoucherMatchable;
 import com.ozguryazilim.tekir.entities.VoucherState;
@@ -21,6 +21,9 @@ import com.ozguryazilim.tekir.voucher.VoucherStateAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateConfig;
 import com.ozguryazilim.tekir.voucher.matcher.VoucherMatcherService;
 import com.ozguryazilim.tekir.voucher.process.ProcessService;
+import com.ozguryazilim.telve.entities.EntityBase;
+import com.ozguryazilim.telve.entities.FeaturePointer;
+import com.ozguryazilim.telve.feature.FeatureUtils;
 import com.ozguryazilim.telve.messages.FacesMessages;
 import com.ozguryazilim.telve.reports.JasperReportHandler;
 
@@ -124,9 +127,9 @@ public abstract class PaymentHomeBase<E extends PaymentBase> extends VoucherForm
         
     }
     
-    public Person getPerson() {
-        if (getAccount() instanceof Person) {
-            return (Person) getAccount();
+    public AbstractPerson getPerson() {
+        if (getAccount() instanceof AbstractPerson) {
+            return (AbstractPerson) getAccount();
         } else {
             return ((Corporation) getAccount()).getPrimaryContact();
         }
@@ -136,7 +139,7 @@ public abstract class PaymentHomeBase<E extends PaymentBase> extends VoucherForm
         if (getAccount() instanceof Corporation) {
             return (Corporation) getAccount();
         } else {
-            return ((Person) getAccount()).getCorporation();
+            return ((AbstractPerson) getAccount()).getCorporation();
         }
     }
 
@@ -170,4 +173,8 @@ public abstract class PaymentHomeBase<E extends PaymentBase> extends VoucherForm
     
     protected abstract ProcessType getProcessType();
     
+    // FeatureLink yönlendirmesi
+    public FeaturePointer getAllFeaturePointer(EntityBase contact){
+    		return FeatureUtils.getFeaturePointer(contact);
+    }
 }

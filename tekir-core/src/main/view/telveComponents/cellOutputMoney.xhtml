@@ -19,7 +19,7 @@
 
     <composite:implementation>
 
-        <p:outputPanel  styleClass="value currency #{cc.attrs.styleClass}" style="text-align: right">
+        <span  styleClass="currency #{cc.attrs.styleClass}" style="text-align: right">
             <h:outputText id="#{cc.id}_inp" value="#{cc.attrs.value}" >
             	<f:converter converterId="NumberConverter" />
                 	<f:attribute name="decimalSeperator" value="#{cc.attrs.decimalSeperator}" />
@@ -28,7 +28,7 @@
                		<f:attribute name="minFraction" value="#{cc.attrs.minFraction}"/>    
                		</h:outputText>
             <i class="#{messages['currency.symbol.'.concat(cc.attrs.currency)]}" title="#{messages['currency.'.concat(cc.attrs.currency)]}"/>
-        </p:outputPanel>
+        </span>
 
     </composite:implementation>
 

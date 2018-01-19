@@ -8,59 +8,64 @@
 
     <ui:define name="content">     
         <div class="row">
-            <div class="col-md-3 col-xs-12">
-                <t:accordion icon="fa fa-stack-exchange" label="general.label.Summary" columnClass="col-xs-12">
-                    <t:outputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(homeBean.entity.starter)}" columnClass="col-xs-12"/>
-                    <ui:remove>
-                        bir output account input account seti mi hazırlasak?
-                    </ui:remove>
-                    <t:outputEntityLink label="general.label.Account" value="#{homeBean.entity.account}" view="/contact/contactView.xhtml" columnClass="col-xs-12"/>
-                    <t:outputEntityLink label="financeAccount.label.Account" value="#{homeBean.entity.financeAccount}" view="/finance/financeAccountView.xhtml" columnClass="col-xs-12"/>
-                    
-                    <t:outputMoney label="general.label.Amount" value="#{homeBean.entity.amount}" currency="#{homeBean.entity.currency}" columnClass="col-xs-12"/>
-                    <t:outputMoney label="general.label.LocalAmount" value="#{homeBean.entity.localAmount}" currency="#{currencyService.reportCurrency}" columnClass="col-xs-12"/>
-                    
-                </t:accordion>
+            <div class="col-md-7">
+                <div class="row">
+                    <t:accordion icon="fa fa-stack-exchange" label="general.label.Summary">
+                        
+                        <t:outputText label="voucher.label.Topic" value="#{homeBean.entity.topic}"  columnClass="col-sm-12"/>
+                        <t:outputFeatureLink label="general.label.Account" 
+                                             value="#{featureController.getFeatureLink(homeBean.getAllFeaturePointer(homeBean.entity.account))}" 
+                                             rendered="#{not empty homeBean.entity.account}" columnClass="col-lg-6"/>             
+                        <t:outputFeatureLink label="general.label.FinanceAccount" 
+                                             value="#{featureController.getFeatureLink(homeBean.getAllFeaturePointer(homeBean.entity.financeAccount))}" 
+                                             rendered="#{not empty homeBean.entity.financeAccount}" columnClass="col-lg-6"/>  
+                        <t:outputMoney label="general.label.Amount" value="#{homeBean.entity.amount}" currency="#{homeBean.entity.currency}" columnClass="col-sm-6"/>
+                        <t:outputMoney label="general.label.LocalAmount" value="#{homeBean.entity.localAmount}" currency="#{currencyService.reportCurrency}" columnClass="col-sm-6"/>
+                        <t:outputText label="general.label.Info" value="#{homeBean.entity.info}" columnClass="col-md-12"/>
+                    </t:accordion>
 
-                <t:accordion icon="fa fa-file-text" label="general.label.Voucher" columnClass="col-xs-12">
-                    <t:outputText label="voucher.label.VoucherNo" value="#{homeBean.entity.voucherNo}"  columnClass="col-xs-12"/>
-                    <t:outputText label="voucher.label.ReferenceNo" value="#{homeBean.entity.referenceNo}" columnClass="col-xs-12"/>
-                    <t:outputText label="voucher.label.Process" value="#{homeBean.entity.process.processNo}" columnClass="col-xs-12"/>
-                    <t:outputText label="voucher.label.Owner" value="#{homeBean.entity.owner}" columnClass="col-xs-12"/>
-                    <t:outputText label="general.label.Code" value="#{homeBean.entity.code}" columnClass="col-xs-12"/>
-                    <t:outputText label="general.label.Info" value="#{homeBean.entity.info}" columnClass="col-xs-12"/>
-                    <t:outputDate label="voucher.label.Date" value="#{homeBean.entity.date}" columnClass="col-xs-12"/>
-                </t:accordion>
+                    <t:accordion icon="fa fa-file-text" label="general.label.Voucher" >
+                        <t:outputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(homeBean.entity.starter)}" columnClass="col-sm-12"/>
+                        <t:outputText label="voucher.label.VoucherNo" value="#{homeBean.entity.voucherNo}"  columnClass="col-sm-6"/>
+                        <t:outputText label="voucher.label.ReferenceNo" value="#{homeBean.entity.referenceNo}" columnClass="col-sm-6"/>
+                        <t:outputText label="voucher.label.Process" value="#{homeBean.entity.process.processNo}" columnClass="col-sm-6"/>
+                        <t:outputText label="voucher.label.Group" value="#{homeBean.entity.group.groupNo}" columnClass="col-sm-6"/>
+                        <t:outputText label="voucher.label.Owner" value="#{userLookup.getUserName(homeBean.entity.owner)}" columnClass="col-sm-6"/>
+                        <t:outputText label="general.label.Code" value="#{homeBean.entity.code}" columnClass="col-sm-3"/>
+                        <t:outputDate label="voucher.label.Date" value="#{homeBean.entity.date}" columnClass="col-sm-3"/>
+                    </t:accordion>
+                </div>
             </div>
 
-            <div class="col-md-6 col-xs-12">
-                
-            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <ui:include src="/notes/noteWidget.xhtml">
+                        <ui:param name="featurePointer" value="#{homeBean.featurePointer}" />
+                    </ui:include>
 
-            <div class="col-md-3 col-xs-12">
+                    <ui:include src="/activities/activityWidget.xhtml">
+                        <ui:param name="person" value="#{homeBean.person}" />
+                        <ui:param name="corporation" value="#{homeBean.corporation}" />
+                        <ui:param name="feature" value="#{homeBean.featurePointer}" />
+                        <ui:param name="attached" value="Feature" />
+                    </ui:include>
+                    
+                    <ui:include src="/attachment/simpleAttachmentWidget.xhtml">
+                        <ui:param name="payload" value="#{homeBean.entity}" />
+                        <ui:param name="featurePointer" value="#{homeBean.featurePointer}" />
+                    </ui:include>
 
-                <ui:include src="/notes/noteWidget.xhtml">
-                    <ui:param name="featurePointer" value="#{homeBean.featurePointer}" />
-                </ui:include>
-                
-                <ui:include src="/activities/activityWidget.xhtml">
-                    <ui:param name="person" value="#{homeBean.person}" />
-                    <ui:param name="corporation" value="#{homeBean.corporation}" />
-                    <ui:param name="feature" value="#{homeBean.featurePointer}" />
-                    <ui:param name="attached" value="Feature" />
-                </ui:include>
+                    <ui:include src="/voucher/voucherReleatedWidget.xhtml">
+                        <ui:param name="featurePointer" value="#{homeBean.featurePointer}" />
+                        <ui:param name="processNo" value="#{homeBean.entity.process.processNo}" />
+                        <ui:param name="groupNo" value="#{homeBean.entity.group.groupNo}" />
+                    </ui:include>
 
-                <ui:include src="/voucher/voucherReleatedWidget.xhtml">
-                    <ui:param name="featurePointer" value="#{homeBean.featurePointer}" />
-                    <ui:param name="processNo" value="#{homeBean.entity.process.processNo}" />
-                    <ui:param name="groupNo" value="#{homeBean.entity.group.groupNo}" />
-                </ui:include>
-                
-                <ui:include src="/feeds/feedWidget.xhtml">
-                    <ui:param name="feature" value="#{homeBean.featureClass.simpleName}" />
-                    <ui:param name="pk" value="#{homeBean.entity.id}" />
-                </ui:include>
-
+                    <ui:include src="/feeds/feedWidget.xhtml">
+                        <ui:param name="feature" value="#{homeBean.featureClass.simpleName}" />
+                        <ui:param name="pk" value="#{homeBean.entity.id}" />
+                    </ui:include>
+                </div>
             </div>
 
 

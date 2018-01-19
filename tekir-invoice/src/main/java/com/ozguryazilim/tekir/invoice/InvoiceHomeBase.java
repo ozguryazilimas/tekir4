@@ -6,12 +6,12 @@
 package com.ozguryazilim.tekir.invoice;
 
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
+import com.ozguryazilim.tekir.entities.AbstractPerson;
 import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.Invoice;
 import com.ozguryazilim.tekir.entities.InvoiceItem;
 import com.ozguryazilim.tekir.entities.InvoiceSummary;
-import com.ozguryazilim.tekir.entities.Person;
 import com.ozguryazilim.tekir.entities.ProcessStatus;
 import com.ozguryazilim.tekir.entities.ProcessType;
 import com.ozguryazilim.tekir.entities.VoucherState;
@@ -198,9 +198,9 @@ public abstract class InvoiceHomeBase<E extends Invoice> extends VoucherFormBase
         }
     }
 
-    public Person getPerson() {
-        if (getAccount() instanceof Person) {
-            return (Person) getAccount();
+    public AbstractPerson getPerson() {
+        if (getAccount() instanceof AbstractPerson) {
+            return (AbstractPerson) getAccount();
         } else {
             return ((Corporation) getAccount()).getPrimaryContact();
         }
@@ -210,7 +210,7 @@ public abstract class InvoiceHomeBase<E extends Invoice> extends VoucherFormBase
         if (getAccount() instanceof Corporation) {
             return (Corporation) getAccount();
         } else {
-            return ((Person) getAccount()).getCorporation();
+            return ((AbstractPerson) getAccount()).getCorporation();
         }
     }
 

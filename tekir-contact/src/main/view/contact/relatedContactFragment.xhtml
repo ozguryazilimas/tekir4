@@ -6,7 +6,7 @@
                 xmlns:p="http://primefaces.org/ui">
 
 
-    <t:accordion id="rc" label="contact.label.RelatedContacts" columnClass="col-xs-12">
+    <t:accordion id="rc" label="contact.label.RelatedContacts" columnClass="#{columnClass}" contentClass="">
         <f:facet name="toolbar">
             <div class="dropdown">
                 <button id="dropMenu1" class="btn btn-box-tool dropdown-toogle" data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">
@@ -19,6 +19,16 @@
                             <p:ajax event="dialogReturn" update=":rc:relConts" partialSubmit="true" process="@this" />   
                         </p:commandLink>
                     </li>
+                    
+                    <p:repeat value="" var="" >
+                    <li>
+                        <p:commandLink id="ap" action="#{phoneEditor.create(contact)}" process="@this">
+                            <i class="fa fa-phone" /> #{messages['contact.button.AddPhone']}
+                            <p:ajax event="dialogReturn" update=":rc:relConts" partialSubmit="true" process="@this" />   
+                        </p:commandLink>
+                    </li>
+                    </p:repeat>
+                    
                 </ul>
             </div>
 

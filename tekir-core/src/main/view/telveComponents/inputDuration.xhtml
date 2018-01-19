@@ -1,0 +1,38 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+
+	<composite:interface>
+		<composite:attribute name="value" type="java.lang.Long"
+			required="true" />
+		<composite:attribute name="label" required="false"
+			default="general.label.Duration" />
+		<composite:attribute name="required" required="false"
+			type="java.lang.Boolean" default="false" />
+		<composite:attribute name="placeholder" required="false"
+			default="#{messages['general.message.Example']}: 2#{messages['general.acronym.Hour']}30#{messages['general.acronym.Minute']}" />
+		<composite:attribute name="columnClass" required="false"
+			default="col-xs-6" />
+		<composite:attribute name="last" required="false"
+			type="java.lang.Boolean" default="false" />
+	</composite:interface>
+
+	<composite:implementation>
+		<div id="#{cc.clientId}"
+			class="prop #{cc.attrs.columnClass} columns #{cc.attrs.last ? 'end' : '' }">
+			<p:outputLabel for="#{cc.id}_inp" value="#{messages[cc.attrs.label]}"
+				styleClass="name #{invalid?'errors':''}" />
+			<span class="value">
+				<p:inputText id="#{cc.id}_inp"
+					value="#{cc.attrs.value}" converter="durationConverter"
+					placeholder="#{cc.attrs.placeholder}"
+					required="#{cc.attrs.required}" />
+			</span>
+			<p:message for="#{cc.id}_inp" display="tooltip" />
+		</div>
+	</composite:implementation>
+
+</ui:component>

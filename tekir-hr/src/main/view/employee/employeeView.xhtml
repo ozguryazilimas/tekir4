@@ -1,0 +1,108 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/containerViewTabBase.xhtml">
+
+    <ui:param name="bean" value="#{employeeHome}" />
+    <ui:param name="entityName" value="employee" />
+    <ui:param name="viewIdentifier" value="#{employeeHome.entity.name}" />
+    <ui:param name="showCaption" value="true"/>
+    <ui:param name="dontShowContentHeader" value="true" />
+
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{employeeHome.id}" />
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="customHeader">
+        <section class="content-header">
+            <p:outputPanel id="states">
+            <ul class="states pull-right">
+                <li role="presentation">
+                    <div style="font-weight: bold;"> Belge Sahibi</div>
+                    <div >
+                        #{userLookup.getUserName(employeeHome.entity.owner)}
+                    </div>
+                </li>
+                <ui:remove>
+                    Buraya Puanlama v.b. gelebilir mi? Bu bizim için değerli bir müşteridir v.b.
+                <li role="presentation">
+                    <div style="font-weight: bold;">#{employeeHome.entity.status} </div>
+                    <div >#{employeeHome.entity.statusReason}</div>
+                </li>
+                </ui:remove>
+            </ul>
+            </p:outputPanel>
+            <i class="fa fa-3x #{messages['feature.icon.'.concat(bean.feature.name)]} pull-left" />
+            <small class="text-muted">#{ messages[pageTitleResolver.pageTitle] }</small>
+            <h1>#{messages['contact.class.'.concat(employeeHome.entity.class.simpleName)]}  <small>#{ viewIdentifier }</small></h1> 
+        </section>
+    </ui:define>
+
+    <ui:define name="caption">
+        <div class="row">
+            <t:outputText label="general.label.Name" value="#{employeeHome.entity.name}" />
+            <t:outputText label="general.label.Code" value="#{employeeHome.entity.code}" />
+        </div>            
+        <div class="row">        
+            <t:outputText label="general.label.Info" value="#{employeeHome.entity.info}" />
+            <t:outputBoolean label="general.label.Status" itemLabel="general.boolean.active." value="#{employeeHome.entity.active}" />
+        </div>  
+        <div class="row">        
+            <div class="col-md-6 col-xs-12">
+                <ul class="list-inline text-sm text-muted">
+                    <ui:repeat value="#{employeeHome.entity.contactRoles}" var="item" >
+                        <li><i class="fa fa-tag" /> #{messages['contact.role.'.concat(item)]}</li>
+                    </ui:repeat>
+                </ul>
+            </div>
+        </div>
+
+    </ui:define>
+
+    <ui:define name="context-menu">
+        <li>
+            <p:commandLink action="#{employeeHome.newEmployee()}" styleClass="context-command" >
+                <i class="fa fa-user"></i>
+                <h:outputText value=" #{messages['general.button.AddEmployee']}" />
+            </p:commandLink>
+        </li>
+        
+        <li>
+            <p:commandLink action="#{employeeHome.edit()}" styleClass="context-command" rendered="#{identity.hasPermission( entityName, 'update') and hideEditBtn ne 'true' }">
+                <i class="fa fa-edit"></i>
+                <h:outputText value=" #{messages['general.button.Edit']}" />
+            </p:commandLink>
+        </li>
+        <li>
+            <p:commandLink action="#{changeOwnerDialog.openDialog()}" styleClass="context-command" ajax="false" rendered="#{employeeHome.hasChangeOwnerPermission()}">
+                <i class="fa fa-random"></i>
+                <h:outputText value=" #{messages['general.button.ChangeOwner']}" />
+                <p:ajax event="dialogReturn" listener="#{employeeHome.onOwnerChange}" update=":states" />
+            </p:commandLink>
+        </li>
+        
+        <ui:include src="/feeds/feedFollowAction.xhtml">
+            <ui:param name="featurePointer" value="#{employeeHome.featurePointer}" />
+        </ui:include>
+        <ui:remove>
+            <li>
+                <p:commandLink action="#{newPersonDialog.openDialog()}" styleClass="context-command" >
+                    <i class="fa fa-user"></i>
+                    <h:outputText value=" #{messages['general.button.AddPerson']}" />
+                </p:commandLink>
+            </li>
+            <li>
+                <p:commandLink action="#{newCorporationDialog.openDialog()}" styleClass="context-command" >
+                    <i class="fa fa-building"></i>
+                    <h:outputText value=" #{messages['general.button.AddCorporation']}" />
+                </p:commandLink>
+            </li>
+        </ui:remove>
+    </ui:define>
+
+</ui:composition>
