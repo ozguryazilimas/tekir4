@@ -12,6 +12,7 @@
     <ui:param name="viewState" value="#{accountDebitNoteHome.entity.state.name} #{accountDebitNoteHome.entity.stateReason}" />
     <ui:param name="showCaption" value="true"/>
     <ui:param name="dontShowContentHeader" value="false" />
+    <ui:param name="process" value="false" />
 
     <ui:define name="metadata">
         <f:metadata>
@@ -20,21 +21,10 @@
     </ui:define>
 
 
-    <ui:define name="caption">
-        <div class="row">
-            <div class="col-md-6 col-xs-12">
-                <t:outputEntityLink label="general.label.Account" value="#{accountDebitNoteHome.entity.account}" view="/contact/contactView.xhtml" />
-                <t:outputMoney label="general.label.Amount" value="#{accountDebitNoteHome.entity.amount}" currency="#{accountDebitNoteHome.entity.currency}" />
-                <t:outputText label="general.label.Info" value="#{accountDebitNoteHome.entity.info}" columnClass="col-xs-12"/>
-                
-            </div>
-            <div class="col-md-6 col-xs-12">
-                <t:outputText label="voucher.label.VoucherNo" value="#{accountDebitNoteHome.entity.voucherNo}"  />
-                <t:outputText label="voucher.label.ReferenceNo" value="#{accountDebitNoteHome.entity.referenceNo}" />
-                <t:outputText label="general.label.Code" value="#{accountDebitNoteHome.entity.code}" />
-            </div>
-        </div>  
-
+    <ui:define name="caption-states">
+        <t:stateOutputFeatureLink label="general.label.Account" value="#{featureController.getFeatureLink(accountDebitNoteHome.getAllFeaturePointer(accountDebitNoteHome.entity.account))}" />
+        <t:stateOutputMoney label="general.label.Amount" value="#{accountDebitNoteHome.entity.amount}" currency="#{accountDebitNoteHome.entity.currency}" />
+        <t:stateOutputDate label="voucher.label.Date" value="#{accountDebitNoteHome.entity.date}"/>
     </ui:define>
 
 </ui:composition>

@@ -12,6 +12,7 @@
     <ui:param name="viewState" value="#{financeAccountVirementHome.entity.state.name} #{financeAccountVirementHome.entity.stateReason}" />
     <ui:param name="showCaption" value="true"/>
     <ui:param name="dontShowContentHeader" value="false" />
+    <ui:param name="process" value="false"/>
 
     <ui:define name="metadata">
         <f:metadata>
@@ -20,12 +21,27 @@
     </ui:define>
 
 
-    <ui:define name="caption">
+    <ui:define name="caption-states">
+        
+        <t:stateOutputFeatureLink label="finance.label.FromAccount" 
+                                    value="#{featureController.getFeatureLink(financeAccountVirementHome.getAllFeaturePointer(financeAccountVirementHome.entity.fromAccount))}" />
+        <t:stateOutputFeatureLink label="finance.label.ToAccount" 
+                                    value="#{featureController.getFeatureLink(financeAccountVirementHome.getAllFeaturePointer(financeAccountVirementHome.entity.toAccount))}" />
+        <t:stateOutputMoney label="general.label.FromAmount" value="#{financeAccountVirementHome.entity.fromAmount}" currency="#{financeAccountVirementHome.entity.fromCurrency}" />
+
+        <t:stateOutputMoney label="general.label.ToAmount" value="#{financeAccountVirementHome.entity.toAmount}" currency="#{financeAccountVirementHome.entity.toCurrency}"/>
+        <t:stateOutputDate label="general.label.Date" value="#{financeAccountVirementHome.entity.date}"/>
+        
+        <ui:remove>
         <div class="row">
             <div class="col-md-6 col-xs-12">
           		<t:outputEnum label="finance.label.VirementType" itemLabel="virementtype." value="#{financeAccountVirementHome.entity.virementType}" columnClass="col-xs-12" />
-                <t:outputEntityLink label="finance.label.FromAccount" value="#{financeAccountVirementHome.entity.fromAccount}" view="/finance/financeAccountView.xhtml" columnClass="col-xs-12" />
-                <t:outputEntityLink label="finance.label.ToAccount" value="#{financeAccountVirementHome.entity.toAccount}" view="/finance/financeAccountView.xhtml" columnClass="col-xs-12" />
+                <t:outputFeatureLink label="finance.label.FromAccount" 
+                            value="#{featureController.getFeatureLink(financeAccountVirementHome.getAllFeaturePointer(financeAccountVirementHome.entity.fromAccount))}" 
+                            columnClass="col-xs-12"/>
+                <t:outputFeatureLink label="finance.label.ToAccount" 
+                            value="#{featureController.getFeatureLink(financeAccountVirementHome.getAllFeaturePointer(financeAccountVirementHome.entity.toAccount))}" 
+                            columnClass="col-xs-12"/>
                 <t:outputMoney label="general.label.FromAmount" value="#{financeAccountVirementHome.entity.fromAmount}" currency="#{financeAccountVirementHome.entity.fromCurrency}" columnClass="col-xs-12"/>
                 <t:outputMoney label="general.label.ToAmount" value="#{financeAccountVirementHome.entity.toAmount}" currency="#{financeAccountVirementHome.entity.toCurrency}" columnClass="col-xs-12"/>
                 <t:outputText label="general.label.Info" value="#{financeAccountVirementHome.entity.info}" columnClass="col-xs-12"/>
@@ -37,7 +53,7 @@
                 <t:outputText label="general.label.Code" value="#{financeAccountVirementHome.entity.code}" />
             </div>
         </div>  
-
+            </ui:remove>
     </ui:define>
 
 </ui:composition>

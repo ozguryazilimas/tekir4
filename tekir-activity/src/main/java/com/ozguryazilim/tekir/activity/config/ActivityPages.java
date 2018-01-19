@@ -35,13 +35,33 @@ public interface ActivityPages extends Pages{
     @View
     @SecuredPage()
     @PageTitle("module.caption.Activity")
+    class Activity implements ActivityPages {}
+    
+    @View
+    @SecuredPage()
+    @PageTitle("module.caption.Activity")
     class ActivityView implements ActivityPages {}
     
     @View
     @SecuredPage()
     @PageTitle("module.caption.Activity")
     class ActivityMasterView implements ActivityPages {}
-
+    
+    @View 
+    @SecuredPage()
+    class ActivityReminderCommand implements ActivityPages {}
+    
+    @View 
+    @SecuredPage()
+    class EMailFetchCommand implements ActivityPages {}
+    
+    @View 
+    @SecuredPage()
+    class ActivityQuickPanel implements ActivityPages {}
+    
+    @View 
+    @SecuredPage()
+    class EMailImportOptionPane implements ActivityPages {}
     
     @SecuredPage()
     interface Phone extends ActivityPages{
@@ -81,5 +101,15 @@ public interface ActivityPages extends Pages{
 
         @SecuredPage() @View
         class TaskActivityFragment implements Task {}
+    }
+    
+    @SecuredPage()
+    interface Comment extends ActivityPages{
+        
+        @SecuredPage() @View
+        class CommentActivityEditor implements Comment {}
+
+        @SecuredPage() @View
+        class CommentActivityFragment implements Comment {}
     }
 }

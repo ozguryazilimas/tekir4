@@ -117,17 +117,21 @@ public abstract class OrderFeeder<E extends Order> extends AbstractFeeder<E> {
 	 * @return
 	 */
 	protected String getMessage(VoucherStateChange event) {
-		switch (event.getTo().getName()) {
-		case "OPEN":
-			return getProcessType() + " order created";
-		case "CLOSE":
-			return getProcessType() + " order Won. Congrats!";
-		case "LOST":
-			return getProcessType() + " Order lost! " + event.getPayload().getStateReason();
-		case "CANCELED":
-			return getProcessType() + " Order canceled. " + event.getPayload().getStateReason();
+		switch (event.getAction().getName()) {
+		case "CREATE":
+			return "feeder.messages.OrderFeeder.CREATE$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo();
+		case "publish":
+			return "feeder.messages.OrderFeeder.PUBLISH$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo();
+		case "revise":
+			return "feeder.messages.OrderFeeder.REVISE$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo() + "$%&" + event.getPayload().getStateReason();
+		case "loss":
+			return "feeder.messages.OrderFeeder.LOST$%&" + event.getPayload().getVoucherNo() + "$%&" + event.getPayload().getStateReason();
+		case "cancel":
+			return "feeder.messages.OrderFeeder.CANCEL$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo() + "$%&" + event.getPayload().getStateReason();
+        case "complete":
+            return "feeder.messages.OrderFeeder.COMPLETE$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo();
 		default:
-			return getProcessType() + " Order created";
+			return "feeder.messages.OrderFeeder.DEFAULT$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo();
 		}
 	}
 

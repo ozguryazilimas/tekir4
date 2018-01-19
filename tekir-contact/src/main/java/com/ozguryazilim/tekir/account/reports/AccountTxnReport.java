@@ -48,7 +48,7 @@ public class AccountTxnReport extends JasperReportBase {
     public void buildFilter() {
         filter = new AccountTxnFilter();                
         filter.setEndDate(new ReportDate(DateValueType.Today));
-        filter.setStartDate(new ReportDate(DateValueType.TenDaysBefore));
+        filter.setStartDate(new ReportDate(DateValueType.FirstDayOfMonth));
     }
 
     @Override

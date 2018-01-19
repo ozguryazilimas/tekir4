@@ -1,0 +1,71 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/editBase.xhtml">
+
+    <ui:param name="homeBean" value="#{activityHome}" />
+    <ui:param name="entity" value="#{activityHome.entity}" />
+    <ui:param name="dontShowContentHeader" value="true" />
+
+    <ui:define name="customHeader">
+        <section class="content-header">
+            <p:outputPanel id="states">
+                <ul class="states pull-right">
+                    <li role="presentation">
+                        <div style="font-weight: bold;">#{messages['activity.label.Assignee']}</div>
+                        <div >
+                            #{userLookup.getUserName(activityHome.entity.assignee)}
+                        </div>
+                    </li>
+                </ul>
+            </p:outputPanel>
+            <i class="fa fa-3x #{messages['activity.button.icon.'.concat(activityHome.entity.class.simpleName)]} pull-left"/> 
+            <small class="text-muted">#{ messages[pageTitleResolver.pageTitle] }</small>
+            <h1>#{messages['activity.class.'.concat(activityHome.entity.class.simpleName)]}  <small>#{ viewIdentifier }</small></h1> 
+        </section>
+    </ui:define>
+
+
+    <ui:define name="form">
+        <ui:include src="/activities/activityEditor.xhtml" />
+
+    </ui:define>
+
+    <ui:define name="context-menu">
+        <li>
+            <p:commandLink title="#{messages['general.button.Save']}" onclick="jQuery('#form\\:save').click();return false;" rendered="#{not hideSave and (( not empty entity.id and homeBean.hasUpdatePermission()) or ( empty entity.id and homeBean.hasInsertPermission()))}">
+                <i class="fa fa-save"></i>
+                <h:outputText value=" #{messages['general.button.Save']}" />
+            </p:commandLink>
+        </li>
+        <li>
+            <p:commandLink title="#{messages['activity.button.Success']}" onclick="jQuery('#form\\:success').click();return false;" rendered="#{not hideSave and (( not empty entity.id and homeBean.hasUpdatePermission()) or ( empty entity.id and homeBean.hasInsertPermission())) and entity.status eq 'DRAFT'}">
+                <i class="fa fa-check"></i>
+                <h:outputText value=" #{messages['activity.button.Success']}" />
+            </p:commandLink>
+        </li>
+        <li>
+            <p:commandLink title="#{messages['general.button.Delete']}" action="#{homeBean.delete()}" rendered="#{not hideDelete and not empty entity.id and homeBean.hasDeletePermission() }">
+                <i class="fa fa-trash-o"></i>
+                <h:outputText value=" #{messages['general.button.Delete']}" />
+                <p:confirm header="#{messages['general.caption.Confirm']}" message="#{messages['general.message.confirm.Delete']}" icon="ui-icon-alert" />
+            </p:commandLink>
+        </li>
+    </ui:define>
+
+    <ui:define name="extraButtons">
+        <p:commandButton id="success" 
+                         value="#{messages['activity.button.Success']}" 
+                         action="#{homeBean.closeSuccess()}"
+                         rendered="#{not hideSave and (( not empty entity.id and homeBean.hasUpdatePermission()) or ( empty entity.id and homeBean.hasInsertPermission()))}"
+                         ajax="true"
+                         process="@form"
+                         validateClient="true"
+                         styleClass="btn-success"
+                         icon="fa fa-save" />  
+    </ui:define>
+
+</ui:composition>

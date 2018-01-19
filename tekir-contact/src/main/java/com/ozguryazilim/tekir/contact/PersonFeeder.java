@@ -5,7 +5,7 @@
  */
 package com.ozguryazilim.tekir.contact;
 
-import com.ozguryazilim.tekir.entities.Person;
+import com.ozguryazilim.tekir.entities.AbstractPerson;
 import com.ozguryazilim.tekir.feed.AbstractFeeder;
 import com.ozguryazilim.tekir.feed.Feeder;
 import com.ozguryazilim.telve.auth.Identity;
@@ -18,20 +18,20 @@ import javax.inject.Inject;
  * @author Hakan Uygun
  */
 @Feeder
-public class PersonFeeder extends AbstractFeeder<Person>{
+public class PersonFeeder extends AbstractFeeder<AbstractPerson>{
 
     @Inject
     private Identity identity;
     
     
-    public void feed(@Observes(during = TransactionPhase.AFTER_COMPLETION) Person entity) {
+    public void feed(@Observes(during = TransactionPhase.AFTER_COMPLETION) AbstractPerson entity) {
        /*  FIXME: Burayı iyi bir düşünelim.
         FeaturePointer contactPointer = new FeaturePointer();
         contactPointer.setBusinessKey(entity.getName());
         contactPointer.setPrimaryKey(entity.getId());
-        contactPointer.setFeature("Person");
+        contactPointer.setFeature("AbstractPerson");
         
-        sendFeed("FEED", "PersonFeeder", identity.getLoginName(), "Person hede hede", "Uuuuu <a href='#'>Başka bir yer</a> linki verelim bakalım. burası daha da uzun", contactPointer, null );
+        sendFeed("FEED", getClass().getSimpleName(), identity.getLoginName(), "Person hede hede", "Uuuuu <a href='#'>Başka bir yer</a> linki verelim bakalım. burası daha da uzun", contactPointer, null );
         */
     }
     

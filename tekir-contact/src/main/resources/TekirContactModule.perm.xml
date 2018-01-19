@@ -15,9 +15,6 @@
         <permission target="contactCategory" >
             <entityActions />
         </permission>
-        <permission target="relatedContact" order="100">
-            <entityActions />
-        </permission>
         <permission target="accountTxn" order="100">
             <entityActions />
         </permission>

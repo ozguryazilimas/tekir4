@@ -6,7 +6,7 @@
                 xmlns:p="http://primefaces.org/ui">
 
 
-    <t:accordion icon="fa fa-cube" id="ca1" label="general.label.Commodities" columnClass="col-xs-12">
+    <t:accordion icon="fa fa-cube" id="ca1" label="general.label.Commodities" columnClass="#{columnClass}" contentClass="">
 
         <div class="row">
             <p:dataTable id="its" value="#{bean.entity.items}" var="item" reflow="true" styleClass="col-xs-12">

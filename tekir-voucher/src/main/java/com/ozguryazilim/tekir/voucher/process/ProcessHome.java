@@ -9,8 +9,10 @@ import com.google.common.base.Splitter;
 import java.util.List;
 import javax.inject.Inject;
 import com.ozguryazilim.telve.data.RepositoryBase;
+import com.ozguryazilim.telve.entities.EntityBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureLinkController;
+import com.ozguryazilim.telve.feature.FeatureUtils;
 import com.ozguryazilim.telve.forms.FormBase;
 import com.ozguryazilim.telve.forms.FormEdit;
 import com.ozguryazilim.tekir.account.AccountTxnRepository;
@@ -84,12 +86,16 @@ public class ProcessHome extends FormBase<Process, Long> {
 
     public FeaturePointer getFeaturePointer() {
         FeaturePointer result = new FeaturePointer();
-        result.setBusinessKey(getEntity().getTopic());
+        result.setBusinessKey(getEntity().getProcessNo());
         result.setFeature(getFeatureClass().getSimpleName());
         result.setPrimaryKey(getEntity().getId());
         return result;
     }
-
+    // FeatureLink yönlendirmesi
+    public FeaturePointer getAllFeaturePointer(EntityBase contact){
+    		return FeatureUtils.getFeaturePointer(contact);
+    }
+    
     public List<AccountTxn> getTxnList() {
         if (txnList == null) {
             refreshTxn();

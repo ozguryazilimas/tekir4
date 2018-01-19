@@ -19,20 +19,11 @@
         </f:metadata>
     </ui:define>
 
-    <ui:define name="caption">
-        <div class="row">
-            <div class="col-md-6 col-xs-12">
-                <t:outputEntityLink label="general.label.Account" value="#{paymentReceivedHome.entity.account}" view="/contact/contactView.xhtml" />
-                <t:outputEntityLink label="financeAccount.label.Account" value="#{paymentReceivedHome.entity.financeAccount}" view="/finance/financeAccountView.xhtml" />                
-                <t:outputMoney label="general.label.Amount" value="#{paymentReceivedHome.entity.amount}" currency="#{paymentReceivedHome.entity.currency}" />
-            </div>
-            <div class="col-md-6 col-xs-12">
-                <t:outputText label="voucher.label.VoucherNo" value="#{paymentReceivedHome.entity.voucherNo}"  />
-                <t:outputText label="voucher.label.ReferenceNo" value="#{paymentReceivedHome.entity.referenceNo}" />
-                <t:outputText label="voucher.label.Process" value="#{paymentReceivedHome.entity.process.processNo}" />
-                <t:outputText label="general.label.Code" value="#{paymentReceivedHome.entity.code}" />
-            </div>
-        </div>  
+    <ui:define name="caption-states">
+        <t:stateOutputFeatureLink label="general.label.Account" value="#{featureController.getFeatureLink(paymentReceivedHome.getAllFeaturePointer(paymentReceivedHome.entity.account))}"  />
+        <t:stateOutputFeatureLink label="general.label.FinanceAccount" value="#{featureController.getFeatureLink(paymentReceivedHome.getAllFeaturePointer(paymentReceivedHome.entity.financeAccount))}"/>
+        <t:stateOutputMoney label="general.label.Amount" value="#{paymentReceivedHome.entity.amount}" currency="#{paymentReceivedHome.entity.currency}"/>
+        <t:stateOutputDate label="general.label.Date" value="#{paymentReceivedHome.entity.date}"/>
     </ui:define>
 
 

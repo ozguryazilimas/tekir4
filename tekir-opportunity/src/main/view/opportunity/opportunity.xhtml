@@ -29,33 +29,107 @@
                         <h:outputText id="txt3output" value="%#{opportunityHome.entity.probability}" />
                         <h:inputHidden id="txt3" value="#{opportunityHome.entity.probability}" />
                         <span style="width: 99%">
-                        <p:slider for="txt3" display="txt3output" step="5" displayTemplate="%{value}" style="background-color: #4A89DC;"/>
+                            <p:slider for="txt3" display="txt3output" step="5" displayTemplate="%{value}" style="background-color: #4A89DC;"/>
                         </span>
-                        
+
                     </t:inputAny>
                     <t:inputTextarea label="opportunity.label.Sitiuation" value="#{opportunityHome.entity.situation}" columnClass="col-xs-12"/>
                     <t:inputTextarea label="opportunity.label.CustomerNeed" value="#{opportunityHome.entity.customerNeed}" columnClass="col-xs-12"/>
                     <t:inputTextarea label="opportunity.label.Solution" value="#{opportunityHome.entity.solution}" columnClass="col-xs-12"/>
                 </div>
             </div>
-            
+
             <div class="col-md-6 col-xs-12">
                 <div class="row">
                     <t:inputDate label="voucher.label.Date" value="#{opportunityHome.entity.date}" columnClass="col-md-4"/>
                     <t:inputText label="voucher.label.VoucherNo" value="#{opportunityHome.entity.voucherNo}"  required="true" readonly="true" columnClass="col-md-4"/>
                     <t:inputText label="voucher.label.ReferenceNo" value="#{opportunityHome.entity.referenceNo}" columnClass="col-md-4"/>
                     <ui:remove>
-                    <t:inputText label="voucher.label.Process" value="#{opportunityHome.entity.process.processNo}" columnClass="col-xs-12"/>
+                        <t:inputText label="voucher.label.Process" value="#{opportunityHome.entity.process.processNo}" columnClass="col-xs-12"/>
                     </ui:remove>
                     <t:inputLookupDialog label="voucher.label.Group" value="#{opportunityHome.entity.group}" caption="topic" lookupBean="#{voucherGroupLookup}" lookupListener="opportunityHome.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" columnClass="col-xs-12"/>
-                    <t:inputText label="voucher.label.Owner" value="#{opportunityHome.entity.owner}" />
                     <t:inputText label="general.label.Code" value="#{opportunityHome.entity.code}" />
+
+
+                </div>
+                <div class="row">
+
+                        <t:inputAny label="general.label.Details" columnClass="col-sm-12">
+                            <p:dataTable id="items" value="#{opportunityHome.entity.items}" var="item" rowIndexVar="inx" >
+
+                                <p:column headerText="#{messages['general.label.Commodity']}">
+                                    #{item.commodity.name}
+                                </p:column>
+                                <p:column headerText="#{messages['general.label.Info']}">
+                                    #{item.info}
+                                </p:column>
+                                <p:column class="actionColumnDouble">
+                                    <f:facet name="header">
+                                        <p:commandLink action="#{opportunityHome.createItem()}"  process="@this" update=":form:itemPopup" oncomplete="PF('itemPopup').show();" styleClass="btn btn-box-tool">
+                                            <i class="fa fa-plus"/>
+                                        </p:commandLink>
+
+                                    </f:facet>
+
+                                    <p:commandLink process="@this" action="#{opportunityHome.editItem(inx)}" styleClass="btn-save" update=":form:itemPopup" oncomplete="PF('itemPopup').show();">
+                                        <i class="fa fa-pencil" />
+                                    </p:commandLink>
+                                    <p:commandLink process="@this" action="#{opportunityHome.deleteItem(inx)}" styleClass="btn-delete" update="@([id$=items])">
+                                        <i class="fa fa-trash" />
+                                        <p:confirm header="#{messages['general.caption.Confirm']}" message="#{messages['general.message.confirm.Delete']}" icon="fa fa-2x fa-exclamation-triangle btn-delete" />
+                                    </p:commandLink>
+                                </p:column>
+                            </p:dataTable>
+                        </t:inputAny>
+                </div>
+                <div class="row">
                     <t:inputTextarea label="general.label.Info" value="#{opportunityHome.entity.info}" columnClass="col-xs-12"/>
-                    
                 </div>
             </div>
+
+
+
+
         </div>
-        
+
+        <p:dialog id="itemPopup" widgetVar="itemPopup" modal="true"
+                  header="#{messages['module.caption.ItemPopupPopup']}" resizable="false"
+                  width="450">
+            <p:outputPanel id="cdForm" rendered="#{opportunityHome.selectedItem ne null}">
+
+                <div class="row">
+                    <t:inputLookupDialog value="#{opportunityHome.selectedItem.commodity}" label="general.label.Commodity"
+                                         caption="name" lookupBean="#{commodityLookup}"
+                                         lookupListener="opportunityHome.selectedItem.commodity"
+                                         columnClass="col-sm-12" />
+                    <t:inputTextarea label="general.label.Info" value="#{opportunityHome.selectedItem.info}" columnClass="col-xs-12"/>
+                </div>
+
+                <div class="actionButtons">
+                    <p:commandButton id="itsave"
+                                     value="#{messages['general.button.Save']}" accesskey="s"
+                                     action="#{opportunityHome.saveItem()}"
+                                     oncomplete="if (args &amp;&amp; !args.validationFailed){ PF('itemPopup').hide();}"
+                                     update="@([id$=items])"
+                                     icon="fa fa-save"
+                                     validateClient="true"
+                                     styleClass="btn-primary"
+                                     />
+
+                    <p:commandButton id="itdone"
+                                     value="#{messages['general.button.Close']}"
+                                     onclick="PF('itemPopup').hide();"
+                                     icon="ui-icon-close"
+                                     process="@this"
+                                     ajax="true"/>
+
+                </div>
+
+            </p:outputPanel>
+        </p:dialog>
+
+
+
     </ui:define>
 
 </ui:composition>

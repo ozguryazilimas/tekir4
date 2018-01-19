@@ -17,7 +17,7 @@
                 <div class="row">
                     <t:inputLookupDialog label="general.label.Account" value="#{accountDebitNoteHome.entity.account}" 
                                          lookupBean="#{contactLookup}" lookupListener="accountDebitNoteHome.entity.account" 
-                                         lookupProfile="R:ACCOUNT;O:CUSTOMER,VENDOR"
+                                         lookupProfile="T:Contact;R:ACCOUNT;O:CUSTOMER,VENDOR"
                                          placeholder="#{messages['general.info.Account']}" />
                     <t:inputCurrency label="general.label.Currency" value="#{accountDebitNoteHome.entity.currency}"  required="true" columnClass="col-xs-12"/>
                     <t:inputMoney label="accountDebitNote.label.Amount" value="#{accountDebitNoteHome.entity.amount}"  currency="#{accountDebitNoteHome.entity.currency}" required="true" columnClass="col-xs-12"/>
@@ -28,7 +28,6 @@
                 <div class="row">
                     <t:inputText label="voucher.label.VoucherNo" value="#{accountDebitNoteHome.entity.voucherNo}"  required="true" readonly="true" columnClass="col-xs-12"/>
                     <t:inputText label="voucher.label.ReferenceNo" value="#{accountDebitNoteHome.entity.referenceNo}" columnClass="col-xs-12"/>
-                    <t:inputText label="voucher.label.Owner" value="#{accountDebitNoteHome.entity.owner}" columnClass="col-xs-12"/>
                     <t:inputText label="general.label.Code" value="#{accountDebitNoteHome.entity.code}" columnClass="col-xs-12"/>
                     <t:inputLookupDialog label="voucher.label.Group" value="#{accountDebitNoteHome.entity.group}" caption="topic" lookupBean="#{voucherGroupLookup}" lookupListener="accountDebitNoteHome.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" />
                     <t:inputTextarea label="general.label.Info" value="#{accountDebitNoteHome.entity.info}" columnClass="col-xs-12"/>

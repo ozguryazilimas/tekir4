@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jboss-deployment-structure>
     <deployment>
+        <!--
         <exclude-subsystems>
             <subsystem name="infinispan"/>
         </exclude-subsystems>
+        -->
         <dependencies>
             <module name="com.ozguryazilim.telve">
                 <imports>

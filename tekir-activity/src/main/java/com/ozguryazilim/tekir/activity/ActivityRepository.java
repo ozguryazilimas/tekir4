@@ -6,11 +6,14 @@
 package com.ozguryazilim.tekir.activity;
 
 import com.google.common.base.Strings;
+import com.ozguryazilim.tekir.entities.AbstractPerson;
 import com.ozguryazilim.tekir.entities.Activity;
+import com.ozguryazilim.tekir.entities.ActivityMention;
+import com.ozguryazilim.tekir.entities.ActivityMention_;
 import com.ozguryazilim.tekir.entities.ActivityStatus;
 import com.ozguryazilim.tekir.entities.Activity_;
 import com.ozguryazilim.tekir.entities.Corporation;
-import com.ozguryazilim.tekir.entities.Person;
+import com.ozguryazilim.tekir.entities.EMailActivity;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
@@ -26,6 +29,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.apache.deltaspike.data.api.Query;
 import org.apache.deltaspike.data.api.Repository;
 import org.apache.deltaspike.data.api.criteria.Criteria;
 import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
@@ -120,7 +124,7 @@ public abstract class ActivityRepository extends RepositoryBase<Activity, Activi
      * @param person
      * @return 
      */
-    public List<Activity> findByPerson( Person person, ActivityWidgetFilter filter ){
+    public List<Activity> findByPerson( AbstractPerson person, ActivityWidgetFilter filter ){
         Criteria<Activity,Activity> crit = criteria()
                 .eq(Activity_.person, person)
                 .orderDesc(Activity_.dueDate);
@@ -191,6 +195,36 @@ public abstract class ActivityRepository extends RepositoryBase<Activity, Activi
     }
     
     
+    /**
+     * Verilen FeaturePointer mentionlanmış activity listesini döndürür.
+     * 
+     * @param featurePointer
+     * @param filter
+     * @return 
+     */
+    public List<Activity> findByMention( FeaturePointer featurePointer, ActivityWidgetFilter filter ){
+        Criteria<Activity,Activity> crit = criteria()
+                .join(Activity_.mentions,
+                    where(ActivityMention.class)
+                        .eq(ActivityMention_.featurePointer, featurePointer)
+                )
+                .orderDesc(Activity_.dueDate);
+                
+        
+        switch( filter ){
+            case MINE : crit.eq(Activity_.assignee, identity.getLoginName()); break;
+            case OVERDUE : crit.gt(Activity_.dueDate, new Date()); break;
+            case SCHEDULED : crit.eq( Activity_.status, ActivityStatus.SCHEDULED); break;
+            case SUCCESS : crit.eq( Activity_.status, ActivityStatus.SUCCESS); break;
+            case FAILED : crit.eq( Activity_.status, ActivityStatus.FAILED); break;
+            case FOLLOWUP : break; //TODO:
+        }
+
+        //Criteria üzerinde pagein limit yok
+        return crit.createQuery().setMaxResults(5).getResultList();
+                
+    }
+    
     public List<Activity> findForCalendarSource( String assignee, Date beginDate, Date endDate, Class<? extends Activity> clazz, Boolean showClocedEvents){
         
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
@@ -228,4 +262,45 @@ public abstract class ActivityRepository extends RepositoryBase<Activity, Activi
         
     }
     
+    /**
+     * Belirtilen süreden sonra kapanmamış aktiviteleri veritabanında arar.
+     *
+     * @param date Aktivitelerin bitiş tarihinden itibaren geçecek süre
+     * @return Geçen süreden sonra kapanmamış olan aktiviteler
+     * @see Activity
+     * @see Activity_
+     */
+    public List<Activity> findExpiredActivities(Date date) {
+        CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
+        //Geriye ViewModel dönecek cq'yu ona göre oluşturuyoruz.
+        CriteriaQuery<Activity> criteriaQuery = criteriaBuilder.createQuery(Activity.class);
+
+        //From 
+        Root<Activity> from = criteriaQuery.from(Activity.class);
+
+        //Sonuç filtremiz : Zaten sınıfın kendisi döner.
+        //buildVieModelSelect(criteriaQuery, from);
+
+        //Filtreleri ekleyelim.
+        List<Predicate> predicates = new ArrayList<>();
+
+        //Tarih verilen parametreden küçük ve eşit olanlar.
+        predicates.add(criteriaBuilder.lessThanOrEqualTo(from.get(Activity_.dueDate), date));
+
+        //Olumlu ya da Olumsuz kapanmamış olanlar.
+        predicates.add(criteriaBuilder.notLike(from.get(Activity_.status).as(String.class), "SUCCESS"));
+
+        //Oluşan filtreleri sorgumuza ekliyoruz
+        criteriaQuery.where(predicates.toArray(new Predicate[]{}));
+
+        //Haydi bakalım sonuçları alalım
+        TypedQuery<Activity> typedQuery = entityManager().createQuery(criteriaQuery);
+        List<Activity> resultList = typedQuery.getResultList();
+
+        return resultList;
+    }
+ 
+    
+    @Query("select c from EMailActivity c where messageId = ?1")
+    public abstract List<EMailActivity> findByMessageId( String messageId);
 }

@@ -161,7 +161,7 @@ public class ContactViewModel implements ViewModel, Serializable {
     }
 
     public String getContactType(){
-        if( contactClass.equals( Person.class ) ){
+        if( contactClass.equals(Person.class ) ){
             return "Person";
         } else if( contactClass.equals( Corporation.class ) ){
             return "Corporation";

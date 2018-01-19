@@ -1,0 +1,32 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                template="/layout/optionPaneBase.xhtml">
+
+    <ui:param name="bean" value="#{autoCodeOptionPane}" />
+    <ui:define name="content">
+        <p:dataTable value="#{autoCodeOptionPane.consumers}" var="consumer" >
+            <p:column headerText="#{messages['autoCode.label.Consumer']}">
+                #{messages[consumer.caption]}
+            </p:column>
+            <p:column headerText="#{messages['autoCode.label.Serial']}">
+                <p:inputText value="#{consumer.serial}" />
+            </p:column>
+            <p:column headerText="#{messages['autoCode.label.Type']}">
+                <t:cellInputEnum value="#{consumer.type}" itemLabel="autoCode.Type." hasNullValue="false"/>
+            </p:column>
+            <p:column headerText="#{messages['autoCode.label.Size']}">
+                <p:inputNumber value="#{consumer.size}" decimalPlaces="0"/>
+            </p:column>
+        </p:dataTable>
+    </ui:define>
+
+
+
+
+
+</ui:composition>
