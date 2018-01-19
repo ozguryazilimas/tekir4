@@ -7,7 +7,7 @@ package com.ozguryazilim.tekir.voucher.columns;
 
 import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.entities.VoucherState;
-import com.ozguryazilim.telve.messages.MessagesUtils;
+import com.ozguryazilim.telve.messages.Messages;
 import com.ozguryazilim.telve.query.columns.Column;
 
 import java.io.IOException;
@@ -17,7 +17,6 @@ import java.lang.reflect.InvocationTargetException;
 import javax.persistence.metamodel.Attribute;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.primefaces.extensions.util.MessageUtils;
 
 /**
  *
@@ -42,7 +41,7 @@ public class VoucherStateColumn<E> extends Column<E> {
     	   doc.write("\"");
            String val = BeanUtils.getProperty(e, getName());
            if( !Strings.isNullOrEmpty(val)){
-               doc.write( MessagesUtils.getMessage( "voucherState.name." + val ));
+               doc.write( Messages.getMessage( "voucherState.name." + val ));
            }
            doc.write("\"");
     }

@@ -1,11 +1,13 @@
 package com.ozguryazilim.tekir.contact;
 
+import com.ozguryazilim.tekir.contact.relation.RelatedContactRepository;
 import com.google.common.base.Strings;
 import com.ozguryazilim.telve.forms.FormEdit;
 import com.ozguryazilim.telve.forms.FormBase;
 import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.tekir.contact.config.ContactPages;
 import com.ozguryazilim.tekir.contact.information.ContactInformationRepository;
+import com.ozguryazilim.tekir.core.code.AutoCodeService;
 import com.ozguryazilim.tekir.entities.ContactInformation;
 import com.ozguryazilim.tekir.entities.Person;
 import com.ozguryazilim.tekir.entities.Corporation;
@@ -53,6 +55,9 @@ public class ContactHome extends FormBase<Contact, Long> {
     @Inject
     private PersonFeeder personFeeder;
     
+    @Inject
+    private AutoCodeService codeService;
+    
     private List<String> selectedRoles = new ArrayList<>();
 
     public Class<? extends ViewConfig> newPerson() {
@@ -60,6 +65,7 @@ public class ContactHome extends FormBase<Contact, Long> {
         p.getContactRoles().add("CONTACT");
         p.getContactRoles().add("PERSON");
         p.setOwner(identity.getLoginName());
+        p.setCode(codeService.getNewSerialNumber(Person.class.getSimpleName()));
         setEntity(p);
         selectedRoles.clear();
         return ContactPages.Contact.class;
@@ -70,6 +76,7 @@ public class ContactHome extends FormBase<Contact, Long> {
         p.getContactRoles().add("CONTACT");
         p.getContactRoles().add("CORPORATION");
         p.setOwner(identity.getLoginName());
+        p.setCode(codeService.getNewSerialNumber(Corporation.class.getSimpleName()));
         setEntity(p);
         selectedRoles.clear();
         return ContactPages.Contact.class;

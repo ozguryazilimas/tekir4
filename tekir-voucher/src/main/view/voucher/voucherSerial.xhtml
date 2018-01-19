@@ -5,51 +5,20 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
-                template="/layout/primeTemplate.xhtml">
+                template="/layout/optionPaneBase.xhtml">
 
-    <ui:define name="body">
-        
-        <ui:include src="/layout/messages.xhtml"/>
+    <ui:param name="bean" value="#{voucherSerialController}" />
+    <ui:define name="content">
 
-        <div class="box box-primary">
-            <h:form id="vsf">
-                <div class="box-body">
-                    <p:dataTable value="#{voucherSerialController.features}" var="feature" >
-                        <p:column headerText="#{messages['general.label.Voucher']}">
-                            #{messages[voucherSerialController.captions[feature]]}
-                        </p:column>
-                        <p:column headerText="#{messages['module.caption.VoucherSerial']}">
-                            <p:inputText value="#{voucherSerialController.serials[feature]}" />
-                        </p:column>
+        <p:dataTable value="#{voucherSerialController.features}" var="feature" >
+            <p:column headerText="#{messages['general.label.Voucher']}">
+                #{messages[voucherSerialController.captions[feature]]}
+            </p:column>
+            <p:column headerText="#{messages['module.caption.VoucherSerial']}">
+                <p:inputText value="#{voucherSerialController.serials[feature]}" />
+            </p:column>
 
-                    </p:dataTable>
-                </div>
-                <div class="box-footer">
-                    <div class="row">
-                        <div class="col-xs-12 " >
-                            <div class="pull-right">
-                                <p:commandButton id="save" 
-                                                 value="#{messages['general.button.Save']}" 
-                                                 action="#{voucherSerialController.save()}"
-                                                 ajax="true"
-                                                 process="@form"
-                                                 validateClient="true"
-                                                 styleClass="btn-success"
-                                                 icon="fa fa-save" />  
-
-                                <p:commandButton id="done" 
-                                                 value="#{messages['general.button.Close']}"
-                                                 action="#{voucherSerialController.close()}"
-                                                 icon="ui-icon-close" 
-                                                 partialSubmit="true"
-                                                 process="@this"
-                                                 ajax="true"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </h:form>
-        </div>
+        </p:dataTable>
 
     </ui:define>
 </ui:composition>

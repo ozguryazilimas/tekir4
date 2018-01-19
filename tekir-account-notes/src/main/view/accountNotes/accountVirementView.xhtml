@@ -12,6 +12,7 @@
     <ui:param name="viewState" value="#{accountVirementHome.entity.state.name} #{accountVirementHome.entity.stateReason}" />
     <ui:param name="showCaption" value="true"/>
     <ui:param name="dontShowContentHeader" value="false" />
+    <ui:param name="process" value="false" />
 
     <ui:define name="metadata">
         <f:metadata>
@@ -20,28 +21,11 @@
     </ui:define>
 
 
-    <ui:define name="caption">
-        <div class="row">
-            <div class="col-md-6 col-xs-12">          
-                <t:outputFeatureLink label="general.label.FromAccount" 
-                            value="#{featureController.getFeatureLink(accountVirementHome.getAllFeaturePointer(accountVirementHome.entity.fromAccount))}" 
-                            columnClass="col-xs-12"/>
-
-                <t:outputFeatureLink label="general.label.ToAccount" 
-                            value="#{featureController.getFeatureLink(accountVirementHome.getAllFeaturePointer(accountVirementHome.entity.toAccount))}" 
-                            columnClass="col-xs-12"/>
-                                        
-                <t:outputMoney label="general.label.Amount" value="#{accountVirementHome.entity.amount}" currency="#{accountVirementHome.entity.currency}" />
-                <t:outputText label="general.label.Info" value="#{accountVirementHome.entity.info}" columnClass="col-xs-12"/>
-                
-            </div>
-            <div class="col-md-6 col-xs-12">
-                <t:outputText label="voucher.label.VoucherNo" value="#{accountVirementHome.entity.voucherNo}"  />
-                <t:outputText label="voucher.label.ReferenceNo" value="#{accountVirementHome.entity.referenceNo}" />
-                <t:outputText label="general.label.Code" value="#{accountVirementHome.entity.code}" />
-            </div>
-        </div>  
-
+    <ui:define name="caption-states">
+        <t:stateOutputFeatureLink label="general.label.FromAccount" value="#{featureController.getFeatureLink(accountVirementHome.getAllFeaturePointer(accountVirementHome.entity.fromAccount))}"  />
+        <t:stateOutputFeatureLink label="general.label.ToAccount" value="#{featureController.getFeatureLink(accountVirementHome.getAllFeaturePointer(accountVirementHome.entity.toAccount))}" />
+        <t:stateOutputMoney label="general.label.Amount" value="#{accountVirementHome.entity.amount}" currency="#{accountVirementHome.entity.currency}" />
+        <t:stateOutputDate label="voucher.label.Date" value="#{accountVirementHome.entity.date}"/>
     </ui:define>
 
 </ui:composition>

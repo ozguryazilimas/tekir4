@@ -1,0 +1,90 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui">
+
+    #{stakeholderWidget.init(process)}
+
+    <t:accordion id="sh" icon="fa fa-users" label="general.label.Stakeholders" columnClass="#{columnClass}" contentClass="">
+
+        <f:facet name="toolbar">
+            <p:commandLink action="#{stakeholderWidget.createStakeholder()}"  process="@this" update="stakeholderPopup" oncomplete="PF('stakeholderPopup').show();" styleClass="btn btn-box-tool">
+                <i class="fa fa-plus"/>
+            </p:commandLink>
+        </f:facet>
+
+
+        <p:outputPanel id="shc" layout="block" class="box-body">
+            <ul class="products-list product-list-in-box">
+
+                <p:repeat value="#{stakeholderWidget.stakeHolders}" var="ci" >
+                    <li class="item">
+                        <div class="product-info" style="margin-left: 0px;">
+
+                            
+                                <div class="box-tools pull-right">
+                                    <p:commandLink process="@this" action="#{stakeholderWidget.edit(ci)}" styleClass="btn btn-box-tool" update="stakeholderPopup" oncomplete="PF('stakeholderPopup').show();">
+                                        <i class="fa fa-pencil" />
+                                    </p:commandLink>
+                                    <p:commandLink process="@this" action="#{stakeholderWidget.delete(ci)}" styleClass="btn btn-box-tool" update="@([id$=shc])">
+                                        <i class="fa fa-trash" />
+                                        <p:confirm header="#{messages['general.caption.Confirm']}" message="#{messages['general.message.confirm.Delete']}" icon="fa fa-2x fa-exclamation-triangle btn-delete" />
+                                    </p:commandLink>
+                                </div>
+                            
+
+
+                            <span class="product-title">
+                                <t:cellOutputFeatureLink value="#{stakeholderWidget.getFeatureLink(ci.contact)}" />
+                            </span>
+                            <span class="product-description text-sm">#{ci.contact.jobTitle}</span>
+                            <span class="product-description text-sm">#{ci.info}</span>
+                        </div>
+                    </li>
+                </p:repeat>
+            </ul>
+        </p:outputPanel>
+    </t:accordion>
+
+    
+        <p:dialog id="stakeholderPopup" widgetVar="stakeholderPopup" modal="false"
+                  header="#{messages['module.caption.StakeholderPopup']}" resizable="true" 
+                  width="450">
+            <h:form id="cdForm" rendered="#{stakeholderWidget.stakeholder ne null}">
+                
+                <div class="row">
+                    <t:inputLookupDialog value="#{stakeholderWidget.stakeholder.contact}" label="contact.label.Contact"  
+                                         caption="name" lookupBean="#{contactLookup}" 
+                                         lookupProfile="T:Person"  
+                                         lookupListener="stakeholderWidget.stakeholder.contact"  
+                                         columnClass="col-sm-12" />
+                    <t:inputTextarea label="general.label.Info" value="#{stakeholderWidget.stakeholder.info}" columnClass="col-xs-12"/>
+                </div>
+
+                <div class="actionButtons">
+                    <p:commandButton id="save"
+                                     value="#{messages['general.button.Save']}" accesskey="s"
+                                     action="#{stakeholderWidget.save()}"
+                                     oncomplete="if (args &amp;&amp; !args.validationFailed){ PF('stakeholderPopup').hide();}"                                     
+                                     update="@([id$=shc])"
+                                     icon="fa fa-save" 
+                                     validateClient="true"
+                                     styleClass="btn-primary"
+                                     />
+
+                    <p:commandButton id="done"
+                                     value="#{messages['general.button.Close']}"
+                                     onclick="PF('stakeholderPopup').hide();"
+                                     icon="ui-icon-close"	
+                                     process="@this"
+                                     ajax="true"/>
+
+                </div>
+
+            </h:form>
+        </p:dialog>
+    
+
+</ui:composition>

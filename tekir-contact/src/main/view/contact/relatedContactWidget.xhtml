@@ -1,0 +1,172 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui">
+
+    #{relatedContactWidget.init(contact)}
+
+    <t:accordion id="rc" label="contact.label.RelatedContacts" columnClass="#{columnClass}" contentClass="">
+        <f:facet name="toolbar">
+            <div class="dropdown">
+                <button id="dropMenu1" class="btn btn-box-tool dropdown-toogle" data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-plus"/>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right" arai-labeledby="dropMenu1" style="z-index: 5000">
+                    <p:repeat value="#{relatedContactWidget.relations}" var="relation" >
+                        <li>
+                            <p:commandLink action="#{relatedContactWidget.createRelation(relation)}"  process="@this" update="relatedContactPopup" oncomplete="PF('relatedContactPopup').show();">
+                                #{relation.name}
+                            </p:commandLink>
+                        </li>
+                    </p:repeat>
+
+                </ul>
+            </div>
+
+        </f:facet>
+
+        <p:outputPanel id="relConts" layout="block" class="box-body">
+            <ul class="products-list product-list-in-box">
+                <ui:fragment rendered="#{contact.class.simpleName eq 'Corporation'}">
+                    <ui:fragment rendered="#{not empty contact.primaryContact}">
+                        <li class="item">
+                            <div class="product-info" style="margin-left: 0px;">
+                                <span class="label label-default pull-right">#{messages['contact.label.PrimaryContact']}</span>
+                                <span class="product-title">#{contact.primaryContact.name}</span>
+                                <ui:fragment rendered="#{not empty contact.primaryContact.primaryMobile}">
+                                    <span class="product-description text-sm">
+                                        <i class="fa fa-mobile" /> #{contact.primaryContact.primaryMobile.caption}
+                                    </span>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{not empty contact.primaryContact.primaryPhone}">
+                                    <span class="product-description text-sm">
+                                        <i class="fa fa-phone" /> #{contact.primaryContact.primaryPhone.caption}
+                                    </span>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{not empty contact.primaryContact.primaryEmail}">
+                                    <span class="product-description text-sm">
+                                        <i class="fa fa-envelope-o" /> #{contact.primaryContact.primaryEmail.caption}
+                                    </span>
+                                </ui:fragment>
+                            </div>
+                        </li>
+                    </ui:fragment>
+                </ui:fragment>
+
+                <p:repeat value="#{relatedContactWidget.relatedContacts}" var="ci" >
+                    <li class="item">
+                        <div class="product-info" style="margin-left: 0px;">
+                        <span class="label label-default pull-right">#{ci.relation.name}</span>
+                        <ui:fragment rendered="#{ci.relation.id gt -1 }">
+                        <div class="box-tools pull-right">
+                            <p:commandLink process="@this" action="#{relatedContactWidget.edit(ci)}" styleClass="btn btn-box-tool" update="relatedContactPopup" oncomplete="PF('relatedContactPopup').show();">
+                                <i class="fa fa-pencil" />
+                            </p:commandLink>
+                            <p:commandLink process="@this" action="#{relatedContactWidget.delete(ci)}" styleClass="btn btn-box-tool" update="@([id$=relConts])">
+                                <i class="fa fa-trash" />
+                                <p:confirm header="#{messages['general.caption.Confirm']}" message="#{messages['general.message.confirm.Delete']}" icon="fa fa-2x fa-exclamation-triangle btn-delete" />
+                            </p:commandLink>
+                        </div>
+                            </ui:fragment>
+
+                        <span class="product-title">
+                        <t:cellOutputFeatureLink value="#{relatedContactWidget.getFeatureLink(ci.targetContact )}" />
+                        </span>
+                        <span class="product-description text-sm">#{ci.info}</span>
+                        </div>
+                    </li>
+                </p:repeat>
+                <ui:remove>
+                    <ui:repeat value="#{relatedContacts}" var="ci" >
+                        <li class="item">
+                            <div class="product-img">
+                                <i class="fa fa-user"/>
+                            </div>
+                            <div class="product-info">
+                                <ui:remove>
+                                    <div class="box-tools pull-right">
+                                        <p:commandLink action="#{contactInformationController.edit(ci)}" process="@this" styleClass="btn btn-box-tool">
+                                            <i class="fa fa-pencil" />
+                                            <p:ajax event="dialogReturn" update=":ci:contactInfos" partialSubmit="true" process="@this" />   
+                                        </p:commandLink>
+                                        <p:commandLink action="#{contactInformationController.delete(ci)}" process="@this" styleClass="btn btn-box-tool" update=":ci:contactInfos">
+                                            <i class="fa fa-trash" />
+                                            <p:confirm header="#{messages['general.caption.Confirm']}" message="#{messages['general.message.confirm.Delete']}" icon="fa fa-2x fa-exclamation-triangle btn-delete" />
+                                        </p:commandLink>
+                                    </div>
+                                </ui:remove>
+                                <span class="label label-default pull-right">#{ci.relation.name}</span>
+                                <span class="product-title">#{ci.targetContact.name}</span>
+                                <span class="product-description text-sm">#{ci.info}</span>
+                            </div>
+                        </li>
+                    </ui:repeat>
+                    <ui:repeat value="#{relatedContactsRevers}" var="ci" >
+                        <li class="item">
+                            <div class="product-img">
+                                <i class="fa fa-user"/>
+                            </div>
+                            <div class="product-info">
+                                <ui:remove>
+                                    <div class="box-tools pull-right">
+                                        <p:commandLink action="#{contactInformationController.edit(ci)}" process="@this" styleClass="btn btn-box-tool">
+                                            <i class="fa fa-pencil" />
+                                            <p:ajax event="dialogReturn" update=":ci:contactInfos" partialSubmit="true" process="@this" />   
+                                        </p:commandLink>
+                                        <p:commandLink action="#{contactInformationController.delete(ci)}" process="@this" styleClass="btn btn-box-tool" update=":ci:contactInfos">
+                                            <i class="fa fa-trash" />
+                                            <p:confirm header="#{messages['general.caption.Confirm']}" message="#{messages['general.message.confirm.Delete']}" icon="fa fa-2x fa-exclamation-triangle btn-delete" />
+                                        </p:commandLink>
+                                    </div>
+                                </ui:remove>
+                                <span class="label label-default pull-right">#{ci.relation.name}</span>
+                                <span class="product-title">#{ci.sourceContact.name}</span>
+                                <span class="product-description text-sm">#{ci.info}</span>
+                            </div>
+                        </li>
+                    </ui:repeat>
+                </ui:remove>
+            </ul>
+        </p:outputPanel>
+    </t:accordion>
+
+    <p:dialog id="relatedContactPopup" widgetVar="relatedContactPopup" modal="false"
+              header="#{messages['module.caption.RelatedContact']}" resizable="true" 
+              width="450">
+        <h:form id="cdForm" rendered="#{relatedContactWidget.relatedContact ne null}">
+            <h4>#{relatedContactWidget.relatedContact.relation.name}</h4>
+            <div class="row">
+                <t:inputLookupDialog value="#{relatedContactWidget.relatedContact.targetContact}" label="contact.label.Contact"  
+                                     caption="name" lookupBean="#{contactLookup}" 
+                                     lookupProfile="C:#{relatedContactWidget.contact.id};R:#{relatedContactWidget.relatedContact.relation.targetRoles}"  
+                                     lookupListener="relatedContactWidget.relatedContact.targetContact"  
+                                     columnClass="col-sm-12" />
+                <t:inputTextarea label="general.label.Info" value="#{relatedContactWidget.relatedContact.info}" columnClass="col-xs-12"/>
+            </div>
+
+            <div class="actionButtons">
+                <p:commandButton id="save"
+                                 value="#{messages['general.button.Save']}" accesskey="s"
+                                 action="#{relatedContactWidget.save()}"
+                                 oncomplete="if (args &amp;&amp; !args.validationFailed){ PF('relatedContactPopup').hide();}"                                     
+                                 update="@([id$=relConts])"
+                                 icon="fa fa-save" 
+                                 validateClient="true"
+                                 styleClass="btn-primary"
+                                 />
+
+                <p:commandButton id="done"
+                                 value="#{messages['general.button.Close']}"
+                                 onclick="PF('relatedContactPopup').hide();"
+                                 icon="ui-icon-close"	
+                                 process="@this"
+                                 ajax="true"/>
+
+            </div>
+
+        </h:form>
+    </p:dialog>
+
+</ui:composition>

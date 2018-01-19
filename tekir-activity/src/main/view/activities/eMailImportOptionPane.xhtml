@@ -1,0 +1,31 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                template="/layout/optionPaneBase.xhtml">
+
+    <ui:param name="bean" value="#{eMailImportOptionPane}" />
+    <ui:define name="content">
+
+        <div class="row">
+            <t:inputText label="eMailImportOptionPane.label.Protocol" value="#{eMailImportOptionPane.protocol.asString}" columnClass="col-sm-12"/>
+            <t:inputText label="eMailImportOptionPane.label.Host" value="#{eMailImportOptionPane.host.asString}" columnClass="col-sm-12"/>
+            <t:inputText label="eMailImportOptionPane.label.Port" value="#{eMailImportOptionPane.port.asString}" columnClass="col-sm-12"/>
+            <t:inputText label="eMailImportOptionPane.label.SSL" value="#{eMailImportOptionPane.ssl.asString}" columnClass="col-sm-12"/>
+            <t:inputText label="eMailImportOptionPane.label.Folder" value="#{eMailImportOptionPane.folder.asString}" columnClass="col-sm-12"/>
+        </div>
+        <div class="row">
+            <t:inputText label="eMailImportOptionPane.label.User" value="#{eMailImportOptionPane.user.asString}" />
+            <t:inputText label="eMailImportOptionPane.label.Password" value="#{eMailImportOptionPane.pass.asString}" />
+        </div>
+
+    </ui:define>
+
+
+
+
+
+</ui:composition>

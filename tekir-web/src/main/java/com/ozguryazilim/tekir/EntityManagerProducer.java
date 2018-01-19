@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.ozguryazilim.tekir;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -14,13 +13,15 @@ import javax.persistence.PersistenceContextType;
 
 /**
  * Entity Manager üreticisi
+ *
  * @author Hakan Uygun
  */
 @ApplicationScoped
 public class EntityManagerProducer {
-    
-    @PersistenceContext( type = PersistenceContextType.EXTENDED, unitName = "tekir")
+
+    @PersistenceContext(type = PersistenceContextType.EXTENDED, unitName = "tekir")
     private EntityManager em;
+
     
     @Produces
     public EntityManager getEntityManager() {
@@ -33,5 +34,4 @@ public class EntityManagerProducer {
             entityManager.close();
         }
     }*/
-
 }

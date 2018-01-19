@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ozguryazilim.tekir.contact;
+package com.ozguryazilim.tekir.contact.relation;
 
+import com.ozguryazilim.tekir.contact.relation.ContactRelationViewModel;
 import com.ozguryazilim.tekir.entities.Contact;
-import com.ozguryazilim.tekir.entities.ContactRelation;
 import com.ozguryazilim.telve.entities.ViewModel;
 
 /**
@@ -19,10 +19,10 @@ public class RelatedContactViewModel implements ViewModel{
     private Long id;
     private Contact sourceContact;
     private Contact targetContact;
-    private ContactRelation relation;
+    private ContactRelationViewModel relation;
     private String info;
 
-    public RelatedContactViewModel(Long id, Contact sourceContact, Contact targetContact, ContactRelation relation, String info) {
+    public RelatedContactViewModel(Long id, Contact sourceContact, Contact targetContact, ContactRelationViewModel relation, String info) {
         this.id = id;
         this.sourceContact = sourceContact;
         this.targetContact = targetContact;
@@ -38,6 +38,11 @@ public class RelatedContactViewModel implements ViewModel{
         this.targetContact = targetContact;
         this.relation = relation;
         this.info = info;
+    }
+    
+    public RelatedContactViewModel( Contact sourceContact, ContactRelationViewModel relation) {
+        this.sourceContact = sourceContact;
+        this.relation = relation;
     }
 
     
@@ -66,11 +71,11 @@ public class RelatedContactViewModel implements ViewModel{
         this.targetContact = targetContact;
     }
 
-    public ContactRelation getRelation() {
+    public ContactRelationViewModel getRelation() {
         return relation;
     }
 
-    public void setRelation(ContactRelation relation) {
+    public void setRelation(ContactRelationViewModel relation) {
         this.relation = relation;
     }
 

@@ -100,4 +100,20 @@
             <column name="TOPIC" type="varchar(255)"/>
         </addColumn>
     </changeSet>
+    <changeSet author="oyas (generated)" id="1506243814559-1">
+        <createTable tableName="TVO_PROCESS_STAKEHOLDER">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TVO_PROCESS_STAKEHOLDERPK"/>
+            </column>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="CONTACT_ID" type="BIGINT"/>
+            <column name="PROCESS_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1506243814559-2">
+        <addForeignKeyConstraint baseColumnNames="CONTACT_ID" baseTableName="TVO_PROCESS_STAKEHOLDER" constraintName="FK_STAKE_CONTACT" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1506243814559-3">
+        <addForeignKeyConstraint baseColumnNames="PROCESS_ID" baseTableName="TVO_PROCESS_STAKEHOLDER" constraintName="FK_STAKE_PROCESS" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TVO_PROCESS"/>
+    </changeSet>
 </databaseChangeLog>

@@ -8,6 +8,21 @@
                 template="/layout/containerViewTabBase.xhtml">
 
     <ui:param name="viewState" value="" />
+    <ui:param name="viewIdentifier" value="#{bean.entity.voucherNo} - #{bean.entity.topic}" />
+
+    <ui:define name="caption">
+        <ul class="caption-states">
+            <ui:insert name="caption-states" />
+            <ui:fragment rendered="#{process ne 'false'}">
+                <t:stateOutputFeatureLink label="voucher.label.Process" value="#{featureController.getFeatureLink(bean.processFeaturePointer)}" />
+            </ui:fragment>
+            <t:stateOutputText label="voucher.label.ReferenceNo" value="#{bean.entity.referenceNo}" />
+            <t:stateOutputText label="general.label.Code" value="#{bean.entity.code}" />
+        </ul>
+        <ui:fragment rendered="#{bean.entity.info ne ''}">
+            <p><i class="fa fa-info"/> #{bean.entity.info}</p>
+        </ui:fragment>
+    </ui:define>
 
     <ui:define name="context-menu-2">
         <ui:repeat value="#{bean.permittedStateTransitionActions}" var="act">
@@ -24,14 +39,34 @@
         </ui:repeat>
         <ui:repeat value="#{bean.permittedStateActions}" var="act">
             <li>
-                <p:commandLink action="#{bean.triggerExec(act)}" styleClass="context-command" ajax="false" rendered="#{not act.hasDialog()}">
+                <p:commandLink action="#{bean.triggerExec(act)}" styleClass="context-command" ajax="false" rendered="#{not act.hasSubactions}">
                     <i class="#{act.icon}"></i>
                     <h:outputText value=" #{messages['general.button.'.concat( act.name )]}" />
                 </p:commandLink>
             </li>
+            <ui:fragment rendered="#{act.hasSubactions}">
+            <li class="dropdown">
+                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <i class="#{act.icon}"></i>
+                    <h:outputText value=" #{messages['general.button.'.concat( act.name )]}" />
+                    <i class="fa fa-caret-down" />
+                </a>
+                <ul class="dropdown-menu">
+                    <ui:repeat value="#{act.subactionNames}" var="item" varStatus="loop2">
+                        <li>
+                            <p:commandLink action="#{bean.triggerExec(act, item)}" styleClass="context-command" ajax="false" >
+                                <i class="#{act.icon}"></i>
+                                <h:outputText value=" #{messages['printOut.'.concat(bean.getFeature().getName()).concat('.').concat( item )]}" />
+                            </p:commandLink>
+                        </li>
+                    </ui:repeat>
+                </ul>
+            </li>
+                </ui:fragment>
+
         </ui:repeat>
     </ui:define>
-    
+
     <ui:define name="context-menu-4">
         <li>
             <p:commandLink action="#{changeOwnerDialog.openDialog()}" styleClass="context-command" ajax="false" rendered="#{bean.hasChangeOwnerPermission()}">
@@ -45,20 +80,20 @@
     <ui:define name="state-header">
 
         <p:outputPanel id="states">
-        <ul class="states pull-right">
-            <li role="presentation">
-                <div style="font-weight: bold;"> Belge Sahibi</div>
-                <div >
-                    #{userLookup.getUserName(bean.entity.owner)}
-                </div>
-            </li>
-            <li role="presentation">
-                <div style="font-weight: bold;">#{messages['voucherState.name.'.concat(bean.entity.state.name)]} </div>
-                <div >#{bean.entity.stateReason}</div>
-            </li>
+            <ul class="states pull-right">
+                <li role="presentation">
+                    <div style="font-weight: bold;"> Belge Sahibi</div>
+                    <div >
+                        #{userLookup.getUserName(bean.entity.owner)}
+                    </div>
+                </li>
+                <li role="presentation">
+                    <div style="font-weight: bold;">#{messages['voucherState.name.'.concat(bean.entity.state.name)]} </div>
+                    <div >#{bean.entity.stateReason}</div>
+                </li>
 
-        </ul>
-            </p:outputPanel>
+            </ul>
+        </p:outputPanel>
 
     </ui:define>
 

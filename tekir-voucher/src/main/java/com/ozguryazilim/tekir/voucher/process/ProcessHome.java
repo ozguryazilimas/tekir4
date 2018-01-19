@@ -86,7 +86,7 @@ public class ProcessHome extends FormBase<Process, Long> {
 
     public FeaturePointer getFeaturePointer() {
         FeaturePointer result = new FeaturePointer();
-        result.setBusinessKey(getEntity().getTopic());
+        result.setBusinessKey(getEntity().getProcessNo());
         result.setFeature(getFeatureClass().getSimpleName());
         result.setPrimaryKey(getEntity().getId());
         return result;

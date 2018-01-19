@@ -1,0 +1,65 @@
+<persistence version="2.0"
+             xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+    <persistence-unit name="tekir" transaction-type="JTA">
+        <jta-data-source>java:jboss/datasources/TestDS</jta-data-source>
+        <shared-cache-mode>DISABLE_SELECTIVE</shared-cache-mode>
+        <!--
+        <jar-file>lib/telve-core-model-4.0.0.Beta4.jar</jar-file>
+        <jar-file>lib/tekir-core-model-4.0.0-SNAPSHOT.jar</jar-file>
+        <jar-file>lib/tekir-contact-model-5442866765422823338.jar</jar-file>
+        -->
+        <class>com.ozguryazilim.tekir.entities.Industry</class>
+        <class>com.ozguryazilim.tekir.entities.Location</class>
+        <class>com.ozguryazilim.tekir.entities.Territory</class>
+        <class>com.ozguryazilim.tekir.entities.Territory</class>
+        
+        <class>com.ozguryazilim.tekir.entities.Contact</class>
+        <class>com.ozguryazilim.tekir.entities.AbstractPerson</class>
+        <class>com.ozguryazilim.tekir.entities.Person</class>
+        <class>com.ozguryazilim.tekir.entities.Corporation</class>
+        <class>com.ozguryazilim.tekir.entities.CorporationType</class>
+        <class>com.ozguryazilim.tekir.entities.ReleatedContact</class>
+        <class>com.ozguryazilim.tekir.entities.AccountTxn</class>
+        <class>com.ozguryazilim.tekir.entities.ContactAddress</class>
+        <class>com.ozguryazilim.tekir.entities.ContactBank</class>
+        <class>com.ozguryazilim.tekir.entities.ContactCategory</class>
+        <class>com.ozguryazilim.tekir.entities.ContactEMail</class>
+        <class>com.ozguryazilim.tekir.entities.ContactInformation</class>
+        <class>com.ozguryazilim.tekir.entities.ContactPhone</class>
+        <class>com.ozguryazilim.tekir.entities.ContactRelation</class>
+        <class>com.ozguryazilim.tekir.entities.ContactSocialAccount</class>
+        <class>com.ozguryazilim.tekir.entities.ContactStream</class>
+        
+        
+    
+        <properties>
+            <!-- Properties for Hibernate -->
+            
+            <!-- WildFly için yeni Hibernate sürümü modülü yüklenirse...
+            <property name="jboss.as.jpa.providerModule" value="org.hibernate:5.2.10.Final" />
+            -->
+
+            <!--
+                Artık Connection üzerinden Dialect Buluyor. Elle vermeye gerek yok.
+                <property name="hibernate.dialect" value="${hibernate.dialect}"/> 
+            -->
+            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup"/>
+            <property name="hibernate.connection.release_mode" value="after_statement"/>
+            
+            <!-- cache config -->
+            <property name="hibernate.cache.use_second_level_cache" value="true" />
+            <property name="hibernate.cache.use_query_cache" value="true" />
+            
+            <!--
+            <property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.infinispan.JndiInfinispanRegionFactory" />
+            <property name="hibernate.cache.infinispan.cachemanager" value="java:CacheManager" /> 
+            -->
+        </properties>
+    </persistence-unit>
+
+    
+</persistence>

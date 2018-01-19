@@ -9,68 +9,89 @@
     <ui:define name="content">     
 
         <div class="row">
-            <div class="col-md-4 col-xs-12">
-                <t:accordion icon="fa fa-stack-exchange" label="general.label.Summary" columnClass="col-xs-12">
-                    <t:outputEnum label="finance.label.VirementType" itemLabel="virementtype." value="#{financeAccountVirementHome.entity.virementType}" columnClass="col-xs-12" />
-                    <t:outputText label="voucher.label.Topic" value="#{financeAccountVirementHome.entity.topic}" columnClass="col-xs-12"/>
-                    <t:outputText label="general.label.Info" value="#{financeAccountVirementHome.entity.info}" columnClass="col-xs-12"/>
-                    <t:outputMoney label="general.label.FromAmount" value="#{financeAccountVirementHome.entity.fromAmount}" currency="#{financeAccountVirementHome.entity.fromCurrency}" columnClass="col-xs-12"/>
-                    <t:outputMoney label="general.label.ToAmount" value="#{financeAccountVirementHome.entity.toAmount}" currency="#{financeAccountVirementHome.entity.toCurrency}" columnClass="col-xs-12"/>
-                </t:accordion>
+            <div class="col-md-7 ">
+                <div class="row">
 
-                <t:accordion icon="fa fa-file-text" label="general.label.Voucher" columnClass="col-xs-12">
-                    <t:outputText label="voucher.label.VoucherNo" value="#{financeAccountVirementHome.entity.voucherNo}"  columnClass="col-xs-12"/>
-                    <t:outputText label="voucher.label.ReferenceNo" value="#{financeAccountVirementHome.entity.referenceNo}" columnClass="col-xs-12"/>
-                    <t:outputText label="voucher.label.Group" value="#{financeAccountVirementHome.entity.group.groupNo}"  columnClass="col-xs-12"/>
-                    <t:outputText label="voucher.label.Owner" value="#{financeAccountVirementHome.entity.owner}" columnClass="col-xs-12"/>
-                    <t:outputText label="general.label.Code" value="#{financeAccountVirementHome.entity.code}" columnClass="col-xs-12"/>
+                    <t:accordion icon="fa fa-stack-exchange" label="general.label.Summary" >
+
+                        <t:outputEnum label="finance.label.VirementType" itemLabel="virementtype." value="#{financeAccountVirementHome.entity.virementType}" columnClass="col-md-6" />
+                        <t:outputDate label="voucher.label.Date" value="#{financeAccountVirementHome.entity.date}" columnClass="col-md-6"/>
+                        <t:outputText label="voucher.label.Topic" value="#{financeAccountVirementHome.entity.topic}" columnClass="col-md-12"/>
+                        
+
+                        <t:outputAny label="finance.label.FromAccount" columnClass="col-lg-6">
+                            <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(financeAccountVirementHome.getAllFeaturePointer(financeAccountVirementHome.entity.fromAccount))}" />
+                            <span class="pull-right">
+                                <t:cellOutputMoney value="#{financeAccountVirementHome.entity.fromAmount}" currency="#{financeAccountVirementHome.entity.fromCurrency}" />
+                            </span>
+                        </t:outputAny>
+
+                        <t:outputAny label="finance.label.ToAccount" columnClass="col-lg-6">
+                            <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(financeAccountVirementHome.getAllFeaturePointer(financeAccountVirementHome.entity.toAccount))}" />
+                            <span class="pull-right">
+                                <t:cellOutputMoney value="#{financeAccountVirementHome.entity.toAmount}" currency="#{financeAccountVirementHome.entity.toCurrency}" />
+                            </span>
+                        </t:outputAny>
+
+                        <t:outputText label="general.label.Info" value="#{financeAccountVirementHome.entity.info}" columnClass="col-md-12"/>
+                        
+                        <ui:remove>
+                            <t:outputFeatureLink label="finance.label.FromAccount" 
+                                                 value="#{featureController.getFeatureLink(financeAccountVirementHome.getAllFeaturePointer(financeAccountVirementHome.entity.fromAccount))}" 
+                                                 columnClass="col-md-6"/>
+                            <t:outputMoney label="general.label.FromAmount" value="#{financeAccountVirementHome.entity.fromAmount}" currency="#{financeAccountVirementHome.entity.fromCurrency}" columnClass="col-md-6"/>
+
+                            <t:outputFeatureLink label="finance.label.ToAccount" 
+                                                 value="#{featureController.getFeatureLink(financeAccountVirementHome.getAllFeaturePointer(financeAccountVirementHome.entity.toAccount))}" 
+                                                 columnClass="col-md-6"/>
+
+                            <t:outputMoney label="general.label.ToAmount" value="#{financeAccountVirementHome.entity.toAmount}" currency="#{financeAccountVirementHome.entity.toCurrency}" columnClass="col-md-6"/>
+                        </ui:remove>
+                    </t:accordion>
+
+
+
+
+                    <t:accordion icon="fa fa-file-text" label="general.label.Voucher" contentClass="row">
+
+                        <t:outputText label="voucher.label.VoucherNo" value="#{financeAccountVirementHome.entity.voucherNo}"  columnClass="col-md-6 col-sm-12"/>
+                        <t:outputText label="voucher.label.ReferenceNo" value="#{financeAccountVirementHome.entity.referenceNo}" columnClass="col-md-6 col-sm-12"/>
+                        <t:outputText label="voucher.label.Group" value="#{financeAccountVirementHome.entity.group.groupNo}"  columnClass="col-md-6 col-sm-12"/>
+                        <t:outputText label="voucher.label.Owner" value="#{userLookup.getUserName(financeAccountVirementHome.entity.owner)}" columnClass="col-md-6 col-sm-12"/>
+                        <t:outputText label="general.label.Code" value="#{financeAccountVirementHome.entity.code}" columnClass="col-md-6 col-sm-12"/>
+
+                        <t:outputDate label="voucher.label.Date" value="#{financeAccountVirementHome.entity.date}" columnClass="col-md-6 col-sm-12"/>
+
+                    </t:accordion>
+
+                </div>
+            </div>
+
+
+            <div class="col-md-5 col-xs-12">
+                <div class="row">
+                    <ui:include src="/activities/activityWidget.xhtml">
+                        <ui:param name="person" value="" />
+                        <ui:param name="corporation" value="" />
+                        <ui:param name="feature" value="#{financeAccountVirementHome.featurePointer}" />
+                        <ui:param name="attached" value="Feature" />
+                    </ui:include>
+
+                    <ui:include src="/notes/noteWidget.xhtml">
+                        <ui:param name="featurePointer" value="#{financeAccountVirementHome.featurePointer}" />
+                    </ui:include>
+
+                    <ui:include src="/attachment/simpleAttachmentWidget.xhtml">
+                        <ui:param name="payload" value="#{financeAccountVirementHome.entity}" />
+                        <ui:param name="featurePointer" value="#{financeAccountVirementHome.featurePointer}" />
+                    </ui:include>
                     
-                    <t:outputDate label="voucher.label.Date" value="#{financeAccountVirementHome.entity.date}" columnClass="col-xs-12"/>
-                </t:accordion>
+                    <ui:include src="/feeds/feedWidget.xhtml">
+                        <ui:param name="feature" value="#{financeAccountVirementHome.featureClass.simpleName}" />
+                        <ui:param name="pk" value="#{financeAccountVirementHome.entity.id}" />
+                    </ui:include>
+                </div>
             </div>
-
-
-            <div class="col-md-4 col-xs-12">
-                
-                <ui:include src="/activities/activityWidget.xhtml">
-                    <ui:param name="person" value="" />
-                    <ui:param name="corporation" value="" />
-                    <ui:param name="feature" value="#{financeAccountVirementHome.featurePointer}" />
-                    <ui:param name="attached" value="Feature" />
-                </ui:include>
-
-                <ui:include src="/notes/noteWidget.xhtml">
-                    <ui:param name="featurePointer" value="#{financeAccountVirementHome.featurePointer}" />
-                </ui:include>
-
-                <ui:include src="/feeds/feedWidget.xhtml">
-                    <ui:param name="feature" value="#{financeAccountVirementHome.featureClass.simpleName}" />
-                    <ui:param name="pk" value="#{financeAccountVirementHome.entity.id}" />
-                </ui:include>
-
-            </div>
-
-            <div class="col-md-4 col-xs-12">
-                <ui:remove>
-                 <t:accordion icon="fa fa-file" id="cx" label="general.label.ReleatedVouchers" columnClass="col-xs-12">
-                    <ul class="products-list product-list-in-box">
-                        <ui:repeat value="#{financeAccountTxnService.getProcessVouchers(financeAccountVirementHome.entity.process.processNo)}" var="ci" >
-                            <li class="item">
-                                <t:cellOutputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
-
-                                <span class="text-muted pull-right">#{ci.processId}</span>
-
-                                <div class="text-sm">
-                                    #{ci.info}
-                                </div>
-
-                            </li>
-                        </ui:repeat>
-                    </ul>
-                </t:accordion>
-                    </ui:remove>
-            </div>
-
         </div>
 
     </ui:define>

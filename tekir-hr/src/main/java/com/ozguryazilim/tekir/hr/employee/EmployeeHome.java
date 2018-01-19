@@ -7,11 +7,9 @@ package com.ozguryazilim.tekir.hr.employee;
 
 import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.contact.ContactRoleRegistery;
-import com.ozguryazilim.tekir.contact.RelatedContactRepository;
 import com.ozguryazilim.tekir.contact.information.ContactInformationRepository;
 import com.ozguryazilim.tekir.entities.ContactInformation;
 import com.ozguryazilim.tekir.entities.Employee;
-import com.ozguryazilim.tekir.entities.RelatedContact;
 import com.ozguryazilim.tekir.hr.config.EmployeePages;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
@@ -48,9 +46,6 @@ public class EmployeeHome extends FormBase<Employee, Long> {
     @Inject
     private ContactInformationRepository informationRepository;
 
-    @Inject
-    private RelatedContactRepository relatedContactRepository;
-    
     private List<String> selectedRoles = new ArrayList<>();
 
     public Class<? extends ViewConfig> newEmployee() {
@@ -118,15 +113,6 @@ public class EmployeeHome extends FormBase<Employee, Long> {
         return informationRepository.findByContact(getEntity());
     }
 
-    
-    public List<RelatedContact> getRelatedContacts() {
-        return relatedContactRepository.findBySourceContact( getEntity());
-    }
-    
-    //TODO:Method ismini düzeltelim
-    public List<RelatedContact> getRelatedContactsRevers() {
-        return relatedContactRepository.findByTargetContact( getEntity());
-    }
     
     public List<String> getContactRoles() {
         return ContactRoleRegistery.getSelectableContactRoles();

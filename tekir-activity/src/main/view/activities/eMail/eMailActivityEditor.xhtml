@@ -3,25 +3,16 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
-                xmlns:p="http://primefaces.org/ui"                
-                template="/activities/activityEditorBase.xhtml">
+                xmlns:p="http://primefaces.org/ui">
 
-    <ui:param name="title" value="#{messages['eMailActivityEditor.label.Title']} - #{ messages['activity.status.'.concat(eMailActivityController.entity.status)]}" />
-    <ui:param name="bean" value="#{eMailActivityController}" />
-
-    <ui:define name="editorContent">
-        <div class="row">
-            From / To v.s. gelecek
-        </div>
-    </ui:define> 
-    
-    <ui:define name="assignment">
-        <div class="row">
-                <t:inputLookupDialog label="general.label.Person" value="#{eMailActivityController.entity.person}" lookupBean="#{contactLookup}" lookupListener="eMailActivityController.entity.person" placeholder="#{messages['contact.info.Person']}" lookupProfile="T:Person" columnClass="col-xs-6"/>
-                <t:inputLookupDialog label="general.label.Corporation" value="#{eMailActivityController.entity.corporation}" lookupBean="#{contactLookup}" lookupListener="eMailActivityController.entity.corporation" placeholder="#{messages['general.info.Corparation']}" lookupProfile="T:Corporation" columnClass="col-xs-6"/>
-                <t:inputFeature label="activity.label.Regarding" value="#{eMailActivityController.entity.regarding}" lookupBean="#{tekirFeatureLookup}" lookupListener="eMailActivityController.entity.regarding" columnClass="col-xs-6"/>
-                <t:inputUser label="general.label.Assignee" value="#{bean.entity.assignee}" hasNotSelected="true" required="true"  columnClass="col-xs-6"/>
-            </div>
-    </ui:define>
-    
+    <div class="row">
+        <t:inputText label="activity.label.From" value="" columnClass="col-md-6 col-sm-12"/>
+        <t:inputText label="activity.label.CC" value="" columnClass="col-md-6 col-sm-12"/>
+        <t:inputText label="activity.label.To" value="" columnClass="col-md-6 col-sm-12"/>
+        <t:inputText label="activity.label.BCC" value="" columnClass="col-md-6 col-sm-12"/>
+    </div>
+    <div class="row">
+        <t:inputText label="activity.label.Subject" value="#{activityHome.entity.subject}" required="true" columnClass="col-sm-12"/>
+        <t:inputTextarea label="activity.label.Body" value="#{activityHome.entity.body}" columnClass="col-sm-12"/>
+    </div>
 </ui:composition>

@@ -46,6 +46,18 @@
             <version>${version.telve}</version>
             <type>ejb</type>
         </dependency>
+        <dependency>
+            <groupId>com.ozguryazilim.mutfak</groupId>
+            <artifactId>telve-attachment</artifactId>
+            <version>${version.telve}</version>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>com.ozguryazilim.mutfak</groupId>
+            <artifactId>telve-attachment-modeshape</artifactId>
+            <version>${version.telve}</version>
+            <type>ejb</type>
+        </dependency>
 <!--         <dependency>
             <groupId>com.ozguryazilim.mutfak</groupId>
             <artifactId>telve-keycloak</artifactId>
@@ -292,5 +304,4 @@
         </profile>
         
     </profiles>
-
 </project>

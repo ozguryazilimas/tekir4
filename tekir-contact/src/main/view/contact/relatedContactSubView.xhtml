@@ -28,6 +28,9 @@
                 <div class="row">
                     <t:inputLookupDialog value="#{bean.entity.targetContact}" label="contact.label.Contact"  caption="name" lookupBean="#{contactLookup}" lookupProfile="C:#{bean.getSourceContact().id}"  lookupListener="relatedContactSubView.entity.targetContact"  columnClass="col-xs-12" />
                     <t:inputLookup value="#{bean.entity.relation}" label="contact.label.ContactRelation"  caption="name" lookupBean="#{contactRelationLookup}" lookupListener="bean.entity.relation"  columnClass="col-xs-12"/>
+                    <t:inputCombobox label="contact.label.ContactRelation" value="#{bean.entity.relation}">
+                        <f:selectItems value="#{bean.relations}" var="item" itemLabel="#{item.name}" itemValue="#{item}" />
+                    </t:inputCombobox>
                     <t:inputTextarea label="general.label.Info" value="#{bean.entity.info}" columnClass="col-xs-12"/>
                 </div>
 
