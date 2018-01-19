@@ -4,7 +4,7 @@ import com.ozguryazilim.tekir.account.AccountTxnService;
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.tekir.entities.Corporation;
-import com.ozguryazilim.tekir.entities.Person;
+import com.ozguryazilim.tekir.entities.AbstractPerson;
 import com.ozguryazilim.tekir.entities.ProcessType;
 import com.ozguryazilim.telve.forms.FormEdit;
 import com.ozguryazilim.tekir.entities.Quote;
@@ -19,6 +19,10 @@ import com.ozguryazilim.tekir.voucher.VoucherStateAction;
 import com.ozguryazilim.tekir.voucher.VoucherStateConfig;
 import com.ozguryazilim.tekir.voucher.process.ProcessService;
 import com.ozguryazilim.telve.data.RepositoryBase;
+import com.ozguryazilim.telve.entities.EntityBase;
+import com.ozguryazilim.telve.entities.FeaturePointer;
+import com.ozguryazilim.telve.feature.FeatureUtils;
+
 import java.util.List;
 import javax.inject.Inject;
 
@@ -183,9 +187,9 @@ public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodit
 		}
 	}
 
-	public Person getPerson() {
-		if (getAccount() instanceof Person) {
-			return (Person) getAccount();
+	public AbstractPerson getPerson() {
+		if (getAccount() instanceof AbstractPerson) {
+			return (AbstractPerson) getAccount();
 		} else {
 			return ((Corporation) getAccount()).getPrimaryContact();
 		}
@@ -195,7 +199,7 @@ public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodit
 		if (getAccount() instanceof Corporation) {
 			return (Corporation) getAccount();
 		} else {
-			return ((Person) getAccount()).getCorporation();
+			return ((AbstractPerson) getAccount()).getCorporation();
 		}
 	}
 
@@ -205,4 +209,9 @@ public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodit
 		sc.calcSummaries(this::getEntity, getEntity()::getItems, getEntity()::getSummaries, () -> new QuoteSummary(),
 				getEntity()::setTotal, getEntity().getAccount().getVatWithholding());
 	}
+	
+    // FeatureLink yönlendirmesi
+    public FeaturePointer getAllFeaturePointer(EntityBase contact){
+    		return FeatureUtils.getFeaturePointer(contact);
+    }
 }

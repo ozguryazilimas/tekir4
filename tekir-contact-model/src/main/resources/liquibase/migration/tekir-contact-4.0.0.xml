@@ -242,4 +242,32 @@
             <column name="VAT_WITHHOLDING" type="BOOLEAN"/>
         </addColumn>
     </changeSet>
+    <changeSet author="oyas (generated)" id="1505062932003-1">
+        <addColumn tableName="TCC_CONTACT_REL_DEF">
+            <column name="SOURCE_ROLES" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1505062932003-2">
+        <addColumn tableName="TCC_CONTACT_REL_DEF">
+            <column name="TARGET_ROLES" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1505062932003-3">
+        <addColumn tableName="TCC_CONTACT_REL_DEF">
+            <column name="WEIGHT" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1505062932003-4">
+        <addColumn tableName="TCC_CONTACT_REL_DEF">
+            <column name="reversName" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1505062932003-5">
+        <addColumn tableName="TCC_CONTACT_REL_DEF">
+            <column name="vectorName" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1505062932003-11">
+        <dropColumn columnName="ROLES" tableName="TCC_CONTACT_REL_DEF"/>
+    </changeSet>
 </databaseChangeLog>

@@ -57,6 +57,7 @@ public class PhoneEditor extends AbstractContactInformationEditor<ContactPhone> 
 
         init();
 
+        setContact(contact);
         if (phone != null) {
             setEntity(phone);
         } else {

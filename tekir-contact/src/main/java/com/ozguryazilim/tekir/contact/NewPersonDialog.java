@@ -7,16 +7,15 @@ package com.ozguryazilim.tekir.contact;
 
 import com.ozguryazilim.tekir.contact.config.ContactPages;
 import com.ozguryazilim.tekir.entities.Person;
-import com.ozguryazilim.telve.view.DialogBase;
-
+import com.ozguryazilim.tekir.entities.AbstractPerson;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
-
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import org.apache.deltaspike.core.api.config.view.ViewConfig;
+import org.apache.deltaspike.core.api.config.view.metadata.ViewConfigResolver;
+import org.primefaces.context.RequestContext;
 
 /**
  * Yeni Kişi Tanım Popup Controller
@@ -25,45 +24,76 @@ import org.apache.deltaspike.core.api.config.view.ViewConfig;
  */
 @Named
 @SessionScoped
-public class NewPersonDialog extends DialogBase implements Serializable{
+public class NewPersonDialog implements Serializable{
+    
+    @Inject
+    private ViewConfigResolver viewConfigResolver;
     
     @Inject 
     private ContactRepository repository;
     
     
-    private Person contact;
+    private AbstractPerson contact;
     
-    @Override
-    public void beforeOpenDialog() {
+    public void openDialog() {
         contact = new Person();
         
         contact.getContactRoles().add("CONTACT");
         contact.getContactRoles().add("PERSON");
         
+        openDialogImpl();
     }
     
-    @Override
+    protected void openDialogImpl() {
+        Map<String, Object> options = new HashMap<>();
+        options.put("modal", true);
+        //options.put("draggable", false);  
+        options.put("resizable", false);
+        options.put("width", "780");
+        options.put("height", "430");
+        //options.put("contentWidth", 780);
+        options.put("contentHeight", 450);
+        options.put("position", "center top");
+
+        RequestContext.getCurrentInstance().openDialog(getDialogName(), options, null);
+    }
+    
+    /**
+     * Yeni contact'ı save eder.
+     */
     public void closeDialog() {
-    	
-    	//Person'ının ad soyadından bütünleşik isim elde ediyoruz.
+        //Person'ının ad soyadından bütünleşik isim elde ediyoruz.
         contact.setName( contact.getFirstName() + " " + contact.getLastName());
         
         repository.save(contact);
-
-        closeDialogWindow();
+        
+        RequestContext.getCurrentInstance().closeDialog(null);
     }
 
-	@Override
-	public Class<? extends ViewConfig> getDialogViewConfig() {
-		return ContactPages.NewPersonPopup.class;
-	}
+    /**
+     * Bir şey yapmadan çık.
+     */
+    public void cancelDialog() {
+        RequestContext.getCurrentInstance().closeDialog(null);
+    }
+    
+    /**
+     * startPopup dialog adını döndürür.
+     *
+     * @return
+     */
+    public String getDialogName() {
+        String viewId = viewConfigResolver.getViewConfigDescriptor(ContactPages.NewPersonPopup.class).getViewId();
+        return viewId.substring(0, viewId.indexOf(".xhtml"));
+    }
 
-    public Person getContact() {
+    public AbstractPerson getContact() {
         return contact;
     }
 
-    public void setContact(Person person) {
+    public void setContact(AbstractPerson person) {
         this.contact = person;
     }
+    
     
 }

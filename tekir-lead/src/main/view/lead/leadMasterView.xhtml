@@ -1,0 +1,86 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+	template="/layout/voucherMasterViewBase.xhtml">
+
+	<ui:define name="content">
+
+		<div class="row">
+			<div class="col-md-4 col-xs-12">
+
+				<t:accordion icon="fa fa-stack-exchange"
+					label="general.label.Summary" columnClass="col-xs-12">
+					<t:outputText label="general.label.Topic"
+						value="#{leadHome.entity.topic}" columnClass="col-xs-12" />
+					<t:outputText label="lead.label.RelatedPersonName"
+						value="#{leadHome.entity.relatedPersonName}"
+						columnClass="col-xs-12" />
+					<t:outputText label="lead.label.RelatedPersonSurname"
+						value="#{leadHome.entity.relatedPersonSurname}"
+						columnClass="col-xs-12" />
+					<t:outputText label="lead.label.RelatedCompanyName"
+						value="#{leadHome.entity.relatedCompanyName}"
+						columnClass="col-xs-12" />
+					<t:outputText label="lead.label.RelatedPhone"
+						value="#{leadHome.entity.relatedPhone}" columnClass="col-xs-6" />
+					<t:outputText label="lead.label.RelatedEmail"
+						value="#{leadHome.entity.relatedEmail}" columnClass="col-xs-6" />
+					<t:outputText label="lead.label.RelatedAddress"
+						value="#{leadHome.entity.relatedAddress}" columnClass="col-xs-12" />
+					<t:outputText label="lead.label.Territory"
+						value="#{leadHome.entity.territory.name}" columnClass="col-xs-12" />
+					<t:outputText label="lead.label.Location"
+						value="#{leadHome.entity.location.name}" columnClass="col-xs-6" />
+					<t:outputText label="lead.label.Industry"
+						value="#{leadHome.entity.industry.name}" columnClass="col-xs-6" />
+				</t:accordion>
+
+				<t:accordion icon="fa fa-file-text" label="general.label.Voucher"
+					columnClass="col-xs-12">
+					<t:outputText label="voucher.label.VoucherNo"
+						value="#{leadHome.entity.voucherNo}" columnClass="col-xs-6" />
+					<t:outputText label="voucher.label.ReferenceNo"
+						value="#{leadHome.entity.referenceNo}" columnClass="col-xs-6" />
+					<t:outputText label="voucher.label.Owner"
+						value="#{leadHome.entity.owner}" columnClass="col-xs-6" />
+					<t:outputText label="general.label.Code"
+						value="#{leadHome.entity.code}" columnClass="col-xs-6" />
+					<t:outputText label="general.label.Info"
+						value="#{leadHome.entity.info}" columnClass="col-xs-12" />
+					<t:outputDate label="voucher.label.Date"
+						value="#{leadHome.entity.date}" columnClass="col-xs-12" />
+				</t:accordion>
+
+			</div>
+
+			<div class="col-md-4 col-xs-12" />
+
+			<div class="col-md-4 col-xs-12">
+
+					<ui:include src="/notes/noteWidget.xhtml">
+						<ui:param name="featurePointer"
+							value="#{leadHome.featurePointer}" />
+					</ui:include>
+
+					<ui:include src="/feeds/feedWidget.xhtml">
+						<ui:param name="feature"
+							value="#{leadHome.featureClass.simpleName}" />
+						<ui:param name="pk" value="#{leadHome.entity.id}" />
+					</ui:include>
+
+					<ui:include src="/voucher/voucherReleatedWidget.xhtml">
+						<ui:param name="featurePointer"
+							value="#{leadHome.featurePointer}" />
+						<ui:param name="groupNo"
+							value="#{leadHome.entity.group.groupNo}" />
+					</ui:include>
+
+			</div>
+		</div>
+
+	</ui:define>
+
+</ui:composition>

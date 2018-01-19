@@ -8,8 +8,8 @@
 
     <ui:param name="bean" value="#{activityHome}" />
     <ui:param name="entityName" value="activity" />
-    <ui:param name="viewIdentifier" value="#{bean.entity.subject}" />
-    <ui:param name="showCaption" value="true"/>
+    <ui:param name="viewIdentifier" value="#{bean.entity.subject} [#{bean.entity.activityNo}]" />
+    <ui:param name="showCaption" value="false"/>
     <ui:param name="dontShowContentHeader" value="false" />
 
     <ui:define name="metadata">
@@ -22,19 +22,35 @@
         <section class="content-header">
             <p:outputPanel id="states">
                 <ul class="states pull-right">
+                    <ui:fragment rendered="#{activityHome.entity.direction ne 'NONE'}">
                     <li role="presentation">
-                        <div style="font-weight: bold;">#{messages['activity.label.Assignee']}</div>
-                        <div >
+                        <div class="text-sm text-muted">#{messages['activity.label.Direction']} </div>
+                        <div>#{messages['activity.direction.'.concat(activityHome.entity.direction)]} </div>
+                    </li>
+                    </ui:fragment>
+                    
+                    <li role="presentation">
+                        <div class="text-sm text-muted">#{messages['activity.label.Priority']} </div>
+                        <div class="#{activityHome.entity.priority eq 'HIGH' ? 'text-danger' : ''}">#{messages['activity.priority.'.concat(activityHome.entity.priority)]} </div>
+                    </li>
+                    
+                    <li role="presentation">
+                        <div class="text-sm text-muted">#{messages['activity.label.DueDate']} </div>
+                        <div><t:cellOutputDateTime value="#{bean.entity.dueDate}" /></div>
+                    </li>
+                    
+                    <li role="presentation">
+                        <div class="text-sm text-muted">Durum</div>
+                        <div class="#{activityHome.entity.status eq 'SUCCESS' ? 'text-success' : activityHome.entity.status eq 'FAILED' ? 'text-danger' :'' }" style="font-weight: bold;">#{messages['activity.status.'.concat(activityHome.entity.status)]} </div>
+                        <div >#{activityHome.entity.statusReason}</div>
+                    </li>
+                    
+                    <li role="presentation">
+                        <div class="text-sm text-muted">#{messages['activity.label.Assignee']}</div>
+                        <div style="font-weight: bold;">
                             #{userLookup.getUserName(activityHome.entity.assignee)}
                         </div>
                     </li>
-                    <ui:remove>
-                        Buraya Puanlama v.b. gelebilir mi? Bu bizim için değerli bir müşteridir v.b.
-                        <li role="presentation">
-                            <div style="font-weight: bold;">#{contactHome.entity.status} </div>
-                            <div >#{contactHome.entity.statusReason}</div>
-                        </li>
-                    </ui:remove>
                 </ul>
             </p:outputPanel>
             <i class="fa fa-3x #{messages['activity.button.icon.'.concat(bean.entity.class.simpleName)]} pull-left"/> 
@@ -67,10 +83,35 @@
         </li>
 
         <li>
-            <p:commandLink action="#{activityWidget.edit(activityHome.entity)}" process="@this" styleClass="context-command">
-                <i class="fa fa-pencil" />
+            <ui:remove>
+                //Edit ne zaman açılsın? Hep mi?
+                and ( bean.entity.status eq 'DRAFT' or bean.entity.status eq 'SCHEDULED')
+            </ui:remove>
+            <p:commandLink action="#{bean.edit()}" title="#{messages['general.button.Edit']}" ajax="false" rendered="#{bean.hasUpdatePermission() }">
+                <i class="fa fa-pencil"></i>
                 <h:outputText value=" #{messages['general.button.Edit']}" />
-                <p:ajax event="dialogReturn" update="@all" partialSubmit="true" process="@this" />   
+            </p:commandLink>
+        </li>
+        
+        <li>
+            <p:commandLink action="#{bean.closeSuccess()}" title="#{messages['activity.button.Success']}" ajax="false" rendered="#{bean.hasUpdatePermission() and bean.entity.status eq 'SCHEDULED'}">
+                <i class="fa fa-check"></i>
+                <h:outputText value=" #{messages['activity.button.Success']}" />
+            </p:commandLink>
+        </li>
+
+        <li>
+            <p:commandLink title="#{messages['activity.button.Faild']}" ajax="true" rendered="#{bean.hasUpdatePermission() and bean.entity.status eq 'SCHEDULED'}" update="stateDlg" oncomplete="PF('stateDlg').show()">
+                <i class="fa fa-close"></i>
+                <h:outputText value=" #{messages['activity.button.Faild']}" />
+            </p:commandLink>
+        </li>
+        
+        <li>
+            <p:commandLink title="#{messages['general.button.Delete']}" action="#{bean.delete()}" rendered="#{not empty bean.entity.id and bean.hasDeletePermission() }">
+                <i class="fa fa-trash-o"></i>
+                <h:outputText value=" #{messages['general.button.Delete']}" />
+                <p:confirm header="#{messages['general.caption.Confirm']}" message="#{messages['general.message.confirm.Delete']}" icon="ui-icon-alert" />
             </p:commandLink>
         </li>
 
@@ -81,14 +122,41 @@
         <div class="row">
             <div>
                 <t:outputText label="voucher.label.Topic" value="#{bean.entity.subject}" />
+                <ui:remove>
                 <t:outputEnum label="general.label.Status" itemLabel="activity.status." value="#{bean.entity.status}" columnClass="col-md-3 col-xs-12"/>
                 <t:outputText label="activity.label.Assignee" value="#{userLookup.getUserName(bean.entity.assignee)}" columnClass="col-md-3 col-xs-12"/>
+                </ui:remove>
+                <t:outputEnum label="activity.label.Direction" itemLabel="activity.direction." value="#{bean.entity.direction}" columnClass="col-md-3 col-xs-12"/>
+                <t:outputEnum label="activity.label.Priority" itemLabel="activity.priority." value="#{bean.entity.priority}" columnClass="col-md-3 col-xs-12"/>
                 <t:outputDateTime label="activity.label.DueDate" value="#{bean.entity.dueDate}" columnClass="col-md-3 col-xs-12"/>
-                <t:outputText label="activity.label.Duration" value="#{bean.entity.duration}" columnClass="col-md-3 col-xs-12"/>
+                <t:outputDuration value="#{bean.entity.duration}" columnClass="col-md-3 col-xs-12"/>
+                <t:outputDateTime label="general.label.TxnDate" value="#{bean.entity.date}" columnClass="col-md-3 col-xs-12"/>
             </div>         
         </div>  
 
 
     </ui:define>   
 
+    <ui:define name="includes">
+        <p:dialog header="#{messages['dialog.caption.State']}" id="stateDlg" widgetVar="stateDlg" >
+            <h:form id="stateDlgForm" style="width: 250px;">
+                <div class="row">
+                    <t:inputSuggestion label="general.label.Reason" value="#{bean.entity.statusReason}" group="#{bean.entity.class.simpleName}" listener="" columnClass="col-sm-12"/>
+                    <t:inputTextarea label="general.label.Info" value="#{activityHome.entity.info}" columnClass="col-sm-12"/>
+                    <ui:remove>
+                    <t:inputTextarea label="general.label.ResultNote" value="#{activityHome.entity.resultNote}" columnClass="col-sm-12"/>
+                    </ui:remove>
+                    
+                </div>
+
+                <div class="row actionButtons">
+                    <div class="col-sm-12 pull-right">
+                        <p:commandButton id="select" value="#{messages['general.button.Ok']}" icon="fa fa-check" action="#{bean.closeFaild()}" styleClass="btn-primary" oncomplete="PF('stateDlg').hide()"/>
+                        <p:commandButton id="close" value="#{messages['general.button.Cancel']}" icon="ui-icon-close" onclick="PF('stateDlg').hide()" />
+                    </div>
+                </div>
+            </h:form>
+        </p:dialog>
+    </ui:define>
+    
 </ui:composition>

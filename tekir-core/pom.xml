@@ -47,6 +47,16 @@
             <version>${version.telve}</version>
         </dependency>
         <dependency>
+            <groupId>com.ozguryazilim.mutfak</groupId>
+            <artifactId>telve-attachment</artifactId>
+            <version>${version.telve}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ozguryazilim.mutfak</groupId>
+            <artifactId>telve-attachment-ui</artifactId>
+            <version>${version.telve}</version>
+        </dependency>
+        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>tekir-feed</artifactId>
             <version>${project.version}</version>

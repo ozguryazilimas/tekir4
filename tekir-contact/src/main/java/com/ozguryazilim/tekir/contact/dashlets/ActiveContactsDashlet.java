@@ -8,7 +8,7 @@ package com.ozguryazilim.tekir.contact.dashlets;
 import com.ozguryazilim.mutfak.kahve.Kahve;
 import com.ozguryazilim.mutfak.kahve.annotations.UserAware;
 import com.ozguryazilim.tekir.contact.CorporationFeature;
-import com.ozguryazilim.tekir.contact.PersonFeature;
+import com.ozguryazilim.tekir.contact.AbstractPersonFeature;
 import com.ozguryazilim.tekir.feed.FeedRepository;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.dashboard.AbstractDashlet;
@@ -54,7 +54,7 @@ public class ActiveContactsDashlet extends AbstractDashlet{
     public void load() {
     
         features.clear();
-        features.add(PersonFeature.class.getSimpleName());
+        features.add(AbstractPersonFeature.class.getSimpleName());
         features.add(CorporationFeature.class.getSimpleName());
         
         /*

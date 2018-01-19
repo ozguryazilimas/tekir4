@@ -16,6 +16,7 @@ import com.ozguryazilim.telve.forms.BrowseBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.columns.DateColumn;
 import com.ozguryazilim.telve.query.columns.EnumColumn;
+import com.ozguryazilim.telve.query.columns.FeatureColumn;
 import com.ozguryazilim.telve.query.columns.LinkColumn;
 import com.ozguryazilim.telve.query.columns.SubTextColumn;
 import com.ozguryazilim.telve.query.columns.TextColumn;
@@ -47,6 +48,7 @@ public class ActivityBrowse extends BrowseBase<Activity, Activity> {
         priorityFilter.setOperand(FilterOperand.All);
 
         queryDefinition
+                .addFilter(new StringFilter<>(Activity_.activityNo, "activity.label.ActivityNo"))
                 .addFilter(new StringFilter<>(Activity_.subject, "activity.label.Subject"))
                 .addFilter(statusFilter)
                 .addFilter(priorityFilter)
@@ -57,12 +59,13 @@ public class ActivityBrowse extends BrowseBase<Activity, Activity> {
 
         queryDefinition
                 .addColumn(new LinkColumn<>(Activity_.subject, "activity.label.Subject"), true)
+                .addColumn(new LinkColumn<>(Activity_.activityNo, "activity.label.ActivityNo"), true)
                 //.addColumn(new TextColumn<>(Activity_.body, "activity.label.Body"), true)
                 .addColumn(new SubTextColumn<>(Activity_.person, Contact_.name, "general.label.Person"), true)
-                .addColumn(new SubTextColumn<>(Activity_.corporation, Contact_.name, "general.label.Corporation"), false)
+                .addColumn(new SubTextColumn<>(Activity_.corporation, Contact_.name, "general.label.Corporation"), true)
+                .addColumn(new FeatureColumn<>(Activity_.regarding, "general.label.Regarding"), true)
                 .addColumn(new EnumColumn<>(Activity_.priority, "general.label.Priority", "activity.priority."), true)
                 .addColumn(new EnumColumn<>(Activity_.status, "general.label.Status", "activity.status."), true)
-                .addColumn(new DateColumn<>(Activity_.date, "general.label.Date"), false)
                 .addColumn(new TextColumn<>(Activity_.assignee, "activity.label.Assignee"), false)
                 .addColumn(new DateColumn<>(Activity_.date, "general.label.Date"), false)
                 .addColumn(new DateColumn<>(Activity_.dueDate, "activity.label.DueDate"), false);

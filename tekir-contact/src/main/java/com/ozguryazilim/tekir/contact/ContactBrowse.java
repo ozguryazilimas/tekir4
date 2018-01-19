@@ -3,11 +3,15 @@ package com.ozguryazilim.tekir.contact;
 import com.ozguryazilim.telve.forms.Browse;
 import com.ozguryazilim.telve.forms.BrowseBase;
 import com.ozguryazilim.telve.data.RepositoryBase;
+import com.ozguryazilim.telve.entities.EntityBase;
+import com.ozguryazilim.telve.entities.FeaturePointer;
+import com.ozguryazilim.telve.feature.FeatureUtils;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.tekir.entities.ContactEMail_;
 import com.ozguryazilim.tekir.entities.ContactPhone_;
 import com.ozguryazilim.tekir.entities.Contact_;
+import com.ozguryazilim.telve.entities.EntityBase;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.query.columns.LinkColumn;
 import com.ozguryazilim.telve.query.columns.SubTextColumn;
@@ -45,6 +49,10 @@ public class ContactBrowse extends BrowseBase<Contact, ContactViewModel> {
                     .addColumn(new SubTextColumn<>(Contact_.primaryEmail, ContactEMail_.address, "contact.label.PrimaryEmail"), true)
                     .addColumn(new TextColumn<>(Contact_.info, "general.label.Info"), true);
 	}
+	
+	
+
+
 
 	@Override
 	protected RepositoryBase<Contact, ContactViewModel> getRepository() {
@@ -77,5 +85,9 @@ public class ContactBrowse extends BrowseBase<Contact, ContactViewModel> {
             } else {
                 return null;
             }
+        }
+        
+        public FeaturePointer getAllFeaturePointer(EntityBase contact){
+    		return FeatureUtils.getFeaturePointer(contact);
         }
 }

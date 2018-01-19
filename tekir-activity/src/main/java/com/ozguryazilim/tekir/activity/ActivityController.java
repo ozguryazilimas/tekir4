@@ -11,10 +11,10 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Stereotype;
 import javax.inject.Named;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
+import org.apache.deltaspike.core.api.scope.GroupedConversationScoped;
 
 /**
  * ActivityController Controller işaretlemek için kullanılır.
@@ -22,7 +22,7 @@ import org.apache.deltaspike.core.api.config.view.ViewConfig;
  * @author Hakan Uygun
  */
 @Stereotype
-@SessionScoped
+@GroupedConversationScoped
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Named

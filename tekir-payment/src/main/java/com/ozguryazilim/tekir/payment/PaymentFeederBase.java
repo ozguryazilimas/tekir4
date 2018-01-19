@@ -128,17 +128,15 @@ public abstract class PaymentFeederBase<E extends PaymentBase> extends AbstractF
 	 * @return
 	 */
 	protected String getMessage(VoucherStateChange event) {
-		switch (event.getTo().getName()) {
-		case "OPEN":
-			return getProcessType() + " payment created";
-		case "CLOSE":
-			return getProcessType() + " payment Won. Congrats!";
-		case "LOST":
-			return getProcessType() + " payment lost! " + event.getPayload().getStateReason();
-		case "CANCELED":
-			return getProcessType() + " payment canceled. " + event.getPayload().getStateReason();
+		switch (event.getAction().getName()) {
+		case "CREATE":
+			return "feeder.messages.PaymentFeeder.CREATE$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo();
+		case "publish":
+			return "feeder.messages.PaymentFeeder.PUBLISH$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo();
+		case "revise":
+			return "feeder.messages.PaymentFeeder.REVISE$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo() + "$%&" + event.getPayload().getStateReason();
 		default:
-			return getProcessType() + " payment created";
+			return "feeder.messages.PaymentFeeder.DEFAULT$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo();
 		}
 	}
 

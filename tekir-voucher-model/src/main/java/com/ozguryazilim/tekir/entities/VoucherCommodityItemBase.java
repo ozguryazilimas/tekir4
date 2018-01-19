@@ -65,7 +65,7 @@ public abstract class VoucherCommodityItemBase<E extends VoucherBase> extends En
     @Column(name = "TOT_AMT")
     private BigDecimal total = BigDecimal.ZERO;
 
-    @Column(name = "LİNE_TOT_AMT")
+    @Column(name = "LINE_TOT_AMT")
     private BigDecimal lineTotal = BigDecimal.ZERO;
     
     @Override

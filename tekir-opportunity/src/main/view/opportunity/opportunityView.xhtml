@@ -8,7 +8,7 @@
 
     <ui:param name="bean" value="#{opportunityHome}" />
     <ui:param name="entityName" value="opportunity" />
-    <ui:param name="viewIdentifier" value="#{opportunityHome.entity.voucherNo}" />
+    <ui:param name="viewIdentifier" value="#{opportunityHome.entity.voucherNo} - #{opportunityHome.entity.topic}" />
     <ui:param name="viewState" value="#{opportunityHome.entity.state.name} #{opportunityHome.entity.stateReason}" />
     <ui:param name="showCaption" value="true"/>
     <ui:param name="dontShowContentHeader" value="false" />
@@ -19,24 +19,15 @@
         </f:metadata>
     </ui:define>
 
-    <ui:define name="caption">
-        <div class="row">
-            <div class="col-md-6 col-xs-12">
-                <t:outputText label="opportunity.label.Topic" value="#{opportunityHome.entity.topic}" />
-                <t:outputMoney label="opportunity.label.Budget" value="#{opportunityHome.entity.budget}" currency="#{opportunityHome.entity.currency}" />
-                <t:outputEntityLink label="general.label.Account" value="#{opportunityHome.entity.account}" view="/contact/contactView.xhtml" />
-                <t:outputEntityLink label="contact.label.PrimaryContact" value="#{opportunityHome.entity.primaryContact}" view="/contact/contactView.xhtml" />
-                <t:outputText label="general.label.Info" value="#{opportunityHome.entity.info}" columnClass="col-xs-12"/>
-            </div>
-            <div class="col-md-6 col-xs-12">
-                <t:outputText label="voucher.label.VoucherNo" value="#{opportunityHome.entity.voucherNo}"  />
-                <t:outputText label="voucher.label.ReferenceNo" value="#{opportunityHome.entity.referenceNo}" />
-                <t:outputText label="voucher.label.Process" value="#{opportunityHome.entity.process.processNo}" />
-                <t:outputText label="general.label.Code" value="#{opportunityHome.entity.code}" />
-            </div>
-        </div>  
-
-
+    <ui:define name="caption-states">
+        
+            <t:stateOutputFeatureLink label="general.label.Account" value="#{featureController.getFeatureLink(opportunityHome.getAllFeaturePointer(opportunityHome.entity.account))}" />
+            <t:stateOutputFeatureLink label="contact.label.PrimaryContact" value="#{featureController.getFeatureLink(opportunityHome.getAllFeaturePointer(opportunityHome.entity.primaryContact))}" />
+            
+            <t:stateOutputMoney label="opportunity.label.Budget" value="#{opportunityHome.entity.budget}" currency="#{opportunityHome.entity.currency}" />
+            
+            <t:stateOutputText label="opportunity.label.Probability" value="%#{opportunityHome.entity.probability}" />
+            
     </ui:define>
 
     <ui:define name="stateDlgExt">

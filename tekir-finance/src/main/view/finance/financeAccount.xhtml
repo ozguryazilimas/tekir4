@@ -44,8 +44,6 @@
                     <t:inputDate label="general.label.CloseDate" value="#{financeAccountHome.entity.closeDate}" />
                     <ui:remove>
                         <t:inputText label="voucher.label.VoucherNo" value="#{financeAccountHome.entity.voucherNo}"  required="true" readonly="true" columnClass="col-xs-12"/>
-                        <t:inputText label="voucher.label.ReferenceNo" value="#{financeAccountHome.entity.referenceNo}" columnClass="col-xs-12"/>
-                        <t:inputText label="voucher.label.Owner" value="#{financeAccountHome.entity.owner}" columnClass="col-xs-12"/>
                         <t:inputText label="general.label.Code" value="#{financeAccountHome.entity.code}" columnClass="col-xs-12"/>
                         <t:inputLookupDialog label="voucher.label.Group" value="#{financeAccountHome.entity.group}" caption="topic" lookupBean="#{voucherGroupLookup}" lookupListener="financeAccountHome.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" />
 

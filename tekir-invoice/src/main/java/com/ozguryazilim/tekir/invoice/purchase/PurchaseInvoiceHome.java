@@ -13,7 +13,10 @@ import com.ozguryazilim.tekir.voucher.matcher.MatcherStateChange;
 import com.ozguryazilim.tekir.voucher.matcher.VoucherMatcherService;
 import com.ozguryazilim.tekir.voucher.process.ProcessService;
 import com.ozguryazilim.telve.data.RepositoryBase;
+import com.ozguryazilim.telve.entities.EntityBase;
+import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureQualifier;
+import com.ozguryazilim.telve.feature.FeatureUtils;
 import com.ozguryazilim.telve.forms.FormEdit;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
@@ -51,5 +54,8 @@ public class PurchaseInvoiceHome extends InvoiceHomeBase<PurchaseInvoice> {
     public void listenMatcherState(@Observes @FeatureQualifier(feauture = PurchaseInvoiceFeature.class) MatcherStateChange event) {
         feedMatcherState(event);
     }
-
+    // FeatureLink yönlendirmesi
+    public FeaturePointer getAllFeaturePointer(EntityBase contact){
+		return FeatureUtils.getFeaturePointer(contact);
+    }
 }
