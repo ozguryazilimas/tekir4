@@ -15,7 +15,7 @@
         <div class="row">
             <t:inputText label="general.label.Name" value="#{paymentPlanHome.entity.name}" required="true" />
             <t:inputText label="general.label.Code" value="#{paymentPlanHome.entity.code}" required="true" />
-            <t:inputNumber label="paymentPlan.label.Term" value="#{paymentPlanHome.entity.term}" required="true" />
+            <t:inputNumber label="paymentPlan.label.Term" value="#{paymentPlanHome.entity.term}" required="true" decimalPlaces="0"/>
         </div>            
         <div class="row">        
             <t:inputTextarea label="general.label.Info" value="#{paymentPlanHome.entity.info}" required="false" />                                            
