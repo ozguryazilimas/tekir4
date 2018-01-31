@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ozguryazilim.tekir.activity.email.imports.model;
 
 import com.google.common.base.Strings;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,12 +9,11 @@ import java.util.List;
 import javax.mail.internet.InternetAddress;
 
 /**
- *
  * @author oyas
  */
-public class EMailMessage implements Serializable{
-    
-    
+public class EMailMessage implements Serializable {
+
+
     private String messageId;
     private Date date;
     private String subject;
@@ -27,14 +22,14 @@ public class EMailMessage implements Serializable{
     private List<InternetAddress> toList = new ArrayList<>();
     private List<InternetAddress> ccList = new ArrayList<>();
     private List<InternetAddress> bccList = new ArrayList<>();
-    
-    
+
+
     private String replyId;
     private String forwardId;
     private List<String> references = new ArrayList<>();
 
     private List<EMailAttacment> attachments = new ArrayList<>();
-    
+
     public String getMessageId() {
         return messageId;
     }
@@ -66,8 +61,8 @@ public class EMailMessage implements Serializable{
     public void setReplyId(String replyId) {
         this.replyId = replyId;
     }
-    
-    public boolean isReply(){
+
+    public boolean isReply() {
         return !Strings.isNullOrEmpty(replyId);
     }
 
@@ -79,10 +74,10 @@ public class EMailMessage implements Serializable{
         this.forwardId = forwardId;
     }
 
-    public boolean isForwarded(){
+    public boolean isForwarded() {
         return !Strings.isNullOrEmpty(forwardId);
     }
-    
+
     public InternetAddress getFrom() {
         return from;
     }
@@ -138,23 +133,10 @@ public class EMailMessage implements Serializable{
     public void setDate(Date date) {
         this.date = date;
     }
-    
-    
 
     @Override
     public String toString() {
         return "EMailMessage{" + "messageId=" + messageId + ", subject=" + subject + ", from=" + from + ", toList=" + toList + ", ccList=" + ccList + ", bccList=" + bccList + ", replyId=" + replyId + ", forwardId=" + forwardId + ", references=" + references + ", attachments=" + attachments + '}';
     }
-    
 
-    
-
-    
-    
-    
-
-    
-    
-    
-    
 }

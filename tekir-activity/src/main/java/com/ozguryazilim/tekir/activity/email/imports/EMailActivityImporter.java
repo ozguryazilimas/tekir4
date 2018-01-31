@@ -26,13 +26,17 @@ import com.ozguryazilim.telve.auth.UserService;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureRegistery;
 import com.ozguryazilim.telve.sequence.SequenceManager;
+
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.List;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+import javax.mail.Address;
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,16 +58,16 @@ public class EMailActivityImporter implements Serializable {
 
     @Inject
     private ContactInformationRepository informationRepository;
-    
+
     @Inject
     private UserService userService;
-    
+
     @Inject
     private AttacmentContextProviderSelector providerSelector;
-    
+
     @Inject
     private SequenceManager sequenceManager;
-    
+
     @Inject
     @FileStore
     private AttachmentStore store;
@@ -76,8 +80,8 @@ public class EMailActivityImporter implements Serializable {
 
             EMailActivity activity = new EMailActivity();
 
-            activity.setActivityNo( sequenceManager.getNewSerialNumber("ACT", 6));
-                    
+            activity.setActivityNo(sequenceManager.getNewSerialNumber("ACT", 6));
+
             activity.setMessageId(message.getMessageId());
             activity.setReplyId(message.getReplyId());
             activity.setForwardId(message.getForwardId());
@@ -90,82 +94,81 @@ public class EMailActivityImporter implements Serializable {
             activity.setStatus(ActivityStatus.DRAFT);
 
             //From/To/CC/BCC ve diğerleri
-            activity.setFrom(message.getFrom().toString());
-            activity.setTo(message.getToList().toString());
-            activity.setCc(message.getCcList().toString());
-            activity.setBcc(message.getBccList().toString());
+            activity.setFrom(addressToString(message.getFrom()));
+            activity.setTo(addressToString(message.getToList()));
+            activity.setCc(addressToString(message.getCcList()));
+            activity.setBcc(addressToString(message.getBccList()));
 
-            
+
             //To kısmına bakılarak kimi ilgilendirdiğine bakılabilir. Hatta onun çalıştığı şirket de doğrudan corp olarak atanabilir
             //Geri kalan herkes mention listesine girecek
             //From kısmında domain name kontrolü yaparak bizden mi karşıdan mı olduğuna bakılabilir. Domain ismi için kahve conf'a girmeli
             addContactMention(message.getFrom().getAddress(), activity);
-            
+
             //Burada primary nasıl seçilecek?
-            for( InternetAddress adr : message.getToList() ){
+            for (InternetAddress adr : message.getToList()) {
                 addContactMention(adr.getAddress(), activity);
             }
-            
-            for( InternetAddress adr : message.getCcList() ){
+
+            for (InternetAddress adr : message.getCcList()) {
                 addContactMention(adr.getAddress(), activity);
             }
-            
+
             //BCC'ye gerek var mı?
-            for( InternetAddress adr : message.getBccList() ){
+            for (InternetAddress adr : message.getBccList()) {
                 addContactMention(adr.getAddress(), activity);
             }
-                                    
-            
+
+
             //FIXME: doğru kullanıcıya atanacak.
             //Hangi kullanıcıya assign edileceği gene from/to kısmından bulunmalı ( yöne bağlı olarak )
             //String userName = userService.getUsersByEmail("from/to");
             activity.setAssignee("telve");
-            
-            
-            
+
+
             //Ayrıca message id üzerinden daha önce kaydedilmiş mail activity aranacak. eğer bulunur ise ilgili kısımları oradan alınan bilgilerle doldurulacak.
-            if( message.isReply()){
+            if (message.isReply()) {
                 List<EMailActivity> acts = activityRepository.findByMessageId(message.getReplyId());
-                if( !acts.isEmpty()){
+                if (!acts.isEmpty()) {
                     FeaturePointer fp = acts.get(0).getRegarding();
                     activity.setRegarding(fp);
                 }
-            } else if( message.isForwarded()){
+            } else if (message.isForwarded()) {
                 List<EMailActivity> acts = activityRepository.findByMessageId(message.getForwardId());
-                if( !acts.isEmpty()){
+                if (!acts.isEmpty()) {
                     FeaturePointer fp = acts.get(0).getRegarding();
                     activity.setRegarding(fp);
                 }
             }
-            
+
             //Hala bir regarding bulunamamış ise Subject parse edilip bulunması denebilir mi?
             //Ama yazılı olan VoucherNo'yu hangi tablolarda arayacağız?
-            
-            
+
+
             activityRepository.save(activity);
-            
+
             //Attachmentlar attachment olarak activity'ye bağlanacak
-            for( EMailAttacment atch : message.getAttachments()){
+            for (EMailAttacment atch : message.getAttachments()) {
                 FeaturePointer fp = new FeaturePointer();
                 fp.setBusinessKey(activity.getActivityNo());
                 fp.setFeature(ActivityFeature.class.getSimpleName());
                 fp.setPrimaryKey(activity.getId());
-                AttachmentContext context = providerSelector.getAttachmentContextProvider(fp, activity).getContext(fp,activity);
+                AttachmentContext context = providerSelector.getAttachmentContextProvider(fp, activity).getContext(fp, activity);
                 AttachmentDocument document = new AttachmentDocument();
-          
+
                 document.setName(atch.getName());
                 document.setMimeType(atch.getMimeType());
-                
+
                 store.addDocument(context, store.getFolder(context, ""), document, atch.getContent());
             }
-            
-            
+
+
             //Feed'ler ve sorumlu kişi bilgilendirmesi yapılacak
-            
+
 
         } catch (MessagingException | IOException | AttachmentNotFoundException | AttachmentException ex) {
             LOG.error("Mail Import Error", ex);
-        } 
+        }
 
     }
 
@@ -187,4 +190,24 @@ public class EMailActivityImporter implements Serializable {
         }
     }
 
+    private String addressToString(InternetAddress address) {
+        StringBuilder sb = new StringBuilder();
+        if (address.getPersonal() != null) {
+            sb.append(address.getPersonal());
+        }
+        sb.append(" <").append(address.getAddress()).append(">");
+        return sb.toString();
+    }
+
+    private String addressToString(List<InternetAddress> addresses) {
+        StringBuilder sb = new StringBuilder();
+        Iterator<InternetAddress> it = addresses.iterator();
+        while (it.hasNext()) {
+            sb.append(addressToString(it.next()));
+            if (it.hasNext()) {
+                sb.append(", ");
+            }
+        }
+        return sb.toString();
+    }
 }

@@ -9,6 +9,7 @@ import com.ozguryazilim.tekir.activity.email.imports.model.EMailMessage;
 import com.ozguryazilim.tekir.activity.email.imports.model.EMailAttacment;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -26,6 +27,7 @@ import javax.mail.Part;
 import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
 import org.apache.commons.io.IOUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
@@ -34,16 +36,16 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Parametre olarak alınan e-postayı parse eder.
- *
+ * <p>
  * - Eposta'dan mümkünse Text metni ve attachmentları çıkarır. HTML ve Gömülü
  * resimleri safdışı eder.
- *
+ * <p>
  * - E-posta header'larından bu e-postanın bir cevap olup olmadığını ve cevap
  * ise orjinal id'leri ayıklar
- *
+ * <p>
  * - E-posta eğer bir Forward ise içinden orjinal olanı bulmaya çalışır.
  * Orjnalin ID'sini de yakalar
- *
+ * <p>
  * - Reply e-postaların içinden reply kısmını bulup sadece onu döndürebilir?
  *
  * @author Hakan Uygun
@@ -68,7 +70,7 @@ public class EMailParser {
         MimeMessage message = new MimeMessage(s, messageStream);
 
         if (LOG.isDebugEnabled()) {
-            for (Enumeration<Header> e = message.getAllHeaders(); e.hasMoreElements();) {
+            for (Enumeration<Header> e = message.getAllHeaders(); e.hasMoreElements(); ) {
                 Header h = e.nextElement();
                 LOG.debug("{}:{}", h.getName(), h.getValue());
             }
@@ -96,8 +98,13 @@ public class EMailParser {
         //From bir tane mi olacak?
         Address[] from = message.getFrom();
         if (from != null && from.length > 0) {
-            LOG.debug("Address: {}", from[0]);
-            result.setFrom(new InternetAddress(from[0].toString()));
+            Address sender = from[0];
+            LOG.debug("Address: {}", sender);
+            try {
+                result.setFrom((InternetAddress) sender);
+            } catch (Exception ex) {
+                result.setFrom(new InternetAddress(sender.toString()));
+            }
         }
     }
 
