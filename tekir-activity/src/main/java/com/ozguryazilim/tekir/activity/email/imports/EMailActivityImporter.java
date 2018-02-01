@@ -11,10 +11,7 @@ import com.ozguryazilim.tekir.activity.ActivityFeature;
 import com.ozguryazilim.tekir.activity.ActivityRepository;
 import com.ozguryazilim.tekir.contact.ContactRepository;
 import com.ozguryazilim.tekir.contact.information.ContactInformationRepository;
-import com.ozguryazilim.tekir.entities.ActivityMention;
-import com.ozguryazilim.tekir.entities.ActivityStatus;
-import com.ozguryazilim.tekir.entities.ContactEMail;
-import com.ozguryazilim.tekir.entities.EMailActivity;
+import com.ozguryazilim.tekir.entities.*;
 import com.ozguryazilim.telve.attachment.AttachmentContext;
 import com.ozguryazilim.telve.attachment.AttachmentDocument;
 import com.ozguryazilim.telve.attachment.AttachmentException;
@@ -105,6 +102,17 @@ public class EMailActivityImporter implements Serializable {
             //From kısmında domain name kontrolü yaparak bizden mi karşıdan mı olduğuna bakılabilir. Domain ismi için kahve conf'a girmeli
             addContactMention(message.getFrom().getAddress(), activity);
 
+            List<ContactEMail> emails = informationRepository.findByEmail(message.getFrom().getAddress());
+            for (ContactEMail cemail : emails) {
+                Contact contact = cemail.getContact();
+                if (contact instanceof AbstractPerson) {
+                    activity.setPerson((AbstractPerson) contact);
+                } else if (contact instanceof Corporation) {
+                    activity.setCorporation((Corporation) contact);
+                }
+            }
+
+
             //Burada primary nasıl seçilecek?
             for (InternetAddress adr : message.getToList()) {
                 addContactMention(adr.getAddress(), activity);
@@ -120,11 +128,11 @@ public class EMailActivityImporter implements Serializable {
             }
 
 
+
             //FIXME: doğru kullanıcıya atanacak.
             //Hangi kullanıcıya assign edileceği gene from/to kısmından bulunmalı ( yöne bağlı olarak )
             //String userName = userService.getUsersByEmail("from/to");
             activity.setAssignee("telve");
-
 
             //Ayrıca message id üzerinden daha önce kaydedilmiş mail activity aranacak. eğer bulunur ise ilgili kısımları oradan alınan bilgilerle doldurulacak.
             if (message.isReply()) {

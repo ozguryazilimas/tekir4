@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ozguryazilim.tekir.activity.email.imports;
 
 import com.google.common.base.CharMatcher;
@@ -11,6 +6,7 @@ import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
+
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,11 +14,11 @@ import java.util.stream.Collectors;
 
 /**
  * Orjinali : https://github.com/Driftt/EmailReplyParser
- * 
+ * <p>
  * INFO: Kullanıp kullanmayacağımdan pek emin değilim.
- * 
+ * <p>
  * Paket olarak kullanmak için bir tane daha var : https://github.com/edlio/EmailReplyParser
- * 
+ *
  * @author Hakan Uygun
  */
 public class EMailReplyParser {
@@ -34,9 +30,9 @@ public class EMailReplyParser {
     private final static Pattern QUOTE_HDR_REGEX = Pattern.compile("^:etorw.*nO");
     private final static Pattern MULTI_QUOTE_HDR_REGEX = Pattern.compile("(?!On.*On\\s.+?wrote:)(On\\s(.+?)wrote:)");
     private final static Pattern QUOTED_REGEX = Pattern.compile("(>+)");
-    
+
     private final String text;
-    
+
     private List<Fragment> fragments = Lists.newArrayList();
     private boolean foundVisible = false;
     private Fragment fragment;

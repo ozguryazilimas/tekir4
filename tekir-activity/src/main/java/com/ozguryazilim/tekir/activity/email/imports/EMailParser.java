@@ -14,6 +14,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
@@ -25,6 +26,7 @@ import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Part;
 import javax.mail.Session;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
@@ -112,10 +114,7 @@ public class EMailParser {
 
         Address[] toa = message.getRecipients(Message.RecipientType.TO);
         if (toa != null) {
-            for (Address adr : toa) {
-                LOG.debug("Address: {}", adr);
-                result.getToList().add(new InternetAddress(adr.toString()));
-            }
+            result.setToList(toInternetAddressList(toa));
         }
     }
 
@@ -123,10 +122,7 @@ public class EMailParser {
 
         Address[] toa = message.getRecipients(Message.RecipientType.CC);
         if (toa != null) {
-            for (Address adr : toa) {
-                LOG.debug("Address: {}", adr);
-                result.getCcList().add(new InternetAddress(adr.toString()));
-            }
+            result.setCcList(toInternetAddressList(toa));
         }
     }
 
@@ -134,10 +130,7 @@ public class EMailParser {
 
         Address[] toa = message.getRecipients(Message.RecipientType.BCC);
         if (toa != null) {
-            for (Address adr : toa) {
-                LOG.debug("Address: {}", adr);
-                result.getBccList().add(new InternetAddress(adr.toString()));
-            }
+            result.setBccList(toInternetAddressList(toa));
         }
     }
 
@@ -219,9 +212,9 @@ public class EMailParser {
         //Eğer daha önce Text hali alınmamış ise
         if (Strings.isNullOrEmpty(result.getContent())) {
             // get pretty printed html with preserved br and p tags
-            //String prettyPrintedBodyFragment = Jsoup.clean(html, "", Whitelist.none().addTags("br", "p"), new OutputSettings().prettyPrint(true));
+            // String prettyPrintedBodyFragment = Jsoup.clean(html, "", Whitelist.none().addTags("br", "p"), new OutputSettings().prettyPrint(true));
             // get plain text with preserved line breaks by disabled prettyPrint
-            //String text = Jsoup.clean(prettyPrintedBodyFragment, "", Whitelist.none(), new OutputSettings().prettyPrint(false));
+            // String text = Jsoup.clean(prettyPrintedBodyFragment, "", Whitelist.none(), new OutputSettings().prettyPrint(false));
 
             String text = Jsoup.clean(html, Whitelist.basic());
 
@@ -251,4 +244,20 @@ public class EMailParser {
         }
 
     }
+
+    private List<InternetAddress> toInternetAddressList(Address[] addresses) throws AddressException {
+        if (addresses != null) {
+            return new ArrayList<>();
+        }
+        List<InternetAddress> list = new ArrayList<>(addresses.length);
+        for (Address address : addresses) {
+            if (address instanceof InternetAddress) {
+                list.add((InternetAddress) address);
+            } else {
+                list.add(new InternetAddress(address.toString()));
+            }
+        }
+        return list;
+    }
+
 }
