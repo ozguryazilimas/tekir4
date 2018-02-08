@@ -54,6 +54,8 @@
             <column name="ROW_KEY" type="VARCHAR(255)"/>
             <column name="AMOUNT" type="DECIMAL(19, 2)"/>
             <column name="MASTER_ID" type="BIGINT"/>
+            <column name="BASE_NAME" type="varchar(255)"/>
+            <column name="CODE" type="varchar(255)"/>
         </createTable>
     </changeSet>
     <changeSet author="oyas (generated)" id="1469889916962-4">
