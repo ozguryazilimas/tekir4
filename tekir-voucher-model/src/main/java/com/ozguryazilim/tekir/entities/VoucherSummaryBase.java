@@ -54,6 +54,12 @@ public abstract class VoucherSummaryBase<E extends VoucherBase> extends EntityBa
      */
     @Column( name = "INFO")
     private String info;
+
+    @Column( name = "BASE_NAME")
+    private String baseName;
+
+    @Column( name = "CODE")
+    private String code;
     
     /**
      * Satırın değeri
@@ -100,7 +106,21 @@ public abstract class VoucherSummaryBase<E extends VoucherBase> extends EntityBa
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
-    
-    
-    
+
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getBaseName() {
+        return baseName;
+    }
+
+    public void setBaseName(String baseName) {
+        this.baseName = baseName;
+    }
 }

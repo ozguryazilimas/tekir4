@@ -85,6 +85,8 @@ public class SummaryCalculator<E extends VoucherBase, I extends VoucherCommodity
                     sm.setInfo(tax.getName());
                     sm.setMaster(entity);
                     sm.setAmount(taxAmt);
+                    sm.setBaseName(String.valueOf(tax.getType()));
+                    sm.setCode(tax.getEinvoiceCode());
                     summaries.put(sm.getRowKey(), sm);
                 } else {
                     sm.setAmount(sm.getAmount().add(taxAmt));
