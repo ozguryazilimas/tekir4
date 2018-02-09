@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ozguryazilim.tekir.hr.config;
 
+import com.ozguryazilim.tekir.hr.credit.EmployeeCreditNoteFeature;
 import com.ozguryazilim.tekir.hr.employee.EmployeeFeature;
 import com.ozguryazilim.telve.auth.SecuredPage;
 import com.ozguryazilim.telve.nav.Navigation;
@@ -56,5 +52,34 @@ public interface EmployeePages extends Pages {
 			implements
 				EmployeePages {
 	}
+        
+        @View
+        @SecuredPage("employeeCreditNote")
+        @PageTitle("module.caption.EmployeeCreditNoteBrowse")
+        @Navigation(label = "module.caption.EmployeeCreditNoteBrowse", feature = EmployeeCreditNoteFeature.class, section = HRNavigationSection.class)
+        class EmployeeCreditNoteBrowse implements EmployeePages {
+        }
+
+        @View
+        @SecuredPage("employeeCreditNote")
+        @PageTitle("module.caption.EmployeeCreditNote")
+        class EmployeeCreditNote implements EmployeePages {
+        }
+
+        @View
+        @SecuredPage("employeeCreditNote")
+        @PageTitle("module.caption.EmployeeCreditNote")
+        class EmployeeCreditNoteView
+                implements
+                EmployeePages {
+        }
+
+        @View
+        @SecuredPage("employeeCreditNote")
+        @PageTitle("module.caption.EmployeeCreditNoteMasterView")
+        class EmployeeCreditNoteMasterView
+                implements
+                EmployeePages {
+        }
     
 }

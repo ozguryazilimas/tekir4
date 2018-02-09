@@ -5,6 +5,16 @@
             <entityActions scope="owner,group"/>
             <action name="changeOwner" scope="owner,group"/>
         </permission>
+        
+        <permission target="employeeCreditNote">
+            <entityActions scope="owner,group" />
+            <action name="changeOwner" scope="owner,group" order="7"/>
+            <action name="publish" scope="owner,group" order="8" />
+            <action name="complete" scope="owner,group" order="9" />
+            <action name="cancel" scope="owner,group" order="10" />
+            <action name="revise" scope="owner,group" order="11" />
+            <action name="print" scope="owner,group" order="12" />
+        </permission>
     </permissionGroup>
 </permissions>
 

@@ -48,6 +48,7 @@ public class VoucherGroupBrowse extends BrowseBase<VoucherGroup, VoucherGroup> {
         
         queryDefinition
 		        .addFilter(new StringFilter<>(VoucherGroup_.topic, "voucher.label.Topic"))
+                        .addFilter(new StringFilter<>(VoucherGroup_.groupNo, "voucher.label.GroupNo"))
 		        .addFilter(new EnumFilter<>(VoucherGroup_.status, VoucherGroupStatus.ACTIVE,"general.label.Status", "voucher.groupStatus."));
     }
 
