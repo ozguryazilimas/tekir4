@@ -22,6 +22,7 @@ import com.ozguryazilim.tekir.voucher.columns.VoucherStateColumn;
 import com.ozguryazilim.tekir.entities.Lead_;
 import com.ozguryazilim.tekir.entities.LeadSource_;
 import com.ozguryazilim.tekir.entities.LeadCategory_;
+import com.ozguryazilim.tekir.voucher.filter.VoucherStateFilter;
 
 import com.ozguryazilim.telve.entities.TreeNodeEntityBase_;
 
@@ -47,7 +48,8 @@ public class LeadBrowse extends VoucherBrowseBase<Lead, LeadViewModel> {
 				.addFilter(new StringFilter<>(Lead_.relatedPersonSurname, "lead.label.RelatedPersonSurname"))
 				.addFilter(new StringFilter<>(Lead_.relatedAddress, "lead.label.RelatedAddress"))
 				.addFilter(new SubStringFilter<>(Lead_.leadSource, TreeNodeEntityBase_.name, "lead.label.LeadSourceName"))
-				.addFilter(new SubStringFilter<>(Lead_.leadCategory, TreeNodeEntityBase_.name, "lead.label.LeadCategoryName"));
+				.addFilter(new SubStringFilter<>(Lead_.leadCategory, TreeNodeEntityBase_.name, "lead.label.LeadCategoryName"))
+                                .addFilter(new VoucherStateFilter<>(VoucherBase_.state, getHome().getStateConfig().getStates(), "general.label.State"));
 
 		queryDefinition
 				.addColumn(new LinkColumn<>(VoucherBase_.voucherNo, "voucher.label.VoucherNo"), true)
