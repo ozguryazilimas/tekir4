@@ -33,16 +33,13 @@ import org.slf4j.LoggerFactory;
 public class EMailFetchCommandExecutor extends AbstractCommandExecuter<EMailFetchCommand> {
 
     private static final Logger LOG = LoggerFactory.getLogger(EMailFetchCommandExecutor.class);
-
-
     private static final String MAIL_PROTOCOL = "mail.protocol";
     private static final String MAIL_HOST = "mail.host";
     private static final String MAIL_PORT = "mail.port";
     private static final String MAIL_USER = "mail.user";
     private static final String MAIL_PASS = "mail.pass";
     private static final String MAIL_SSL = "mail.ssl";
-    private static final String MAIL_INBOX_FOLDER = "mail.inbox.folder";
-    private static final String MAIL_OUTBOX_FOLDER = "mail.outbox.folder";
+    private static final String MAIL_FOLDER = "mail.folder";
 
     @Inject
     private Kahve kahve;
@@ -70,12 +67,8 @@ public class EMailFetchCommandExecutor extends AbstractCommandExecuter<EMailFetc
             int port = kahve.get(MAIL_PORT, "993").getAsInteger();
             store.connect(host, port, user, pass);
 
-            String inboxFolder = kahve.get(MAIL_INBOX_FOLDER, "INBOX").getAsString();
-            String outboxFolder = kahve.get(MAIL_OUTBOX_FOLDER, "SENT").getAsString();
-
-            processFolder(store, inboxFolder, EmailDirection.INBOX);
-            processFolder(store, outboxFolder, EmailDirection.OUTBOX);
-
+            String folder = kahve.get(MAIL_FOLDER, "INBOX").getAsString();
+            processFolder(store, folder);
             store.close();
         } catch (MessagingException ex) {
             LOG.error("EMail Import Failed", ex);
@@ -87,7 +80,7 @@ public class EMailFetchCommandExecutor extends AbstractCommandExecuter<EMailFetc
      * @param folder
      * @param direction
      */
-    protected void processFolder(Store store, String folder, EmailDirection direction) {
+    protected void processFolder(Store store, String folder) {
         try {
             Folder emailFolder = store.getFolder(folder);
 
@@ -106,7 +99,6 @@ public class EMailFetchCommandExecutor extends AbstractCommandExecuter<EMailFetc
 
                 EMailImportCommand importCommand = new EMailImportCommand();
                 importCommand.setEml(eml);
-                importCommand.setDirection(direction);
 
                 commandSender.sendCommand(importCommand);
 

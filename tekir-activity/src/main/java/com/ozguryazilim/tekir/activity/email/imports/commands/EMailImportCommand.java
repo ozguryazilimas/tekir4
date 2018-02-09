@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ozguryazilim.tekir.activity.email.imports.commands;
 
 import com.ozguryazilim.telve.messagebus.command.AbstractCommand;
@@ -17,15 +12,6 @@ import com.ozguryazilim.telve.messagebus.command.AbstractCommand;
 public class EMailImportCommand extends AbstractCommand {
 
     private String eml;
-    private EmailDirection direction;
-
-    public EMailImportCommand() {
-    }
-
-    public EMailImportCommand(String eml, EmailDirection direction) {
-        this.eml = eml;
-        this.direction = direction;
-    }
 
     public String getEml() {
         return eml;
@@ -35,11 +21,4 @@ public class EMailImportCommand extends AbstractCommand {
         this.eml = eml;
     }
 
-    public EmailDirection getDirection() {
-        return direction;
-    }
-
-    public void setDirection(EmailDirection direction) {
-        this.direction = direction;
-    }
 }

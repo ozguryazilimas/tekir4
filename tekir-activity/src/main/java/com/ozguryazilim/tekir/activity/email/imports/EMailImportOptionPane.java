@@ -22,8 +22,8 @@ public class EMailImportOptionPane extends AbstractOptionPane {
     private static final String MAIL_USER = "mail.user";
     private static final String MAIL_PASS = "mail.pass";
     private static final String MAIL_SSL = "mail.ssl";
-    private static final String MAIL_INBOX_FOLDER = "mail.inbox.inboxFolder";
-    private static final String MAIL_OUTBOX_FOLDER = "mail.outbox.inboxFolder";
+    private static final String MAIL_FOLDER = "mail.folder";
+    private static final String MAIL_DOMAIN = "mail.domain";
 
     @Inject
     private Kahve kahve;
@@ -34,8 +34,8 @@ public class EMailImportOptionPane extends AbstractOptionPane {
     private KahveEntry user;
     private KahveEntry pass;
     private KahveEntry ssl;
-    private KahveEntry inboxFolder;
-    private KahveEntry outboxFolder;
+    private KahveEntry folder;
+    private KahveEntry domain;
 
 
     @PostConstruct
@@ -46,21 +46,20 @@ public class EMailImportOptionPane extends AbstractOptionPane {
         user = kahve.get(MAIL_USER, "");
         pass = kahve.get(MAIL_PASS, "");
         ssl = kahve.get(MAIL_SSL, "true");
-        inboxFolder = kahve.get(MAIL_INBOX_FOLDER, "INBOX");
-        outboxFolder = kahve.get(MAIL_OUTBOX_FOLDER, "SENT");
+        folder = kahve.get(MAIL_FOLDER, "INBOX");
+        domain = kahve.get(MAIL_DOMAIN, "");
     }
 
     @Override
     public void save() {
-
         kahve.put(MAIL_PROTOCOL, protocol);
         kahve.put(MAIL_HOST, host);
         kahve.put(MAIL_PORT, port);
         kahve.put(MAIL_USER, user);
         kahve.put(MAIL_PASS, pass);
         kahve.put(MAIL_SSL, ssl);
-        kahve.put(MAIL_INBOX_FOLDER, inboxFolder);
-        kahve.put(MAIL_OUTBOX_FOLDER, outboxFolder);
+        kahve.put(MAIL_FOLDER, folder);
+        kahve.put(MAIL_DOMAIN, domain);
 
     }
 
@@ -88,11 +87,11 @@ public class EMailImportOptionPane extends AbstractOptionPane {
         return ssl;
     }
 
-    public KahveEntry getInboxFolder() {
-        return inboxFolder;
+    public KahveEntry getFolder() {
+        return folder;
     }
 
-    public KahveEntry getOutboxFolder() {
-        return outboxFolder;
+    public KahveEntry getDomain() {
+        return domain;
     }
 }

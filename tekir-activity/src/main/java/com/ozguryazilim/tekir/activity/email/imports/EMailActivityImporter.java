@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.tekir.activity.email.imports;
 
+import com.ozguryazilim.mutfak.kahve.Kahve;
 import com.ozguryazilim.tekir.activity.email.imports.model.EMailMessage;
 import com.ozguryazilim.tekir.activity.email.imports.model.EMailAttacment;
 import com.ozguryazilim.tekir.activity.ActivityFeature;
@@ -19,6 +20,7 @@ import com.ozguryazilim.telve.attachment.AttachmentNotFoundException;
 import com.ozguryazilim.telve.attachment.AttachmentStore;
 import com.ozguryazilim.telve.attachment.AttacmentContextProviderSelector;
 import com.ozguryazilim.telve.attachment.qualifiers.FileStore;
+import com.ozguryazilim.telve.auth.UserInfo;
 import com.ozguryazilim.telve.auth.UserService;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureRegistery;
@@ -26,8 +28,8 @@ import com.ozguryazilim.telve.sequence.SequenceManager;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.mail.Address;
@@ -46,6 +48,19 @@ import org.slf4j.LoggerFactory;
 public class EMailActivityImporter implements Serializable {
 
     private static final Logger LOG = LoggerFactory.getLogger(EMailActivityImporter.class);
+    private static final String MAIL_DOMAIN = "mail.domain";
+    /**
+     * gelen mail
+     */
+    private static final int INBOX = 0;
+    /**
+     * giden mail
+     */
+    private static final int OUTBOX = 1;
+
+    private static final int UNKNOWN = -1;
+
+    private Set<String> ownEmails;
 
     @Inject
     private ActivityRepository activityRepository;
@@ -68,6 +83,16 @@ public class EMailActivityImporter implements Serializable {
     @Inject
     @FileStore
     private AttachmentStore store;
+
+    @Inject
+    private Kahve kahve;
+
+    private String emailDomain;
+
+    @PostConstruct
+    private void init() {
+        this.emailDomain = kahve.get(MAIL_DOMAIN, "").getAsString();
+    }
 
     public void importMail(String mail) {
 
@@ -96,6 +121,7 @@ public class EMailActivityImporter implements Serializable {
             activity.setCc(addressToString(message.getCcList()));
             activity.setBcc(addressToString(message.getBccList()));
 
+            int direction = resolveDirection(message);
 
             //To kısmına bakılarak kimi ilgilendirdiğine bakılabilir. Hatta onun çalıştığı şirket de doğrudan corp olarak atanabilir
             //Geri kalan herkes mention listesine girecek
@@ -126,7 +152,6 @@ public class EMailActivityImporter implements Serializable {
             for (InternetAddress adr : message.getBccList()) {
                 addContactMention(adr.getAddress(), activity);
             }
-
 
 
             //FIXME: doğru kullanıcıya atanacak.
@@ -180,6 +205,67 @@ public class EMailActivityImporter implements Serializable {
 
     }
 
+    protected int resolveDirection(EMailMessage message) {
+        int direction = resolveDirectionByDomain(message);
+
+        if (direction != UNKNOWN) {
+            return direction;
+        }
+
+        return resolveDirectionByContacts(message);
+    }
+
+    private int resolveDirectionByContacts(EMailMessage message) {
+        if (ownEmails == null) {
+            ownEmails = new HashSet<>();
+            //TODO kullanıcı maillerini çekmek için daha efektif bir yol bul
+            for (String loginName : userService.getLoginNames()) {
+                UserInfo ui = userService.getUserInfo(loginName);
+                if (ui.getEmail() != null) {
+                    ownEmails.add(ui.getEmail());
+                }
+            }
+
+            List<Contact> employes = contactRepository.findByRole("EMPLOYEE");
+            for (Contact employee : employes) {
+                if (employee.getPrimaryEmail() != null) {
+                    ownEmails.add(employee.getPrimaryEmail().getEmailAddress());
+                }
+            }
+        }
+
+        String from = message.getFrom().getAddress();
+
+        // biz göndermediysek bize gelmiştir varsayımı
+        return ownEmails.contains(from) ? OUTBOX : INBOX;
+    }
+
+    private int resolveDirectionByDomain(EMailMessage message) {
+        if (this.emailDomain.isEmpty()) {
+            return UNKNOWN;
+        }
+
+        if (isDomainMatches(message.getFrom().getAddress())) {
+            return OUTBOX;
+        }
+
+        for (InternetAddress address : message.getToList()) {
+            if (isDomainMatches(address.getAddress())) {
+                return INBOX;
+            }
+        }
+
+        return UNKNOWN;
+    }
+
+    private boolean isDomainMatches(String email) {
+        String[] parts = email.split("@");
+        if (parts.length != 2) {
+            return false;
+        }
+        return this.emailDomain.equals(parts[1]);
+    }
+
     protected void addContactMention(String email, EMailActivity activity) {
         List<ContactEMail> infos = informationRepository.findByEmail(email);
         //Burada aslında bir tane bulmak lazım.
@@ -197,6 +283,7 @@ public class EMailActivityImporter implements Serializable {
             activity.getMentions().add(mention);
         }
     }
+
 
     private String addressToString(InternetAddress address) {
         StringBuilder sb = new StringBuilder();
