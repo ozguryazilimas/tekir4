@@ -1,0 +1,93 @@
+[
+    {
+        "name": "Açık (Süreç No ya göre ters sıralı)",
+        "resultLimit": 200,
+        "rowLimit": 20,
+        "columns": ["topic", "processNo", "account", "type", "status"],
+        "filters": ["topic", "processNo", "type", "status", "account"],
+        "filterValues": {
+            "topic": "All::null",
+            "type": "All::PURCHASE",
+            "account": "All::null",
+            "processNo": "All::54",
+            "status": "Equal::OPEN"
+        },
+        "sorters": ["processNo"],
+        "sorterValues": {
+            "processNo": "D"
+        }
+    },
+    {
+        "name": "Hepsi (Süreç No ya göre ters sıralı)",
+        "resultLimit": 200,
+        "rowLimit": 20,
+        "columns": ["topic", "processNo", "account", "type", "status"],
+        "filters": ["topic", "processNo", "type", "status", "account"],
+        "filterValues": {
+            "topic": "All::null",
+            "type": "All::SALES",
+            "account": "All::null",
+            "processNo": "All::null",
+            "status": "All::OPEN"
+        },
+        "sorters": ["processNo"],
+        "sorterValues": {
+            "processNo": "D"
+        }
+    },
+    {
+        "name": "Kapalı (Süreç No ya göre ters sıralı)",
+        "resultLimit": 200,
+        "rowLimit": 20,
+        "columns": ["topic", "processNo", "account", "type", "status"],
+        "filters": ["topic", "processNo", "type", "status", "account"],
+        "filterValues": {
+            "topic": "All::null",
+            "type": "All::PURCHASE",
+            "account": "All::null",
+            "processNo": "All::54",
+            "status": "Equal::CLOSE"
+        },
+        "sorters": ["processNo"],
+        "sorterValues": {
+            "processNo": "D"
+        }
+    },
+    {
+        "name": "Satın Alım (Süreç No ya göre ters sıralı)",
+        "resultLimit": 200,
+        "rowLimit": 20,
+        "columns": ["topic", "processNo", "account", "type", "status"],
+        "filters": ["topic", "processNo", "type", "status", "account"],
+        "filterValues": {
+            "topic": "All::null",
+            "type": "Equal::PURCHASE",
+            "account": "All::null",
+            "processNo": "All::54",
+            "status": "All::OPEN"
+        },
+        "sorters": ["processNo"],
+        "sorterValues": {
+            "processNo": "D"
+        }
+    },
+    {
+        "name": "Satış (Süreç No ya göre ters sıralı)",
+        "resultLimit": 200,
+        "rowLimit": 20,
+        "columns": ["topic", "processNo", "account", "type", "status"],
+        "filters": ["topic", "processNo", "type", "status", "account"],
+        "filterValues": {
+            "topic": "All::null",
+            "type": "Equal::SALES",
+            "account": "All::null",
+            "processNo": "All::54",
+            "status": "All::OPEN"
+        },
+        "sorters": ["processNo"],
+        "sorterValues": {
+            "processNo": "D"
+        }
+    }
+
+]
