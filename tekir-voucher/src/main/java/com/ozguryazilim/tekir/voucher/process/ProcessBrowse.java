@@ -44,7 +44,7 @@ public class ProcessBrowse extends BrowseBase<Process, Process> {
         typeFilter.setOperand(FilterOperand.All);
         queryDefinition
 		        .addFilter(new StringFilter<>(Process_.topic, "voucher.label.Topic"))
-		        .addFilter(new StringFilter<>(Process_.processNo, "voucher.label.Date"))
+		        .addFilter(new StringFilter<>(Process_.processNo, "voucher.label.ProcessNo"))
 		        .addFilter(typeFilter)
 		        .addFilter(new EnumFilter<>(Process_.status, ProcessStatus.OPEN,"general.label.Status", "processStatus."))
 		        .addFilter(new SubStringFilter<>(Process_.account,Contact_.name, "voucher.label.Account"));

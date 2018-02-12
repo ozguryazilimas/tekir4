@@ -1,0 +1,48 @@
+[
+    {
+        "name": "Aktif (Grup No ya göre ters sıralı)",
+        "resultLimit": 200,
+        "rowLimit": 20,
+        "columns": ["topic", "groupNo", "status"],
+        "filters": ["topic", "status"],
+        "filterValues": {
+            "topic": "All::null",
+            "status": "Equal::ACTIVE"
+        },
+        "sorters": ["groupNo"],
+        "sorterValues": {
+            "groupNo": "D"
+        }
+    },
+    {
+        "name": "Hepsi (Grup No ya göre ters sıralı)",
+        "resultLimit": 200,
+        "rowLimit": 20,
+        "columns": ["topic", "groupNo", "status"],
+        "filters": ["topic", "status"],
+        "filterValues": {
+            "topic": "All::null",
+            "status": "All::ACTIVE"
+        },
+        "sorters": ["groupNo"],
+        "sorterValues": {
+            "groupNo": "D"
+        }
+    },
+    {
+        "name": "Pasif (Grup No ya göre ters sıralı)",
+        "resultLimit": 200,
+        "rowLimit": 20,
+        "columns": ["topic", "groupNo", "status"],
+        "filters": ["topic", "status"],
+        "filterValues": {
+            "topic": "All::null",
+            "status": "Equal::PASSIVE"
+        },
+        "sorters": ["groupNo"],
+        "sorterValues": {
+            "groupNo": "D"
+        }
+    }
+
+]

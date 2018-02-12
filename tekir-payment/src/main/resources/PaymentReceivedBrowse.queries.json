@@ -1,0 +1,184 @@
+[
+    {
+        "name": "Bugün (Tarihe göre ters sıralı)",
+        "resultLimit": 100,
+        "rowLimit": 20,
+        "columns": ["voucherNo", "account", "financeAccount", "topic", "date", "amount", "owner"],
+        "filters": ["voucherNo", "code", "info", "topic", "state", "state", "stateReason", "owner", "amount", "account", "financeAccount", "process", "date"],
+        "filterValues": {
+            "voucherNo": "All::null",
+            "owner": "All::",
+            "date": "Equal::Today::20170718T0000::Today::20170718T0000",
+            "amount": "All::0",
+            "financeAccount": "All::null",
+            "process": "All::null",
+            "code": "All::null",
+            "topic": "All::null",
+            "state": "All::OPEN",
+            "stateReason": "All::null",
+            "account": "All::null",
+            "info": "All::null"
+        },
+        "sorters": ["date", "voucherNo"],
+        "sorterValues": {
+            "date": "D",
+            "voucherNo": "D"
+        }
+    },
+    {
+        "name": "Hepsi (Tarihe göre ters sıralı)",
+        "resultLimit": 100,
+        "rowLimit": 20,
+        "columns": ["voucherNo", "account", "financeAccount", "topic", "date", "amount", "owner"],
+        "filters": ["voucherNo", "code", "info", "topic", "state", "state", "stateReason", "owner", "amount", "account", "financeAccount", "process", "date"],
+        "filterValues": {
+            "voucherNo": "All::null",
+            "owner": "All::",
+            "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
+            "amount": "All::0",
+            "financeAccount": "All::null",
+            "process": "All::null",
+            "code": "All::null",
+            "topic": "All::null",
+            "state": "All::OPEN",
+            "stateReason": "All::null",
+            "account": "All::null",
+            "info": "All::null"
+        },
+        "sorters": ["date", "voucherNo"],
+        "sorterValues": {
+            "date": "D",
+            "voucherNo": "D"
+        }
+    },
+    {
+        "name": "Hepsi (Toplama göre ters sıralı)",
+        "resultLimit": 100,
+        "rowLimit": 20,
+        "columns": ["voucherNo", "account", "financeAccount", "topic", "date", "amount", "owner"],
+        "filters": ["voucherNo", "code", "info", "topic", "state", "state", "stateReason", "owner", "amount", "account", "financeAccount", "process", "date"],
+        "filterValues": {
+            "voucherNo": "All::null",
+            "owner": "All::",
+            "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
+            "amount": "All::0",
+            "financeAccount": "All::null",
+            "process": "All::null",
+            "code": "All::null",
+            "topic": "All::null",
+            "state": "All::OPEN",
+            "stateReason": "All::null",
+            "account": "All::null",
+            "info": "All::null"
+        },
+        "sorters": ["amount"],
+        "sorterValues": {
+            "amount": "D"
+        }
+    },
+    {
+        "name": "Kapalı (Tarihe göre ters sıralı)",
+        "resultLimit": 100,
+        "rowLimit": 20,
+        "columns": ["voucherNo", "account", "financeAccount", "topic", "date", "amount", "owner"],
+        "filters": ["voucherNo", "code", "info", "topic", "state", "state", "stateReason", "owner", "amount", "account", "financeAccount", "process", "date"],
+        "filterValues": {
+            "voucherNo": "All::null",
+            "owner": "All::",
+            "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
+            "amount": "All::0",
+            "financeAccount": "All::null",
+            "process": "All::null",
+            "code": "All::null",
+            "topic": "All::null",
+            "state": "All::OPEN",
+            "stateReason": "All::null",
+            "account": "All::null",
+            "info": "All::null"
+        },
+        "sorters": ["date", "voucherNo"],
+        "sorterValues": {
+            "date": "D",
+            "voucherNo": "D"
+        }
+    },
+    {
+        "name": "Revisyon (Tarihe göre ters sıralı)",
+        "resultLimit": 100,
+        "rowLimit": 20,
+        "columns": ["voucherNo", "account", "financeAccount", "topic", "date", "amount", "owner"],
+        "filters": ["voucherNo", "code", "info", "topic", "state", "state", "stateReason", "owner", "amount", "account", "financeAccount", "process", "date"],
+        "filterValues": {
+            "voucherNo": "All::null",
+            "owner": "All::",
+            "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
+            "amount": "All::0",
+            "financeAccount": "All::null",
+            "process": "All::null",
+            "code": "All::null",
+            "topic": "All::null",
+            "state": "All::OPEN",
+            "stateReason": "All::null",
+            "account": "All::null",
+            "info": "All::null"
+        },
+        "sorters": ["date", "voucherNo"],
+        "sorterValues": {
+            "date": "D",
+            "voucherNo": "D"
+        }
+    },
+    {
+        "name": "Son 10 gün (Tarihe göre ters sıralı)",
+        "resultLimit": 100,
+        "rowLimit": 20,
+        "columns": ["voucherNo", "account", "financeAccount", "topic", "date", "amount", "owner"],
+        "filters": ["voucherNo", "code", "info", "topic", "state", "state", "stateReason", "owner", "amount", "account", "financeAccount", "process", "date"],
+        "filterValues": {
+            "voucherNo": "All::null",
+            "owner": "All::",
+            "date": "In::LastTenDays::20170708T0000::Today::20170718T0000",
+            "amount": "All::0",
+            "financeAccount": "All::null",
+            "process": "All::null",
+            "code": "All::null",
+            "topic": "All::null",
+            "state": "All::OPEN",
+            "stateReason": "All::null",
+            "account": "All::null",
+            "info": "All::null"
+        },
+        "sorters": ["date", "voucherNo"],
+        "sorterValues": {
+            "date": "D",
+            "voucherNo": "D"
+        }
+    },
+    {
+        "name": "Taslak (Tarihe göre ters sıralı)",
+        "resultLimit": 100,
+        "rowLimit": 20,
+        "columns": ["voucherNo", "account", "financeAccount", "topic", "date", "amount", "owner"],
+        "filters": ["voucherNo", "code", "info", "topic", "state", "state", "stateReason", "owner", "amount", "account", "financeAccount", "process", "date"],
+        "filterValues": {
+            "voucherNo": "All::null",
+            "owner": "All::",
+            "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
+            "amount": "All::0",
+            "financeAccount": "All::null",
+            "process": "All::null",
+            "code": "All::null",
+            "topic": "All::null",
+            "state": "All::OPEN",
+            "stateReason": "All::null",
+            "account": "All::null",
+            "info": "All::null"
+        },
+        "sorters": ["date", "voucherNo"],
+        "sorterValues": {
+            "date": "D",
+            "voucherNo": "D"
+        }
+    }
+
+]
