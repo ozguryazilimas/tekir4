@@ -6,6 +6,7 @@
 package com.ozguryazilim.tekir.entities;
 
 import com.ozguryazilim.telve.entities.ParamEntityBase;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Column;
@@ -21,42 +22,43 @@ import javax.persistence.TemporalType;
 
 /**
  * Vergi türleri Enum olarak tanımlandılar.
- * 
+ * <p>
  * Bu modelde sadece isim, oran ve geçerlilik tarihleri tanımlanıyor.
- * 
+ *
  * @author Vergi Tanımları
  */
 @Entity
 @Table(name = "TCO_TAX")
-public class TaxDefinition extends ParamEntityBase{
-    
-    
-    @Id @GeneratedValue( strategy = GenerationType.AUTO, generator="genericSeq")
-    @Column(name="ID")
+public class TaxDefinition extends ParamEntityBase {
+
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "genericSeq")
+    @Column(name = "ID")
     private Long id;
-    
+
     @Enumerated(EnumType.STRING)
-    @Column( name = "TYPE")
+    @Column(name = "TYPE")
     private TaxType type;
-    
+
     /**
      * Vergi oranaı
      */
-    @Column( name = "RATE")
+    @Column(name = "RATE")
     private BigDecimal rate = BigDecimal.ZERO;
-    
-    
+
+
     /**
      * Vergi tanımının geçerli olduğu tarih başlangıcı
      */
-    @Column( name = "FROM_DATE")
+    @Column(name = "FROM_DATE")
     @Temporal(TemporalType.DATE)
     private Date fromDate;
-    
+
     /**
      * Vergi tanımının geçerli olduğu tarih bitişi
      */
-    @Column( name = "TO_DATE")
+    @Column(name = "TO_DATE")
     @Temporal(TemporalType.DATE)
     private Date toDate;
 
@@ -99,8 +101,4 @@ public class TaxDefinition extends ParamEntityBase{
     public void setToDate(Date toDate) {
         this.toDate = toDate;
     }
-
-    
-
-    
 }

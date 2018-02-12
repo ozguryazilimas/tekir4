@@ -17,6 +17,9 @@
             <t:inputText label="eMailImportOptionPane.label.SSL" value="#{eMailImportOptionPane.ssl.asString}" columnClass="col-sm-12"/>
             <t:inputText label="eMailImportOptionPane.label.folder" value="#{eMailImportOptionPane.folder.asString}" columnClass="col-sm-12"/>
             <t:inputText label="eMailImportOptionPane.label.domain" value="#{eMailImportOptionPane.domain.asString}" columnClass="col-sm-12"/>
+            <t:inputCombobox label="eMailImportOptionPane.label.default.user" value="#{eMailImportOptionPane.defaultUser.asString}" columnClass="col-sm-12">
+                <f:selectItems value="#{eMailImportOptionPane.userNames}"/>
+            </t:inputCombobox>
         </div>
         <div class="row">
             <t:inputText label="eMailImportOptionPane.label.User" value="#{eMailImportOptionPane.user.asString}" />

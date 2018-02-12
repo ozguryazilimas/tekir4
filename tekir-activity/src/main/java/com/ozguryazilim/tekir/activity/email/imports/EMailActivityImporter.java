@@ -49,6 +49,7 @@ public class EMailActivityImporter implements Serializable {
 
     private static final Logger LOG = LoggerFactory.getLogger(EMailActivityImporter.class);
     private static final String MAIL_DOMAIN = "mail.domain";
+    private static final String MAIL_DEFAULT_USER = "mail.default.user";
     /**
      * gelen mail
      */
@@ -123,24 +124,19 @@ public class EMailActivityImporter implements Serializable {
 
             int direction = resolveDirection(message);
 
-            //To kısmına bakılarak kimi ilgilendirdiğine bakılabilir. Hatta onun çalıştığı şirket de doğrudan corp olarak atanabilir
-            //Geri kalan herkes mention listesine girecek
-            //From kısmında domain name kontrolü yaparak bizden mi karşıdan mı olduğuna bakılabilir. Domain ismi için kahve conf'a girmeli
-            addContactMention(message.getFrom().getAddress(), activity);
-
-            List<ContactEMail> emails = informationRepository.findByEmail(message.getFrom().getAddress());
-            for (ContactEMail cemail : emails) {
-                Contact contact = cemail.getContact();
-                if (contact instanceof AbstractPerson) {
-                    activity.setPerson((AbstractPerson) contact);
-                } else if (contact instanceof Corporation) {
-                    activity.setCorporation((Corporation) contact);
-                }
+            boolean contactsAdded = false;
+            // bize gelen mailler icin baglantiyi from kısmından al
+            if (direction == INBOX) {
+                addContacts(message.getFrom().getAddress(), activity);
+            } else {
+                addContactMention(message.getFrom().getAddress(), activity);
             }
 
-
-            //Burada primary nasıl seçilecek?
             for (InternetAddress adr : message.getToList()) {
+                //giden mail ise ilk bulduğunla eşleştir
+                if (direction == OUTBOX && !contactsAdded) {
+                    contactsAdded = addContacts(adr.getAddress(), activity);
+                }
                 addContactMention(adr.getAddress(), activity);
             }
 
@@ -148,16 +144,29 @@ public class EMailActivityImporter implements Serializable {
                 addContactMention(adr.getAddress(), activity);
             }
 
-            //BCC'ye gerek var mı?
             for (InternetAddress adr : message.getBccList()) {
                 addContactMention(adr.getAddress(), activity);
             }
 
+            String assignee = null;
+            if (direction == INBOX) {
+                assignee = userService.getUserByEmail(message.getFrom().getAddress());
+            } else {
+                for (InternetAddress adr : message.getToList()) {
+                    assignee = userService.getUserByEmail(adr.getAddress());
+                    if (assignee != null) {
+                        break;
+                    }
+                }
+            }
 
-            //FIXME: doğru kullanıcıya atanacak.
-            //Hangi kullanıcıya assign edileceği gene from/to kısmından bulunmalı ( yöne bağlı olarak )
-            //String userName = userService.getUsersByEmail("from/to");
-            activity.setAssignee("telve");
+            if (assignee != null) {
+                activity.setAssignee(assignee);
+            } else {
+                //bulunamayanların kime atanacağı kahveden çekiliyor
+                activity.setAssignee(kahve.get(MAIL_DEFAULT_USER).getAsString());
+            }
+
 
             //Ayrıca message id üzerinden daha önce kaydedilmiş mail activity aranacak. eğer bulunur ise ilgili kısımları oradan alınan bilgilerle doldurulacak.
             if (message.isReply()) {
@@ -176,7 +185,7 @@ public class EMailActivityImporter implements Serializable {
 
             //Hala bir regarding bulunamamış ise Subject parse edilip bulunması denebilir mi?
             //Ama yazılı olan VoucherNo'yu hangi tablolarda arayacağız?
-
+            //hüseyin: içerik üzerinden eşleştirme şimdilik yapmayalım.
 
             activityRepository.save(activity);
 
@@ -238,6 +247,23 @@ public class EMailActivityImporter implements Serializable {
 
         // biz göndermediysek bize gelmiştir varsayımı
         return ownEmails.contains(from) ? OUTBOX : INBOX;
+    }
+
+    private boolean addContacts(String email, EMailActivity activity) {
+        List<ContactEMail> emails = informationRepository.findByEmail(email);
+        for (ContactEMail ce : emails) {
+            Contact contact = ce.getContact();
+            if (contact instanceof AbstractPerson) {
+                AbstractPerson person = (AbstractPerson) contact;
+                activity.setPerson(person);
+                activity.setCorporation(person.getCorporation());
+                return true;
+            } else if (contact instanceof Corporation) {
+                activity.setCorporation((Corporation) contact);
+                return true;
+            }
+        }
+        return false;
     }
 
     private int resolveDirectionByDomain(EMailMessage message) {
