@@ -1,20 +1,17 @@
 package com.ozguryazilim.tekir.einvoice;
 
 import com.ozguryazilim.mutfak.kahve.Kahve;
-import com.ozguryazilim.tekir.core.options.CorporateOptionPane;
 import com.ozguryazilim.tekir.entities.InvoiceItem;
+import com.ozguryazilim.tekir.entities.InvoiceSummary;
 import com.ozguryazilim.tekir.entities.SalesInvoice;
 import com.ozguryazilim.tekir.entities.TaxDefinition;
 
-import javax.inject.Inject;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 public class EinvoiceBuilderGetters {
-    @Inject
-    Kahve kahve;
-
 
     public String getFaturaTuru(){
         return "TICARIFATURA";
@@ -54,6 +51,26 @@ public class EinvoiceBuilderGetters {
         return kahve.get("corp.taxOffice", "").getAsString();
     }
 
+    public String getSaticiAdres(Kahve kahve){
+        return kahve.get("corp.invAddr", "").getAsString();
+    }
+
+    public String getSaticiIlce(Kahve kahve){
+        return kahve.get("corp.invCounty", "").getAsString();
+    }
+
+    public String getSaticiSehir(Kahve kahve){
+        return kahve.get("corp.invProvince", "").getAsString();
+    }
+
+    public String getSaticiUlke(Kahve kahve){
+        return kahve.get("corp.invCountry", "").getAsString();
+    }
+
+    public String getSaticiPostaKodu(Kahve kahve){
+        return kahve.get("corp.invZipCode", "").getAsString();
+    }
+
     public String getAliciVKN(SalesInvoice entity){
         return entity.getAccount().getTaxNumber();
     }
@@ -78,6 +95,14 @@ public class EinvoiceBuilderGetters {
         return entity.getAccount().getPrimaryAddress().getCountry();
     }
 
+    public String getAliciPostaKodu(SalesInvoice entity){
+        return entity.getAccount().getPrimaryAddress().getZipCode();
+    }
+
+    public String getAliciAdres(SalesInvoice entity){
+        return entity.getAccount().getPrimaryAddress().getAddress();
+    }
+
     public InvoiceItem getFaturaSatir(SalesInvoice entity, int i){
         return entity.getItems().get(i);
     }
@@ -87,15 +112,15 @@ public class EinvoiceBuilderGetters {
     }
 
     public BigDecimal getMiktarTipi(InvoiceItem commodityEntity){
-        return commodityEntity.getQuantity().getAmount();
+        return commodityEntity.getQuantity().getAmount().setScale(2, RoundingMode.CEILING);
     }
 
     public BigDecimal getBirimFiyat(InvoiceItem commodityEntity){
-        return commodityEntity.getPrice();
+        return commodityEntity.getPrice().setScale(2, RoundingMode.CEILING);
     }
 
     public BigDecimal getMalHizmetMiktari(InvoiceItem commodityEntity){
-        return commodityEntity.getTotal();
+        return commodityEntity.getTotal().setScale(2, RoundingMode.CEILING);
     }
 
     public String getMalHizmetBilgileriAdi(InvoiceItem commodityEntity){
@@ -107,7 +132,7 @@ public class EinvoiceBuilderGetters {
     }
 
     public BigDecimal getIskontoTutarTipi(InvoiceItem commodityEntity){
-        return commodityEntity.getDiscount();
+        return commodityEntity.getDiscount().setScale(2, RoundingMode.CEILING);
     }
 
     public TaxDefinition getTax1(InvoiceItem commodityEntity){
@@ -122,23 +147,39 @@ public class EinvoiceBuilderGetters {
     }
 
     public BigDecimal getMatrah(InvoiceItem commodityEntity){
-        return commodityEntity.getLineTotal();
+        return commodityEntity.getLineTotal().setScale(2, RoundingMode.CEILING);
     }
 
     public BigDecimal getToplamMalHizmetTutari(SalesInvoice entity){
-        return entity.getSummaries().get("BeforeDiscountTotal").getAmount();
+        return entity.getSummaries().get("BeforeDiscountTotal").getAmount().setScale(2, RoundingMode.CEILING);
     }
 
     public BigDecimal getVergiHaricTutar(SalesInvoice entity){
-        return entity.getSummaries().get("BeforeTaxTotal").getAmount();
+        return entity.getSummaries().get("BeforeTaxTotal").getAmount().setScale(2, RoundingMode.CEILING);
     }
 
     public BigDecimal getToplamIskontoTutari(SalesInvoice entity){
-        return entity.getSummaries().get("Discount").getAmount();
+        return entity.getSummaries().get("Discount").getAmount().setScale(2, RoundingMode.CEILING);
     }
 
     public BigDecimal getOdenecekTutar(SalesInvoice entity){
-        return entity.getSummaries().get("GrandTotal").getAmount();
+        return entity.getSummaries().get("GrandTotal").getAmount().setScale(2, RoundingMode.CEILING);
+    }
+
+    public BigDecimal getToplamVergiTutari(InvoiceSummary taxEntity){
+        return taxEntity.getAmount().setScale(2, RoundingMode.CEILING);
+    }
+
+    public String getToplamVergiKodu(InvoiceSummary taxEntity){
+        return taxEntity.getCode();
+    }
+
+    public String getToplamVergiAdi(InvoiceSummary taxEntity){
+        return taxEntity.getBaseName();
+    }
+
+    public String getBelgeNo(SalesInvoice entity){
+        return entity.getVoucherNo();
     }
 
 }

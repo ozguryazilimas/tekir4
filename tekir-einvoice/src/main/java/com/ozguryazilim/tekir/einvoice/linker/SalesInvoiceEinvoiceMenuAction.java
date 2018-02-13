@@ -5,7 +5,6 @@
  */
 package com.ozguryazilim.tekir.einvoice.linker;
 import com.ozguryazilim.mutfak.kahve.Kahve;
-import com.ozguryazilim.tekir.core.options.CorporateOptionPane;
 import com.ozguryazilim.tekir.einvoice.EinvoiceBuilder;
 import com.ozguryazilim.tekir.entities.SalesInvoice;
 import com.ozguryazilim.tekir.invoice.sales.SalesInvoiceHome;

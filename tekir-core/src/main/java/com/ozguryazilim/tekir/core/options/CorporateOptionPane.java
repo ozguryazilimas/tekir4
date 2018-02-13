@@ -26,6 +26,10 @@ public class CorporateOptionPane extends AbstractOptionPane{
     private static final String TAX_OFFICE = "corp.taxOffice";
     private static final String TAX_NUMBER = "corp.taxNumber";
     private static final String INV_ADDRESS = "corp.invAddr";
+    private static final String INV_COUNTY = "corp.invCounty";
+    private static final String INV_PROVINCE = "corp.invProvince";
+    private static final String INV_COUNTRY = "corp.invCountry";
+    private static final String INV_ZIPCODE = "corp.invZipCode";
     
     @Inject
     private Kahve kahve;
@@ -34,6 +38,10 @@ public class CorporateOptionPane extends AbstractOptionPane{
     private String taxOffice;
     private String taxNumber;
     private String invoiceAddress;
+    private String invoiceCounty;
+    private String invoiceProvince;
+    private String invoiceCountry;
+    private String invoiceZipCode;
     
     
     
@@ -44,6 +52,10 @@ public class CorporateOptionPane extends AbstractOptionPane{
         taxOffice = kahve.get(TAX_OFFICE, "").getAsString();
         taxNumber = kahve.get(TAX_NUMBER, "").getAsString();
         invoiceAddress = kahve.get(INV_ADDRESS, "").getAsString();
+        invoiceCounty = kahve.get(INV_COUNTY, "").getAsString();
+        invoiceProvince = kahve.get(INV_PROVINCE, "").getAsString();
+        invoiceCountry = kahve.get(INV_COUNTRY, "").getAsString();
+        invoiceZipCode = kahve.get(INV_ZIPCODE, "").getAsString();
         
     }
     
@@ -54,6 +66,10 @@ public class CorporateOptionPane extends AbstractOptionPane{
         kahve.put(TAX_OFFICE, taxOffice);
         kahve.put(TAX_NUMBER, taxNumber);
         kahve.put(INV_ADDRESS, invoiceAddress);
+        kahve.put(INV_COUNTY, invoiceCounty);
+        kahve.put(INV_PROVINCE, invoiceProvince);
+        kahve.put(INV_COUNTRY, invoiceCountry);
+        kahve.put(INV_ZIPCODE, invoiceZipCode);
         
         super.save();
     }
@@ -89,9 +105,37 @@ public class CorporateOptionPane extends AbstractOptionPane{
     public void setInvoiceAddress(String invoiceAddress) {
         this.invoiceAddress = invoiceAddress;
     }
-    
-    
-    
-    
-    
+
+
+    public String getInvoiceCounty() {
+        return invoiceCounty;
+    }
+
+    public void setInvoiceCounty(String invoiceCounty) {
+        this.invoiceCounty = invoiceCounty;
+    }
+
+    public String getInvoiceProvince() {
+        return invoiceProvince;
+    }
+
+    public void setInvoiceProvince(String invoiceProvince) {
+        this.invoiceProvince = invoiceProvince;
+    }
+
+    public String getInvoiceCountry() {
+        return invoiceCountry;
+    }
+
+    public void setInvoiceCountry(String invoiceCountry) {
+        this.invoiceCountry = invoiceCountry;
+    }
+
+    public String getInvoiceZipCode() {
+        return invoiceZipCode;
+    }
+
+    public void setInvoiceZipCode(String invoiceZipCode) {
+        this.invoiceZipCode = invoiceZipCode;
+    }
 }

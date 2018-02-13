@@ -1,16 +1,20 @@
-package com.ozguryazilim.tekir;
+package com.ozguryazilim.tekir.einvoice;
 
 import com.cs.csap.service.ConnectorService;
 import com.cs.csap.service.UserService;
-import tr.com.cs.uut.connector.service.GidenBelgeDurum;
 
+import javax.xml.bind.DatatypeConverter;
 import javax.xml.ws.BindingProvider;
 import javax.xml.ws.handler.MessageContext;
+import java.io.File;
+import java.io.FileInputStream;
+import java.security.MessageDigest;
 import java.util.Collection;
 import java.util.TreeMap;
 
-public class Sorgula {
-    public static void main(String[] args) {
+public class EinvoiceSender {
+
+    public String sendEinvoice(File file, String saticiVKN, String belgeNo) throws Exception{
         UserService service = new UserService();
         ConnectorService connectorService = new ConnectorService();
 
@@ -31,20 +35,18 @@ public class Sorgula {
         headers.put("Cookie", cookie);
         bpc.getRequestContext().put(MessageContext.HTTP_REQUEST_HEADERS, headers);
 
-        String belgeOidOld = "0njbc3smzm127z";
-        GidenBelgeDurum status = connector.gidenBelgeDurumSorgula("6930329621", belgeOidOld);
-        System.out.println(status.getDurum());
-        System.out.println(status.getAciklama());
-        System.out.println(status.getGonderimDurumu());
-        System.out.println(status.getGonderimCevabiKodu());
-        System.out.println(status.getGonderimCevabiDetayi());
-        System.out.println(status.getYanitDurumu());
-        System.out.println(status.getYanitDetayi());
-        System.out.println(status.getYanitTarihi());
-        System.out.println(status.getOlusturulmaTarihi());
-        System.out.println(status.getAlimTarihi());
-        System.out.println(status.getGonderimTarihi());
-        System.out.println(status.getEttn());
-        System.out.println(status.getBelgeNo());
+        byte[] bytesArray = new byte[(int) file.length()];
+        FileInputStream fis = new FileInputStream(file);
+        fis.read(bytesArray);
+        fis.close();
+
+        MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+        messageDigest.update(bytesArray);
+        byte[] hash = messageDigest.digest();
+        String hashString = DatatypeConverter.printHexBinary(hash).toUpperCase();
+
+        String belgeOid = connector.belgeGonder(saticiVKN, "FATURA", belgeNo, bytesArray, hashString, "application/xml", "3.0");
+        System.out.println(belgeOid);
+        return belgeOid;
     }
 }

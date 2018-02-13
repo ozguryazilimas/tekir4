@@ -17,6 +17,7 @@ import java.util.List;
 
 public class EinvoiceBuilder {
     EinvoiceBuilderGetters getters = new EinvoiceBuilderGetters();
+    EinvoiceSender sender = new EinvoiceSender();
 
     public void buildEinvoice(SalesInvoice entity, Kahve kahve) throws Exception{
 
@@ -47,9 +48,11 @@ public class EinvoiceBuilder {
 
         saticiTarafBilgileriTipi.setVergiDairesi(getters.getSaticiVergiDairesi(kahve));
 
-        saticiAdresTipi.setIlce("ilce");
-        saticiAdresTipi.setSehir("sehir");
-        saticiAdresTipi.setUlke("ulke");
+        saticiAdresTipi.setIlce(getters.getSaticiIlce(kahve));
+        saticiAdresTipi.setSehir(getters.getSaticiSehir(kahve));
+        saticiAdresTipi.setUlke(getters.getSaticiUlke(kahve));
+        saticiAdresTipi.setPostaKodu(getters.getSaticiPostaKodu(kahve));
+        saticiAdresTipi.setCaddeSokak(getters.getSaticiAdres(kahve));
         saticiTarafBilgileriTipi.setPostaAdresi(saticiAdresTipi);
 
         fatura.setSatici(saticiTarafBilgileriTipi);
@@ -65,6 +68,8 @@ public class EinvoiceBuilder {
         aliciAdresTipi.setIlce(getters.getAliciIlce(entity));
         aliciAdresTipi.setSehir(getters.getAliciSehir(entity));
         aliciAdresTipi.setUlke(getters.getAliciUlke(entity));
+        aliciAdresTipi.setPostaKodu(getters.getAliciPostaKodu(entity));
+        aliciAdresTipi.setCaddeSokak(getters.getAliciAdres(entity));
         aliciTarafBilgileriTipi.setPostaAdresi(aliciAdresTipi);
         fatura.setAlici(aliciTarafBilgileriTipi);
 
@@ -88,15 +93,21 @@ public class EinvoiceBuilder {
         fatura.setParasalToplamlar(parasalToplamlarTipi);
 
         List<InvoiceSummary> taxes = VoucherItemUtils.getTaxes(entity.getSummaries());
+        BigDecimal toplamVergiTutari2 = new BigDecimal("0");
+        VergilerTipi toplamVergilerTipi = new VergilerTipi();
+        TutarTipi tutarTipi = new TutarTipi();
         int taxCount = taxes.size();
         for (int i=0; i<taxCount; i++){
             InvoiceSummary taxEntity = taxes.get(i);
-
-            VergiTuruTipi vergiTuruTipi = new VergiTuruTipi();
-
-            vergiTuruTipi.setVergikodu(taxEntity.getInfo());
-
+            toplamVergiTutari2 = setTotalTax(taxEntity, entity, toplamVergiTutari2, toplamVergilerTipi);
         }
+        tutarTipi.setParaBirimi(getters.getParaBirimi(entity));
+        tutarTipi.setValue(toplamVergiTutari2.setScale(2, RoundingMode.CEILING));
+        toplamVergilerTipi.setToplamVergiTutari(tutarTipi);
+
+
+        fatura.getVergiler().add(toplamVergilerTipi);
+
 
         int listCount = entity.getItems().size();
         for (int i=0; i<listCount; i++){
@@ -161,13 +172,15 @@ public class EinvoiceBuilder {
             fatura.getFaturaSatir().add(faturaSatirTipi);
         }
 
-        File file = new File("file2.xml");
+        File file = new File("einvoiceFile.xml");
 
         JAXBContext jaxbContext = JAXBContext.newInstance(Fatura.class);
         Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
         jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         jaxbMarshaller.marshal(fatura, file);
         jaxbMarshaller.marshal(fatura, System.out);
+
+        sender.sendEinvoice(file, getters.getSaticiVKN(kahve), getters.getBelgeNo(entity));
     }
 
     public BigDecimal setTax(VergilerTipi vergilerTipi, TaxDefinition tax, InvoiceItem commodityEntity, SalesInvoice entity, BigDecimal toplamVergiTutari) {
@@ -197,5 +210,30 @@ public class EinvoiceBuilder {
             vergilerTipi.getVergi().add(vergiTipi);
         }
         return toplamVergiTutari;
+    }
+
+    public BigDecimal setTotalTax(InvoiceSummary taxEntity, SalesInvoice entity, BigDecimal toplamVergiTutari2, VergilerTipi toplamVergilerTipi){
+        VergiTuruTipi vergiTuruTipi = new VergiTuruTipi();
+        VergiTipi vergiTipi = new VergiTipi();
+        TutarTipi vergiTutari = new TutarTipi();
+        TutarTipi vergiMatrah = new TutarTipi();
+
+        vergiMatrah.setParaBirimi(getters.getParaBirimi(entity));
+        vergiMatrah.setValue(getters.getVergiHaricTutar(entity));
+        vergiTipi.setMatrah(vergiMatrah);
+
+        vergiTuruTipi.setVergikodu(getters.getToplamVergiKodu(taxEntity));
+        vergiTuruTipi.setVergiAdi(getters.getToplamVergiAdi(taxEntity));
+        vergiTipi.setVergiTuru(vergiTuruTipi);
+
+        vergiTutari.setParaBirimi(getters.getParaBirimi(entity));
+        vergiTutari.setValue(getters.getToplamVergiTutari(taxEntity));
+        vergiTipi.setVergiTutari(vergiTutari);
+
+        toplamVergiTutari2 = toplamVergiTutari2.add(taxEntity.getAmount());
+
+        toplamVergilerTipi.getVergi().add(vergiTipi);
+
+        return toplamVergiTutari2;
     }
 }
