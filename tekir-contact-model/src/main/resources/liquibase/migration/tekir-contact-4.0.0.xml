@@ -299,12 +299,12 @@
     </changeSet>
     <changeSet author="oyas (generated)" id="1505062932003-4">
         <addColumn tableName="TCC_CONTACT_REL_DEF">
-            <column name="REVERSE_NAME" type="varchar(255)"/>
+            <column name="reversName" type="varchar(255)"/>
         </addColumn>
     </changeSet>
     <changeSet author="oyas (generated)" id="1505062932003-5">
         <addColumn tableName="TCC_CONTACT_REL_DEF">
-            <column name="VECTOR_NAME" type="varchar(255)"/>
+            <column name="vectorName" type="varchar(255)"/>
         </addColumn>
     </changeSet>
     <changeSet author="oyas (generated)" id="1505062932003-11">
