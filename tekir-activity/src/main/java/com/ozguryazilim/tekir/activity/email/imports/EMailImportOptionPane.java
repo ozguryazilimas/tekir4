@@ -25,6 +25,7 @@ public class EMailImportOptionPane extends AbstractOptionPane {
     private static final String MAIL_PASS = "mail.pass";
     private static final String MAIL_SSL = "mail.ssl";
     private static final String MAIL_FOLDER = "mail.folder";
+    private static final String MAIL_ARCHIVE_FOLDER = "mail.archive.folder";
     private static final String MAIL_DOMAIN = "mail.domain";
     private static final String MAIL_DEFAULT_USER = "mail.default.user";
 
@@ -41,6 +42,7 @@ public class EMailImportOptionPane extends AbstractOptionPane {
     private KahveEntry pass;
     private KahveEntry ssl;
     private KahveEntry folder;
+    private KahveEntry archiveFolder;
     private KahveEntry domain;
     private KahveEntry defaultUser;
 
@@ -54,6 +56,7 @@ public class EMailImportOptionPane extends AbstractOptionPane {
         pass = kahve.get(MAIL_PASS, "");
         ssl = kahve.get(MAIL_SSL, "true");
         folder = kahve.get(MAIL_FOLDER, "INBOX");
+        archiveFolder = kahve.get(MAIL_ARCHIVE_FOLDER, "");
         domain = kahve.get(MAIL_DOMAIN, "");
         defaultUser = kahve.get(MAIL_DEFAULT_USER, "telve");
     }
@@ -67,6 +70,7 @@ public class EMailImportOptionPane extends AbstractOptionPane {
         kahve.put(MAIL_PASS, pass);
         kahve.put(MAIL_SSL, ssl);
         kahve.put(MAIL_FOLDER, folder);
+        kahve.put(MAIL_ARCHIVE_FOLDER, archiveFolder);
         kahve.put(MAIL_DOMAIN, domain);
         kahve.put(MAIL_DEFAULT_USER, defaultUser);
     }
@@ -109,5 +113,9 @@ public class EMailImportOptionPane extends AbstractOptionPane {
 
     public List<String> getUserNames() {
         return userService.getLoginNames();
+    }
+
+    public KahveEntry getArchiveFolder() {
+        return archiveFolder;
     }
 }

@@ -14,11 +14,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 import javax.inject.Inject;
-import javax.mail.Folder;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Store;
+import javax.mail.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +36,10 @@ public class EMailFetchCommandExecutor extends AbstractCommandExecuter<EMailFetc
     private static final String MAIL_PASS = "mail.pass";
     private static final String MAIL_SSL = "mail.ssl";
     private static final String MAIL_FOLDER = "mail.folder";
+    private static final String MAIL_ARCHIVE_FOLDER = "mail.archive.folder";
+
+    private static final String IMAP = "imap";
+    private static final String POP3 = "pop3";
 
     @Inject
     private Kahve kahve;
@@ -57,8 +57,10 @@ public class EMailFetchCommandExecutor extends AbstractCommandExecuter<EMailFetc
 
         LOG.debug("EMail Import Process Begin");
         try {
+            String protocol = kahve.get(MAIL_PROTOCOL, "imap").getAsString();
+
             //Burada kahveden okuma yapılacak
-            Store store = getSession().getStore("imaps");
+            Store store = getSession().getStore(protocol + "s");
 
             //FIXME: parola kahvede hashli saklanacak
             String host = kahve.get(MAIL_HOST, "mail.host").getAsString();
@@ -68,23 +70,9 @@ public class EMailFetchCommandExecutor extends AbstractCommandExecuter<EMailFetc
             store.connect(host, port, user, pass);
 
             String folder = kahve.get(MAIL_FOLDER, "INBOX").getAsString();
-            processFolder(store, folder);
-            store.close();
-        } catch (MessagingException ex) {
-            LOG.error("EMail Import Failed", ex);
-        }
-    }
-
-    /**
-     * @param store
-     * @param folder
-     * @param direction
-     */
-    protected void processFolder(Store store, String folder) {
-        try {
             Folder emailFolder = store.getFolder(folder);
 
-            emailFolder.open(Folder.READ_ONLY);
+            emailFolder.open(Folder.READ_WRITE);
 
             // retrieve the messages from the folder in an array and print it
             Message[] messages = emailFolder.getMessages();
@@ -101,14 +89,18 @@ public class EMailFetchCommandExecutor extends AbstractCommandExecuter<EMailFetc
                 importCommand.setEml(eml);
 
                 commandSender.sendCommand(importCommand);
-
-                //FIXME: Burada IMAP ise bir arşiv folder'ına atılacak. POP3 ise silinecek. IMAP içinde bunu ayarlardan almak lazım
-                //message.setFlag(Flags.Flag.DELETED, true);
-                //folder.expunge();
+                message.setFlag(Flags.Flag.DELETED, true);
             }
-
+            if (IMAP.equals(protocol)) {
+                //arşivle
+                String archiveFolderName = kahve.get(MAIL_ARCHIVE_FOLDER).getAsString();
+                Folder arvhiveFolder = store.getFolder(archiveFolderName);
+                //TODO: direk kafadan arşivledik ama EMailImportCommand işi halledemezse ne olacak?
+                emailFolder.copyMessages(messages, arvhiveFolder);
+            }
             // close the store and folder objects
-            emailFolder.close(false);
+            emailFolder.close(true);
+            store.close();
         } catch (MessagingException | IOException ex) {
             LOG.error("EMail Import Failed", ex);
         }

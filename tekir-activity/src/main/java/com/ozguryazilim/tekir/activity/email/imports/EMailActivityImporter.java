@@ -29,6 +29,7 @@ import com.ozguryazilim.telve.sequence.SequenceManager;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
+import javax.activation.MimeType;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
@@ -100,118 +101,152 @@ public class EMailActivityImporter implements Serializable {
         EMailParser parser = new EMailParser();
         try {
             EMailMessage message = parser.parse(mail);
+            if (isImportedBefore(message.getMessageId())) {
+                LOG.info("Message with messageId (" + message.getMessageId() + ") already imported");
+                return;
+            }
 
-            EMailActivity activity = new EMailActivity();
-
-            activity.setActivityNo(sequenceManager.getNewSerialNumber("ACT", 6));
-
-            activity.setMessageId(message.getMessageId());
-            activity.setReplyId(message.getReplyId());
-            activity.setForwardId(message.getForwardId());
-
-            activity.setSubject(message.getSubject());
-            activity.setBody(message.getContent());
-            activity.setDate(message.getDate());
-            activity.setDueDate(message.getDate());
-
-            activity.setStatus(ActivityStatus.DRAFT);
-
-            //From/To/CC/BCC ve diğerleri
-            activity.setFrom(addressToString(message.getFrom()));
-            activity.setTo(addressToString(message.getToList()));
-            activity.setCc(addressToString(message.getCcList()));
-            activity.setBcc(addressToString(message.getBccList()));
-
-            int direction = resolveDirection(message);
-
-            boolean contactsAdded = false;
-            // bize gelen mailler icin baglantiyi from kısmından al
-            if (direction == INBOX) {
-                addContacts(message.getFrom().getAddress(), activity);
+            if (isMeeting(message)) {
+                createMeetingActivity(message);
             } else {
-                addContactMention(message.getFrom().getAddress(), activity);
+                createEmailActivity(message);
             }
-
-            for (InternetAddress adr : message.getToList()) {
-                //giden mail ise ilk bulduğunla eşleştir
-                if (direction == OUTBOX && !contactsAdded) {
-                    contactsAdded = addContacts(adr.getAddress(), activity);
-                }
-                addContactMention(adr.getAddress(), activity);
-            }
-
-            for (InternetAddress adr : message.getCcList()) {
-                addContactMention(adr.getAddress(), activity);
-            }
-
-            for (InternetAddress adr : message.getBccList()) {
-                addContactMention(adr.getAddress(), activity);
-            }
-
-            String assignee = null;
-            if (direction == INBOX) {
-                assignee = userService.getUserByEmail(message.getFrom().getAddress());
-            } else {
-                for (InternetAddress adr : message.getToList()) {
-                    assignee = userService.getUserByEmail(adr.getAddress());
-                    if (assignee != null) {
-                        break;
-                    }
-                }
-            }
-
-            if (assignee != null) {
-                activity.setAssignee(assignee);
-            } else {
-                //bulunamayanların kime atanacağı kahveden çekiliyor
-                activity.setAssignee(kahve.get(MAIL_DEFAULT_USER).getAsString());
-            }
-
-
-            //Ayrıca message id üzerinden daha önce kaydedilmiş mail activity aranacak. eğer bulunur ise ilgili kısımları oradan alınan bilgilerle doldurulacak.
-            if (message.isReply()) {
-                List<EMailActivity> acts = activityRepository.findByMessageId(message.getReplyId());
-                if (!acts.isEmpty()) {
-                    FeaturePointer fp = acts.get(0).getRegarding();
-                    activity.setRegarding(fp);
-                }
-            } else if (message.isForwarded()) {
-                List<EMailActivity> acts = activityRepository.findByMessageId(message.getForwardId());
-                if (!acts.isEmpty()) {
-                    FeaturePointer fp = acts.get(0).getRegarding();
-                    activity.setRegarding(fp);
-                }
-            }
-
-            //Hala bir regarding bulunamamış ise Subject parse edilip bulunması denebilir mi?
-            //Ama yazılı olan VoucherNo'yu hangi tablolarda arayacağız?
-            //hüseyin: içerik üzerinden eşleştirme şimdilik yapmayalım.
-
-            activityRepository.save(activity);
-
-            //Attachmentlar attachment olarak activity'ye bağlanacak
-            for (EMailAttacment atch : message.getAttachments()) {
-                FeaturePointer fp = new FeaturePointer();
-                fp.setBusinessKey(activity.getActivityNo());
-                fp.setFeature(ActivityFeature.class.getSimpleName());
-                fp.setPrimaryKey(activity.getId());
-                AttachmentContext context = providerSelector.getAttachmentContextProvider(fp, activity).getContext(fp, activity);
-                AttachmentDocument document = new AttachmentDocument();
-
-                document.setName(atch.getName());
-                document.setMimeType(atch.getMimeType());
-
-                store.addDocument(context, store.getFolder(context, ""), document, atch.getContent());
-            }
-
-
-            //Feed'ler ve sorumlu kişi bilgilendirmesi yapılacak
-
-
         } catch (MessagingException | IOException | AttachmentNotFoundException | AttachmentException ex) {
             LOG.error("Mail Import Error", ex);
         }
+    }
 
+    private void createMeetingActivity(EMailMessage message) {
+        MeetingActivity activity = new MeetingActivity();
+        activity.setActivityNo(sequenceManager.getNewSerialNumber("ACT", 6));
+
+
+    }
+
+    private void createEmailActivity(EMailMessage message) throws AttachmentException, AttachmentNotFoundException {
+        EMailActivity activity = new EMailActivity();
+
+        activity.setActivityNo(sequenceManager.getNewSerialNumber("ACT", 6));
+
+        activity.setMessageId(message.getMessageId());
+        activity.setReplyId(message.getReplyId());
+        activity.setForwardId(message.getForwardId());
+
+        activity.setSubject(message.getSubject());
+        activity.setBody(message.getContent());
+        activity.setDate(message.getDate());
+        activity.setDueDate(message.getDate());
+
+        activity.setStatus(ActivityStatus.DRAFT);
+
+        //From/To/CC/BCC ve diğerleri
+        activity.setFrom(addressToString(message.getFrom()));
+        activity.setTo(addressToString(message.getToList()));
+        activity.setCc(addressToString(message.getCcList()));
+        activity.setBcc(addressToString(message.getBccList()));
+
+        int direction = resolveDirection(message);
+
+        boolean contactsAdded = false;
+        // bize gelen mailler icin baglantiyi from kısmından al
+        if (direction == INBOX) {
+            addContacts(message.getFrom().getAddress(), activity);
+        } else {
+            addContactMention(message.getFrom().getAddress(), activity);
+        }
+
+        for (InternetAddress adr : message.getToList()) {
+            //giden mail ise ilk bulduğunla eşleştir
+            if (direction == OUTBOX && !contactsAdded) {
+                contactsAdded = addContacts(adr.getAddress(), activity);
+            }
+            addContactMention(adr.getAddress(), activity);
+        }
+
+        for (InternetAddress adr : message.getCcList()) {
+            addContactMention(adr.getAddress(), activity);
+        }
+
+        for (InternetAddress adr : message.getBccList()) {
+            addContactMention(adr.getAddress(), activity);
+        }
+
+        String assignee = null;
+        if (direction == INBOX) {
+            assignee = userService.getUserByEmail(message.getFrom().getAddress());
+        } else {
+            for (InternetAddress adr : message.getToList()) {
+                assignee = userService.getUserByEmail(adr.getAddress());
+                if (assignee != null) {
+                    break;
+                }
+            }
+        }
+
+        if (assignee != null) {
+            activity.setAssignee(assignee);
+        } else {
+            //bulunamayanların kime atanacağı kahveden çekiliyor
+            activity.setAssignee(kahve.get(MAIL_DEFAULT_USER).getAsString());
+        }
+
+
+        //Ayrıca message id üzerinden daha önce kaydedilmiş mail activity aranacak. eğer bulunur ise ilgili kısımları oradan alınan bilgilerle doldurulacak.
+        if (message.isReply()) {
+            List<EMailActivity> acts = activityRepository.findByMessageId(message.getReplyId());
+            if (!acts.isEmpty()) {
+                FeaturePointer fp = acts.get(0).getRegarding();
+                activity.setRegarding(fp);
+            }
+        } else if (message.isForwarded()) {
+            List<EMailActivity> acts = activityRepository.findByMessageId(message.getForwardId());
+            if (!acts.isEmpty()) {
+                FeaturePointer fp = acts.get(0).getRegarding();
+                activity.setRegarding(fp);
+            }
+        }
+
+        //Hala bir regarding bulunamamış ise Subject parse edilip bulunması denebilir mi?
+        //Ama yazılı olan VoucherNo'yu hangi tablolarda arayacağız?
+        //hüseyin: içerik üzerinden eşleştirme şimdilik yapmayalım.
+
+        activityRepository.save(activity);
+
+        //Attachmentlar attachment olarak activity'ye bağlanacak
+        addAttachments(activity, message);
+
+        //Feed'ler ve sorumlu kişi bilgilendirmesi yapılacak
+    }
+
+    protected void addAttachments(Activity activity, EMailMessage message) throws AttachmentException, AttachmentNotFoundException {
+        for (EMailAttacment atch : message.getAttachments()) {
+            FeaturePointer fp = new FeaturePointer();
+            fp.setBusinessKey(activity.getActivityNo());
+            fp.setFeature(ActivityFeature.class.getSimpleName());
+            fp.setPrimaryKey(activity.getId());
+            AttachmentContext context = providerSelector.getAttachmentContextProvider(fp, activity).getContext(fp, activity);
+            AttachmentDocument document = new AttachmentDocument();
+
+            document.setName(atch.getName());
+            document.setMimeType(atch.getMimeType());
+
+            store.addDocument(context, store.getFolder(context, ""), document, atch.getContent());
+        }
+    }
+
+
+    private boolean isMeeting(EMailMessage message) {
+        for (EMailAttacment attacment : message.getAttachments()) {
+            if ("application/ics".equals(attacment.getMimeType())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isImportedBefore(String messageId) {
+        List<EMailActivity> activities = activityRepository.findByMessageId(messageId);
+        return activities.size() > 0;
     }
 
     protected int resolveDirection(EMailMessage message) {
@@ -286,10 +321,7 @@ public class EMailActivityImporter implements Serializable {
 
     private boolean isDomainMatches(String email) {
         String[] parts = email.split("@");
-        if (parts.length != 2) {
-            return false;
-        }
-        return this.emailDomain.equals(parts[1]);
+        return parts.length == 2 && this.emailDomain.equals(parts[1]);
     }
 
     protected void addContactMention(String email, EMailActivity activity) {
