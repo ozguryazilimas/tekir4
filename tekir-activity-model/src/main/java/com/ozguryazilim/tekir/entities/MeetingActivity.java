@@ -29,6 +29,8 @@ public class MeetingActivity extends Activity{
     /**
      * Toplantı kimlerle
      * TODO: Bunu bir liste olarak mı saklasak? Katılacak kişilerin isimleri, e-posta adresler v.b şeklinde?
+     * Bunları liste yaptıptığımız gibi bizde kaydı varsa eşleştirmemiz lazım.
+     * Ya da kaldıralım sadece mention kullanalım
      */
     @Column(name = "ATTENDEES")
     private String attendees;

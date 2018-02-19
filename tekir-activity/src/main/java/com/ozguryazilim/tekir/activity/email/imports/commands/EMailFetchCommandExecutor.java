@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ozguryazilim.tekir.activity.email.imports.commands;
 
 import com.ozguryazilim.mutfak.kahve.Kahve;
@@ -94,9 +89,11 @@ public class EMailFetchCommandExecutor extends AbstractCommandExecuter<EMailFetc
             if (IMAP.equals(protocol)) {
                 //arşivle
                 String archiveFolderName = kahve.get(MAIL_ARCHIVE_FOLDER).getAsString();
-                Folder arvhiveFolder = store.getFolder(archiveFolderName);
+                Folder archiveFolder = store.getFolder(archiveFolderName);
+                archiveFolder.open(Folder.READ_WRITE);
                 //TODO: direk kafadan arşivledik ama EMailImportCommand işi halledemezse ne olacak?
-                emailFolder.copyMessages(messages, arvhiveFolder);
+                emailFolder.copyMessages(messages, archiveFolder);
+                archiveFolder.close(false);
             }
             // close the store and folder objects
             emailFolder.close(true);

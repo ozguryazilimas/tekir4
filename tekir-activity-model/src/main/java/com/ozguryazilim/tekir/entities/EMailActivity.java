@@ -40,10 +40,6 @@ public class EMailActivity extends Activity {
     @Column(name = "EM_BCC")
     private String bcc;
 
-    //E-Posta mesaj idsi
-    @Column(name = "EM_MID")
-    private String messageId;
-    
     @Column(name = "EM_RID")
     private String replyId;
     
@@ -82,14 +78,6 @@ public class EMailActivity extends Activity {
         this.bcc = bcc;
     }
 
-    public String getMessageId() {
-        return messageId;
-    }
-
-    public void setMessageId(String messageId) {
-        this.messageId = messageId;
-    }
-
     public String getReplyId() {
         return replyId;
     }
@@ -105,8 +93,4 @@ public class EMailActivity extends Activity {
     public void setForwardId(String forwardId) {
         this.forwardId = forwardId;
     }
-    
-    
-    
-    
 }

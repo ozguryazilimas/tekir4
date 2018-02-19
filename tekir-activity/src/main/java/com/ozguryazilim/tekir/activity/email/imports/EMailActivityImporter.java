@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ozguryazilim.tekir.activity.email.imports;
 
 import com.ozguryazilim.mutfak.kahve.Kahve;
@@ -10,6 +5,8 @@ import com.ozguryazilim.tekir.activity.email.imports.model.EMailMessage;
 import com.ozguryazilim.tekir.activity.email.imports.model.EMailAttacment;
 import com.ozguryazilim.tekir.activity.ActivityFeature;
 import com.ozguryazilim.tekir.activity.ActivityRepository;
+import com.ozguryazilim.tekir.activity.email.imports.model.MeetingFile;
+import com.ozguryazilim.tekir.activity.email.imports.model.MeetingFileParseException;
 import com.ozguryazilim.tekir.contact.ContactRepository;
 import com.ozguryazilim.tekir.contact.information.ContactInformationRepository;
 import com.ozguryazilim.tekir.entities.*;
@@ -28,15 +25,21 @@ import com.ozguryazilim.telve.sequence.SequenceManager;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.MalformedURLException;
 import java.util.*;
 import javax.activation.MimeType;
+import javax.activation.MimeTypeParseException;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
-import javax.mail.Address;
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 
+import net.fortuna.ical4j.model.Calendar;
+import net.fortuna.ical4j.model.Component;
+import net.fortuna.ical4j.model.PropertyList;
+import net.fortuna.ical4j.model.component.VEvent;
+import net.fortuna.ical4j.model.property.Attendee;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,16 +54,7 @@ public class EMailActivityImporter implements Serializable {
     private static final Logger LOG = LoggerFactory.getLogger(EMailActivityImporter.class);
     private static final String MAIL_DOMAIN = "mail.domain";
     private static final String MAIL_DEFAULT_USER = "mail.default.user";
-    /**
-     * gelen mail
-     */
-    private static final int INBOX = 0;
-    /**
-     * giden mail
-     */
-    private static final int OUTBOX = 1;
-
-    private static final int UNKNOWN = -1;
+    private static final String ATTENDEE = "ATTENDEE";
 
     private Set<String> ownEmails;
 
@@ -97,7 +91,6 @@ public class EMailActivityImporter implements Serializable {
     }
 
     public void importMail(String mail) {
-
         EMailParser parser = new EMailParser();
         try {
             EMailMessage message = parser.parse(mail);
@@ -106,21 +99,104 @@ public class EMailActivityImporter implements Serializable {
                 return;
             }
 
-            if (isMeeting(message)) {
-                createMeetingActivity(message);
+            MeetingFile meetingFile = getMeetingFile(message);
+            if (meetingFile != null) {
+                processMeetingActivity(message, meetingFile);
             } else {
                 createEmailActivity(message);
             }
-        } catch (MessagingException | IOException | AttachmentNotFoundException | AttachmentException ex) {
+        } catch (MessagingException | IOException | AttachmentNotFoundException |
+                AttachmentException | MeetingFileParseException | MimeTypeParseException ex) {
             LOG.error("Mail Import Error", ex);
         }
     }
 
-    private void createMeetingActivity(EMailMessage message) {
+    private void processMeetingActivity(EMailMessage message, MeetingFile meetingFile) throws MeetingFileParseException {
+        MeetingActivity activity;
+        Calendar calendar = meetingFile.getCalendar();
+        String method = calendar.getProperty("METHOD").getValue();
+        if ("CANCEL".equalsIgnoreCase(method)) {
+            cancelMeetingActivity(meetingFile);
+            return;
+        }
+        activity = createMeetingActivity(message, meetingFile);
+
+        if ("REPLY".equalsIgnoreCase(method)) {
+            updateMeetingActivity(activity, meetingFile);
+        }
+    }
+
+    private void updateMeetingActivity(MeetingActivity activity, MeetingFile meetingFile) throws MeetingFileParseException {
+        // bazı durumlarda katılımcı listesi toplantı isteğinde eksik gelebiliyor. Ya da sonradan
+        // katılımcı eklenebiliyor. REPLY geldikçe yeni katılımcıları ekleyelim
+        String attendees = activity.getAttendees();
+        Calendar calendar = meetingFile.getCalendar();
+        VEvent event = (VEvent) calendar.getComponent(Component.VEVENT);
+        PropertyList<Attendee> attendeeList = event.getProperties(ATTENDEE);
+        StringBuilder sb = new StringBuilder(attendees);
+        for (Attendee attendee : attendeeList) {
+            String email = attendee.getCalAddress().getSchemeSpecificPart();
+            if (!attendees.contains(email)) {
+                sb.append(", ");
+                sb.append(email);
+                addContactMention(email, activity);
+            }
+        }
+    }
+
+    private void cancelMeetingActivity(MeetingFile meetingFile) throws MeetingFileParseException {
+        Calendar calendar = meetingFile.getCalendar();
+        VEvent event = (VEvent) calendar.getComponent(Component.VEVENT);
+        String uid = event.getUid().getValue();
+        List<MeetingActivity> activities = activityRepository.findByReferenceId(uid, MeetingActivity.class);
+
+        for (MeetingActivity activity : activities) {
+            activity.setStatus(ActivityStatus.FAILED);
+            activity.setStatusReason("Canceled");
+        }
+    }
+
+    private MeetingActivity createMeetingActivity(EMailMessage message, MeetingFile meetingFile) throws MeetingFileParseException {
+        Calendar calendar = meetingFile.getCalendar();
+        VEvent event = (VEvent) calendar.getComponent(Component.VEVENT);
+        String uid = event.getUid().getValue();
+        List<MeetingActivity> activities = activityRepository.findByReferenceId(uid, MeetingActivity.class);
+        if (activities.size() > 0) {
+            return activities.get(0);
+        }
+
         MeetingActivity activity = new MeetingActivity();
         activity.setActivityNo(sequenceManager.getNewSerialNumber("ACT", 6));
+        String organizerAddress = event.getOrganizer().getCalAddress().getSchemeSpecificPart();
+        ActivityDirection direction = resolveDirection(organizerAddress, null);
+        activity.setDirection(direction);
 
+        activity.setReferenceId(uid);
+        activity.setSubject(event.getSummary().getValue());
+        activity.setLocation(event.getLocation().getValue());
+        activity.setBody(event.getDescription().getValue());
+        activity.setDate(message.getDate());
+        Date start = event.getStartDate().getDate();
+        Date end = event.getEndDate().getDate();
+        activity.setDueDate(start);
+        activity.setDuration((end.getTime() - start.getTime()) / 1000);
 
+        //attendee
+        PropertyList<Attendee> attendeeList = event.getProperties(ATTENDEE);
+        StringBuilder attendees = new StringBuilder();
+        for (int i = 0; i < attendeeList.size(); i++) {
+            Attendee attendee = attendeeList.get(i);
+            String email = attendee.getCalAddress().getSchemeSpecificPart();
+            attendees.append(email);
+            if (i != attendeeList.size() - 1) {
+                attendees.append(", ");
+            }
+            addContactMention(email, activity);
+        }
+
+        activity.setAttendees(attendees.toString());
+        activityRepository.save(activity);
+        return activity;
     }
 
     private void createEmailActivity(EMailMessage message) throws AttachmentException, AttachmentNotFoundException {
@@ -128,7 +204,7 @@ public class EMailActivityImporter implements Serializable {
 
         activity.setActivityNo(sequenceManager.getNewSerialNumber("ACT", 6));
 
-        activity.setMessageId(message.getMessageId());
+        activity.setReferenceId(message.getMessageId());
         activity.setReplyId(message.getReplyId());
         activity.setForwardId(message.getForwardId());
 
@@ -145,11 +221,16 @@ public class EMailActivityImporter implements Serializable {
         activity.setCc(addressToString(message.getCcList()));
         activity.setBcc(addressToString(message.getBccList()));
 
-        int direction = resolveDirection(message);
+        String[] toList = message.getToList().stream().map(address -> {
+            return address.getAddress();
+        }).toArray(String[]::new);
+
+        ActivityDirection direction = resolveDirection(message.getFrom().getAddress(), toList);
+        activity.setDirection(direction);
 
         boolean contactsAdded = false;
         // bize gelen mailler icin baglantiyi from kısmından al
-        if (direction == INBOX) {
+        if (direction == ActivityDirection.INCOMING) {
             addContacts(message.getFrom().getAddress(), activity);
         } else {
             addContactMention(message.getFrom().getAddress(), activity);
@@ -157,7 +238,7 @@ public class EMailActivityImporter implements Serializable {
 
         for (InternetAddress adr : message.getToList()) {
             //giden mail ise ilk bulduğunla eşleştir
-            if (direction == OUTBOX && !contactsAdded) {
+            if (direction == ActivityDirection.OUTGOING && !contactsAdded) {
                 contactsAdded = addContacts(adr.getAddress(), activity);
             }
             addContactMention(adr.getAddress(), activity);
@@ -172,7 +253,7 @@ public class EMailActivityImporter implements Serializable {
         }
 
         String assignee = null;
-        if (direction == INBOX) {
+        if (direction == ActivityDirection.INCOMING) {
             assignee = userService.getUserByEmail(message.getFrom().getAddress());
         } else {
             for (InternetAddress adr : message.getToList()) {
@@ -193,13 +274,13 @@ public class EMailActivityImporter implements Serializable {
 
         //Ayrıca message id üzerinden daha önce kaydedilmiş mail activity aranacak. eğer bulunur ise ilgili kısımları oradan alınan bilgilerle doldurulacak.
         if (message.isReply()) {
-            List<EMailActivity> acts = activityRepository.findByMessageId(message.getReplyId());
+            List<EMailActivity> acts = activityRepository.findByReferenceId(message.getReplyId(), EMailActivity.class);
             if (!acts.isEmpty()) {
                 FeaturePointer fp = acts.get(0).getRegarding();
                 activity.setRegarding(fp);
             }
         } else if (message.isForwarded()) {
-            List<EMailActivity> acts = activityRepository.findByMessageId(message.getForwardId());
+            List<EMailActivity> acts = activityRepository.findByReferenceId(message.getForwardId(), EMailActivity.class);
             if (!acts.isEmpty()) {
                 FeaturePointer fp = acts.get(0).getRegarding();
                 activity.setRegarding(fp);
@@ -235,31 +316,43 @@ public class EMailActivityImporter implements Serializable {
     }
 
 
-    private boolean isMeeting(EMailMessage message) {
+    /**
+     * Email içerisinden RFC5545e uygun toplantı dosyasını ayıklayarak döner
+     *
+     * @param message
+     * @return
+     */
+    private MeetingFile getMeetingFile(EMailMessage message) throws MimeTypeParseException {
         for (EMailAttacment attacment : message.getAttachments()) {
-            if ("application/ics".equals(attacment.getMimeType())) {
+            MimeType mimeType = new MimeType(attacment.getMimeType());
+            if ("calendar".equals(mimeType.getSubType()) || "ics".equals(mimeType.getSubType())) {
+                return new MeetingFile(attacment);
+            }
+        }
+        return null;
+    }
+
+    private boolean isImportedBefore(String messageId) {
+        List<Activity> activities = activityRepository.findByReferenceId(messageId);
+        for (Activity activity : activities) {
+            if (activity instanceof EMailActivity) {
                 return true;
             }
         }
         return false;
     }
 
-    private boolean isImportedBefore(String messageId) {
-        List<EMailActivity> activities = activityRepository.findByMessageId(messageId);
-        return activities.size() > 0;
-    }
+    protected ActivityDirection resolveDirection(String fromAddress, String[] toAddresses) {
+        ActivityDirection direction = resolveDirectionByDomain(fromAddress, toAddresses);
 
-    protected int resolveDirection(EMailMessage message) {
-        int direction = resolveDirectionByDomain(message);
-
-        if (direction != UNKNOWN) {
+        if (direction != ActivityDirection.NONE) {
             return direction;
         }
 
-        return resolveDirectionByContacts(message);
+        return resolveDirectionByContacts(fromAddress);
     }
 
-    private int resolveDirectionByContacts(EMailMessage message) {
+    private ActivityDirection resolveDirectionByContacts(String from) {
         if (ownEmails == null) {
             ownEmails = new HashSet<>();
             //TODO kullanıcı maillerini çekmek için daha efektif bir yol bul
@@ -278,13 +371,11 @@ public class EMailActivityImporter implements Serializable {
             }
         }
 
-        String from = message.getFrom().getAddress();
-
         // biz göndermediysek bize gelmiştir varsayımı
-        return ownEmails.contains(from) ? OUTBOX : INBOX;
+        return ownEmails.contains(from) ? ActivityDirection.OUTGOING : ActivityDirection.INCOMING;
     }
 
-    private boolean addContacts(String email, EMailActivity activity) {
+    private boolean addContacts(String email, Activity activity) {
         List<ContactEMail> emails = informationRepository.findByEmail(email);
         for (ContactEMail ce : emails) {
             Contact contact = ce.getContact();
@@ -301,22 +392,24 @@ public class EMailActivityImporter implements Serializable {
         return false;
     }
 
-    private int resolveDirectionByDomain(EMailMessage message) {
-        if (this.emailDomain.isEmpty()) {
-            return UNKNOWN;
+    private ActivityDirection resolveDirectionByDomain(String from, String[] toList) {
+        if (emailDomain == null || emailDomain.isEmpty()) {
+            return ActivityDirection.NONE;
         }
 
-        if (isDomainMatches(message.getFrom().getAddress())) {
-            return OUTBOX;
+        if (isDomainMatches(from)) {
+            return ActivityDirection.OUTGOING;
         }
 
-        for (InternetAddress address : message.getToList()) {
-            if (isDomainMatches(address.getAddress())) {
-                return INBOX;
+        if (toList != null) {
+            for (String address : toList) {
+                if (isDomainMatches(address)) {
+                    return ActivityDirection.INCOMING;
+                }
             }
         }
 
-        return UNKNOWN;
+        return ActivityDirection.NONE;
     }
 
     private boolean isDomainMatches(String email) {
@@ -324,10 +417,19 @@ public class EMailActivityImporter implements Serializable {
         return parts.length == 2 && this.emailDomain.equals(parts[1]);
     }
 
-    protected void addContactMention(String email, EMailActivity activity) {
+    protected void addContactMention(String email, Activity activity) {
         List<ContactEMail> infos = informationRepository.findByEmail(email);
         //Burada aslında bir tane bulmak lazım.
+
         for (ContactEMail info : infos) {
+            Long contactId = info.getContact().getId();
+            for (ActivityMention m : activity.getMentions()) {
+                if (m.getFeaturePointer() != null && m.getFeaturePointer().getPrimaryKey() == contactId) {
+                    // zaten tanımlanmış
+                    return;
+                }
+            }
+
             ActivityMention mention = new ActivityMention();
 
             FeaturePointer pp = new FeaturePointer();
