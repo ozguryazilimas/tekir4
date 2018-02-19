@@ -93,18 +93,17 @@ public class EinvoiceBuilder {
         fatura.setParasalToplamlar(parasalToplamlarTipi);
 
         List<InvoiceSummary> taxes = VoucherItemUtils.getTaxes(entity.getSummaries());
-        BigDecimal toplamVergiTutari2 = new BigDecimal("0");
+        BigDecimal toplamVergiTutariVergiler = new BigDecimal("0");
         VergilerTipi toplamVergilerTipi = new VergilerTipi();
         TutarTipi tutarTipi = new TutarTipi();
         int taxCount = taxes.size();
         for (int i=0; i<taxCount; i++){
             InvoiceSummary taxEntity = taxes.get(i);
-            toplamVergiTutari2 = setTotalTax(taxEntity, entity, toplamVergiTutari2, toplamVergilerTipi);
+            toplamVergiTutariVergiler = setTotalTax(taxEntity, entity, toplamVergiTutariVergiler, toplamVergilerTipi);
         }
         tutarTipi.setParaBirimi(getters.getParaBirimi(entity));
-        tutarTipi.setValue(toplamVergiTutari2.setScale(2, RoundingMode.CEILING));
+        tutarTipi.setValue(toplamVergiTutariVergiler.setScale(2, RoundingMode.CEILING));
         toplamVergilerTipi.setToplamVergiTutari(tutarTipi);
-
 
         fatura.getVergiler().add(toplamVergilerTipi);
 
@@ -178,7 +177,6 @@ public class EinvoiceBuilder {
         Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
         jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         jaxbMarshaller.marshal(fatura, file);
-        jaxbMarshaller.marshal(fatura, System.out);
 
         sender.sendEinvoice(file, getters.getSaticiVKN(kahve), getters.getBelgeNo(entity));
     }
@@ -212,7 +210,7 @@ public class EinvoiceBuilder {
         return toplamVergiTutari;
     }
 
-    public BigDecimal setTotalTax(InvoiceSummary taxEntity, SalesInvoice entity, BigDecimal toplamVergiTutari2, VergilerTipi toplamVergilerTipi){
+    public BigDecimal setTotalTax(InvoiceSummary taxEntity, SalesInvoice entity, BigDecimal toplamVergiTutariVergiler, VergilerTipi toplamVergilerTipi){
         VergiTuruTipi vergiTuruTipi = new VergiTuruTipi();
         VergiTipi vergiTipi = new VergiTipi();
         TutarTipi vergiTutari = new TutarTipi();
@@ -230,10 +228,10 @@ public class EinvoiceBuilder {
         vergiTutari.setValue(getters.getToplamVergiTutari(taxEntity));
         vergiTipi.setVergiTutari(vergiTutari);
 
-        toplamVergiTutari2 = toplamVergiTutari2.add(taxEntity.getAmount());
+        toplamVergiTutariVergiler = toplamVergiTutariVergiler.add(taxEntity.getAmount());
 
         toplamVergilerTipi.getVergi().add(vergiTipi);
 
-        return toplamVergiTutari2;
+        return toplamVergiTutariVergiler;
     }
 }
