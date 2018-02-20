@@ -1,24 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ozguryazilim.tekir.einvoice.linker;
+
 import com.ozguryazilim.mutfak.kahve.Kahve;
 import com.ozguryazilim.tekir.einvoice.EinvoiceBuilder;
+import com.ozguryazilim.tekir.einvoice.EinvoiceSender;
 import com.ozguryazilim.tekir.entities.SalesInvoice;
 import com.ozguryazilim.tekir.invoice.sales.SalesInvoiceHome;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.File;
 import java.io.Serializable;
 
-;
+;import static com.ozguryazilim.tekir.einvoice.EinvoiceBuilder.SATICI_VKN;
 
 /**
- *
- * @author oyas
+ * Fatura uzerinden SalesInvoice ve Kahve entitylerini alir.
+ * Ardindan sirasiyla EinvoiceBuilder ve EinvoiceSender siniflarini calistirir.
+ * @return Efatura islemlerini takip etmek icin gerekli olan belgeOid numarasini doner.
+ * @author soner.cirit
  */
 @Named
 @RequestScoped
@@ -27,10 +27,12 @@ public class SalesInvoiceEinvoiceMenuAction implements Serializable{
     SalesInvoiceHome invoiceHome;
     @Inject
     Kahve kahve;
+    private EinvoiceSender sender = new EinvoiceSender();
 
-    public void newEinvoice() throws Exception {
+    public String newEinvoice() throws Exception {
         SalesInvoice entity = invoiceHome.getEntity();
         EinvoiceBuilder einvoiceBuilder = new EinvoiceBuilder();
-        einvoiceBuilder.buildEinvoice(entity, kahve);
+        File file = einvoiceBuilder.buildEinvoice(entity, kahve);
+        return sender.sendEinvoice(file, kahve.get(SATICI_VKN, "").getAsString(), entity.getVoucherNo());
     }
 }

@@ -12,6 +12,13 @@ import java.security.MessageDigest;
 import java.util.Collection;
 import java.util.TreeMap;
 
+/**
+ * File, satici VKN ve belgeNo degerlerini alir.
+ * UserService ile login olur ve cookie alir. Ardindan bu cookieyi ConnectorService'e uygular.
+ * Ardindan yollanacak dosyanin bytesArray'i ve hash'i alinir ve servise yollanir.
+ * @return Efatura islemlerini takip etmek icin gerekli olan belgeOid'yi doner.
+ * @author soner.cirit
+ */
 public class EinvoiceSender {
 
     public String sendEinvoice(File file, String saticiVKN, String belgeNo) throws Exception{
@@ -45,8 +52,6 @@ public class EinvoiceSender {
         byte[] hash = messageDigest.digest();
         String hashString = DatatypeConverter.printHexBinary(hash).toUpperCase();
 
-        String belgeOid = connector.belgeGonder(saticiVKN, "FATURA", belgeNo, bytesArray, hashString, "application/xml", "3.0");
-        System.out.println(belgeOid);
-        return belgeOid;
+        return connector.belgeGonder(saticiVKN, "FATURA", belgeNo, bytesArray, hashString, "application/xml", "3.0");
     }
 }
