@@ -23,6 +23,8 @@ import java.io.Serializable;
 @Named
 @RequestScoped
 public class SalesInvoiceEinvoiceMenuAction implements Serializable{
+    private static final String USERNAME = "einvoice.username";
+    private static final String PASSWORD = "einvoice.password";
     @Inject
     SalesInvoiceHome invoiceHome;
     @Inject
@@ -33,6 +35,6 @@ public class SalesInvoiceEinvoiceMenuAction implements Serializable{
         SalesInvoice entity = invoiceHome.getEntity();
         EinvoiceBuilder einvoiceBuilder = new EinvoiceBuilder();
         File file = einvoiceBuilder.buildEinvoice(entity, kahve);
-        return sender.sendEinvoice(file, kahve.get(SATICI_VKN, "").getAsString(), entity.getVoucherNo());
+        return sender.sendEinvoice(file, kahve.get(SATICI_VKN, "").getAsString(), entity.getVoucherNo(), kahve.get(USERNAME,"").getAsString(), kahve.get(PASSWORD,"").getAsString());
     }
 }

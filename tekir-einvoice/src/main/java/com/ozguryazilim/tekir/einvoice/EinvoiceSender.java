@@ -21,14 +21,14 @@ import java.util.TreeMap;
  */
 public class EinvoiceSender {
 
-    public String sendEinvoice(File file, String saticiVKN, String belgeNo) throws Exception{
+    public String sendEinvoice(File file, String saticiVKN, String belgeNo, String username, String password) throws Exception{
         UserService service = new UserService();
         ConnectorService connectorService = new ConnectorService();
 
         tr.com.cs.csap.service.UserService client = service.getUserServicePort();
         tr.com.cs.uut.connector.service.ConnectorService connector = connectorService.getConnectorServicePort();
 
-        client.wsLogin("ozguryazilim.gonderici", "12345678aB", "tr");
+        client.wsLogin(username, password, "tr");
 
         BindingProvider bp = ((BindingProvider) client);
         BindingProvider bpc = ((BindingProvider) connector);

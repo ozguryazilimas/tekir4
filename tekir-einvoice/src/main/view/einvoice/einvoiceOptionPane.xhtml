@@ -12,8 +12,11 @@
 
        <div class="row">
             <t:inputText label="einvoiceOption.label.username" value="#{einvoiceOptionPane.username}" />
-            <t:inputText label="einvoiceOption.label.password" value="#{einvoiceOptionPane.password}" />
-        </div>
+       </div>
+       <div>
+           <t:outputText label="einvoiceOption.label.password" value=""/>
+           <p:password value="#{einvoiceOptionPane.password}" />
+       </div>
 
     </ui:define>
 
