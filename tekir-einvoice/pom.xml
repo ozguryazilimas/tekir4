@@ -24,6 +24,12 @@
         </dependency>
 
         <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>tekir-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>3.8.1</version>
