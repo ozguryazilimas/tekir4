@@ -6,8 +6,9 @@
                 xmlns:t="http://java.sun.com/jsf/composite/telveComponents">
 
     <li>
-        <p:commandLink action="#{salesInvoiceEinvoiceMenuAction.newEinvoice()}" styleClass="context-command">
-            <h:outputText value=" #{messages['einvoice.button.NewEinvoice']}" />
+        <p:commandLink action="#{salesInvoiceEinvoiceMenuAction.newEinvoice()}" styleClass="context-command"
+                       ajax="false" rendered="#{empty salesInvoiceEinvoiceMenuAction.checkIfExists()}">
+            <h:outputText value=" #{messages['einvoice.button.NewEinvoice']}"/>
         </p:commandLink>
     </li>
 

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="oyas (generated)" id="1520849874773-1">
+        <createTable tableName="TEI_EINVOICE">
+            <column name="DIRECTION" type="VARCHAR(31)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TEI_INVOICEPK"/>
+            </column>
+            <column name="CREATE_DATE" type="datetime"/>
+            <column name="UPDATE_DATE" type="datetime"/>
+            <column name="UPDATE_USER" type="VARCHAR(255)"/>
+            <column name="EINVOICE_CODE" type="VARCHAR(255)"/>
+            <column name="EINVOICE_STATUS" type="VARCHAR(255)"/>
+            <column name="RETURNED_MESSAGE" type="VARCHAR(255)"/>
+            <column name="INVOICE_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1520849874772-2">
+        <addForeignKeyConstraint baseColumnNames="INVOICE_ID" baseTableName="TEI_INVOICE" constraintName="FK_EIV_IV"
+                                 deferrable="false" initiallyDeferred="false" referencedColumnNames="ID"
+                                 referencedTableName="TIV_INVOICE"/>
+    </changeSet>
+</databaseChangeLog>

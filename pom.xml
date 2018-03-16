@@ -112,6 +112,7 @@
         <module>tekir-lead-opportunity-linker</module>
         <module>tekir-hr-model</module>
         <module>tekir-hr</module>
+        <module>tekir-einvoice-model</module>
         <module>tekir-einvoice</module>
     </modules>
     

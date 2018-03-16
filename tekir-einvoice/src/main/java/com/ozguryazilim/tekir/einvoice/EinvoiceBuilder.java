@@ -16,10 +16,10 @@ import java.util.List;
 
 public class EinvoiceBuilder {
 
+    public static final String SATICI_VKN = "corp.taxNumber";
     private static final String FATURA_TURU = "TICARIFATURA";
     private static final String FATURA_TIPI = "SATIS";
     private static final String VKN_KODU = "VKN";
-    public static final String SATICI_VKN = "corp.taxNumber";
     private static final String SATICI_UNVAN = "corp.name";
     private static final String SATICI_VERGIDAIRESI = "corp.taxOffice";
     private static final String SATICI_ADRES = "corp.invAddr";
@@ -36,10 +36,11 @@ public class EinvoiceBuilder {
      * SalesInvoice ve Kahve entitylerini alir.
      * SalesInvoice'dan urun, vergi ve alici kurum bilgileri alinir.
      * Kahve'den satici(tekir'i kullanan) kurumun bilgileri alinir.
+     *
      * @return Alinan degerleri JAXB ile einvoiceFile.xml dosyasina derler ve bu dosyayi geri doner.
      * @author soner.cirit
      */
-    public File buildEinvoice(SalesInvoice entity, Kahve kahve) throws Exception{
+    public File buildEinvoice(SalesInvoice entity, Kahve kahve) throws Exception {
 
         Fatura fatura = new Fatura();
         TarafBilgileriTipi aliciTarafBilgileriTipi = new TarafBilgileriTipi();
@@ -100,15 +101,18 @@ public class EinvoiceBuilder {
         fatura.setAlici(aliciTarafBilgileriTipi);
 
         toplamMalHizmetTutari.setParaBirimi(getParaBirimi(entity));
-        toplamMalHizmetTutari.setValue(entity.getSummaries().get(TOPLAM_MAL_HIZMET_TUTARI).getAmount().setScale(2, RoundingMode.CEILING));
+        toplamMalHizmetTutari.setValue(entity.getSummaries().get(TOPLAM_MAL_HIZMET_TUTARI).getAmount().setScale(2,
+                RoundingMode.CEILING));
         parasalToplamlarTipi.setToplamMalHizmetTutari(toplamMalHizmetTutari);
 
         vergiHaricTutar.setParaBirimi(getParaBirimi(entity));
-        vergiHaricTutar.setValue(entity.getSummaries().get(VERGI_HARIC_TUTAR).getAmount().setScale(2, RoundingMode.CEILING));
+        vergiHaricTutar.setValue(entity.getSummaries().get(VERGI_HARIC_TUTAR).getAmount().setScale(2, RoundingMode
+                .CEILING));
         parasalToplamlarTipi.setVergiHaricTutar(vergiHaricTutar);
 
         toplamIskontoTutari.setParaBirimi(getParaBirimi(entity));
-        toplamIskontoTutari.setValue(entity.getSummaries().get(TOPLAM_ISKONTO_TUTARI).getAmount().setScale(2, RoundingMode.CEILING));
+        toplamIskontoTutari.setValue(entity.getSummaries().get(TOPLAM_ISKONTO_TUTARI).getAmount().setScale(2,
+                RoundingMode.CEILING));
         parasalToplamlarTipi.setToplamIskontoTutari(toplamIskontoTutari);
 
         odenecekTutar.setParaBirimi(getParaBirimi(entity));
@@ -133,7 +137,7 @@ public class EinvoiceBuilder {
 
 
         int listCount = entity.getItems().size();
-        for (int i=0; i<listCount; i++){
+        for (int i = 0; i < listCount; i++) {
             InvoiceItem commodityEntity = entity.getItems().get(i);
 
             FaturaSatirTipi faturaSatirTipi = new FaturaSatirTipi();
@@ -147,7 +151,7 @@ public class EinvoiceBuilder {
             MalHizmetBilgileriTipi malHizmetBilgileri = new MalHizmetBilgileriTipi();
             TutarTipi birimFiyat = new TutarTipi();
 
-            idTipi.setValue(String.valueOf(i+1));
+            idTipi.setValue(String.valueOf(i + 1));
             faturaSatirTipi.setSiraNo(idTipi);
 
             miktarTipi.setBirimKodu(commodityEntity.getCommodity().getUnitSet().getEinvoiceCode());
@@ -165,7 +169,7 @@ public class EinvoiceBuilder {
             malHizmetBilgileri.setAdi(commodityEntity.getCommodity().getName());
             faturaSatirTipi.setMalHizmetBilgileri(malHizmetBilgileri);
 
-            if (commodityEntity.getDiscountRate() != 0){
+            if (commodityEntity.getDiscountRate() != 0) {
                 iskontoArtirimTipi.setArtirim(false);
                 iskontoArtirimTipi.setOran(BigDecimal.valueOf(commodityEntity.getDiscountRate() * 0.01));
                 iskontoTutarTipi.setParaBirimi(getParaBirimi(entity));
@@ -205,8 +209,9 @@ public class EinvoiceBuilder {
         return file;
     }
 
-    private BigDecimal setTax(VergilerTipi vergilerTipi, TaxDefinition tax, InvoiceItem commodityEntity, SalesInvoice entity, BigDecimal toplamVergiTutari) {
-        if (tax != null){
+    private BigDecimal setTax(VergilerTipi vergilerTipi, TaxDefinition tax, InvoiceItem commodityEntity, SalesInvoice
+            entity, BigDecimal toplamVergiTutari) {
+        if (tax != null) {
             VergiTipi vergiTipi = new VergiTipi();
             VergiTuruTipi vergiTuruTipi = new VergiTuruTipi();
             TutarTipi vergiTutari = new TutarTipi();
@@ -223,7 +228,8 @@ public class EinvoiceBuilder {
             vergiTipi.setMatrah(matrah);
 
             vergiTutari.setParaBirimi(getParaBirimi(entity));
-            BigDecimal vergiTutariBirim = commodityEntity.getLineTotal().setScale(2, RoundingMode.CEILING).multiply(tax.getRate().multiply(BigDecimal.valueOf(0.01))).setScale(2, RoundingMode.CEILING);
+            BigDecimal vergiTutariBirim = commodityEntity.getLineTotal().setScale(2, RoundingMode.CEILING).multiply
+                    (tax.getRate().multiply(BigDecimal.valueOf(0.01))).setScale(2, RoundingMode.CEILING);
             vergiTutari.setValue(vergiTutariBirim);
             vergiTipi.setVergiTutari(vergiTutari);
 
@@ -234,14 +240,16 @@ public class EinvoiceBuilder {
         return toplamVergiTutari;
     }
 
-    private BigDecimal setTotalTax(InvoiceSummary taxEntity, SalesInvoice entity, BigDecimal toplamVergiTutariVergiler, VergilerTipi toplamVergilerTipi){
+    private BigDecimal setTotalTax(InvoiceSummary taxEntity, SalesInvoice entity, BigDecimal
+            toplamVergiTutariVergiler, VergilerTipi toplamVergilerTipi) {
         VergiTuruTipi vergiTuruTipi = new VergiTuruTipi();
         VergiTipi vergiTipi = new VergiTipi();
         TutarTipi vergiTutari = new TutarTipi();
         TutarTipi vergiMatrah = new TutarTipi();
 
         vergiMatrah.setParaBirimi(getParaBirimi(entity));
-        vergiMatrah.setValue(entity.getSummaries().get(VERGI_HARIC_TUTAR).getAmount().setScale(2, RoundingMode.CEILING));
+        vergiMatrah.setValue(entity.getSummaries().get(VERGI_HARIC_TUTAR).getAmount().setScale(2, RoundingMode
+                .CEILING));
         vergiTipi.setMatrah(vergiMatrah);
 
         vergiTuruTipi.setVergikodu(taxEntity.getCode());
@@ -267,7 +275,7 @@ public class EinvoiceBuilder {
         return invoiceCurrency;
     }
 
-    private String getSaticiVKN(Kahve kahve){
+    private String getSaticiVKN(Kahve kahve) {
         return kahve.get(SATICI_VKN, "").getAsString();
     }
 

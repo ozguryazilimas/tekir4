@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0"
+             xmlns="http://java.sun.com/xml/ns/persistence"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+    <persistence-unit name="tekirCore">
+        <jta-data-source>java:jboss/datasources/TekirDS</jta-data-source>
+        <jar-file>../tekir-core-model/target/classes</jar-file>
+        <jar-file>../tekir-invoice-model/target/classes</jar-file>
+        <jar-file>../tekir-commodity-model/target/classes</jar-file>
+        <jar-file>../tekir-voucher-model/target/classes</jar-file>
+        <jar-file>../tekir-contact-model/target/classes</jar-file>
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.transaction.manager_lookup_class"
+                      value="org.hibernate.transaction.JBossTransactionManagerLookup"/>
+            <property name="hibernate.connection.release_mode" value="after_statement"/>
+        </properties>
+    </persistence-unit>
+
+</persistence>
