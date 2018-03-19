@@ -5,6 +5,7 @@ import com.cs.csap.service.UserService;
 import com.ozguryazilim.tekir.entities.EinvoiceStatus;
 import com.ozguryazilim.tekir.entities.SalesEinvoice;
 import com.ozguryazilim.tekir.entities.SalesInvoice;
+import com.ozguryazilim.telve.messages.FacesMessages;
 
 import javax.xml.bind.DatatypeConverter;
 import javax.xml.ws.BindingProvider;
@@ -26,8 +27,8 @@ import java.util.TreeMap;
  */
 public class EinvoiceSender {
 
-    public void sendEinvoice(File file, String saticiVKN, SalesInvoice entity, String username, String password,
-                             EinvoiceRepository einvoiceRepository) throws Exception {
+    public String sendEinvoice(File file, String saticiVKN, SalesInvoice entity, String username, String password,
+                               EinvoiceRepository einvoiceRepository) throws Exception {
         UserService service = new UserService();
         ConnectorService connectorService = new ConnectorService();
 
@@ -67,11 +68,13 @@ public class EinvoiceSender {
             einvoice.setEinvoiceCode(belgeOid);
             einvoice.setEinvoiceStatus(EinvoiceStatus.SENT);
             einvoiceRepository.save(einvoice);
+            return "SUCCESS";
         } catch (SOAPFaultException s) {
             einvoice.setInvoice(entity);
             einvoice.setReturnedMessage(String.valueOf(s));
             einvoice.setEinvoiceStatus(EinvoiceStatus.FAILED);
             einvoiceRepository.save(einvoice);
+            return String.valueOf(s);
         }
     }
 }

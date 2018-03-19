@@ -7,6 +7,7 @@ import com.ozguryazilim.tekir.einvoice.sales.SalesEinvoiceRepository;
 import com.ozguryazilim.tekir.entities.SalesEinvoice;
 import com.ozguryazilim.tekir.entities.SalesInvoice;
 import com.ozguryazilim.tekir.invoice.sales.SalesInvoiceHome;
+import com.ozguryazilim.telve.messages.FacesMessages;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -41,8 +42,13 @@ public class SalesInvoiceEinvoiceMenuAction implements Serializable {
         SalesInvoice entity = invoiceHome.getEntity();
         EinvoiceBuilder einvoiceBuilder = new EinvoiceBuilder();
         File file = einvoiceBuilder.buildEinvoice(entity, kahve);
-        sender.sendEinvoice(file, kahve.get(SATICI_VKN, "").getAsString(), entity, kahve.get(USERNAME, "")
-                .getAsString(), kahve.get(PASSWORD, "").getAsString(), salesEinvoiceRepository);
+        String rM = sender.sendEinvoice(file, kahve.get(SATICI_VKN, "").getAsString(), entity, kahve.get(USERNAME,
+                "").getAsString(), kahve.get(PASSWORD, "").getAsString(), salesEinvoiceRepository);
+        if (rM.equals("SUCCESS")) {
+            FacesMessages.info("E-fatura başarıyla gönderilmiştir.");
+        } else {
+            FacesMessages.error("E-fatura gönderilememiştir.", rM);
+        }
     }
 
     public List<SalesEinvoice> checkIfExists() {

@@ -6,6 +6,7 @@ import com.ozguryazilim.tekir.entities.*;
 import com.ozguryazilim.tekir.voucher.utils.VoucherItemUtils;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import java.io.File;
 import java.math.BigDecimal;
@@ -13,6 +14,7 @@ import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 
 public class EinvoiceBuilder {
 
@@ -40,7 +42,7 @@ public class EinvoiceBuilder {
      * @return Alinan degerleri JAXB ile einvoiceFile.xml dosyasina derler ve bu dosyayi geri doner.
      * @author soner.cirit
      */
-    public File buildEinvoice(SalesInvoice entity, Kahve kahve) throws Exception {
+    public File buildEinvoice(SalesInvoice entity, Kahve kahve) {
 
         Fatura fatura = new Fatura();
         TarafBilgileriTipi aliciTarafBilgileriTipi = new TarafBilgileriTipi();
@@ -92,31 +94,35 @@ public class EinvoiceBuilder {
         aliciTarafBilgileriTipi.setVergiDairesi(aliciEntity.getTaxOffice());
 
         ContactAddress aliciAdresEntity = aliciEntity.getPrimaryAddress();
-        aliciAdresTipi.setIlce(aliciAdresEntity.getCounty());
-        aliciAdresTipi.setSehir(aliciAdresEntity.getProvince());
-        aliciAdresTipi.setUlke(aliciAdresEntity.getCountry());
-        aliciAdresTipi.setPostaKodu(aliciAdresEntity.getZipCode());
-        aliciAdresTipi.setCaddeSokak(aliciAdresEntity.getAddress());
-        aliciTarafBilgileriTipi.setPostaAdresi(aliciAdresTipi);
-        fatura.setAlici(aliciTarafBilgileriTipi);
+        if (aliciAdresEntity != null) {
+            aliciAdresTipi.setIlce(aliciAdresEntity.getCounty());
+            aliciAdresTipi.setSehir(aliciAdresEntity.getProvince());
+            aliciAdresTipi.setUlke(aliciAdresEntity.getCountry());
+            aliciAdresTipi.setPostaKodu(aliciAdresEntity.getZipCode());
+            aliciAdresTipi.setCaddeSokak(aliciAdresEntity.getAddress());
+            aliciTarafBilgileriTipi.setPostaAdresi(aliciAdresTipi);
+            fatura.setAlici(aliciTarafBilgileriTipi);
+        }
 
         toplamMalHizmetTutari.setParaBirimi(getParaBirimi(entity));
-        toplamMalHizmetTutari.setValue(entity.getSummaries().get(TOPLAM_MAL_HIZMET_TUTARI).getAmount().setScale(2,
-                RoundingMode.CEILING));
+        Map<String, InvoiceSummary> deneme = entity.getSummaries();
+        toplamMalHizmetTutari.setValue(entity.getSummaries().size() == 0 ? BigDecimal.ZERO : entity.getSummaries()
+                .get(TOPLAM_MAL_HIZMET_TUTARI).getAmount().setScale(2, RoundingMode.CEILING));
         parasalToplamlarTipi.setToplamMalHizmetTutari(toplamMalHizmetTutari);
 
         vergiHaricTutar.setParaBirimi(getParaBirimi(entity));
-        vergiHaricTutar.setValue(entity.getSummaries().get(VERGI_HARIC_TUTAR).getAmount().setScale(2, RoundingMode
-                .CEILING));
+        vergiHaricTutar.setValue(entity.getSummaries().size() == 0 ? BigDecimal.ZERO : entity.getSummaries().get
+                (VERGI_HARIC_TUTAR).getAmount().setScale(2, RoundingMode.CEILING));
         parasalToplamlarTipi.setVergiHaricTutar(vergiHaricTutar);
 
         toplamIskontoTutari.setParaBirimi(getParaBirimi(entity));
-        toplamIskontoTutari.setValue(entity.getSummaries().get(TOPLAM_ISKONTO_TUTARI).getAmount().setScale(2,
-                RoundingMode.CEILING));
+        toplamIskontoTutari.setValue(entity.getSummaries().size() == 0 ? BigDecimal.ZERO : entity.getSummaries().get
+                (TOPLAM_ISKONTO_TUTARI).getAmount().setScale(2, RoundingMode.CEILING));
         parasalToplamlarTipi.setToplamIskontoTutari(toplamIskontoTutari);
 
         odenecekTutar.setParaBirimi(getParaBirimi(entity));
-        odenecekTutar.setValue(entity.getSummaries().get(ODENECEK_TUTAR).getAmount().setScale(2, RoundingMode.CEILING));
+        odenecekTutar.setValue(entity.getSummaries().size() == 0 ? BigDecimal.ZERO : entity.getSummaries().get
+                (ODENECEK_TUTAR).getAmount().setScale(2, RoundingMode.CEILING));
         parasalToplamlarTipi.setVergiDahilTutar(odenecekTutar);
         parasalToplamlarTipi.setOdenecekTutar(odenecekTutar);
 
@@ -201,10 +207,15 @@ public class EinvoiceBuilder {
 
         File file = new File("einvoiceFile.xml");
 
-        JAXBContext jaxbContext = JAXBContext.newInstance(Fatura.class);
-        Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-        jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        jaxbMarshaller.marshal(fatura, file);
+        JAXBContext jaxbContext;
+        try {
+            jaxbContext = JAXBContext.newInstance(Fatura.class);
+            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            jaxbMarshaller.marshal(fatura, file);
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
 
         return file;
     }
@@ -278,5 +289,4 @@ public class EinvoiceBuilder {
     private String getSaticiVKN(Kahve kahve) {
         return kahve.get(SATICI_VKN, "").getAsString();
     }
-
 }
