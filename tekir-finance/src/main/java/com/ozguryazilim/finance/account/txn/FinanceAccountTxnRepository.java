@@ -82,10 +82,11 @@ public abstract class FinanceAccountTxnRepository extends RepositoryBase<Finance
                 sumExp,
                 from.get(FinanceAccountTxn_.currency)	
         );
-        
-        criteriaQuery.groupBy(                
+
+        criteriaQuery.groupBy(
                 //,
                 //from.get(FinanceAccountTxn_.account).type(),
+                from.get(FinanceAccountTxn_.id),
                 from.get(FinanceAccountTxn_.currency)
         );
         

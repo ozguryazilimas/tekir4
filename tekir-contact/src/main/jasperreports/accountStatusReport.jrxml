@@ -44,7 +44,7 @@ AND ($P{INDUSTRY_ID}=0 OR tc.INDUSTRY_ID = $P{INDUSTRY_ID})
 AND ( $P{TERRITORY_ID}=0 OR tc.TERRITORY_ID = $P{TERRITORY_ID})
 AND tc.NAME LIKE CONCAT('%',$P{NAME},'%')
 AND tat.CODE LIKE CONCAT('%',$P{CODE},'%')
-GROUP BY tat.ACCOUNT_ID]]>
+GROUP BY tat.ACCOUNT_ID, tat.CODE, tc.NAME]]>
 	</queryString>
 	<field name="CODE" class="java.lang.String"/>
 	<field name="NAME" class="java.lang.String"/>
