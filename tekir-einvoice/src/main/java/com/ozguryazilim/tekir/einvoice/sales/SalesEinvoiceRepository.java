@@ -22,6 +22,4 @@ public abstract class SalesEinvoiceRepository extends EinvoiceRepository<SalesEi
     }
 
     public abstract List<SalesEinvoice> findByInvoice(Invoice invoice);
-
-    public abstract List<SalesEinvoice> findTopByInvoice(Invoice invoice);
 }
