@@ -105,7 +105,6 @@ public class EinvoiceBuilder {
         }
 
         toplamMalHizmetTutari.setParaBirimi(getParaBirimi(entity));
-        Map<String, InvoiceSummary> deneme = entity.getSummaries();
         toplamMalHizmetTutari.setValue(entity.getSummaries().size() == 0 ? BigDecimal.ZERO : entity.getSummaries()
                 .get(TOPLAM_MAL_HIZMET_TUTARI).getAmount().setScale(2, RoundingMode.CEILING));
         parasalToplamlarTipi.setToplamMalHizmetTutari(toplamMalHizmetTutari);
