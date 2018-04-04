@@ -90,7 +90,8 @@ public class LeadFeeder extends AbstractFeeder<Lead> {
 			return "feeder.messages.LeadFeeder.CREATE$%&" + identity.getUserName() + "$%&"
 					+ event.getPayload().getVoucherNo();
 		case "publish":
-			return "Lead published";
+			return "feeder.messages.LeadFeeder.PUBLISH$%&" + identity.getUserName() + "$%&"
+					+ event.getPayload().getVoucherNo();
 		case "won":
 			return "feeder.messages.LeadFeeder.WON$%&" + identity.getUserName() + "$%&"
 					+ event.getPayload().getVoucherNo();
@@ -104,15 +105,16 @@ public class LeadFeeder extends AbstractFeeder<Lead> {
 
 		switch (event.getTo().getName()) {
 		case "OPEN":
-			return "Lead created";
+			return "feeder.messages.LeadFeeder.OPEN";
 		case "CLOSE":
-			return "Lead Won. Congrats!";
+			return "feeder.messages.LeadFeeder.CLOSE";
 		case "LOST":
-			return "Lead lost! " + event.getPayload().getStateReason();
+			return "feeder.messages.LeadFeeder.LOST$%&" + event.getPayload().getVoucherNo() + "$%&"
+					+ event.getPayload().getStateReason();
 		case "CANCELED":
-			return "Lead canceled. " + event.getPayload().getStateReason();
+			return "feeder.messages.LeadFeeder.CANCELED$%&" + event.getPayload().getStateReason();
 		default:
-			return "Lead created";
+			return "feeder.messages.LeadFeeder.OPEN";
 		}
 	}
 
