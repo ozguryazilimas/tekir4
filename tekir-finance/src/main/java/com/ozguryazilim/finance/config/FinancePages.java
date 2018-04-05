@@ -12,12 +12,13 @@ import com.ozguryazilim.telve.auth.SecuredPage;
 import com.ozguryazilim.telve.nav.Navigation;
 import com.ozguryazilim.telve.view.PageTitle;
 import com.ozguryazilim.telve.view.Pages;
+
 import javax.enterprise.context.ApplicationScoped;
+
 import org.apache.deltaspike.jsf.api.config.view.Folder;
 import org.apache.deltaspike.jsf.api.config.view.View;
 
 /**
- *
  * @author oyas
  */
 @ApplicationScoped
@@ -40,30 +41,27 @@ public interface FinancePages extends Pages {
     @View
     @SecuredPage("financeAccount")
     @PageTitle("module.caption.FinanceAccount")
-    class FinanceAccountView
-            implements
-            FinancePages {
+    class FinanceAccountView implements FinancePages {
     }
 
     @View
     @SecuredPage("financeAccount")
     @PageTitle("module.caption.FinanceAccount")
-    class FinanceAccountMasterView
-            implements
-            FinancePages {
+    class FinanceAccountMasterView implements FinancePages {
     }
 
-    @SecuredPage()
+    @SecuredPage
     @View
-    class FinanceAccountLookup
-            implements
-            FinancePages {
+    class FinanceAccountLookup implements FinancePages {
     }
-    
+
     @View
     @SecuredPage("FinanceAccountVirement")
     @PageTitle("module.caption.FinanceAccountVirementBrowse")
-    @Navigation(label = "module.caption.FinanceAccountVirementBrowse", icon="flaticon-contract", feature = FinanceAccountVirementFeature.class, section = FinanceNavigationSection.class)
+    @Navigation(label = "module.caption.FinanceAccountVirementBrowse",
+            icon = "flaticon-contract",
+            feature = FinanceAccountVirementFeature.class,
+            section = FinanceNavigationSection.class)
     class FinanceAccountVirementBrowse implements FinancePages {
     }
 
@@ -76,22 +74,18 @@ public interface FinancePages extends Pages {
     @View
     @SecuredPage("FinanceAccountVirement")
     @PageTitle("module.caption.FinanceAccountVirement")
-    class FinanceAccountVirementView
-            implements
-            FinancePages {
+    class FinanceAccountVirementView implements FinancePages {
     }
 
     @View
     @SecuredPage("FinanceAccountVirement")
-    class FinanceAccountVirementMasterView
-            implements
-            FinancePages {
+    class FinanceAccountVirementMasterView implements FinancePages {
     }
-    
-	@SecuredPage
-	@View
-	@PageTitle("report.name.financeAccountTxnReport")
-	class FinanceAccountTxnReport implements FinancePages {
-	}
+
+    @SecuredPage
+    @View
+    @PageTitle("report.name.financeAccountTxnReport")
+    class FinanceAccountTxnReport implements FinancePages {
+    }
 
 }
