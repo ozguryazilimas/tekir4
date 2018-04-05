@@ -1,0 +1,53 @@
+[
+  {
+    "name": "query.default.PaymentBrowse",
+    "resultLimit": 100,
+    "rowLimit": 20,
+    "columns": [
+      "voucherNo",
+      "account",
+      "financeAccount",
+      "topic",
+      "date",
+      "amount",
+      "owner"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "amount",
+      "account",
+      "financeAccount",
+      "process",
+      "date"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "owner": "All::",
+      "date": "All::LastTenDays::20180326T0000::Today::20180405T0000",
+      "amount": "All::0",
+      "financeAccount": "All::null",
+      "process": "All::null",
+      "code": "All::null",
+      "topic": "All::null",
+      "state": "All::null",
+      "stateReason": "All::null",
+      "account": "All::null",
+      "info": "All::null"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  }
+]
