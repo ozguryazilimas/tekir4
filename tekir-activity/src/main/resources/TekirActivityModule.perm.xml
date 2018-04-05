@@ -2,23 +2,23 @@
 
 <permissions>
     <permissionGroup name="Activities">
-        <permission target="meetingActivity">           
+        <permission target="meetingActivity">
             <entityActions scope="owner,group"/>
         </permission>
-        <permission target="phoneActivity">           
+        <permission target="phoneActivity">
             <entityActions scope="owner,group"/>
         </permission>
-        <permission target="emailActivity">           
+        <permission target="emailActivity">
             <entityActions scope="owner,group"/>
         </permission>
-       	<permission target="taskActivity">           
-           <entityActions scope="owner,group"/>
-       	</permission>
-       	<permission target="faxActivity">           
-          <entityActions scope="owner,group"/>
-   	   	</permission>
-  		<permission target="smsActivity">           
-          <entityActions scope="owner,group"/>
-   	   	</permission>
+        <permission target="taskActivity">
+            <entityActions scope="owner,group"/>
+        </permission>
+        <permission target="faxActivity">
+            <entityActions scope="owner,group"/>
+        </permission>
+        <permission target="smsActivity">
+            <entityActions scope="owner,group"/>
+        </permission>
     </permissionGroup>
 </permissions>

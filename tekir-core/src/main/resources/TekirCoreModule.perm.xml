@@ -3,37 +3,37 @@
 <permissions>
     <permissionGroup name="Params" order="100">
         <permission target="location" order="1">
-            <entityActions />
+            <entityActions/>
         </permission>
         <permission target="territory" order="2">
-            <entityActions />
+            <entityActions/>
         </permission>
         <permission target="industry" order="3">
-            <entityActions />
+            <entityActions/>
         </permission>
         <permission target="unitSetDefinition" order="5">
-            <entityActions />
+            <entityActions/>
         </permission>
-        
-       
     </permissionGroup>
-        <permissionGroup name="FinancialParams" order="100">
+
+    <permissionGroup name="FinancialParams" order="100">
         <permission target="currencyDefinition" order="1">
-            <entityActions />
+            <entityActions/>
         </permission>
         <permission target="exchangeRate" order="2">
-            <entityActions />
+            <entityActions/>
         </permission>
-         <permission target="paymentPlan" order="3">
-            <entityActions />
+        <permission target="paymentPlan" order="3">
+            <entityActions/>
         </permission>
         <permission target="taxDefinition" order="4">
-            <entityActions />
+            <entityActions/>
         </permission>
     </permissionGroup>
+
     <permissionGroup name="Dashlets">
-    	<permission target="exchangeRateDashlet">
-            <action name="select" />
+        <permission target="exchangeRateDashlet">
+            <action name="select"/>
         </permission>
     </permissionGroup>
 </permissions>

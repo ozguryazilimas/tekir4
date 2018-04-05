@@ -2,35 +2,35 @@
 
 <permissions>
     <permissionGroup name="Contact" order="10">
-        <permission target="contact" order="1">
+        <permission name="contact" order="1">
             <entityActions scope="owner,group"/>
             <action name="changeOwner" scope="owner,group" order="15"/>
         </permission>
-        <permission target="corporationType" >
-            <entityActions />
+        <permission name="corporationType">
+            <entityActions/>
         </permission>
-        <permission target="contactRelation" >
-            <entityActions />
+        <permission name="contactRelation">
+            <entityActions/>
         </permission>
-        <permission target="contactCategory" >
-            <entityActions />
+        <permission name="contactCategory">
+            <entityActions/>
         </permission>
-        <permission target="accountTxn" order="100">
-            <entityActions />
+        <permission name="accountTxn" order="100">
+            <entityActions/>
         </permission>
-            <permissionGroup name="Dashlets" order="13">
-        <permission target="activeContactsDashlet">            
+        <permissionGroup name="Dashlets" order="13">
+            <permission name="activeContactsDashlet">
+                <action name="select" scope="owner,group"/>
+            </permission>
+            <permission name="topAccountsDashlet">
+                <action name="select" scope="owner,group"/>
+            </permission>
+        </permissionGroup>
+    </permissionGroup>
+    <permissionGroup name="Reports">
+        <permission name="accountTxnReport">
             <action name="select" scope="owner,group"/>
-        </permission>
-         <permission target="topAccountsDashlet">            
-            <action name="select" scope="owner,group"/>
+            <action name="exec" scope="owner,group"/>
         </permission>
     </permissionGroup>
-    </permissionGroup>
-     <permissionGroup name="Reports">
-     	<permission target="accountTxnReport">            
-     		<action name="select" scope="owner,group"/>
-     		<action name="exec" scope="owner,group"/>
-   		</permission>
-     </permissionGroup>
 </permissions>
