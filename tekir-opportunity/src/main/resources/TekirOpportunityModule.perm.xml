@@ -2,7 +2,7 @@
 
 <permissions>
     <permissionGroup name="Sales">
-        <permission target="opportunity" order="1">
+        <permission name="opportunity" order="1">
             <entityActions scope="owner,group"/>
             <action name="publish" scope="owner,group" order="7"/>
             <action name="cancel" scope="owner,group" order="8"/> 
@@ -14,10 +14,10 @@
         </permission>
     </permissionGroup>
     <permissionGroup name="Dashlets">
-        <permission target="salesStatusDashlet">            
+        <permission name="salesStatusDashlet">
             <action name="select" scope="owner,group"/>
         </permission>
-         <permission target="topOpportunitiesDashlet">            
+         <permission name="topOpportunitiesDashlet">
             <action name="select" scope="owner,group"/>
         </permission>
     </permissionGroup>

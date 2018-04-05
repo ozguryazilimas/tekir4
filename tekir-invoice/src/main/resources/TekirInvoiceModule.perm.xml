@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <permissions>
     <permissionGroup name="Sales">
-        <permission target="salesInvoice">
+        <permission name="salesInvoice">
             <entityActions scope="owner,group"/>            
             <action name="publish" scope="owner,group" order="7"/>
             <action name="cancel" scope="owner,group" order="8"/> 
@@ -14,7 +14,7 @@
         </permission>
     </permissionGroup>
     <permissionGroup name="Purchase">
-        <permission target="purchaseInvoice">
+        <permission name="purchaseInvoice">
             <entityActions scope="owner,group"/>
             <action name="publish" scope="owner,group" order="7"/>
             <action name="cancel" scope="owner,group" order="8"/> 

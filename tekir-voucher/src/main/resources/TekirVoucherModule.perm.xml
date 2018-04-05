@@ -2,10 +2,10 @@
 
 <permissions>
     <permissionGroup name="Voucher" order="13">
-        <permission target="voucherGroup" order="1">
+        <permission name="voucherGroup" order="1">
             <entityActions />
         </permission>
-        <permission target="process" order="1">
+        <permission name="process" order="1">
             <entityActions />
         </permission>
     </permissionGroup>

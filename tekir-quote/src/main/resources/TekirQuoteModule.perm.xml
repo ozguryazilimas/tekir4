@@ -2,7 +2,7 @@
 
 <permissions>
     <permissionGroup name="Sales" order="12">
-        <permission target="quote" order="2">
+        <permission name="quote" order="2">
             <entityActions scope="owner,group"/>
             <action name="publish" scope="owner,group" order="7"/>
             <action name="cancel" scope="owner,group" order="8"/> 
