@@ -1,0 +1,35 @@
+[
+  {
+    "name": "query.default.EmployeeBrowse",
+    "resultLimit": 100,
+    "rowLimit": 20,
+    "columns": [
+      "code",
+      "name",
+      "employeeNo",
+      "sgkNo",
+      "primaryMobile",
+      "primaryPhone",
+      "primaryEmail",
+      "info"
+    ],
+    "filters": [
+      "code",
+      "name",
+      "employeeNo",
+      "sgkNo"
+    ],
+    "filterValues": {
+      "code": "All::null",
+      "name": "All::null",
+      "employeeNo": "All::null",
+      "sgkNo": "All::null"
+    },
+    "sorters": [
+      "employeeNo"
+    ],
+    "sorterValues": {
+      "employeeNo": "A"
+    }
+  }
+]
