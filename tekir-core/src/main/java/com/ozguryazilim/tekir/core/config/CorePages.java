@@ -18,7 +18,7 @@ import com.ozguryazilim.telve.nav.Navigation;
 public interface CorePages extends Pages {
 
     @View
-    @SecuredPage()
+    @SecuredPage
     class TekirFeatureLookup implements CorePages {
     }
 
@@ -32,7 +32,7 @@ public interface CorePages extends Pages {
     }
 
     @View
-    @SecuredPage()
+    @SecuredPage
     class LocationLookup implements CorePages {
     }
 
@@ -46,7 +46,7 @@ public interface CorePages extends Pages {
     }
 
     @View
-    @SecuredPage()
+    @SecuredPage
     class IndustryLookup implements CorePages {
     }
 
@@ -60,7 +60,7 @@ public interface CorePages extends Pages {
     }
 
     @View
-    @SecuredPage()
+    @SecuredPage
     class TerritoryLookup implements CorePages {
     }
 
@@ -88,7 +88,7 @@ public interface CorePages extends Pages {
     }
 
     @View
-    @SecuredPage()
+    @SecuredPage
     class UnitSetDefinitionLookup
             implements
             com.ozguryazilim.tekir.core.config.CorePages {
@@ -104,7 +104,7 @@ public interface CorePages extends Pages {
     }
 
     @View
-    @SecuredPage()
+    @SecuredPage
     class TaxDefinitionLookup implements CorePages {
     }
 
@@ -119,23 +119,23 @@ public interface CorePages extends Pages {
     }
 
     @View
-    @SecuredPage()
+    @SecuredPage
     class PaymentPlanLookup implements CorePages {
     }
 
     @View
-    @SecuredPage()
+    @SecuredPage
     class TcmbExchangeRatesCommand implements CorePages {
 
     }
 
     @View
-    @SecuredPage()
+    @SecuredPage
     class CorporateOptionPane implements CorePages {
     }
 
     @View
-    @SecuredPage()
+    @SecuredPage
     class AutoCodeOptionPane implements CorePages {
     }
 

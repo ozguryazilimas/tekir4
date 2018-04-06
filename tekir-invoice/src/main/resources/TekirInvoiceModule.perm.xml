@@ -10,7 +10,8 @@
             <action name="changeOwner" scope="owner,group" order="11"/>
             <action name="loss" scope="owner,group" order="12"/>
             <action name="paid" scope="owner,group" order="13"/>
-            <action name="partial" scope="owner,group" order="14"/>           
+            <action name="partial" scope="owner,group" order="14"/>
+            <action name="changeOwner" scope="owner,group" order="11" />
         </permission>
     </permissionGroup>
     <permissionGroup name="Purchase">
@@ -23,7 +24,8 @@
             <action name="changeOwner" scope="owner,group" order="11"/>
             <action name="loss" scope="owner,group" order="12"/>
             <action name="paid" scope="owner,group" order="13"/>
-            <action name="partial" scope="owner,group" order="14"/>  
+            <action name="partial" scope="owner,group" order="14"/>
+            <action name="changeOwner" scope="owner,group" order="11" />
         </permission>
     </permissionGroup>
 </permissions>

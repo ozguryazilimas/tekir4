@@ -1,15 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ozguryazilim.opportunity.dashlets;
 
 import com.ozguryazilim.mutfak.kahve.Kahve;
 import com.ozguryazilim.mutfak.kahve.KahveEntry;
 import com.ozguryazilim.mutfak.kahve.annotations.UserAware;
-import com.ozguryazilim.tekir.account.AccountTxnRepository;
-import com.ozguryazilim.tekir.account.AccountTxnSumModel;
 import com.ozguryazilim.tekir.entities.Opportunity;
 import com.ozguryazilim.tekir.entities.Quote;
 import com.ozguryazilim.tekir.entities.VoucherState;
@@ -19,13 +12,7 @@ import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.dashboard.AbstractDashlet;
 import com.ozguryazilim.telve.dashboard.Dashlet;
 import com.ozguryazilim.telve.dashboard.DashletCapability;
-import com.ozguryazilim.telve.messages.FacesMessages;
-import com.ozguryazilim.telve.messages.Messages;
-import com.ozguryazilim.telve.utils.DateUtils;
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +28,8 @@ import org.primefaces.model.chart.PieChartModel;
 @Dashlet(capability = {DashletCapability.canHide, DashletCapability.canEdit, DashletCapability.canMinimize, DashletCapability.canRefresh})
 public class SalesStatusDashlet extends AbstractDashlet{
     
-    @Inject @UserAware
+    @Inject
+    @UserAware
     private Kahve kahve;
     
     @Inject
@@ -222,7 +210,4 @@ public class SalesStatusDashlet extends AbstractDashlet{
 		return piecePieChartModel;
 	}
 
-    
-    
-    
 }
