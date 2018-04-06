@@ -35,8 +35,9 @@
                 <p:commandButton id="select" 
                                  value="#{messages['general.button.Ok']}" 
                                  icon="fa fa-check" 
-                                 action="#{bean.closeDialog()}" 
+                                 disabled="#{facesContext.validationFailed}"
                                  validateClient="true"
+                                 action="#{bean.closeDialog()}" 
                                  styleClass="btn-primary" />
                 <p:commandButton id="close" 
                                  value="#{messages['general.button.Cancel']}" 

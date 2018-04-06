@@ -22,8 +22,8 @@
                 </div>  
 
                 <div class="row">
-                    <t:inputText label="contact.label.PrimaryMobile" value="#{bean.mobile}" columnClass="col-sm-6" required="false"/>
-                    <t:inputText label="contact.label.PrimaryEmail" value="#{bean.email}" columnClass="col-sm-6" required="false"/>
+                    <t:inputPhone label="contact.label.PrimaryMobile" value="#{bean.mobile}" columnClass="col-sm-6" required="false"/>
+                    <t:inputEmail label="contact.label.PrimaryEmail" value="#{bean.email}" columnClass="col-sm-6" required="false"/>
                 </div>  
                 
                 
@@ -42,8 +42,8 @@
                     <t:inputText label="general.label.OrganizationName" value="#{bean.corporationFullName}" columnClass="col-sm-6" required="true"/>
                 </div>
                 <div class="row">
-                    <t:inputText label="contact.label.PrimaryPhone" value="#{bean.corporationPhone}" columnClass="col-sm-6" required="false"/>
-                    <t:inputText label="contact.label.PrimaryEmail" value="#{bean.corporationEmail}" columnClass="col-sm-6" required="false"/>
+                    <t:inputPhone label="contact.label.PrimaryPhone" value="#{bean.corporationPhone}" columnClass="col-sm-6" required="false"/>
+                    <t:inputEmail label="contact.label.PrimaryEmail" value="#{bean.corporationEmail}" columnClass="col-sm-6" required="false"/>
                 </div>  
                 <div class="row">
                     
@@ -59,3 +59,4 @@
     </ui:define>
 
 </ui:composition>
+

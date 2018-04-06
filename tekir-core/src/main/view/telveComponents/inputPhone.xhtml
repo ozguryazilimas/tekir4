@@ -1,0 +1,31 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:f="http://java.sun.com/jsf/core"
+              xmlns:composite="http://java.sun.com/jsf/composite">
+
+    <composite:interface>
+        <composite:attribute name="value" required="true"/>
+        <composite:attribute name="required" required="false" type="java.lang.Boolean" default="false"/>
+        <composite:attribute name="columnClass" required="false" default="col-md-6 col-xs-12"/>
+        <composite:clientBehavior name="keyup" event="keyup" targets="#{cc.id}_inp"/>
+    </composite:interface>
+
+    <composite:implementation>
+        <div id="#{cc.clientId}" class="prop #{cc.attrs.columnClass}">
+        	<p:outputLabel for="#{cc.id}_inp" value="#{messages['general.label.PhoneNumber']}" />
+        	<span class="value">
+                    <p:inputText id="#{cc.id}_inp" value="#{cc.attrs.value}"
+                    			 validatorMessage="#{messages['inputPhone.message.InvalidNumber']}"
+                                 required="#{cc.attrs.required}" autocomplete="off"
+                                 onfocus="if (this.value == '') {this.value = '#{messages['inputPhone.defaultAreaCode']}'; }"
+                                 onblur="if (this.value == '#{messages['inputPhone.defaultAreaCode']}'){this.value = ''; }"
+                                 >
+                        <f:validateRegex pattern="^(|(?:[0-9\+])(?:[0-9] ?\.? ?\,? ?-?){6,25}[0-9])$"/>
+                    </p:inputText>
+            </span>
+            <p:message id="#{cc.id}_msg" for="#{cc.id}_inp" autoUpdate="true"/>
+        </div>
+    </composite:implementation>
+
+</ui:component>

@@ -2,8 +2,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
-                xmlns:p="http://primefaces.org/ui"                
+                xmlns:p="http://java.sun.com/jsf/composite/telveComponents"     
                 template="/contact/contactInformationEditor.xhtml">
 
     <ui:param name="title" value="phoneEditor.label.Title" />
@@ -11,7 +10,9 @@
 
     <ui:define name="editorContent">
         <div class="row">
-            <t:inputText label="general.label.PhoneNumber" value="#{phoneEditor.entity.number}" />
+            <p:inputPhone value="#{phoneEditor.entity.number}" />
         </div>
-    </ui:define> 
+    </ui:define>
+
 </ui:composition>
+
