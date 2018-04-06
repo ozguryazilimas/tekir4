@@ -21,6 +21,7 @@
                                  onfocus="if (this.value == '') {this.value = '#{messages['inputPhone.defaultAreaCode']}'; }"
                                  onblur="if (this.value == '#{messages['inputPhone.defaultAreaCode']}'){this.value = ''; }"
                                  >
+                        <p:keyFilter regEx="/[0-9\.\,\-\+]/i"/>
                         <f:validateRegex pattern="^(|(?:[0-9\+])(?:[0-9] ?\.? ?\,? ?-?){6,25}[0-9])$"/>
                     </p:inputText>
             </span>
