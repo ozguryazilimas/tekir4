@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <permissions>
     <permissionGroup name="HR" order="15">
-        <permission target="employee" >
+        <permission name="employee" >
             <entityActions scope="owner,group"/>
             <action name="changeOwner" scope="owner,group"/>
         </permission>
         
-        <permission target="employeeCreditNote">
+        <permission name="employeeCreditNote">
             <entityActions scope="owner,group" />
             <action name="changeOwner" scope="owner,group" order="7"/>
             <action name="publish" scope="owner,group" order="8" />

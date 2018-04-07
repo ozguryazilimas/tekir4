@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <permissions>
     <permissionGroup name="Sales">
-        <permission target="paymentReceived">
+        <permission name="paymentReceived">
             <entityActions scope="owner,group"/>
 			<action name="publish" scope="owner,group" order="7"/>
             <action name="revise" scope="owner,group" order="9"/>           
@@ -10,7 +10,7 @@
         </permission>
     </permissionGroup>
     <permissionGroup name="Purchase">
-        <permission target="payment">
+        <permission name="payment">
             <entityActions scope="owner,group"/>
 			<action name="publish" scope="owner,group" order="7"/>
             <action name="revise" scope="owner,group" order="9"/>           
