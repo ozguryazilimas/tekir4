@@ -2,38 +2,38 @@
 
 <permissions>
     <permissionGroup name="Params" order="100">
-        <permission target="location" order="1">
-            <entityActions />
+        <permission name="location" order="1">
+            <entityActions/>
         </permission>
-        <permission target="territory" order="2">
-            <entityActions />
+        <permission name="territory" order="2">
+            <entityActions/>
         </permission>
-        <permission target="industry" order="3">
-            <entityActions />
+        <permission name="industry" order="3">
+            <entityActions/>
         </permission>
-        <permission target="unitSetDefinition" order="5">
-            <entityActions />
-        </permission>
-        
-       
-    </permissionGroup>
-        <permissionGroup name="FinancialParams" order="100">
-        <permission target="currencyDefinition" order="1">
-            <entityActions />
-        </permission>
-        <permission target="exchangeRate" order="2">
-            <entityActions />
-        </permission>
-         <permission target="paymentPlan" order="3">
-            <entityActions />
-        </permission>
-        <permission target="taxDefinition" order="4">
-            <entityActions />
+        <permission name="unitSetDefinition" order="5">
+            <entityActions/>
         </permission>
     </permissionGroup>
+
+    <permissionGroup name="FinancialParams" order="100">
+        <permission name="currencyDefinition" order="1">
+            <entityActions/>
+        </permission>
+        <permission name="exchangeRate" order="2">
+            <entityActions/>
+        </permission>
+        <permission name="paymentPlan" order="3">
+            <entityActions/>
+        </permission>
+        <permission name="taxDefinition" order="4">
+            <entityActions/>
+        </permission>
+    </permissionGroup>
+
     <permissionGroup name="Dashlets">
-    	<permission target="exchangeRateDashlet">
-            <action name="select" />
+        <permission name="exchangeRateDashlet">
+            <action name="select"/>
         </permission>
     </permissionGroup>
 </permissions>
