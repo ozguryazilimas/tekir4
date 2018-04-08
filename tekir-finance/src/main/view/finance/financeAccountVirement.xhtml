@@ -10,6 +10,12 @@
     <ui:param name="entity" value="#{financeAccountVirementHome.entity}" />
     <ui:param name="dontShowContentHeader" value="true" />
 
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{financeAccountVirementHome.id}" />
+            <f:viewAction action="#{financeAccountVirementHome.initData()}" />
+        </f:metadata>
+    </ui:define>
 
     <ui:define name="form">
         <div class="row">

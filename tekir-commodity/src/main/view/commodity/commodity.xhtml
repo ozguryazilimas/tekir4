@@ -8,6 +8,13 @@
 
     <ui:param name="homeBean" value="#{commodityHome}" />
     <ui:param name="entity" value="#{commodityHome.entity}" />
+    
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{commodityHome.id}" />
+            <f:viewAction action="#{commodityHome.initData()}" />
+        </f:metadata>
+    </ui:define>
 
     <ui:define name="form">
         <div class="row">

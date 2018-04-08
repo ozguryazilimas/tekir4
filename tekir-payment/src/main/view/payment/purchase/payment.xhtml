@@ -11,4 +11,11 @@
     <ui:param name="entity" value="#{paymentHome.entity}" />
     <ui:param name="regardingFeature" value="PurchaseInvoiceFeature" />
     <ui:param name="customerRoles" value="S:VENDOR;O:CUSTOMER" />
+    
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{paymentHome.id}" />
+            <f:viewAction action="#{paymentHome.initData()}" />
+        </f:metadata>
+    </ui:define>
 </ui:composition>

@@ -10,6 +10,13 @@
     <ui:param name="entity" value="#{activityHome.entity}" />
     <ui:param name="dontShowContentHeader" value="true" />
 
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{activityHome.id}" />
+            <f:viewAction action="#{activityHome.initData()}" />
+        </f:metadata>
+    </ui:define>
+    
     <ui:define name="customHeader">
         <section class="content-header">
             <p:outputPanel id="states">
