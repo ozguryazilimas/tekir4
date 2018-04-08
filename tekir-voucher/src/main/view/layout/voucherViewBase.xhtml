@@ -16,6 +16,7 @@
             <ui:fragment rendered="#{process ne 'false'}">
                 <t:stateOutputFeatureLink label="voucher.label.Process" value="#{featureController.getFeatureLink(bean.processFeaturePointer)}" />
             </ui:fragment>
+            <t:stateOutputFeatureLink label="voucher.label.Group" value="#{featureController.getFeatureLink(bean.groupFeaturePointer)}" />
             <t:stateOutputText label="voucher.label.ReferenceNo" value="#{bean.entity.referenceNo}" />
             <t:stateOutputText label="general.label.Code" value="#{bean.entity.code}" />
         </ul>
