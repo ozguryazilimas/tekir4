@@ -28,6 +28,9 @@ public interface PaymentPages extends Pages {
         @Navigation(label = "module.caption.PaymentReceivedBrowse",
                 icon = "flaticon-speech-bubble",
                 section = SalesNavigationSection.class)
+        @Navigation(label = "module.caption.PaymentReceivedBrowse",
+                icon = "flaticon-speech-bubble",
+                section = FinanceNavigationSection.class)
         class PaymentReceivedBrowse implements Sales {
         }
 
@@ -59,6 +62,9 @@ public interface PaymentPages extends Pages {
         @Navigation(label = "module.caption.PaymentBrowse",
                 icon = "flaticon-speech-bubble",
                 section = PurchaseNavigationSection.class)
+        @Navigation(label = "module.caption.PaymentBrowse",
+                icon = "flaticon-speech-bubble",
+                section = FinanceNavigationSection.class)
         class PaymentBrowse implements Purchase {
         }
 

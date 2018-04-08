@@ -13,9 +13,10 @@
         <ui:param name="viewState" value="#{commodityHome.entity.active ? messages['general.boolean.active.True'] : messages['general.boolean.active.False']}" />
 
 	<ui:define name="metadata">
-		<f:metadata>
-			<f:viewParam name="eid" value="#{commodityHome.id}" />
-		</f:metadata>
+            <f:metadata>
+                <f:viewParam name="eid" value="#{commodityHome.id}" />
+                <f:viewAction action="#{commodityHome.initData()}" />
+            </f:metadata>
 	</ui:define>
 
 	<ui:define name="caption">

@@ -10,6 +10,13 @@
     <ui:param name="entity" value="#{accountCreditNoteHome.entity}" />
     <ui:param name="dontShowContentHeader" value="true" />
 
+    <ui:define name="metadata">
+        <f:metadata>
+          <f:viewParam name="eid" value="#{accountCreditNoteHome.id}" />
+          <f:viewAction action="#{accountCreditNoteHome.initData()}" />
+        </f:metadata>
+    </ui:define>
+
 
     <ui:define name="form">
         <div class="row">

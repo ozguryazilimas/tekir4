@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
+import org.apache.deltaspike.core.api.config.view.navigation.NavigationParameterContext;
 import org.apache.deltaspike.core.api.config.view.navigation.ViewNavigationHandler;
 import org.primefaces.event.SelectEvent;
 
@@ -42,6 +43,10 @@ public class ContactHome extends FormBase<Contact, Long> {
     
     @Inject
     private ViewNavigationHandler viewNavigationHandler;
+    
+    @Inject
+    private NavigationParameterContext navigationParameterContext;
+
     
     @Inject
     private ContactRepository repository;
@@ -68,6 +73,8 @@ public class ContactHome extends FormBase<Contact, Long> {
         p.setCode(codeService.getNewSerialNumber(Person.class.getSimpleName()));
         setEntity(p);
         selectedRoles.clear();
+        navigationParameterContext.addPageParameter("eid", 0);
+
         return ContactPages.Contact.class;
     }
 
@@ -79,6 +86,8 @@ public class ContactHome extends FormBase<Contact, Long> {
         p.setCode(codeService.getNewSerialNumber(Corporation.class.getSimpleName()));
         setEntity(p);
         selectedRoles.clear();
+        navigationParameterContext.addPageParameter("eid", 0);
+
         return ContactPages.Contact.class;
     }
 
