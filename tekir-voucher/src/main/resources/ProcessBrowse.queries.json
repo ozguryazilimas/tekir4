@@ -32,7 +32,7 @@
     }
   },
   {
-    "name": "query.default.ProcessBrowse",
+    "name": "query.ProcessBrowse.All",
     "resultLimit": 200,
     "rowLimit": 20,
     "columns": [
