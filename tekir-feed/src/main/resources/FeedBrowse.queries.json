@@ -385,7 +385,7 @@
     }
   },
   {
-    "name": "query.default.FeedBrowse",
+    "name": "query.FeedBrowse.All",
     "resultLimit": 200,
     "rowLimit": 20,
     "columns": [
