@@ -51,7 +51,7 @@
     }
   },
   {
-    "name": "query.default.PaymentReceivedBrowse",
+    "name": "query.PaymentReceivedBrowse.All",
     "resultLimit": 100,
     "rowLimit": 20,
     "columns": [
