@@ -176,7 +176,7 @@
     }
   },
   {
-    "name": "query.default.CommodityBrowse",
+    "name": "query.CommodityBrowse.All",
     "resultLimit": 200,
     "rowLimit": 20,
     "columns": [
