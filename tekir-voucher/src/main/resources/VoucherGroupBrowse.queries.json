@@ -24,7 +24,7 @@
     }
   },
   {
-    "name": "query.default.VoucherGroupBrowse",
+    "name": "query.VoucherGroupBrowse.All",
     "resultLimit": 200,
     "rowLimit": 20,
     "columns": [
