@@ -1,6 +1,6 @@
 [
   {
-    "name": "query.default.EmployeeBrowse",
+    "name": "query.EmployeeBrowse.All",
     "resultLimit": 100,
     "rowLimit": 20,
     "columns": [
