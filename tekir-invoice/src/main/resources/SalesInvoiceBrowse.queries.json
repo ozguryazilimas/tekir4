@@ -1,6 +1,6 @@
 [
   {
-    "name": "query.default.SalesInvoiceBrowse",
+    "name": "query.SalesInvoiceBrowse.All",
     "resultLimit": 100,
     "rowLimit": 20,
     "columns": [
