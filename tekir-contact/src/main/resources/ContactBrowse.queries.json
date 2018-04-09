@@ -1,6 +1,6 @@
 [
   {
-    "name": "query.default.ContactBrowse",
+    "name": "query.ContactBrowse.All",
     "resultLimit": 200,
     "rowLimit": 20,
     "columns": [
