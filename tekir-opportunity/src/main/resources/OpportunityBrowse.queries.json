@@ -238,7 +238,7 @@
     }
   },
   {
-    "name": "query.default.OpportunityBrowse",
+    "name": "query.OpportunityBrowse.All",
     "resultLimit": 200,
     "rowLimit": 20,
     "columns": [
