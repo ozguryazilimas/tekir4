@@ -1,6 +1,6 @@
 [
   {
-    "name": "query.default.FinanceAccountBrowse",
+    "name": "query.FinanceAccountBrowse.sortedByName",
     "resultLimit": 100,
     "rowLimit": 20,
     "columns": [
