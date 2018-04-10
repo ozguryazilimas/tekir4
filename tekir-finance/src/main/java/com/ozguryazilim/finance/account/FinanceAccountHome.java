@@ -8,6 +8,8 @@ package com.ozguryazilim.finance.account;
 import com.google.common.base.Strings;
 import com.ozguryazilim.finance.account.txn.FinanceAccountTxnRepository;
 import com.ozguryazilim.finance.config.FinancePages;
+import com.ozguryazilim.tekir.core.code.AutoCode;
+import com.ozguryazilim.tekir.core.code.AutoCodeService;
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.AccountType;
 import com.ozguryazilim.tekir.entities.FinanceAccount;
@@ -42,7 +44,11 @@ import org.primefaces.model.chart.LineChartSeries;
  * @author oyas
  */
 @FormEdit(feature = FinanceAccountFeature.class)
+@AutoCode(caption = "module.caption.FinanceAccount", size = 3)
 public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
+
+    @Inject 
+    private AutoCodeService codeService;
 
     @Inject
     private FinanceAccountRepository repository;
@@ -52,7 +58,7 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
 
     @Inject
     private Identity identity;
-    
+
     @Inject
     private CurrencyService currencyService;
 
@@ -85,6 +91,7 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
         p.getAccountRoles().add("CASH");
         p.setType(AccountType.CASH);
         p.setOwner(identity.getLoginName());
+        p.setCode(codeService.getNewSerialNumber(FinanceAccountHome.class.getSimpleName()));
         setEntity(p);
         selectedRoles.clear();
         navigationParameterContext.addPageParameter("eid", 0);
@@ -97,6 +104,7 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
         p.getAccountRoles().add("BANK");
         p.setType(AccountType.BANK);
         p.setOwner(identity.getLoginName());
+        p.setCode(codeService.getNewSerialNumber(FinanceAccountHome.class.getSimpleName()));
         setEntity(p);
         selectedRoles.clear();
         navigationParameterContext.addPageParameter("eid", 0);
@@ -109,6 +117,7 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
         p.getAccountRoles().add("CREDIT_CARD");
         p.setType(AccountType.CREDIT_CARD);
         p.setOwner(identity.getLoginName());
+        p.setCode(codeService.getNewSerialNumber(FinanceAccountHome.class.getSimpleName()));
         setEntity(p);
         selectedRoles.clear();
         navigationParameterContext.addPageParameter("eid", 0);
