@@ -24,7 +24,8 @@
                     <t:inputLookupDialog label="general.label.Account" value="#{accountDebitNoteHome.entity.account}" 
                                          lookupBean="#{contactLookup}" lookupListener="accountDebitNoteHome.entity.account" 
                                          lookupProfile="T:Contact;R:ACCOUNT;O:CUSTOMER,VENDOR"
-                                         placeholder="#{messages['general.info.Account']}" />
+                                         placeholder="#{messages['general.info.Account']}" 
+                                         required="true" />
                     <t:inputCurrency label="general.label.Currency" value="#{accountDebitNoteHome.entity.currency}"  required="true" columnClass="col-xs-12"/>
                     <t:inputMoney label="accountDebitNote.label.Amount" value="#{accountDebitNoteHome.entity.amount}"  currency="#{accountDebitNoteHome.entity.currency}" required="true" columnClass="col-xs-12"/>
                 </div>
