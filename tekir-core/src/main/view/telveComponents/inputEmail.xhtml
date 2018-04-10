@@ -1,0 +1,29 @@
+﻿<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:f="http://java.sun.com/jsf/core"
+              xmlns:composite="http://java.sun.com/jsf/composite">
+
+    <composite:interface>
+        <composite:attribute name="value" required="true"/>
+        <composite:attribute name="required" required="false" type="java.lang.Boolean" default="false"/>
+        <composite:attribute name="columnClass" required="false" default="col-md-6 col-xs-12"/>
+        <composite:clientBehavior name="keyup" event="keyup" targets="#{cc.id}_inp"/>
+    </composite:interface>
+
+    <composite:implementation>
+        <div id="#{cc.clientId}" class="prop #{cc.attrs.columnClass}">
+        	<p:outputLabel for="#{cc.id}_inp" value="#{messages['general.label.Email']}" />
+            <span class="value">
+                    <p:inputText id="#{cc.id}_inp" value="#{cc.attrs.value}"
+                                 validatorMessage="#{messages['inputEmail.message.InvalidEmail']}"
+                                 required="#{cc.attrs.required}" autocomplete="off">
+                        <f:validateRegex
+                                pattern="^(|[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z])$"/>
+                    </p:inputText>
+            </span>
+            <p:message id="#{cc.id}_msg" for="#{cc.id}_inp" autoUpdate="true"/>
+        </div>
+    </composite:implementation>
+
+</ui:component>

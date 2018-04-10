@@ -116,4 +116,24 @@
     <changeSet author="oyas (generated)" id="1506243814559-3">
         <addForeignKeyConstraint baseColumnNames="PROCESS_ID" baseTableName="TVO_PROCESS_STAKEHOLDER" constraintName="FK_STAKE_PROCESS" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TVO_PROCESS"/>
     </changeSet>
+    
+    <changeSet author="oktay (generated)" id="1500022081320-1">
+        <createTable tableName="TVO_GROUP_TXN">
+            <column autoIncrement="true" name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="TVO_GROUP_TXNPK"/>
+            </column>
+            <column name="TXNDATE" type="datetime"/>
+            <column name="FEATURE_BK" type="VARCHAR(255)"/>
+            <column name="FEATURE" type="VARCHAR(255)"/>
+            <column name="FEATURE_PK" type="BIGINT"/>
+            <column name="OWNER" type="VARCHAR(255)"/>
+            <column name="TOPIC" type="VARCHAR(255)"/>
+            <column name="GROUP_ID" type="BIGINT"/>
+            <column name="STATE" type="varchar(255)"/>
+            <column name="STATUS" type="varchar(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oktay (generated)" id="1500022081320-3">
+        <addForeignKeyConstraint baseColumnNames="GROUP_ID" baseTableName="TVO_GROUP_TXN" constraintName="FK_TVOTXN_TVO" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TVO_GROUP"/>
+    </changeSet>
 </databaseChangeLog>

@@ -39,7 +39,7 @@ public class Territory extends ParamEntityBase{
     
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Location> locations = new ArrayList<>();
+    private List<TerritoryItem> items = new ArrayList<>();
 
     @Override
     public Long getId() {
@@ -50,12 +50,12 @@ public class Territory extends ParamEntityBase{
         this.id = id;
     }
 
-    public List<Location> getLocations() {
-        return locations;
+    public List<TerritoryItem> getItems() {
+        return items;
     }
 
-    public void setLocations(List<Location> locations) {
-        this.locations = locations;
+    public void setItems(List<TerritoryItem> items) {
+        this.items = items;
     }
     
     

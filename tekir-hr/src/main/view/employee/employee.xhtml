@@ -10,6 +10,12 @@
     <ui:param name="entity" value="#{employeeHome.entity}" />
     <ui:param name="dontShowContentHeader" value="true" />
 
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{employeeHome.id}" />
+            <f:viewAction action="#{employeeHome.initData()}" />
+        </f:metadata>
+    </ui:define>
 
     <ui:define name="customHeader">
         <section class="content-header">

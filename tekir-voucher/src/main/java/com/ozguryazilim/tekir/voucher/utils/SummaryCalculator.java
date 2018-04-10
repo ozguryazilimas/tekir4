@@ -119,7 +119,12 @@ public class SummaryCalculator<E extends VoucherBase, I extends VoucherCommodity
         sm = newSummarySupplier.get();
         sm.setRowKey("DiscountRate");
         sm.setMaster(entity);
-        sm.setAmount(discount.multiply(BigDecimal.valueOf(100)).divide(total, MathContext.DECIMAL32));
+        if (total.equals(BigDecimal.ZERO)){
+            sm.setAmount(BigDecimal.ZERO);
+        }
+        else{
+            sm.setAmount(discount.multiply(BigDecimal.valueOf(100)).divide(total, MathContext.DECIMAL32));
+        }
         summaries.put(sm.getRowKey(), sm);
 
         sm = newSummarySupplier.get();

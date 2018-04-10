@@ -23,14 +23,12 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
+import org.apache.deltaspike.core.api.config.view.navigation.NavigationParameterContext;
 import org.apache.deltaspike.core.api.config.view.navigation.ViewNavigationHandler;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.chart.Axis;
@@ -60,6 +58,10 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
 
     @Inject
     private ViewNavigationHandler viewNavigationHandler;
+    
+    @Inject
+    private NavigationParameterContext navigationParameterContext;
+
 
     private List<String> selectedRoles = new ArrayList<>();
 
@@ -85,6 +87,8 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
         p.setOwner(identity.getLoginName());
         setEntity(p);
         selectedRoles.clear();
+        navigationParameterContext.addPageParameter("eid", 0);
+
         return FinancePages.FinanceAccount.class;
     }
 
@@ -95,6 +99,8 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
         p.setOwner(identity.getLoginName());
         setEntity(p);
         selectedRoles.clear();
+        navigationParameterContext.addPageParameter("eid", 0);
+
         return FinancePages.FinanceAccount.class;
     }
 
@@ -105,6 +111,8 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
         p.setOwner(identity.getLoginName());
         setEntity(p);
         selectedRoles.clear();
+        navigationParameterContext.addPageParameter("eid", 0);
+
         return FinancePages.FinanceAccount.class;
     }
 
