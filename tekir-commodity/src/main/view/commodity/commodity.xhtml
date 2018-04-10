@@ -23,7 +23,7 @@
 		            <t:inputText label="general.label.Name" value="#{commodityHome.entity.name}" required="true" columnClass="col-xs-12"/>
 		            <t:inputLookupDialog label="general.label.Category" value="#{commodityHome.entity.category}" lookupBean="#{commodityCategoryLookup}" lookupListener="commodityHome.entity.category" placeholder="#{messages['general.info.Category']}" columnClass="col-xs-12"/>
 		            
-		            <t:inputLookup label="general.label.UnitSet" value="#{commodityHome.entity.unitSet}" lookupListener="commodityHome.entity.unitSet" lookupBean="#{unitSetDefinitionLookup}" placeholder="#{messages['general.label.UnitSet']}" columnClass="col-md-6 col-xs-12">
+		            <t:inputLookup label="general.label.UnitSet" value="#{commodityHome.entity.unitSet}" lookupListener="commodityHome.entity.unitSet" lookupBean="#{unitSetDefinitionLookup}" placeholder="#{messages['general.label.UnitSet']}" columnClass="col-md-6 col-xs-12" required="true">
 		                <p:ajax event="change" listener="#{commodityHome.onUnitSetChange}" update=":form:baseUnit" process="@this"/>
 		            </t:inputLookup>
             
