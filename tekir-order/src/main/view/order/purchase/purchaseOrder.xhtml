@@ -9,6 +9,13 @@
     <ui:param name="homeBean" value="#{purchaseOrderHome}" />
     <ui:param name="entity" value="#{purchaseOrderHome.entity}" />
 
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{purchaseOrderHome.id}" />
+            <f:viewAction action="#{purchaseOrderHome.initData()}" />
+        </f:metadata>
+    </ui:define>
+    
     <ui:define name="form">
         <div class="row">
 

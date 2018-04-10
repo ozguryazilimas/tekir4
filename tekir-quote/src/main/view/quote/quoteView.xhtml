@@ -16,8 +16,10 @@
     <ui:define name="metadata">
         <f:metadata>
             <f:viewParam name="eid" value="#{quoteHome.id}" />
+            <f:viewAction action="#{quoteHome.initData()}" />
         </f:metadata>
     </ui:define>
+    
 
     <ui:define name="caption-states">
         <t:stateOutputFeatureLink label="general.label.Account" value="#{featureController.getFeatureLink(quoteHome.getAllFeaturePointer(quoteHome.entity.account))}" />

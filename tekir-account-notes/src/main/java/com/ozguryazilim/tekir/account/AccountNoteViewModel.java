@@ -58,6 +58,5 @@ public class AccountNoteViewModel extends VoucherViewModel{
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
-    
-    
+
 }

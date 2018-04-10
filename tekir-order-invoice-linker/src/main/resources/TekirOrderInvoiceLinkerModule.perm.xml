@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<permissions>
+    <permissionGroup name="Sales">
+        <permission name="salesInvoice">
+            <action name="insert" scope="owner,group" order="2" />
+        </permission>
+    </permissionGroup>
+    <permissionGroup name="Purchase">
+        <permission name="purchaseInvoice">
+            <action name="insert" scope="owner,group" order="2" />
+        </permission>
+    </permissionGroup>
+</permissions>

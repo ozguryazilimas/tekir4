@@ -11,6 +11,13 @@
     <ui:param name="dontShowContentHeader" value="true" />
 
 
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{contactHome.id}" />
+            <f:viewAction action="#{contactHome.initData()}" />
+        </f:metadata>
+    </ui:define>
+    
     <ui:define name="customHeader">
         <section class="content-header">
             <ui:fragment rendered="#{viewState ne ''}" >
