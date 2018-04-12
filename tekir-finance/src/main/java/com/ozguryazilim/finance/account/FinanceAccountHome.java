@@ -116,6 +116,16 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
         return FinancePages.FinanceAccount.class;
     }
 
+    private void newAccount(AccountType type) {
+        FinanceAccount p = new FinanceAccount();
+        p.getAccountRoles().add(type.name());
+        p.setType(type);
+        p.setOwner(identity.getLoginName());
+        setEntity(p);
+        selectedRoles.clear();
+        navigationParameterContext.addPageParameter("eid", 0);
+    }
+
     @Override
     public boolean onBeforeSave() {
         //Eğer person ise name alanını düzeltmek lazım

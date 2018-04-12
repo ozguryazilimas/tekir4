@@ -9,7 +9,16 @@ import com.ozguryazilim.tekir.activity.email.imports.model.MeetingFile;
 import com.ozguryazilim.tekir.activity.email.imports.model.MeetingFileParseException;
 import com.ozguryazilim.tekir.contact.ContactRepository;
 import com.ozguryazilim.tekir.contact.information.ContactInformationRepository;
-import com.ozguryazilim.tekir.entities.*;
+import com.ozguryazilim.tekir.entities.AbstractPerson;
+import com.ozguryazilim.tekir.entities.Activity;
+import com.ozguryazilim.tekir.entities.ActivityDirection;
+import com.ozguryazilim.tekir.entities.ActivityMention;
+import com.ozguryazilim.tekir.entities.ActivityStatus;
+import com.ozguryazilim.tekir.entities.Contact;
+import com.ozguryazilim.tekir.entities.ContactEMail;
+import com.ozguryazilim.tekir.entities.Corporation;
+import com.ozguryazilim.tekir.entities.EMailActivity;
+import com.ozguryazilim.tekir.entities.MeetingActivity;
 import com.ozguryazilim.telve.attachment.AttachmentContext;
 import com.ozguryazilim.telve.attachment.AttachmentDocument;
 import com.ozguryazilim.telve.attachment.AttachmentException;
@@ -25,8 +34,11 @@ import com.ozguryazilim.telve.sequence.SequenceManager;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.MalformedURLException;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 import javax.activation.MimeType;
 import javax.activation.MimeTypeParseException;
 import javax.annotation.PostConstruct;
@@ -213,7 +225,7 @@ public class EMailActivityImporter implements Serializable {
         activity.setDate(message.getDate());
         activity.setDueDate(message.getDate());
 
-        activity.setStatus(ActivityStatus.DRAFT);
+        activity.setStatus(ActivityStatus.SUCCESS);
 
         //From/To/CC/BCC ve diğerleri
         activity.setFrom(addressToString(message.getFrom()));
@@ -269,6 +281,8 @@ public class EMailActivityImporter implements Serializable {
         } else {
             //bulunamayanların kime atanacağı kahveden çekiliyor
             activity.setAssignee(kahve.get(MAIL_DEFAULT_USER).getAsString());
+            //kime atanacağı bulunamayan mailler tam ilişkilendirilemediğinden durumu kestirilemiyor yapıyoruz
+            activity.setStatus(ActivityStatus.UNRESOLVED);
         }
 
 

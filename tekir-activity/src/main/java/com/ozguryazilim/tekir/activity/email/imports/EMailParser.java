@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ozguryazilim.tekir.activity.email.imports;
 
 import com.ozguryazilim.tekir.activity.email.imports.model.EMailMessage;
@@ -246,7 +241,7 @@ public class EMailParser {
     }
 
     private List<InternetAddress> toInternetAddressList(Address[] addresses) throws AddressException {
-        if (addresses != null) {
+        if (addresses == null) {
             return new ArrayList<>();
         }
         List<InternetAddress> list = new ArrayList<>(addresses.length);

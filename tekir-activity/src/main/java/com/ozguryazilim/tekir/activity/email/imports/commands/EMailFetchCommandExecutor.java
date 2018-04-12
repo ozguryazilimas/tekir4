@@ -9,7 +9,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 import javax.inject.Inject;
-import javax.mail.*;
+import javax.mail.Flags;
+import javax.mail.Folder;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Store;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,9 +91,9 @@ public class EMailFetchCommandExecutor extends AbstractCommandExecuter<EMailFetc
                 commandSender.sendCommand(importCommand);
                 message.setFlag(Flags.Flag.DELETED, true);
             }
-            if (IMAP.equals(protocol)) {
+            String archiveFolderName = kahve.get(MAIL_ARCHIVE_FOLDER).getAsString();
+            if (IMAP.equals(protocol) && archiveFolderName != null && !archiveFolderName.isEmpty()) {
                 //arşivle
-                String archiveFolderName = kahve.get(MAIL_ARCHIVE_FOLDER).getAsString();
                 Folder archiveFolder = store.getFolder(archiveFolderName);
                 archiveFolder.open(Folder.READ_WRITE);
                 //TODO: direk kafadan arşivledik ama EMailImportCommand işi halledemezse ne olacak?
