@@ -117,6 +117,8 @@ public abstract class AccountTxnRepository extends
 
     public abstract List<AccountTxn> findByProcessId(String processId);
 
+    public abstract List<AccountTxn> findByAccountAndDateBetweenOrderByDate(Contact account, Date beginDate, Date endDate );
+    
     public List<AccountTxn> findOpenTxnsByAccount(Contact account) {
         Criteria<AccountTxn, AccountTxn> crit = criteria()
                 .eq(AccountTxn_.account, account)
