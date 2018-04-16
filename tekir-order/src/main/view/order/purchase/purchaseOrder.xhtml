@@ -24,7 +24,8 @@
                     <t:inputLookupDialog label="general.label.Account" value="#{purchaseOrderHome.account}" 
                                          lookupBean="#{contactLookup}" lookupListener="purchaseOrderHome.account" 
                                          lookupProfile="R:ACCOUNT;S:VENDOR"
-                                         placeholder="#{messages['general.info.Account']}" update=":form:prss" columnClass="col-xs-12"/>
+                                         placeholder="#{messages['general.info.Account']}" update=":form:prss"
+                                         required="true" columnClass="col-xs-12"/>
                     
                     <t:inputText label="voucher.label.Topic" value="#{purchaseOrderHome.entity.topic}"  required="true" columnClass="col-xs-12"/>
                     
