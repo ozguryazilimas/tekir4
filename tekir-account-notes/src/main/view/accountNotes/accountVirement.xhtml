@@ -29,7 +29,7 @@
                                          lookupBean="#{contactLookup}" lookupListener="accountVirementHome.entity.toAccount" 
                                          lookupProfile="R:ACCOUNT;O:CUSTOMER,VENDOR"
                                          placeholder="#{messages['general.info.Account']}" />
-                    <t:inputText label="voucher.label.Topic" value="#{accountVirementHome.entity.topic}"  required="false" columnClass="col-xs-12"/>
+                    <t:inputText label="voucher.label.Topic" value="#{accountVirementHome.entity.topic}"  required="true" columnClass="col-xs-12"/>
                     <t:inputTextarea label="general.label.Info" value="#{accountVirementHome.entity.info}" columnClass="col-xs-12"/>
                     <t:inputCurrency label="general.label.Currency" value="#{accountVirementHome.entity.currency}"  required="true" />
                     <t:inputMoney label="accountVirement.label.Amount" value="#{accountVirementHome.entity.amount}"  currency="#{accountVirementHome.entity.currency}" required="true" />
