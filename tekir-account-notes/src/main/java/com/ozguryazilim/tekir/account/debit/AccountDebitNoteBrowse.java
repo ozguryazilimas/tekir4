@@ -50,6 +50,7 @@ public class AccountDebitNoteBrowse extends VoucherBrowseBase<AccountDebitNote, 
         queryDefinition
                 .addColumn(new DateColumn<>(VoucherBase_.date, "general.label.Date"), true)
                 .addColumn(new LinkColumn<>(VoucherBase_.voucherNo, "voucher.label.VoucherNo"), true)
+                .addColumn(new TextColumn<>(VoucherBase_.topic, "voucher.label.Topic"), true)
                 .addColumn(new SubTextColumn<>(AccountDebitNote_.account, Contact_.name, "general.label.Account"), true)
                 .addColumn(new TextColumn<>(VoucherBase_.info, "general.label.Info"), true)
                 .addColumn(new TextColumn<>(VoucherBase_.code, "general.label.Code"), false)
