@@ -1,0 +1,25 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/dynamicReportBase.xhtml">
+
+    <ui:param name="title" value="report.name.AccountStatusReport" />
+    <ui:param name="bean" value="#{accountStatusDynaReport}" />
+    <ui:param name="supportCSV" value="true" />
+    <ui:param name="supportXLS" value="true" />
+
+    <ui:define name="filter">
+        <div class="row" >
+            <t:inputText value="#{accountStatusDynaReport.filter.code}" label="general.label.Code" columnClass="col-xs-6" />
+            <t:inputText value="#{accountStatusDynaReport.filter.name}" label="general.label.Name" columnClass="col-xs-6" />
+            <t:inputLookupDialog label="contact.label.CorparationType" value="#{accountStatusDynaReport.filter.corporationType}" lookupBean="#{corporationTypeLookup}" lookupListener="accountStatusDynaReport.filter.corporationType" placeholder="#{messages['contact.info.CorporationType']}" />
+            <t:inputLookupDialog label="general.label.Category" value="#{accountStatusDynaReport.filter.contactCategory}" lookupBean="#{contactCategoryLookup}" lookupListener="accountStatusDynaReport.filter.contactCategory" placeholder="#{messages['general.info.Category']}" />
+            <t:inputLookupDialog label="general.label.Industry" value="#{accountStatusDynaReport.filter.industry}" lookupBean="#{industryLookup}" lookupListener="accountStatusDynaReport.filter.industry" placeholder="#{messages['general.info.Industry']}" />
+            <t:inputLookupDialog label="general.label.Territory" value="#{accountStatusDynaReport.filter.territory}" lookupBean="#{territoryLookup}" lookupListener="accountStatusDynaReport.filter.territory" placeholder="#{messages['general.info.Territory']}" />
+            <t:inputReportDate value="#{accountStatusDynaReport.filter.date}" label="general.label.Date" columnClass="col-xs-6" />
+        </div>
+    </ui:define>
+</ui:composition>

@@ -163,6 +163,18 @@ public interface ContactPages extends Pages {
 	class AccountStatusReport implements ContactPages {
 	}
         
+        @SecuredPage
+	@View
+	@PageTitle("report.name.accountStatementReport")
+	class AccountStatementReport implements ContactPages {
+	}
+        
+        @SecuredPage
+	@View
+	@PageTitle("report.name.accountStatusReport")
+	class AccountStatusDynaReport implements ContactPages {
+	}
+        
         @SecuredPage @View
         class QuickPersonPanel implements ContactPages {	}
         

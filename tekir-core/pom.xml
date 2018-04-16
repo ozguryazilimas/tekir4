@@ -38,6 +38,21 @@
         </dependency>
         <dependency>
             <groupId>com.ozguryazilim.mutfak</groupId>
+            <artifactId>telve-jasperreports</artifactId>
+            <version>${version.telve}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ozguryazilim.mutfak</groupId>
+            <artifactId>telve-admin-reports</artifactId>
+            <version>${version.telve}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ozguryazilim.mutfak</groupId>
+            <artifactId>telve-idm-reports</artifactId>
+            <version>${version.telve}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ozguryazilim.mutfak</groupId>
             <artifactId>telve-calendar</artifactId>
             <version>${version.telve}</version>
         </dependency>
