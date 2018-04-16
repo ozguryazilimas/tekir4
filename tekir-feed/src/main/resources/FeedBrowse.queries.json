@@ -1,421 +1,772 @@
 [
-    {
-        "name": "Açık (Tarihe göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["type", "feeder", "user", "date", "subject", "body"],
-        "filters": ["type", "feeder", "user", "date", "subject", "body"],
-        "filterValues": {
-            "date": "All::LastMonth::20170601T0000::Today::20170630T0000",
-            "feeder": "All::",
-            "subject": "All::",
-            "type": "Equal::OPEN",
-            "body": "All::",
-            "user": "All::"
-        },
-        "sorters": ["date"],
-        "sorterValues": {
-            "date": "D"
-        }
+  {
+    "name": "query.FeedBrowse.Open",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filters": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filterValues": {
+      "date": "All::LastMonth::20170601T0000::Today::20170630T0000",
+      "feeder": "All::",
+      "subject": "All::",
+      "type": "Equal::OPEN",
+      "body": "All::",
+      "user": "All::"
     },
-    {
-        "name": "Aktiviteler (Tarihe göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["type", "feeder", "user", "date", "subject", "body"],
-        "filters": ["type", "feeder", "user", "date", "subject", "body"],
-        "filterValues": {
-            "date": "All::TenDaysBefore::20170708T0000::Today::20170718T0000",
-            "feeder": "Contains::ActivityFeeder",
-            "subject": "All::null",
-            "type": "All::null",
-            "body": "All::null",
-            "user": "All::null"
-        },
-        "sorters": ["type"],
-        "sorterValues": {
-            "type": "D"
-        }
-    },
-    {
-        "name": "Alıntılar (Tarihe göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["type", "feeder", "user", "date", "subject", "body"],
-        "filters": ["type", "feeder", "user", "date", "subject", "body"],
-        "filterValues": {
-            "date": "All::Today::20170718T0000::Today::20170718T0000",
-            "feeder": "Equal::QuoteFeeder",
-            "subject": "All::",
-            "type": "All::Open",
-            "body": "All::",
-            "user": "All::"
-        },
-        "sorters": ["date"],
-        "sorterValues": {
-            "date": "D"
-        }
-    },
-    {
-        "name": "Başarılı (Tarihe göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["type", "feeder", "user", "date", "subject", "body"],
-        "filters": ["type", "feeder", "user", "date", "subject", "body"],
-        "filterValues": {
-            "date": "All::LastMonth::20170601T0000::Today::20170630T0000",
-            "feeder": "All::",
-            "subject": "All::",
-            "type": "Equal::WON",
-            "body": "All::",
-            "user": "All::"
-        },
-        "sorters": ["date"],
-        "sorterValues": {
-            "date": "D"
-        }
-    },
-    {
-        "name": "Başarısız (Tarihe göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["type", "feeder", "user", "date", "subject", "body"],
-        "filters": ["type", "feeder", "user", "date", "subject", "body"],
-        "filterValues": {
-            "date": "All::LastMonth::20170601T0000::Today::20170630T0000",
-            "feeder": "All::",
-            "subject": "All::",
-            "type": "Equal::LOSS",
-            "body": "All::",
-            "user": "All::"
-        },
-        "sorters": ["date"],
-        "sorterValues": {
-            "date": "D"
-        }
-    },
-    {
-        "name": "Bugün (Tarihe göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["type", "feeder", "user", "date", "subject", "body"],
-        "filters": ["type", "feeder", "user", "date", "subject", "body"],
-        "filterValues": {
-            "date": "GreaterOrEqual::Today::20170718T0000::Today::20170630T0000",
-            "feeder": "All::",
-            "subject": "All::",
-            "type": "All::CREATE",
-            "body": "All::",
-            "user": "All::"
-        },
-        "sorters": ["date"],
-        "sorterValues": {
-            "date": "D"
-        }
-    },
-    {
-        "name": "Faturalar (Tarihe göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["type", "feeder", "user", "date", "subject", "body"],
-        "filters": ["type", "feeder", "user", "date", "subject", "body"],
-        "filterValues": {
-            "date": "All::TenDaysBefore::20170708T0000::Today::20170718T0000",
-            "feeder": "Contains::Invoice",
-            "subject": "All::null",
-            "type": "All::null",
-            "body": "All::null",
-            "user": "All::null"
-        },
-        "sorters": ["type"],
-        "sorterValues": {
-            "type": "D"
-        }
-    },
-    {
-        "name": "Fırsatlar (Tarihe göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["type", "feeder", "user", "date", "subject", "body"],
-        "filters": ["type", "feeder", "user", "date", "subject", "body"],
-        "filterValues": {
-            "date": "All::Today::20170718T0000::Today::20170718T0000",
-            "feeder": "Equal::OpportunityFeeder",
-            "subject": "All::",
-            "type": "All::Open",
-            "body": "All::",
-            "user": "All::"
-        },
-        "sorters": ["date"],
-        "sorterValues": {
-            "date": "D"
-        }
-    },
-    {
-        "name": "Finans (Tarihe göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["type", "feeder", "user", "date", "subject", "body"],
-        "filters": ["type", "feeder", "user", "date", "subject", "body"],
-        "filterValues": {
-            "date": "All::TenDaysBefore::20170708T0000::Today::20170718T0000",
-            "feeder": "Contains::Finance",
-            "subject": "All::null",
-            "type": "All::null",
-            "body": "All::null",
-            "user": "All::null"
-        },
-        "sorters": ["type"],
-        "sorterValues": {
-            "type": "D"
-        }
-    },
-    {
-        "name": "Gelen (Tarihe göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["type", "feeder", "user", "date", "subject", "body"],
-        "filters": ["type", "feeder", "user", "date", "subject", "body"],
-        "filterValues": {
-            "date": "All::LastMonth::20170601T0000::Today::20170630T0000",
-            "feeder": "All::",
-            "subject": "All::",
-            "type": "Equal::INCOMING",
-            "body": "All::",
-            "user": "All::"
-        },
-        "sorters": ["date"],
-        "sorterValues": {
-            "date": "D"
-        }
-    },
-    {
-        "name": "Giden (Tarihe göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["type", "feeder", "user", "date", "subject", "body"],
-        "filters": ["type", "feeder", "user", "date", "subject", "body"],
-        "filterValues": {
-            "date": "All::LastMonth::20170601T0000::Today::20170630T0000",
-            "feeder": "All::",
-            "subject": "All::",
-            "type": "Equal::OUTGOING",
-            "body": "All::",
-            "user": "All::"
-        },
-        "sorters": ["date"],
-        "sorterValues": {
-            "date": "D"
-        }
-    },
-    {
-        "name": "Hepsi (Tarihe göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["type", "feeder", "user", "date", "subject", "body"],
-        "filters": ["type", "feeder", "user", "date", "subject", "body"],
-        "filterValues": {
-            "date": "All::LastMonth::20170601T0000::Today::20170630T0000",
-            "feeder": "All::",
-            "subject": "All::",
-            "type": "All::Open",
-            "body": "All::",
-            "user": "All::"
-        },
-        "sorters": ["date"],
-        "sorterValues": {
-            "date": "D"
-        }
-    },
-    {
-        "name": "İptal (Tarihe göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["type", "feeder", "user", "date", "subject", "body"],
-        "filters": ["type", "feeder", "user", "date", "subject", "body"],
-        "filterValues": {
-            "date": "All::LastMonth::20170601T0000::Today::20170630T0000",
-            "feeder": "All::",
-            "subject": "All::",
-            "type": "Equal::CANCEL",
-            "body": "All::",
-            "user": "All::"
-        },
-        "sorters": ["date"],
-        "sorterValues": {
-            "date": "D"
-        }
-    },
-    {
-        "name": "İpuçları (Tarihe göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["type", "feeder", "user", "date", "subject", "body"],
-        "filters": ["type", "feeder", "user", "date", "subject", "body"],
-        "filterValues": {
-            "date": "All::Today::20170718T0000::Today::20170718T0000",
-            "feeder": "Equal::LeadFeeder",
-            "subject": "All::",
-            "type": "All::Open",
-            "body": "All::",
-            "user": "All::"
-        },
-        "sorters": ["date"],
-        "sorterValues": {
-            "date": "D"
-        }
-    },
-    {
-        "name": "Normal (Tarihe göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["type", "feeder", "user", "date", "subject", "body"],
-        "filters": ["type", "feeder", "user", "date", "subject", "body"],
-        "filterValues": {
-            "date": "All::LastMonth::20170601T0000::Today::20170630T0000",
-            "feeder": "All::",
-            "subject": "All::",
-            "type": "Equal::NORMAL",
-            "body": "All::",
-            "user": "All::"
-        },
-        "sorters": ["date"],
-        "sorterValues": {
-            "date": "D"
-        }
-    },
-    {
-        "name": "Notlar (Tarihe göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["type", "feeder", "user", "date", "subject", "body"],
-        "filters": ["type", "feeder", "user", "date", "subject", "body"],
-        "filterValues": {
-            "date": "All::TenDaysBefore::20170708T0000::Today::20170718T0000",
-            "feeder": "Equal::NoteFeeder",
-            "subject": "All::null",
-            "type": "All::null",
-            "body": "All::null",
-            "user": "All::null"
-        },
-        "sorters": ["type"],
-        "sorterValues": {
-            "type": "D"
-        }
-    },
-    {
-        "name": "Ödemeler (Tarihe göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["type", "feeder", "user", "date", "subject", "body"],
-        "filters": ["type", "feeder", "user", "date", "subject", "body"],
-        "filterValues": {
-            "date": "All::LastMonth::20170601T0000::Today::20170630T0000",
-            "feeder": "Contains::Payment",
-            "subject": "All::null",
-            "type": "All::null",
-            "body": "All::null",
-            "user": "All::null"
-        },
-        "sorters": ["date"],
-        "sorterValues": {
-            "date": "D"
-        }
-    },
-    {
-        "name": "Revizyon (Tarihe göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["type", "feeder", "user", "date", "subject", "body"],
-        "filters": ["type", "feeder", "user", "date", "subject", "body"],
-        "filterValues": {
-            "date": "All::LastMonth::20170601T0000::Today::20170630T0000",
-            "feeder": "All::",
-            "subject": "All::",
-            "type": "Equal::REVISE",
-            "body": "All::",
-            "user": "All::"
-        },
-        "sorters": ["date"],
-        "sorterValues": {
-            "date": "D"
-        }
-    },
-    {
-        "name": "Siparişler (Tarihe göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["type", "feeder", "user", "date", "subject", "body"],
-        "filters": ["type", "feeder", "user", "date", "subject", "body"],
-        "filterValues": {
-            "date": "All::Today::20170718T0000::Today::20170718T0000",
-            "feeder": "Contains::Order",
-            "subject": "All::",
-            "type": "All::Open",
-            "body": "All::",
-            "user": "All::"
-        },
-        "sorters": ["date"],
-        "sorterValues": {
-            "date": "D"
-        }
-    },
-    {
-        "name": "Son 10 gün (Tarihe göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["type", "feeder", "user", "date", "subject", "body"],
-        "filters": ["type", "feeder", "user", "date", "subject", "body"],
-        "filterValues": {
-            "date": "In::LastTenDays::20170708T0000::Today::20170718T0000",
-            "feeder": "All::",
-            "subject": "All::",
-            "type": "All::CREATE",
-            "body": "All::",
-            "user": "All::"
-        },
-        "sorters": ["date"],
-        "sorterValues": {
-            "date": "D"
-        }
-    },
-    {
-        "name": "Tamamlanan (Tarihe göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["type", "feeder", "user", "date", "subject", "body"],
-        "filters": ["type", "feeder", "user", "date", "subject", "body"],
-        "filterValues": {
-            "date": "All::LastMonth::20170601T0000::Today::20170630T0000",
-            "feeder": "All::",
-            "subject": "All::",
-            "type": "Equal::COMPLETE",
-            "body": "All::",
-            "user": "All::"
-        },
-        "sorters": ["date"],
-        "sorterValues": {
-            "date": "D"
-        }
-    },
-    {
-        "name": "Taslak (Tarihe göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["type", "feeder", "user", "date", "subject", "body"],
-        "filters": ["type", "feeder", "user", "date", "subject", "body"],
-        "filterValues": {
-            "date": "All::LastMonth::20170601T0000::Today::20170630T0000",
-            "feeder": "All::",
-            "subject": "All::",
-            "type": "Equal::DRAFT",
-            "body": "All::",
-            "user": "All::"
-        },
-        "sorters": ["date"],
-        "sorterValues": {
-            "date": "D"
-        }
+    "sorters": [
+      "date"
+    ],
+    "sorterValues": {
+      "date": "D"
     }
-
+  },
+  {
+    "name": "query.FeedBrowse.Activities",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filters": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filterValues": {
+      "date": "All::TenDaysBefore::20170708T0000::Today::20170718T0000",
+      "feeder": "Contains::ActivityFeeder",
+      "subject": "All::null",
+      "type": "All::null",
+      "body": "All::null",
+      "user": "All::null"
+    },
+    "sorters": [
+      "type"
+    ],
+    "sorterValues": {
+      "type": "D"
+    }
+  },
+  {
+    "name": "query.FeedBrowse.Quotes",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filters": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filterValues": {
+      "date": "All::Today::20170718T0000::Today::20170718T0000",
+      "feeder": "Equal::QuoteFeeder",
+      "subject": "All::",
+      "type": "All::Open",
+      "body": "All::",
+      "user": "All::"
+    },
+    "sorters": [
+      "date"
+    ],
+    "sorterValues": {
+      "date": "D"
+    }
+  },
+  {
+    "name": "query.FeedBrowse.Successful",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filters": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filterValues": {
+      "date": "All::LastMonth::20170601T0000::Today::20170630T0000",
+      "feeder": "All::",
+      "subject": "All::",
+      "type": "Equal::WON",
+      "body": "All::",
+      "user": "All::"
+    },
+    "sorters": [
+      "date"
+    ],
+    "sorterValues": {
+      "date": "D"
+    }
+  },
+  {
+    "name": "query.FeedBrowse.Unsuccessful",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filters": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filterValues": {
+      "date": "All::LastMonth::20170601T0000::Today::20170630T0000",
+      "feeder": "All::",
+      "subject": "All::",
+      "type": "Equal::LOSS",
+      "body": "All::",
+      "user": "All::"
+    },
+    "sorters": [
+      "date"
+    ],
+    "sorterValues": {
+      "date": "D"
+    }
+  },
+  {
+    "name": "query.FeedBrowse.Today",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filters": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filterValues": {
+      "date": "GreaterOrEqual::Today::20170718T0000::Today::20170630T0000",
+      "feeder": "All::",
+      "subject": "All::",
+      "type": "All::CREATE",
+      "body": "All::",
+      "user": "All::"
+    },
+    "sorters": [
+      "date"
+    ],
+    "sorterValues": {
+      "date": "D"
+    }
+  },
+  {
+    "name": "query.FeedBrowse.Invoices",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filters": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filterValues": {
+      "date": "All::TenDaysBefore::20170708T0000::Today::20170718T0000",
+      "feeder": "Contains::Invoice",
+      "subject": "All::null",
+      "type": "All::null",
+      "body": "All::null",
+      "user": "All::null"
+    },
+    "sorters": [
+      "type"
+    ],
+    "sorterValues": {
+      "type": "D"
+    }
+  },
+  {
+    "name": "query.FeedBrowse.Opportunities",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filters": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filterValues": {
+      "date": "All::Today::20170718T0000::Today::20170718T0000",
+      "feeder": "Equal::OpportunityFeeder",
+      "subject": "All::",
+      "type": "All::Open",
+      "body": "All::",
+      "user": "All::"
+    },
+    "sorters": [
+      "date"
+    ],
+    "sorterValues": {
+      "date": "D"
+    }
+  },
+  {
+    "name": "query.FeedBrowse.Finance",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filters": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filterValues": {
+      "date": "All::TenDaysBefore::20170708T0000::Today::20170718T0000",
+      "feeder": "Contains::Finance",
+      "subject": "All::null",
+      "type": "All::null",
+      "body": "All::null",
+      "user": "All::null"
+    },
+    "sorters": [
+      "type"
+    ],
+    "sorterValues": {
+      "type": "D"
+    }
+  },
+  {
+    "name": "query.FeedBrowse.Incoming",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filters": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filterValues": {
+      "date": "All::LastMonth::20170601T0000::Today::20170630T0000",
+      "feeder": "All::",
+      "subject": "All::",
+      "type": "Equal::INCOMING",
+      "body": "All::",
+      "user": "All::"
+    },
+    "sorters": [
+      "date"
+    ],
+    "sorterValues": {
+      "date": "D"
+    }
+  },
+  {
+    "name": "query.FeedBrowse.Outgoing",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filters": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filterValues": {
+      "date": "All::LastMonth::20170601T0000::Today::20170630T0000",
+      "feeder": "All::",
+      "subject": "All::",
+      "type": "Equal::OUTGOING",
+      "body": "All::",
+      "user": "All::"
+    },
+    "sorters": [
+      "date"
+    ],
+    "sorterValues": {
+      "date": "D"
+    }
+  },
+  {
+    "name": "query.FeedBrowse.All",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filters": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filterValues": {
+      "date": "All::LastMonth::20170601T0000::Today::20170630T0000",
+      "feeder": "All::",
+      "subject": "All::",
+      "type": "All::Open",
+      "body": "All::",
+      "user": "All::"
+    },
+    "sorters": [
+      "date"
+    ],
+    "sorterValues": {
+      "date": "D"
+    }
+  },
+  {
+    "name": "query.FeedBrowse.Canceled",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filters": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filterValues": {
+      "date": "All::LastMonth::20170601T0000::Today::20170630T0000",
+      "feeder": "All::",
+      "subject": "All::",
+      "type": "Equal::CANCEL",
+      "body": "All::",
+      "user": "All::"
+    },
+    "sorters": [
+      "date"
+    ],
+    "sorterValues": {
+      "date": "D"
+    }
+  },
+  {
+    "name": "query.FeedBrowse.Leads",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filters": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filterValues": {
+      "date": "All::Today::20170718T0000::Today::20170718T0000",
+      "feeder": "Equal::LeadFeeder",
+      "subject": "All::",
+      "type": "All::Open",
+      "body": "All::",
+      "user": "All::"
+    },
+    "sorters": [
+      "date"
+    ],
+    "sorterValues": {
+      "date": "D"
+    }
+  },
+  {
+    "name": "query.FeedBrowse.Normal",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filters": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filterValues": {
+      "date": "All::LastMonth::20170601T0000::Today::20170630T0000",
+      "feeder": "All::",
+      "subject": "All::",
+      "type": "Equal::NORMAL",
+      "body": "All::",
+      "user": "All::"
+    },
+    "sorters": [
+      "date"
+    ],
+    "sorterValues": {
+      "date": "D"
+    }
+  },
+  {
+    "name": "query.FeedBrowse.Notes",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filters": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filterValues": {
+      "date": "All::TenDaysBefore::20170708T0000::Today::20170718T0000",
+      "feeder": "Equal::NoteFeeder",
+      "subject": "All::null",
+      "type": "All::null",
+      "body": "All::null",
+      "user": "All::null"
+    },
+    "sorters": [
+      "type"
+    ],
+    "sorterValues": {
+      "type": "D"
+    }
+  },
+  {
+    "name": "query.FeedBrowse.Payments",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filters": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filterValues": {
+      "date": "All::LastMonth::20170601T0000::Today::20170630T0000",
+      "feeder": "Contains::Payment",
+      "subject": "All::null",
+      "type": "All::null",
+      "body": "All::null",
+      "user": "All::null"
+    },
+    "sorters": [
+      "date"
+    ],
+    "sorterValues": {
+      "date": "D"
+    }
+  },
+  {
+    "name": "query.FeedBrowse.Revise",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filters": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filterValues": {
+      "date": "All::LastMonth::20170601T0000::Today::20170630T0000",
+      "feeder": "All::",
+      "subject": "All::",
+      "type": "Equal::REVISE",
+      "body": "All::",
+      "user": "All::"
+    },
+    "sorters": [
+      "date"
+    ],
+    "sorterValues": {
+      "date": "D"
+    }
+  },
+  {
+    "name": "query.FeedBrowse.Orders",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filters": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filterValues": {
+      "date": "All::Today::20170718T0000::Today::20170718T0000",
+      "feeder": "Contains::Order",
+      "subject": "All::",
+      "type": "All::Open",
+      "body": "All::",
+      "user": "All::"
+    },
+    "sorters": [
+      "date"
+    ],
+    "sorterValues": {
+      "date": "D"
+    }
+  },
+  {
+    "name": "query.FeedBrowse.LastTenDays",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filters": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filterValues": {
+      "date": "In::LastTenDays::20170708T0000::Today::20170718T0000",
+      "feeder": "All::",
+      "subject": "All::",
+      "type": "All::CREATE",
+      "body": "All::",
+      "user": "All::"
+    },
+    "sorters": [
+      "date"
+    ],
+    "sorterValues": {
+      "date": "D"
+    }
+  },
+  {
+    "name": "query.FeedBrowse.Completed",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filters": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filterValues": {
+      "date": "All::LastMonth::20170601T0000::Today::20170630T0000",
+      "feeder": "All::",
+      "subject": "All::",
+      "type": "Equal::COMPLETE",
+      "body": "All::",
+      "user": "All::"
+    },
+    "sorters": [
+      "date"
+    ],
+    "sorterValues": {
+      "date": "D"
+    }
+  },
+  {
+    "name": "query.FeedBrowse.Draft",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filters": [
+      "type",
+      "feeder",
+      "user",
+      "date",
+      "subject",
+      "body"
+    ],
+    "filterValues": {
+      "date": "All::LastMonth::20170601T0000::Today::20170630T0000",
+      "feeder": "All::",
+      "subject": "All::",
+      "type": "Equal::DRAFT",
+      "body": "All::",
+      "user": "All::"
+    },
+    "sorters": [
+      "date"
+    ],
+    "sorterValues": {
+      "date": "D"
+    }
+  }
 ]

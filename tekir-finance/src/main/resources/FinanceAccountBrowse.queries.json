@@ -1,0 +1,19 @@
+[
+  {
+    "name": "query.FinanceAccountBrowse.sortedByName",
+    "resultLimit": 100,
+    "rowLimit": 20,
+    "columns": [
+      "code",
+      "name"
+    ],
+    "filters": [],
+    "filterValues": {},
+    "sorters": [
+      "name"
+    ],
+    "sorterValues": {
+      "name": "A"
+    }
+  }
+]

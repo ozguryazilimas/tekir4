@@ -1,14 +1,15 @@
 [
   {
-    "name": "query.QuoteBrowse.Open",
+    "name": "query.PaymentBrowse.All",
     "resultLimit": 100,
     "rowLimit": 20,
     "columns": [
       "voucherNo",
       "account",
+      "financeAccount",
       "topic",
       "date",
-      "total",
+      "amount",
       "owner"
     ],
     "filters": [
@@ -20,160 +21,18 @@
       "state",
       "stateReason",
       "owner",
-      "total",
+      "amount",
       "account",
+      "financeAccount",
       "process",
       "date"
     ],
     "filterValues": {
       "voucherNo": "All::null",
       "owner": "All::",
-      "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
-      "total": "All::0",
-      "process": "All::null",
-      "code": "All::null",
-      "topic": "All::null",
-      "state": "Equal::OPEN-NEUTRAL-OPEN",
-      "stateReason": "All::null",
-      "account": "All::null",
-      "info": "All::null"
-    },
-    "sorters": [
-      "date",
-      "voucherNo"
-    ],
-    "sorterValues": {
-      "date": "D",
-      "voucherNo": "D"
-    }
-  },
-  {
-    "name": "query.QuoteBrowse.Successful",
-    "resultLimit": 100,
-    "rowLimit": 20,
-    "columns": [
-      "voucherNo",
-      "account",
-      "topic",
-      "date",
-      "total",
-      "owner"
-    ],
-    "filters": [
-      "voucherNo",
-      "code",
-      "info",
-      "topic",
-      "state",
-      "state",
-      "stateReason",
-      "owner",
-      "total",
-      "account",
-      "process",
-      "date"
-    ],
-    "filterValues": {
-      "voucherNo": "All::null",
-      "owner": "All::",
-      "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
-      "total": "All::0",
-      "process": "All::null",
-      "code": "All::null",
-      "topic": "All::null",
-      "state": "Equal::CLOSE-POSITIVE-WON",
-      "stateReason": "All::null",
-      "account": "All::null",
-      "info": "All::null"
-    },
-    "sorters": [
-      "date",
-      "voucherNo"
-    ],
-    "sorterValues": {
-      "date": "D",
-      "voucherNo": "D"
-    }
-  },
-  {
-    "name": "query.QuoteBrowse.Unsuccessful",
-    "resultLimit": 100,
-    "rowLimit": 20,
-    "columns": [
-      "voucherNo",
-      "account",
-      "topic",
-      "date",
-      "total",
-      "owner"
-    ],
-    "filters": [
-      "voucherNo",
-      "code",
-      "info",
-      "topic",
-      "state",
-      "state",
-      "stateReason",
-      "owner",
-      "total",
-      "account",
-      "process",
-      "date"
-    ],
-    "filterValues": {
-      "voucherNo": "All::null",
-      "owner": "All::",
-      "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
-      "total": "All::0",
-      "process": "All::null",
-      "code": "All::null",
-      "topic": "All::null",
-      "state": "Equal::CLOSE-NEGATIVE-LOSS",
-      "stateReason": "All::null",
-      "account": "All::null",
-      "info": "All::null"
-    },
-    "sorters": [
-      "date",
-      "voucherNo"
-    ],
-    "sorterValues": {
-      "date": "D",
-      "voucherNo": "D"
-    }
-  },
-  {
-    "name": "query.QuoteBrowse.Today",
-    "resultLimit": 100,
-    "rowLimit": 20,
-    "columns": [
-      "voucherNo",
-      "account",
-      "topic",
-      "date",
-      "total",
-      "owner"
-    ],
-    "filters": [
-      "voucherNo",
-      "code",
-      "info",
-      "topic",
-      "state",
-      "state",
-      "stateReason",
-      "owner",
-      "total",
-      "account",
-      "process",
-      "date"
-    ],
-    "filterValues": {
-      "voucherNo": "All::null",
-      "owner": "All::",
-      "date": "Equal::Today::20170718T0000::Today::20170718T0000",
-      "total": "All::0",
+      "date": "All::LastTenDays::20180326T0000::Today::20180405T0000",
+      "amount": "All::0",
+      "financeAccount": "All::null",
       "process": "All::null",
       "code": "All::null",
       "topic": "All::null",
@@ -192,15 +51,16 @@
     }
   },
   {
-    "name": "query.QuoteBrowse.All",
+    "name": "query.PaymentBrowse.Draft",
     "resultLimit": 100,
     "rowLimit": 20,
     "columns": [
       "voucherNo",
       "account",
+      "financeAccount",
       "topic",
       "date",
-      "total",
+      "amount",
       "owner"
     ],
     "filters": [
@@ -212,20 +72,22 @@
       "state",
       "stateReason",
       "owner",
-      "total",
+      "amount",
       "account",
+      "financeAccount",
       "process",
       "date"
     ],
     "filterValues": {
       "voucherNo": "All::null",
       "owner": "All::",
-      "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
-      "total": "All::0",
+      "date": "All::LastTenDays::20180326T0000::Today::20180405T0000",
+      "amount": "All::0",
+      "financeAccount": "All::null",
       "process": "All::null",
       "code": "All::null",
       "topic": "All::null",
-      "state": "All::null",
+      "state": "Equal::DRAFT-NEUTRAL-DRAFT",
       "stateReason": "All::null",
       "account": "All::null",
       "info": "All::null"
@@ -240,15 +102,16 @@
     }
   },
   {
-    "name": "query.QuoteBrowse.AllReverseSortedByTotal",
+    "name": "query.PaymentBrowse.Revise",
     "resultLimit": 100,
     "rowLimit": 20,
     "columns": [
       "voucherNo",
       "account",
+      "financeAccount",
       "topic",
       "date",
-      "total",
+      "amount",
       "owner"
     ],
     "filters": [
@@ -260,41 +123,46 @@
       "state",
       "stateReason",
       "owner",
-      "total",
+      "amount",
       "account",
+      "financeAccount",
       "process",
       "date"
     ],
     "filterValues": {
       "voucherNo": "All::null",
       "owner": "All::",
-      "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
-      "total": "All::0",
+      "date": "All::LastTenDays::20180326T0000::Today::20180405T0000",
+      "amount": "All::0",
+      "financeAccount": "All::null",
       "process": "All::null",
       "code": "All::null",
       "topic": "All::null",
-      "state": "All::null",
+      "state": "Equal::DRAFT-NEUTRAL-REVISE",
       "stateReason": "All::null",
       "account": "All::null",
       "info": "All::null"
     },
     "sorters": [
-      "total"
+      "date",
+      "voucherNo"
     ],
     "sorterValues": {
-      "total": "D"
+      "date": "D",
+      "voucherNo": "D"
     }
   },
   {
-    "name": "query.QuoteBrowse.Closed",
+    "name": "query.PaymentBrowse.Close",
     "resultLimit": 100,
     "rowLimit": 20,
     "columns": [
       "voucherNo",
       "account",
+      "financeAccount",
       "topic",
       "date",
-      "total",
+      "amount",
       "owner"
     ],
     "filters": [
@@ -306,16 +174,18 @@
       "state",
       "stateReason",
       "owner",
-      "total",
+      "amount",
       "account",
+      "financeAccount",
       "process",
       "date"
     ],
     "filterValues": {
       "voucherNo": "All::null",
       "owner": "All::",
-      "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
-      "total": "All::0",
+      "date": "All::LastTenDays::20180326T0000::Today::20180405T0000",
+      "amount": "All::0",
+      "financeAccount": "All::null",
       "process": "All::null",
       "code": "All::null",
       "topic": "All::null",
@@ -334,15 +204,16 @@
     }
   },
   {
-    "name": "query.QuoteBrowse.LastTenDays",
+    "name": "query.PaymentBrowse.Today",
     "resultLimit": 100,
     "rowLimit": 20,
     "columns": [
       "voucherNo",
       "account",
+      "financeAccount",
       "topic",
       "date",
-      "total",
+      "amount",
       "owner"
     ],
     "filters": [
@@ -354,16 +225,18 @@
       "state",
       "stateReason",
       "owner",
-      "total",
+      "amount",
       "account",
+      "financeAccount",
       "process",
       "date"
     ],
     "filterValues": {
       "voucherNo": "All::null",
       "owner": "All::",
-      "date": "In::LastTenDays::20170708T0000::Today::20170718T0000",
-      "total": "All::0",
+      "date": "Equal::Today::20170718T0000::Today::20170718T0000",
+      "amount": "All::0",
+      "financeAccount": "All::null",
       "process": "All::null",
       "code": "All::null",
       "topic": "All::null",
@@ -382,15 +255,16 @@
     }
   },
   {
-    "name": "query.QuoteBrowse.Draft",
+    "name": "query.PaymentBrowse.LastTenDays",
     "resultLimit": 100,
     "rowLimit": 20,
     "columns": [
       "voucherNo",
       "account",
+      "financeAccount",
       "topic",
       "date",
-      "total",
+      "amount",
       "owner"
     ],
     "filters": [
@@ -402,20 +276,22 @@
       "state",
       "stateReason",
       "owner",
-      "total",
+      "amount",
       "account",
+      "financeAccount",
       "process",
       "date"
     ],
     "filterValues": {
       "voucherNo": "All::null",
       "owner": "All::",
-      "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
-      "total": "All::0",
+      "date": "In::LastTenDays::20170708T0000::Today::20170718T0000",
+      "amount": "All::0",
+      "financeAccount": "All::null",
       "process": "All::null",
       "code": "All::null",
       "topic": "All::null",
-      "state": "Equal::DRAFT-NEUTRAL-DRAFT",
+      "state": "All::null",
       "stateReason": "All::null",
       "account": "All::null",
       "info": "All::null"

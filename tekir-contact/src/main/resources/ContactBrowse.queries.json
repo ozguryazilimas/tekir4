@@ -1,40 +1,72 @@
 [
-    {
-        "name": "Hepsi (Ada göre sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["code", "name", "primaryMobile", "primaryPhone", "primaryEmail", "info"],
-        "filters": ["code", "name", "primaryMobile", "primaryPhone", "primaryEmail", "info"],
-        "filterValues": {
-            "primaryPhone": "All::null",
-            "primaryMobile": "All::null",
-            "code": "All::null",
-            "name": "All::null",
-            "primaryEmail": "All::null",
-            "info": "All::null"
-        },
-        "sorters": ["name"],
-        "sorterValues": {
-            "name": "A"
-        }
+  {
+    "name": "query.ContactBrowse.All",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "code",
+      "name",
+      "primaryMobile",
+      "primaryPhone",
+      "primaryEmail",
+      "info"
+    ],
+    "filters": [
+      "code",
+      "name",
+      "primaryMobile",
+      "primaryPhone",
+      "primaryEmail",
+      "info"
+    ],
+    "filterValues": {
+      "primaryPhone": "All::null",
+      "primaryMobile": "All::null",
+      "code": "All::null",
+      "name": "All::null",
+      "primaryEmail": "All::null",
+      "info": "All::null"
     },
-    {
-        "name": "Hepsi (Ada göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["code", "name", "primaryMobile", "primaryPhone", "primaryEmail", "info"],
-        "filters": ["code", "name", "primaryMobile", "primaryPhone", "primaryEmail", "info"],
-        "filterValues": {
-            "primaryPhone": "All::null",
-            "primaryMobile": "All::null",
-            "code": "All::null",
-            "name": "All::null",
-            "primaryEmail": "All::null",
-            "info": "All::null"
-        },
-        "sorters": ["name"],
-        "sorterValues": {
-            "name": "D"
-        }
+    "sorters": [
+      "name"
+    ],
+    "sorterValues": {
+      "name": "A"
     }
+  },
+  {
+    "name": "query.ContactBrowse.AllReverseSortedByName",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "code",
+      "name",
+      "primaryMobile",
+      "primaryPhone",
+      "primaryEmail",
+      "info"
+    ],
+    "filters": [
+      "code",
+      "name",
+      "primaryMobile",
+      "primaryPhone",
+      "primaryEmail",
+      "info"
+    ],
+    "filterValues": {
+      "primaryPhone": "All::null",
+      "primaryMobile": "All::null",
+      "code": "All::null",
+      "name": "All::null",
+      "primaryEmail": "All::null",
+      "info": "All::null"
+    },
+    "sorters": [
+      "name"
+    ],
+    "sorterValues": {
+      "name": "D"
+    }
+  }
 ]
