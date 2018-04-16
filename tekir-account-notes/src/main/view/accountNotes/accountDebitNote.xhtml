@@ -8,7 +8,7 @@
 
     <ui:param name="homeBean" value="#{accountDebitNoteHome}" />
     <ui:param name="entity" value="#{accountDebitNoteHome.entity}" />
-    <ui:param name="dontShowContentHeader" value="true" />
+    <ui:param name="dontShowContentHeader" value="false" />
 
     <ui:define name="metadata">
         <f:metadata>
@@ -26,6 +26,7 @@
                                          lookupProfile="T:Contact;R:ACCOUNT;O:CUSTOMER,VENDOR"
                                          placeholder="#{messages['general.info.Account']}" 
                                          required="true" />
+                    <t:inputText label="voucher.label.Topic" value="#{accountDebitNoteHome.entity.topic}" required="true" columnClass="col-xs-12"/>
                     <t:inputCurrency label="general.label.Currency" value="#{accountDebitNoteHome.entity.currency}"  required="true" columnClass="col-xs-12"/>
                     <t:inputMoney label="accountDebitNote.label.Amount" value="#{accountDebitNoteHome.entity.amount}"  currency="#{accountDebitNoteHome.entity.currency}" required="true" columnClass="col-xs-12"/>
                 </div>
