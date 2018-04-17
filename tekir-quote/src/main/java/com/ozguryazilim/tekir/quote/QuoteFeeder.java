@@ -98,7 +98,7 @@ public class QuoteFeeder extends AbstractFeeder<Quote> {
 			accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getCode(), entity.getInfo(),
 					Boolean.FALSE, Boolean.FALSE, entity.getCurrency(), entity.getTotal(), entity.getLocalAmount(),
 					entity.getDate(), entity.getOwner(), entity.getProcess().getProcessNo(),
-					entity.getState().toString(), entity.getStateReason());
+					entity.getState().toString(), entity.getStateReason(), entity.getTopic());
 			
 			if( entity.getGroup()!=null){
 				voucherGroupTxnService.saveFeature(voucherPointer, entity.getGroup(), entity.getOwner(), entity.getTopic(),

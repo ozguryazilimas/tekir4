@@ -320,4 +320,9 @@
                       columnDataType="varchar(255)"
                       tableName="TCC_CONTACT_REL_DEF"/>
     </changeSet>
+    <changeSet author="ercan" id="1523955555006-1">
+        <addColumn tableName="TCC_ACCOUNT_TXN">
+            <column name="TOPIC" type="varchar(255)" />
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
