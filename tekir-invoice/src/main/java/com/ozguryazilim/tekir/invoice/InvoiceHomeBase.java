@@ -149,7 +149,8 @@ public abstract class InvoiceHomeBase<E extends Invoice> extends VoucherFormBase
     @Override
     public void addItem() {
         if (getEntity().getAccount() == null) {
-            FacesMessages.error("facesMessages.AddItem.NoAccountError");
+            FacesMessages.error("facesMessages.AddItem.NoAccountError",
+                "facesMessages.AddItem.NoAccountErrorDetail");
         } else {
             InvoiceItem item = new InvoiceItem();
             commodityItemEditor.openDialog(item, getEntity().getCurrency(), this);
