@@ -87,7 +87,8 @@ public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodit
 	@Override
 	public void addItem() {
         if (getEntity().getAccount() == null) {
-            FacesMessages.error("facesMessages.AddItem.NoAccountError", "facesMessages.AddItem.NoAccountErrorDetail");
+            FacesMessages.error("facesMessages.AddItem.NoAccountError",
+                "facesMessages.AddItem.NoAccountErrorDetail");
         } else {
             QuoteItem item = new QuoteItem();
             commodityItemEditor.openDialog(item, getEntity().getCurrency(), this);
