@@ -46,7 +46,8 @@
                     </div>  
 
                     <div class="row">
-                        <t:inputText label="contact.label.SSN" value="#{contactHome.entity.ssn}" columnClass="col-xs-6" required="false"/>
+                        <t:inputMask label="contact.label.SSN" value="#{contactHome.entity.ssn}"
+                                     columnClass="col-xs-6" required="false" mask="99999999999"/>
                         <t:inputText label="contact.label.JobTitle" value="#{contactHome.entity.jobTitle}" columnClass="col-xs-6" required="false"/>
 
                     </div>  
@@ -139,7 +140,8 @@
                 </div>  
 
                 <div class="row">
-                    <t:inputText label="contact.label.SSN" value="#{contactHome.entity.ssn}" columnClass="col-xs-6" required="false"/>
+                    <t:inputMask label="contact.label.SSN" value="#{contactHome.entity.ssn}"
+                                 columnClass="col-xs-6" required="false" mask="99999999999"/>
                     <t:inputText label="contact.label.JobTitle" value="#{contactHome.entity.jobTitle}" columnClass="col-xs-6" required="false"/>
 
                 </div>  

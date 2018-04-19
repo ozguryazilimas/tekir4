@@ -24,7 +24,8 @@
             </div>  
             
             <div class="row">
-                <t:inputText label="contact.label.SSN" value="#{bean.contact.ssn}" columnClass="col-xs-6" required="false"/>
+                <t:inputMask label="contact.label.SSN" value="#{bean.contact.ssn}"
+                             columnClass="col-xs-6" required="false" mask="99999999999"/>
                 <t:inputText label="contact.label.JobTitle" value="#{bean.contact.jobTitle}" columnClass="col-xs-6" required="false"/>
                 
             </div>  
