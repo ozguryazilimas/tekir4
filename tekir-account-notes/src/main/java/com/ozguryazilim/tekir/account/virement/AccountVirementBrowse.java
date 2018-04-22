@@ -50,6 +50,7 @@ public class AccountVirementBrowse extends VoucherBrowseBase<AccountVirement, Ac
         queryDefinition
                 .addColumn(new DateColumn<>(VoucherBase_.date, "general.label.Date"), true)
                 .addColumn(new LinkColumn<>(VoucherBase_.voucherNo, "voucher.label.VoucherNo"), true)
+                .addColumn(new TextColumn<>(VoucherBase_.topic, "voucher.label.Topic"), true)
                 .addColumn(new SubTextColumn<>(AccountVirement_.fromAccount, Contact_.name, "general.label.FromAccount"), true)
                 .addColumn(new SubTextColumn<>(AccountVirement_.toAccount, Contact_.name, "general.label.ToAccount"), true)
                 .addColumn(new TextColumn<>(VoucherBase_.info, "general.label.Info"), true)
