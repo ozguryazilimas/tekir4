@@ -105,7 +105,9 @@
                         <t:accordion label="contact.label.Account" >
                             <div class="row">
                                 <t:inputText label="contact.label.TaxOffice" value="#{contactHome.entity.taxOffice}" required="true"/>
-                                <t:inputText label="contact.label.TaxNumber" value="#{contactHome.entity.taxNumber}" required="true"/>
+                                <t:inputMask label="contact.label.TaxNumber"
+                                             value="#{contactHome.entity.taxNumber}"
+                                             required="true" mask="9999999999?9"/>
                                 <t:inputText label="contact.label.BankAccount" value="#{contactHome.entity.bankAccount}" required="false"/>
                                 <t:inputCurrency label="general.label.Currency" value="#{contactHome.entity.currency}" required="true"/>
                                 <t:inputCheckbox label="contact.label.VatWithholding" itemLabel="contact.label.Applicable" value="#{contactHome.entity.vatWithholding}" required="false"/>
@@ -178,7 +180,9 @@
             <ui:fragment rendered="#{contactHome.isAccount}">
                 <div class="row">
                     <t:inputText label="contact.label.TaxOffice" value="#{contactHome.entity.taxOffice}" required="true"/>
-                    <t:inputText label="contact.label.TaxNumber" value="#{contactHome.entity.taxNumber}" required="true"/>
+                    <t:inputMask label="contact.label.TaxNumber"
+                                 value="#{contactHome.entity.taxNumber}"
+                                 required="true" mask="9999999999?9"/>
                     <t:inputText label="contact.label.BankAccount" value="#{contactHome.entity.bankAccount}" required="false"/>
                     <t:inputCurrency label="general.label.Currency" value="#{contactHome.entity.currency}" required="true"/>
                 </div>
