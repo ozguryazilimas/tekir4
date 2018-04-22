@@ -135,8 +135,13 @@ public abstract class OrderHomeBase<E extends Order> extends VoucherFormBase<E> 
     
     @Override
     public void addItem() {
-        OrderItem item = new OrderItem();
-        commodityItemEditor.openDialog(item, getEntity().getCurrency(), this);
+        if (getEntity().getAccount() == null) {
+            FacesMessages.error("facesMessages.AddItem.NoAccountError",
+                "facesMessages.AddItem.NoAccountErrorDetail");
+        } else {
+            OrderItem item = new OrderItem();
+            commodityItemEditor.openDialog(item, getEntity().getCurrency(), this);
+        }
     }
 
     @Override
