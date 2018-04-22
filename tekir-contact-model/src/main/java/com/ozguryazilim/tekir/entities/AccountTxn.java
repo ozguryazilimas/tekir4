@@ -108,7 +108,9 @@ public class AccountTxn extends EntityBase{
      */
     @Column(name="STATUS_REASON")
     private String statusReason;
-    
+
+    @Column(name="TOPIC")
+    private String topic;
 
     @Column(name="ACCOUNTABLE")
     private Boolean accountable = Boolean.FALSE;
@@ -212,6 +214,14 @@ public class AccountTxn extends EntityBase{
 
     public void setStatusReason(String statusReason) {
         this.statusReason = statusReason;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 
     public Boolean getAccountable() {

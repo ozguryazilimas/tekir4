@@ -37,8 +37,8 @@ public class AccountVirementAccountTxnFeeder implements Serializable{
             
             FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
             
-            accountTxnService.saveFeature(voucherPointer, entity.getFromAccount(), entity.getCode(), entity.getInfo(), Boolean.TRUE, Boolean.TRUE, entity.getCurrency(), entity.getAmount(), entity.getLocalAmount(), entity.getDate(), entity.getOwner(), null, entity.getState().toString(), entity.getStateReason());
-            accountTxnService.saveFeature(voucherPointer, entity.getToAccount(), entity.getCode(), entity.getInfo(), Boolean.TRUE, Boolean.FALSE, entity.getCurrency(), entity.getAmount(), entity.getLocalAmount(), entity.getDate(), entity.getOwner(), null, entity.getState().toString(), entity.getStateReason());
+            accountTxnService.saveFeature(voucherPointer, entity.getFromAccount(), entity.getCode(), entity.getInfo(), Boolean.TRUE, Boolean.TRUE, entity.getCurrency(), entity.getAmount(), entity.getLocalAmount(), entity.getDate(), entity.getOwner(), null, entity.getState().toString(), entity.getStateReason(), entity.getTopic());
+            accountTxnService.saveFeature(voucherPointer, entity.getToAccount(), entity.getCode(), entity.getInfo(), Boolean.TRUE, Boolean.FALSE, entity.getCurrency(), entity.getAmount(), entity.getLocalAmount(), entity.getDate(), entity.getOwner(), null, entity.getState().toString(), entity.getStateReason(), entity.getTopic());
         }
         
         //TODO: Delete edildiğinde de gidip txn'den silme yapılmalı.

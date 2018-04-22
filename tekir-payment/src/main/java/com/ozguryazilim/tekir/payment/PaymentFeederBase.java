@@ -107,7 +107,7 @@ public abstract class PaymentFeederBase<E extends PaymentBase> extends AbstractF
 			accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getCode(), entity.getInfo(),
 					Boolean.FALSE, getProcessType() == ProcessType.PURCHASE, entity.getCurrency(), entity.getAmount(),
 					entity.getLocalAmount(), entity.getDate(), entity.getOwner(), entity.getProcess().getProcessNo(),
-					entity.getState().toString(), entity.getStateReason());
+					entity.getState().toString(), entity.getStateReason(), entity.getTopic());
 			financeAccountTxnService.saveFeature(voucherPointer, entity.getFinanceAccount(), entity.getCode(),
 					entity.getInfo(), Boolean.FALSE, getProcessType() == ProcessType.PURCHASE, entity.getCurrency(),
 					entity.getAmount(), entity.getLocalAmount(), entity.getDate(), entity.getOwner(),
