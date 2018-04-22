@@ -32,7 +32,7 @@
                     <t:inputMask label="general.label.AccountNo"
                                  value="#{financeAccountHome.entity.accountNo}" required="true"
                                  rendered="#{financeAccountHome.entity.type ne 'CASH'}"
-                                 mask="999999999999999999999999999999"/>
+                                 mask="?999999999999999999999999999999"/>
                     <t:inputMask label="general.label.IBAN"
                                  value="#{financeAccountHome.entity.iban}" required="true"
                                  rendered="#{financeAccountHome.entity.type eq 'BANK'}"
