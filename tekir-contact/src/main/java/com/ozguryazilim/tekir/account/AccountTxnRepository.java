@@ -20,6 +20,7 @@ import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.entities.FeaturePointer_;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.filters.Filter;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,6 +31,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.apache.deltaspike.data.api.Query;
 import org.apache.deltaspike.data.api.Repository;
 import org.apache.deltaspike.data.api.criteria.Criteria;
 import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
@@ -118,6 +120,9 @@ public abstract class AccountTxnRepository extends
     public abstract List<AccountTxn> findByProcessId(String processId);
 
     public abstract List<AccountTxn> findByAccountAndDateBetweenOrderByDate(Contact account, Date beginDate, Date endDate );
+    
+    @Query( "select sum( t.localAmount * ( case when t.debit = true then -1 else 1 end )) from AccountTxn t where t.account = ?1 and t.date < ?2" )
+    public abstract BigDecimal findByAccountBalance( Contact account, Date beginDate );
     
     public List<AccountTxn> findOpenTxnsByAccount(Contact account) {
         Criteria<AccountTxn, AccountTxn> crit = criteria()

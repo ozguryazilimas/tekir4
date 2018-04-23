@@ -13,7 +13,13 @@
 
     <ui:define name="filter">
         <div class="row" >
-            <t:inputLookupDialog label="contact.label.Account" value="#{accountStatementReport.filter.contact}" lookupBean="#{contactLookup}" lookupListener="accountStatementReport.filter.contact" placeholder="#{messages['contact.info.Account']}" columnClass="col-xs-12" required="true"/>
+            <t:inputLookupDialog label="contact.label.Account" 
+                                 value="#{accountStatementReport.filter.contact}" 
+                                 lookupBean="#{contactLookup}" 
+                                 lookupListener="accountStatementReport.filter.contact" 
+                                 lookupProfile="S:ACCOUNT;O:VENDOR,CUSTOMER,PERSON,CORPORATION"
+                                 placeholder="#{messages['contact.info.Account']}" 
+                                 columnClass="col-xs-12" required="true"/>
             <t:inputReportDate value="#{accountStatementReport.filter.beginDate}" label="general.label.BeginDate" columnClass="col-xs-6" />
             <t:inputReportDate value="#{accountStatementReport.filter.endDate}" label="general.label.EndDate" columnClass="col-xs-6" />
         </div>

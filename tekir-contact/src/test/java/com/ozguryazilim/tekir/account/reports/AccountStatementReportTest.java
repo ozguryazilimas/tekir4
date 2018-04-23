@@ -104,6 +104,30 @@ public class AccountStatementReportTest {
         txn.setStatusReason("");
         
         rows.add( txn );
+        
+        fp = new FeaturePointer();
+        fp.setBusinessKey("FT-00002");
+        fp.setPrimaryKey(2L);
+        fp.setFeature("SalesInvoiceFeature");
+        
+        txn = new AccountTxn();
+        txn.setId(2L);
+        txn.setAccount(contact);
+        txn.setAmount(BigDecimal.TEN);
+        txn.setCode("ABC");
+        txn.setCurrency( Currency.getInstance("TRY"));
+        txn.setDate(new Date());
+        txn.setDebit(Boolean.FALSE);
+        txn.setFeature(fp);
+        txn.setInfo("Belge Açıklaması");
+        txn.setLocalAmount(BigDecimal.TEN);
+        txn.setOwner("telve");
+        txn.setProcessId("PS-00002");
+        txn.setReferenceNo("AA-0002");
+        txn.setStatus("OPEN-NEUTRAL-OPEN");
+        txn.setStatusReason("");
+        
+        rows.add( txn );
         return rows;
     }
 }
