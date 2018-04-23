@@ -6,15 +6,21 @@
 package com.ozguryazilim.tekir.account;
 
 import com.google.common.base.Strings;
+import com.ozguryazilim.tekir.account.reports.AccountStatusFilter;
 import com.ozguryazilim.tekir.entities.AccountTxn;
 import com.ozguryazilim.tekir.entities.AccountTxn_;
 import com.ozguryazilim.tekir.entities.Contact;
+import com.ozguryazilim.tekir.entities.ContactCategory_;
 import com.ozguryazilim.tekir.entities.Contact_;
+import com.ozguryazilim.tekir.entities.Corporation;
+import com.ozguryazilim.tekir.entities.Corporation_;
+import com.ozguryazilim.tekir.entities.Industry_;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.entities.FeaturePointer_;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.filters.Filter;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,8 +28,10 @@ import javax.enterprise.context.Dependent;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.apache.deltaspike.data.api.Query;
 import org.apache.deltaspike.data.api.Repository;
 import org.apache.deltaspike.data.api.criteria.Criteria;
 import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
@@ -111,6 +119,11 @@ public abstract class AccountTxnRepository extends
 
     public abstract List<AccountTxn> findByProcessId(String processId);
 
+    public abstract List<AccountTxn> findByAccountAndDateBetweenOrderByDate(Contact account, Date beginDate, Date endDate );
+    
+    @Query( "select sum( t.localAmount * ( case when t.debit = true then -1 else 1 end )) from AccountTxn t where t.account = ?1 and t.date < ?2" )
+    public abstract BigDecimal findByAccountBalance( Contact account, Date beginDate );
+    
     public List<AccountTxn> findOpenTxnsByAccount(Contact account) {
         Criteria<AccountTxn, AccountTxn> crit = criteria()
                 .eq(AccountTxn_.account, account)
@@ -194,5 +207,78 @@ public abstract class AccountTxnRepository extends
         List<AccountTxnSumModel> resultList = typedQuery.getResultList();
 
         return resultList;
+    }
+    
+    public List<AccountTxnStatusModel> findAccountStatus( AccountStatusFilter filter) {
+        CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
+        //Geriye AccidentAnalysisViewModel dönecek cq'yu ona göre oluşturuyoruz.
+        CriteriaQuery<AccountTxnStatusModel> criteriaQuery = criteriaBuilder.createQuery(AccountTxnStatusModel.class);
+
+        //From Tabii ki PersonWorkHistory
+        Root<AccountTxn> from = criteriaQuery.from(AccountTxn.class);
+
+        criteriaQuery.multiselect(
+                from.get(AccountTxn_.account).get(Contact_.id),
+                from.get(AccountTxn_.account).get(Contact_.name),
+                //from.get(AccountTxn_.account).type(),
+                criteriaBuilder.sum(
+                        criteriaBuilder.<Number>selectCase()
+                            .when(criteriaBuilder.equal(from.get(AccountTxn_.debit), Boolean.TRUE), from.get(AccountTxn_.localAmount))
+                            .otherwise(0)
+                ),
+                criteriaBuilder.sum(
+                        criteriaBuilder.<Number>selectCase()
+                            .when(criteriaBuilder.equal(from.get(AccountTxn_.debit), Boolean.FALSE), from.get(AccountTxn_.localAmount))
+                            .otherwise(0)
+                )
+        );
+
+        criteriaQuery.groupBy(
+                from.get(AccountTxn_.account).get(Contact_.id),
+                from.get(AccountTxn_.account).get(Contact_.name)
+                //from.get(AccountTxn_.account).type()
+        );
+
+        //Filtreleri ekleyelim.
+        List<Predicate> predicates = new ArrayList<>();
+
+        if (!Strings.isNullOrEmpty(filter.getCode())) {
+            predicates.add(criteriaBuilder.like(from.get(AccountTxn_.account).get(Contact_.code), "%" + filter.getCode() + "%"));
+        }
+        
+        if (!Strings.isNullOrEmpty(filter.getName())) {
+            predicates.add(criteriaBuilder.like(from.get(AccountTxn_.account).get(Contact_.name), "%" + filter.getName()+ "%"));
+        }
+        
+        if (filter.getContactCategory() != null) {
+            predicates.add(criteriaBuilder.like(from.get(AccountTxn_.account).get(Contact_.category).get(ContactCategory_.path), filter.getContactCategory().getPath() + "%"));
+        }
+        
+        if (filter.getIndustry() != null) {
+            predicates.add(criteriaBuilder.like(from.get(AccountTxn_.account).get(Contact_.industry).get(Industry_.path), filter.getIndustry().getPath() + "%"));
+        }
+        
+        if (filter.getTerritory() != null) {
+            predicates.add(criteriaBuilder.equal(from.get(AccountTxn_.account).get(Contact_.territory), filter.getTerritory()));
+        }
+        
+        if (filter.getCorporationType() != null) {
+            //CorporationType sadece Contact mirascısı Corporation'da dolayısı ile cast ediyoruz.
+            Path<Corporation> corpPath = criteriaBuilder.treat(from.get(AccountTxn_.account), Corporation.class);
+            predicates.add(criteriaBuilder.equal(corpPath.get(Corporation_.corporationType), filter.getCorporationType())); 
+        }
+
+        predicates.add(criteriaBuilder.lessThanOrEqualTo(from.get(AccountTxn_.date), filter.getDate().getCalculatedValue()));
+
+        criteriaQuery.where(predicates.toArray(new Predicate[]{}));
+
+        criteriaQuery.orderBy(criteriaBuilder.asc(from.get(AccountTxn_.account).get(Contact_.name)));
+        
+        TypedQuery<AccountTxnStatusModel> typedQuery = entityManager().createQuery(criteriaQuery);
+        //typedQuery.setMaxResults(limit);
+        List<AccountTxnStatusModel> resultList = typedQuery.getResultList();
+
+        return resultList;
+        
     }
 }
