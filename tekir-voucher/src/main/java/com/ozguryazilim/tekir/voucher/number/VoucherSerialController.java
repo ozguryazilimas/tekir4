@@ -75,9 +75,8 @@ public class VoucherSerialController extends AbstractOptionPane{
         for( Map.Entry<String,String> ve : serials.entrySet()){
             kahve.put("voucher.serial." + ve.getKey(), ve.getValue());
         }
-        
-        //FIXME: i18n
-        FacesMessages.info("Başarı ile kayıt gerçekleşti");
+
+        FacesMessages.info("voucher.messages.RecordSaved");
     }
     
     public Class<? extends ViewConfig> close(){

@@ -9,7 +9,7 @@
         <p:commandLink action="#{purchaseOrderInvoiceMenuAction.newInvoice()}" styleClass="context-command" 
                        rendered="#{identity.hasPermission('purchaseInvoice', 'insert') and ( purchaseOrderHome.entity.state.type eq 'OPEN' )}">
             <i class="fa fa-lightbulb-o"></i>
-            <h:outputText value=" #{messages['invoice.button.NewInvoice']}" />
+            <h:outputText value=" #{messages['general.button.Invoice']}" />
         </p:commandLink>
     </li>
 

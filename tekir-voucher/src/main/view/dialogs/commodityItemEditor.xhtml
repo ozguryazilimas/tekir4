@@ -10,7 +10,7 @@
     <ui:define name="form">
         <h:form id="vciEditor">
             <div class="row">
-                <t:inputLookupDialog label="general.label.Commodity" value="#{voucherCommodityItemEditor.commodity}" lookupBean="#{commodityLookup}" lookupListener="voucherCommodityItemEditor.commodity" placeholder="#{messages['general.info.Commodity']}" columnClass="col-xs-12"/>
+                <t:inputLookupDialog label="general.label.Commodity" value="#{voucherCommodityItemEditor.commodity}" lookupBean="#{commodityLookup}" lookupListener="voucherCommodityItemEditor.commodity" placeholder="#{messages['general.label.Commodity']}" columnClass="col-xs-12"/>
                 <t:inputText label="general.label.Info" value="#{voucherCommodityItemEditor.item.info}" columnClass="col-xs-12"/>
                 <p:outputPanel autoUpdate="true">
                     <ui:fragment rendered="#{not empty voucherCommodityItemEditor.commodity}">

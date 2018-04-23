@@ -318,8 +318,7 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
 
         //TODO: AfterLoad yerine başka bir method mu yazsak? 
         if (!hasViewPermission()) {
-            //FIXME: i18n
-            FacesMessages.error("Kayda erişim için yetkiniz yok!");
+            FacesMessages.error("facesMessages.error.NoPermission");
             createNew();
             viewNavigationHandler.navigateTo(getBrowsePage());
             return false;

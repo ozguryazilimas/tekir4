@@ -30,6 +30,7 @@ import com.ozguryazilim.tekir.voucher.process.ProcessService;
 import com.ozguryazilim.tekir.voucher.utils.SummaryCalculator;
 import com.ozguryazilim.tekir.voucher.utils.VoucherItemUtils;
 import com.ozguryazilim.telve.messages.FacesMessages;
+import com.ozguryazilim.telve.messages.Messages;
 import com.ozguryazilim.telve.reports.JasperReportHandler;
 import java.util.List;
 import javax.inject.Inject;
@@ -65,6 +66,7 @@ public abstract class InvoiceHomeBase<E extends Invoice> extends VoucherFormBase
         getEntity().setCurrency(currencyService.getDefaultCurrency());
     }
 
+
     @Override
     protected VoucherStateConfig buildStateConfig() {
         VoucherStateConfig config = new VoucherStateConfig();
@@ -98,16 +100,16 @@ public abstract class InvoiceHomeBase<E extends Invoice> extends VoucherFormBase
     @Override
     public boolean onAfterLoad() {
         if (!getEntity().getAccount().getContactRoles().contains("ACCOUNT")) {
-            FacesMessages.error("Seçtiğiniz bağlantı bir Cari değil!", "Bağlantıyı cariye dönüştürmelisiniz?");
+            FacesMessages.error("facesMessages.contact.NotAccount", "facesMessages.contact.NotAccountDetail");
         }
 
         if( getProcessType() == ProcessType.SALES ){
             if (!getEntity().getAccount().getContactRoles().contains("CUSTOMER")) {
-                FacesMessages.warn("Seçtiğiniz bağlantı bir Müşteri değil.", "Bağlantıyı müşteri olarak işaretlemek ister misiniz?");
+                FacesMessages.warn("facesMessages.contact.NotCustomer", "facesMessages.contact.NotCustomerDetail");
             }
         } else {
             if (!getEntity().getAccount().getContactRoles().contains("VENDOR")) {
-                FacesMessages.warn("Seçtiğiniz bağlantı bir tedatikçi değil.", "Bağlantıyı tedarikçi olarak işaretlemek ister misiniz?");
+                FacesMessages.warn("facesMessages.warn.ContactVendor", "facesMessages.contact.NotVendorDetail");
             }
         }
         return super.onAfterLoad();
@@ -139,7 +141,7 @@ public abstract class InvoiceHomeBase<E extends Invoice> extends VoucherFormBase
     protected boolean onBeforeTrigger(VoucherStateChange e) {
         if ("publish".equals(e.getAction().getName())) {
             if (!getEntity().getAccount().getContactRoles().contains("ACCOUNT")) {
-                FacesMessages.error("Seçtiğiniz bağlantı bir Cari değil!", "Bağlantıyı cariye dönüştürmelisiniz?");
+                FacesMessages.error("facesMessages.contact.NotAccount", "facesMessages.contact.NotAccountDetail");
                 return false;
             }
         }
@@ -187,15 +189,15 @@ public abstract class InvoiceHomeBase<E extends Invoice> extends VoucherFormBase
         getEntity().setAccount(account);
         getEntity().setProcess(null);
         if (!account.getContactRoles().contains("ACCOUNT")) {
-            FacesMessages.error("Seçtiğiniz bağlantı bir Cari değil!", "Bağlantıyı cariye dönüştürmelisiniz?");
+            FacesMessages.error("facesMessages.contact.NotAccount", "facesMessages.contact.NotAccountDetail");
         }
         if( getProcessType() == ProcessType.SALES ){
             if (!getEntity().getAccount().getContactRoles().contains("CUSTOMER")) {
-                FacesMessages.warn("Seçtiğiniz bağlantı bir Müşteri değil.", "Bağlantıyı müşteri olarak işaretlemek ister misiniz?");
+                FacesMessages.warn("facesMessages.contact.NotCustomer", "facesMessages.contact.NotCustomerDetail");
             }
         } else {
             if (!getEntity().getAccount().getContactRoles().contains("VENDOR")) {
-                FacesMessages.warn("Seçtiğiniz bağlantı bir tedatikçi değil.", "Bağlantıyı tedarikçi olarak işaretlemek ister misiniz?");
+                FacesMessages.warn("facesMessages.warn.ContactVendor", "facesMessages.contact.NotVendorDetail");
             }
         }
     }

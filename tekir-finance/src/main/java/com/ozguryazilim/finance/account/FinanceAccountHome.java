@@ -139,7 +139,7 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
 
         //FIXME: Burayı generic bir hale getirmek lazım                
         if (!identity.isPermitted("financeAccount:select:" + getEntity().getOwner())) {
-            FacesMessages.error("Kayda erişim için yetkiniz yok!");
+            FacesMessages.error("facesMessages.error.NoPermission");
             createNew();
             viewNavigationHandler.navigateTo(FinancePages.FinanceAccountBrowse.class);
             return false;
