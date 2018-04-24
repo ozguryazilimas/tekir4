@@ -27,7 +27,7 @@
         <p:column headerText="#{messages['general.label.LocalAmount']}">
             <t:cellOutputMoney value="#{item.localAmount}" currency="#{currencyService.reportCurrency}"/>
         </p:column>
-        <p:column headerText="#{messages['general.label.Balance']}">
+        <p:column headerText="#{messages['general.label.Remainder']}">
             <t:cellOutputMoney value="#{item.remainder}" currency="#{currencyService.reportCurrency}"/>
         </p:column>
     </ui:define>

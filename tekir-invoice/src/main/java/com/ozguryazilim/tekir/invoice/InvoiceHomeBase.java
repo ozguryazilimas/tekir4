@@ -109,7 +109,7 @@ public abstract class InvoiceHomeBase<E extends Invoice> extends VoucherFormBase
             }
         } else {
             if (!getEntity().getAccount().getContactRoles().contains("VENDOR")) {
-                FacesMessages.warn("facesMessages.warn.ContactVendor", "facesMessages.contact.NotVendorDetail");
+                FacesMessages.warn("facesMessages.contact.NotVendor", "facesMessages.contact.NotVendorDetail");
             }
         }
         return super.onAfterLoad();
@@ -197,7 +197,7 @@ public abstract class InvoiceHomeBase<E extends Invoice> extends VoucherFormBase
             }
         } else {
             if (!getEntity().getAccount().getContactRoles().contains("VENDOR")) {
-                FacesMessages.warn("facesMessages.warn.ContactVendor", "facesMessages.contact.NotVendorDetail");
+                FacesMessages.warn("facesMessages.contact.NotVendor", "facesMessages.contact.NotVendorDetail");
             }
         }
     }
