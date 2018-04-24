@@ -233,9 +233,9 @@ public class EMailActivityImporter implements Serializable {
         activity.setCc(addressToString(message.getCcList()));
         activity.setBcc(addressToString(message.getBccList()));
 
-        String[] toList = message.getToList().stream().map(address -> {
-            return address.getAddress();
-        }).toArray(String[]::new);
+        String[] toList = message.getToList().stream()
+                .map(address -> address.getAddress())
+                .toArray(String[]::new);
 
         ActivityDirection direction = resolveDirection(message.getFrom().getAddress(), toList);
         activity.setDirection(direction);
@@ -244,6 +244,7 @@ public class EMailActivityImporter implements Serializable {
         // bize gelen mailler icin baglantiyi from kısmından al
         if (direction == ActivityDirection.INCOMING) {
             addContacts(message.getFrom().getAddress(), activity);
+            contactsAdded = true;
         } else {
             addContactMention(message.getFrom().getAddress(), activity);
         }
