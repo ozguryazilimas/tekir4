@@ -15,7 +15,7 @@
         <div class="row" >
             <t:inputText value="#{accountStatusDynaReport.filter.code}" label="general.label.Code" columnClass="col-xs-6" />
             <t:inputText value="#{accountStatusDynaReport.filter.name}" label="general.label.Name" columnClass="col-xs-6" />
-            <t:inputLookupDialog label="contact.label.CorparationType" value="#{accountStatusDynaReport.filter.corporationType}" lookupBean="#{corporationTypeLookup}" lookupListener="accountStatusDynaReport.filter.corporationType" placeholder="#{messages['contact.info.CorporationType']}" />
+            <t:inputLookupDialog label="contact.label.CorporationType" value="#{accountStatusDynaReport.filter.corporationType}" lookupBean="#{corporationTypeLookup}" lookupListener="accountStatusDynaReport.filter.corporationType" placeholder="#{messages['contact.info.CorporationType']}" />
             <t:inputLookupDialog label="general.label.Category" value="#{accountStatusDynaReport.filter.contactCategory}" lookupBean="#{contactCategoryLookup}" lookupListener="accountStatusDynaReport.filter.contactCategory" placeholder="#{messages['general.info.Category']}" />
             <t:inputLookupDialog label="general.label.Industry" value="#{accountStatusDynaReport.filter.industry}" lookupBean="#{industryLookup}" lookupListener="accountStatusDynaReport.filter.industry" placeholder="#{messages['general.info.Industry']}" />
             <t:inputLookupDialog label="general.label.Territory" value="#{accountStatusDynaReport.filter.territory}" lookupBean="#{territoryLookup}" lookupListener="accountStatusDynaReport.filter.territory" placeholder="#{messages['general.info.Territory']}" />
