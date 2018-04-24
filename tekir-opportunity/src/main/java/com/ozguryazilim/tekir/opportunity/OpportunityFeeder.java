@@ -96,7 +96,7 @@ public class OpportunityFeeder extends AbstractFeeder<Opportunity> {
 			accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getCode(), entity.getInfo(),
 					Boolean.FALSE, Boolean.TRUE, entity.getCurrency(), entity.getBudget(), entity.getLocalBudget(),
 					entity.getDate(), entity.getOwner(), entity.getProcess().getProcessNo(),
-					entity.getState().toString(), entity.getStateReason());
+					entity.getState().toString(), entity.getStateReason(), entity.getTopic());
 			
 			
 			if( entity.getGroup()!=null){

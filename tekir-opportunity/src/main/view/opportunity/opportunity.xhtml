@@ -24,7 +24,8 @@
                     <t:inputLookupDialog label="general.label.Account" value="#{opportunityHome.entity.account}" 
                                          lookupBean="#{contactLookup}" lookupListener="opportunityHome.entity.account" 
                                          lookupProfile="O:ACCOUNT,CUSTOMER,PERSON;S:CORPORATION"
-                                         placeholder="#{messages['general.info.Account']}" />
+                                         placeholder="#{messages['general.info.Account']}"
+                                         required="true" />
                     <t:inputLookupDialog label="general.label.PrimaryContact" value="#{opportunityHome.entity.primaryContact}" lookupBean="#{contactLookup}" 
                                          lookupProfile="T:Person"
                                          lookupListener="opportunityHome.entity.primaryContact" placeholder="#{messages['general.info.PrimaryContact']}" />

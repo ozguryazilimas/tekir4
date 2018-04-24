@@ -1,227 +1,432 @@
 [
-    {
-        "name": "Açık (Tarihe göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["voucherNo", "account", "topic", "date", "budget", "owner"],
-        "filters": ["voucherNo", "code", "info", "topic", "state", "state", "stateReason", "owner", "budget", "account", "process", "date"],
-        "filterValues": {
-            "voucherNo": "All::null",
-            "owner": "All::",
-            "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
-            "process": "All::null",
-            "code": "All::null",
-            "topic": "All::null",
-            "state": "All::OPEN",
-            "stateReason": "All::null",
-            "account": "All::null",
-            "info": "All::null",
-            "budget": "All::0"
-        },
-        "sorters": ["date", "voucherNo"],
-        "sorterValues": {
-            "date": "D",
-            "voucherNo": "D"
-        }
+  {
+    "name": "query.OpportunityBrowse.Open",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "voucherNo",
+      "account",
+      "topic",
+      "date",
+      "budget",
+      "owner"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "budget",
+      "account",
+      "process",
+      "date"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "owner": "All::",
+      "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
+      "process": "All::null",
+      "code": "All::null",
+      "topic": "All::null",
+      "state": "Equal::OPEN-NEUTRAL-OPEN",
+      "stateReason": "All::null",
+      "account": "All::null",
+      "info": "All::null",
+      "budget": "All::0"
     },
-    {
-        "name": "Başarılı (Tarihe göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["voucherNo", "account", "topic", "date", "budget", "owner"],
-        "filters": ["voucherNo", "code", "info", "topic", "state", "state", "stateReason", "owner", "budget", "account", "process", "date"],
-        "filterValues": {
-            "voucherNo": "All::null",
-            "owner": "All::",
-            "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
-            "process": "All::null",
-            "code": "All::null",
-            "topic": "All::null",
-            "state": "All::OPEN",
-            "stateReason": "All::null",
-            "account": "All::null",
-            "info": "All::null",
-            "budget": "All::0"
-        },
-        "sorters": ["date", "voucherNo"],
-        "sorterValues": {
-            "date": "D",
-            "voucherNo": "D"
-        }
-    },
-    {
-        "name": "Başarısız (Tarihe göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["voucherNo", "account", "topic", "date", "budget", "owner"],
-        "filters": ["voucherNo", "code", "info", "topic", "state", "state", "stateReason", "owner", "budget", "account", "process", "date"],
-        "filterValues": {
-            "voucherNo": "All::null",
-            "owner": "All::",
-            "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
-            "process": "All::null",
-            "code": "All::null",
-            "topic": "All::null",
-            "state": "All::OPEN",
-            "stateReason": "All::null",
-            "account": "All::null",
-            "info": "All::null",
-            "budget": "All::0"
-        },
-        "sorters": ["date", "voucherNo"],
-        "sorterValues": {
-            "date": "D",
-            "voucherNo": "D"
-        }
-    },
-    {
-        "name": "Bugün (Tarihe göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["voucherNo", "account", "topic", "date", "budget", "owner"],
-        "filters": ["voucherNo", "code", "info", "topic", "state", "state", "stateReason", "owner", "budget", "account", "process", "date"],
-        "filterValues": {
-            "voucherNo": "All::null",
-            "owner": "All::",
-            "date": "Equal::Today::20170718T0000::Today::20170718T0000",
-            "process": "All::null",
-            "code": "All::null",
-            "topic": "All::null",
-            "state": "All::OPEN",
-            "stateReason": "All::null",
-            "account": "All::null",
-            "info": "All::null",
-            "budget": "All::0"
-        },
-        "sorters": ["date", "voucherNo"],
-        "sorterValues": {
-            "date": "D",
-            "voucherNo": "D"
-        }
-    },
-    {
-        "name": "Hepsi (Bütçeye göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["voucherNo", "account", "topic", "date", "budget", "owner"],
-        "filters": ["voucherNo", "code", "info", "topic", "state", "state", "stateReason", "owner", "budget", "account", "process", "date"],
-        "filterValues": {
-            "voucherNo": "All::null",
-            "owner": "All::",
-            "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
-            "process": "All::null",
-            "code": "All::null",
-            "topic": "All::null",
-            "state": "All::OPEN",
-            "stateReason": "All::null",
-            "account": "All::null",
-            "info": "All::null",
-            "budget": "All::0"
-        },
-        "sorters": ["budget"],
-        "sorterValues": {
-            "budget": "D"
-        }
-    },
-    {
-        "name": "Hepsi (Tarihe göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["voucherNo", "account", "topic", "date", "budget", "owner"],
-        "filters": ["voucherNo", "code", "info", "topic", "state", "state", "stateReason", "owner", "budget", "account", "process", "date"],
-        "filterValues": {
-            "voucherNo": "All::null",
-            "owner": "All::",
-            "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
-            "process": "All::null",
-            "code": "All::null",
-            "topic": "All::null",
-            "state": "All::OPEN",
-            "stateReason": "All::null",
-            "account": "All::null",
-            "info": "All::null",
-            "budget": "All::0"
-        },
-        "sorters": ["date", "voucherNo"],
-        "sorterValues": {
-            "date": "D",
-            "voucherNo": "D"
-        }
-    },
-    {
-        "name": "Kapalı (Tarihe göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["voucherNo", "account", "topic", "date", "budget", "owner"],
-        "filters": ["voucherNo", "code", "info", "topic", "state", "state", "stateReason", "owner", "budget", "account", "process", "date"],
-        "filterValues": {
-            "voucherNo": "All::null",
-            "owner": "All::",
-            "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
-            "process": "All::null",
-            "code": "All::null",
-            "topic": "All::null",
-            "state": "All::OPEN",
-            "stateReason": "All::null",
-            "account": "All::null",
-            "info": "All::null",
-            "budget": "All::0"
-        },
-        "sorters": ["date", "voucherNo"],
-        "sorterValues": {
-            "date": "D",
-            "voucherNo": "D"
-        }
-    },
-    {
-        "name": "Son 10 gün (Tarihe göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["voucherNo", "account", "topic", "date", "budget", "owner"],
-        "filters": ["voucherNo", "code", "info", "topic", "state", "state", "stateReason", "owner", "budget", "account", "process", "date"],
-        "filterValues": {
-            "voucherNo": "All::null",
-            "owner": "All::",
-            "date": "In::LastTenDays::20170708T0000::Today::20170718T0000",
-            "process": "All::null",
-            "code": "All::null",
-            "topic": "All::null",
-            "state": "All::OPEN",
-            "stateReason": "All::null",
-            "account": "All::null",
-            "info": "All::null",
-            "budget": "All::0"
-        },
-        "sorters": ["date", "voucherNo"],
-        "sorterValues": {
-            "date": "D",
-            "voucherNo": "D"
-        }
-    },
-    {
-        "name": "Taslak (Tarihe göre ters sıralı)",
-        "resultLimit": 200,
-        "rowLimit": 20,
-        "columns": ["voucherNo", "account", "topic", "date", "budget", "owner"],
-        "filters": ["voucherNo", "code", "info", "topic", "state", "state", "stateReason", "owner", "budget", "account", "process", "date"],
-        "filterValues": {
-            "voucherNo": "All::null",
-            "owner": "All::",
-            "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
-            "process": "All::null",
-            "code": "All::null",
-            "topic": "All::null",
-            "state": "All::OPEN",
-            "stateReason": "All::null",
-            "account": "All::null",
-            "info": "All::null",
-            "budget": "All::0"
-        },
-        "sorters": ["date", "voucherNo"],
-        "sorterValues": {
-            "date": "D",
-            "voucherNo": "D"
-        }
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
     }
-
+  },
+  {
+    "name": "query.OpportunityBrowse.Successful",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "voucherNo",
+      "account",
+      "topic",
+      "date",
+      "budget",
+      "owner"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "budget",
+      "account",
+      "process",
+      "date"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "owner": "All::",
+      "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
+      "process": "All::null",
+      "code": "All::null",
+      "topic": "All::null",
+      "state": "Equal::CLOSE-POSITIVE-WON",
+      "stateReason": "All::null",
+      "account": "All::null",
+      "info": "All::null",
+      "budget": "All::0"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  },
+  {
+    "name": "query.OpportunityBrowse.Unsuccessful",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "voucherNo",
+      "account",
+      "topic",
+      "date",
+      "budget",
+      "owner"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "budget",
+      "account",
+      "process",
+      "date"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "owner": "All::",
+      "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
+      "process": "All::null",
+      "code": "All::null",
+      "topic": "All::null",
+      "state": "Equal::CLOSE-NEGATIVE-LOSS",
+      "stateReason": "All::null",
+      "account": "All::null",
+      "info": "All::null",
+      "budget": "All::0"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  },
+  {
+    "name": "query.OpportunityBrowse.Today",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "voucherNo",
+      "account",
+      "topic",
+      "date",
+      "budget",
+      "owner"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "budget",
+      "account",
+      "process",
+      "date"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "owner": "All::",
+      "date": "Equal::Today::20170718T0000::Today::20170718T0000",
+      "process": "All::null",
+      "code": "All::null",
+      "topic": "All::null",
+      "state": "All::null",
+      "stateReason": "All::null",
+      "account": "All::null",
+      "info": "All::null",
+      "budget": "All::0"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  },
+  {
+    "name": "query.OpportunityBrowse.AllReverseSortedByBudget",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "voucherNo",
+      "account",
+      "topic",
+      "date",
+      "budget",
+      "owner"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "budget",
+      "account",
+      "process",
+      "date"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "owner": "All::",
+      "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
+      "process": "All::null",
+      "code": "All::null",
+      "topic": "All::null",
+      "state": "All::null",
+      "stateReason": "All::null",
+      "account": "All::null",
+      "info": "All::null",
+      "budget": "All::0"
+    },
+    "sorters": [
+      "budget"
+    ],
+    "sorterValues": {
+      "budget": "D"
+    }
+  },
+  {
+    "name": "query.OpportunityBrowse.All",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "voucherNo",
+      "account",
+      "topic",
+      "date",
+      "budget",
+      "owner"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "budget",
+      "account",
+      "process",
+      "date"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "owner": "All::",
+      "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
+      "process": "All::null",
+      "code": "All::null",
+      "topic": "All::null",
+      "state": "All::null",
+      "stateReason": "All::null",
+      "account": "All::null",
+      "info": "All::null",
+      "budget": "All::0"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  },
+  {
+    "name": "query.OpportunityBrowse.Closed",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "voucherNo",
+      "account",
+      "topic",
+      "date",
+      "budget",
+      "owner"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "budget",
+      "account",
+      "process",
+      "date"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "owner": "All::",
+      "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
+      "process": "All::null",
+      "code": "All::null",
+      "topic": "All::null",
+      "state": "Equal::CLOSE-NEUTRAL-CLOSE",
+      "stateReason": "All::null",
+      "account": "All::null",
+      "info": "All::null",
+      "budget": "All::0"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  },
+  {
+    "name": "query.OpportunityBrowse.LastTenDays",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "voucherNo",
+      "account",
+      "topic",
+      "date",
+      "budget",
+      "owner"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "budget",
+      "account",
+      "process",
+      "date"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "owner": "All::",
+      "date": "In::LastTenDays::20170708T0000::Today::20170718T0000",
+      "process": "All::null",
+      "code": "All::null",
+      "topic": "All::null",
+      "state": "All::null",
+      "stateReason": "All::null",
+      "account": "All::null",
+      "info": "All::null",
+      "budget": "All::0"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  },
+  {
+    "name": "query.OpportunityBrowse.Draft",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "voucherNo",
+      "account",
+      "topic",
+      "date",
+      "budget",
+      "owner"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "budget",
+      "account",
+      "process",
+      "date"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "owner": "All::",
+      "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
+      "process": "All::null",
+      "code": "All::null",
+      "topic": "All::null",
+      "state": "Equal::DRAFT-NEUTRAL-DRAFT",
+      "stateReason": "All::null",
+      "account": "All::null",
+      "info": "All::null",
+      "budget": "All::0"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  }
 ]

@@ -8,7 +8,7 @@
 
     <ui:param name="homeBean" value="#{accountVirementHome}" />
     <ui:param name="entity" value="#{accountVirementHome.entity}" />
-    <ui:param name="dontShowContentHeader" value="true" />
+    <ui:param name="dontShowContentHeader" value="false" />
 
     <ui:define name="metadata">
         <f:metadata>
@@ -24,12 +24,12 @@
                     <t:inputLookupDialog label="general.label.FromAccount" value="#{accountVirementHome.entity.fromAccount}" 
                                          lookupBean="#{contactLookup}" lookupListener="accountVirementHome.entity.fromAccount" 
                                          lookupProfile="T:Contact;R:ACCOUNT;O:CUSTOMER,VENDOR"
-                                         placeholder="#{messages['general.info.Account']}" />
+                                         required="true" placeholder="#{messages['general.info.Account']}" />
                     <t:inputLookupDialog label="general.label.ToAccount" value="#{accountVirementHome.entity.toAccount}" 
                                          lookupBean="#{contactLookup}" lookupListener="accountVirementHome.entity.toAccount" 
                                          lookupProfile="R:ACCOUNT;O:CUSTOMER,VENDOR"
-                                         placeholder="#{messages['general.info.Account']}" />
-                    <t:inputText label="voucher.label.Topic" value="#{accountVirementHome.entity.topic}"  required="false" columnClass="col-xs-12"/>
+                                         required="true" placeholder="#{messages['general.info.Account']}" />
+                    <t:inputText label="voucher.label.Topic" value="#{accountVirementHome.entity.topic}"  required="true" columnClass="col-xs-12"/>
                     <t:inputTextarea label="general.label.Info" value="#{accountVirementHome.entity.info}" columnClass="col-xs-12"/>
                     <t:inputCurrency label="general.label.Currency" value="#{accountVirementHome.entity.currency}"  required="true" />
                     <t:inputMoney label="accountVirement.label.Amount" value="#{accountVirementHome.entity.amount}"  currency="#{accountVirementHome.entity.currency}" required="true" />

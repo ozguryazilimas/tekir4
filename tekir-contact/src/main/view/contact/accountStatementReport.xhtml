@@ -1,0 +1,27 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/dynamicReportBase.xhtml">
+
+    <ui:param name="title" value="report.name.AccountStatementReport" />
+    <ui:param name="bean" value="#{accountStatementReport}" />
+    <ui:param name="supportCSV" value="true" />
+    <ui:param name="supportXLS" value="true" />
+
+    <ui:define name="filter">
+        <div class="row" >
+            <t:inputLookupDialog label="contact.label.Account" 
+                                 value="#{accountStatementReport.filter.contact}" 
+                                 lookupBean="#{contactLookup}" 
+                                 lookupListener="accountStatementReport.filter.contact" 
+                                 lookupProfile="S:ACCOUNT;O:VENDOR,CUSTOMER,PERSON,CORPORATION"
+                                 placeholder="#{messages['contact.info.Account']}" 
+                                 columnClass="col-xs-12" required="true"/>
+            <t:inputReportDate value="#{accountStatementReport.filter.beginDate}" label="general.label.BeginDate" columnClass="col-xs-6" />
+            <t:inputReportDate value="#{accountStatementReport.filter.endDate}" label="general.label.EndDate" columnClass="col-xs-6" />
+        </div>
+    </ui:define>
+</ui:composition>
