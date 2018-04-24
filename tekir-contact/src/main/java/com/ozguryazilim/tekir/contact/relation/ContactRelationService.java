@@ -12,6 +12,7 @@ import com.ozguryazilim.tekir.entities.ContactRelation;
 import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.Person;
 import com.ozguryazilim.tekir.entities.RelatedContact;
+import com.ozguryazilim.telve.messages.Messages;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -259,7 +260,7 @@ public class ContactRelationService implements Serializable {
         ContactRelationViewModel result = new ContactRelationViewModel();
         result.setId(-1l);
         result.setCode("INTERNAL");
-        result.setName("contact.label.Workplace");
+        result.setName(Messages.getMessage("contact.label.Workplace"));
         result.setWeigth(-10);
         //Sadece kurumlar hedeflenebilir.
         result.setTargetRoles("CORPORATION");
@@ -277,7 +278,7 @@ public class ContactRelationService implements Serializable {
         ContactRelationViewModel result = new ContactRelationViewModel();
         result.setId(-2l);
         result.setCode("INTERNAL");
-        result.setName("contact.label.ParentCompany");
+        result.setName(Messages.getMessage("contact.label.ParentCompany"));
         result.setWeigth(-10);
         //Sadece kurumlar hedeflenebilir.
         result.setTargetRoles("CORPORATION");
@@ -295,7 +296,7 @@ public class ContactRelationService implements Serializable {
         ContactRelationViewModel result = new ContactRelationViewModel();
         result.setId(-3l);
         result.setCode("INTERNAL");
-        result.setName("contact.label.SubsidiaryCompany");
+        result.setName(Messages.getMessage("contact.label.SubsidiaryCompany"));
         result.setWeigth(-5);
         //Sadece kurumlar hedeflenebilir.
         result.setTargetRoles("CORPORATION");
@@ -313,7 +314,7 @@ public class ContactRelationService implements Serializable {
         ContactRelationViewModel result = new ContactRelationViewModel();
         result.setId(-4l);
         result.setCode("INTERNAL");
-        result.setName("contact.label.Employee");
+        result.setName(Messages.getMessage("contact.label.Employee"));
         result.setWeigth(-1);
         //Sadece kurumlar hedeflenebilir.
         result.setTargetRoles("PERSON");
