@@ -22,6 +22,7 @@ public class TekirContactModule {
         ContactRoleRegistery.register("PARTNER", true);
         ContactRoleRegistery.register("COMPETITOR", true);
         ContactRoleRegistery.register("RESELLER", true);
+        ContactRoleRegistery.register("INTERNATIONAL", false);
         //ContactRoleRegistery.register("LEAD");
         //ContactRoleRegistery.register("EMPLOYEE");
     }
