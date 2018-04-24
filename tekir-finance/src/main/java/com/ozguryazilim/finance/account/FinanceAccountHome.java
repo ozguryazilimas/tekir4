@@ -20,6 +20,7 @@ import com.ozguryazilim.telve.feature.FeatureHandler;
 import com.ozguryazilim.telve.forms.FormBase;
 import com.ozguryazilim.telve.forms.FormEdit;
 import com.ozguryazilim.telve.messages.FacesMessages;
+import com.ozguryazilim.telve.messages.Messages;
 import com.ozguryazilim.telve.utils.DateUtils;
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -267,23 +268,23 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
         chartModel = new LineChartModel();
 
         LineChartSeries debitSeries = new LineChartSeries();
-        debitSeries.setLabel("Debit");
+        debitSeries.setLabel(Messages.getMessage("finance.label.Debit"));
         debitSeries.setShowLine(false);
         //debitSeries.setDisableStack(true);
 
         LineChartSeries creditSeries = new LineChartSeries();
-        creditSeries.setLabel("Credit");
+        creditSeries.setLabel(Messages.getMessage("finance.label.Credit"));
         creditSeries.setShowLine(false);
         //creditSeries.setDisableStack(true);
 
         LineChartSeries stateSeries = new LineChartSeries();
-        stateSeries.setLabel("Balance");
+        stateSeries.setLabel(Messages.getMessage("general.label.Balance"));
         stateSeries.setFill(true);
         stateSeries.setDisableStack(true);
         stateSeries.setFillAlpha(0.2);
-        
-        //TODO: Configden ( dil dosyalarından ) alınlı i18n
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+        String pattern = Messages.getMessage("general.format.Date");
+        DateFormat df = new SimpleDateFormat(pattern);
         
         for( FinanceAccountBalanceModel bm : balanceModels ){
             String dts = df.format(bm.getDate());
@@ -327,7 +328,7 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
         //Axis xAxis = new CategoryAxis();
         //lineChartModel.getAxes().put(AxisType.X, xAxis);
         
-        DateAxis axis = new DateAxis("Dates");
+        DateAxis axis = new DateAxis(Messages.getMessage("general.label.Date"));
         //axis.setTickAngle(-50);
         axis.setMin(df.format(startDate));
         axis.setMax(df.format(new Date()));
@@ -348,9 +349,8 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
 
         FinanceAccountBalanceModel m = new FinanceAccountBalanceModel();
         m.setLineType("TAKE-OVER");
-        //TODO: i18n
         m.setDate(startDate);
-        m.setTopic("Take Over");
+        m.setTopic(Messages.getMessage("finance.label.TakeOver"));
         m.setAmount(BigDecimal.ZERO);
         m.setBalance(takeOverTotal);
         balanceModels.add(m);
@@ -376,8 +376,7 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
         m = new FinanceAccountBalanceModel();
         m.setDate(new Date());
         m.setLineType("RESULT");
-        //TODO: i18n
-        m.setTopic("Result");
+        m.setTopic(Messages.getMessage("general.label.Result"));
         m.setAmount(BigDecimal.ZERO);
         m.setBalance(takeOverTotal);
         balanceModels.add(m);
