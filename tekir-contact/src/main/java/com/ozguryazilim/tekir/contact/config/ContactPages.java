@@ -165,7 +165,7 @@ public interface ContactPages extends Pages {
         
         @SecuredPage
 	@View
-	@PageTitle("report.name.accountStatementReport")
+	@PageTitle("report.name.AccountStatementReport")
 	class AccountStatementReport implements ContactPages {
 	}
         

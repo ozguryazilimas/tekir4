@@ -45,7 +45,7 @@ public class AutoCodeOptionPane extends AbstractOptionPane{
     @Override
     public void save() {
         autoCodeService.save();
-        FacesMessages.info("Değişikler başarıyla saklandı.");
+        FacesMessages.info("facesMessages.info.ChangesSuccessfullySaved");
     }
     
     

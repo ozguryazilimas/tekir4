@@ -128,7 +128,7 @@ public class ContactHome extends FormBase<Contact, Long> {
         
         //FIXME: Burayı generic bir hale getirmek lazım                
         if( !identity.isPermitted("contact:select:" + getEntity().getOwner())){
-            FacesMessages.error("Kayda erişim için yetkiniz yok!");
+            FacesMessages.error("facesMessages.error.NoPermission");
             createNew();
             viewNavigationHandler.navigateTo(ContactPages.ContactBrowse.class);
             return false;

@@ -54,13 +54,13 @@
 
                     <div class="row">
                         <t:inputText label="contact.label.CorporationName" value="#{contactHome.entity.corporationName}" columnClass="col-xs-6" required="false"/>
-                        <t:inputLookupDialog label="general.label.Corporation" value="#{contactHome.entity.corporation}" lookupBean="#{contactLookup}" lookupListener="contactHome.entity.corporation" placeholder="#{messages['general.info.Corparation']}" lookupProfile="T:Corporation"/>
+                        <t:inputLookupDialog label="general.label.Corporation" value="#{contactHome.entity.corporation}" lookupBean="#{contactLookup}" lookupListener="contactHome.entity.corporation" placeholder="#{messages['general.info.Corporation']}" lookupProfile="T:Corporation"/>
                     </div>
                 </ui:fragment>
 
                 <ui:fragment rendered="#{contactHome.entity.class.simpleName eq 'Corporation'}">
                     <div class="row">
-                        <t:inputLookupDialog label="contact.label.CorparationType" value="#{contactHome.entity.corporationType}" lookupBean="#{corporationTypeLookup}" lookupListener="contactHome.entity.corporationType" placeholder="#{messages['contact.info.CorporationType']}" />
+                        <t:inputLookupDialog label="contact.label.CorporationType" value="#{contactHome.entity.corporationType}" lookupBean="#{corporationTypeLookup}" lookupListener="contactHome.entity.corporationType" placeholder="#{messages['contact.info.CorporationType']}" />
                         <t:inputText label="general.label.Name" value="#{contactHome.entity.name}" columnClass="col-xs-12" required="true"/>
                         <t:inputText label="general.label.OrganizationName" value="#{contactHome.entity.organizastionName}" columnClass="col-xs-12" required="true"/>
                         <t:inputLookupDialog label="contact.label.PrimaryContact" value="#{contactHome.entity.primaryContact}" lookupBean="#{contactLookup}" lookupListener="contactHome.entity.primaryContact" placeholder="#{messages['contact.info.PrimaryContact']}" lookupProfile="T:Person"/>
@@ -150,13 +150,13 @@
 
                 <div class="row">
                     <t:inputText label="contact.label.CorporationName" value="#{contactHome.entity.corporationName}" columnClass="col-xs-6" required="false"/>
-                    <t:inputLookupDialog label="general.label.Corporation" value="#{contactHome.entity.corporation}" lookupBean="#{contactLookup}" lookupListener="contactHome.entity.corporation" placeholder="#{messages['general.info.Corparation']}" lookupProfile="T:Corporation"/>
+                    <t:inputLookupDialog label="general.label.Corporation" value="#{contactHome.entity.corporation}" lookupBean="#{contactLookup}" lookupListener="contactHome.entity.corporation" placeholder="#{messages['general.info.Corporation']}" lookupProfile="T:Corporation"/>
                 </div>
             </ui:fragment>
 
             <ui:fragment rendered="#{contactHome.entity.class.simpleName eq 'Corporation'}">
                 <div class="row">
-                    <t:inputLookupDialog label="contact.label.CorparationType" value="#{contactHome.entity.corporationType}" lookupBean="#{corporationTypeLookup}" lookupListener="contactHome.entity.corporationType" placeholder="#{messages['contact.info.CorporationType']}" />
+                    <t:inputLookupDialog label="contact.label.CorporationType" value="#{contactHome.entity.corporationType}" lookupBean="#{corporationTypeLookup}" lookupListener="contactHome.entity.corporationType" placeholder="#{messages['contact.info.CorporationType']}" />
                     <t:inputText label="general.label.Name" value="#{contactHome.entity.name}" columnClass="col-xs-12" required="true"/>
                     <t:inputText label="general.label.OrganizationName" value="#{contactHome.entity.organizastionName}" columnClass="col-xs-12" required="true"/>
                     <t:inputLookupDialog label="contact.label.PrimaryContact" value="#{contactHome.entity.primaryContact}" lookupBean="#{contactLookup}" lookupListener="contactHome.entity.primaryContact" placeholder="#{messages['contact.info.PrimaryContact']}" lookupProfile="T:Person"/>

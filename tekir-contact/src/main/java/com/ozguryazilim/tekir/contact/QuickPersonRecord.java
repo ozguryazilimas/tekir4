@@ -15,6 +15,7 @@ import com.ozguryazilim.tekir.entities.ContactPhone;
 import com.ozguryazilim.tekir.entities.Person;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.messages.FacesMessages;
+import com.ozguryazilim.telve.messages.Messages;
 import com.ozguryazilim.telve.quick.QuickRecord;
 import com.ozguryazilim.telve.quick.QuickRecordBase;
 import javax.inject.Inject;
@@ -114,10 +115,10 @@ public class QuickPersonRecord extends QuickRecordBase{
             
             //FIXME: Feeder çalıştırılmalı
             
-            FacesMessages.info("Yeni Kişi Kaydı Başarılı", getEntity().getName() + " isimli kişi kaydedildi.");
+            FacesMessages.info("contact.messages.PersonSuccessfullySaved", Messages.getMessage("contact.messages.PersonSuccessfullySavedDetail", getEntity().getName()));
             return true;
         } catch (Exception e ){
-            FacesMessages.error("Hata oluştu", e.getLocalizedMessage());
+            FacesMessages.error("general.message.exception.Exception", e.getLocalizedMessage());
             return false;
         }
     }
