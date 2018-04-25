@@ -102,7 +102,7 @@ public class ContactHome extends FormBase<Contact, Long> {
         List<String> ls = getEntity().getContactRoles().stream()
                 .filter(p -> !getContactRoles().contains(p))
                 .collect(Collectors.toList());
-        
+
         //Şimdi kullanıcın seçtiklerini ekleyelim
         ls.addAll(selectedRoles);
         
@@ -128,7 +128,7 @@ public class ContactHome extends FormBase<Contact, Long> {
         
         //FIXME: Burayı generic bir hale getirmek lazım                
         if( !identity.isPermitted("contact:select:" + getEntity().getOwner())){
-            FacesMessages.error("Kayda erişim için yetkiniz yok!");
+            FacesMessages.error("facesMessages.error.NoPermission");
             createNew();
             viewNavigationHandler.navigateTo(ContactPages.ContactBrowse.class);
             return false;
@@ -240,6 +240,20 @@ public class ContactHome extends FormBase<Contact, Long> {
             return (Corporation) getEntity();
         } else {
             return ((AbstractPerson) getEntity()).getCorporation();
+        }
+    }
+
+    public Boolean getIsInternational() {
+        return getEntity().getContactRoles().contains("INTERNATIONAL");
+    }
+
+    public void setIsInternational(Boolean isInternational) {
+        if (isInternational) {
+            if( !getIsInternational() ){
+                getEntity().getContactRoles().add("INTERNATIONAL");
+            }
+        } else {
+            getEntity().getContactRoles().remove("INTERNATIONAL");
         }
     }
 }

@@ -14,20 +14,20 @@
             <i class="#{messages['feature.icon.'.concat(item.feature.feature)]}" 
                title="#{messages['feature.caption.'.concat(item.feature.feature)]}"/>
         </p:column>
-        <p:column headerText="Feature">
+        <p:column headerText="#{messages['general.label.Feature']}">
             <h:outputText value="#{item.feature.businessKey}"
                           title="#{messages['feature.caption.'.concat(item.feature.feature)]}"/>
         </p:column>
-        <p:column headerText="Topic">
+        <p:column headerText="#{messages['general.label.Topic']}">
             #{item.topic}
         </p:column>
-        <p:column headerText="Tutar">
+        <p:column headerText="#{messages['general.label.Amount']}">
             <t:cellOutputMoney value="#{item.amount}" currency="#{item.currency}"/>
         </p:column>
-        <p:column headerText="Tutar">
+        <p:column headerText="#{messages['general.label.LocalAmount']}">
             <t:cellOutputMoney value="#{item.localAmount}" currency="#{currencyService.reportCurrency}"/>
         </p:column>
-        <p:column headerText="Kalan">
+        <p:column headerText="#{messages['general.label.Remainder']}">
             <t:cellOutputMoney value="#{item.remainder}" currency="#{currencyService.reportCurrency}"/>
         </p:column>
     </ui:define>

@@ -48,6 +48,7 @@ public class AccountTxnSubView extends SubViewQueryBase<AccountTxn, AccountTxn>{
                 .addColumn(new FeatureColumn<>(AccountTxn_.feature, "general.label.Feature"), true)
                 .addColumn(new DateColumn<>(AccountTxn_.date, "general.label.Date"), true)
                 .addColumn(new TextColumn<>(AccountTxn_.info, "general.label.Info"), true)
+                .addColumn(new TextColumn<>(AccountTxn_.topic, "voucher.label.Topic"), true)
                 .addColumn(new BooleanColumn<>(AccountTxn_.debit, "general.label.DebitCredit", "booleanValue.DebitCredit."), true)
                 .addColumn(new MoneyColumn<>(AccountTxn_.amount, AccountTxn_.currency, "general.label.Money"), true)
                 .addColumn(new TextColumn<>(AccountTxn_.code, "general.label.Code"), false)
@@ -61,7 +62,7 @@ public class AccountTxnSubView extends SubViewQueryBase<AccountTxn, AccountTxn>{
                 .addFilter(new UserFilter<>(AccountTxn_.owner, "general.label.Owner"))
                 .addFilter(new StringFilter<>(AccountTxn_.code, "voucher.label.Code"))
                 .addFilter(new StringFilter<>(AccountTxn_.info, "voucher.label.Info"))
-                //.addFilter(new StringFilter<>(AccountTxn_.topic, "voucher.label.Topic"))
+                .addFilter(new StringFilter<>(AccountTxn_.topic, "voucher.label.Topic"))
                 //.addFilter(new StringFilter<>(AccountTxn_.stateReason, "voucher.label.StateReason"))
                 
                 .addFilter(new BigDecimalFilter<>(AccountTxn_.amount, "general.label.Total"))

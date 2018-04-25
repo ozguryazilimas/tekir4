@@ -24,14 +24,15 @@
             </div>  
             
             <div class="row">
-                <t:inputText label="contact.label.SSN" value="#{bean.contact.ssn}" columnClass="col-xs-6" required="false"/>
+                <t:inputMask label="contact.label.SSN" value="#{bean.contact.ssn}"
+                             columnClass="col-xs-6" required="false" mask="99999999999"/>
                 <t:inputText label="contact.label.JobTitle" value="#{bean.contact.jobTitle}" columnClass="col-xs-6" required="false"/>
                 
             </div>  
             
             <div class="row">
                 <t:inputText label="contact.label.CorparationName" value="#{bean.contact.corporationName}" columnClass="col-xs-6" required="false"/>
-                <t:inputLookupDialog label="general.label.Corparation" value="#{newPersonDialog.contact.corporation}" lookupBean="#{contactLookup}" lookupListener="newPersonDialog.contact.corporation" placeholder="#{messages['general.info.Corparation']}" lookupProfile="T:Corporation"/>
+                <t:inputLookupDialog label="general.label.Corparation" value="#{newPersonDialog.contact.corporation}" lookupBean="#{contactLookup}" lookupListener="newPersonDialog.contact.corporation" placeholder="#{messages['general.info.Corporation']}" lookupProfile="T:Corporation"/>
             </div>
             
             <div class="row">

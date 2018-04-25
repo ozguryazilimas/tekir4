@@ -6,6 +6,7 @@
     "columns": [
       "date",
       "voucherNo",
+      "topic",
       "fromAccount",
       "toAccount",
       "info",
@@ -55,6 +56,7 @@
     "columns": [
       "date",
       "voucherNo",
+      "topic",
       "fromAccount",
       "toAccount",
       "info",
@@ -104,6 +106,7 @@
     "columns": [
       "date",
       "voucherNo",
+      "topic",
       "fromAccount",
       "toAccount",
       "info",
@@ -153,6 +156,7 @@
     "columns": [
       "date",
       "voucherNo",
+      "topic",
       "fromAccount",
       "toAccount",
       "info",
@@ -202,6 +206,7 @@
     "columns": [
       "date",
       "voucherNo",
+      "topic",
       "fromAccount",
       "toAccount",
       "info",
