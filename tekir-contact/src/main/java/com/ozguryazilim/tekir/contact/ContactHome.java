@@ -103,7 +103,6 @@ public class ContactHome extends FormBase<Contact, Long> {
                 .filter(p -> !getContactRoles().contains(p))
                 .collect(Collectors.toList());
 
-        ls.remove("INTERNATIONAL");
         //Şimdi kullanıcın seçtiklerini ekleyelim
         ls.addAll(selectedRoles);
         
@@ -250,7 +249,9 @@ public class ContactHome extends FormBase<Contact, Long> {
 
     public void setIsInternational(Boolean isInternational) {
         if (isInternational) {
-            getEntity().getContactRoles().add("INTERNATIONAL");
+            if( !getIsInternational() ){
+                getEntity().getContactRoles().add("INTERNATIONAL");
+            }
         } else {
             getEntity().getContactRoles().remove("INTERNATIONAL");
         }
