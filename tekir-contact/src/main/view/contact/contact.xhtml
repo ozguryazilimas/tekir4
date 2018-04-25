@@ -103,12 +103,24 @@
 
                 <ui:fragment rendered="#{contactHome.isAccount}">
                     <div class="row">
-                        <t:accordion label="contact.label.Account" >
+                        <t:accordion label="contact.label.Account" id="accountForm">
                             <div class="row">
-                                <t:inputText label="contact.label.TaxOffice" value="#{contactHome.entity.taxOffice}" required="true"/>
-                                <t:inputMask label="contact.label.TaxNumber"
-                                             value="#{contactHome.entity.taxNumber}"
-                                             required="true" mask="9999999999?9"/>
+                                <t:inputCheckboxGroup label="contact.label.FirmOrigin">
+                                    <p:selectBooleanCheckbox itemLabel="#{messages['contact.role.INTERNATIONAL']}"
+                                                             value="#{contactHome.isInternational}">
+                                        <p:ajax update=":form:accountForm:accountVariables"
+                                                event="change" process="@this"/>
+                                    </p:selectBooleanCheckbox>
+                                </t:inputCheckboxGroup>
+                                <h:panelGroup id="accountVariables">
+                                    <t:inputText label="contact.label.TaxOffice"
+                                                 value="#{contactHome.entity.taxOffice}"
+                                                 required="#{!contactHome.isInternational}"/>
+                                    <t:inputMask label="contact.label.TaxNumber"
+                                                 value="#{contactHome.entity.taxNumber}"
+                                                 required="#{!contactHome.isInternational}"
+                                                 mask="9999999999?9"/>
+                                </h:panelGroup>
                                 <t:inputText label="contact.label.BankAccount" value="#{contactHome.entity.bankAccount}" required="false"/>
                                 <t:inputCurrency label="general.label.Currency" value="#{contactHome.entity.currency}" required="true"/>
                                 <t:inputCheckbox label="contact.label.VatWithholding" itemLabel="contact.label.Applicable" value="#{contactHome.entity.vatWithholding}" required="false"/>
@@ -180,14 +192,29 @@
 
 
             <ui:fragment rendered="#{contactHome.isAccount}">
-                <div class="row">
-                    <t:inputText label="contact.label.TaxOffice" value="#{contactHome.entity.taxOffice}" required="true"/>
-                    <t:inputMask label="contact.label.TaxNumber"
-                                 value="#{contactHome.entity.taxNumber}"
-                                 required="true" mask="9999999999?9"/>
-                    <t:inputText label="contact.label.BankAccount" value="#{contactHome.entity.bankAccount}" required="false"/>
-                    <t:inputCurrency label="general.label.Currency" value="#{contactHome.entity.currency}" required="true"/>
-                </div>
+                <t:accordion label="contact.label.Account" id="accountForm">
+                    <div class="row">
+                        <t:inputCheckboxGroup label="contact.label.FirmOrigin">
+                            <p:selectBooleanCheckbox itemLabel="#{messages['contact.role.INTERNATIONAL']}"
+                                                     value="#{contactHome.isInternational}">
+                                <p:ajax update=":form:accountForm:accountVariables"
+                                        event="change" process="@this"/>
+                            </p:selectBooleanCheckbox>
+                        </t:inputCheckboxGroup>
+                        <h:panelGroup id="accountVariables">
+                            <t:inputText label="contact.label.TaxOffice"
+                                         value="#{contactHome.entity.taxOffice}"
+                                         required="#{!contactHome.isInternational}"/>
+                            <t:inputMask label="contact.label.TaxNumber"
+                                         value="#{contactHome.entity.taxNumber}"
+                                         required="#{!contactHome.isInternational}"
+                                         mask="9999999999?9"/>
+                        </h:panelGroup>
+                        <t:inputText label="contact.label.BankAccount" value="#{contactHome.entity.bankAccount}" required="false"/>
+                        <t:inputCurrency label="general.label.Currency" value="#{contactHome.entity.currency}" required="true"/>
+                        <t:inputCheckbox label="contact.label.VatWithholding" itemLabel="contact.label.Applicable" value="#{contactHome.entity.vatWithholding}" required="false"/>
+                    </div>
+                </t:accordion>
             </ui:fragment>
 
         </ui:remove>
