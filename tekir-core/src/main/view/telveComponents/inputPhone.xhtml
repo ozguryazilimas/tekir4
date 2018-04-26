@@ -18,8 +18,8 @@
         <div id="#{cc.clientId}" class="prop #{cc.attrs.columnClass}">
             <p:outputLabel for="#{cc.id}_inp" value="#{messages['general.label.PhoneNumber']}"/>
             <span class="value">
-                    <p:inputText id="#{cc.id}_inp" value="#{cc.attrs.value}"
-                                 required="#{cc.attrs.required}" placeholder="+90 000 0000"/>
+                    <p:inputText id="#{cc.id}_inp" value="#{cc.attrs.value}" size="32"
+                                 required="#{cc.attrs.required}" placeholder="+90 212 999 99 99"/>
             </span>
             <p:message id="#{cc.id}_msg" for="#{cc.id}_inp" autoUpdate="true"/>
             <script>
