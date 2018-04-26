@@ -1,6 +1,7 @@
 <ui:component xmlns="http://www.w3.org/1999/xhtml"
               xmlns:ui="http://java.sun.com/jsf/facelets"
               xmlns:p="http://primefaces.org/ui"
+              xmlns:h="http://java.sun.com/jsf/html"
               xmlns:f="http://java.sun.com/jsf/core"
               xmlns:composite="http://java.sun.com/jsf/composite">
 
@@ -12,17 +13,18 @@
     </composite:interface>
 
     <composite:implementation>
+        <h:outputScript library="telveComponents" name="libphonenumber-js.min.js" target="head"/>
+        <h:outputScript library="telveComponents" name="tekir.js" target="head"/>
         <div id="#{cc.clientId}" class="prop #{cc.attrs.columnClass}">
-        	<p:outputLabel for="#{cc.id}_inp" value="#{messages['general.label.PhoneNumber']}" />
-            <script>
-                $.mask.definitions['9'] = '';
-                $.mask.definitions['x'] = '[0-9]';
-            </script>
+            <p:outputLabel for="#{cc.id}_inp" value="#{messages['general.label.PhoneNumber']}"/>
             <span class="value">
-                    <p:inputMask id="#{cc.id}_inp" value="#{cc.attrs.value}"
-                                 required="#{cc.attrs.required}" mask="+90 (xxx) xxx-xxxx"/>
+                    <p:inputText id="#{cc.id}_inp" value="#{cc.attrs.value}"
+                                 required="#{cc.attrs.required}" placeholder="+90 000 0000"/>
             </span>
             <p:message id="#{cc.id}_msg" for="#{cc.id}_inp" autoUpdate="true"/>
+            <script>
+                tekir.attachPhoneInput("#{cc.clientId}:#{cc.id}_inp");
+            </script>
         </div>
     </composite:implementation>
 
