@@ -1,7 +1,7 @@
 (function () {
     var tekir = window.tekir = window.tekir || {};
 
-    function phone_handleKeyPress(event) {
+    function handleKeyPress(event) {
         var val = event.target.value;
         var charCode = event.charCode;
         if (val.indexOf('+') < 0 && charCode === 43) { //+
@@ -10,7 +10,7 @@
         return (charCode > 47 && charCode < 58);
     }
 
-    function phone_handleKeyUp(event) {
+    function handleKeyUp(event) {
         var val = event.target.value;
         if (!libphonenumber.isValidNumber(val)) {
             return false;
@@ -29,7 +29,7 @@
 
     var phoneRegex = /^([+]?)+([\s0-9]*$)/g;
 
-    function phone_handlePaste(event) {
+    function handlePaste(event) {
 
         try {
             var text = event.clipboardData.getData('text');
@@ -47,7 +47,7 @@
         return true;
     }
 
-    function phone_handleChange(event) {
+    function handleChange(event) {
         var val = event.target.value;
         if (!val.match(phoneRegex)) {
             event.target.value = event.target._oldValue || "";
@@ -64,9 +64,9 @@
             return;
         }
 
-        el.onkeypress = phone_handleKeyPress;
-        el.onkeyup = phone_handleKeyUp;
-        el.onpaste = phone_handlePaste;
-        el.addEventListener('change', phone_handleChange);
+        el.onkeypress = handleKeyPress;
+        el.onkeyup = handleKeyUp;
+        el.onpaste = handlePaste;
+        el.addEventListener('change', handleChange);
     };
 }());
