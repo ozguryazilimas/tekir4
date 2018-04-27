@@ -103,7 +103,7 @@ public class ContactListDynaReport extends DynamicReportBase<ContactListFilter> 
         DateFormat df = new SimpleDateFormat(pattern);
         Date dt = getFilter().getDate().getCalculatedValue();
         String date = df.format(dt);
-        //FIXME: Burada tarih formatlanmalı. Msajlar i18n
+        //FIXME: Msajlar i18n
 
         StringBuilder sb = new StringBuilder();
         sb.append(date).append(' ').append(" itibari ile").append('\n');
