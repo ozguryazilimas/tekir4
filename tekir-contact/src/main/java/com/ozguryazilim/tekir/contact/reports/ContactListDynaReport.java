@@ -63,11 +63,11 @@ public class ContactListDynaReport extends DynamicReportBase<ContactListFilter> 
     protected void buildReport(JasperReportBuilder report, Boolean forExport) {
 
         TextColumnBuilder<String> contactCode = col.column("contactCode", type.stringType())
-            .setTitle(msg("AccountTxnReport.Code")).setFixedWidth(cm(3));
+            .setTitle(msg("ContactListReport.Code")).setFixedWidth(cm(3));
         TextColumnBuilder<String> contactName = col.column("contactName", type.stringType())
-            .setTitle(msg("AccountTxnReport.Name")).setFixedWidth(cm(3));
+            .setTitle(msg("ContactListReport.Name")).setFixedWidth(cm(3));
         TextColumnBuilder<String> contactInfo = col.column("contactInfo", type.stringType())
-            .setTitle(msg("AccountTxnReport.Info"));
+            .setTitle(msg("ContactListReport.Info"));
 
         if (getFilter().getDetail()) {
             SubreportBuilder sub = cmp.subreport(new SubreportExpression())
@@ -103,32 +103,38 @@ public class ContactListDynaReport extends DynamicReportBase<ContactListFilter> 
         DateFormat df = new SimpleDateFormat(pattern);
         Date dt = getFilter().getDate().getCalculatedValue();
         String date = df.format(dt);
-        //FIXME: Msajlar i18n
 
         StringBuilder sb = new StringBuilder();
-        sb.append(date).append(' ').append(" itibari ile").append('\n');
+        sb.append(date).append(" ").append(Messages.getMessage("general.label.Since")).append('\n');
         if (!Strings.isNullOrEmpty(getFilter().getCode())) {
-            sb.append("Kod : ").append(getFilter().getCode()).append('\n');
+            sb.append(Messages.getMessage("general.label.Code")).append(" : ")
+                .append(getFilter().getCode()).append('\n');
         }
         if (!Strings.isNullOrEmpty(getFilter().getName())) {
-            sb.append("Ad : ").append(getFilter().getName()).append('\n');
+            sb.append(Messages.getMessage("general.label.Name")).append(" : ")
+                .append(getFilter().getName()).append('\n');
         }
         if (getFilter().getContactCategory() != null) {
-            sb.append("Kategori : ").append(getFilter().getContactCategory().getName())
+            sb.append(Messages.getMessage("general.label.Category")).append(" : ")
+                .append(getFilter().getContactCategory().getName())
                 .append('\n');
         }
         if (getFilter().getCorporationType() != null) {
-            sb.append("Kurum Tipi : ").append(getFilter().getCorporationType().getName())
+            sb.append(Messages.getMessage("contact.label.CorporationType")).append(" : ")
+                .append(getFilter().getCorporationType().getName())
                 .append('\n');
         }
         if (getFilter().getIndustry() != null) {
-            sb.append("Sektör : ").append(getFilter().getIndustry().getName()).append('\n');
+            sb.append(Messages.getMessage("general.label.Industry")).append(" : ")
+                .append(getFilter().getIndustry().getName()).append('\n');
         }
         if (getFilter().getTerritory() != null) {
-            sb.append("Bölge : ").append(getFilter().getTerritory().getName()).append('\n');
+            sb.append(Messages.getMessage("general.label.Territory")).append(" : ")
+                .append(getFilter().getTerritory().getName()).append('\n');
         }
         if (getFilter().getOwner() != null) {
-            sb.append("Belge sahibi : ").append(getFilter().getOwner()).append('\n');
+            sb.append(Messages.getMessage("general.label.Owner")).append(" : ")
+                .append(getFilter().getOwner()).append('\n');
         }
 
         return sb.toString();
