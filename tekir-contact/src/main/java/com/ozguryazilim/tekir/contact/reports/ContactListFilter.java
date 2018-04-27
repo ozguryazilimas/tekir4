@@ -16,6 +16,7 @@ public class ContactListFilter implements Serializable {
     private Industry industry;
     private Territory territory;
     private String owner;
+    private Boolean isDetail;
     private ReportDate date;
 
     public String getCode() {
@@ -72,6 +73,14 @@ public class ContactListFilter implements Serializable {
 
     public void setOwner(String owner) {
         this.owner = owner;
+    }
+
+    public Boolean getDetail() {
+        return isDetail;
+    }
+
+    public void setDetail(Boolean detail) {
+        isDetail = detail;
     }
 
     public ReportDate getDate() {

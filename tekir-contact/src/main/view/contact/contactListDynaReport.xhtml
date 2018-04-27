@@ -6,7 +6,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/layout/dynamicReportBase.xhtml">
 
-    <ui:param name="title" value="report.name.ContactListReport"/>
+    <ui:param name="title" value="report.name.ContactListDynaReport"/>
     <ui:param name="bean" value="#{contactListDynaReport}"/>
     <ui:param name="supportCSV" value="true"/>
     <ui:param name="supportXLS" value="true"/>
@@ -38,7 +38,9 @@
                                  lookupListener="contactListDynaReport.filter.territory"
                                  placeholder="#{messages['general.info.Territory']}"/>
             <t:inputUser value="#{contactListDynaReport.filter.owner}"
-                         label="general.label.Assignee" columnClass="col-xs-6"/>
+                         label="general.label.Owner" columnClass="col-xs-6"/>
+            <t:inputCheckbox itemLabel="general.label.Show" label="general.label.OpenTxn"
+                             value="#{contactListDynaReport.filter.detail}"/>
         </div>
     </ui:define>
 </ui:composition>
