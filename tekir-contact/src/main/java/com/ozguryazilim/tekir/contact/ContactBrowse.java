@@ -27,6 +27,7 @@ import com.ozguryazilim.telve.query.filters.EntityOverlayFilter;
 import com.ozguryazilim.telve.query.filters.StringFilter;
 import com.ozguryazilim.telve.query.filters.SubStringFilter;
 import com.ozguryazilim.telve.query.filters.TreeEntityFilter;
+import com.ozguryazilim.telve.query.filters.UserFilter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -59,7 +60,8 @@ public class ContactBrowse extends BrowseBase<Contact, ContactViewModel> {
                     .addFilter(new TreeEntityFilter<>(Contact_.industry, Industry_.path,
                         IndustryLookup.class, "general.label.Industry"))
                     .addFilter(new EntityOverlayFilter<>(Contact_.territory, TerritoryLookup.class,
-                        "general.label.Territory"));
+                        "general.label.Territory"))
+                    .addFilter(new UserFilter<>(Contact_.owner, "general.label.Owner"));
 
                 queryDefinition
                     .addColumn(new LinkColumn<>(Contact_.code, "general.label.Code"), true)
