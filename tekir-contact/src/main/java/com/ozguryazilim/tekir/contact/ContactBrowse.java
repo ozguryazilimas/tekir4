@@ -1,7 +1,9 @@
 package com.ozguryazilim.tekir.contact;
 
 import com.ozguryazilim.tekir.contact.category.ContactCategoryLookup;
+import com.ozguryazilim.tekir.core.industry.IndustryLookup;
 import com.ozguryazilim.tekir.entities.ContactCategory_;
+import com.ozguryazilim.tekir.entities.Industry_;
 import com.ozguryazilim.telve.forms.Browse;
 import com.ozguryazilim.telve.forms.BrowseBase;
 import com.ozguryazilim.telve.data.RepositoryBase;
@@ -49,7 +51,9 @@ public class ContactBrowse extends BrowseBase<Contact, ContactViewModel> {
                     .addFilter(new SubStringFilter<>(Contact_.primaryEmail, ContactEMail_.address, "contact.label.PrimaryEmail"))
                     .addFilter(new StringFilter<>(Contact_.info, "general.label.Info"))
                     .addFilter(new TreeEntityFilter<>(Contact_.category, ContactCategory_.path,
-                        ContactCategoryLookup.class, "general.label.Category"));
+                        ContactCategoryLookup.class, "general.label.Category"))
+                    .addFilter(new TreeEntityFilter<>(Contact_.industry, Industry_.path,
+                        IndustryLookup.class, "general.label.Industry"));
 
                 queryDefinition
                     .addColumn(new LinkColumn<>(Contact_.code, "general.label.Code"), true)
