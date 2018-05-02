@@ -1,5 +1,7 @@
 package com.ozguryazilim.tekir.contact;
 
+import com.ozguryazilim.tekir.contact.category.ContactCategoryLookup;
+import com.ozguryazilim.tekir.entities.ContactCategory_;
 import com.ozguryazilim.telve.forms.Browse;
 import com.ozguryazilim.telve.forms.BrowseBase;
 import com.ozguryazilim.telve.data.RepositoryBase;
@@ -18,6 +20,7 @@ import com.ozguryazilim.telve.query.columns.SubTextColumn;
 import com.ozguryazilim.telve.query.columns.TextColumn;
 import com.ozguryazilim.telve.query.filters.StringFilter;
 import com.ozguryazilim.telve.query.filters.SubStringFilter;
+import com.ozguryazilim.telve.query.filters.TreeEntityFilter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -44,8 +47,10 @@ public class ContactBrowse extends BrowseBase<Contact, ContactViewModel> {
                     .addFilter(new SubStringFilter<>(Contact_.primaryMobile, ContactPhone_.address, "contact.label.PrimaryMobile"))
                     .addFilter(new SubStringFilter<>(Contact_.primaryPhone, ContactPhone_.address, "contact.label.PrimaryPhone"))
                     .addFilter(new SubStringFilter<>(Contact_.primaryEmail, ContactEMail_.address, "contact.label.PrimaryEmail"))
-                    .addFilter(new StringFilter<>(Contact_.info, "general.label.Info"));
-                
+                    .addFilter(new StringFilter<>(Contact_.info, "general.label.Info"))
+                    .addFilter(new TreeEntityFilter<>(Contact_.category, ContactCategory_.path,
+                        ContactCategoryLookup.class, "general.label.Category"));
+
                 queryDefinition
                     .addColumn(new LinkColumn<>(Contact_.code, "general.label.Code"), true)
                     .addColumn(new LinkColumn<>(Contact_.name, "general.label.Name"), true)
