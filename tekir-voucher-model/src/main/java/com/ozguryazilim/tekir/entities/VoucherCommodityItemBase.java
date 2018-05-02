@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ozguryazilim.tekir.entities;
 
 import com.ozguryazilim.telve.entities.EntityBase;
@@ -25,49 +20,52 @@ import javax.persistence.MappedSuperclass;
  */
 @MappedSuperclass
 public abstract class VoucherCommodityItemBase<E extends VoucherBase> extends EntityBase{
-    
-    @Id 
+
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "genericSeq")
     @Column(name = "ID")
     private Long id;
-    
+
     @ManyToOne
     @JoinColumn(name = "MASTER_ID", foreignKey = @ForeignKey(name = "FK_QUOTEIT_QUOTE"))
     private E master;
-    
+
     @ManyToOne
     @JoinColumn(name = "COMMODITY_ID", foreignKey = @ForeignKey(name = "FK_QUOTEIT_COMMO"))
     private Commodity commodity;
-    
+
     @Column(name = "INFO")
     private String info;
-    
-    
+
+
     @Embedded
     @AttributeOverrides({
         @AttributeOverride(name = "amount", column = @Column(name = "QTY_AMT")),
         @AttributeOverride(name = "unit", column = @Column(name = "QTY_UNIT")),
     })
     private Quantity quantity;
-    
+
     @Column(name = "PRICE_AMT")
     private BigDecimal price = BigDecimal.ZERO;
-    
+
     /**
      * Yüzde kaç indirim olduğu integer değer olarak tutuluyor.
      */
     @Column(name = "DISC_RATE")
     private Integer discountRate = 0;
-    
+
     @Column(name = "DISC_AMT")
     private BigDecimal discount = BigDecimal.ZERO;
-    
+
     @Column(name = "TOT_AMT")
     private BigDecimal total = BigDecimal.ZERO;
 
     @Column(name = "LINE_TOT_AMT")
     private BigDecimal lineTotal = BigDecimal.ZERO;
-    
+
+    @Column(name = "LINE_TOT_TAX")
+    private BigDecimal taxTotal = BigDecimal.ZERO;
+
     @Override
     public Long getId() {
         return id;
@@ -149,5 +147,11 @@ public abstract class VoucherCommodityItemBase<E extends VoucherBase> extends En
         this.lineTotal = lineTotal;
     }
 
-    
+    public BigDecimal getTaxTotal() {
+        return taxTotal;
+    }
+
+    public void setTaxTotal(BigDecimal taxTotal) {
+        this.taxTotal = taxTotal;
+    }
 }

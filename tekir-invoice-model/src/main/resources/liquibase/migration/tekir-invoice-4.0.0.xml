@@ -75,4 +75,10 @@
             <column name="LOCAL_AMOUNT" type="decimal(19, 2)"/>
         </addColumn>
     </changeSet>
+    <changeSet author="hates" id="020520181721">
+        <addColumn tableName="TIV_INVOICE">
+            <column name="LINE_TOT_TAX" type="decimal(19, 2)"/>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

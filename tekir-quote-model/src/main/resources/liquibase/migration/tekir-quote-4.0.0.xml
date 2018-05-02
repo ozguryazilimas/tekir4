@@ -133,4 +133,9 @@
             <column name="LOCAL_AMOUNT" type="decimal(19, 2)"/>
         </addColumn>
     </changeSet>
+    <changeSet author="hates" id="020520181725">
+        <addColumn tableName="TSQ_QUOTE">
+            <column name="TOR_ORDER" type="decimal(19, 2)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

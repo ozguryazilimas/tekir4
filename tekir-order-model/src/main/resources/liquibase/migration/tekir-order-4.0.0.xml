@@ -95,4 +95,9 @@
             <column name="LOCAL_AMOUNT" type="decimal(19, 2)"/>
         </addColumn>
     </changeSet>
+    <changeSet author="hates" id="020520181724">
+        <addColumn tableName="TIV_INVOICE">
+            <column name="TOR_ORDER" type="decimal(19, 2)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
