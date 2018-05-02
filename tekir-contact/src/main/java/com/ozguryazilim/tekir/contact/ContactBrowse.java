@@ -2,8 +2,10 @@ package com.ozguryazilim.tekir.contact;
 
 import com.ozguryazilim.tekir.contact.category.ContactCategoryLookup;
 import com.ozguryazilim.tekir.core.industry.IndustryLookup;
+import com.ozguryazilim.tekir.core.territory.TerritoryLookup;
 import com.ozguryazilim.tekir.entities.ContactCategory_;
 import com.ozguryazilim.tekir.entities.Industry_;
+import com.ozguryazilim.tekir.entities.Territory_;
 import com.ozguryazilim.telve.forms.Browse;
 import com.ozguryazilim.telve.forms.BrowseBase;
 import com.ozguryazilim.telve.data.RepositoryBase;
@@ -20,6 +22,8 @@ import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.query.columns.LinkColumn;
 import com.ozguryazilim.telve.query.columns.SubTextColumn;
 import com.ozguryazilim.telve.query.columns.TextColumn;
+import com.ozguryazilim.telve.query.filters.EntityDialogFilter;
+import com.ozguryazilim.telve.query.filters.EntityOverlayFilter;
 import com.ozguryazilim.telve.query.filters.StringFilter;
 import com.ozguryazilim.telve.query.filters.SubStringFilter;
 import com.ozguryazilim.telve.query.filters.TreeEntityFilter;
@@ -53,7 +57,9 @@ public class ContactBrowse extends BrowseBase<Contact, ContactViewModel> {
                     .addFilter(new TreeEntityFilter<>(Contact_.category, ContactCategory_.path,
                         ContactCategoryLookup.class, "general.label.Category"))
                     .addFilter(new TreeEntityFilter<>(Contact_.industry, Industry_.path,
-                        IndustryLookup.class, "general.label.Industry"));
+                        IndustryLookup.class, "general.label.Industry"))
+                    .addFilter(new EntityOverlayFilter<>(Contact_.territory, TerritoryLookup.class,
+                        "general.label.Territory"));
 
                 queryDefinition
                     .addColumn(new LinkColumn<>(Contact_.code, "general.label.Code"), true)
