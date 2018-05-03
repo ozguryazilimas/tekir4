@@ -105,7 +105,7 @@ public class ContactListDynaReport extends DynamicReportBase<ContactListFilter> 
         String date = df.format(dt);
 
         StringBuilder sb = new StringBuilder();
-        sb.append(date).append(" ").append(Messages.getMessage("general.label.Since")).append('\n');
+        sb.append(date).append(" ").append(Messages.getMessage("general.label.AsOf")).append('\n');
         if (!Strings.isNullOrEmpty(getFilter().getCode())) {
             sb.append(Messages.getMessage("general.label.Code")).append(" : ")
                 .append(getFilter().getCode()).append('\n');
