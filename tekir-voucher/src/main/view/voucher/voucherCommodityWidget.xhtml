@@ -32,7 +32,7 @@
                     <t:cellOutputMoney value="#{item.discount}" currency="#{bean.entity.currency}" />
                 </p:column>
                 <p:column headerText="#{messages['widget.label.Tax']}">
-                    <t:cellOutputMoney value="#{item.discount}" currency="#{bean.entity.currency}" />
+                    <t:cellOutputMoney value="#{item.taxTotal}" currency="#{bean.entity.currency}" />
                 </p:column>
                 <p:column headerText="#{messages['widget.label.Total']}" >
                     <t:cellOutputMoney value="#{item.lineTotal}" currency="#{bean.entity.currency}" />
