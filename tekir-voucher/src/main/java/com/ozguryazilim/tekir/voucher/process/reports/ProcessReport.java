@@ -37,7 +37,7 @@ import org.apache.deltaspike.core.api.config.ConfigResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Report(filterPage = VoucherPages.Process.ProcessReport.class, permission = "processReport", path = "/process", template = "contactListDynaReport")
+@Report(filterPage = VoucherPages.Process.ProcessReport.class, permission = "processReport", path = "/process", template = "processReport")
 public class ProcessReport extends DynamicReportBase<ProcessReportFilter> {
 
     private static final Logger LOG = LoggerFactory.getLogger(ProcessReport.class);
