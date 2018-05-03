@@ -1,0 +1,58 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/dynamicReportBase.xhtml">
+
+    <ui:param name="title" value="report.name.ProcessReport"/>
+    <ui:param name="bean" value="#{processReport}"/>
+    <ui:param name="supportCSV" value="true"/>
+    <ui:param name="supportXLS" value="true"/>
+
+    <ui:define name="filter">
+        <div class="row">
+            <t:inputText value="#{processReport.filter.code}" label="general.label.Code"
+                         columnClass="col-xs-6"/>
+            <t:inputText value="#{processReport.filter.name}" label="general.label.Name"
+                         columnClass="col-xs-6"/>
+            <t:inputLookupDialog label="contact.label.CorporationType"
+                                 value="#{processReport.filter.corporationType}"
+                                 lookupBean="#{corporationTypeLookup}"
+                                 lookupListener="processReport.filter.corporationType"
+                                 placeholder="#{messages['contact.info.CorporationType']}"/>
+            <t:inputLookupDialog label="general.label.Category"
+                                 value="#{processReport.filter.contactCategory}"
+                                 lookupBean="#{contactCategoryLookup}"
+                                 lookupListener="processReport.filter.contactCategory"
+                                 placeholder="#{messages['general.info.Category']}"/>
+            <t:inputLookupDialog label="general.label.Industry"
+                                 value="#{processReport.filter.industry}"
+                                 lookupBean="#{industryLookup}"
+                                 lookupListener="processReport.filter.industry"
+                                 placeholder="#{messages['general.info.Industry']}"/>
+            <t:inputLookupDialog label="general.label.Territory"
+                                 value="#{processReport.filter.territory}"
+                                 lookupBean="#{territoryLookup}"
+                                 lookupListener="processReport.filter.territory"
+                                 placeholder="#{messages['general.info.Territory']}"/>
+            <t:inputUser value="#{processReport.filter.owner}"
+                         label="processReport.filter.AccountOwner" columnClass="col-xs-6"/>
+            <t:inputCheckboxGroup label="processReport.filter.ProcessDetails">
+                <p:selectBooleanCheckbox itemLabel="#{messages['general.label.Show']}"
+                                         value="#{processReport.filter.detail}">
+                    <p:ajax update=":reportForm:dates" event="change" process="@this"/>
+                </p:selectBooleanCheckbox>
+            </t:inputCheckboxGroup>
+            <h:panelGroup id="dates">
+                <t:inputReportDate value="#{processReport.filter.beginDate}"
+                                   label="general.label.BeginDate" columnClass="col-xs-6"
+                                   rendered="#{processReport.filter.detail}"/>
+                <t:inputReportDate value="#{processReport.filter.endDate}"
+                                   label="general.label.EndDate" columnClass="col-xs-6"
+                                   rendered="#{processReport.filter.detail}"/>
+            </h:panelGroup>
+        </div>
+    </ui:define>
+</ui:composition>

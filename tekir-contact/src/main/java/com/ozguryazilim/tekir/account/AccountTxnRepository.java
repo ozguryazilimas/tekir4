@@ -120,6 +120,9 @@ public abstract class AccountTxnRepository extends
     public abstract List<AccountTxn> findByProcessId(String processId);
 
     public abstract List<AccountTxn> findByAccountAndDateBetweenOrderByDate(Contact account, Date beginDate, Date endDate );
+
+    public abstract List<AccountTxn> findByProcessIdAndDateBetweenOrderByDate(String processId,
+        Date beginDate, Date endDate);
     
     @Query( "select sum( t.localAmount * ( case when t.debit = true then -1 else 1 end )) from AccountTxn t where t.account = ?1 and t.date < ?2" )
     public abstract BigDecimal findByAccountBalance( Contact account, Date beginDate );
