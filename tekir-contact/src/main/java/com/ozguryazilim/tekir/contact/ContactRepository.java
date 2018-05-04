@@ -292,7 +292,7 @@ public abstract class ContactRepository
     @Query("select c from Person c where corporation = ?1")
     public abstract List<Contact> findByCorporation( Contact contact);
 
-    public List<ContactListModel> findByFilter(ContactListFilter filter) {
+    public List<ContactListModel> findByListFilter(ContactListFilter filter) {
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
 
         CriteriaQuery<ContactListModel> criteriaQuery = criteriaBuilder
@@ -355,6 +355,4 @@ public abstract class ContactRepository
 
         return resultList;
     }
-
-    public abstract Contact findById(Long id);
 }

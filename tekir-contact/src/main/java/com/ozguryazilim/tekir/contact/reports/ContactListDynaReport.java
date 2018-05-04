@@ -84,12 +84,11 @@ public class ContactListDynaReport extends DynamicReportBase<ContactListFilter> 
 
     @Override
     protected JRDataSource getReportDataSource() {
-        List<ContactListModel> rows = repository.findByFilter(getFilter());
+        List<ContactListModel> rows = repository.findByListFilter(getFilter());
 
         if (getFilter().getDetail()) {
             for (ContactListModel c : rows) {
-                Contact contact = repository.findById(c.getContactId());
-                List<AccountTxn> txnRows = txnRepository.findOpenTxnsByAccount(contact);
+                List<AccountTxn> txnRows = txnRepository.findOpenTxnByContactId(c.getContactId());
                 c.setTxnList(txnRows);
             }
         }

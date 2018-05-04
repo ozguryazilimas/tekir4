@@ -281,4 +281,31 @@ public abstract class AccountTxnRepository extends
         return resultList;
         
     }
+
+    public List<AccountTxn> findOpenTxnByContactId(Long contactId) {
+        CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
+        CriteriaQuery<AccountTxn> criteriaQuery = criteriaBuilder.createQuery(AccountTxn.class);
+        Root<AccountTxn> from = criteriaQuery.from(AccountTxn.class);
+
+        criteriaQuery.select(from);
+
+        List<Predicate> predicates = new ArrayList<>();
+
+        predicates.add(criteriaBuilder
+            .equal(from.get(AccountTxn_.account).get(Contact_.id), contactId));
+        predicates.add(criteriaBuilder
+            .or(
+                criteriaBuilder.like(from.get(AccountTxn_.status), "DRAFT%"),
+                criteriaBuilder.like(from.get(AccountTxn_.status), "OPEN%")
+            ));
+
+        criteriaQuery.where(predicates.toArray(new Predicate[]{}));
+
+        criteriaQuery.orderBy(criteriaBuilder.desc(from.get(AccountTxn_.date)));
+
+        TypedQuery<AccountTxn> typedQuery = entityManager().createQuery(criteriaQuery);
+        List<AccountTxn> resultList = typedQuery.getResultList();
+
+        return resultList;
+    }
 }
