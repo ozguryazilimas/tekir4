@@ -23,6 +23,7 @@ public class ListAttributeStringListFilter<E> extends Filter<E, String, String> 
     private String keyPrefix;
     private List<String> valueList;
     private String attributeName;
+    private List<String> values;
 
 
     public ListAttributeStringListFilter(String attributeName, List<String> valueList, String label,
@@ -33,13 +34,13 @@ public class ListAttributeStringListFilter<E> extends Filter<E, String, String> 
         this.valueList = valueList;
         this.attributeName = attributeName;
 
-        setOperands(Operands.getStringOperands());
-        setOperand(FilterOperand.Contains);
+        setOperands(Operands.getEnumOperands());
+        setOperand(FilterOperand.Equal);
     }
 
     @Override
     public void decorateCriteria(Criteria<E, ?> criteria) {
-        if (getValue() != null) {
+        if (getValues() != null) {
             switch (getOperand()) {
                 case Equal:
                     //criteria.eq(getAttribute(), getValue());
@@ -56,17 +57,21 @@ public class ListAttributeStringListFilter<E> extends Filter<E, String, String> 
     @Override
     public void decorateCriteriaQuery(List<Predicate> predicates, CriteriaBuilder builder,
         Root<E> from) {
-        if (getValue() != null) {
+        if (getValues() != null) {
             switch (getOperand()) {
-                case Contains:
-                    predicates
-                        .add(builder.like(from.get(attributeName).as(String.class),
-                            "%" + getValue() + "%"));
+                case Equal:
+                    for (String v : values) {
+                        predicates
+                            .add(builder
+                                .like(from.get(attributeName).as(String.class), "%" + v + "%"));
+                    }
                     break;
-                case NotContains:
-                    predicates
-                        .add(builder.like(from.get(attributeName).as(String.class),
-                            "%" + getValue() + "%"));
+                case NotEqual:
+                    for (String v : values) {
+                        predicates
+                            .add(builder
+                                .notLike(from.get(attributeName).as(String.class), "%" + v + "%"));
+                    }
                     break;
                 default:
                     break;
@@ -94,6 +99,14 @@ public class ListAttributeStringListFilter<E> extends Filter<E, String, String> 
 
     public void setValueList(List<String> valueList) {
         this.valueList = valueList;
+    }
+
+    public List<String> getValues() {
+        return values;
+    }
+
+    public void setValues(List<String> values) {
+        this.values = values;
     }
 
     @Override
