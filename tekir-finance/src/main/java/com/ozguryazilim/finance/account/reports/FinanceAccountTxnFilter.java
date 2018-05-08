@@ -13,15 +13,14 @@ public class FinanceAccountTxnFilter implements Serializable {
 
 	private ReportDate startDate;
 	private ReportDate endDate;
-        private FinanceAccount financeAccount;
+	private FinanceAccount financeAccount;
 
-        public FinanceAccount getFinanceAccount() {
-            return financeAccount;
-        }
-
-        public void setFinanceAccount(FinanceAccount financeAccount) {
-            this.financeAccount = financeAccount;
-        }
+	public FinanceAccount getFinanceAccount() {
+		return financeAccount;
+	}
+	public void setFinanceAccount(FinanceAccount financeAccount) {
+		this.financeAccount = financeAccount;
+	}
 
 	public ReportDate getStartDate() {
 		return startDate;

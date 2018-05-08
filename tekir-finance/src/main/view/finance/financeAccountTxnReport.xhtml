@@ -16,7 +16,8 @@
                                              lookupBean="#{financeAccountLookup}"
                                              lookupProfile="R:PAYMENT;O:MULTI_CURRENCY"
                                              lookupListener="financeAccountTxnReport.filter.financeAccount"
-                                             placeholder="#{messages['general.info.FinanceAccount']}" columnClass="col-xs-6"/>
+                                             placeholder="#{messages['general.info.FinanceAccount']}"
+                                             required="true" columnClass="col-xs-6"/>
             <t:inputReportDate value="#{bean.filter.startDate}" label="general.label.StartDate" columnClass="col-xs-6" />
             <t:inputReportDate value="#{bean.filter.endDate}" label="general.label.EndDate" columnClass="col-xs-6" />
         </div>
