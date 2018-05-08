@@ -56,20 +56,13 @@ public class ContactRelationHome extends ParamBase<ContactRelation, Long> {
         boolean result = true;
 
         if (getEntity().getSourceRoles().isEmpty()) {
-            //FIXME: i18n
-            FacesMessages.error("Kaynak Rolü Seçilmemiş", "En az bir adet kaynak rolü seçilmelidir.");
+            FacesMessages.error("contact.messages.EmptySourceRoles", "contact.messages.EmptySourceRolesDetail");
             result = false;
 
-        }
-
-        if (getEntity().getSourceRoles().isEmpty()) {
-            //FIXME: i18n
-            FacesMessages.error("Hedef Rolü Seçilmemiş", "En az bir hedef kaynak rolü seçilmelidir.");
-            result = false;
         }
 
         //Vector ve Revers bileşiminden parametre ismi oluşturuyoruz.
-        getEntity().setName(getEntity().getVectorName() + "/" + getEntity().getReversName());
+        getEntity().setName(getEntity().getVectorName() + "/" + getEntity().getReverseName());
 
         return result;
     }

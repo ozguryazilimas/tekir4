@@ -23,6 +23,11 @@
 
                             <t:outputText label="general.label.FirstName" value="#{contactHome.entity.firstName}" columnClass="col-lg-12 col-md-6"/>
                             <t:outputText label="general.label.LastName" value="#{contactHome.entity.lastName}" columnClass="col-lg-12 col-md-6"/>
+                            <t:outputText value="#{contactHome.entity.useName}"
+                                          label="contact.label.UseName" columnClass="col-xs-12"/>
+                            <t:outputText
+                                    value="#{messages['gender.'.concat(contactHome.entity.gender)]}"
+                                    label="contact.label.Gender" columnClass="col-xs-12"/>
                             <t:outputText label="contact.label.JobTitle" value="#{contactHome.entity.jobTitle}" columnClass="col-lg-12 col-md-6"/>
                             <t:outputText label="contact.label.CorporationName" value="#{contactHome.entity.corporationName}" 
                                           columnClass="col-lg-12 col-md-6" rendered="#{empty contactHome.entity.corporation}"/> 
@@ -113,7 +118,7 @@
                         <ui:param name="payload" value="#{contactHome.entity}" />
                     </ui:include>
 
-                    <t:accordion icon="fa fa-file" id="cx" label="general.label.ReleatedVouchers" columnClass="col-lg-12 col-md-12" contentClass="">
+                    <t:accordion icon="fa fa-file" id="cx" label="general.label.RelatedVouchers" columnClass="col-lg-12 col-md-12" contentClass="">
                         <ui:remove>
                             <div class="no-padding">
                                 <table class="table table-bordered">

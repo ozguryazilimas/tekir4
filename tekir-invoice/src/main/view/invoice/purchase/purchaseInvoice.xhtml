@@ -9,6 +9,13 @@
     <ui:param name="homeBean" value="#{purchaseInvoiceHome}" />
     <ui:param name="entity" value="#{purchaseInvoiceHome.entity}" />
 
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{purchaseInvoiceHome.id}" />
+            <f:viewAction action="#{purchaseInvoiceHome.initData()}" />
+        </f:metadata>
+    </ui:define>
+    
     <ui:define name="form">
         <div class="row">
 
@@ -17,7 +24,8 @@
                     <t:inputLookupDialog label="general.label.Account" value="#{purchaseInvoiceHome.account}" 
                                          lookupBean="#{contactLookup}" lookupListener="purchaseInvoiceHome.account" 
                                          lookupProfile="R:ACCOUNT;S:VENDOR"
-                                         placeholder="#{messages['general.info.Account']}" update=":form:prss" columnClass="col-xs-12"/>
+                                         placeholder="#{messages['general.info.Account']}" update=":form:prss"
+                                         required="true" columnClass="col-xs-12"/>
                     
                     <t:inputText label="voucher.label.Topic" value="#{purchaseInvoiceHome.entity.topic}"  required="true" columnClass="col-xs-12"/>
                     

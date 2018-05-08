@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ozguryazilim.tekir.contact.config;
 
 import com.ozguryazilim.tekir.contact.ContactRoleRegistery;
@@ -26,6 +21,8 @@ public class TekirContactModule {
         ContactRoleRegistery.register("VENDOR", true);
         ContactRoleRegistery.register("PARTNER", true);
         ContactRoleRegistery.register("COMPETITOR", true);
+        ContactRoleRegistery.register("RESELLER", true);
+        ContactRoleRegistery.register("INTERNATIONAL", false);
         //ContactRoleRegistery.register("LEAD");
         //ContactRoleRegistery.register("EMPLOYEE");
     }

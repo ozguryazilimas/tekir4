@@ -17,6 +17,7 @@ import com.ozguryazilim.telve.query.columns.LinkColumn;
 import com.ozguryazilim.telve.query.columns.SubTextColumn;
 import com.ozguryazilim.telve.query.columns.TextColumn;
 import com.ozguryazilim.telve.query.filters.StringFilter;
+import com.ozguryazilim.telve.query.filters.SubStringFilter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -39,7 +40,11 @@ public class ContactBrowse extends BrowseBase<Contact, ContactViewModel> {
 	protected void buildQueryDefinition(QueryDefinition<Contact, ContactViewModel> queryDefinition) {
                 queryDefinition
                     .addFilter(new StringFilter<>(Contact_.code, "general.label.Code"))
-                    .addFilter(new StringFilter<>(Contact_.name, "general.label.Name"));
+                    .addFilter(new StringFilter<>(Contact_.name, "general.label.Name"))
+                    .addFilter(new SubStringFilter<>(Contact_.primaryMobile, ContactPhone_.address, "contact.label.PrimaryMobile"))
+                    .addFilter(new SubStringFilter<>(Contact_.primaryPhone, ContactPhone_.address, "contact.label.PrimaryPhone"))
+                    .addFilter(new SubStringFilter<>(Contact_.primaryEmail, ContactEMail_.address, "contact.label.PrimaryEmail"))
+                    .addFilter(new StringFilter<>(Contact_.info, "general.label.Info"));
                 
                 queryDefinition
                     .addColumn(new LinkColumn<>(Contact_.code, "general.label.Code"), true)

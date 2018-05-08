@@ -77,11 +77,11 @@
 		</ui:fragment>
 
 		<ui:fragment rendered="#{empty exchangeRateDashlet.rates}">
-            #{messages['exhangeRate.message.RateNotFound']}
+            #{messages['exchangeRate.message.RateNotFound']}
             <h:link outcome="/core/exchangeRate.xhtml"
 				rendered="#{identity.hasPermission('exchangeRate', 'insert')}">
 				<i class="fa fa-chain"></i>
-                    #{messages['exhangeRate.message.DefineRate']}
+                    #{messages['exchangeRate.message.DefineRate']}
             </h:link>
 		</ui:fragment>
 

@@ -1,0 +1,44 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/voucherViewBase.xhtml">
+
+    <ui:param name="bean" value="#{employeeCreditNoteHome}" />
+    <ui:param name="entityName" value="employeeCreditNote" />
+    <ui:param name="viewIdentifier" value="#{employeeCreditNoteHome.entity.voucherNo}" />
+    <ui:param name="viewState" value="#{employeeCreditNoteHome.entity.state.name} #{employeeCreditNoteHome.entity.stateReason}" />
+    <ui:param name="showCaption" value="true"/>
+    <ui:param name="dontShowContentHeader" value="false" />
+
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{employeeCreditNoteHome.id}" />
+            <f:viewAction action="#{employeeCreditNoteHome.initData()}" />
+        </f:metadata>
+    </ui:define>
+
+
+    <ui:define name="caption">
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <t:outputFeatureLink label="general.label.Account" 
+                                     value="#{featureController.getFeatureLink(employeeCreditNoteHome.getAllFeaturePointer(employeeCreditNoteHome.entity.employee))}" columnClass="col-xs-12"/>
+                <t:outputText label="general.label.Topic" value="#{employeeCreditNoteHome.entity.topic}"/>
+                <t:outputMoney label="general.label.Amount" value="#{employeeCreditNoteHome.entity.amount}" currency="#{employeeCreditNoteHome.entity.currency}" />
+                <t:outputText label="general.label.Info" value="#{employeeCreditNoteHome.entity.info}" columnClass="col-xs-12"/>
+
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <t:outputText label="voucher.label.VoucherNo" value="#{employeeCreditNoteHome.entity.voucherNo}" />
+                <t:outputText label="voucher.label.ReferenceNo" value="#{employeeCreditNoteHome.entity.referenceNo}" />
+                <t:outputEnum label="employeeCreditNote.label.Type" itemLabel="employeeCreditNote.type.label." value="#{employeeCreditNoteHome.entity.type}" />
+                <t:outputText label="general.label.Code" value="#{employeeCreditNoteHome.entity.code}" />
+            </div>
+        </div>  
+
+    </ui:define>
+
+</ui:composition>

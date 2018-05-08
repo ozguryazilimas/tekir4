@@ -17,6 +17,8 @@ import com.ozguryazilim.telve.messages.FacesMessages;
 import java.io.Serializable;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+
+import com.ozguryazilim.telve.messages.Messages;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,9 +68,8 @@ public class OpportunityQuoteLinker implements VoucherRedirectHandler, Serializa
                 quoteHome.getEntity().setTopic(entity.getTopic());
                 quoteHome.getEntity().setProcess(entity.getProcess());
                 quoteHome.getEntity().setGroup(entity.getGroup());
-                
-                //FIXME: i18n
-                FacesMessages.info("Kutlarız. Fırsat kazanıldı!", "" + entity.getVoucherNo() + " " + entity.getTopic() + " fırsat için teklif hazırlanacak!");
+
+                FacesMessages.info("opportunity-quote-linker.messages.WON", Messages.getMessage("opportunity-quote-linker.messages.WonDetail" ,entity.getVoucherNo(), entity.getTopic()));
                 return result;
             }
         }

@@ -1,0 +1,58 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"               
+                xmlns:ui="http://java.sun.com/jsf/facelets"               
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"                
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/layout/voucherBrowseBase.xhtml">
+
+    <ui:param name="bean" value="#{employeeCreditNoteBrowse}" />
+    <ui:param name="advanceEnabled" value="true" />
+    <ui:param name="saveEnabled" value="true" />
+    <ui:param name="filterEnabled" value="true" />
+    <ui:param name="permission" value="employeeCreditNote" />
+    <ui:param name="showQuickSearch" value="true" />
+    <ui:param name="showDetailPanel" value="true" />
+
+    <ui:define name="detailBar">
+        <div class="row">
+            <div class="text-muted col-xs-12">
+                <i class="fa fa-user" />
+                #{bean.employee.name}
+                <ul class="list-inline text-sm text-muted">
+                    <ui:repeat value="#{bean.employee.contactRoles}" var="item" >
+                        <li><i class="fa fa-tag" /> #{messages['contact.role.'.concat(item)]}</li>
+                    </ui:repeat>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <t:outputText label="general.label.FirstName" value="#{bean.employee.firstName}" columnClass="col-xs-12"/>
+            <t:outputText label="general.label.LastName" value="#{bean.employee.lastName}" columnClass="col-xs-12"/>
+            <t:outputText value="#{bean.employee.useName}" label="contact.label.UseName" columnClass="col-xs-12"/>
+            <t:outputText value="#{messages['gender.'.concat(bean.employee.gender)]}" label="contact.label.Gender" columnClass="col-xs-12"/>
+            <t:outputText label="general.label.Info" value="#{bean.employee.info}" columnClass="col-xs-12" rendered="#{not empty bean.employee.info}"/>
+            <t:outputText label="contact.label.JobTitle" value="#{bean.employee.jobTitle}" columnClass="col-xs-12" rendered="#{not empty bean.employee.jobTitle}"/>
+            <t:outputText label="contact.label.SSN" value="#{bean.employee.ssn}" columnClass="col-xs-12" rendered="#{not empty bean.employee.ssn}"/>
+        </div>            
+
+
+
+        <div class="row">
+            <t:outputText label="general.label.Category" value="#{bean.employee.category.name}" columnClass="col-xs-12" rendered="#{not empty bean.employee.category}"/>
+            <t:outputText label="general.label.Industry" value="#{bean.employee.industry.name}" columnClass="col-xs-12" rendered="#{not empty bean.employee.industry}"/>
+            <t:outputText label="general.label.Territory" value="#{bean.employee.territory.name}" columnClass="col-xs-12" rendered="#{not empty bean.employee.territory}"/>
+        </div>
+
+        <div class="row">
+            <t:outputText label="contact.label.PrimaryMobile" value="#{bean.employee.primaryMobile.caption}" columnClass="col-xs-12" rendered="#{not empty bean.employee.primaryMobile}"/>
+            <t:outputText label="contact.label.PrimaryPhone" value="#{bean.employee.primaryPhone.caption}" columnClass="col-xs-12" rendered="#{not empty bean.employee.primaryPhone}"/>
+            <t:outputText label="contact.label.PrimaryEmail" value="#{bean.employee.primaryEmail.caption}" columnClass="col-xs-12" rendered="#{not empty bean.employee.primaryEmail}"/>
+            <t:outputText label="contact.label.PrimaryAddress" value="#{bean.employee.primaryAddress.caption}" columnClass="col-xs-12" rendered="#{not empty bean.employee.primaryAddress}"/>
+            <t:outputText label="contact.label.PrimaryFax" value="#{bean.employee.primaryFax.caption}" columnClass="col-xs-12" rendered="#{not empty bean.employee.primaryFax}"/>
+        </div>
+
+    </ui:define>
+
+</ui:composition>

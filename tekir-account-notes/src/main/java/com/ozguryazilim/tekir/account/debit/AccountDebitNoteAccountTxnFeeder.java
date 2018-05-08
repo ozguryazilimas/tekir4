@@ -37,7 +37,7 @@ public class AccountDebitNoteAccountTxnFeeder implements Serializable{
             
             FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
             
-            accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getCode(), entity.getInfo(), Boolean.TRUE, Boolean.TRUE, entity.getCurrency(), entity.getAmount(), entity.getLocalAmount(), entity.getDate(), entity.getOwner(),null, entity.getState().toString(), entity.getStateReason());
+            accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getCode(), entity.getInfo(), Boolean.TRUE, Boolean.TRUE, entity.getCurrency(), entity.getAmount(), entity.getLocalAmount(), entity.getDate(), entity.getOwner(),null, entity.getState().toString(), entity.getStateReason(), entity.getTopic());
         }
         
         //TODO: Delete edildiğinde de gidip txn'den silme yapılmalı.

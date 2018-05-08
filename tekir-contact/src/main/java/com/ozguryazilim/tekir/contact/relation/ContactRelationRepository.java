@@ -72,7 +72,7 @@ public abstract class ContactRelationRepository
                 .map( r -> {
                     ContactRelationViewModel v = new ContactRelationViewModel();
                     v.setId(r.getId());
-                    v.setName(r.getReversName());
+                    v.setName(r.getReverseName());
                     v.setCode(r.getCode());
                     v.setWeigth(r.getWeigth());
                     v.setRevers(Boolean.TRUE);

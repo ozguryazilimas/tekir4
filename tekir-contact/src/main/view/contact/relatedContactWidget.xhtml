@@ -138,7 +138,7 @@
         <h:form id="cdForm" rendered="#{relatedContactWidget.relatedContact ne null}">
             <h4>#{relatedContactWidget.relatedContact.relation.name}</h4>
             <div class="row">
-                <t:inputLookupDialog value="#{relatedContactWidget.relatedContact.targetContact}" label="contact.label.Contact"  
+                <t:inputLookupDialog value="#{relatedContactWidget.relatedContact.targetContact}" label="general.label.Contact"
                                      caption="name" lookupBean="#{contactLookup}" 
                                      lookupProfile="C:#{relatedContactWidget.contact.id};R:#{relatedContactWidget.relatedContact.relation.targetRoles}"  
                                      lookupListener="relatedContactWidget.relatedContact.targetContact"  

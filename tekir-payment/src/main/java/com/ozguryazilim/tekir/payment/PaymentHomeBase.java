@@ -122,7 +122,7 @@ public abstract class PaymentHomeBase<E extends PaymentBase> extends VoucherForm
         }
         
         if (!account.getContactRoles().contains("ACCOUNT")) {
-            FacesMessages.error("Seçtiğiniz bağlantı bir Cari değil!", "Bağlantıyı cariye dönüştürmelisiniz?");
+            FacesMessages.error("facesMessages.contact.NotAccount", "facesMessages.contact.NotAccountDetail");
         }
         
     }

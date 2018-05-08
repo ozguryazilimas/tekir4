@@ -13,6 +13,7 @@ import com.ozguryazilim.tekir.entities.ContactPhone;
 import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.Person;
 import com.ozguryazilim.tekir.entities.Territory;
+import com.ozguryazilim.tekir.entities.TerritoryItem;
 import com.ozguryazilim.tekir.lead.LeadFeature;
 import com.ozguryazilim.tekir.lead.LeadHome;
 import com.ozguryazilim.tekir.opportunity.OpportunityHome;
@@ -59,14 +60,20 @@ public class LeadOpportunityLinker implements VoucherRedirectHandler {
 				// oluşturulup location buna ekleniyor.
 				if (leadHome.getEntity().getLocation() != null) {
 					territory = new Territory();
-					territory.getLocations().add(leadHome.getEntity().getLocation());
+                                        TerritoryItem ti = new TerritoryItem();
+                                        ti.setParent(territory);
+                                        ti.setLocation(leadHome.getEntity().getLocation());
+					territory.getItems().add(ti);
 					territoryRepository.save(territory);
 				}
 			}
 			// Territory ve location null değilken de location
 			// direkt territorye ekleniyor.
 			else if (leadHome.getEntity().getLocation() != null) {
-				territory.getLocations().add(leadHome.getEntity().getLocation());
+                                TerritoryItem ti = new TerritoryItem();
+                                 ti.setParent(territory);
+                                 ti.setLocation(leadHome.getEntity().getLocation());
+                                 territory.getItems().add(ti);
 			}
 
                         //Contact Person

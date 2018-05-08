@@ -10,6 +10,12 @@
     <ui:param name="entity" value="#{employeeHome.entity}" />
     <ui:param name="dontShowContentHeader" value="true" />
 
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{employeeHome.id}" />
+            <f:viewAction action="#{employeeHome.initData()}" />
+        </f:metadata>
+    </ui:define>
 
     <ui:define name="customHeader">
         <section class="content-header">
@@ -35,10 +41,18 @@
                     <t:inputText label="general.label.FirstName" value="#{employeeHome.entity.firstName}" columnClass="col-xs-6" required="true"/>
                     <t:inputText label="general.label.LastName" value="#{employeeHome.entity.lastName}" columnClass="col-xs-6" required="true"/>
 
-                </div>  
+                </div>
 
                 <div class="row">
-                    <t:inputText label="contact.label.SSN" value="#{employeeHome.entity.ssn}" columnClass="col-xs-6" required="false"/>
+                    <t:inputText label="contact.label.UseName"
+                                 value="#{employeeHome.entity.useName}" columnClass="col-xs-6"/>
+                    <t:inputEnum itemLabel="gender." hasNullValue="false" columnClass="col-xs-6"
+                                 value="#{employeeHome.entity.gender}" label="contact.label.Gender"/>
+                </div>
+
+                <div class="row">
+                    <t:inputMask label="contact.label.SSN" value="#{employeeHome.entity.ssn}"
+                                 columnClass="col-xs-6" required="false" mask="99999999999"/>
                     <t:inputText label="contact.label.JobTitle" value="#{employeeHome.entity.jobTitle}" columnClass="col-xs-6" required="false"/>
 
                 </div>  

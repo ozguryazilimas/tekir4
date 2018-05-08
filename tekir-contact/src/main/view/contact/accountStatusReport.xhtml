@@ -14,7 +14,7 @@
         <div class="row" >
         	<t:inputText value="#{bean.filter.code}" label="general.label.Code" columnClass="col-xs-6" />
         	<t:inputText value="#{bean.filter.name}" label="general.label.Name" columnClass="col-xs-6" />
-            <t:inputLookupDialog label="contact.label.CorparationType" value="#{bean.filter.corporationType}" lookupBean="#{corporationTypeLookup}" lookupListener="bean.filter.corporationType" placeholder="#{messages['contact.info.CorporationType']}" />
+            <t:inputLookupDialog label="contact.label.CorporationType" value="#{bean.filter.corporationType}" lookupBean="#{corporationTypeLookup}" lookupListener="bean.filter.corporationType" placeholder="#{messages['contact.info.CorporationType']}" />
             <t:inputLookupDialog label="general.label.Category" value="#{bean.filter.contactCategory}" lookupBean="#{contactCategoryLookup}" lookupListener="bean.filter.contactCategory" placeholder="#{messages['general.info.Category']}" />
             <t:inputLookupDialog label="general.label.Industry" value="#{bean.filter.industry}" lookupBean="#{industryLookup}" lookupListener="bean.filter.industry" placeholder="#{messages['general.info.Industry']}" />
             <t:inputLookupDialog label="general.label.Territory" value="#{bean.filter.territory}" lookupBean="#{territoryLookup}" lookupListener="bean.filter.territory" placeholder="#{messages['general.info.Territory']}" />

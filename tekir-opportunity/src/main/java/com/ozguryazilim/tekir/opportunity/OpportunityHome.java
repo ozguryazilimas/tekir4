@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ozguryazilim.tekir.opportunity;
 
 import com.ozguryazilim.tekir.account.AccountTxnService;
@@ -42,9 +37,9 @@ import org.slf4j.LoggerFactory;
  */
 @FormEdit(feature=OpportunityFeature.class)
 public class OpportunityHome extends VoucherFormBase<Opportunity>{
-	
+
     private static Logger LOG = LoggerFactory.getLogger(OpportunityHome.class);
-    
+
     @Inject
     private OpportunityRepository repository;
 
@@ -53,30 +48,27 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
 
     @Inject
     private CurrencyService currencyService;
-    
+
     @Inject
     private AccountTxnService accountTxnService;
-    
+
     @Inject
     private ProcessService processService;
-    
+
     @Inject
     private JasperReportHandler reportHandler;
-    
+
     private OpportunityItem selectedItem;
     private boolean itemEdit = false;
-    
+
     @Override
     public void createNew() {
-        super.createNew(); 
-        
+        super.createNew();
         getEntity().setCurrency(currencyService.getDefaultCurrency());
         getEntity().setProbability(50);
-        
+
     }
-    
-    
-    
+
     @Override
     protected RepositoryBase<Opportunity, ?> getRepository() {
         return repository;
@@ -84,19 +76,19 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
 
     @Override
     public boolean onBeforeSave() {
-        
+
         if( getEntity().getState().equals(VoucherState.DRAFT) && !getEntity().isPersisted()){
             getEntity().setState(VoucherState.OPEN);
         }
-        
+
         //Opportunity'de bir process id'si doğal olarak olmayacak. Satış süreci ilk kez buradan başlar :)
         //Eğer daha önce bir process alınmamış ise yeni bir tane oluştur.
         if( getEntity().getProcess() == null ) {
             getEntity().setProcess(processService.createProcess(getEntity().getAccount(), getEntity().getTopic(), ProcessType.SALES));
         }
-        
+
         getEntity().setLocalBudget(currencyService.convert(getEntity().getCurrency(), getEntity().getBudget(), getEntity().getDate()));
-        
+
         return super.onBeforeSave(); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -107,35 +99,33 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
             //FIXME: Bir servis haline getirmek lazım activityHome ile yaptığımız şeyi
             //Bizim FeaturePointer'ımızıbir alalım
             FeaturePointer fp = getFeaturePointer();
-            
+
             ActivityHome activityHome =  BeanProvider.getContextualReference(ActivityHome.class, true);
             activityHome.setId(getEntity().getStarter().getPrimaryKey());
             activityHome.getEntity().setRegarding(fp);
-            
-            activityHome.save();
-            
-        }
-        return super.onAfterCreate(); 
-    }
 
-    
+            activityHome.save();
+
+        }
+        return super.onAfterCreate();
+    }
 
     @Override
     protected VoucherStateConfig buildStateConfig() {
-        VoucherStateConfig config = new VoucherStateConfig();        
-        
+        VoucherStateConfig config = new VoucherStateConfig();
+
         config.addTranstion(VoucherState.DRAFT, new VoucherStateAction("publish", "fa fa-check" ), VoucherState.OPEN);
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("won", "fa fa-check" ), VoucherState.WON);
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("loss", "fa fa-close", true ), VoucherState.LOSS);
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("cancel", "fa fa-ban", true ), VoucherState.CLOSE);
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("revise", "fa fa-unlock", true ), VoucherState.DRAFT);
-        
+
         config.addStateTypeAction(VoucherStateType.OPEN, new VoucherPrintOutAction(this));
         config.addStateTypeAction(VoucherStateType.CLOSE, new VoucherPrintOutAction(this));
-        
+
         return config;
     }
-    
+
     public Person getPerson() {
         if (getEntity().getAccount() instanceof Person) {
             return (Person) getEntity().getAccount();
@@ -158,13 +148,14 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
 
     public AttachmentContext getContext() {
         AttachmentContext result = new AttachmentContext();
-        
+
         String accountRoot = getEntity().getAccount().getName() + "[" + getEntity().getAccount().getCode() + "]";
         FeaturePointer fp = getFeaturePointer();
         result.setRoot( accountRoot + "/" + fp.getFeature() + "/" + fp.getBusinessKey());
+        //FIXME: username'in aslında ne olması gerektiğini araştır düzelt
         result.setUsername("Bişi");
         result.setFeaturePointer(getFeaturePointer());
-        
+
         return result;
     }
 
@@ -175,28 +166,28 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
     public void setSelectedItem(OpportunityItem selectedItem) {
         this.selectedItem = selectedItem;
     }
-    
+
     public void createItem(){
         selectedItem = new OpportunityItem();
         itemEdit = false;
     }
-    
+
     public void editItem(Integer ix){
         selectedItem = getEntity().getItems().get(ix);
         itemEdit = true;
     }
-    
+
     public void deleteItem(Integer ix){
         getEntity().getItems().remove(ix.intValue());
     }
-    
+
     public void saveItem(){
         if( !itemEdit ){
             selectedItem.setMaster(getEntity());
             getEntity().getItems().add(selectedItem);
-        } 
-        
+        }
+
         itemEdit = false;
     }
-    
+
 }

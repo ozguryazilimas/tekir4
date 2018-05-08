@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
     <changeSet author="oyas (generated)" id="1467649436683-2">
         <createTable tableName="TCC_CONTACT">
             <column name="CONTACT_TYPE" type="VARCHAR(31)">
@@ -179,58 +182,95 @@
         </addColumn>
     </changeSet>
     <changeSet author="oyas (generated)" id="1467649436683-9">
-        <addForeignKeyConstraint baseColumnNames="LOCATION_ID" baseTableName="TCC_CONTACT_INFO" constraintName="FK_CONADDR_LOC" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_LOCATION"/>
+        <addForeignKeyConstraint baseColumnNames="LOCATION_ID" baseTableName="TCC_CONTACT_INFO"
+                                 constraintName="FK_CONADDR_LOC" deferrable="false" initiallyDeferred="false"
+                                 referencedColumnNames="ID" referencedTableName="TCO_LOCATION"/>
     </changeSet>
     <changeSet author="oyas (generated)" id="1467649436683-12">
-        <addForeignKeyConstraint baseColumnNames="CONTACT_ID" baseTableName="TCC_CONTACT_INFO" constraintName="FK_CONINF_CONTACT" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+        <addForeignKeyConstraint baseColumnNames="CONTACT_ID" baseTableName="TCC_CONTACT_INFO"
+                                 constraintName="FK_CONINF_CONTACT" deferrable="false" initiallyDeferred="false"
+                                 referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
     </changeSet>
     <changeSet author="oyas (generated)" id="1467649436683-13">
-        <addForeignKeyConstraint baseColumnNames="RELEATION_ID" baseTableName="TCC_CONTACT_REL" constraintName="FK_CONREL_REL" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT_REL_DEF"/>
+        <addForeignKeyConstraint baseColumnNames="RELEATION_ID" baseTableName="TCC_CONTACT_REL"
+                                 constraintName="FK_CONREL_REL" deferrable="false" initiallyDeferred="false"
+                                 referencedColumnNames="ID" referencedTableName="TCC_CONTACT_REL_DEF"/>
     </changeSet>
     <changeSet author="oyas (generated)" id="1467649436683-14">
-        <addForeignKeyConstraint baseColumnNames="SOURCE_ID" baseTableName="TCC_CONTACT_REL" constraintName="FK_CONREL_SOURCE" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+        <addForeignKeyConstraint baseColumnNames="SOURCE_ID" baseTableName="TCC_CONTACT_REL"
+                                 constraintName="FK_CONREL_SOURCE" deferrable="false" initiallyDeferred="false"
+                                 referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
     </changeSet>
     <changeSet author="oyas (generated)" id="1467649436683-15">
-        <addForeignKeyConstraint baseColumnNames="TARGET_ID" baseTableName="TCC_CONTACT_REL" constraintName="FK_CONREL_TARGET" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+        <addForeignKeyConstraint baseColumnNames="TARGET_ID" baseTableName="TCC_CONTACT_REL"
+                                 constraintName="FK_CONREL_TARGET" deferrable="false" initiallyDeferred="false"
+                                 referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
     </changeSet>
     <changeSet author="oyas (generated)" id="1467649436683-16">
-        <addForeignKeyConstraint baseColumnNames="ADDR_ID" baseTableName="TCC_CONTACT" constraintName="FK_CON_ADDR" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT_INFO"/>
+        <addForeignKeyConstraint baseColumnNames="ADDR_ID" baseTableName="TCC_CONTACT" constraintName="FK_CON_ADDR"
+                                 deferrable="false" initiallyDeferred="false" referencedColumnNames="ID"
+                                 referencedTableName="TCC_CONTACT_INFO"/>
     </changeSet>
     <changeSet author="oyas (generated)" id="1467649436683-17">
-        <addForeignKeyConstraint baseColumnNames="CAT_ID" baseTableName="TCC_CONTACT" constraintName="FK_CON_CAT" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT_CAT"/>
+        <addForeignKeyConstraint baseColumnNames="CAT_ID" baseTableName="TCC_CONTACT" constraintName="FK_CON_CAT"
+                                 deferrable="false" initiallyDeferred="false" referencedColumnNames="ID"
+                                 referencedTableName="TCC_CONTACT_CAT"/>
     </changeSet>
     <changeSet author="oyas (generated)" id="1467649436683-18">
-        <addForeignKeyConstraint baseColumnNames="EMAIL_ID" baseTableName="TCC_CONTACT" constraintName="FK_CON_EMAIL" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT_INFO"/>
+        <addForeignKeyConstraint baseColumnNames="EMAIL_ID" baseTableName="TCC_CONTACT" constraintName="FK_CON_EMAIL"
+                                 deferrable="false" initiallyDeferred="false" referencedColumnNames="ID"
+                                 referencedTableName="TCC_CONTACT_INFO"/>
     </changeSet>
     <changeSet author="oyas (generated)" id="1467649436683-19">
-        <addForeignKeyConstraint baseColumnNames="FAX_ID" baseTableName="TCC_CONTACT" constraintName="FK_CON_FAX" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT_INFO"/>
+        <addForeignKeyConstraint baseColumnNames="FAX_ID" baseTableName="TCC_CONTACT" constraintName="FK_CON_FAX"
+                                 deferrable="false" initiallyDeferred="false" referencedColumnNames="ID"
+                                 referencedTableName="TCC_CONTACT_INFO"/>
     </changeSet>
     <changeSet author="oyas (generated)" id="1467649436683-20">
-        <addForeignKeyConstraint baseColumnNames="INDUSTRY_ID" baseTableName="TCC_CONTACT" constraintName="FK_CON_INDUSTRY" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_INDUSTRY"/>
+        <addForeignKeyConstraint baseColumnNames="INDUSTRY_ID" baseTableName="TCC_CONTACT"
+                                 constraintName="FK_CON_INDUSTRY" deferrable="false" initiallyDeferred="false"
+                                 referencedColumnNames="ID" referencedTableName="TCO_INDUSTRY"/>
     </changeSet>
     <changeSet author="oyas (generated)" id="1467649436683-21">
-        <addForeignKeyConstraint baseColumnNames="MOBILE_ID" baseTableName="TCC_CONTACT" constraintName="FK_CON_MOBILE" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT_INFO"/>
+        <addForeignKeyConstraint baseColumnNames="MOBILE_ID" baseTableName="TCC_CONTACT" constraintName="FK_CON_MOBILE"
+                                 deferrable="false" initiallyDeferred="false" referencedColumnNames="ID"
+                                 referencedTableName="TCC_CONTACT_INFO"/>
     </changeSet>
     <changeSet author="oyas (generated)" id="1467649436683-22">
-        <addForeignKeyConstraint baseColumnNames="PHONE_ID" baseTableName="TCC_CONTACT" constraintName="FK_CON_PHONE" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT_INFO"/>
+        <addForeignKeyConstraint baseColumnNames="PHONE_ID" baseTableName="TCC_CONTACT" constraintName="FK_CON_PHONE"
+                                 deferrable="false" initiallyDeferred="false" referencedColumnNames="ID"
+                                 referencedTableName="TCC_CONTACT_INFO"/>
     </changeSet>
     <changeSet author="oyas (generated)" id="1467649436683-23">
-        <addForeignKeyConstraint baseColumnNames="TERRITORY_ID" baseTableName="TCC_CONTACT" constraintName="FK_CON_TER" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_TERRITORY"/>
+        <addForeignKeyConstraint baseColumnNames="TERRITORY_ID" baseTableName="TCC_CONTACT" constraintName="FK_CON_TER"
+                                 deferrable="false" initiallyDeferred="false" referencedColumnNames="ID"
+                                 referencedTableName="TCO_TERRITORY"/>
     </changeSet>
     <changeSet author="oyas (generated)" id="1467649436683-24">
-        <addForeignKeyConstraint baseColumnNames="PARENT_ID" baseTableName="TCC_CONTACT" constraintName="FK_CORP_PARENT" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+        <addForeignKeyConstraint baseColumnNames="PARENT_ID" baseTableName="TCC_CONTACT" constraintName="FK_CORP_PARENT"
+                                 deferrable="false" initiallyDeferred="false" referencedColumnNames="ID"
+                                 referencedTableName="TCC_CONTACT"/>
     </changeSet>
     <changeSet author="oyas (generated)" id="1467649436683-25">
-        <addForeignKeyConstraint baseColumnNames="CONTACT_ID" baseTableName="TCC_CONTACT" constraintName="FK_CORP_PER" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+        <addForeignKeyConstraint baseColumnNames="CONTACT_ID" baseTableName="TCC_CONTACT" constraintName="FK_CORP_PER"
+                                 deferrable="false" initiallyDeferred="false" referencedColumnNames="ID"
+                                 referencedTableName="TCC_CONTACT"/>
     </changeSet>
     <changeSet author="oyas (generated)" id="1467649436683-26">
-        <addForeignKeyConstraint baseColumnNames="TYPE_ID" baseTableName="TCC_CONTACT" constraintName="FK_CORP_TYPE" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CORP_TYPE"/>
+        <addForeignKeyConstraint baseColumnNames="TYPE_ID" baseTableName="TCC_CONTACT" constraintName="FK_CORP_TYPE"
+                                 deferrable="false" initiallyDeferred="false" referencedColumnNames="ID"
+                                 referencedTableName="TCC_CORP_TYPE"/>
     </changeSet>
     <changeSet author="oyas (generated)" id="1467649436683-27">
-        <addForeignKeyConstraint baseColumnNames="CORP_ID" baseTableName="TCC_CONTACT" constraintName="FK_PER_CORP" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+        <addForeignKeyConstraint baseColumnNames="CORP_ID" baseTableName="TCC_CONTACT" constraintName="FK_PER_CORP"
+                                 deferrable="false" initiallyDeferred="false" referencedColumnNames="ID"
+                                 referencedTableName="TCC_CONTACT"/>
     </changeSet>
     <changeSet author="oyas (generated)" id="1467649436683-28">
-        <addForeignKeyConstraint baseColumnNames="PID" baseTableName="TCC_CONTACT_CAT" constraintName="FK_sjkf2ep6fcrq182sdjar52ttb" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT_CAT"/>
+        <addForeignKeyConstraint baseColumnNames="PID" baseTableName="TCC_CONTACT_CAT"
+                                 constraintName="FK_sjkf2ep6fcrq182sdjar52ttb" deferrable="false"
+                                 initiallyDeferred="false" referencedColumnNames="ID"
+                                 referencedTableName="TCC_CONTACT_CAT"/>
     </changeSet>
     <changeSet author="oyas (generated)" id="1480342069846-1">
         <addColumn tableName="TCC_ACCOUNT_TXN">
@@ -269,5 +309,20 @@
     </changeSet>
     <changeSet author="oyas (generated)" id="1505062932003-11">
         <dropColumn columnName="ROLES" tableName="TCC_CONTACT_REL_DEF"/>
+    </changeSet>
+    <changeSet author="hates" id="1505062932003-13">
+        <renameColumn newColumnName="REVERSE_NAME"
+                      oldColumnName="reversName"
+                      columnDataType="varchar(255)"
+                      tableName="TCC_CONTACT_REL_DEF"/>
+        <renameColumn newColumnName="VECTOR_NAME"
+                      oldColumnName="vectorName"
+                      columnDataType="varchar(255)"
+                      tableName="TCC_CONTACT_REL_DEF"/>
+    </changeSet>
+    <changeSet author="ercan" id="1523955555006-1">
+        <addColumn tableName="TCC_ACCOUNT_TXN">
+            <column name="TOPIC" type="varchar(255)" />
+        </addColumn>
     </changeSet>
 </databaseChangeLog>

@@ -17,17 +17,18 @@ import com.ozguryazilim.telve.feature.FeatureUtils;
 import com.ozguryazilim.telve.forms.FormBase;
 import com.ozguryazilim.telve.forms.FormEdit;
 import com.ozguryazilim.telve.lookup.LookupSelectTuple;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
+
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
 import org.apache.deltaspike.core.api.config.view.metadata.ViewConfigResolver;
 import org.primefaces.event.SelectEvent;
 
 /**
- *
  * @author oyas
  */
 @FormEdit(feature = ActivityFeature.class)
@@ -41,7 +42,7 @@ public class ActivityHome extends FormBase<Activity, Long> {
 
     @Inject
     private Event<ActivityMentionEvent> event;
-    
+
     private Class<? extends ViewConfig> returnPage;
 
     @Override
@@ -83,7 +84,7 @@ public class ActivityHome extends FormBase<Activity, Long> {
     @Override
     public Class<? extends ViewConfig> getReturnPage() {
         //Eğer geri dönüş için bir sayfa verilmiş ve Status SUCCESS, FAILD v.b. ise 
-        if (returnPage != null && ( getEntity().getStatus().equals(ActivityStatus.SUCCESS) || getEntity().getStatus().equals(ActivityStatus.FAILED) )) {
+        if (returnPage != null && (getEntity().getStatus().equals(ActivityStatus.SUCCESS) || getEntity().getStatus().equals(ActivityStatus.FAILED))) {
             return returnPage;
         }
 
@@ -93,14 +94,13 @@ public class ActivityHome extends FormBase<Activity, Long> {
     @Override
     public Class<? extends ViewConfig> getCloseReturnPage() {
         //Eğer geri dönüş için bir sayfa verilmiş ve Status SUCCESS, FAILD v.b. ise 
-        if (returnPage != null ) {
+        if (returnPage != null) {
             return returnPage;
         }
-        
+
         return super.getCloseReturnPage();
     }
-    
-    
+
 
     public void setReturnPage(Class<? extends ViewConfig> returnPage) {
         this.returnPage = returnPage;
@@ -108,6 +108,7 @@ public class ActivityHome extends FormBase<Activity, Long> {
 
     //***********************************
     // Mention Ekleme Fonksiyonları
+
     /**
      * Contact Seçim dialog sonucu çağrılır
      *
@@ -160,7 +161,6 @@ public class ActivityHome extends FormBase<Activity, Long> {
 
     /**
      * Seçim eventinden diagnosis listesini döndürür.
-     *
      */
     @SuppressWarnings({"unchecked"})
     private List<Contact> getContacts(SelectEvent event) {
@@ -195,9 +195,9 @@ public class ActivityHome extends FormBase<Activity, Long> {
             checkPrimaryMention(pp, "PERSON");
 
         }
-        
+
         //Corporation kontrolü
-        if (getEntity().getCorporation()!= null) {
+        if (getEntity().getCorporation() != null) {
 
             FeaturePointer pp = new FeaturePointer();
             pp.setBusinessKey(getEntity().getCorporation().getName());
@@ -207,19 +207,19 @@ public class ActivityHome extends FormBase<Activity, Long> {
             checkPrimaryMention(pp, "CORPORATION");
 
         }
-        
+
         //Regarding kontrolü
         if (getEntity().getRegarding() != null) {
             checkPrimaryMention(getEntity().getRegarding(), "REGARDING");
         }
-        
-        
+
+
         //Şimdi başka mention eklemek isteyen varsa ekleyebilsin diye event fırlatıyoruz.
         ActivityMentionEvent mentionEvent = new ActivityMentionEvent(getEntity());
         event.fire(mentionEvent);
-        
+
         //Şimdi geriye gelenleri ekliyoruz.
-        for( FeaturePointer fp : mentionEvent.getMentionList()){
+        for (FeaturePointer fp : mentionEvent.getMentionList()) {
             if (!isMentionAdded(fp)) {
                 ActivityMention mention = new ActivityMention();
                 mention.setActivity(getEntity());
@@ -227,16 +227,16 @@ public class ActivityHome extends FormBase<Activity, Long> {
                 getEntity().getMentions().add(mention);
             }
         }
-        
+
         //Eğer yeni kayıt ise state'i düzeltelim.
-        if( ActivityStatus.DRAFT.equals(getEntity().getStatus() )){
-            if( getEntity().getDueDate() != null ){
+        if (ActivityStatus.DRAFT.equals(getEntity().getStatus())) {
+            if (getEntity().getDueDate() != null) {
                 getEntity().setStatus(ActivityStatus.SCHEDULED);
             } else {
                 getEntity().setStatus(ActivityStatus.OPEN);
             }
         }
-        
+
         return super.onBeforeSave();
     }
 
@@ -274,14 +274,14 @@ public class ActivityHome extends FormBase<Activity, Long> {
         }
     }
 
-    
-    public Class<? extends ViewConfig> closeSuccess(){
+
+    public Class<? extends ViewConfig> closeSuccess() {
         getEntity().setDate(new Date());
         getEntity().setStatus(ActivityStatus.SUCCESS);
         return save();
     }
-    
-    public Class<? extends ViewConfig> closeFaild(){
+
+    public Class<? extends ViewConfig> closeFaild() {
         getEntity().setDate(new Date());
         getEntity().setStatus(ActivityStatus.FAILED);
         return save();

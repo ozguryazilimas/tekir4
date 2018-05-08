@@ -13,7 +13,8 @@
         <div class="row">
             <t:inputSuggestion label="general.label.Bank" value="#{bankEditor.entity.bank}" group="bank" listener="bankEditor.entity.bank" />
             <t:inputCurrency label="general.label.Currency" value="#{bankEditor.entity.currency}" required="true"/>
-            <t:inputText label="general.label.IBAN" value="#{bankEditor.entity.iban}" />
+            <t:inputMask label="general.label.IBAN" value="#{bankEditor.entity.iban}"
+                         mask="?****-****-****-****-****-****-****-****-**"/>
         </div>
     </ui:define> 
 </ui:composition>

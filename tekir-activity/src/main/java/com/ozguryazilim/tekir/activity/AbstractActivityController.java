@@ -19,6 +19,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
 import org.apache.deltaspike.core.api.config.view.metadata.ViewConfigResolver;
+import org.apache.deltaspike.core.api.config.view.navigation.NavigationParameterContext;
 import org.apache.deltaspike.core.util.ProxyUtils;
 
 /**
@@ -32,6 +33,9 @@ public abstract class AbstractActivityController<E extends Activity> implements 
     
     @Inject
     private ViewConfigResolver viewConfigResolver;
+    
+    @Inject
+    private NavigationParameterContext navigationParameterContext;
     
     @Inject
     private Identity identity;
@@ -86,6 +90,8 @@ public abstract class AbstractActivityController<E extends Activity> implements 
         activityHome.setEntity(entity);
         activityHome.setReturnPage(viewConfigResolver.getViewConfigDescriptor(FacesContext.getCurrentInstance().getViewRoot().getViewId()).getConfigClass());
         
+        navigationParameterContext.addPageParameter("eid", 0);
+
         return ActivityPages.Activity.class;
     }
     
