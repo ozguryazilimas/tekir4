@@ -95,4 +95,7 @@
     <changeSet author="muhammedf (generated)" id="1493825259447-11">
         <addForeignKeyConstraint baseColumnNames="PID" baseTableName="TLE_LEAD_SOURCE" constraintName="FK_rnmj1udkxb64cucjs9aknup6n" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TLE_LEAD_SOURCE"/>
     </changeSet>
+    <changeSet author="hates" id="070520181118">
+        <dropColumn tableName="TLE_LEAD" columnName="CODE"/>
+    </changeSet>
 </databaseChangeLog>

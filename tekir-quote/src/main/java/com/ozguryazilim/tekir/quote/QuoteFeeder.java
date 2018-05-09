@@ -95,8 +95,8 @@ public class QuoteFeeder extends AbstractFeeder<Quote> {
 
 			FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
 
-			accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getCode(), entity.getInfo(),
-					Boolean.FALSE, Boolean.FALSE, entity.getCurrency(), entity.getTotal(), entity.getLocalAmount(),
+			accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getInfo(), Boolean.FALSE,
+					Boolean.FALSE, entity.getCurrency(), entity.getTotal(), entity.getLocalAmount(),
 					entity.getDate(), entity.getOwner(), entity.getProcess().getProcessNo(),
 					entity.getState().toString(), entity.getStateReason(), entity.getTopic());
 			

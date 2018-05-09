@@ -127,4 +127,7 @@
     <changeSet author="oyas (generated)" id="1482482197773-7">
         <dropColumn columnName="CCY" tableName="TFN_FINANCE_VIREMENT"/>
     </changeSet>
+    <changeSet author="hates" id="070520181117">
+        <dropColumn tableName="TFN_FINANCE_VIREMENT" columnName="CODE"/>
+    </changeSet>
 </databaseChangeLog>

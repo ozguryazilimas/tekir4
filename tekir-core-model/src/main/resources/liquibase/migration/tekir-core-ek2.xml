@@ -94,4 +94,5 @@
             <column name="TAG_ID" type="BIGINT"/>
         </createTable>
     </changeSet>
+
 </databaseChangeLog>

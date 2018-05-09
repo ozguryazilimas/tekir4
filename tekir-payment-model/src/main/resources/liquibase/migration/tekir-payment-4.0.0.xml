@@ -39,4 +39,7 @@
             <column name="LOCAL_AMOUNT" type="decimal(19, 2)"/>
         </addColumn>
     </changeSet>
+    <changeSet author="hates" id="070520181135">
+        <dropColumn tableName="TPC_PAYMENT" columnName="CODE"/>
+    </changeSet>
 </databaseChangeLog>

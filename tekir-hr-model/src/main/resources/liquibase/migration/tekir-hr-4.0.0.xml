@@ -149,4 +149,9 @@
     <changeSet author="Erdem Uslu (generated)" id="1498821470593-3">
         <addForeignKeyConstraint baseColumnNames="EMPLOYEE_ID" baseTableName="THR_CREDIT_NOTE" constraintName="FK_CREDIT_NOTE_EMP" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
     </changeSet>
+    <changeSet author="hates" id="0405201818">
+        <dropColumn tableName="THR_CREDIT_NOTE" columnName="CODE"/>
+        <dropColumn tableName="THR_LEAVE" columnName="CODE"/>
+        <dropColumn tableName="THR_SALARY_NOTE" columnName="CODE"/>
+    </changeSet>
 </databaseChangeLog>

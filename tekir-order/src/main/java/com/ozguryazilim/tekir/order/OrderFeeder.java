@@ -97,8 +97,8 @@ public abstract class OrderFeeder<E extends Order> extends AbstractFeeder<E> {
 
 			FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
 
-			accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getCode(), entity.getInfo(),
-					Boolean.FALSE, getProcessType() == ProcessType.PURCHASE, entity.getCurrency(), entity.getTotal(),
+			accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getInfo(), Boolean.FALSE,
+					getProcessType() == ProcessType.PURCHASE, entity.getCurrency(), entity.getTotal(),
 					entity.getLocalAmount(), entity.getDate(), entity.getOwner(), entity.getProcess().getProcessNo(),
 					entity.getState().toString(), entity.getStateReason(), entity.getTopic());
 		}

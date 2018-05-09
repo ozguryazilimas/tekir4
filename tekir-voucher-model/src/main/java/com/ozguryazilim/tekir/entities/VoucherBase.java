@@ -44,14 +44,6 @@ public abstract class VoucherBase extends AuditBase{
     private String voucherNo;
     
     /**
-     * Ek kod alanı. Raporlar v.s. için
-     */
-    @Column(name="CODE", length=30)
-    @Size(max=30)
-    private String code;
-    
-    
-    /**
      * Fiş açıklama alanı
      */
     @Column(name="INFO")
@@ -141,14 +133,6 @@ public abstract class VoucherBase extends AuditBase{
 
     public void setVoucherNo(String voucherNo) {
         this.voucherNo = voucherNo;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public String getInfo() {

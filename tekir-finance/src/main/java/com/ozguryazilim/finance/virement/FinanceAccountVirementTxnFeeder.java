@@ -61,14 +61,13 @@ public class FinanceAccountVirementTxnFeeder implements Serializable{
 			}
 
 
-			financeAccountTxnService.saveFeature(voucherPointer, entity.getFromAccount(), entity.getCode(), 
-					entity.getInfo(), Boolean.TRUE, Boolean.TRUE, entity.getFromCurrency(), 
-					entity.getFromAmount(), fromLocalAmount, entity.getDate(),
-					entity.getOwner(), null, entity.getState().toString(), entity.getStateReason());
-			
-			financeAccountTxnService.saveFeature(voucherPointer, entity.getToAccount(), entity.getCode(), 
-					entity.getInfo(), Boolean.TRUE, Boolean.FALSE, entity.getToCurrency(), 
-					entity.getToAmount(), toLocalAmount, entity.getDate(),
+			financeAccountTxnService.saveFeature(voucherPointer, entity.getFromAccount(), entity.getInfo(),
+					Boolean.TRUE, Boolean.TRUE, entity.getFromCurrency(), entity.getFromAmount(), fromLocalAmount,
+					entity.getDate(), entity.getOwner(), null, entity.getState().toString(),
+					entity.getStateReason());
+
+			financeAccountTxnService.saveFeature(voucherPointer, entity.getToAccount(), entity.getInfo(), Boolean.TRUE,
+					Boolean.FALSE, entity.getToCurrency(), entity.getToAmount(), toLocalAmount, entity.getDate(),
 					entity.getOwner(), null, entity.getState().toString(), entity.getStateReason());
 
 			//TODO: Delete edildiğinde de gidip txn'den silme yapılmalı.
