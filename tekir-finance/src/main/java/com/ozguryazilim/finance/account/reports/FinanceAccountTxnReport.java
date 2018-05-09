@@ -62,11 +62,14 @@ public class FinanceAccountTxnReport extends JasperReportBase {
                 e.printStackTrace();
             }
         }
+        
         params.put("FIRM_TITLE", title);        
         params.put("START_DATE", getFilter().getStartDate());
         params.put("END_DATE", getFilter().getEndDate());
         params.put("ACCOUNT_ID", getFilter().getFinanceAccount() == null ?
                 0 : getFilter().getFinanceAccount().getId());
+        params.put("CONTACT_ID", getFilter().getAccount() == null ? 
+                0 : getFilter().getAccount().getId());
 
         return true;
     }

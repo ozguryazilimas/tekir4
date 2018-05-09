@@ -17,7 +17,12 @@
                                              lookupProfile="R:PAYMENT;O:MULTI_CURRENCY"
                                              lookupListener="financeAccountTxnReport.filter.financeAccount"
                                              placeholder="#{messages['general.info.FinanceAccount']}"
-                                             required="true" columnClass="col-xs-6"/>
+                                             columnClass="col-xs-6"/>
+            <t:inputLookupDialog label="general.label.Account" value="#{bean.filter.account}" 
+                                            lookupBean="#{contactLookup}" 
+                                            lookupListener="financeAccountTxnReport.filter.account" 
+                                            lookupProfile="T:Contact;R:ACCOUNT;O:CUSTOMER,VENDOR"
+                                            placeholder="#{messages['general.info.Account']}" />
             <t:inputReportDate value="#{bean.filter.startDate}" label="general.label.StartDate" columnClass="col-xs-6" />
             <t:inputReportDate value="#{bean.filter.endDate}" label="general.label.EndDate" columnClass="col-xs-6" />
         </div>

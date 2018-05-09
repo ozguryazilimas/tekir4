@@ -41,6 +41,10 @@ public class FinanceAccountTxn extends EntityBase {
     @JoinColumn(name = "ACCOUNT_ID", foreignKey = @ForeignKey(name = "FK_BCACCTXN_ACC"))
     private FinanceAccount account;
     
+    @ManyToOne
+    @JoinColumn(name = "CONTACT_ID", foreignKey = @ForeignKey(name = "FK_ACCTXN_ACC"))
+    private Contact contact;
+    
     /**
      * Belgenin Düzenlenme Tarih Saati
      */
@@ -132,6 +136,14 @@ public class FinanceAccountTxn extends EntityBase {
 
     public void setAccount(FinanceAccount account) {
         this.account = account;
+    }
+    
+    public Contact getContact() {
+        return contact;
+    }
+    
+    public void setContact(Contact contact) {
+        this.contact = contact;
     }
 
     public Date getDate() {

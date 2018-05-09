@@ -43,14 +43,17 @@ AND tft.ACCOUNT_ID = $P{ACCOUNT_ID}]]>
 	<parameter name="END_DATE" class="java.util.Date"/>
 	<parameter name="START_DATE" class="java.util.Date"/>
 	<parameter name="ACCOUNT_ID" class="java.lang.Long"/>
+        <parameter name="CONTACT_ID" class="java.lang.Long"/>
 	<queryString>
 		<![CDATA[
-			SELECT tft.ACCOUNT_ID, tft.CODE, tfa.NAME, tft.TXNDATE, tft.FEATURE,
-			tft.INFO, tft.DEBIT, tft.LOCAL_AMOUNT, (SELECT tco.NAME from TCC_CONTACT as tco
-			INNER JOIN TCC_ACCOUNT_TXN as tat on tat.FEATURE_PK = tft.FEATURE_PK where
-			tco.ID = tat.ACCOUNT_ID) AS ACCOUNT_NAME FROM TFN_FINANCE_TXN tft INNER JOIN
-			TFN_FINANCE_ACC as tfa on tft.ACCOUNT_ID = tfa.ID WHERE tft.TXNDATE < $P{END_DATE}
-			AND tft.TXNDATE > $P{START_DATE} AND ($P{ACCOUNT_ID}=0 OR tft.ACCOUNT_ID = $P{ACCOUNT_ID})
+			SELECT tft.ACCOUNT_ID, tft.CODE, tfa.NAME, tft.TXNDATE, 
+                        tft.FEATURE, tft.INFO, tft.DEBIT, tft.LOCAL_AMOUNT, 
+                        (SELECT tco.NAME from TCC_CONTACT AS tco 
+                        WHERE tco.ID = tft.CONTACT_ID) AS ACCOUNT_NAME FROM TFN_FINANCE_TXN tft
+                        INNER JOIN TFN_FINANCE_ACC AS tfa on tft.ACCOUNT_ID = tfa.ID 
+                        WHERE tft.TXNDATE < $P{END_DATE} AND tft.TXNDATE > $P{START_DATE}
+                        AND ($P{ACCOUNT_ID}=0 OR tft.ACCOUNT_ID = $P{ACCOUNT_ID})
+                        AND ($P{CONTACT_ID}=0 OR tft.CONTACT_ID = $P{CONTACT_ID})
 			ORDER BY tfa.NAME
 		]]>
 	</queryString>
