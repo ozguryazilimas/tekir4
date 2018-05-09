@@ -80,7 +80,7 @@ public abstract class AccountDebitNoteRepository extends VoucherRepositoryBase<A
     private void buildVieModelSelect(CriteriaQuery<AccountDebitNoteViewModel> criteriaQuery, Root<? extends AccountDebitNote> from) {
         criteriaQuery.multiselect(
                 from.get(AccountDebitNote_.id),
-                from.get(VoucherBase_.code),
+               /* from.get(VoucherBase_.code),*/
                 from.get(VoucherBase_.voucherNo),
                 from.get(VoucherBase_.info),
                 from.get(VoucherBase_.referenceNo),

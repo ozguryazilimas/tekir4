@@ -1,14 +1,17 @@
 package com.ozguryazilim.tekir.core.view;
 
 import com.ozguryazilim.tekir.core.tag.TagRepository;
+import com.ozguryazilim.tekir.core.tag.TagService;
 import com.ozguryazilim.tekir.entities.Tag;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.inject.spi.CDI;
 import javax.faces.component.FacesComponent;
 import javax.faces.component.UINamingContainer;
+import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -29,19 +32,9 @@ public class InputTag extends UINamingContainer{
 
     public void setChips(List<String> chips) {
         String type = (String) getAttributes().get("type");
-        Map<String, Tag> globalTagMap = getTagMap(type);
         Collection<Tag> tags = getTags();
         tags.clear();
-        for (String text : chips) {
-            if (globalTagMap.containsKey(text)) {
-                tags.add(globalTagMap.get(text));
-            } else {
-                Tag t = new Tag();
-                t.setText(text);
-                t.setType(type);
-                tags.add(t);
-            }
-        }
+        getTagService().populateWithNames(tags, chips, type);
     }
 
     private Collection<Tag> getTags() {
@@ -53,21 +46,11 @@ public class InputTag extends UINamingContainer{
         return ((Collection<Tag>) valueObject);
     }
 
-    private Map<String, Tag> getTagMap(String type) {
-        //TODO burada haldır haldır select çalışacak. Araya TagService yazarak bu işi çöz
-        List<Tag> existingTags = getRepository().findByType(type);
-        Map<String, Tag> tagMap = new HashMap<>(existingTags.size());
-        for (Tag t : existingTags) {
-            tagMap.put(t.getText(), t);
-        }
-        return tagMap;
-    }
-
-    private TagRepository getRepository() {
+    private TagService getTagService() {
         BeanManager bm = CDI.current().getBeanManager();
-        Bean<TagRepository> bean = (Bean<TagRepository>) bm.getBeans(TagRepository.class).iterator().next();
-        CreationalContext<TagRepository> ctx = bm.createCreationalContext(bean);
-        return (TagRepository) bm.getReference(bean, TagRepository.class, ctx);
+        Bean<TagService> bean = (Bean<TagService>) bm.getBeans(TagService.class).iterator().next();
+        CreationalContext<TagService> ctx = bm.createCreationalContext(bean);
+        return (TagService) bm.getReference(bean, TagService.class, ctx);
     }
 
 }

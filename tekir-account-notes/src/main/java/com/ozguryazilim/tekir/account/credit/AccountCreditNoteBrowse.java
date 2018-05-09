@@ -53,7 +53,7 @@ public class AccountCreditNoteBrowse extends VoucherBrowseBase<AccountCreditNote
                 .addColumn(new TextColumn<>(VoucherBase_.topic, "voucher.label.Topic"), true)
                 .addColumn(new SubTextColumn<>(AccountCreditNote_.account, Contact_.name, "general.label.Account"), true)
                 .addColumn(new TextColumn<>(VoucherBase_.info, "general.label.Info"), true)
-                .addColumn(new TextColumn<>(VoucherBase_.code, "general.label.Code"), false)
+                //FIXME: .addColumn(new TextColumn<>(VoucherBase_.code, "general.label.Code"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.referenceNo, "voucher.label.ReferenceNo"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.stateReason, "voucher.label.StateReason"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.stateInfo, "voucher.label.StateInfo"), false)
@@ -63,7 +63,7 @@ public class AccountCreditNoteBrowse extends VoucherBrowseBase<AccountCreditNote
                 
         queryDefinition
                 .addFilter(new StringFilter<>(VoucherBase_.voucherNo, "voucher.label.VoucherNo"))
-                .addFilter(new StringFilter<>(VoucherBase_.code, "voucher.label.Code"))
+                //FIXME: .addFilter(new StringFilter<>(VoucherBase_.code, "voucher.label.Code"))
                 .addFilter(new StringFilter<>(VoucherBase_.info, "voucher.label.Info"))
                 .addFilter(new StringFilter<>(VoucherBase_.topic, "voucher.label.Topic"))
                 .addFilter(new VoucherStateFilter<>(VoucherBase_.state, getHome().getStateConfig().getStates(), "general.label.State"))

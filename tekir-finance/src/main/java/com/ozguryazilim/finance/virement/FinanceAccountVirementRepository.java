@@ -87,7 +87,7 @@ public abstract class FinanceAccountVirementRepository extends VoucherRepository
                 from.get(FinanceAccountVirement_.toCurrency),
                 from.get(FinanceAccountVirement_.fromAmount),
                 from.get(FinanceAccountVirement_.toAmount),                
-                from.get(VoucherBase_.code),
+                /*FIXME: from.get(VoucherBase_.code),*/
                 from.get(VoucherBase_.voucherNo),
                 from.get(VoucherBase_.info),
                 from.get(VoucherBase_.referenceNo),

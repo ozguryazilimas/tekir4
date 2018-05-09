@@ -99,7 +99,7 @@ public abstract class OpportunityRepository extends VoucherRepositoryBase<Opport
 				from.get(VoucherProcessBase_.account).get(Contact_.id),
 				from.get(VoucherProcessBase_.account).get(Contact_.name),
 				from.get(VoucherProcessBase_.account).type(),
-				from.get(VoucherBase_.code),
+				//FIXME: from.get(VoucherBase_.code),
 				from.get(VoucherBase_.voucherNo),
 				from.get(VoucherBase_.info),
 				from.get(VoucherBase_.referenceNo),

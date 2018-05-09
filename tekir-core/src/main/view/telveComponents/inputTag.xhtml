@@ -6,7 +6,7 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 
-    <composite:interface componentType="inputTag">
+    <composite:interface>
         <composite:attribute name="value" required="true"/>
         <composite:attribute name="label" required="true"/>
         <composite:attribute name="hasNullValue" required="false" type="java.lang.Boolean" default="true"/>
@@ -20,13 +20,13 @@
 
     <composite:implementation>
         <div id="#{cc.clientId}" class="prop #{ cc.attrs.columnClass} columns #{cc.attrs.last ? 'end' : '' }">
-
             <p:outputLabel for="#{cc.id}_inp" value="#{messages[cc.attrs.label]}"
                            styleClass="name #{invalid?'errors':''}" />
-
-            <span class="value" style="height: 30px;">
-                <p:chips id="#{cc.id}_inp" value="#{cc.chips}" />
-            </span>
+            <div class="value">
+                <p:chips id="#{cc.id}_inp" value="#{cc.attrs.value}" >
+                    <f:converter binding="#{tagConverter}"/>
+                </p:chips>
+            </div>
             <p:message for="#{cc.id}_inp" display="tooltip" />
         </div>
     </composite:implementation>

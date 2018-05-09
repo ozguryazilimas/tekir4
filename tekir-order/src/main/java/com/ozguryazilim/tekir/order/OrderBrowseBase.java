@@ -48,7 +48,7 @@ public abstract class OrderBrowseBase<E extends Order, V extends VoucherProcessV
                 .addColumn(new MoneyColumn<>(Order_.total, PurchaseOrder_.currency, "general.label.Total"), true)
                 .addColumn(new UserColumn<>(VoucherBase_.owner, "voucher.label.Owner"), true)
                 .addColumn(new TextColumn<>(VoucherBase_.referenceNo, "voucher.label.ReferenceNo"), false)
-                .addColumn(new TextColumn<>(VoucherBase_.code, "voucher.label.Code"), false)
+                //FIXME: .addColumn(new TextColumn<>(VoucherBase_.code, "voucher.label.Code"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.info, "voucher.label.Info"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.stateReason, "voucher.label.StateReason"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.stateInfo, "voucher.label.StateInfo"), false)
@@ -57,7 +57,7 @@ public abstract class OrderBrowseBase<E extends Order, V extends VoucherProcessV
         
         queryDefinition
                 .addFilter(new StringFilter<>(VoucherBase_.voucherNo, "voucher.label.VoucherNo"))
-                .addFilter(new StringFilter<>(VoucherBase_.code, "voucher.label.Code"))
+                //FIXME: .addFilter(new StringFilter<>(VoucherBase_.code, "voucher.label.Code"))
                 .addFilter(new StringFilter<>(VoucherBase_.info, "voucher.label.Info"))
                 .addFilter(new StringFilter<>(VoucherBase_.topic, "voucher.label.Topic"))
                 .addFilter(new VoucherStateFilter<>(VoucherBase_.state, getHome().getStateConfig().getStates(), "general.label.State"))

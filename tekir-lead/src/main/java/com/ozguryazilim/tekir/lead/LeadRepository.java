@@ -72,8 +72,8 @@ public abstract class LeadRepository extends VoucherRepositoryBase<Lead, LeadVie
 	private void buildVieModelSelect(CriteriaQuery<LeadViewModel> criteriaQuery, Root<? extends Lead> from) {
 
 		criteriaQuery.multiselect(
-				from.get(Lead_.id), 
-				from.get(VoucherBase_.code), 
+				from.get(Lead_.id),
+				//FIXME: from.get(VoucherBase_.code),
 				from.get(VoucherBase_.voucherNo),
 				from.get(VoucherBase_.info), 
 				from.get(VoucherBase_.referenceNo), 
