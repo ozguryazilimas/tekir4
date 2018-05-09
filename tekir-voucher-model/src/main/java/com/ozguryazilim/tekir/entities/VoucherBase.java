@@ -9,10 +9,16 @@ import com.ozguryazilim.telve.annotations.BizKey;
 import com.ozguryazilim.telve.entities.AuditBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
@@ -115,13 +121,23 @@ public abstract class VoucherBase extends AuditBase{
     @ManyToOne
     @JoinColumn(name = "GROUP_ID", foreignKey = @ForeignKey(name = "FK_VOG_VOG"))
     private VoucherGroup group;
-    
-    
-    
-    
+
     public String getVoucherNo() {
         return voucherNo;
     }
+
+    @ManyToMany(
+            targetEntity = Tag.class,
+            fetch = FetchType.EAGER,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(name = "TCO_TAG_MAP",
+            joinColumns = @JoinColumn(name = "REF_ID"),
+            inverseJoinColumns = @JoinColumn(name = "TAG_ID")
+    )
+    private Set<Tag> tags = new HashSet<>();
 
     public void setVoucherNo(String voucherNo) {
         this.voucherNo = voucherNo;
@@ -214,6 +230,12 @@ public abstract class VoucherBase extends AuditBase{
     public void setTopic(String topic) {
         this.topic = topic;
     }
-    
-    
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+    }
 }

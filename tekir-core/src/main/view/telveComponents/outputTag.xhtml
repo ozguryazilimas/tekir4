@@ -1,0 +1,27 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:composite="http://java.sun.com/jsf/composite"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <composite:interface>
+        <composite:attribute name="value" required="true"/>
+        <composite:attribute name="label" required="true"/>
+        <composite:attribute name="columnClass" required="false" default="col-md-6 col-xs-12"/>
+    </composite:interface>
+
+    <composite:implementation>
+        <div id="#{cc.clientId}" class="disprop #{cc.attrs.columnClass}">
+            <h:outputStylesheet library="telveComponents" name="outputtag.css" target="head"/>
+            <p:outputLabel for="#{cc.id}_inp" value="#{messages[cc.attrs.label]} :" styleClass="name" />
+            <p:outputPanel id="#{cc.id}_inp" styleClass="value ui-widget">
+                <p:repeat value="#{cc.attrs.value}" var="t">
+                    <div class="tekir-tag">#{t.text}</div>
+                </p:repeat>
+            </p:outputPanel>
+        </div>
+    </composite:implementation>
+
+</ui:component>
