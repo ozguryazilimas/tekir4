@@ -111,6 +111,6 @@
         <addForeignKeyConstraint baseColumnNames="PROCESS_ID" baseTableName="TCO_OPPOTUNITY" constraintName="FK_PROSS_VOG" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TVO_PROCESS"/>
     </changeSet>
     <changeSet author="hates" id="070520181133">
-        <dropColumn tableName="TCO_OPPOTUNITY" columnName="CODE"/>
+        <renameColumn tableName="TCO_OPPOTUNITY" columnDataType="VARCHAR(2000)" newColumnName="TAGS" oldColumnName="CODE" />
     </changeSet>
 </databaseChangeLog>

@@ -185,8 +185,8 @@
         <dropColumn columnName="PROCESS_ID" tableName="TAN_VIREMENT"/>
     </changeSet>
     <changeSet author="hates" id="040520181807">
-        <dropColumn tableName="TAN_CREDIT_NOTE" columnName="CODE"/>
-        <dropColumn tableName="TAN_DEBIT_NOTE" columnName="CODE"/>
-        <dropColumn tableName="TAN_VIREMENT" columnName="CODE"/>
+        <renameColumn tableName="TAN_CREDIT_NOTE" columnDataType="VARCHAR(2000)" newColumnName="TAGS" oldColumnName="CODE" />
+        <renameColumn tableName="TAN_DEBIT_NOTE" columnDataType="VARCHAR(2000)" newColumnName="TAGS" oldColumnName="CODE" />
+        <renameColumn tableName="TAN_VIREMENT" columnDataType="VARCHAR(2000)" newColumnName="TAGS" oldColumnName="CODE" />
     </changeSet>
 </databaseChangeLog>

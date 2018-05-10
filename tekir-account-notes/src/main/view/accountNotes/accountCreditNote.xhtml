@@ -37,7 +37,7 @@
                 <div class="row">
                     <t:inputText label="voucher.label.VoucherNo" value="#{accountCreditNoteHome.entity.voucherNo}"  required="true" readonly="true" columnClass="col-xs-12"/>
                     <t:inputText label="voucher.label.ReferenceNo" value="#{accountCreditNoteHome.entity.referenceNo}" columnClass="col-xs-12"/>
-                    <t:inputTag label="general.label.Tag" value="#{accountCreditNoteHome.entity.tags}" type="ACCOUNT" columnClass="col-xs-12"/>
+                    <t:inputTag label="general.label.Tag" value="#{accountCreditNoteHome.entity.tags}" key="AccountCreditNote" columnClass="col-xs-12"/>
                     <t:inputLookupDialog label="voucher.label.Group" value="#{accountCreditNoteHome.entity.group}" caption="topic" lookupBean="#{voucherGroupLookup}" lookupListener="accountCreditNoteHome.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" />
                     <t:inputTextarea label="general.label.Info" value="#{accountCreditNoteHome.entity.info}" columnClass="col-xs-12"/>
                     <t:inputDate label="voucher.label.Date" value="#{accountCreditNoteHome.entity.date}" columnClass="col-xs-12"/>

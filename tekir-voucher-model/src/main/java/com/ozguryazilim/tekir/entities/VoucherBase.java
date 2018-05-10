@@ -1,24 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ozguryazilim.tekir.entities;
 
+import com.ozguryazilim.tekir.entites.converters.StringListConverter;
 import com.ozguryazilim.telve.annotations.BizKey;
 import com.ozguryazilim.telve.entities.AuditBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
+
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import javax.persistence.CascadeType;
+import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Embedded;
-import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
@@ -38,47 +32,48 @@ public abstract class VoucherBase extends AuditBase{
      * Uygulama tarafında takip için kullanılan temel numara
      * Fiş Numarası
      */
-    @Column(name="VOUCHER_NO", length=30, nullable=false, unique=true)
-    @NotNull @Size(max = 30)
+    @Column(name = "VOUCHER_NO", length = 30, nullable = false, unique = true)
+    @NotNull
+    @Size(max = 30)
     @BizKey
     private String voucherNo;
 
     /**
      * Fiş açıklama alanı
      */
-    @Column(name="INFO")
+    @Column(name = "INFO")
     private String info;
 
     /**
      * Fiş konusu. Aslında process'le birlikte ilerliyor.
      */
-    @Column(name="TOPIC")
+    @Column(name = "TOPIC")
     private String topic;
 
     /**
      * Resmi/Matbuu belge üzerinde bulunan numara.
      * Belge Numarası
      */
-    @Column(name="REFERENCE_NO", length=30)
-    @Size(max=30)
+    @Column(name = "REFERENCE_NO", length = 30)
+    @Size(max = 30)
     private String referenceNo;
 
     /**
      * Belgenin Düzenlenme Tarih Saati
      */
-    @Column(name="TXNDATE")
+    @Column(name = "TXNDATE")
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date date;
 
     /**
      * Bu belge'nin erişim yetkilisi, sorumlusunun kim olduğu
      */
-    @Column(name="OWNER")
+    @Column(name = "OWNER")
     private String owner;
 
     /**
      * Bu belgenin açılmasına neden olan belge'nin linki.
-     *
+     * <p>
      * Örneğin bir Fırsat'tan Teklif oluşturulduğunda Teklif modelinde Fırsat'ın bilgileri
      */
     @Embedded
@@ -87,28 +82,26 @@ public abstract class VoucherBase extends AuditBase{
     /**
      * JPA Converter ile String'e çevrilecek.
      */
-    @Column(name="STATE")
+    @Column(name = "STATE")
     private VoucherState state = VoucherState.DRAFT;
 
     /**
      * Suggestion2dan gelecek
      */
-    @Column(name="STATE_REASON")
+    @Column(name = "STATE_REASON")
     private String stateReason;
 
     /**
      * Durum ile ilgili ek açıklama alanı
      */
-    @Column(name="STATE_INFO")
+    @Column(name = "STATE_INFO")
     private String stateInfo;
-
 
     /**
      * Grup numarası.
-     *
-     *
+     * <p>
+     * <p>
      * Farklı tür belge ve süreci bir araya gruplamak için kullanılır. "İşlem No" "İşlem Grup"
-     *
      */
     @ManyToOne
     @JoinColumn(name = "GROUP_ID", foreignKey = @ForeignKey(name = "FK_VOG_VOG"))
@@ -118,18 +111,9 @@ public abstract class VoucherBase extends AuditBase{
         return voucherNo;
     }
 
-    @ManyToMany(
-            targetEntity = Tag.class,
-            fetch = FetchType.EAGER,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            })
-    @JoinTable(name = "TCO_TAG_MAP",
-            joinColumns = @JoinColumn(name = "REF_ID"),
-            inverseJoinColumns = @JoinColumn(name = "TAG_ID")
-    )
-    private Set<Tag> tags = new HashSet<>();
+    @Column(name = "TAGS")
+    @Convert(converter = StringListConverter.class)
+    private List<String> tags = new ArrayList<>();
 
     public void setVoucherNo(String voucherNo) {
         this.voucherNo = voucherNo;
@@ -215,11 +199,11 @@ public abstract class VoucherBase extends AuditBase{
         this.topic = topic;
     }
 
-    public Set<Tag> getTags() {
+    public List<String> getTags() {
         return tags;
     }
 
-    public void setTags(Set<Tag> tags) {
+    public void setTags(List<String> tags) {
         this.tags = tags;
     }
 }

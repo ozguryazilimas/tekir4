@@ -96,6 +96,6 @@
         </addColumn>
     </changeSet>
     <changeSet author="hates" id="070520181134">
-        <dropColumn tableName="TOR_ORDER" columnName="CODE"/>
+        <renameColumn tableName="TOR_ORDER" columnDataType="VARCHAR(2000)" newColumnName="TAGS" oldColumnName="CODE" />
     </changeSet>
 </databaseChangeLog>

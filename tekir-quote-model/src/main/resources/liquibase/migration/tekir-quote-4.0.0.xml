@@ -134,6 +134,6 @@
         </addColumn>
     </changeSet>
     <changeSet author="hates" id="070520181136">
-        <dropColumn tableName="TSQ_QUOTE" columnName="CODE"/>
+        <renameColumn tableName="TSQ_QUOTE" columnDataType="VARCHAR(2000)" newColumnName="TAGS" oldColumnName="CODE" />
     </changeSet>
 </databaseChangeLog>

@@ -40,6 +40,6 @@
         </addColumn>
     </changeSet>
     <changeSet author="hates" id="070520181135">
-        <dropColumn tableName="TPC_PAYMENT" columnName="CODE"/>
+        <renameColumn tableName="TPC_PAYMENT" columnDataType="VARCHAR(2000)" newColumnName="TAGS" oldColumnName="CODE" />
     </changeSet>
 </databaseChangeLog>

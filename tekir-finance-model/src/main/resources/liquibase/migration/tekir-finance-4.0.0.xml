@@ -128,6 +128,6 @@
         <dropColumn columnName="CCY" tableName="TFN_FINANCE_VIREMENT"/>
     </changeSet>
     <changeSet author="hates" id="070520181117">
-        <dropColumn tableName="TFN_FINANCE_VIREMENT" columnName="CODE"/>
+        <renameColumn tableName="TFN_FINANCE_VIREMENT" columnDataType="VARCHAR(2000)" newColumnName="TAGS" oldColumnName="CODE" />
     </changeSet>
 </databaseChangeLog>

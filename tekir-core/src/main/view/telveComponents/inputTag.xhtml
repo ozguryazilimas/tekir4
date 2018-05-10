@@ -1,31 +1,45 @@
 <ui:component xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:composite="http://java.sun.com/jsf/composite"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
-
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+              xmlns:composite="http://java.sun.com/jsf/composite"
+              xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <composite:interface>
-        <composite:attribute name="value" required="true"/>
-        <composite:attribute name="label" required="true"/>
-        <composite:attribute name="hasNullValue" required="false" type="java.lang.Boolean" default="true"/>
-        <composite:attribute name="required" required="false" type="java.lang.Boolean" default="false"/>
-        <composite:attribute name="columnClass" required="false" default="col-md-6 col-xs-12"/>
-        <composite:attribute name="last" required="false" type="java.lang.Boolean" default="false"/>
-        <composite:attribute name="disabled" required="false" type="java.lang.Boolean" default="false"/>
-        <composite:attribute name="type" required="true" type="java.lang.String" default="DEFAULT"/>
+        <composite:attribute name="value" required="true" />
+        <composite:attribute name="label" required="true" />
+        <composite:attribute name="hasNullValue" required="false" type="java.lang.Boolean" default="true" />
+        <composite:attribute name="required" required="false" type="java.lang.Boolean" default="false" />
+        <composite:attribute name="columnClass" required="false" default="col-md-6 col-xs-12" />
+        <composite:attribute name="last" required="false" type="java.lang.Boolean" default="false" />
+        <composite:attribute name="disabled" required="false" type="java.lang.Boolean" default="false" />
+        <composite:attribute name="key" required="true" type="java.lang.String" default="DEFAULT" />
         <composite:clientBehavior name="change" event="change" targets="#{cc.id}_inp" />
     </composite:interface>
 
     <composite:implementation>
+        <h:outputStylesheet library="telveComponents" name="inputtag.css" target="head" />
         <div id="#{cc.clientId}" class="prop #{ cc.attrs.columnClass} columns #{cc.attrs.last ? 'end' : '' }">
             <p:outputLabel for="#{cc.id}_inp" value="#{messages[cc.attrs.label]}"
                            styleClass="name #{invalid?'errors':''}" />
             <div class="value">
-                <p:chips id="#{cc.id}_inp" value="#{cc.attrs.value}" >
-                    <f:converter binding="#{tagConverter}"/>
-                </p:chips>
+                <p:autoComplete id="#{cc.id}_inp"
+                                multiple="true"
+                                value="#{cc.attrs.value}"
+                                forceSelection="false"
+                                completeMethod="#{inputTagController.completeTag}"
+                                var="sr"
+                                itemValue="#{sr.tag}"
+                                itemLabel="#{sr.tag}"
+                                a:key="#{cc.attrs.key}"
+                                cache="true"
+                                style="height: auto">
+                    <p:column>
+                        <h:outputText value="#{sr.tag} #{sr.absent?messages['inputTag.message.Create']:''}" />
+                    </p:column>
+                    <p:ajax event="itemSelect" listener="#{inputTagController.onItemSelect}" />
+                </p:autoComplete>
             </div>
             <p:message for="#{cc.id}_inp" display="tooltip" />
         </div>

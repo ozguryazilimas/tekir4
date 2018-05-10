@@ -12,7 +12,7 @@
         <t:outputText label="voucher.label.Process" value="#{homeBean.entity.process.processNo}" columnClass="col-sm-6"/>
         <t:outputText label="voucher.label.Group" value="#{homeBean.entity.group.groupNo}" columnClass="col-sm-6"/>
         <t:outputText label="voucher.label.Owner" value="#{userLookup.getUserName(homeBean.entity.owner)}" columnClass="col-sm-6"/>
-        <t:outputText label="general.label.Code" value="#{homeBean.entity.code}" columnClass="col-sm-6"/>
+        <t:outputTag label="general.label.Tag" value="#{homeBean.entity.tags}" columnClass="col-sm-6"/>
         <t:outputDate label="voucher.label.Date" value="#{homeBean.entity.date}" columnClass="col-sm-6"/>
     </t:accordion>
 

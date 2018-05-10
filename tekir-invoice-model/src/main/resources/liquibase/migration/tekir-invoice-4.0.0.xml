@@ -76,6 +76,6 @@
         </addColumn>
     </changeSet>
     <changeSet author="hates" id="070520181132">
-        <dropColumn tableName="TIV_INVOICE" columnName="CODE"/>
+        <renameColumn tableName="TIV_INVOICE" columnDataType="VARCHAR(2000)" newColumnName="TAGS" oldColumnName="CODE" />
     </changeSet>
 </databaseChangeLog>
