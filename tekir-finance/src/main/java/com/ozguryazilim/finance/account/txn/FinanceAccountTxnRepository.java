@@ -6,8 +6,11 @@
 package com.ozguryazilim.finance.account.txn;
 
 import com.google.common.base.Strings;
+import com.ozguryazilim.finance.account.FinanceAccountTxnStatementModel;
 import com.ozguryazilim.finance.account.FinanceAccountTxnSumModel;
+import com.ozguryazilim.finance.account.reports.FinanceAccountTxnFilter;
 import com.ozguryazilim.tekir.entities.AccountType;
+import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.tekir.entities.FinanceAccount;
 import com.ozguryazilim.tekir.entities.FinanceAccount_;
 import com.ozguryazilim.tekir.entities.FinanceAccountTxn;
@@ -157,5 +160,93 @@ public abstract class FinanceAccountTxnRepository extends RepositoryBase<Finance
         List<FinanceAccountTxnSumModel> resultList = typedQuery.getResultList();
         
         return resultList;
+    }
+
+    public List<FinanceAccountTxnStatementModel> findAccountStatus(
+            FinanceAccountTxnFilter filter) {
+        CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
+        //Geriye AccidentAnalysisViewModel dönecek cq'yu ona göre oluşturuyoruz.
+        CriteriaQuery<FinanceAccountTxnStatementModel> criteriaQuery =
+                criteriaBuilder.createQuery(FinanceAccountTxnStatementModel.class);
+
+        //From Tabii ki PersonWorkHistory
+        Root<FinanceAccountTxn> from = criteriaQuery.from(FinanceAccountTxn
+                .class);
+
+        criteriaQuery.multiselect(
+                from.get(FinanceAccountTxn_.account).get(FinanceAccount_.id),
+                from.get(FinanceAccountTxn_.account).get(FinanceAccount_.name),
+                //from.get(AccountTxn_.account).type(),
+                from.get(FinanceAccountTxn_.date),
+                from.get(FinanceAccountTxn_.debit),
+                from.get(FinanceAccountTxn_.currency),
+                from.get(FinanceAccountTxn_.localAmount),
+                from.get(FinanceAccountTxn_.feature),
+                from.get(FinanceAccountTxn_.info),
+                from.get(FinanceAccountTxn_.referenceNo),
+                from.get(FinanceAccountTxn_.status),
+                from.get(FinanceAccountTxn_.amount)
+        );
+
+        criteriaQuery.groupBy(
+                from.get(FinanceAccountTxn_.account).get(FinanceAccount_.id),
+                from.get(FinanceAccountTxn_.account).get(FinanceAccount_.name),
+                from.get(FinanceAccountTxn_.date),
+                from.get(FinanceAccountTxn_.debit),
+                from.get(FinanceAccountTxn_.currency),
+                from.get(FinanceAccountTxn_.localAmount),
+                from.get(FinanceAccountTxn_.feature),
+                from.get(FinanceAccountTxn_.info),
+                from.get(FinanceAccountTxn_.referenceNo),
+                from.get(FinanceAccountTxn_.status),
+                from.get(FinanceAccountTxn_.amount)
+                //from.get(AccountTxn_.account).type()
+        );
+
+        //Filtreleri ekleyelim.
+        List<Predicate> predicates = new ArrayList<>();
+
+        if (filter.getFinanceAccount() != null) {
+            predicates.add(criteriaBuilder.like(from.get(FinanceAccountTxn_
+                    .account).get(FinanceAccount_.name), "%" + filter
+                    .getFinanceAccount().getName() +
+                    "%"));
+        }
+
+        if (filter.getAccount() != null) {
+            predicates.add(criteriaBuilder.like(from.get(FinanceAccountTxn_
+                    .contact).get(Contact_.name), "%" + filter
+                    .getAccount().getName() +
+                    "%"));
+        }
+
+        if (!Strings.isNullOrEmpty(filter.getCode())) {
+            predicates.add(criteriaBuilder.like(from.get(FinanceAccountTxn_.account)
+                    .get(FinanceAccount_.code), "%" + filter.getCode() + "%"));
+        }
+
+        if (filter.getStartDate() != null) {
+            predicates.add(criteriaBuilder.greaterThanOrEqualTo(from.get(FinanceAccountTxn_.date),
+                    filter.getStartDate().getCalculatedValue()));
+        }
+
+        if (filter.getEndDate() != null) {
+            predicates.add(criteriaBuilder.lessThanOrEqualTo(from.get(FinanceAccountTxn_.date),
+                    filter.getEndDate().getCalculatedValue()));
+        }
+
+        criteriaQuery.where(predicates.toArray(new Predicate[]{}));
+
+        criteriaQuery.orderBy(criteriaBuilder.asc(from.get(FinanceAccountTxn_
+                .account).get(FinanceAccount_.name)));
+
+        TypedQuery<FinanceAccountTxnStatementModel> typedQuery = entityManager()
+                .createQuery(criteriaQuery);
+        //typedQuery.setMaxResults(limit);
+        List<FinanceAccountTxnStatementModel> resultList = typedQuery
+                .getResultList();
+
+        return resultList;
+
     }
 }

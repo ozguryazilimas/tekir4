@@ -6,28 +6,43 @@ import com.ozguryazilim.telve.reports.ReportDate;
 import java.io.Serializable;
 
 /**
- * 
+ *
  * @author Ceyhun Onur
  */
 
 public class FinanceAccountTxnFilter implements Serializable {
 
-	private ReportDate startDate;
+	private Contact account;
+	private String code;
 	private ReportDate endDate;
 	private FinanceAccount financeAccount;
-        private Contact account;
-        
-        public Contact getAccount() {
-            return account;
-        }
-        
-        public void setAccount(Contact account) {
-            this.account = account;
-        }
-        
+	private ReportDate startDate;
+
+	public FinanceAccountTxnFilter (ReportDate startDate, ReportDate
+			endDate) {
+		this.startDate = startDate;
+		this.endDate = endDate;
+	}
+	public Contact getAccount() {
+		return account;
+	}
+
+	public void setAccount(Contact account) {
+		this.account = account;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
 	public FinanceAccount getFinanceAccount() {
 		return financeAccount;
 	}
+
 	public void setFinanceAccount(FinanceAccount financeAccount) {
 		this.financeAccount = financeAccount;
 	}
