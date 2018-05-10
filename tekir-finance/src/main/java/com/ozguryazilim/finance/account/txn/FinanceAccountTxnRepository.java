@@ -162,7 +162,7 @@ public abstract class FinanceAccountTxnRepository extends RepositoryBase<Finance
         return resultList;
     }
 
-    public List<FinanceAccountTxnStatementModel> findAccountStatus(
+    public List<FinanceAccountTxnStatementModel> findAccountTransactions(
             FinanceAccountTxnFilter filter) {
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
         //Geriye AccidentAnalysisViewModel dönecek cq'yu ona göre oluşturuyoruz.
@@ -182,7 +182,7 @@ public abstract class FinanceAccountTxnRepository extends RepositoryBase<Finance
                 from.get(FinanceAccountTxn_.currency),
                 from.get(FinanceAccountTxn_.localAmount),
                 from.get(FinanceAccountTxn_.feature),
-                from.get(FinanceAccountTxn_.info),
+                from.get(FinanceAccountTxn_.contact).get(Contact_.name),
                 from.get(FinanceAccountTxn_.referenceNo),
                 from.get(FinanceAccountTxn_.status),
                 from.get(FinanceAccountTxn_.amount)
@@ -196,7 +196,7 @@ public abstract class FinanceAccountTxnRepository extends RepositoryBase<Finance
                 from.get(FinanceAccountTxn_.currency),
                 from.get(FinanceAccountTxn_.localAmount),
                 from.get(FinanceAccountTxn_.feature),
-                from.get(FinanceAccountTxn_.info),
+                from.get(FinanceAccountTxn_.contact).get(Contact_.name),
                 from.get(FinanceAccountTxn_.referenceNo),
                 from.get(FinanceAccountTxn_.status),
                 from.get(FinanceAccountTxn_.amount)

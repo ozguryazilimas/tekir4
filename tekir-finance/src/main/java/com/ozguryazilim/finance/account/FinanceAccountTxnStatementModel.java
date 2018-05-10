@@ -17,7 +17,7 @@ public class FinanceAccountTxnStatementModel implements Serializable{
     private Date date;
     private Boolean debit;
     private FeaturePointer feature;
-    private String info;
+    private String contactName;
     private BigDecimal localAmount;
     private String referenceNo;
     private String status;
@@ -25,7 +25,8 @@ public class FinanceAccountTxnStatementModel implements Serializable{
     public FinanceAccountTxnStatementModel(Long accountId, String accountName,
                                         Date date, Boolean debit, Currency currency,
                                         BigDecimal localAmount, FeaturePointer feature,
-                                        String info, String referenceNo, String status,
+                                        String contactName, String referenceNo,
+                                           String status,
                                         BigDecimal amount) {
         this.accountId = accountId;
         this.accountName = accountName;
@@ -34,7 +35,7 @@ public class FinanceAccountTxnStatementModel implements Serializable{
         this.date = date;
         this.debit = debit;
         this.feature = feature;
-        this.info = info;
+        this.contactName = contactName;
         this.localAmount = debit ? (localAmount.negate()) : localAmount;
         this.referenceNo = referenceNo;
         this.status = status;
@@ -81,6 +82,14 @@ public class FinanceAccountTxnStatementModel implements Serializable{
         this.amount = amount;
     }
 
+    public String getContactName() {
+        return contactName;
+    }
+
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+    }
+
     public Currency getCurrency() {
         return currency;
     }
@@ -111,14 +120,6 @@ public class FinanceAccountTxnStatementModel implements Serializable{
 
     public void setFeature(FeaturePointer feature) {
         this.feature = feature;
-    }
-
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
     }
 
     public BigDecimal getLocalAmount() {

@@ -57,11 +57,15 @@ public class FinanceAccountTxnReport extends DynamicReportBase<FinanceAccountTxn
 
     @Override
     protected void buildReport(JasperReportBuilder report, Boolean forExport) {
-        TextColumnBuilder<String> info = col.column( msg("general.label.Info"), "info", type.stringType());
+        TextColumnBuilder<String> contactName = col.column( msg("finance" +
+                ".label.Account"), "contactName", type.stringType())
+                .setHorizontalTextAlignment(HorizontalTextAlignment.CENTER);
         TextColumnBuilder<FeaturePointer> feature = TekirDynamicReportUtils.buildFeatureColumn("feature");
 
         TextColumnBuilder<String> referenceNo = col.column( msg("general.label.Reference"), "referenceNo", type.stringType());
-        TextColumnBuilder<String> status = TekirDynamicReportUtils.buildStatusColumn("status");
+        TextColumnBuilder<String> status = TekirDynamicReportUtils
+                .buildStatusColumn("status").setHorizontalTextAlignment
+                        (HorizontalTextAlignment.CENTER);
         TextColumnBuilder<Date> txnDate = col.column( msg("general.label.Date"), "date", type.dateType()).setFixedWidth(cm(3))
                 .setPattern(msg("general.format.Date")).setHorizontalTextAlignment(HorizontalTextAlignment.LEFT);
         TextColumnBuilder<BigDecimal> amount = col.column( msg("general.label.Amount"), "amount", type.bigDecimalType()).setFixedWidth(cm(4))
@@ -79,7 +83,8 @@ public class FinanceAccountTxnReport extends DynamicReportBase<FinanceAccountTxn
                 .setValueFormatter(new AbstractValueFormatter<String, Boolean>() {
                     @Override
                     public String format(Boolean value, ReportParameters reportParameters) {
-                        return value ? "D" : "C"; //i18n olacak.
+                        return value ? msg("finance.label.DebitInitial") :
+                                msg("finance.label.CreditInitial");
                     }
                 });
         //BooleanColumnBuilder debit = col.booleanColumn(msg("general.label.DebitCredit"), "debit").setComponentType(BooleanComponentType.IMAGE_CHECKBOX_1);
@@ -99,7 +104,7 @@ public class FinanceAccountTxnReport extends DynamicReportBase<FinanceAccountTxn
                 getFilter().getStartDate().getCalculatedValue());
 
         HorizontalListBuilder devir = cmp.horizontalList()
-                .add(cmp.text(msg("general.label.TakeOver")))
+                .add(cmp.text(msg("finance.label.TakeOver")))
                 .add(cmp.text(type.bigDecimalType().valueToString(balance, locale)).setHorizontalTextAlignment(HorizontalTextAlignment.RIGHT));
 
         report
@@ -108,7 +113,8 @@ public class FinanceAccountTxnReport extends DynamicReportBase<FinanceAccountTxn
                         DynamicReports.field("currency", Currency.class),
                         DynamicReports.field("feature", FeaturePointer.class)
                 )
-                .columns(txnDate, status, feature, referenceNo, info, debit, amount,  localAmount )
+                .columns(txnDate, status, feature, referenceNo, contactName, debit,
+                        amount,  localAmount )
                 .columnHeader(cmp.verticalGap(4), devir)
                 //.setColumnHeaderStyle(stl.templateStyle("Bold"))
                 .detailFooter(sub)
@@ -140,7 +146,7 @@ public class FinanceAccountTxnReport extends DynamicReportBase<FinanceAccountTxn
 
     @Override
     protected JRDataSource getReportDataSource() {
-        List<FinanceAccountTxnStatementModel> rows = repository.findAccountStatus
+        List<FinanceAccountTxnStatementModel> rows = repository.findAccountTransactions
                 (getFilter());
         return new JRBeanCollectionDataSource(rows);
     }
