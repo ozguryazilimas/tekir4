@@ -72,8 +72,8 @@
 					</ui:include>
 
 					<ui:include src="/voucher/voucherReleatedWidget.xhtml">
-						<ui:param name="featurePointer"
-							value="#{leadHome.featurePointer}" />
+						<ui:param name="matchable"
+								  value="#{voucherMatcherService.findMatchableByFeature(leadHome.featurePointer)}"/>
 						<ui:param name="groupNo"
 							value="#{leadHome.entity.group.groupNo}" />
 					</ui:include>

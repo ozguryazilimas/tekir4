@@ -63,7 +63,8 @@
 
                     <ui:include src="/voucher/voucherReleatedWidget.xhtml">
                         <ui:param name="columnClass" value="col-lg-12 col-md-6" />
-                        <ui:param name="featurePointer" value="#{salesOrderHome.featurePointer}" />
+                        <ui:param name="matchable"
+                                  value="#{voucherMatcherService.findMatchableByFeature(salesOrderHome.featurePointer)}"/>
                         <ui:param name="processNo" value="#{salesOrderHome.entity.process.processNo}" />
                         <ui:param name="groupNo" value="#{salesOrderHome.entity.group.groupNo}" />
                     </ui:include>
