@@ -84,10 +84,9 @@ public abstract class AccountVirementRepository extends VoucherRepositoryBase<Ac
                 from.get(AccountVirement_.toAccount),
                 from.get(AccountVirement_.currency),
                 from.get(AccountVirement_.amount),
-                /*FIXME:from.get(VoucherBase_.code),*/
+                from.get("tags"),
                 from.get(VoucherBase_.voucherNo),
-                from.get(VoucherBase_.info),
-                from.get(VoucherBase_.referenceNo),
+                from.get(VoucherBase_.info),                from.get(VoucherBase_.referenceNo),
                 from.get(VoucherBase_.date),
                 from.get(VoucherBase_.owner),
                 from.get(VoucherBase_.state),

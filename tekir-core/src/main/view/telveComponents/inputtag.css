@@ -4,5 +4,5 @@
 }
 
 .ui-autocomplete-multiple-container{
-    height: auto;
+    height: auto !important;
 }

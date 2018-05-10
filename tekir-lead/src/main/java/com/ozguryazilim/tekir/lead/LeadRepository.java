@@ -73,29 +73,29 @@ public abstract class LeadRepository extends VoucherRepositoryBase<Lead, LeadVie
 
 		criteriaQuery.multiselect(
 				from.get(Lead_.id),
-				//FIXME: from.get(VoucherBase_.code),
+				from.get("tags"),
 				from.get(VoucherBase_.voucherNo),
-				from.get(VoucherBase_.info), 
-				from.get(VoucherBase_.referenceNo), 
+				from.get(VoucherBase_.info),
+				from.get(VoucherBase_.referenceNo),
 				from.get(VoucherBase_.date),
-				from.get(VoucherBase_.owner), 
-				from.get(VoucherBase_.state), 
+				from.get(VoucherBase_.owner),
+				from.get(VoucherBase_.state),
 				from.get(VoucherBase_.stateReason),
-				from.get(VoucherBase_.stateInfo), 
+				from.get(VoucherBase_.stateInfo),
 				from.get(VoucherBase_.group).get(VoucherGroup_.id),
-				from.get(VoucherBase_.group).get(VoucherGroup_.groupNo), 
+				from.get(VoucherBase_.group).get(VoucherGroup_.groupNo),
 				from.get(VoucherBase_.topic),
-				from.get(Lead_.relatedPersonName), 
+				from.get(Lead_.relatedPersonName),
 				from.get(Lead_.relatedPersonSurname),
-				from.get(Lead_.relatedCompanyName), 
-				from.get(Lead_.relatedPhone), 
+				from.get(Lead_.relatedCompanyName),
+				from.get(Lead_.relatedPhone),
 				from.get(Lead_.relatedAddress),
-				from.get(Lead_.relatedEmail), 
+				from.get(Lead_.relatedEmail),
 				from.get(Lead_.leadSource).get(LeadSource_.id),
 				from.get(Lead_.leadSource).get(TreeNodeEntityBase_.name),
 				from.get(Lead_.leadCategory).get(LeadCategory_.id),
 				from.get(Lead_.leadCategory).get(TreeNodeEntityBase_.name)
-				);
+		);
 	}
 
 	private void buildSearchTextControl(String searchText, CriteriaBuilder criteriaBuilder, List<Predicate> predicates,

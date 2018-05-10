@@ -80,7 +80,7 @@ public abstract class AccountCreditNoteRepository extends VoucherRepositoryBase<
     private void buildVieModelSelect(CriteriaQuery<AccountCreditNoteViewModel> criteriaQuery, Root<? extends AccountCreditNote> from) {
         criteriaQuery.multiselect(
                 from.get(AccountCreditNote_.id),
-                /*FIXME:from.get(VoucherBase_.code),*/
+                from.get("tags"),
                 from.get(VoucherBase_.voucherNo),
                 from.get(VoucherBase_.info),
                 from.get(VoucherBase_.referenceNo),
