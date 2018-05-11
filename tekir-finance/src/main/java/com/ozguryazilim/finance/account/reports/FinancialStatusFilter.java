@@ -7,16 +7,24 @@ import java.io.Serializable;
 
 public class FinancialStatusFilter implements Serializable {
 
-    private AccountType accountType;
     private FinanceAccount financeAccount;
-    private String IBAN;
+    private String code;
+    private ReportDate date;
 
-    public AccountType getAccountType() {
-        return accountType;
+    public String getCode() {
+        return code;
     }
 
-    public void setAccountType(AccountType accountType) {
-        this.accountType = accountType;
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public ReportDate getDate() {
+        return date;
+    }
+
+    public void setDate(ReportDate date) {
+        this.date = date;
     }
 
     public FinanceAccount getFinanceAccount() {
@@ -25,14 +33,6 @@ public class FinancialStatusFilter implements Serializable {
 
     public void setFinanceAccount(FinanceAccount financeAccount) {
         this.financeAccount = financeAccount;
-    }
-
-    public String getIBAN() {
-        return IBAN;
-    }
-
-    public void setIBAN(String IBAN) {
-        this.IBAN = IBAN;
     }
 
 }

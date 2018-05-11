@@ -16,12 +16,8 @@
 								 lookupProfile="R:PAYMENT;O:MULTI_CURRENCY"
 								 lookupListener="financialStatusReport.filter.financeAccount"
 								 placeholder="#{messages['general.info.FinanceAccount']}" columnClass="col-xs-6"/>
-			<t:inputCombobox label="general.label.AccountType" value="#{bean.filter.accountType}" >
-				<f:selectItem itemLabel="#{messages['general.value.NotSelected']}" itemValue="" />
-				<f:selectItems value="#{bean.getAccountTypes()}" var="ct" itemLabel="#{messages[ 'accountType.'.concat(ct) ]}" itemValue="#{ct}" />
-			</t:inputCombobox>
-
-			<t:inputText value="#{bean.filter.IBAN}" label="general.label.IBAN" columnClass="col-xs-6" />
+			<t:inputText value="#{financialStatusReport.filter.code}" label="general.label.Code" columnClass="col-xs-6" />
+			<t:inputReportDate value="#{financialStatusReport.filter.date}" label="general.label.Date" columnClass="col-xs-6" />
 
 		</div>
 	</ui:define>
