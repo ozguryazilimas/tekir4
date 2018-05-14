@@ -32,12 +32,14 @@ public class VoucherGroupFeeder extends AbstractFeeder<VoucherGroup> {
 
         mentions.add(FeatureUtils.getFeaturePointer(entity));
 
-        sendFeed(entity.getStatus().toString(),
+        sendFeed(
+            entity.getStatus().toString(),
             getClass().getSimpleName(),
             identity.getLoginName(),
-            entity.getGroupNo(),
+            entity.getTopic(),
             getMessage(event),
-            mentions);
+            mentions
+        );
     }
 
     protected String getMessage(EntityChangeEvent event) {

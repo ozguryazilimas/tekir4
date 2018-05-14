@@ -68,7 +68,7 @@ public class ActivityFeeder extends AbstractFeeder<Activity> {
         sendFeed(entity.getDirection().name(), 
                 getClass().getSimpleName() + "." + entity.getClass().getSimpleName(), 
                 identity.getLoginName(),
-                entity.getActivityNo(),
+                entity.getSubject(),
                 getMessage(event),
                 mentions);
 

@@ -41,12 +41,14 @@ public class ContactFeeder extends AbstractFeeder<Contact> {
                 mentions.add(FeatureUtils.getFeaturePointer(corp));
             }
 
-            sendFeed(entity.getClass().getSimpleName(),
+            sendFeed(
+                entity.getClass().getSimpleName(),
                 getClass().getSimpleName(),
                 identity.getLoginName(),
-                entity.getCode(),
+                entity.getName(),
                 getMessage(event),
-                mentions);
+                mentions
+            );
         }
 
         if (event.getEntity() instanceof Corporation) {
@@ -67,12 +69,14 @@ public class ContactFeeder extends AbstractFeeder<Contact> {
                 mentions.add(FeatureUtils.getFeaturePointer(parentCorp));
             }
 
-            sendFeed(entity.getClass().getSimpleName(),
+            sendFeed(
+                entity.getClass().getSimpleName(),
                 getClass().getSimpleName(),
                 identity.getLoginName(),
-                entity.getCode(),
+                entity.getName(),
                 getMessage(event),
-                mentions);
+                mentions
+            );
         }
 
     }

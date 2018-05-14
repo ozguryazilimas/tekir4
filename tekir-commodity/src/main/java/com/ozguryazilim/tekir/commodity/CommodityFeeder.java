@@ -32,12 +32,14 @@ public class CommodityFeeder extends AbstractFeeder<Commodity> {
 
         mentions.add(FeatureUtils.getFeaturePointer(entity));
 
-        sendFeed(entity.getClass().getSimpleName(),
+        sendFeed(
+            entity.getClass().getSimpleName(),
             getClass().getSimpleName(),
             identity.getLoginName(),
-            entity.getCode(),
+            entity.getName(),
             getMessage(event),
-            mentions);
+            mentions
+        );
     }
 
     protected String getMessage(EntityChangeEvent event) {
