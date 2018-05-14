@@ -11,6 +11,7 @@ import com.ozguryazilim.tekir.core.reports.TekirDynamicReportUtils;
 import com.ozguryazilim.tekir.entities.AccountTxnState;
 import com.ozguryazilim.telve.config.LocaleSelector;
 import com.ozguryazilim.telve.entities.FeaturePointer;
+import com.ozguryazilim.telve.feature.FeatureCategory;
 import com.ozguryazilim.telve.feature.search.FeatureCategoryLookup;
 import com.ozguryazilim.telve.query.filters.DateValueType;
 import com.ozguryazilim.telve.reports.DynamicReportBase;
@@ -154,7 +155,7 @@ public class AccountStatementReport extends DynamicReportBase<AccountStatementFi
 
     public List<String> getCategories() {
         return new FeatureCategoryLookup().getSearchableFeaturesByCategory
-                ("ACCOUNTABLE");
+                (FeatureCategory.ACCOUNTABLE);
 
     }
 

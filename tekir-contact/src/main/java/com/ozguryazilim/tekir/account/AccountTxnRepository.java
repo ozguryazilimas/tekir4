@@ -347,7 +347,8 @@ public abstract class AccountTxnRepository extends
 
         if (!filter.getShowCurrency()) {
             predicates.add(criteriaBuilder.equal(from.get(AccountTxn_
-                    .currency), Currency.getInstance(Messages.message("tekir.currency.default"))));
+                    .currency), Currency.getInstance(ConfigResolver
+                    .getPropertyValue("tekir.currency.default"))));
         }
 
         if (filter.getStatus() != null) {
