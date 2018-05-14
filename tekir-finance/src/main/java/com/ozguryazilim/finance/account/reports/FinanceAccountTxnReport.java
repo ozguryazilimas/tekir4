@@ -1,6 +1,6 @@
 package com.ozguryazilim.finance.account.reports;
 
-import com.ozguryazilim.finance.account.FinanceAccountTxnStatementModel;
+import com.ozguryazilim.finance.account.FinanceAccountTxnSumModel;
 import com.ozguryazilim.finance.account.txn.FinanceAccountTxnRepository;
 import com.ozguryazilim.finance.config.FinancePages;
 import java.math.BigDecimal;
@@ -141,7 +141,6 @@ public class FinanceAccountTxnReport extends DynamicReportBase<FinanceAccountTxn
                                 }
                             }));
 
-            );
         }
     }
 
@@ -162,7 +161,7 @@ public class FinanceAccountTxnReport extends DynamicReportBase<FinanceAccountTxn
 
     @Override
     protected JRDataSource getReportDataSource() {
-        List<FinanceAccountTxnStatementModel> rows = repository.findAccountTransactions
+        List<FinanceAccountTxnSumModel> rows = repository.findAccountTransactions
                 (getFilter());
         return new JRBeanCollectionDataSource(rows);
     }

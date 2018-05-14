@@ -6,7 +6,7 @@
 package com.ozguryazilim.finance.account.txn;
 
 import com.google.common.base.Strings;
-import com.ozguryazilim.finance.account.FinanceAccountTxnStatementModel;
+import com.ozguryazilim.finance.account.FinanceAccountTxnSumModel;
 import com.ozguryazilim.finance.account.FinanceAccountTxnSumModel;
 import com.ozguryazilim.finance.account.reports.FinanceAccountTxnFilter;
 import com.ozguryazilim.tekir.entities.AccountType;
@@ -162,12 +162,12 @@ public abstract class FinanceAccountTxnRepository extends RepositoryBase<Finance
         return resultList;
     }
 
-    public List<FinanceAccountTxnStatementModel> findAccountTransactions(
+    public List<FinanceAccountTxnSumModel> findAccountTransactions(
             FinanceAccountTxnFilter filter) {
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
         //Geriye AccidentAnalysisViewModel dönecek cq'yu ona göre oluşturuyoruz.
-        CriteriaQuery<FinanceAccountTxnStatementModel> criteriaQuery =
-                criteriaBuilder.createQuery(FinanceAccountTxnStatementModel.class);
+        CriteriaQuery<FinanceAccountTxnSumModel> criteriaQuery =
+                criteriaBuilder.createQuery(FinanceAccountTxnSumModel.class);
 
         //From Tabii ki PersonWorkHistory
         Root<FinanceAccountTxn> from = criteriaQuery.from(FinanceAccountTxn
@@ -225,10 +225,10 @@ public abstract class FinanceAccountTxnRepository extends RepositoryBase<Finance
         criteriaQuery.orderBy(criteriaBuilder.asc(from.get(FinanceAccountTxn_
                 .account).get(FinanceAccount_.name)));
 
-        TypedQuery<FinanceAccountTxnStatementModel> typedQuery = entityManager()
+        TypedQuery<FinanceAccountTxnSumModel> typedQuery = entityManager()
                 .createQuery(criteriaQuery);
         //typedQuery.setMaxResults(limit);
-        List<FinanceAccountTxnStatementModel> resultList = typedQuery
+        List<FinanceAccountTxnSumModel> resultList = typedQuery
                 .getResultList();
 
         return resultList;
