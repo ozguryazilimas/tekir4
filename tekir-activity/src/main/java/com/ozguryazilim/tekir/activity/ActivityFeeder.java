@@ -67,10 +67,28 @@ public class ActivityFeeder extends AbstractFeeder<Activity> {
         //FIXME: Burada activity body'si yerine aslında daha doğru bir metin feed etmek lazım. Ne oldu? Ne yapıyoruz gibi.
         sendFeed(entity.getDirection().name(), 
                 getClass().getSimpleName() + "." + entity.getClass().getSimpleName(), 
-                identity.getLoginName(), 
-                "[" + event.getAction() + "] " + entity.getSubject(),  //FIXME: i18n
-                entity.getBody(), 
+                identity.getLoginName(),
+                entity.getActivityNo(),
+                getMessage(event),
                 mentions);
 
+    }
+
+    protected String getMessage(EntityChangeEvent event) {
+        Activity entity = (Activity) event.getEntity();
+        switch (event.getAction()) {
+            case INSERT:
+                return "feeder.messages.ActivityFeeder.INSERT$%&" + identity.getUserName() + "$%&"
+                    + entity.getActivityNo();
+            case UPDATE:
+                return "feeder.messages.ActivityFeeder.UPDATE$%&" + identity.getUserName() + "$%&"
+                    + entity.getActivityNo();
+            case DELETE:
+                return "feeder.messages.ActivityFeeder.DELETE$%&" + identity.getUserName() + "$%&"
+                    + entity.getActivityNo();
+            default:
+                return "feeder.messages.ActivityFeeder.DEFAULT$%&" + identity.getUserName() + "$%&"
+                    + entity.getActivityNo();
+        }
     }
 }
