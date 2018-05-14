@@ -188,21 +188,6 @@ public abstract class FinanceAccountTxnRepository extends RepositoryBase<Finance
                 from.get(FinanceAccountTxn_.amount)
         );
 
-        criteriaQuery.groupBy(
-                from.get(FinanceAccountTxn_.account).get(FinanceAccount_.id),
-                from.get(FinanceAccountTxn_.account).get(FinanceAccount_.name),
-                from.get(FinanceAccountTxn_.date),
-                from.get(FinanceAccountTxn_.debit),
-                from.get(FinanceAccountTxn_.currency),
-                from.get(FinanceAccountTxn_.localAmount),
-                from.get(FinanceAccountTxn_.feature),
-                from.get(FinanceAccountTxn_.contact).get(Contact_.name),
-                from.get(FinanceAccountTxn_.referenceNo),
-                from.get(FinanceAccountTxn_.status),
-                from.get(FinanceAccountTxn_.amount)
-                //from.get(AccountTxn_.account).type()
-        );
-
         //Filtreleri ekleyelim.
         List<Predicate> predicates = new ArrayList<>();
 

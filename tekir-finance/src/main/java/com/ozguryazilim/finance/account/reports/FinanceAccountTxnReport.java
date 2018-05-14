@@ -55,6 +55,8 @@ public class FinanceAccountTxnReport extends DynamicReportBase<FinanceAccountTxn
         return Boolean.FALSE;
     }
 
+    private BigDecimal balance = new BigDecimal(0);
+
     @Override
     protected void buildReport(JasperReportBuilder report, Boolean forExport) {
         TextColumnBuilder<String> contactName = col.column( msg("finance" +
@@ -100,8 +102,13 @@ public class FinanceAccountTxnReport extends DynamicReportBase<FinanceAccountTxn
 
 
         Locale locale = LocaleSelector.instance().getLocale();
-        BigDecimal balance = repository.findByAccountBalance(getFilter().getFinanceAccount(),
+        BigDecimal takeOver = repository.findByAccountBalance(getFilter()
+                        .getFinanceAccount(),
                 getFilter().getStartDate().getCalculatedValue());
+
+        if (takeOver != null) {
+            balance = takeOver;
+        }
 
         HorizontalListBuilder devir = cmp.horizontalList()
                 .add(cmp.text(msg("finance.label.TakeOver")))
@@ -124,7 +131,16 @@ public class FinanceAccountTxnReport extends DynamicReportBase<FinanceAccountTxn
         if( !forExport ){
             report.subtotalsAtSummary(
                     sbt.text(msg("general.label.Total"), amount),
-                    sbt.sum(localAmount)
+                    sbt.sum(localAmount).setValueFormatter(
+                            new AbstractValueFormatter<BigDecimal, BigDecimal>()
+                            {
+                                @Override public BigDecimal format
+                                        (BigDecimal value,
+                                         ReportParameters reportParameters) {
+                                    return value.add(balance);
+                                }
+                            }));
+
             );
         }
     }
