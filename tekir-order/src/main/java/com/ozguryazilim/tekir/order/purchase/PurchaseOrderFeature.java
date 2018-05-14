@@ -10,6 +10,7 @@ import com.ozguryazilim.tekir.order.config.OrderPages;
 import com.ozguryazilim.tekir.voucher.Voucher;
 import com.ozguryazilim.telve.feature.AbstractFeatureHandler;
 import com.ozguryazilim.telve.feature.Feature;
+import com.ozguryazilim.telve.feature.FeatureCategory;
 import com.ozguryazilim.telve.feature.Page;
 import com.ozguryazilim.telve.feature.PageType;
 import com.ozguryazilim.telve.feature.search.Search;
@@ -20,7 +21,7 @@ import javax.enterprise.inject.Default;
  *
  * @author oyas
  */
-@Feature(permission = "purchaseOrder", forEntity = PurchaseOrder.class )
+@Feature(permission = "purchaseOrder", forEntity = PurchaseOrder.class, category = {FeatureCategory.ACCOUNTABLE} )
 @Page( type = PageType.BROWSE, page = OrderPages.Purchase.PurchaseOrderBrowse.class )
 @Page( type = PageType.VIEW, page = OrderPages.Purchase.PurchaseOrderView.class )
 @Page( type = PageType.MASTER_VIEW, page = OrderPages.Purchase.PurchaseOrderMasterView.class )

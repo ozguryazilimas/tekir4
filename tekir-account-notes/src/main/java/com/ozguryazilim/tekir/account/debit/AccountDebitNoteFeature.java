@@ -6,10 +6,11 @@
 package com.ozguryazilim.tekir.account.debit;
 
 import com.ozguryazilim.tekir.account.config.AccountNotePages;
-import com.ozguryazilim.telve.feature.AbstractFeatureHandler;
-import com.ozguryazilim.telve.feature.Feature;
 import com.ozguryazilim.tekir.entities.AccountDebitNote;
 import com.ozguryazilim.tekir.voucher.Voucher;
+import com.ozguryazilim.telve.feature.AbstractFeatureHandler;
+import com.ozguryazilim.telve.feature.Feature;
+import com.ozguryazilim.telve.feature.FeatureCategory;
 import com.ozguryazilim.telve.feature.Page;
 import com.ozguryazilim.telve.feature.PageType;
 import com.ozguryazilim.telve.feature.search.Search;
@@ -20,7 +21,7 @@ import javax.enterprise.inject.Default;
  *
  * @author oyas
  */
-@Feature(permission = "accountCreditNote", forEntity = AccountDebitNote.class )
+@Feature(permission = "accountCreditNote", forEntity = AccountDebitNote.class, category = {FeatureCategory.ACCOUNTABLE} )
 @Page( type = PageType.BROWSE, page = AccountNotePages.AccountDebitNoteBrowse.class )
 @Page( type = PageType.VIEW, page = AccountNotePages.AccountDebitNoteView.class )
 @Page( type = PageType.MASTER_VIEW, page = AccountNotePages.AccountDebitNoteMasterView.class )

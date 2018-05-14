@@ -12,6 +12,7 @@ import com.ozguryazilim.tekir.invoice.config.InvoicePages;
 import com.ozguryazilim.tekir.voucher.Voucher;
 import com.ozguryazilim.telve.feature.AbstractFeatureHandler;
 import com.ozguryazilim.telve.feature.Feature;
+import com.ozguryazilim.telve.feature.FeatureCategory;
 import com.ozguryazilim.telve.feature.Page;
 import com.ozguryazilim.telve.feature.PageType;
 import com.ozguryazilim.telve.feature.search.Search;
@@ -20,7 +21,7 @@ import com.ozguryazilim.telve.feature.search.Search;
  *
  * @author oyas
  */
-@Feature(permission = "purchaseInvoice", forEntity = PurchaseInvoice.class )
+@Feature(permission = "purchaseInvoice", forEntity = PurchaseInvoice.class, category = {FeatureCategory.ACCOUNTABLE} )
 @Page( type = PageType.BROWSE, page = InvoicePages.Purchase.PurchaseInvoiceBrowse.class )
 @Page( type = PageType.VIEW, page = InvoicePages.Purchase.PurchaseInvoiceView.class )
 @Page( type = PageType.MASTER_VIEW, page = InvoicePages.Purchase.PurchaseInvoiceMasterView.class )

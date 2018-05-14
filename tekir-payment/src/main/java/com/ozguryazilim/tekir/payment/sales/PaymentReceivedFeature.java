@@ -7,10 +7,10 @@ package com.ozguryazilim.tekir.payment.sales;
 
 import com.ozguryazilim.tekir.entities.PaymentReceived;
 import com.ozguryazilim.tekir.payment.config.PaymentPages;
-import com.ozguryazilim.tekir.payment.purchase.PaymentSearchHandler;
 import com.ozguryazilim.tekir.voucher.Voucher;
 import com.ozguryazilim.telve.feature.AbstractFeatureHandler;
 import com.ozguryazilim.telve.feature.Feature;
+import com.ozguryazilim.telve.feature.FeatureCategory;
 import com.ozguryazilim.telve.feature.Page;
 import com.ozguryazilim.telve.feature.PageType;
 import com.ozguryazilim.telve.feature.search.Search;
@@ -21,7 +21,7 @@ import javax.enterprise.inject.Default;
  *
  * @author oyas
  */
-@Feature(permission = "paymentReceived", forEntity = PaymentReceived.class )
+@Feature(permission = "paymentReceived", forEntity = PaymentReceived.class, category = {FeatureCategory.ACCOUNTABLE} )
 @Page( type = PageType.BROWSE, page = PaymentPages.Sales.PaymentReceivedBrowse.class )
 @Page( type = PageType.VIEW, page = PaymentPages.Sales.PaymentReceivedView.class )
 @Page( type = PageType.MASTER_VIEW, page = PaymentPages.Sales.PaymentReceivedMasterView.class )

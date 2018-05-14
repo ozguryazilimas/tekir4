@@ -13,15 +13,27 @@
 
     <ui:define name="filter">
         <div class="row" >
-            <t:inputLookupDialog label="contact.label.Account" 
-                                 value="#{accountStatementReport.filter.contact}" 
-                                 lookupBean="#{contactLookup}" 
-                                 lookupListener="accountStatementReport.filter.contact" 
+            <t:inputLookupDialog label="contact.label.Account"
+                                 value="#{accountStatementReport.filter.contact}"
+                                 lookupBean="#{contactLookup}"
+                                 lookupListener="accountStatementReport.filter.contact"
                                  lookupProfile="S:ACCOUNT;O:VENDOR,CUSTOMER,PERSON,CORPORATION"
                                  placeholder="#{messages['contact.label.Account']}"
                                  columnClass="col-xs-12" required="true"/>
-            <t:inputReportDate value="#{accountStatementReport.filter.beginDate}" label="general.label.BeginDate" columnClass="col-xs-6" />
-            <t:inputReportDate value="#{accountStatementReport.filter.endDate}" label="general.label.EndDate" columnClass="col-xs-6" />
+            <t:inputCombobox label="general.label.Category" value="#{bean.filter.status}" >
+                <f:selectItem itemLabel="#{messages['general.value.NotSelected']}" itemValue="" />
+                <f:selectItems value="#{bean.txnStates}" var="ct" itemValue="#{ct}" itemLabel="#{messages['accountState.caption.'.concat(ct)]}" />
+            </t:inputCombobox>
+            <t:inputCombobox label="general.label.Feature" value="#{bean.filter.featureName}" columnClass="col-md-6 col-xs-6">
+                <f:selectItem itemLabel="#{messages['general.value.NotSelected']}" itemValue="" />
+                <f:selectItems value="#{bean.categories}" var="feature" itemValue="#{feature}" itemLabel="#{messages['feature.caption.'.concat(feature)]}"/>
+            </t:inputCombobox>
+            <t:inputText value="#{bean.filter.code}" label="general.label.Code" columnClass="col-xs-6" />
+            <t:inputReportDate value="#{bean.filter.beginDate}" label="general.label.BeginDate" columnClass="col-xs-6" />
+            <t:inputReportDate value="#{bean.filter.endDate}" label="general.label.EndDate" columnClass="col-xs-6" />
+            <p:selectBooleanCheckbox value="#{bean.filter.showCurrency}" itemLabel="#{messages['report.label.ShowCurrency']}" />
+            <p:selectBooleanCheckbox itemLabel="#{messages['report.label.WithDetail']}" label="report.label.WithDetail"
+                                     value="#{bean.filter.withDetail}"/>
         </div>
     </ui:define>
 </ui:composition>

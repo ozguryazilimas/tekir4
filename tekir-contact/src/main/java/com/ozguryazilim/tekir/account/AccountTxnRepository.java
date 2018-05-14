@@ -6,6 +6,7 @@
 package com.ozguryazilim.tekir.account;
 
 import com.google.common.base.Strings;
+import com.ozguryazilim.tekir.account.reports.AccountStatementFilter;
 import com.ozguryazilim.tekir.account.reports.AccountStatusFilter;
 import com.ozguryazilim.tekir.entities.AccountTxn;
 import com.ozguryazilim.tekir.entities.AccountTxn_;
@@ -22,6 +23,7 @@ import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.filters.Filter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.Dependent;
@@ -31,10 +33,13 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
+import org.apache.deltaspike.core.api.config.ConfigResolver;
 import org.apache.deltaspike.data.api.Query;
 import org.apache.deltaspike.data.api.Repository;
 import org.apache.deltaspike.data.api.criteria.Criteria;
 import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
+import org.castor.core.util.Messages;
 
 /**
  * AccountTxn için repository sınıfı.
@@ -120,10 +125,10 @@ public abstract class AccountTxnRepository extends
     public abstract List<AccountTxn> findByProcessId(String processId);
 
     public abstract List<AccountTxn> findByAccountAndDateBetweenOrderByDate(Contact account, Date beginDate, Date endDate );
-    
+
     @Query( "select sum( t.localAmount * ( case when t.debit = true then -1 else 1 end )) from AccountTxn t where t.account = ?1 and t.date < ?2" )
     public abstract BigDecimal findByAccountBalance( Contact account, Date beginDate );
-    
+
     public List<AccountTxn> findOpenTxnsByAccount(Contact account) {
         Criteria<AccountTxn, AccountTxn> crit = criteria()
                 .eq(AccountTxn_.account, account)
@@ -208,7 +213,7 @@ public abstract class AccountTxnRepository extends
 
         return resultList;
     }
-    
+
     public List<AccountTxnStatusModel> findAccountStatus( AccountStatusFilter filter) {
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
         //Geriye AccidentAnalysisViewModel dönecek cq'yu ona göre oluşturuyoruz.
@@ -223,9 +228,11 @@ public abstract class AccountTxnRepository extends
                 //from.get(AccountTxn_.account).type(),
                 criteriaBuilder.sum(
                         criteriaBuilder.<Number>selectCase()
-                            .when(criteriaBuilder.equal(from.get(AccountTxn_.debit), Boolean.TRUE), from.get(AccountTxn_.localAmount))
-                            .otherwise(0)
-                ),
+                            .when(criteriaBuilder.equal(from.get(AccountTxn_
+                                    .debit), Boolean.TRUE),
+                                    from.get
+                                    (AccountTxn_.localAmount))
+                            .otherwise(0)),
                 criteriaBuilder.sum(
                         criteriaBuilder.<Number>selectCase()
                             .when(criteriaBuilder.equal(from.get(AccountTxn_.debit), Boolean.FALSE), from.get(AccountTxn_.localAmount))
@@ -245,27 +252,27 @@ public abstract class AccountTxnRepository extends
         if (!Strings.isNullOrEmpty(filter.getCode())) {
             predicates.add(criteriaBuilder.like(from.get(AccountTxn_.account).get(Contact_.code), "%" + filter.getCode() + "%"));
         }
-        
+
         if (!Strings.isNullOrEmpty(filter.getName())) {
             predicates.add(criteriaBuilder.like(from.get(AccountTxn_.account).get(Contact_.name), "%" + filter.getName()+ "%"));
         }
-        
+
         if (filter.getContactCategory() != null) {
             predicates.add(criteriaBuilder.like(from.get(AccountTxn_.account).get(Contact_.category).get(ContactCategory_.path), filter.getContactCategory().getPath() + "%"));
         }
-        
+
         if (filter.getIndustry() != null) {
             predicates.add(criteriaBuilder.like(from.get(AccountTxn_.account).get(Contact_.industry).get(Industry_.path), filter.getIndustry().getPath() + "%"));
         }
-        
+
         if (filter.getTerritory() != null) {
             predicates.add(criteriaBuilder.equal(from.get(AccountTxn_.account).get(Contact_.territory), filter.getTerritory()));
         }
-        
+
         if (filter.getCorporationType() != null) {
             //CorporationType sadece Contact mirascısı Corporation'da dolayısı ile cast ediyoruz.
             Path<Corporation> corpPath = criteriaBuilder.treat(from.get(AccountTxn_.account), Corporation.class);
-            predicates.add(criteriaBuilder.equal(corpPath.get(Corporation_.corporationType), filter.getCorporationType())); 
+            predicates.add(criteriaBuilder.equal(corpPath.get(Corporation_.corporationType), filter.getCorporationType()));
         }
 
         predicates.add(criteriaBuilder.lessThanOrEqualTo(from.get(AccountTxn_.date), filter.getDate().getCalculatedValue()));
@@ -273,12 +280,90 @@ public abstract class AccountTxnRepository extends
         criteriaQuery.where(predicates.toArray(new Predicate[]{}));
 
         criteriaQuery.orderBy(criteriaBuilder.asc(from.get(AccountTxn_.account).get(Contact_.name)));
-        
+
         TypedQuery<AccountTxnStatusModel> typedQuery = entityManager().createQuery(criteriaQuery);
         //typedQuery.setMaxResults(limit);
         List<AccountTxnStatusModel> resultList = typedQuery.getResultList();
 
         return resultList;
-        
+
+    }
+
+    public List<AccountTxnSumModel> findAccountByStatusAndFeature(AccountStatementFilter filter) {
+
+        CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
+        //Geriye AccidentAnalysisViewModel dönecek cq'yu ona göre oluşturuyoruz.
+        CriteriaQuery<AccountTxnSumModel> criteriaQuery = criteriaBuilder
+                .createQuery(AccountTxnSumModel.class);
+
+        Root<AccountTxn> from = criteriaQuery.from(AccountTxn.class);
+
+        List<Predicate> predicates = new ArrayList<>();
+        criteriaQuery.multiselect(
+                from.get(AccountTxn_.account).get(Contact_.id),
+                from.get(AccountTxn_.account).get(Contact_.name),
+                from.get(AccountTxn_.amount),
+                //from.get(AccountTxn_.account).type(),
+                /*
+                criteriaBuilder.sum(
+                        criteriaBuilder.<Number>selectCase()
+                                .when(criteriaBuilder.equal(from.get(AccountTxn_
+                                                .debit), Boolean.TRUE),
+                                        criteriaBuilder.prod(
+                                        from.get
+                                                (AccountTxn_.localAmount),
+                                                new BigDecimal(-1)))
+                                .otherwise(from.get(AccountTxn_.localAmount))),
+                */
+                from.get(AccountTxn_.localAmount),
+                from.get(AccountTxn_.currency),
+                from.get(AccountTxn_.feature),
+                from.get(AccountTxn_.date),
+                from.get(AccountTxn_.info),
+                from.get(AccountTxn_.status),
+                from.get(AccountTxn_.referenceNo),
+                from.get(AccountTxn_.debit)
+        );
+
+        if (account != null) {
+            predicates.add(criteriaBuilder.equal(from.get(AccountTxn_.account).get(Contact_.id), account.getId()));
+        }
+
+        if (!Strings.isNullOrEmpty(filter.getCode())) {
+            predicates.add(criteriaBuilder.like(from.get(AccountTxn_.account).get(Contact_.code), "%" + filter.getCode() + "%"));
+        }
+
+        if (filter.getContact() != null) {
+            predicates.add(criteriaBuilder.like(from.get(AccountTxn_.account)
+                    .get(Contact_.name), "%" + filter.getContact().getName()
+                    + "%"));
+        }
+
+        if (filter.getFeatureName() != null) {
+            predicates.add(criteriaBuilder.like(from.get(AccountTxn_.feature).get(FeaturePointer_.feature), filter
+                    .getFeatureName()
+                    + "%"));
+        }
+
+        if (!filter.getShowCurrency()) {
+            predicates.add(criteriaBuilder.equal(from.get(AccountTxn_
+                    .currency), Currency.getInstance(Messages.message("tekir.currency.default"))));
+        }
+
+        if (filter.getStatus() != null) {
+            predicates.add(criteriaBuilder.like(from.get(AccountTxn_.status),
+                    filter
+                    .getStatus()+"%"));
+        }
+
+
+
+        //filtremize ekledik.
+        criteriaQuery.where(predicates.toArray(new Predicate[]{}));
+
+        //Haydi bakalım sonuçları alalım
+        TypedQuery<AccountTxnSumModel> typedQuery = entityManager().createQuery(criteriaQuery);
+        List<AccountTxnSumModel> resultList = typedQuery.getResultList();
+        return resultList;
     }
 }

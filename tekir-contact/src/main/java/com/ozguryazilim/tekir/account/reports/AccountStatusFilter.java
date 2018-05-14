@@ -4,6 +4,7 @@ import com.ozguryazilim.tekir.entities.ContactCategory;
 import com.ozguryazilim.tekir.entities.CorporationType;
 import com.ozguryazilim.tekir.entities.Industry;
 import com.ozguryazilim.tekir.entities.Territory;
+import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.reports.ReportDate;
 import java.io.Serializable;
 
@@ -21,7 +22,8 @@ public class AccountStatusFilter implements Serializable {
 	private Industry industry;
 	private Territory territory;
     private ReportDate date;
-    
+    private FeaturePointer feature;
+
 	public String getCode() {
 		return code;
 	}
@@ -63,5 +65,14 @@ public class AccountStatusFilter implements Serializable {
 	}
 	public void setDate(ReportDate date) {
 		this.date = date;
-	}          
+	}
+
+	public FeaturePointer getFeature() {
+		return feature;
+	}
+
+	public void setFeature(FeaturePointer feature) {
+		this.feature = feature;
+	}
+
 }

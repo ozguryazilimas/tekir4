@@ -12,6 +12,7 @@ import com.ozguryazilim.tekir.entities.FinanceAccountVirement;
 import com.ozguryazilim.tekir.voucher.Voucher;
 import com.ozguryazilim.telve.feature.AbstractFeatureHandler;
 import com.ozguryazilim.telve.feature.Feature;
+import com.ozguryazilim.telve.feature.FeatureCategory;
 import com.ozguryazilim.telve.feature.Page;
 import com.ozguryazilim.telve.feature.PageType;
 import com.ozguryazilim.telve.feature.search.Search;
@@ -20,7 +21,7 @@ import com.ozguryazilim.telve.feature.search.Search;
  *
  * @author oyas
  */
-@Feature(permission = "financeAccountVirement", forEntity = FinanceAccountVirement.class )
+@Feature(permission = "financeAccountVirement", forEntity = FinanceAccountVirement.class, category = {FeatureCategory.ACCOUNTABLE} )
 @Page( type = PageType.BROWSE, page = FinancePages.FinanceAccountVirementBrowse.class )
 @Page( type = PageType.VIEW, page = FinancePages.FinanceAccountVirementView.class )
 @Page( type = PageType.MASTER_VIEW, page = FinancePages.FinanceAccountVirementMasterView.class )

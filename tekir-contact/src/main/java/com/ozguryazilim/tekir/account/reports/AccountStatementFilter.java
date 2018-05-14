@@ -5,7 +5,9 @@
  */
 package com.ozguryazilim.tekir.account.reports;
 
+import com.ozguryazilim.tekir.entities.AccountTxnState;
 import com.ozguryazilim.tekir.entities.Contact;
+import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.reports.ReportDate;
 import java.io.Serializable;
 
@@ -18,22 +20,18 @@ import java.io.Serializable;
  */
 public class AccountStatementFilter implements Serializable{
     
+    private AccountTxnState status;
+    private Boolean showCurrency = Boolean.TRUE;
+    private Boolean withDetail = Boolean.TRUE;
     private Contact contact;
+    private String featureName;
     private ReportDate beginDate;
     private ReportDate endDate;
-    private Boolean withDetail = Boolean.FALSE;
+    private String code;
 
     public AccountStatementFilter(ReportDate beginDate, ReportDate endDate) {
         this.beginDate = beginDate;
         this.endDate = endDate;
-    }
-
-    public Contact getContact() {
-        return contact;
-    }
-
-    public void setContact(Contact contact) {
-        this.contact = contact;
     }
 
     public ReportDate getBeginDate() {
@@ -44,12 +42,53 @@ public class AccountStatementFilter implements Serializable{
         this.beginDate = beginDate;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Contact getContact() {
+        return contact;
+    }
+
+    public void setContact(Contact contact) {
+        this.contact = contact;
+    }
+
+
     public ReportDate getEndDate() {
         return endDate;
     }
 
     public void setEndDate(ReportDate endDate) {
         this.endDate = endDate;
+    }
+
+    public String getFeatureName() {
+        return featureName;
+    }
+
+    public void setFeatureName(String featureName) {
+        this.featureName = featureName;
+    }
+
+    public Boolean getShowCurrency() {
+        return showCurrency;
+    }
+
+    public void setShowCurrency(Boolean showCurrency) {
+        this.showCurrency = showCurrency;
+    }
+
+    public AccountTxnState getStatus() {
+        return status;
+    }
+
+    public void setStatus(AccountTxnState status) {
+        this.status = status;
     }
 
     public Boolean getWithDetail() {
@@ -59,6 +98,6 @@ public class AccountStatementFilter implements Serializable{
     public void setWithDetail(Boolean withDetail) {
         this.withDetail = withDetail;
     }
-    
+
     
 }
