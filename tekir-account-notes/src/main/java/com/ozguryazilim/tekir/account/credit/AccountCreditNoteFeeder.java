@@ -52,8 +52,8 @@ public class AccountCreditNoteFeeder extends AbstractFeeder<AccountCreditNote> {
 
 			List<FeaturePointer> mentions = prepareMentionList(entity);
 
-			sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(), entity.getInfo(),
-					getMessage(event), mentions);
+			sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(),
+				entity.getVoucherNo(), getMessage(event), mentions);
 		}
 	}
 
@@ -66,8 +66,8 @@ public class AccountCreditNoteFeeder extends AbstractFeeder<AccountCreditNote> {
 
 			List<FeaturePointer> mentions = prepareMentionList(entity);
 
-			sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(), entity.getInfo(),
-					FeederUtils.getEventMessage(event), mentions);
+			sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(),
+				entity.getVoucherNo(), FeederUtils.getEventMessage(event), mentions);
 		}
 	}
 	
