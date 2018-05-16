@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.tekir.account.debit;
 
+import com.ozguryazilim.tekir.core.query.columns.TagColumn;
 import com.ozguryazilim.tekir.core.query.filter.TagFilter;
 import com.ozguryazilim.tekir.entities.AccountDebitNote;
 import com.ozguryazilim.tekir.entities.AccountDebitNote_;
@@ -54,7 +55,7 @@ public class AccountDebitNoteBrowse extends VoucherBrowseBase<AccountDebitNote, 
                 .addColumn(new TextColumn<>(VoucherBase_.topic, "voucher.label.Topic"), true)
                 .addColumn(new SubTextColumn<>(AccountDebitNote_.account, Contact_.name, "general.label.Account"), true)
                 .addColumn(new TextColumn<>(VoucherBase_.info, "general.label.Info"), true)
-                //FIXME: .addColumn(new TextColumn<>(VoucherBase_.code, "general.label.Code"), false)
+                .addColumn(new TagColumn<>("tags", "general.label.Tag"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.referenceNo, "voucher.label.ReferenceNo"), false)
                 .addColumn(new VoucherStateColumn<>(VoucherBase_.state, "general.label.State"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.stateReason, "voucher.label.StateReason"), false)
