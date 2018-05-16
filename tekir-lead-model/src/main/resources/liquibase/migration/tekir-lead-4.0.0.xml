@@ -95,4 +95,14 @@
     <changeSet author="muhammedf (generated)" id="1493825259447-11">
         <addForeignKeyConstraint baseColumnNames="PID" baseTableName="TLE_LEAD_SOURCE" constraintName="FK_rnmj1udkxb64cucjs9aknup6n" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TLE_LEAD_SOURCE"/>
     </changeSet>
+    <changeSet author="soner.cirit" id="1526381007356-1">
+        <addUniqueConstraint
+            tableName="TLE_LEAD_SOURCE"
+            columnNames="CODE"/>
+    </changeSet>
+    <changeSet author="soner.cirit" id="1526381007356-2">
+        <addUniqueConstraint
+            tableName="TLE_LEAD_CATEGORY"
+            columnNames="CODE"/>
+    </changeSet>
 </databaseChangeLog>

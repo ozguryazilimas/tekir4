@@ -325,4 +325,24 @@
             <column name="TOPIC" type="varchar(255)" />
         </addColumn>
     </changeSet>
+    <changeSet author="soner.cirit" id="1526381007356-1">
+        <addUniqueConstraint
+            tableName="TCC_CONTACT"
+            columnNames="CODE"/>
+    </changeSet>
+    <changeSet author="soner.cirit" id="1526381007356-2">
+        <addUniqueConstraint
+            tableName="TCC_CONTACT_REL_DEF"
+            columnNames="CODE"/>
+    </changeSet>
+    <changeSet author="soner.cirit" id="1526381007356-3">
+        <addUniqueConstraint
+            tableName="TCC_CORP_TYPE"
+            columnNames="CODE"/>
+    </changeSet>
+    <changeSet author="soner.cirit" id="1526381007356-4">
+        <addUniqueConstraint
+            tableName="TCC_CONTACT_CAT"
+            columnNames="CODE"/>
+    </changeSet>
 </databaseChangeLog>
