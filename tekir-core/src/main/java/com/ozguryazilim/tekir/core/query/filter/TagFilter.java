@@ -2,7 +2,6 @@ package com.ozguryazilim.tekir.core.query.filter;
 
 import com.ozguryazilim.tekir.core.view.InputTagController;
 import com.ozguryazilim.telve.entities.SuggestionItem;
-import com.ozguryazilim.telve.query.Operands;
 import com.ozguryazilim.telve.query.filters.Filter;
 import com.ozguryazilim.telve.query.filters.FilterOperand;
 import com.ozguryazilim.telve.suggestion.SuggestionRepository;
@@ -10,12 +9,14 @@ import org.apache.deltaspike.core.api.provider.BeanProvider;
 import org.apache.deltaspike.data.api.criteria.Criteria;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.ManagedType;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.Type;
 import java.lang.reflect.Member;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,7 +33,12 @@ public class TagFilter<E> extends Filter<E, List<String>, List<String>>{
     public TagFilter(String attributeName, String label, String key) {
         super(null, label);
         setAttribute(new MockSingularAttribute<>(attributeName));
-        this.setOperands(Operands.getEntityOperands());
+
+        this.setOperands(Arrays.asList(new FilterOperand[]{
+                FilterOperand.All,
+                FilterOperand.Contains,
+                FilterOperand.NotContains
+        }));
         this.setOperand(FilterOperand.Equal);
         this.initSuggestions(key);
     }
@@ -45,12 +51,27 @@ public class TagFilter<E> extends Filter<E, List<String>, List<String>>{
 
     @Override
     public void decorateCriteria(Criteria<E, ?> criteria) {
-
     }
 
     @Override
-    public void decorateCriteriaQuery(List<Predicate> list, CriteriaBuilder criteriaBuilder, Root<E> root) {
-        System.out.println(getValue());
+    public void decorateCriteriaQuery(List<Predicate> predicates, CriteriaBuilder cb, Root<E> root) {
+        List<String> tags = getValue();
+        if (tags == null || tags.isEmpty()) return;
+        Expression<String> tagsExp = root.get(this.getAttribute().getName()).as(String.class);
+
+        // tüm seçenekler seçilmiş
+        if (this.getOperand() == FilterOperand.Equal && tags.size() == suggestions.size()) {
+            return;
+        }
+
+        switch (this.getOperand()) {
+            case Contains:
+                tags.forEach(tag -> predicates.add(cb.like(tagsExp, "%|" + tag + "|%")));
+                break;
+            case NotContains:
+                tags.forEach(tag -> predicates.add(cb.notLike(tagsExp, "%|" + tag + "|%")));
+                break;
+        }
     }
 
     @Override

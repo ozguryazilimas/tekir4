@@ -1,6 +1,6 @@
 package com.ozguryazilim.tekir.entities;
 
-import com.ozguryazilim.tekir.entites.converters.StringListConverter;
+import com.ozguryazilim.tekir.entites.converters.TagListConverter;
 import com.ozguryazilim.telve.annotations.BizKey;
 import com.ozguryazilim.telve.entities.AuditBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
@@ -112,7 +112,7 @@ public abstract class VoucherBase extends AuditBase{
     }
 
     @Column(name = "TAGS")
-    @Convert(converter = StringListConverter.class)
+    @Convert(converter = TagListConverter.class)
     private List<String> tags = new ArrayList<>();
 
     public void setVoucherNo(String voucherNo) {
