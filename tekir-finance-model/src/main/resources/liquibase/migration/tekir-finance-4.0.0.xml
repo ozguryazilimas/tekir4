@@ -127,4 +127,9 @@
     <changeSet author="oyas (generated)" id="1482482197773-7">
         <dropColumn columnName="CCY" tableName="TFN_FINANCE_VIREMENT"/>
     </changeSet>
+    <changeSet author="soner.cirit" id="1526381007356-1">
+        <addUniqueConstraint
+            tableName="TFN_FINANCE_ACC"
+            columnNames="CODE"/>
+    </changeSet>
 </databaseChangeLog>
