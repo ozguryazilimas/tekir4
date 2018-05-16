@@ -1,5 +1,6 @@
 package com.ozguryazilim.tekir.quote;
 
+import com.ozguryazilim.tekir.core.query.filter.TagFilter;
 import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.tekir.entities.Process_;
 import com.ozguryazilim.telve.forms.Browse;
@@ -62,7 +63,7 @@ public class QuoteBrowse extends VoucherBrowseBase<Quote, QuoteViewModel> {
         
         queryDefinition
                 .addFilter(new StringFilter<>(VoucherBase_.voucherNo, "voucher.label.VoucherNo"))
-                //FIXME: .addFilter(new StringFilter<>(VoucherBase_.code, "voucher.label.Code"))
+                .addFilter(new TagFilter<>("tags", "general.label.Tag","Quote"))
                 .addFilter(new StringFilter<>(VoucherBase_.info, "voucher.label.Info"))
                 .addFilter(new StringFilter<>(VoucherBase_.topic, "voucher.label.Topic"))
                 .addFilter(new VoucherStateFilter<>(VoucherBase_.state, getHome().getStateConfig().getStates(), "general.label.State"))

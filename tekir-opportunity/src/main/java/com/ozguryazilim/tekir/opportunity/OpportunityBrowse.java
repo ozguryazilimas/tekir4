@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.tekir.opportunity;
 
+import com.ozguryazilim.tekir.core.query.filter.TagFilter;
 import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.tekir.entities.Opportunity;
 import com.ozguryazilim.tekir.entities.Opportunity_;
@@ -67,7 +68,7 @@ public class OpportunityBrowse extends VoucherBrowseBase<Opportunity, Opportunit
         
         queryDefinition
                 .addFilter(new StringFilter<>(VoucherBase_.voucherNo, "voucher.label.VoucherNo"))
-                //FIXME: .addFilter(new StringFilter<>(VoucherBase_.code, "voucher.label.Code"))
+                .addFilter(new TagFilter<>("tags", "general.label.Tag","Opportunity"))
                 .addFilter(new StringFilter<>(VoucherBase_.info, "voucher.label.Info"))
                 .addFilter(new StringFilter<>(VoucherBase_.topic, "voucher.label.Topic"))
                 .addFilter(new VoucherStateFilter<>(VoucherBase_.state, getHome().getStateConfig().getStates(), "general.label.State"))

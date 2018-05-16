@@ -2,6 +2,7 @@ package com.ozguryazilim.tekir.lead;
 
 import javax.inject.Inject;
 
+import com.ozguryazilim.tekir.core.query.filter.TagFilter;
 import com.ozguryazilim.tekir.entities.Lead;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.forms.Browse;
@@ -25,6 +26,7 @@ import com.ozguryazilim.tekir.entities.LeadCategory_;
 import com.ozguryazilim.tekir.voucher.filter.VoucherStateFilter;
 
 import com.ozguryazilim.telve.entities.TreeNodeEntityBase_;
+import com.ozguryazilim.telve.suggestion.SuggestionRepository;
 
 @Browse(feature = LeadFeature.class)
 public class LeadBrowse extends VoucherBrowseBase<Lead, LeadViewModel> {
@@ -43,13 +45,14 @@ public class LeadBrowse extends VoucherBrowseBase<Lead, LeadViewModel> {
 				.addFilter(new DateFilter<>(VoucherBase_.date, "voucher.label.Date"))
 				.addFilter(new StringFilter<>(VoucherBase_.topic, "voucher.label.Topic"))
 				.addFilter(new StringFilter<>(VoucherBase_.owner, "voucher.label.Owner"))
+				.addFilter(new TagFilter<>("tags", "general.label.Tag", "LEAD"))
 				.addFilter(new StringFilter<>(Lead_.relatedCompanyName, "lead.label.RelatedCompanyName"))
 				.addFilter(new StringFilter<>(Lead_.relatedPersonName, "lead.label.RelatedPersonName"))
 				.addFilter(new StringFilter<>(Lead_.relatedPersonSurname, "lead.label.RelatedPersonSurname"))
 				.addFilter(new StringFilter<>(Lead_.relatedAddress, "lead.label.RelatedAddress"))
 				.addFilter(new SubStringFilter<>(Lead_.leadSource, TreeNodeEntityBase_.name, "lead.label.LeadSourceName"))
 				.addFilter(new SubStringFilter<>(Lead_.leadCategory, TreeNodeEntityBase_.name, "lead.label.LeadCategoryName"))
-                                .addFilter(new VoucherStateFilter<>(VoucherBase_.state, getHome().getStateConfig().getStates(), "general.label.State"));
+				.addFilter(new VoucherStateFilter<>(VoucherBase_.state, getHome().getStateConfig().getStates(), "general.label.State"));
 
 		queryDefinition
 				.addColumn(new LinkColumn<>(VoucherBase_.voucherNo, "voucher.label.VoucherNo"), true)

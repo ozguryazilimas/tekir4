@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.tekir.account.virement;
 
+import com.ozguryazilim.tekir.core.query.filter.TagFilter;
 import com.ozguryazilim.tekir.entities.AccountVirement;
 import com.ozguryazilim.tekir.entities.AccountVirement_;
 import com.ozguryazilim.tekir.entities.Contact_;
@@ -64,7 +65,7 @@ public class AccountVirementBrowse extends VoucherBrowseBase<AccountVirement, Ac
                 
         queryDefinition
                 .addFilter(new StringFilter<>(VoucherBase_.voucherNo, "voucher.label.VoucherNo"))
-                //FIXME: .addFilter(new StringFilter<>(VoucherBase_.code, "voucher.label.Code"))
+                .addFilter(new TagFilter<>("tags", "general.label.Tag","AccountVirement"))
                 .addFilter(new StringFilter<>(VoucherBase_.info, "voucher.label.Info"))
                 .addFilter(new StringFilter<>(VoucherBase_.topic, "voucher.label.Topic"))
                 .addFilter(new VoucherStateFilter<>(VoucherBase_.state, getHome().getStateConfig().getStates(), "general.label.State"))
