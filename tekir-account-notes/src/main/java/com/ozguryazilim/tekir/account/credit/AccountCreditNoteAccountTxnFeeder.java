@@ -36,10 +36,10 @@ public class AccountCreditNoteAccountTxnFeeder implements Serializable{
             AccountCreditNote entity = (AccountCreditNote) event.getEntity();
             
             FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
-            
-            accountTxnService.saveFeature(voucherPointer, entity.getAccount(),entity.getInfo(), Boolean.TRUE,
-                    Boolean.FALSE, entity.getCurrency(), entity.getAmount(), entity.getLocalAmount(), entity.getDate(),
-                    entity.getOwner(), null, entity.getState().toString(), entity.getStateReason(),
+
+            accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getInfo(), entity.getTags(),
+                    Boolean.TRUE, Boolean.FALSE, entity.getCurrency(), entity.getAmount(), entity.getLocalAmount(),
+                    entity.getDate(), entity.getOwner(), null, entity.getState().toString(), entity.getStateReason(),
                     entity.getTopic());
         }
         

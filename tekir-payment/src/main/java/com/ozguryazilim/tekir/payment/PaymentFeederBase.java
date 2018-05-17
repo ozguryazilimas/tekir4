@@ -104,12 +104,13 @@ public abstract class PaymentFeederBase<E extends PaymentBase> extends AbstractF
 
 			FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
 
-			accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getInfo(), Boolean.FALSE,
-					getProcessType() == ProcessType.PURCHASE, entity.getCurrency(), entity.getAmount(),
+			accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getInfo(), entity.getTags(),
+					Boolean.FALSE, getProcessType() == ProcessType.PURCHASE, entity.getCurrency(), entity.getAmount(),
 					entity.getLocalAmount(), entity.getDate(), entity.getOwner(), entity.getProcess().getProcessNo(),
 					entity.getState().toString(), entity.getStateReason(), entity.getTopic());
+
 			financeAccountTxnService.saveFeature(voucherPointer, entity.getFinanceAccount(), entity.getInfo(),
-					Boolean.FALSE, getProcessType() == ProcessType.PURCHASE, entity.getCurrency(),
+					entity.getTags(), Boolean.FALSE, getProcessType() == ProcessType.PURCHASE, entity.getCurrency(),
 					entity.getAmount(), entity.getLocalAmount(), entity.getDate(), entity.getOwner(),
 					entity.getProcess().getProcessNo(), entity.getState().toString(), entity.getStateReason());
 		}

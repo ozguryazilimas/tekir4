@@ -11,6 +11,7 @@ import com.ozguryazilim.tekir.entities.FinanceAccountTxn;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Date;
 import java.util.List;
@@ -32,7 +33,7 @@ public class FinanceAccountTxnService implements Serializable{
     private FinanceAccountTxnRepository repository;
 
     @Transactional
-    public void saveFeature( FeaturePointer feature, FinanceAccount account, String info, Boolean accountable, Boolean debit, Currency currency, BigDecimal amount,  BigDecimal localAmount, Date date,  String owner, String processId,  String status, String statusReason ){
+    public void saveFeature(FeaturePointer feature, FinanceAccount account, String info, List<String> tags, Boolean accountable, Boolean debit, Currency currency, BigDecimal amount, BigDecimal localAmount, Date date, String owner, String processId, String status, String statusReason) {
         
         FinanceAccountTxn txn = repository.findOptionalByFeatureAndAccount(feature, account);
         /*/FIXME: findOptionalByFeature olduğu zaman giriş ve çıkış için 2 farklı kayıt FinanceAccountTxn'e atılamıyor.
@@ -50,7 +51,7 @@ public class FinanceAccountTxnService implements Serializable{
         txn.setDebit(debit);
         txn.setDate(date);
         txn.setFeature(feature);
-        //FIXME: txn.setCode(code);
+        txn.setTags(new ArrayList<>(tags));
         txn.setInfo(info);
         txn.setOwner(owner);
         txn.setProcessId(processId);

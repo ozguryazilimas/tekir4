@@ -36,15 +36,15 @@ public class AccountVirementAccountTxnFeeder implements Serializable{
             AccountVirement entity = (AccountVirement) event.getEntity();
             
             FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
-            
-            accountTxnService.saveFeature(voucherPointer, entity.getFromAccount(), entity.getInfo(), Boolean.TRUE,
-                    Boolean.TRUE, entity.getCurrency(), entity.getAmount(), entity.getLocalAmount(), entity.getDate(),
-                    entity.getOwner(), null, entity.getState().toString(), entity.getStateReason(),
-                    entity.getTopic());
 
-            accountTxnService.saveFeature(voucherPointer, entity.getToAccount(), entity.getInfo(), Boolean.TRUE,
-                    Boolean.FALSE, entity.getCurrency(), entity.getAmount(), entity.getLocalAmount(), entity.getDate(),
-                    entity.getOwner(), null, entity.getState().toString(), entity.getStateReason(),
+            accountTxnService.saveFeature(voucherPointer, entity.getFromAccount(), entity.getInfo(), entity.getTags(),
+                    Boolean.TRUE, Boolean.TRUE, entity.getCurrency(), entity.getAmount(), entity.getLocalAmount(),
+                    entity.getDate(), entity.getOwner(), null, entity.getState().toString(),
+                    entity.getStateReason(), entity.getTopic());
+
+            accountTxnService.saveFeature(voucherPointer, entity.getToAccount(), entity.getInfo(), entity.getTags(),
+                    Boolean.TRUE, Boolean.FALSE, entity.getCurrency(), entity.getAmount(), entity.getLocalAmount(),
+                    entity.getDate(), entity.getOwner(), null, entity.getState().toString(), entity.getStateReason(),
                     entity.getTopic());
         }
         
