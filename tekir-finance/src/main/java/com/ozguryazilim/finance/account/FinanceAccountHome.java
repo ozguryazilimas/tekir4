@@ -145,8 +145,6 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
 
     @Override
     public boolean onAfterLoad() {
-
-        //FIXME: Burayı generic bir hale getirmek lazım                
         if (!identity.isPermitted("financeAccount:select:" + getEntity().getOwner())) {
             FacesMessages.error("facesMessages.error.NoPermission");
             createNew();
