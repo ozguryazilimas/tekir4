@@ -7,7 +7,6 @@ package com.ozguryazilim.tekir.opportunity;
 
 import com.ozguryazilim.tekir.account.AccountTxnService;
 import com.ozguryazilim.tekir.entities.Opportunity;
-import com.ozguryazilim.tekir.entities.VoucherBase;
 import com.ozguryazilim.tekir.entities.VoucherStateType;
 import com.ozguryazilim.tekir.feed.AbstractFeeder;
 import com.ozguryazilim.tekir.feed.Feeder;
@@ -22,6 +21,7 @@ import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureQualifier;
 import com.ozguryazilim.telve.forms.EntityChangeAction;
 import com.ozguryazilim.telve.forms.EntityChangeEvent;
+import com.ozguryazilim.telve.messages.Messages;
 import com.ozguryazilim.telve.qualifiers.After;
 import com.ozguryazilim.telve.qualifiers.EntityQualifier;
 import java.util.ArrayList;
@@ -118,23 +118,32 @@ public class OpportunityFeeder extends AbstractFeeder<Opportunity> {
 	 * @return
 	 */
 	protected String getMessage(VoucherStateChange event) {
+		String reason = event.getPayload().getStateReason();
+		if (reason == null) {
+			reason = Messages.getMessage("feed.messages.NullReason");
+		}
 		switch (event.getAction().getName()) {
-		case "CREATE":
-			return "feeder.messages.OpportunityFeeder.CREATE$%&" + identity.getUserName() + "$%&"
+			case "CREATE":
+				return "feeder.messages.OpportunityFeeder.CREATE$%&" + identity.getUserName() + "$%&"
 					+ event.getPayload().getVoucherNo();
-		case "publish":
-			return "feeder.messages.OpportunityFeeder.PUBLISH$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo();
-		case "won":
-			return "feeder.messages.OpportunityFeeder.WON$%&" + identity.getUserName() + "$%&"
+			case "publish":
+				return "feeder.messages.OpportunityFeeder.PUBLISH$%&" + identity.getUserName() + "$%&"
 					+ event.getPayload().getVoucherNo();
-		case "loss":
-			return "feeder.messages.OpportunityFeeder.LOST$%&" + event.getPayload().getVoucherNo() + "$%&"
-					+ event.getPayload().getStateReason();
-		case "cancel":
-			return "feeder.messages.OpportunityFeeder.CANCEL$%&" + identity.getUserName() + "$%&"
-					+ event.getPayload().getVoucherNo() + "$%&" + event.getPayload().getStateReason();
-		default:
-			return "feeder.messages.OpportunityFeeder.DEFAULT$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo();
+			case "won":
+				return "feeder.messages.OpportunityFeeder.WON$%&" + identity.getUserName() + "$%&"
+					+ event.getPayload().getVoucherNo();
+			case "loss":
+				return "feeder.messages.OpportunityFeeder.LOST$%&" + event.getPayload().getVoucherNo() + "$%&"
+					+ reason;
+			case "cancel":
+				return "feeder.messages.OpportunityFeeder.CANCEL$%&" + identity.getUserName() + "$%&"
+					+ event.getPayload().getVoucherNo() + "$%&" + reason;
+			case "revise":
+				return "feeder.messages.OpportunityFeeder.REVISE$%&" + identity.getUserName() + "$%&"
+					+ event.getPayload().getVoucherNo() + "$%&" + reason;
+			default:
+				return "feeder.messages.OpportunityFeeder.DEFAULT$%&" + identity.getUserName() + "$%&"
+					+ event.getPayload().getVoucherNo();
 		}
 	}
 	
