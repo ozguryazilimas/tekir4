@@ -30,6 +30,12 @@ public class TagFilter<E> extends Filter<E, List<String>, List<String>>{
 
     private List<String> suggestions;
 
+    /**
+     *
+     * @param attributeName Entity etiket alanı adı
+     * @param label Filtre için gösterilecek etiket
+     * @param key Etiket gruplarını ayıran anahtar. null olması durumunda tüm etiketler filtre seçeneklerine getirilir
+     */
     public TagFilter(String attributeName, String label, String key) {
         super(null, label);
         setAttribute(new MockSingularAttribute<>(attributeName));
@@ -43,9 +49,15 @@ public class TagFilter<E> extends Filter<E, List<String>, List<String>>{
         this.initSuggestions(key);
     }
 
+
     private void initSuggestions(String key) {
         SuggestionRepository repository = BeanProvider.getContextualReference(SuggestionRepository.class);
-        List<SuggestionItem> suggestionItems = repository.findByGroupAndKey(InputTagController.SUGGESSTION_GROUP, key);
+        List<SuggestionItem> suggestionItems;
+        if ("*".equals(key)) {
+            suggestionItems = repository.findByGroup(InputTagController.SUGGESSTION_GROUP);
+        } else {
+            suggestionItems = repository.findByGroupAndKey(InputTagController.SUGGESSTION_GROUP, key);
+        }
         suggestions = suggestionItems.stream().map(SuggestionItem::getData).collect(Collectors.toList());
     }
 

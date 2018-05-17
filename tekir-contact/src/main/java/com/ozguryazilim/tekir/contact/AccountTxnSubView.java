@@ -7,6 +7,8 @@ package com.ozguryazilim.tekir.contact;
 
 import com.ozguryazilim.tekir.account.AccountTxnRepository;
 import com.ozguryazilim.tekir.contact.config.ContactPages;
+import com.ozguryazilim.tekir.core.query.columns.TagColumn;
+import com.ozguryazilim.tekir.core.query.filter.TagFilter;
 import com.ozguryazilim.tekir.entities.AccountTxn;
 import com.ozguryazilim.tekir.entities.AccountTxn_;
 import com.ozguryazilim.telve.data.RepositoryBase;
@@ -51,7 +53,7 @@ public class AccountTxnSubView extends SubViewQueryBase<AccountTxn, AccountTxn>{
                 .addColumn(new TextColumn<>(AccountTxn_.topic, "voucher.label.Topic"), true)
                 .addColumn(new BooleanColumn<>(AccountTxn_.debit, "general.label.DebitCredit", "booleanValue.DebitCredit."), true)
                 .addColumn(new MoneyColumn<>(AccountTxn_.amount, AccountTxn_.currency, "general.label.Money"), true)
-                //.addColumn(new TextColumn<>(AccountTxn_.code, "general.label.Code"), false)
+                .addColumn(new TagColumn<>("tags", "general.label.Tag"), false)
                 .addColumn(new TextColumn<>(AccountTxn_.processId, "general.label.Process"), false)
                 .addColumn(new TextColumn<>(AccountTxn_.referenceNo, "general.label.ReferenceNo"), false)
                 .addColumn(new MessageColumn<>(AccountTxn_.status, "general.label.Status", "voucherState.name."), true)
@@ -60,7 +62,7 @@ public class AccountTxnSubView extends SubViewQueryBase<AccountTxn, AccountTxn>{
         
         queryDefinition
                 .addFilter(new UserFilter<>(AccountTxn_.owner, "general.label.Owner"))
-                //.addFilter(new StringFilter<>(AccountTxn_.code, "voucher.label.Code"))
+                .addFilter(new TagFilter<>("tags", "voucher.label.Tag","*"))
                 .addFilter(new StringFilter<>(AccountTxn_.info, "voucher.label.Info"))
                 .addFilter(new StringFilter<>(AccountTxn_.topic, "voucher.label.Topic"))
                 //.addFilter(new StringFilter<>(AccountTxn_.stateReason, "voucher.label.StateReason"))
