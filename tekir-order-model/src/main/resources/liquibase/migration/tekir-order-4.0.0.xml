@@ -95,9 +95,7 @@
             <column name="LOCAL_AMOUNT" type="decimal(19, 2)"/>
         </addColumn>
     </changeSet>
-    <changeSet author="hates" id="020520181724">
-        <addColumn tableName="TIV_INVOICE">
-            <column name="TOR_ORDER" type="decimal(19, 2)"/>
-        </addColumn>
+    <changeSet author="hates" id="070520181134">
+        <renameColumn tableName="TOR_ORDER" columnDataType="VARCHAR(2000)" newColumnName="TAGS" oldColumnName="CODE" />
     </changeSet>
 </databaseChangeLog>

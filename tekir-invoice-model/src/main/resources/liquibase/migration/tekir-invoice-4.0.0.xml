@@ -75,10 +75,7 @@
             <column name="LOCAL_AMOUNT" type="decimal(19, 2)"/>
         </addColumn>
     </changeSet>
-    <changeSet author="hates" id="020520181721">
-        <addColumn tableName="TIV_INVOICE">
-            <column name="LINE_TOT_TAX" type="decimal(19, 2)"/>
-        </addColumn>
+    <changeSet author="hates" id="070520181132">
+        <renameColumn tableName="TIV_INVOICE" columnDataType="VARCHAR(2000)" newColumnName="TAGS" oldColumnName="CODE" />
     </changeSet>
-
 </databaseChangeLog>

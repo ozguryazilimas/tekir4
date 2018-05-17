@@ -136,9 +136,15 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
     }
 
     @Override
-    public boolean onAfterLoad() {
+    public boolean onAfterSave() {
+        //Burda refresh atiyoruzki kayit olustuktan sonra olusan ilk chart dogru degerleri alsin
+        refreshTxns();
 
-        //FIXME: Burayı generic bir hale getirmek lazım                
+        return super.onAfterSave();
+    }
+
+    @Override
+    public boolean onAfterLoad() {
         if (!identity.isPermitted("financeAccount:select:" + getEntity().getOwner())) {
             FacesMessages.error("facesMessages.error.NoPermission");
             createNew();
@@ -335,8 +341,10 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
         axis.setTickFormat("%#d %b");
         chartModel.getAxes().put(AxisType.X, axis);
 
+        String yLabel = Messages
+            .getMessage("currency." + getEntity().getCurrency().getCurrencyCode());
         Axis yAxis = chartModel.getAxis(AxisType.Y);
-        yAxis.setLabel(getEntity().getCurrency().getDisplayName());
+        yAxis.setLabel(yLabel);
     }
     
     private void buildCurrencyBalanceMap(){

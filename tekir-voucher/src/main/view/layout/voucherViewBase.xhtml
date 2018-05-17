@@ -18,7 +18,7 @@
             </ui:fragment>
             <t:stateOutputFeatureLink label="voucher.label.Group" value="#{featureController.getFeatureLink(bean.groupFeaturePointer)}" />
             <t:stateOutputText label="voucher.label.ReferenceNo" value="#{bean.entity.referenceNo}" />
-            <t:stateOutputText label="general.label.Code" value="#{bean.entity.code}" />
+            <t:stateOutputTag label="general.label.Tag" value="#{bean.entity.tags}" />
         </ul>
         <ui:fragment rendered="#{bean.entity.info ne ''}">
             <p><i class="fa fa-info"/> #{bean.entity.info}</p>

@@ -24,6 +24,7 @@
         </div>            
         <div class="row">        
             <t:inputTextarea label="general.label.Info" value="#{taxDefinitionHome.entity.info}" required="false" />                                            
+            <t:inputMask label="taxDefinition.label.GibCode" value="#{taxDefinitionHome.entity.gibCode}" required="false" mask="9999"/>
             <t:inputCheckboxGroup label="general.label.Status">
                 <p:selectBooleanCheckbox value="#{taxDefinitionHome.entity.active}" itemLabel="#{messages['general.label.Active']}" />
             </t:inputCheckboxGroup>
