@@ -335,8 +335,10 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
         axis.setTickFormat("%#d %b");
         chartModel.getAxes().put(AxisType.X, axis);
 
+        String yLabel = Messages
+            .getMessage("currency." + getEntity().getCurrency().getCurrencyCode());
         Axis yAxis = chartModel.getAxis(AxisType.Y);
-        yAxis.setLabel(getEntity().getCurrency().getDisplayName());
+        yAxis.setLabel(yLabel);
     }
     
     private void buildCurrencyBalanceMap(){
