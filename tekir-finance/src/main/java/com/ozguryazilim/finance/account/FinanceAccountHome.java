@@ -136,6 +136,14 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
     }
 
     @Override
+    public boolean onAfterSave() {
+        //Burda refresh atiyoruzki kayit olustuktan sonra olusan ilk chart dogru degerleri alsin
+        refreshTxns();
+
+        return super.onAfterSave();
+    }
+
+    @Override
     public boolean onAfterLoad() {
 
         //FIXME: Burayı generic bir hale getirmek lazım                
