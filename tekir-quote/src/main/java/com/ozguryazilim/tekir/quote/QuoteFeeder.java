@@ -59,7 +59,7 @@ public class QuoteFeeder extends AbstractFeeder<Quote> {
 			List<FeaturePointer> mentions = prepareMentionList(entity);
 
 			sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(),
-					entity.getVoucherNo(), getMessage(event), mentions);
+					entity.getTopic(), getMessage(event), mentions);
 
 			// Process feed
 			if ("OPEN".equals(event.getTo().getName()) && "DRAFT".equals(event.getFrom().getName())) {
@@ -83,7 +83,7 @@ public class QuoteFeeder extends AbstractFeeder<Quote> {
 			List<FeaturePointer> mentions = prepareMentionList(entity);
 
 			sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(),
-					entity.getVoucherNo(), FeederUtils.getEventMessage(event), mentions);
+					entity.getTopic(), FeederUtils.getEventMessage(event), mentions);
 		}
 	}
 
