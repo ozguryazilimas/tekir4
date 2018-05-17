@@ -5,6 +5,8 @@
  */
 package com.ozguryazilim.tekir.payment;
 
+import com.ozguryazilim.tekir.core.query.columns.TagColumn;
+import com.ozguryazilim.tekir.core.query.filter.TagFilter;
 import com.ozguryazilim.tekir.entities.FinanceAccount_;
 import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.tekir.entities.PaymentBase;
@@ -48,7 +50,7 @@ public abstract class PaymentBrowseBase<E extends PaymentBase, V extends Payment
                 .addColumn(new MoneyColumn<>(PaymentBase_.amount, PaymentBase_.currency, "general.label.Total"), true)
                 .addColumn(new UserColumn<>(VoucherBase_.owner, "voucher.label.Owner"), true)
                 .addColumn(new TextColumn<>(VoucherBase_.referenceNo, "voucher.label.ReferenceNo"), false)
-                .addColumn(new TextColumn<>(VoucherBase_.code, "voucher.label.Code"), false)
+                .addColumn(new TagColumn<>("tags", "voucher.label.Tag"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.info, "voucher.label.Info"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.stateReason, "voucher.label.StateReason"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.stateInfo, "voucher.label.StateInfo"), false)
@@ -57,7 +59,7 @@ public abstract class PaymentBrowseBase<E extends PaymentBase, V extends Payment
         
         queryDefinition
                 .addFilter(new StringFilter<>(VoucherBase_.voucherNo, "voucher.label.VoucherNo"))
-                .addFilter(new StringFilter<>(VoucherBase_.code, "voucher.label.Code"))
+                .addFilter(new TagFilter<>("tags", "general.label.Tag","PaymentBase"))
                 .addFilter(new StringFilter<>(VoucherBase_.info, "voucher.label.Info"))
                 .addFilter(new StringFilter<>(VoucherBase_.topic, "voucher.label.Topic"))
                 .addFilter(new VoucherStateFilter<>(VoucherBase_.state, getHome().getStateConfig().getStates(), "general.label.State"))

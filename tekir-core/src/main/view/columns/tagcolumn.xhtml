@@ -1,0 +1,9 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+    <h:outputStylesheet library="telveComponents" name="outputtag.css" target="head" />
+    <ui:repeat value="#{item[col.name]}" var="tag" varStatus="loop">
+        <span class="tekir-tag">#{tag}</span>
+    </ui:repeat>
+</ui:composition>

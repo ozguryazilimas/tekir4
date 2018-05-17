@@ -90,7 +90,7 @@ public class AccountStatementReportTest {
         txn.setId(1L);
         txn.setAccount(contact);
         txn.setAmount(BigDecimal.ONE);
-        txn.setCode("ABC");
+        //FIXME txn.setCode("ABC");
         txn.setCurrency( Currency.getInstance("TRY"));
         txn.setDate(new Date());
         txn.setDebit(Boolean.TRUE);
@@ -114,7 +114,7 @@ public class AccountStatementReportTest {
         txn.setId(2L);
         txn.setAccount(contact);
         txn.setAmount(BigDecimal.TEN);
-        txn.setCode("ABC");
+        //FIXME txn.setCode("ABC");
         txn.setCurrency( Currency.getInstance("TRY"));
         txn.setDate(new Date());
         txn.setDebit(Boolean.FALSE);

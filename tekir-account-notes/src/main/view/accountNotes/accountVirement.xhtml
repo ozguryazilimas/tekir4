@@ -40,8 +40,7 @@
                 <div class="row">
                     <t:inputText label="voucher.label.VoucherNo" value="#{accountVirementHome.entity.voucherNo}"  required="true" readonly="true" />
                     <t:inputText label="voucher.label.ReferenceNo" value="#{accountVirementHome.entity.referenceNo}" />
-                    
-                    <t:inputText label="general.label.Code" value="#{accountVirementHome.entity.code}" />
+                    <t:inputTag label="general.label.Tag" key="AccountVirement" value="#{accountVirementHome.entity.tags}" />
                     <t:inputLookupDialog label="voucher.label.Group" value="#{accountVirementHome.entity.group}" caption="topic" lookupBean="#{voucherGroupLookup}" lookupListener="accountVirementHome.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" />
                     <t:inputDate label="voucher.label.Date" value="#{accountVirementHome.entity.date}" columnClass="col-xs-12"/>
                 </div>
