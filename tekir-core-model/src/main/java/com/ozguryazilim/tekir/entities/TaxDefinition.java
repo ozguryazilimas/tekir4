@@ -59,6 +59,12 @@ public class TaxDefinition extends ParamEntityBase{
     @Column( name = "TO_DATE")
     @Temporal(TemporalType.DATE)
     private Date toDate;
+    
+    /**
+     * Gelir İdaresi Başkanlığı tarafından tanımlanmış vergi kodu
+     */
+    @Column ( name = "GIB_CODE")
+    private String gibCode;
 
     public Long getId() {
         return id;
@@ -100,7 +106,12 @@ public class TaxDefinition extends ParamEntityBase{
         this.toDate = toDate;
     }
 
-    
+    public String getGibCode() {
+        return gibCode;
+    }
 
+    public void setGibCode(String gibCode) {
+        this.gibCode = gibCode;
+    }
     
 }
