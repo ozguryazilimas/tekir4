@@ -21,6 +21,7 @@ import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.forms.EntityChangeAction;
 import com.ozguryazilim.telve.forms.EntityChangeEvent;
+import com.ozguryazilim.telve.messages.Messages;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -120,17 +121,24 @@ public abstract class InvoiceFeeder<E extends Invoice> extends AbstractFeeder<E>
 	 * @return
 	 */
 	protected String getMessage(VoucherStateChange event) {
+        String reason = event.getPayload().getStateReason();
+        if (reason == null) {
+            reason = Messages.getMessage("feed.messages.NullReason");
+        }
 		switch (event.getAction().getName()) {
 		case "CREATE":
 			return "feeder.messages.InvoiceFeeder.CREATE$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo();
 		case "publish":
 			return "feeder.messages.InvoiceFeeder.PUBLISH$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo();
 		case "revise":
-			return "feeder.messages.InvoiceFeeder.REVISE$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo() + "$%&" + event.getPayload().getStateReason();
+            return "feeder.messages.InvoiceFeeder.REVISE$%&" + identity.getUserName() + "$%&"
+                + event.getPayload().getVoucherNo() + "$%&" + reason;
 		case "loss":
-			return "feeder.messages.InvoiceFeeder.LOST$%&" + event.getPayload().getVoucherNo() + "$%&" + event.getPayload().getStateReason();
+            return "feeder.messages.InvoiceFeeder.LOST$%&" + event.getPayload().getVoucherNo()
+                + "$%&" + reason;
 		case "cancel":
-			return "feeder.messages.InvoiceFeeder.CANCEL$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo() + "$%&" + event.getPayload().getStateReason();
+            return "feeder.messages.InvoiceFeeder.CANCEL$%&" + identity.getUserName() + "$%&"
+                + event.getPayload().getVoucherNo() + "$%&" + reason;
 		default:
 			return "feeder.messages.InvoiceFeeder.DEFAULT$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo();
 		}
