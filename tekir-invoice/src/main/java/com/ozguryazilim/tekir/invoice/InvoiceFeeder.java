@@ -101,8 +101,8 @@ public abstract class InvoiceFeeder<E extends Invoice> extends AbstractFeeder<E>
 
 			FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
 
-			accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getCode(), entity.getInfo(),
-					Boolean.FALSE, getProcessType() == ProcessType.PURCHASE, entity.getCurrency(), entity.getTotal(),
+			accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getInfo(), entity.getTags(),
+					Boolean.FALSE,getProcessType() == ProcessType.PURCHASE, entity.getCurrency(), entity.getTotal(),
 					entity.getLocalAmount(), entity.getDate(), entity.getOwner(), entity.getProcess().getProcessNo(),
 					entity.getState().toString(), entity.getStateReason(), entity.getTopic());
 		}

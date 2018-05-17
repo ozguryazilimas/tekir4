@@ -2,10 +2,10 @@ package com.ozguryazilim.tekir.lead;
 
 import javax.inject.Inject;
 
+import com.ozguryazilim.tekir.core.query.columns.TagColumn;
+import com.ozguryazilim.tekir.core.query.filter.TagFilter;
 import com.ozguryazilim.tekir.entities.Lead;
-import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.forms.Browse;
-import com.ozguryazilim.telve.forms.BrowseBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.columns.DateColumn;
 import com.ozguryazilim.telve.query.columns.LinkColumn;
@@ -20,8 +20,6 @@ import com.ozguryazilim.tekir.voucher.VoucherFormBase;
 import com.ozguryazilim.tekir.voucher.VoucherRepositoryBase;
 import com.ozguryazilim.tekir.voucher.columns.VoucherStateColumn;
 import com.ozguryazilim.tekir.entities.Lead_;
-import com.ozguryazilim.tekir.entities.LeadSource_;
-import com.ozguryazilim.tekir.entities.LeadCategory_;
 import com.ozguryazilim.tekir.voucher.filter.VoucherStateFilter;
 
 import com.ozguryazilim.telve.entities.TreeNodeEntityBase_;
@@ -43,19 +41,21 @@ public class LeadBrowse extends VoucherBrowseBase<Lead, LeadViewModel> {
 				.addFilter(new DateFilter<>(VoucherBase_.date, "voucher.label.Date"))
 				.addFilter(new StringFilter<>(VoucherBase_.topic, "voucher.label.Topic"))
 				.addFilter(new StringFilter<>(VoucherBase_.owner, "voucher.label.Owner"))
+				.addFilter(new TagFilter<>("tags", "general.label.Tag", "LEAD"))
 				.addFilter(new StringFilter<>(Lead_.relatedCompanyName, "lead.label.RelatedCompanyName"))
 				.addFilter(new StringFilter<>(Lead_.relatedPersonName, "lead.label.RelatedPersonName"))
 				.addFilter(new StringFilter<>(Lead_.relatedPersonSurname, "lead.label.RelatedPersonSurname"))
 				.addFilter(new StringFilter<>(Lead_.relatedAddress, "lead.label.RelatedAddress"))
 				.addFilter(new SubStringFilter<>(Lead_.leadSource, TreeNodeEntityBase_.name, "lead.label.LeadSourceName"))
 				.addFilter(new SubStringFilter<>(Lead_.leadCategory, TreeNodeEntityBase_.name, "lead.label.LeadCategoryName"))
-                                .addFilter(new VoucherStateFilter<>(VoucherBase_.state, getHome().getStateConfig().getStates(), "general.label.State"));
+				.addFilter(new VoucherStateFilter<>(VoucherBase_.state, getHome().getStateConfig().getStates(), "general.label.State"));
 
 		queryDefinition
 				.addColumn(new LinkColumn<>(VoucherBase_.voucherNo, "voucher.label.VoucherNo"), true)
 				.addColumn(new DateColumn<>(VoucherBase_.date, "voucher.label.Date"), true)
 				.addColumn(new TextColumn<>(VoucherBase_.topic, "voucher.label.Topic"), true)
 				.addColumn(new TextColumn<>(VoucherBase_.owner, "voucher.label.Owner"), true)
+				.addColumn(new TagColumn<>("tags", "general.label.Tag"), true)
 				.addColumn(new TextColumn<>(Lead_.relatedCompanyName, "lead.label.RelatedCompanyName"), true)
 				.addColumn(new TextColumn<>(Lead_.relatedPersonName, "lead.label.RelatedPersonName"), false)
 				.addColumn(new TextColumn<>(Lead_.relatedPersonSurname, "lead.label.RelatedPersonSurname"), false)

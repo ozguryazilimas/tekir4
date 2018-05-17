@@ -14,6 +14,7 @@ import com.ozguryazilim.tekir.voucher.VoucherProcessViewModel;
 import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -24,14 +25,14 @@ public class OpportunityViewModel extends VoucherProcessViewModel{
     private BigDecimal budget;
     private Currency currency;
     
-    public OpportunityViewModel(Long id, Process process, Contact account, String code, String voucherNo, String info, String referenceNo, Date date, String owner, VoucherState state, String stateReason, String stateInfo, VoucherGroup group, String topic, BigDecimal budget, Currency currency) {
-        super(id, process, account, code, voucherNo, info, referenceNo, date, owner, state, stateReason, stateInfo, group, topic);
+    public OpportunityViewModel(Long id, Process process, Contact account, List<String> tags, String voucherNo, String info, String referenceNo, Date date, String owner, VoucherState state, String stateReason, String stateInfo, VoucherGroup group, String topic, BigDecimal budget, Currency currency) {
+        super(id, process, account, tags, voucherNo, info, referenceNo, date, owner, state, stateReason, stateInfo, group, topic);
         this.budget = budget;
         this.currency = currency;
     }
     
-    public OpportunityViewModel(Long id, Long processId, String processNo, Long accountId, String accountName, Class<? extends Contact> accountType, String code, String voucherNo, String info, String referenceNo, Date date, String owner, VoucherState state, String stateReason, String stateInfo, Long groupId, String groupNo, String topic, BigDecimal budget, Currency currency) {
-        super(id, processId, processNo, accountId, accountName, accountType, code, voucherNo, info, referenceNo, date, owner, state, stateReason, stateInfo, groupId, groupNo, topic);
+    public OpportunityViewModel(Long id, Long processId, String processNo, Long accountId, String accountName, Class<? extends Contact> accountType, List<String> tags, String voucherNo, String info, String referenceNo, Date date, String owner, VoucherState state, String stateReason, String stateInfo, Long groupId, String groupNo, String topic, BigDecimal budget, Currency currency) {
+        super(id, processId, processNo, accountId, accountName, accountType, tags, voucherNo, info, referenceNo, date, owner, state, stateReason, stateInfo, groupId, groupNo, topic);
         this.budget = budget;
         this.currency = currency;
     }

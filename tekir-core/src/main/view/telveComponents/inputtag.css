@@ -1,0 +1,8 @@
+.ui-autocomplete-token {
+    background-color: #186ba0;
+    color: #ffffff;
+}
+
+.ui-autocomplete-multiple-container{
+    height: auto !important;
+}

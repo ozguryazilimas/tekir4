@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.tekir.opportunity;
 
+import com.ozguryazilim.tekir.core.query.filter.TagFilter;
 import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.tekir.entities.Opportunity;
 import com.ozguryazilim.tekir.entities.Opportunity_;
@@ -57,7 +58,7 @@ public class OpportunityBrowse extends VoucherBrowseBase<Opportunity, Opportunit
                 .addColumn(new MoneyColumn<>(Opportunity_.budget, Opportunity_.currency, "opportunity.label.Budget"), true)
                 .addColumn(new UserColumn<>(Opportunity_.owner, "voucher.label.Owner"), true)
                 .addColumn(new TextColumn<>(Opportunity_.referenceNo, "voucher.label.ReferenceNo"), false)
-                .addColumn(new TextColumn<>(Opportunity_.code, "voucher.label.Code"), false)
+                //FIXME: .addColumn(new TextColumn<>(Opportunity_.code, "voucher.label.Code"), false)
                 .addColumn(new TextColumn<>(Opportunity_.info, "voucher.label.Info"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.stateReason, "voucher.label.StateReason"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.stateInfo, "voucher.label.StateInfo"), false)
@@ -67,7 +68,7 @@ public class OpportunityBrowse extends VoucherBrowseBase<Opportunity, Opportunit
         
         queryDefinition
                 .addFilter(new StringFilter<>(VoucherBase_.voucherNo, "voucher.label.VoucherNo"))
-                .addFilter(new StringFilter<>(VoucherBase_.code, "voucher.label.Code"))
+                .addFilter(new TagFilter<>("tags", "general.label.Tag","Opportunity"))
                 .addFilter(new StringFilter<>(VoucherBase_.info, "voucher.label.Info"))
                 .addFilter(new StringFilter<>(VoucherBase_.topic, "voucher.label.Topic"))
                 .addFilter(new VoucherStateFilter<>(VoucherBase_.state, getHome().getStateConfig().getStates(), "general.label.State"))

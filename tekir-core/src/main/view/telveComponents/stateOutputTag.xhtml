@@ -1,0 +1,28 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:f="http://java.sun.com/jsf/core"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:composite="http://java.sun.com/jsf/composite">
+
+
+    <composite:interface>
+        <composite:attribute name="value" required="true"/>
+        <composite:attribute name="label" required="false"/>        
+    </composite:interface>
+
+    <composite:implementation>
+        <ui:fragment rendered="#{cc.attrs.value ne null and not empty cc.attrs.value}">
+            <h:outputStylesheet library="telveComponents" name="outputtag.css" target="head"/>
+            <li>
+                <div class="text-sm text-muted">#{messages[cc.attrs.label]}</div>
+                <div>
+                    <p:repeat value="#{cc.attrs.value}" var="tag">
+                        <span class="tekir-tag">#{tag}</span>
+                    </p:repeat>
+                </div>
+            </li>
+        </ui:fragment>
+    </composite:implementation>
+
+</ui:component>

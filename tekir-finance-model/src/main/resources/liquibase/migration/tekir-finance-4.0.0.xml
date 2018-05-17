@@ -132,4 +132,7 @@
             tableName="TFN_FINANCE_ACC"
             columnNames="CODE"/>
     </changeSet>
+    <changeSet author="hates" id="070520181117">
+        <renameColumn tableName="TFN_FINANCE_VIREMENT" columnDataType="VARCHAR(2000)" newColumnName="TAGS" oldColumnName="CODE" />
+    </changeSet>
 </databaseChangeLog>

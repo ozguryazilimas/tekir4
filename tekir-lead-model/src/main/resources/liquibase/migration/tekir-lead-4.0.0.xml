@@ -105,4 +105,7 @@
             tableName="TLE_LEAD_CATEGORY"
             columnNames="CODE"/>
     </changeSet>
+    <changeSet author="hates" id="070520181118">
+        <renameColumn tableName="TLE_LEAD" columnDataType="VARCHAR(2000)" newColumnName="TAGS" oldColumnName="CODE" />
+    </changeSet>
 </databaseChangeLog>

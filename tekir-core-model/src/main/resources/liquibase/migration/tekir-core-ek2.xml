@@ -110,4 +110,9 @@
             tableName="TCO_TERRITORY"
             columnNames="CODE"/>
     </changeSet>
+    <changeSet author="Adilcan Eren" id="1480327786898-19">
+        <addColumn tableName="TCO_TAX">
+            <column name="GIB_CODE" type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
