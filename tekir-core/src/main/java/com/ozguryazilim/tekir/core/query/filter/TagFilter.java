@@ -31,20 +31,14 @@ public class TagFilter<E> extends Filter<E, List<String>, List<String>>{
     private List<String> suggestions;
 
     /**
-     *
      * @param attributeName Entity etiket alanı adı
-     * @param label Filtre için gösterilecek etiket
-     * @param key Etiket gruplarını ayıran anahtar. null olması durumunda tüm etiketler filtre seçeneklerine getirilir
+     * @param label         Filtre için gösterilecek etiket
+     * @param key           Etiket gruplarını ayıran anahtar. "*" olması durumunda tüm etiketler filtre seçeneklerine getirilir
      */
     public TagFilter(String attributeName, String label, String key) {
         super(null, label);
         setAttribute(new MockSingularAttribute<>(attributeName));
-
-        this.setOperands(Arrays.asList(new FilterOperand[]{
-                FilterOperand.All,
-                FilterOperand.Contains,
-                FilterOperand.NotContains
-        }));
+        this.setOperands(Arrays.asList(FilterOperand.All, FilterOperand.Contains, FilterOperand.NotContains));
         this.setOperand(FilterOperand.Equal);
         this.initSuggestions(key);
     }
@@ -55,10 +49,11 @@ public class TagFilter<E> extends Filter<E, List<String>, List<String>>{
         List<SuggestionItem> suggestionItems;
         if ("*".equals(key)) {
             suggestionItems = repository.findByGroup(InputTagController.SUGGESSTION_GROUP);
+            suggestions = suggestionItems.stream().map(SuggestionItem::getData).distinct().collect(Collectors.toList());
         } else {
             suggestionItems = repository.findByGroupAndKey(InputTagController.SUGGESSTION_GROUP, key);
+            suggestions = suggestionItems.stream().map(SuggestionItem::getData).collect(Collectors.toList());
         }
-        suggestions = suggestionItems.stream().map(SuggestionItem::getData).collect(Collectors.toList());
     }
 
     @Override
