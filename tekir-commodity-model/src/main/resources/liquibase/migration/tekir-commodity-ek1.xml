@@ -80,4 +80,14 @@
     <changeSet author="oyas (generated)" id="1470598444235-16">
         <addForeignKeyConstraint baseColumnNames="UNITSET_ID" baseTableName="TCO_COMMOTITY" constraintName="FK_COMM_UNITSET" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCO_UNIT_SET"/>
     </changeSet>
+    <changeSet author="soner.cirit" id="1526381007356-1">
+        <addUniqueConstraint
+            tableName="TCO_COMMOTITY_CAT"
+            columnNames="CODE"/>
+    </changeSet>
+    <changeSet author="soner.cirit" id="1526381007356-2">
+        <addUniqueConstraint
+            tableName="TCO_COMMOTITY"
+            columnNames="CODE"/>
+    </changeSet>
 </databaseChangeLog>

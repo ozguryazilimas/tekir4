@@ -58,7 +58,7 @@
                         <t:outputText label="voucher.label.ReferenceNo" value="#{financeAccountVirementHome.entity.referenceNo}" columnClass="col-md-6 col-sm-12"/>
                         <t:outputText label="voucher.label.Group" value="#{financeAccountVirementHome.entity.group.groupNo}"  columnClass="col-md-6 col-sm-12"/>
                         <t:outputText label="voucher.label.Owner" value="#{userLookup.getUserName(financeAccountVirementHome.entity.owner)}" columnClass="col-md-6 col-sm-12"/>
-                        <t:outputText label="general.label.Code" value="#{financeAccountVirementHome.entity.code}" columnClass="col-md-6 col-sm-12"/>
+                        <t:outputTag label="general.label.Tag" value="#{financeAccountVirementHome.entity.tags}" columnClass="col-md-6 col-sm-12"/>
 
                         <t:outputDate label="voucher.label.Date" value="#{financeAccountVirementHome.entity.date}" columnClass="col-md-6 col-sm-12"/>
 

@@ -43,7 +43,15 @@
                         <t:inputText label="general.label.FirstName" value="#{contactHome.entity.firstName}" columnClass="col-xs-6" required="true"/>
                         <t:inputText label="general.label.LastName" value="#{contactHome.entity.lastName}" columnClass="col-xs-6" required="true"/>
 
-                    </div>  
+                    </div>
+
+                    <div class="row">
+                        <t:inputText label="contact.label.UseName"
+                                     value="#{contactHome.entity.useName}" columnClass="col-xs-6"/>
+                        <t:inputEnum itemLabel="gender." hasNullValue="false" columnClass="col-xs-6"
+                                     value="#{contactHome.entity.gender}"
+                                     label="contact.label.Gender"/>
+                    </div>
 
                     <div class="row">
                         <t:inputMask label="contact.label.SSN" value="#{contactHome.entity.ssn}"
@@ -151,7 +159,14 @@
                     <t:inputText label="general.label.FirstName" value="#{contactHome.entity.firstName}" columnClass="col-xs-6" required="true"/>
                     <t:inputText label="general.label.LastName" value="#{contactHome.entity.lastName}" columnClass="col-xs-6" required="true"/>
 
-                </div>  
+                </div>
+
+                <div class="row">
+                    <t:inputText label="contact.label.UseName"
+                                 value="#{contactHome.entity.useName}" columnClass="col-xs-6"/>
+                    <t:inputEnum itemLabel="gender." hasNullValue="false" columnClass="col-xs-6"
+                                 value="#{contactHome.entity.gender}" label="contact.label.Gender"/>
+                </div>
 
                 <div class="row">
                     <t:inputMask label="contact.label.SSN" value="#{contactHome.entity.ssn}"
