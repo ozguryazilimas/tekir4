@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ozguryazilim.tekir.voucher;
 
 import com.ozguryazilim.tekir.entities.VoucherGroup;
@@ -10,6 +5,7 @@ import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.telve.entities.ViewModel;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Kolaylık sağlaması için VoucherBaseView
@@ -19,7 +15,7 @@ import java.util.Date;
 public class VoucherViewModel implements ViewModel, Serializable{
     
     private Long id;
-    private String code;
+    private List<String> tags;
     private String voucherNo;
     private String info;
     private String referenceNo;
@@ -31,9 +27,9 @@ public class VoucherViewModel implements ViewModel, Serializable{
     private VoucherGroup group;
     private String topic;
 
-    public VoucherViewModel(Long id, String code, String voucherNo, String info, String referenceNo, Date date, String owner, VoucherState state, String stateReason, String stateInfo, VoucherGroup group, String topic) {
+    public VoucherViewModel(Long id, List<String> tags, String voucherNo, String info, String referenceNo, Date date, String owner, VoucherState state, String stateReason, String stateInfo, VoucherGroup group, String topic) {
         this.id = id;
-        this.code = code;
+        this.tags = tags;
         this.voucherNo = voucherNo;
         this.info = info;
         this.referenceNo = referenceNo;
@@ -46,9 +42,9 @@ public class VoucherViewModel implements ViewModel, Serializable{
         this.topic = topic;
     }
     
-    public VoucherViewModel(Long id, String code, String voucherNo, String info, String referenceNo, Date date, String owner, VoucherState state, String stateReason, String stateInfo, Long groupId, String groupNo, String topic) {
+    public VoucherViewModel(Long id, List<String> tags, String voucherNo, String info, String referenceNo, Date date, String owner, VoucherState state, String stateReason, String stateInfo, Long groupId, String groupNo, String topic) {
         this.id = id;
-        this.code = code;
+        this.tags = tags;
         this.voucherNo = voucherNo;
         this.info = info;
         this.referenceNo = referenceNo;
@@ -74,12 +70,12 @@ public class VoucherViewModel implements ViewModel, Serializable{
         this.id = id;
     }
 
-    public String getCode() {
-        return code;
+    public List<String> getTags() {
+        return tags;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 
     public String getVoucherNo() {
@@ -162,6 +158,4 @@ public class VoucherViewModel implements ViewModel, Serializable{
         this.topic = topic;
     }
 
-    
-    
 }

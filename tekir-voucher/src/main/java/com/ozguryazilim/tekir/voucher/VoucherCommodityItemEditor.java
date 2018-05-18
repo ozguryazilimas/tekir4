@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ozguryazilim.tekir.voucher;
 
 import com.ozguryazilim.tekir.entities.Commodity;
@@ -42,16 +37,15 @@ public class VoucherCommodityItemEditor implements Serializable{
         this.listener = listener;
         
         Map<String, Object> options = new HashMap<>();
-        
         decorateDialog(options);
-        
         RequestContext.getCurrentInstance().openDialog(getDialogName(), options, null);
     }
 
     
     public void closeDialog() {
-        //Aslında burada kendini çağıran VoucherHome instance'a bir mesaj fırlatmak lazım.
-        //Ya da en azından callback yapmak lazım Bunun için de buraya parametre olarak bean ismi ya da belli bir interface'i implemente eden biş ialabiliriz sanki.
+        // Aslında burada kendini çağıran VoucherHome instance'a bir mesaj fırlatmak lazım.
+        // Ya da en azından callback yapmak lazım Bunun için de buraya parametre olarak bean ismi ya da belli bir
+        // interface'i implemente eden bişi alabiliriz sanki.
         listener.saveItem(item);
         RequestContext.getCurrentInstance().closeDialog(null);
     }
@@ -134,10 +128,5 @@ public class VoucherCommodityItemEditor implements Serializable{
     public void onDiscountRateChange() {
         item.setDiscount(item.getTotal().multiply(BigDecimal.valueOf(item.getDiscountRate())).divide(BigDecimal.valueOf(100), MathContext.DECIMAL32));
         item.setLineTotal( item.getTotal().subtract(item.getDiscount()));
-        
     }
-    
-    
-    
-    
 }

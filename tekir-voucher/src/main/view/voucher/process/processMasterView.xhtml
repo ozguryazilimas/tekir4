@@ -50,7 +50,10 @@
                     
                     <ui:include src="/activities/activityWidget.xhtml">
                         <ui:param name="readonly" value="true" />
-                        <ui:param name="corporation" value="#{processHome.entity.account}" />
+                        <ui:param name="person"
+                                  value="#{processHome.entity.account.contactRoles.contains('PERSON') eq true ? processHome.entity.account : null}"/>
+                        <ui:param name="corporation"
+                                  value="#{processHome.entity.account.contactRoles.contains('CORPORATION') eq true ? processHome.entity.account : null}"/>
                         <ui:param name="feature" value="#{processHome.featurePointer}" />
                         <ui:param name="attached" value="Feature" />
                     </ui:include>

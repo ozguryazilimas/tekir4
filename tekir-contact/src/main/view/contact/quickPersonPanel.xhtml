@@ -18,7 +18,14 @@
                 <div class="row">
                     <t:inputText id="aaaa1" label="general.label.FirstName" value="#{bean.entity.firstName}" columnClass="col-sm-6" required="true"/>
                     <t:inputText id="aaaa2" label="general.label.LastName" value="#{bean.entity.lastName}" columnClass="col-sm-6" required="true"/>
-                </div>  
+                </div>
+
+                <div class="row">
+                    <t:inputText label="contact.label.UseName"
+                                 value="#{bean.entity.useName}" columnClass="col-xs-6"/>
+                    <t:inputEnum itemLabel="gender." hasNullValue="false" columnClass="col-xs-6"
+                                 value="#{bean.entity.gender}" label="contact.label.Gender"/>
+                </div>
 
                 <div class="row">
                     <t:inputPhone id="aaaa3" label="contact.label.PrimaryMobile" value="#{bean.mobile}" columnClass="col-sm-6" required="false"/>

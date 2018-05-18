@@ -13,6 +13,7 @@ import com.ozguryazilim.tekir.voucher.VoucherViewModel;
 import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -28,8 +29,13 @@ public class FinanceAccountVirementViewModel extends VoucherViewModel{
     private BigDecimal toAmount = BigDecimal.ZERO;
     private VirementType virementType = VirementType.VIREMENT;
 
-    public FinanceAccountVirementViewModel(Long id, VirementType virementType, FinanceAccount fromAccount, FinanceAccount toAccount, Currency fromCurrency, Currency toCurrency, BigDecimal fromAmount, BigDecimal toAmount, String code, String voucherNo, String info, String referenceNo, Date date, String owner, VoucherState state, String stateReason, String stateInfo, VoucherGroup group, String topic) {
-        super(id, code, voucherNo, info, referenceNo, date, owner, state, stateReason, stateInfo, group, topic);
+    public FinanceAccountVirementViewModel(Long id, VirementType virementType, FinanceAccount fromAccount,
+										   FinanceAccount toAccount, Currency fromCurrency, Currency toCurrency,
+										   BigDecimal fromAmount, BigDecimal toAmount, List<String> tags,
+										   String voucherNo, String info, String referenceNo, Date date, String owner,
+										   VoucherState state, String stateReason, String stateInfo, VoucherGroup group,
+										   String topic) {
+        super(id, tags, voucherNo, info, referenceNo, date, owner, state, stateReason, stateInfo, group, topic);
         this.fromAccount = fromAccount;
         this.toAccount = toAccount;
         this.fromCurrency = fromCurrency;
