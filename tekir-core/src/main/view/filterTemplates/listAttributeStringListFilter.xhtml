@@ -4,6 +4,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
 
+    <h:outputStylesheet library="filterTemplates" name="tagfilter.css" target="head"/>
     <div class="col-xs-12">
         <h:outputText value="#{messages[filter.labelKey]}" style="font-weight: bold;"/>
     </div>
@@ -17,11 +18,16 @@
     <div class="col-xs-12">
         <div class="row">
             <h:panelGroup id="strInput#{idprefix}" layout="block" styleClass="col-xs-12">
-                <h:selectManyListbox id="enumINP#{idprefix}" value="#{filter.values}" style="width: 100%"
-                                     rendered="#{filter.operand ne 'All' and filter.operand ne 'None'}">
+                <p:selectCheckboxMenu id="enumINP#{idprefix}"
+                                      label="#{messages[filter.labelKey]}"
+                                      value="#{filter.values}"
+                                      style="width: 100%"
+                                      rendered="#{filter.operand ne 'All' and filter.operand ne 'None'}"
+                                      styleClass="tag-filter"
+                                      panelStyleClass="tag-filter-panel">
                     <f:selectItems value="#{filter.valueList}" var="item"
                                    itemLabel="#{messages[ ''.concat( filter.keyPrefix ).concat( item )]}"/>
-                </h:selectManyListbox>
+                </p:selectCheckboxMenu>
             </h:panelGroup>
         </div>
     </div>

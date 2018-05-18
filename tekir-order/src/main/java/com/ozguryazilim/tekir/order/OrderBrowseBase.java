@@ -50,7 +50,7 @@ public abstract class OrderBrowseBase<E extends Order, V extends VoucherProcessV
                 .addColumn(new MoneyColumn<>(Order_.total, PurchaseOrder_.currency, "general.label.Total"), true)
                 .addColumn(new UserColumn<>(VoucherBase_.owner, "voucher.label.Owner"), true)
                 .addColumn(new TextColumn<>(VoucherBase_.referenceNo, "voucher.label.ReferenceNo"), false)
-                .addColumn(new TagColumn<>("tags", "voucher.label.Tag"), false)
+                .addColumn(new TagColumn<>("tags", "general.label.Tag"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.info, "voucher.label.Info"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.stateReason, "voucher.label.StateReason"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.stateInfo, "voucher.label.StateInfo"), false)

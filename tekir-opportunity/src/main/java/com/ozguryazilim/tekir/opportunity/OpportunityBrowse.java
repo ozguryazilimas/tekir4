@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.tekir.opportunity;
 
+import com.ozguryazilim.tekir.core.query.columns.TagColumn;
 import com.ozguryazilim.tekir.core.query.filter.TagFilter;
 import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.tekir.entities.Opportunity;
@@ -58,7 +59,7 @@ public class OpportunityBrowse extends VoucherBrowseBase<Opportunity, Opportunit
                 .addColumn(new MoneyColumn<>(Opportunity_.budget, Opportunity_.currency, "opportunity.label.Budget"), true)
                 .addColumn(new UserColumn<>(Opportunity_.owner, "voucher.label.Owner"), true)
                 .addColumn(new TextColumn<>(Opportunity_.referenceNo, "voucher.label.ReferenceNo"), false)
-                //FIXME: .addColumn(new TextColumn<>(Opportunity_.code, "voucher.label.Code"), false)
+                .addColumn(new TagColumn<>("tags", "general.label.Tag"), false)
                 .addColumn(new TextColumn<>(Opportunity_.info, "voucher.label.Info"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.stateReason, "voucher.label.StateReason"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.stateInfo, "voucher.label.StateInfo"), false)

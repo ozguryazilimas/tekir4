@@ -37,7 +37,6 @@ public abstract class VoucherCommodityItemBase<E extends VoucherBase> extends En
     @Column(name = "INFO")
     private String info;
 
-
     @Embedded
     @AttributeOverrides({
         @AttributeOverride(name = "amount", column = @Column(name = "QTY_AMT")),
