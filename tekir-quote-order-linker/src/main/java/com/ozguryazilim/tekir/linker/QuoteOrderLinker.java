@@ -15,6 +15,8 @@ import com.ozguryazilim.telve.messages.FacesMessages;
 import java.io.Serializable;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+
+import com.ozguryazilim.telve.messages.Messages;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,9 +77,8 @@ public class QuoteOrderLinker implements VoucherRedirectHandler, Serializable{
                 }
                 
                 salesOrderHome.calculateSummaries();
-                
-                //FIXME: i18n
-                FacesMessages.info("Kutlarız. Teklif Kabul edildi!", "" + entity.getVoucherNo() + " " + entity.getTopic() + " teklif için şipariş hazırlanacak!");
+
+                FacesMessages.info("feeder.messages.QuoteFeeder.WON", Messages.getMessage("feeder.messages.QuoteFeeder.WonDetail", entity.getVoucherNo(), entity.getTopic()));
                 return result;
             }
         }

@@ -59,8 +59,8 @@ public class LeadHome extends VoucherFormBase<Lead> {
 			if (getEntity().getRelatedPersonName().isEmpty() || getEntity().getRelatedPersonSurname().isEmpty()
 					|| getEntity().getRelatedCompanyName().isEmpty()) {
 
-				FacesMessages.warn("Bazı mecburi alanlar eksik olduğu için ipucunu kazanamıyorsunuz.",
-						"Bu alanlar şahıs adı, soyadı veya şirket isminden hepsi veya birkaçı olabilir.");
+				FacesMessages.warn("lead.messages.CantWin",
+						"lead.messages.CantWinDetail");
 
 				return false;
 			}

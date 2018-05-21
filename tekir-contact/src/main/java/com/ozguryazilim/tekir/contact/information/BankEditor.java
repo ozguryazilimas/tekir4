@@ -85,7 +85,7 @@ public class BankEditor extends AbstractContactInformationEditor<ContactBank> {
 
     @Override
     public String getEditorCaption() {
-        return "Bank Editor - i18n";
+        return "bankEditor.label.Title";
     }
 
     @Override

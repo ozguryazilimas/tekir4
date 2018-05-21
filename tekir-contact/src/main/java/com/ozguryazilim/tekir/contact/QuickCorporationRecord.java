@@ -14,6 +14,7 @@ import com.ozguryazilim.tekir.entities.ContactPhone;
 import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.messages.FacesMessages;
+import com.ozguryazilim.telve.messages.Messages;
 import com.ozguryazilim.telve.quick.QuickRecord;
 import com.ozguryazilim.telve.quick.QuickRecordBase;
 import javax.inject.Inject;
@@ -111,11 +112,10 @@ public class QuickCorporationRecord extends QuickRecordBase{
             repository.save(getEntity());
             
             //FIXME: Feeder çalıştırılmalı
-            //FIXME: i18n
-            FacesMessages.info("Yeni Kurum Kaydı Başarılı", getEntity().getName() + " isimli kurum kaydedildi.");
+            FacesMessages.info("contact.messages.CorporationSuccessfullySaved", Messages.getMessage("contact.messages.CorporationSuccessfullySavedDetail", getEntity().getName()));
             return true;
         } catch (Exception e ){
-            FacesMessages.error("Hata oluştu", e.getLocalizedMessage());
+            FacesMessages.error("contact.messages.SaveFailed", e.getLocalizedMessage());
             return false;
         }
     }

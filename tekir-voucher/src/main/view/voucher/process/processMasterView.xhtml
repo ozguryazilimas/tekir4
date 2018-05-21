@@ -7,7 +7,7 @@
 
     <ui:define name="content">
         <div class="row">
-            <t:accordion icon="fa fa-file" id="cx" label="general.label.ReleatedVouchers" columnClass="col-md-8" contentClass="">
+            <t:accordion icon="fa fa-file" id="cx" label="general.label.RelatedVouchers" columnClass="col-md-8" contentClass="">
                 <div class="table-responsive no-padding">
                     <table class="table table-condensed table-hover">
                         <tr>
@@ -50,7 +50,10 @@
                     
                     <ui:include src="/activities/activityWidget.xhtml">
                         <ui:param name="readonly" value="true" />
-                        <ui:param name="corporation" value="#{processHome.entity.account}" />
+                        <ui:param name="person"
+                                  value="#{processHome.entity.account.contactRoles.contains('PERSON') eq true ? processHome.entity.account : null}"/>
+                        <ui:param name="corporation"
+                                  value="#{processHome.entity.account.contactRoles.contains('CORPORATION') eq true ? processHome.entity.account : null}"/>
                         <ui:param name="feature" value="#{processHome.featurePointer}" />
                         <ui:param name="attached" value="Feature" />
                     </ui:include>

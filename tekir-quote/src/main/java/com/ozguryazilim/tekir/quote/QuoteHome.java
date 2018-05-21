@@ -109,7 +109,7 @@ public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodit
 	@Override
 	public boolean onAfterLoad() {
 		if (!getEntity().getAccount().getContactRoles().contains("ACCOUNT")) {
-			FacesMessages.warn("Seçtiğiniz bağlantı bir Cari değil!", "Bağlantıyı cariye dönüştürmek ister misiniz?");
+			FacesMessages.warn("facesMessages.contact.NotAccount", "facesMessages.contact.NotAccountDetail");
 		}
 		return super.onAfterLoad(); // To change body of generated methods,
 									// choose Tools | Templates.
@@ -188,7 +188,7 @@ public class QuoteHome extends VoucherFormBase<Quote> implements VoucherCommodit
 		getEntity().setProcess(null);
 
 		if (!account.getContactRoles().contains("ACCOUNT")) {
-			FacesMessages.warn("Seçtiğiniz bağlantı bir Cari değil!", "Bağlantıyı cariye dönüştürmek ister misiniz?");
+			FacesMessages.warn("facesMessages.contact.NotAccount", "facesMessages.contact.NotAccountDetail");
 		}
 	}
 

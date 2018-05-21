@@ -7,6 +7,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.google.common.base.Strings;
@@ -66,10 +67,12 @@ public abstract class VoucherGroupTxnRepository extends RepositoryBase<VoucherGr
 	//public abstract List<VoucherGroupTxn> findByGroupId(VoucherGroup voucherGroup);
 	
 	public List<VoucherGroupTxn> findByGroupId(VoucherGroup voucherGroup){
-		Criteria<VoucherGroupTxn, VoucherGroupTxn> cr = criteria();
-		cr.eq(VoucherGroupTxn_.group,voucherGroup); 
-		return cr.createQuery().getResultList();
-
+	    if (voucherGroup != null){
+            Criteria<VoucherGroupTxn, VoucherGroupTxn> cr = criteria();
+            cr.eq(VoucherGroupTxn_.group,voucherGroup);
+            return cr.createQuery().getResultList();
+        }
+        return Collections.emptyList();
 	}
 
 	@Override

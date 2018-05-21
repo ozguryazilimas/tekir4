@@ -90,7 +90,7 @@ public class EmployeeHome extends FormBase<Employee, Long> {
         
         //FIXME: Burayı generic bir hale getirmek lazım                
         if( !identity.isPermitted("employee:select:" + getEntity().getOwner())){
-            FacesMessages.error("Kayda erişim için yetkiniz yok!");
+            FacesMessages.error("facesMessages.error.NoPermission");
             createNew();
             viewNavigationHandler.navigateTo(EmployeePages.EmployeeBrowse.class);
             return false;

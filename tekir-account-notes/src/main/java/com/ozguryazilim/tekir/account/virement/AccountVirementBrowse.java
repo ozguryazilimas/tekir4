@@ -5,6 +5,8 @@
  */
 package com.ozguryazilim.tekir.account.virement;
 
+import com.ozguryazilim.tekir.core.query.columns.TagColumn;
+import com.ozguryazilim.tekir.core.query.filter.TagFilter;
 import com.ozguryazilim.tekir.entities.AccountVirement;
 import com.ozguryazilim.tekir.entities.AccountVirement_;
 import com.ozguryazilim.tekir.entities.Contact_;
@@ -54,7 +56,7 @@ public class AccountVirementBrowse extends VoucherBrowseBase<AccountVirement, Ac
                 .addColumn(new SubTextColumn<>(AccountVirement_.fromAccount, Contact_.name, "general.label.FromAccount"), true)
                 .addColumn(new SubTextColumn<>(AccountVirement_.toAccount, Contact_.name, "general.label.ToAccount"), true)
                 .addColumn(new TextColumn<>(VoucherBase_.info, "general.label.Info"), true)
-                .addColumn(new TextColumn<>(VoucherBase_.code, "general.label.Code"), false)
+                .addColumn(new TagColumn<>("tags", "general.label.Tag"), false)
                 .addColumn(new VoucherStateColumn<>( VoucherBase_.state, "general.label.State"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.referenceNo, "voucher.label.ReferenceNo"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.stateReason, "voucher.label.StateReason"), false)
@@ -64,7 +66,7 @@ public class AccountVirementBrowse extends VoucherBrowseBase<AccountVirement, Ac
                 
         queryDefinition
                 .addFilter(new StringFilter<>(VoucherBase_.voucherNo, "voucher.label.VoucherNo"))
-                .addFilter(new StringFilter<>(VoucherBase_.code, "voucher.label.Code"))
+                .addFilter(new TagFilter<>("tags", "general.label.Tag","AccountVirement"))
                 .addFilter(new StringFilter<>(VoucherBase_.info, "voucher.label.Info"))
                 .addFilter(new StringFilter<>(VoucherBase_.topic, "voucher.label.Topic"))
                 .addFilter(new VoucherStateFilter<>(VoucherBase_.state, getHome().getStateConfig().getStates(), "general.label.State"))

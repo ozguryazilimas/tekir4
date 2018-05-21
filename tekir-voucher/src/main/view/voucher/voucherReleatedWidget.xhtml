@@ -6,7 +6,7 @@
                 xmlns:p="http://primefaces.org/ui">
 
 
-    <t:accordion icon="fa fa-files" id="vrvW" label="general.label.ReleatedVouchers" columnClass="#{columnClass}" contentClass="">
+    <t:accordion icon="fa fa-files" id="vrvW" label="general.label.RelatedVouchers" columnClass="#{columnClass}" contentClass="">
 
         <f:facet name="toolbar">
 
@@ -15,7 +15,8 @@
                     <i class="fa fa-filter"/>
                     #{messages['voucher.filter.'.concat(voucherReleatedWidget.filter)]}
                     <h:outputText value="[#{processNo}]" rendered="#{voucherReleatedWidget.filter eq 'PROCESS'}" />
-                    <h:outputText value="[#{groupNo}]" rendered="#{voucherReleatedWidget.filter eq 'GROUP'}" />
+                    <h:outputText value="[#{group.groupNo}]"
+                                  rendered="#{voucherReleatedWidget.filter eq 'GROUP'}"/>
                     <i class="fa fa-caret-down"/>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right" arai-labeledby="actDropMenu2" style="z-index: 5000">
@@ -29,8 +30,9 @@
                         <p:commandLink action="#{voucherReleatedWidget.setFilter('PROCESS')}" process="@this" update=":vrvW" rendered="#{not empty processNo }">
                             #{messages['voucher.filter.PROCESS']} [#{processNo}]
                         </p:commandLink>
-                        <p:commandLink action="#{voucherReleatedWidget.setFilter('GROUP')}" process="@this" update=":vrvW" rendered="#{not empty groupNo }">
-                            #{messages['voucher.filter.GROUP']} [#{groupNo}]
+                        <p:commandLink action="#{voucherReleatedWidget.setFilter('GROUP')}"
+                                       process="@this" update=":vrvW" rendered="#{group ne null }">
+                            #{messages['voucher.filter.GROUP']} [#{group.groupNo}]
                         </p:commandLink>
                     </li>
 
@@ -72,7 +74,22 @@
         </ui:fragment>
 
         <ui:fragment rendered="#{voucherReleatedWidget.filter eq 'ALL' or voucherReleatedWidget.filter eq 'GROUP'}">
-            <!-- Grup Fişleri Yapılacak -->
+            <ul class="products-list product-list-in-box">
+                <ui:repeat value="#{voucherGroupTxnService.getGroupVouchers(group)}" var="ci">
+                    <li class="item">
+                        <t:cellOutputFeatureLink
+                                value="#{featureController.getFeatureLink(ci.feature)}"
+                                columnClass="col-xs-12"/>
+
+                        <span class="text-muted pull-right">#{ci.group.groupNo}</span>
+
+                        <div class="text-sm">
+                            #{ci.topic}
+                        </div>
+
+                    </li>
+                </ui:repeat>
+            </ul>
         </ui:fragment>
     </t:accordion>
 

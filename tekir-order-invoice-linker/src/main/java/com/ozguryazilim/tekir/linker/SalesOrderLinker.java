@@ -20,6 +20,8 @@ import com.ozguryazilim.telve.messages.FacesMessages;
 import java.io.Serializable;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+
+import com.ozguryazilim.telve.messages.Messages;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,9 +86,8 @@ public class SalesOrderLinker implements VoucherRedirectHandler, Serializable{
                 }
                 
                 invoiceHome.calculateSummaries();
-                
-                //FIXME: i18n
-                FacesMessages.info("Kutlarız. Sipariş tamamlandı!", "" + entity.getVoucherNo() + " " + entity.getTopic() + " şipariş için fatura girişi yapılacak!");
+
+                FacesMessages.info("orderInvoice.messages.OrderSuccessful", Messages.getMessage("orderInvoice.messages.invoice.CREATE", entity.getVoucherNo(), entity.getTopic()));
                 return result;
             }
         }

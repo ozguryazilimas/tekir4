@@ -25,15 +25,15 @@
         <t:accordion label="general.label.Regarding" columnClass="col-md-4">
 
             <div class="row">
-                <t:inputLookupDialog label="general.label.Person" value="#{activityHome.entity.person}" lookupBean="#{contactLookup}" lookupListener="activityHome.entity.person" placeholder="#{messages['contact.info.Person']}" lookupProfile="T:Person" columnClass="col-sm-6"/>
-                <t:inputLookupDialog label="general.label.Corporation" value="#{activityHome.entity.corporation}" lookupBean="#{contactLookup}" lookupListener="activityHome.entity.corporation" placeholder="#{messages['general.info.Corparation']}" lookupProfile="T:Corporation" columnClass="col-sm-6"/>
+                <t:inputLookupDialog label="general.label.Person" value="#{activityHome.entity.person}" lookupBean="#{contactLookup}" lookupListener="activityHome.entity.person" placeholder="#{messages['general.label.Person']}" lookupProfile="T:Person" columnClass="col-sm-6"/>
+                <t:inputLookupDialog label="general.label.Corporation" value="#{activityHome.entity.corporation}" lookupBean="#{contactLookup}" lookupListener="activityHome.entity.corporation" placeholder="#{messages['general.info.Corporation']}" lookupProfile="T:Corporation" columnClass="col-sm-6"/>
                 <t:inputFeature label="activity.label.Regarding" value="#{activityHome.entity.regarding}" lookupBean="#{tekirFeatureLookup}" lookupListener="activityHome.entity.regarding" columnClass="col-sm-6"/>
                 <t:inputUser label="general.label.Assignee" value="#{activityHome.entity.assignee}" hasNotSelected="true" required="true"  columnClass="col-sm-6"/>
             </div>
 
 
             <p:dataTable id="mentions" value="#{activityHome.entity.mentions}" var="mention" style="margin-top: 10px;" rowIndexVar="rowKey">
-                <p:column headerText="general.label.Regardings">
+                <p:column headerText="#{messages['general.label.Regardings']}">
                     #{mention.featurePointer.businessKey}
                 </p:column>
                 <p:column styleClass="actionColumn">

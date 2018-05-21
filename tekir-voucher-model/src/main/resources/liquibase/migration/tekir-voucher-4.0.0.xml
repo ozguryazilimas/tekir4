@@ -136,4 +136,14 @@
     <changeSet author="oktay (generated)" id="1500022081320-3">
         <addForeignKeyConstraint baseColumnNames="GROUP_ID" baseTableName="TVO_GROUP_TXN" constraintName="FK_TVOTXN_TVO" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TVO_GROUP"/>
     </changeSet>
+    <changeSet author="soner.cirit" id="1526381007356-1">
+        <addUniqueConstraint
+            tableName="TVO_PROCESS"
+            columnNames="PROCESS_NO"/>
+    </changeSet>
+    <changeSet author="soner.cirit" id="1526381007356-2">
+        <addUniqueConstraint
+            tableName="TVO_GROUP"
+            columnNames="GROUP_NO"/>
+    </changeSet>
 </databaseChangeLog>

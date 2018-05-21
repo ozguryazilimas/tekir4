@@ -10,7 +10,7 @@
     <ui:param name="bean" value="#{quickContactSetRecord}" />
 
     <ui:define name="header-info">
-        <div class="text-sm text-muted"><i class="fa fa-info margin-r-5"/>Aynı anda bir biri ile bağlantılı kişi ve kurum kartı oluşturur</div>
+        <div class="text-sm text-muted"><i class="fa fa-info margin-r-5"/>#{messages['quickRecord.desc.quickContactSetRecord']}</div>
     </ui:define>
     <ui:define name="content">
         <div class="row">
@@ -47,7 +47,7 @@
                 </div>  
                 <div class="row">
                     
-                    <t:inputLookupDialog label="contact.label.CorparationType" value="#{quickContactSetRecord.corporationType}" lookupBean="#{corporationTypeLookup}" lookupListener="quickContactSetRecord.corporationType" placeholder="#{messages['contact.info.CorporationType']}" />
+                    <t:inputLookupDialog label="contact.label.CorporationType" value="#{quickContactSetRecord.corporationType}" lookupBean="#{corporationTypeLookup}" lookupListener="quickContactSetRecord.corporationType" placeholder="#{messages['contact.info.CorporationType']}" />
                     <t:inputLookupDialog label="general.label.Category" value="#{quickContactSetRecord.category}" lookupBean="#{contactCategoryLookup}" lookupListener="quickContactSetRecord.category" placeholder="#{messages['general.info.Category']}" />
                     <ui:remove>
                     <t:inputText label="general.label.Code" value="#{bean.code}" columnClass="col-md-6" required="true"/>
