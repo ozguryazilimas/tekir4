@@ -140,7 +140,7 @@ public class ListAttributeStringListFilter<E> extends Filter<E, String, String> 
             List<String> values = Splitter.on(",").trimResults().splitToList(ls.get(1));
             setValues(values);
         } else {
-            setValue(null
+            setValues(null
             );
         }
     }
