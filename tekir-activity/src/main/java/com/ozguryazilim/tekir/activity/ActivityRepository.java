@@ -54,10 +54,8 @@ public abstract class ActivityRepository extends RepositoryBase<Activity, Activi
         //Geriye Activity dönecek cq'yu ona göre oluşturuyoruz.
         CriteriaQuery<Activity> criteriaQuery = criteriaBuilder.createQuery(Activity.class);
 
-
         //From
         Root<Activity> from = criteriaQuery.from(Activity.class);
-
 
         //Sonuç filtremiz : Sınıfın kendisi dönecek zati
         //buildVieModelSelect(criteriaQuery, from);
@@ -128,29 +126,8 @@ public abstract class ActivityRepository extends RepositoryBase<Activity, Activi
         Criteria<Activity, Activity> crit = criteria()
                 .eq(Activity_.person, person)
                 .orderDesc(Activity_.dueDate);
-
-        switch (filter) {
-            case MINE:
-                crit.eq(Activity_.assignee, identity.getLoginName());
-                break;
-            case OVERDUE:
-                crit.gt(Activity_.dueDate, new Date());
-                break;
-            case SCHEDULED:
-                crit.eq(Activity_.status, ActivityStatus.SCHEDULED);
-                break;
-            case SUCCESS:
-                crit.eq(Activity_.status, ActivityStatus.SUCCESS);
-                break;
-            case FAILED:
-                crit.eq(Activity_.status, ActivityStatus.FAILED);
-                break;
-            case FOLLOWUP:
-                break; //TODO:
-        }
-
+        applyFilter(crit,filter);
         //Criteria üzerinde pagein limit yok
-
         return crit.createQuery().setMaxResults(5).getResultList();
 
     }
@@ -166,30 +143,9 @@ public abstract class ActivityRepository extends RepositoryBase<Activity, Activi
                 .eq(Activity_.corporation, corporation)
                 .orderDesc(Activity_.dueDate);
 
-        switch (filter) {
-            case MINE:
-                crit.eq(Activity_.assignee, identity.getLoginName());
-                break;
-            case OVERDUE:
-                crit.gt(Activity_.dueDate, new Date());
-                break;
-            case SCHEDULED:
-                crit.eq(Activity_.status, ActivityStatus.SCHEDULED);
-                break;
-            case SUCCESS:
-                crit.eq(Activity_.status, ActivityStatus.SUCCESS);
-                break;
-            case FAILED:
-                crit.eq(Activity_.status, ActivityStatus.FAILED);
-                break;
-            case FOLLOWUP:
-                break; //TODO:
-        }
-
+        applyFilter(crit, filter);
         //Criteria üzerinde pagein limit yok
-
         return crit.createQuery().setMaxResults(5).getResultList();
-
     }
 
     /**
@@ -203,30 +159,9 @@ public abstract class ActivityRepository extends RepositoryBase<Activity, Activi
                 .eq(Activity_.regarding, featurePointer)
                 .orderDesc(Activity_.dueDate);
 
-
-        switch (filter) {
-            case MINE:
-                crit.eq(Activity_.assignee, identity.getLoginName());
-                break;
-            case OVERDUE:
-                crit.gt(Activity_.dueDate, new Date());
-                break;
-            case SCHEDULED:
-                crit.eq(Activity_.status, ActivityStatus.SCHEDULED);
-                break;
-            case SUCCESS:
-                crit.eq(Activity_.status, ActivityStatus.SUCCESS);
-                break;
-            case FAILED:
-                crit.eq(Activity_.status, ActivityStatus.FAILED);
-                break;
-            case FOLLOWUP:
-                break; //TODO:
-        }
-
+        applyFilter(crit, filter);
         //Criteria üzerinde pagein limit yok
         return crit.createQuery().setMaxResults(5).getResultList();
-
     }
 
 
@@ -245,7 +180,12 @@ public abstract class ActivityRepository extends RepositoryBase<Activity, Activi
                 )
                 .orderDesc(Activity_.dueDate);
 
+        applyFilter(crit, filter);
+        //Criteria üzerinde pagein limit yok
+        return crit.createQuery().setMaxResults(5).getResultList();
+    }
 
+    private void applyFilter(Criteria<Activity, Activity> crit, ActivityWidgetFilter filter) {
         switch (filter) {
             case MINE:
                 crit.eq(Activity_.assignee, identity.getLoginName());
@@ -265,10 +205,6 @@ public abstract class ActivityRepository extends RepositoryBase<Activity, Activi
             case FOLLOWUP:
                 break; //TODO:
         }
-
-        //Criteria üzerinde pagein limit yok
-        return crit.createQuery().setMaxResults(5).getResultList();
-
     }
 
     public List<Activity> findForCalendarSource(String assignee, Date beginDate, Date endDate, Class<? extends Activity> clazz, Boolean showClocedEvents) {
@@ -277,10 +213,8 @@ public abstract class ActivityRepository extends RepositoryBase<Activity, Activi
         //Geriye Activity dönecek cq'yu ona göre oluşturuyoruz.
         CriteriaQuery<Activity> criteriaQuery = criteriaBuilder.createQuery(Activity.class);
 
-
         //From
         Root<Activity> from = criteriaQuery.from(Activity.class);
-
 
         //Sonuç filtremiz : Sınıfın kendisi dönecek zati
         //buildVieModelSelect(criteriaQuery, from);
@@ -299,13 +233,11 @@ public abstract class ActivityRepository extends RepositoryBase<Activity, Activi
         //Oluşan filtreleri sorgumuza ekliyoruz
         criteriaQuery.where(predicates.toArray(new Predicate[]{}));
 
-
         //Haydi bakalım sonuçları alalım
         TypedQuery<Activity> typedQuery = entityManager().createQuery(criteriaQuery);
         List<Activity> resultList = typedQuery.getResultList();
 
         return resultList;
-
     }
 
     /**
