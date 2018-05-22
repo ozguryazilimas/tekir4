@@ -13,7 +13,7 @@ public class TekirHRModule {
     
     @PostConstruct
     public void init(){
-        ContactRoleRegistery.register("EMPLOYEE", false);
+        ContactRoleRegistery.register("EMPLOYEE", false, false);
     }
     
 }

@@ -1,11 +1,11 @@
 package com.ozguryazilim.tekir.contact;
 
 import com.ozguryazilim.tekir.contact.category.ContactCategoryLookup;
+import com.ozguryazilim.tekir.core.filters.ListAttributeStringListFilter;
 import com.ozguryazilim.tekir.core.industry.IndustryLookup;
 import com.ozguryazilim.tekir.core.territory.TerritoryLookup;
 import com.ozguryazilim.tekir.entities.ContactCategory_;
 import com.ozguryazilim.tekir.entities.Industry_;
-import com.ozguryazilim.tekir.entities.Territory_;
 import com.ozguryazilim.telve.forms.Browse;
 import com.ozguryazilim.telve.forms.BrowseBase;
 import com.ozguryazilim.telve.data.RepositoryBase;
@@ -17,12 +17,10 @@ import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.tekir.entities.ContactEMail_;
 import com.ozguryazilim.tekir.entities.ContactPhone_;
 import com.ozguryazilim.tekir.entities.Contact_;
-import com.ozguryazilim.telve.entities.EntityBase;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.query.columns.LinkColumn;
 import com.ozguryazilim.telve.query.columns.SubTextColumn;
 import com.ozguryazilim.telve.query.columns.TextColumn;
-import com.ozguryazilim.telve.query.filters.EntityDialogFilter;
 import com.ozguryazilim.telve.query.filters.EntityOverlayFilter;
 import com.ozguryazilim.telve.query.filters.StringFilter;
 import com.ozguryazilim.telve.query.filters.SubStringFilter;
@@ -61,6 +59,9 @@ public class ContactBrowse extends BrowseBase<Contact, ContactViewModel> {
                         IndustryLookup.class, "general.label.Industry"))
                     .addFilter(new EntityOverlayFilter<>(Contact_.territory, TerritoryLookup.class,
                         "general.label.Territory"))
+                    .addFilter(new ListAttributeStringListFilter<>("contactRoles",
+                        ContactRoleRegistery.getFilterableContactRoles(), "general.label.Tag",
+                        "contact.role."))
                     .addFilter(new UserFilter<>(Contact_.owner, "general.label.Owner"));
 
                 queryDefinition
