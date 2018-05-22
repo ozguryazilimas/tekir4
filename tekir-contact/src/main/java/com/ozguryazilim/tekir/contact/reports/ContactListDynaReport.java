@@ -8,14 +8,16 @@ import com.ozguryazilim.tekir.contact.ContactListModel;
 import com.ozguryazilim.tekir.contact.ContactRepository;
 import com.ozguryazilim.tekir.contact.config.ContactPages;
 import com.ozguryazilim.tekir.core.reports.TekirDynamicReportUtils;
+import com.ozguryazilim.tekir.core.view.InputTagController;
 import com.ozguryazilim.tekir.entities.AccountTxn;
-import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.telve.entities.FeaturePointer;
+import com.ozguryazilim.telve.entities.SuggestionItem;
 import com.ozguryazilim.telve.messages.Messages;
 import com.ozguryazilim.telve.query.filters.DateValueType;
 import com.ozguryazilim.telve.reports.DynamicReportBase;
 import com.ozguryazilim.telve.reports.Report;
 import com.ozguryazilim.telve.reports.ReportDate;
+import com.ozguryazilim.telve.suggestion.SuggestionRepository;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -23,6 +25,8 @@ import java.text.SimpleDateFormat;
 import java.util.Currency;
 import java.util.Date;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.stream.Collectors;
 import javax.inject.Inject;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.base.expression.AbstractSimpleExpression;
@@ -36,6 +40,7 @@ import net.sf.dynamicreports.report.definition.ReportParameters;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.apache.deltaspike.core.api.config.ConfigResolver;
+import org.apache.deltaspike.core.api.provider.BeanProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -88,7 +93,7 @@ public class ContactListDynaReport extends DynamicReportBase<ContactListFilter> 
 
         if (getFilter().getDetail()) {
             for (ContactListModel c : rows) {
-                List<AccountTxn> txnRows = txnRepository.findOpenTxnByContactId(c.getContactId());
+                List<AccountTxn> txnRows = txnRepository.findOpenTxnByContactId(c.getContactId(), getFilter());
                 c.setTxnList(txnRows);
             }
         }
@@ -134,6 +139,19 @@ public class ContactListDynaReport extends DynamicReportBase<ContactListFilter> 
         if (getFilter().getOwner() != null) {
             sb.append(Messages.getMessage("general.label.Owner")).append(" : ")
                 .append(getFilter().getOwner()).append('\n');
+        }
+        if (getFilter().getTag() != null || !getFilter().getTag().isEmpty()) {
+            sb.append(Messages.getMessage("general.label.Tag")).append(" : ");
+
+            ListIterator<String> iterator = getFilter().getTag().listIterator();
+            while (iterator.hasNext()) {
+                sb.append(iterator.next());
+                if (!iterator.hasNext()) {
+                    sb.append(".");
+                } else {
+                    sb.append(", ");
+                }
+            }
         }
 
         return sb.toString();
@@ -188,5 +206,12 @@ public class ContactListDynaReport extends DynamicReportBase<ContactListFilter> 
 
             return report;
         }
+    }
+
+    public List<String> getSuggestions() {
+        SuggestionRepository repository = BeanProvider
+            .getContextualReference(SuggestionRepository.class);
+        List<SuggestionItem> result = repository.findByGroup(InputTagController.SUGGESSTION_GROUP);
+        return result.stream().map(SuggestionItem::getData).distinct().collect(Collectors.toList());
     }
 }

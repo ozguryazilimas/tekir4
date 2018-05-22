@@ -39,8 +39,17 @@
                                  placeholder="#{messages['general.info.Territory']}"/>
             <t:inputUser value="#{contactListDynaReport.filter.owner}"
                          label="general.label.Owner" columnClass="col-xs-6"/>
-            <t:inputCheckbox itemLabel="general.label.Show" label="general.label.OpenTxn"
-                             value="#{contactListDynaReport.filter.detail}"/>
+            <t:inputCheckboxGroup label="general.label.OpenTxn">
+                <p:selectBooleanCheckbox itemLabel="#{messages['general.label.Show']}"
+                                         value="#{contactListDynaReport.filter.detail}">
+                    <p:ajax update=":reportForm:tag" event="change" process="@this"/>
+                </p:selectBooleanCheckbox>
+            </t:inputCheckboxGroup>
+            <h:panelGroup id="tag">
+                <t:selectTag label="general.label.Tag" value="#{contactListDynaReport.filter.tag}"
+                             rendered="#{contactListDynaReport.filter.detail}"
+                             suggestions="#{contactListDynaReport.suggestions}"/>
+            </h:panelGroup>
         </div>
     </ui:define>
 </ui:composition>

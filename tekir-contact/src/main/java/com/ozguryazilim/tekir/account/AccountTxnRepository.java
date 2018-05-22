@@ -7,6 +7,7 @@ package com.ozguryazilim.tekir.account;
 
 import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.account.reports.AccountStatusFilter;
+import com.ozguryazilim.tekir.contact.reports.ContactListFilter;
 import com.ozguryazilim.tekir.entities.AccountTxn;
 import com.ozguryazilim.tekir.entities.AccountTxn_;
 import com.ozguryazilim.tekir.entities.Contact;
@@ -282,7 +283,7 @@ public abstract class AccountTxnRepository extends
         
     }
 
-    public List<AccountTxn> findOpenTxnByContactId(Long contactId) {
+    public List<AccountTxn> findOpenTxnByContactId(Long contactId, ContactListFilter filter) {
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
         CriteriaQuery<AccountTxn> criteriaQuery = criteriaBuilder.createQuery(AccountTxn.class);
         Root<AccountTxn> from = criteriaQuery.from(AccountTxn.class);
@@ -298,6 +299,11 @@ public abstract class AccountTxnRepository extends
                 criteriaBuilder.like(from.get(AccountTxn_.status), "DRAFT%"),
                 criteriaBuilder.like(from.get(AccountTxn_.status), "OPEN%")
             ));
+
+        if (filter.getTag() != null && !filter.getTag().isEmpty()) {
+            filter.getTag().forEach(
+                tag -> predicates.add(criteriaBuilder.like(from.get("tags").as(String.class), "%|" + tag + "|%")));
+        }
 
         criteriaQuery.where(predicates.toArray(new Predicate[]{}));
 

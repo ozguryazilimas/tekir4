@@ -6,6 +6,7 @@ import com.ozguryazilim.tekir.entities.Industry;
 import com.ozguryazilim.tekir.entities.Territory;
 import com.ozguryazilim.telve.reports.ReportDate;
 import java.io.Serializable;
+import java.util.List;
 
 public class ContactListFilter implements Serializable {
 
@@ -17,6 +18,7 @@ public class ContactListFilter implements Serializable {
     private Territory territory;
     private String owner;
     private Boolean isDetail;
+    private List<String> tag;
     private ReportDate date;
 
     public String getCode() {
@@ -81,6 +83,14 @@ public class ContactListFilter implements Serializable {
 
     public void setDetail(Boolean detail) {
         isDetail = detail;
+    }
+
+    public List<String> getTag() {
+        return tag;
+    }
+
+    public void setTag(List<String> tag) {
+        this.tag = tag;
     }
 
     public ReportDate getDate() {
