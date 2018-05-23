@@ -49,7 +49,8 @@
 
                     <t:inputLookupDialog label="voucher.label.Group" value="#{homeBean.entity.group}" caption="topic" lookupBean="#{voucherGroupLookup}" lookupListener="homeBean.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" />
 
-                    <t:inputText label="general.label.Code" value="#{homeBean.entity.code}" />
+                    <t:inputTag label="general.label.Tag" value="#{homeBean.entity.tags}"
+                                key="Payment"/>
                     <t:inputTextarea label="general.label.Info" value="#{homeBean.entity.info}" columnClass="col-xs-12"/>
 
                 </div>
