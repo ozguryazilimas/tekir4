@@ -10,8 +10,9 @@ public class FeederUtils {
 	}
 
 	public static String getEventMessage(VoucherOwnerChange event) {
-		
-		return "feeder.messages.OwnerChanged$%&" + event.getFrom() + "$%&" + event.getTo();
+
+        return "feeder.messages.OwnerChanged$%&" + event.getPayload().getVoucherNo() + "$%&" +
+            event.getFrom() + "$%&" + event.getTo();
 	}
 
 }
