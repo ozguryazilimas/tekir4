@@ -60,8 +60,8 @@ public class ContactBrowse extends BrowseBase<Contact, ContactViewModel> {
                     .addFilter(new EntityOverlayFilter<>(Contact_.territory, TerritoryLookup.class,
                         "general.label.Territory"))
                     .addFilter(new ListAttributeStringListFilter<>("contactRoles",
-                        ContactRoleRegistery.getFilterableContactRoles(), "general.label.Tag",
-                        "contact.role."))
+                        ContactRoleRegistery.getFilterableContactRoles(),
+                        "contact.label.ContactRoles", "contact.role."))
                     .addFilter(new UserFilter<>(Contact_.owner, "general.label.Owner"));
 
                 queryDefinition
