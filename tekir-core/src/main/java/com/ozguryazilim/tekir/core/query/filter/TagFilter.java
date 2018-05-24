@@ -1,10 +1,9 @@
 package com.ozguryazilim.tekir.core.query.filter;
 
-import com.ozguryazilim.tekir.core.view.InputTagController;
-import com.ozguryazilim.telve.entities.SuggestionItem;
+import com.google.common.base.Joiner;
+import com.google.common.base.Splitter;
 import com.ozguryazilim.telve.query.filters.Filter;
 import com.ozguryazilim.telve.query.filters.FilterOperand;
-import com.ozguryazilim.telve.suggestion.SuggestionRepository;
 import org.apache.deltaspike.core.api.provider.BeanProvider;
 import org.apache.deltaspike.data.api.criteria.Criteria;
 
@@ -18,7 +17,6 @@ import javax.persistence.metamodel.Type;
 import java.lang.reflect.Member;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Etiketler için filre tanım modeli
@@ -28,7 +26,8 @@ import java.util.stream.Collectors;
  */
 public class TagFilter<E> extends Filter<E, List<String>, List<String>>{
 
-    private List<String> suggestions;
+    private String key;
+    private TagSuggestionService suggestionProvider;
 
     /**
      * @param attributeName Entity etiket alanı adı
@@ -37,23 +36,16 @@ public class TagFilter<E> extends Filter<E, List<String>, List<String>>{
      */
     public TagFilter(String attributeName, String label, String key) {
         super(null, label);
+        this.key = key;
         setAttribute(new MockSingularAttribute<>(attributeName));
         this.setOperands(Arrays.asList(FilterOperand.All, FilterOperand.Contains, FilterOperand.NotContains));
         this.setOperand(FilterOperand.Equal);
-        this.initSuggestions(key);
+        this.suggestionProvider = BeanProvider.getContextualReference(TagSuggestionService.class);
     }
 
 
-    private void initSuggestions(String key) {
-        SuggestionRepository repository = BeanProvider.getContextualReference(SuggestionRepository.class);
-        List<SuggestionItem> suggestionItems;
-        if ("*".equals(key)) {
-            suggestionItems = repository.findByGroup(InputTagController.SUGGESSTION_GROUP);
-            suggestions = suggestionItems.stream().map(SuggestionItem::getData).distinct().collect(Collectors.toList());
-        } else {
-            suggestionItems = repository.findByGroupAndKey(InputTagController.SUGGESSTION_GROUP, key);
-            suggestions = suggestionItems.stream().map(SuggestionItem::getData).collect(Collectors.toList());
-        }
+    public List<String> getSuggestions() {
+        return this.suggestionProvider.getSuggestions(this.key);
     }
 
     @Override
@@ -65,12 +57,6 @@ public class TagFilter<E> extends Filter<E, List<String>, List<String>>{
         List<String> tags = getValue();
         if (tags == null || tags.isEmpty()) return;
         Expression<String> tagsExp = root.get(this.getAttribute().getName()).as(String.class);
-
-        // tüm seçenekler seçilmiş
-        if (this.getOperand() == FilterOperand.Equal && tags.size() == suggestions.size()) {
-            return;
-        }
-
         switch (this.getOperand()) {
             case Contains:
                 tags.forEach(tag -> predicates.add(cb.like(tagsExp, "%|" + tag + "|%")));
@@ -88,21 +74,19 @@ public class TagFilter<E> extends Filter<E, List<String>, List<String>>{
 
     @Override
     public String serialize() {
-        return null;
+        Joiner joiner = Joiner.on("::");
+        String tags = joiner.join(this.getValue());
+        return joiner.join(this.getOperand(), tags);
     }
 
     @Override
     public void deserialize(String s) {
-
+        List<String> ls = Splitter.on("::").trimResults().splitToList(s);
+        String operand = ls.remove(0);
+        this.setOperand(FilterOperand.valueOf(operand));
+        this.setValue(ls);
     }
 
-    public List<String> getSuggestions() {
-        return suggestions;
-    }
-
-    public void setSuggestions(List<String> suggestions) {
-        this.suggestions = suggestions;
-    }
 
     class MockSingularAttribute<E> implements SingularAttribute<E, List<String>>{
 
