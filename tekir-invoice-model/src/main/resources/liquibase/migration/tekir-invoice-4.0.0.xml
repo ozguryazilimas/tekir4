@@ -83,4 +83,7 @@
             <column name="LINE_TOT_TAX" type="decimal(19, 2)"/>
         </addColumn>
     </changeSet>
+    <changeSet author="soner.cirit" id="20180529-1">
+        <modifyDataType columnName="TXNDATE" newDataType="date" tableName="TIV_INVOICE"/>
+    </changeSet>
 </databaseChangeLog>

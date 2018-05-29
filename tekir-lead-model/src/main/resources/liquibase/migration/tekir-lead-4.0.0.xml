@@ -108,4 +108,7 @@
     <changeSet author="hates" id="070520181118">
         <renameColumn tableName="TLE_LEAD" columnDataType="VARCHAR(2000)" newColumnName="TAGS" oldColumnName="CODE" />
     </changeSet>
+    <changeSet author="soner.cirit" id="20180529-1">
+        <modifyDataType columnName="TXNDATE" newDataType="date" tableName="TLE_LEAD"/>
+    </changeSet>
 </databaseChangeLog>

@@ -48,7 +48,7 @@ public class FinanceAccountTxn extends EntityBase {
      * Belgenin Düzenlenme Tarih Saati
      */
     @Column(name = "TXNDATE")
-    @Temporal(value = TemporalType.TIMESTAMP)
+    @Temporal(value = TemporalType.DATE)
     private Date date;
     
     /**
