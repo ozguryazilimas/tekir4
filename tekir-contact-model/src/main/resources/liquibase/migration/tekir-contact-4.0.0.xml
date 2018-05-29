@@ -311,18 +311,40 @@
         <dropColumn columnName="ROLES" tableName="TCC_CONTACT_REL_DEF"/>
     </changeSet>
     <changeSet author="hates" id="1505062932003-13">
-        <renameColumn newColumnName="REVERSE_NAME"
-                      oldColumnName="reversName"
-                      columnDataType="varchar(255)"
+        <renameColumn newColumnName="REVERSE_NAME" oldColumnName="reversName" columnDataType="varchar(255)"
                       tableName="TCC_CONTACT_REL_DEF"/>
-        <renameColumn newColumnName="VECTOR_NAME"
-                      oldColumnName="vectorName"
-                      columnDataType="varchar(255)"
+        <renameColumn newColumnName="VECTOR_NAME" oldColumnName="vectorName" columnDataType="varchar(255)"
                       tableName="TCC_CONTACT_REL_DEF"/>
     </changeSet>
     <changeSet author="ercan" id="1523955555006-1">
         <addColumn tableName="TCC_ACCOUNT_TXN">
             <column name="TOPIC" type="varchar(255)" />
         </addColumn>
+    </changeSet>
+    <changeSet author="soner.cirit" id="1526381007356-1">
+        <addUniqueConstraint
+            tableName="TCC_CONTACT"
+            columnNames="CODE"/>
+    </changeSet>
+    <changeSet author="soner.cirit" id="1526381007356-2">
+        <addUniqueConstraint
+            tableName="TCC_CONTACT_REL_DEF"
+            columnNames="CODE"/>
+    </changeSet>
+    <changeSet author="soner.cirit" id="1526381007356-3">
+        <addUniqueConstraint
+            tableName="TCC_CORP_TYPE"
+            columnNames="CODE"/>
+    </changeSet>
+    <changeSet author="soner.cirit" id="1526381007356-4">
+        <addUniqueConstraint
+            tableName="TCC_CONTACT_CAT"
+            columnNames="CODE"/>
+    </changeSet>
+    <changeSet author="hates" id="170520180957">
+        <renameColumn newColumnName="TAGS" oldColumnName="CODE" columnDataType="varchar(2000)"
+                      tableName="TCC_ACCOUNT_TXN"/>
+        <renameColumn newColumnName="TAGS" oldColumnName="CODE" columnDataType="varchar(2000)"
+                      tableName="TFN_FINANCE_TXN"/>
     </changeSet>
 </databaseChangeLog>

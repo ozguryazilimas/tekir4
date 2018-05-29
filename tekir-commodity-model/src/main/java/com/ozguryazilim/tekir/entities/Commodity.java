@@ -44,8 +44,8 @@ public class Commodity extends AuditBase{
     @Id @GeneratedValue( strategy = GenerationType.AUTO, generator="genericSeq")
     @Column(name="ID")
     private Long id;
-    
-    @Column(name = "CODE")
+
+    @Column(name = "CODE", unique = true)
     @NotNull
     private String code;
     

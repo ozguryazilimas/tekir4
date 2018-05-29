@@ -30,17 +30,24 @@ public class ContactRoleRegistery {
      * Kullanıcı tarafından seçilebilir olanlar.
      */
     private static final List<String> selectableContactRoles = new ArrayList<>();
-    
-    
+
+    /**
+     * Filtre icin kullanilacak olan roller
+     */
+    private static final List<String> filterableContactRoles = new ArrayList<>();
+
     /**
      * Verilen bağlantı rolünü sisteme register eder.
      * @param role
      * @param forUser bu rolün kullanıcı tarafından seçilip seçilemeyeceği
      */
-    public static void register(String role, boolean forUser) {
+    public static void register(String role, boolean forUser, boolean forFilter) {
         contactRoles.add(role);
         if( forUser ){
             selectableContactRoles.add(role);
+        }
+        if (forFilter) {
+            filterableContactRoles.add(role);
         }
     }
 
@@ -51,5 +58,8 @@ public class ContactRoleRegistery {
     public static List<String> getSelectableContactRoles() {
         return selectableContactRoles;
     }
-    
+
+    public static List<String> getFilterableContactRoles() {
+        return filterableContactRoles;
+    }
 }

@@ -71,7 +71,7 @@
                         <ui:param name="matchable"
                                   value="#{voucherMatcherService.findMatchableByFeature(quoteHome.featurePointer)}"/>
                         <ui:param name="processNo" value="#{quoteHome.entity.process.processNo}" />
-                        <ui:param name="groupNo" value="#{quoteHome.entity.group.groupNo}" />
+                        <ui:param name="group" value="#{quoteHome.entity.group}" />
                     </ui:include>
 
                     <ui:include src="/feeds/feedWidget.xhtml">

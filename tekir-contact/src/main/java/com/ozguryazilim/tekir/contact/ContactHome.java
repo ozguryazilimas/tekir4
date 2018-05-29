@@ -58,9 +58,6 @@ public class ContactHome extends FormBase<Contact, Long> {
     private RelatedContactRepository relatedContactRepository;
     
     @Inject
-    private PersonFeeder personFeeder;
-    
-    @Inject
     private AutoCodeService codeService;
     
     private List<String> selectedRoles = new ArrayList<>();
@@ -115,9 +112,6 @@ public class ContactHome extends FormBase<Contact, Long> {
 
     @Override
     public boolean onAfterSave() {
-        if( getEntity() instanceof AbstractPerson ){
-            personFeeder.feed((AbstractPerson) getEntity());
-        }
         return super.onAfterSave(); 
     }
     

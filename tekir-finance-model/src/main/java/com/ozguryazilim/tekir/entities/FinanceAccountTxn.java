@@ -5,12 +5,15 @@
  */
 package com.ozguryazilim.tekir.entities;
 
+import com.ozguryazilim.tekir.entites.converters.TagListConverter;
 import com.ozguryazilim.telve.entities.EntityBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -51,9 +54,9 @@ public class FinanceAccountTxn extends EntityBase {
     /**
      * Ek kod alanı. Raporlar v.s. için
      */
-    @Column(name="CODE", length=30)
-    @Size(max=30)
-    private String code;
+    @Column(name = "TAGS", length = 2000)
+    @Convert(converter = TagListConverter.class)
+    private List<String> tags;
     
     
     /**
@@ -142,12 +145,12 @@ public class FinanceAccountTxn extends EntityBase {
         this.date = date;
     }
 
-    public String getCode() {
-        return code;
+    public List<String> getTags() {
+        return tags;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 
     public String getInfo() {

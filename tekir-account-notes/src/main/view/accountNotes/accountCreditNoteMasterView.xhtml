@@ -23,7 +23,7 @@
                         <t:outputText label="voucher.label.ReferenceNo" value="#{accountCreditNoteHome.entity.referenceNo}" columnClass="col-sm-6"/>
                         <t:outputText label="voucher.label.Group" value="#{accountCreditNoteHome.entity.group.groupNo}" columnClass="col-sm-6"/>
                         <t:outputText label="voucher.label.Owner" value="#{userLookup.getUserName(accountCreditNoteHome.entity.owner)}" columnClass="col-sm-6"/>
-                        <t:outputText label="general.label.Code" value="#{accountCreditNoteHome.entity.code}" columnClass="col-sm-6"/>
+                        <t:outputTag label="general.label.Tag" value="#{accountCreditNoteHome.entity.tags}" columnClass="col-sm-6"/>
                         <t:outputDate label="voucher.label.Date" value="#{accountCreditNoteHome.entity.date}" columnClass="col-sm-6"/>
                     </t:accordion>
                 </div>

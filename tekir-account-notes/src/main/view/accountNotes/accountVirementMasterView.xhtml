@@ -23,7 +23,7 @@
                         <t:outputText label="voucher.label.ReferenceNo" value="#{accountVirementHome.entity.referenceNo}" columnClass="col-sm-6"/>
                         <t:outputText label="voucher.label.Group" value="#{accountVirementHome.entity.group.groupNo}" columnClass="col-sm-6"/>
                         <t:outputText label="voucher.label.Owner" value="#{userLookup.getUserName(accountVirementHome.entity.owner)}" columnClass="col-sm-6"/>
-                        <t:outputText label="general.label.Code" value="#{accountVirementHome.entity.code}" columnClass="col-sm-6"/>
+                        <t:outputTag label="general.label.Tag" value="#{accountVirementHome.entity.tags}" columnClass="col-sm-6"/>
                         <t:outputDate label="voucher.label.Date" value="#{accountVirementHome.entity.date}" columnClass="col-sm-6"/>
                     </t:accordion>
                 </div>
