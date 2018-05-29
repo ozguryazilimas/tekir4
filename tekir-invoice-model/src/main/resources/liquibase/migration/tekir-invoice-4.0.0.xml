@@ -86,4 +86,9 @@
     <changeSet author="soner.cirit" id="20180529-1">
         <modifyDataType columnName="TXNDATE" newDataType="date" tableName="TIV_INVOICE"/>
     </changeSet>
+    <changeSet author="sonercirit" id="20180529-2">
+        <addColumn tableName="TIV_INVOICE">
+            <column name="INV_TIME" type="time"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
