@@ -346,6 +346,11 @@ public abstract class ContactRepository
                 .add(criteriaBuilder.equal(from.get(Contact_.owner), filter.getOwner()));
         }
 
+        if (filter.getRoles() != null && !filter.getRoles().isEmpty()) {
+            filter.getRoles().forEach(role -> predicates.add(
+                criteriaBuilder.like(from.get("contactRoles").as(String.class), "%" + role + "%")));
+        }
+
         criteriaQuery.where(predicates.toArray(new Predicate[]{}));
 
         criteriaQuery.orderBy(criteriaBuilder.asc(from.get(Contact_.name)));

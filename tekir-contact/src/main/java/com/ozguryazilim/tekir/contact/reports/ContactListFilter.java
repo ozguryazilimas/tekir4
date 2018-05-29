@@ -12,6 +12,7 @@ public class ContactListFilter implements Serializable {
 
     private String code;
     private String name;
+    private List<String> roles;
     private CorporationType corporationType;
     private ContactCategory contactCategory;
     private Industry industry;
@@ -35,6 +36,14 @@ public class ContactListFilter implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 
     public CorporationType getCorporationType() {

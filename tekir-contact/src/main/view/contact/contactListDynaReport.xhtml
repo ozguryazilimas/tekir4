@@ -10,6 +10,7 @@
     <ui:param name="bean" value="#{contactListDynaReport}"/>
     <ui:param name="supportCSV" value="true"/>
     <ui:param name="supportXLS" value="true"/>
+    <h:outputStylesheet library="filterTemplates" name="tagfilter.css" target="head"/>
 
     <ui:define name="filter">
         <div class="row">
@@ -17,6 +18,15 @@
                          columnClass="col-xs-6"/>
             <t:inputText value="#{contactListDynaReport.filter.name}" label="general.label.Name"
                          columnClass="col-xs-6"/>
+            <t:inputAny label="contact.label.ContactRoles">
+                <p:selectCheckboxMenu label="#{messages['contact.label.ContactRoles']}"
+                                      value="#{contactListDynaReport.filter.roles}"
+                                      styleClass="tag-filter"
+                                      panelStyleClass="tag-filter-panel">
+                    <f:selectItems value="#{contactListDynaReport.roles}" var="item"
+                                   itemLabel="#{messages['contact.role.'.concat(item)]}"/>
+                </p:selectCheckboxMenu>
+            </t:inputAny>
             <t:inputLookupDialog label="contact.label.CorporationType"
                                  value="#{contactListDynaReport.filter.corporationType}"
                                  lookupBean="#{corporationTypeLookup}"

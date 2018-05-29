@@ -6,18 +6,17 @@ import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.account.AccountTxnRepository;
 import com.ozguryazilim.tekir.contact.ContactListModel;
 import com.ozguryazilim.tekir.contact.ContactRepository;
+import com.ozguryazilim.tekir.contact.ContactRoleRegistery;
 import com.ozguryazilim.tekir.contact.config.ContactPages;
+import com.ozguryazilim.tekir.core.query.filter.TagSuggestionService;
 import com.ozguryazilim.tekir.core.reports.TekirDynamicReportUtils;
-import com.ozguryazilim.tekir.core.view.InputTagController;
 import com.ozguryazilim.tekir.entities.AccountTxn;
 import com.ozguryazilim.telve.entities.FeaturePointer;
-import com.ozguryazilim.telve.entities.SuggestionItem;
 import com.ozguryazilim.telve.messages.Messages;
 import com.ozguryazilim.telve.query.filters.DateValueType;
 import com.ozguryazilim.telve.reports.DynamicReportBase;
 import com.ozguryazilim.telve.reports.Report;
 import com.ozguryazilim.telve.reports.ReportDate;
-import com.ozguryazilim.telve.suggestion.SuggestionRepository;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -26,7 +25,6 @@ import java.util.Currency;
 import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.stream.Collectors;
 import javax.inject.Inject;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.base.expression.AbstractSimpleExpression;
@@ -54,6 +52,8 @@ public class ContactListDynaReport extends DynamicReportBase<ContactListFilter> 
 
     @Inject
     private AccountTxnRepository txnRepository;
+
+    private TagSuggestionService suggestionProvider;
 
     @Override
     protected ContactListFilter buildFilter() {
@@ -93,7 +93,8 @@ public class ContactListDynaReport extends DynamicReportBase<ContactListFilter> 
 
         if (getFilter().getDetail()) {
             for (ContactListModel c : rows) {
-                List<AccountTxn> txnRows = txnRepository.findOpenTxnByContactId(c.getContactId(), getFilter());
+                List<AccountTxn> txnRows = txnRepository
+                    .findOpenTxnByContactId(c.getContactId(), getFilter());
                 c.setTxnList(txnRows);
             }
         }
@@ -140,10 +141,30 @@ public class ContactListDynaReport extends DynamicReportBase<ContactListFilter> 
             sb.append(Messages.getMessage("general.label.Owner")).append(" : ")
                 .append(getFilter().getOwner()).append('\n');
         }
-        if (getFilter().getTag() != null || !getFilter().getTag().isEmpty()) {
-            sb.append(Messages.getMessage("general.label.Tag")).append(" : ");
+        if (getFilter().getRoles() != null) {
+            ListIterator<String> iterator = getFilter().getRoles().listIterator();
 
+            if (iterator.hasNext()) {
+                sb.append(Messages.getMessage("contact.label.ContactRoles")).append(" : ");
+            }
+
+            while (iterator.hasNext()) {
+                sb.append(Messages.getMessage("contact.role." + iterator.next()));
+                if (!iterator.hasNext()) {
+                    sb.append(".\n");
+                } else {
+                    sb.append(", ");
+                }
+            }
+        }
+
+        if (getFilter().getTag() != null && getFilter().getDetail()) {
             ListIterator<String> iterator = getFilter().getTag().listIterator();
+
+            if (iterator.hasNext()) {
+                sb.append(Messages.getMessage("general.label.Tag")).append(" : ");
+            }
+
             while (iterator.hasNext()) {
                 sb.append(iterator.next());
                 if (!iterator.hasNext()) {
@@ -209,9 +230,11 @@ public class ContactListDynaReport extends DynamicReportBase<ContactListFilter> 
     }
 
     public List<String> getSuggestions() {
-        SuggestionRepository repository = BeanProvider
-            .getContextualReference(SuggestionRepository.class);
-        List<SuggestionItem> result = repository.findByGroup(InputTagController.SUGGESSTION_GROUP);
-        return result.stream().map(SuggestionItem::getData).distinct().collect(Collectors.toList());
+        suggestionProvider = BeanProvider.getContextualReference(TagSuggestionService.class);
+        return suggestionProvider.getSuggestions("*");
+    }
+
+    public List<String> getRoles() {
+        return ContactRoleRegistery.getFilterableContactRoles();
     }
 }
