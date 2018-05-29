@@ -24,8 +24,10 @@
                         <p:commandLink action="#{voucherReleatedWidget.setFilter('ALL')}" process="@this" update=":vrvW">
                             #{messages['voucher.filter.ALL']}
                         </p:commandLink>
-                        <p:commandLink action="#{voucherReleatedWidget.setFilter('MATCHED')}" process="@this" update=":vrvW">
-                            #{messages['voucher.filter.MATCHED']} 
+                        <p:commandLink action="#{voucherReleatedWidget.setFilter('MATCHED')}"
+                                       process="@this" update=":vrvW"
+                                       rendered="#{matchable ne null}">
+                            #{messages['voucher.filter.MATCHED']}
                         </p:commandLink>
                         <p:commandLink action="#{voucherReleatedWidget.setFilter('PROCESS')}" process="@this" update=":vrvW" rendered="#{not empty processNo }">
                             #{messages['voucher.filter.PROCESS']} [#{processNo}]
@@ -43,7 +45,8 @@
 
         <ui:fragment rendered="#{voucherReleatedWidget.filter eq 'ALL' or voucherReleatedWidget.filter eq 'MATCHED'}">
         <ul class="products-list product-list-in-box">
-            <ui:repeat value="#{voucherMatcherService.findMatchersForFeature(featurePointer)}" var="ci" >
+            <ui:repeat value="#{voucherMatcherService.findMatchersForMatchable(matchable)}"
+                       var="ci">
                 <li class="item">
                     <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
                     <span class="text-muted pull-right">

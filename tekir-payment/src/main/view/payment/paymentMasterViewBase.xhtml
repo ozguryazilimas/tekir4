@@ -57,7 +57,8 @@
                     </ui:include>
 
                     <ui:include src="/voucher/voucherReleatedWidget.xhtml">
-                        <ui:param name="featurePointer" value="#{homeBean.featurePointer}" />
+                        <ui:param name="matchable"
+                                  value="#{voucherMatcherService.findMatchableByFeature(homeBean.featurePointer)}"/>
                         <ui:param name="processNo" value="#{homeBean.entity.process.processNo}" />
                         <ui:param name="group" value="#{homeBean.entity.group}" />
                     </ui:include>
