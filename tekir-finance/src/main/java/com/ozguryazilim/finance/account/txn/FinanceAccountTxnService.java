@@ -43,7 +43,11 @@ public class FinanceAccountTxnService implements Serializable{
         if( txn == null ){
             txn = new FinanceAccountTxn();
         }
-        
+        List<String> txnTags = new ArrayList<>();
+        if (tags != null) {
+            txnTags.addAll(tags);
+        }
+
         txn.setAccount(account);
         txn.setAmount(amount);
         txn.setLocalAmount(localAmount);
@@ -51,7 +55,7 @@ public class FinanceAccountTxnService implements Serializable{
         txn.setDebit(debit);
         txn.setDate(date);
         txn.setFeature(feature);
-        txn.setTags(new ArrayList<>(tags));
+        txn.setTags(txnTags);
         txn.setInfo(info);
         txn.setOwner(owner);
         txn.setProcessId(processId);

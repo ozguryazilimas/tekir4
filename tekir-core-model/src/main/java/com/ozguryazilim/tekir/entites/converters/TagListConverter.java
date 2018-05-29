@@ -20,6 +20,9 @@ import java.util.stream.Collectors;
 public class TagListConverter implements AttributeConverter<List<String>, String>{
     @Override
     public String convertToDatabaseColumn(List<String> list) {
+        if (list == null || list.isEmpty()) {
+            return "";
+        }
         return list.stream().map(s -> "|" + s + "|")
                 .collect(Collectors.joining(","));
     }
@@ -32,6 +35,7 @@ public class TagListConverter implements AttributeConverter<List<String>, String
         }
         return Arrays.stream(f.split(","))
                 .map(s -> s.length() > 2 ? s.substring(1, s.length() - 1) : "")
+                .filter(s -> !"".equals(s))
                 .collect(Collectors.toList());
     }
 }

@@ -1,5 +1,6 @@
 package com.ozguryazilim.tekir.lead;
 
+import com.ozguryazilim.telve.messages.Messages;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,6 +86,10 @@ public class LeadFeeder extends AbstractFeeder<Lead> {
 	}
 
 	protected String getMessage(VoucherStateChange event) {
+        String reason = event.getPayload().getStateReason();
+        if (reason == null) {
+            reason = Messages.getMessage("feed.messages.NullReason");
+        }
 		switch (event.getAction().getName()) {
 		case "CREATE":
 			return "feeder.messages.LeadFeeder.CREATE$%&" + identity.getUserName() + "$%&"
@@ -97,30 +102,21 @@ public class LeadFeeder extends AbstractFeeder<Lead> {
 					+ event.getPayload().getVoucherNo();
 		case "loss":
 			return "feeder.messages.LeadFeeder.LOST$%&" + event.getPayload().getVoucherNo() + "$%&"
-					+ event.getPayload().getStateReason();
+					+ reason;
 		case "cancel":
 			return "feeder.messages.LeadFeeder.CANCEL$%&" + identity.getUserName() + "$%&"
-					+ event.getPayload().getVoucherNo() + "$%&" + event.getPayload().getStateReason();
-		}
-
-		switch (event.getTo().getName()) {
-		case "OPEN":
-			return "feeder.messages.LeadFeeder.OPEN";
-		case "CLOSE":
-			return "feeder.messages.LeadFeeder.CLOSE";
-		case "LOST":
-			return "feeder.messages.LeadFeeder.LOST$%&" + event.getPayload().getVoucherNo() + "$%&"
-					+ event.getPayload().getStateReason();
-		case "CANCELED":
-			return "feeder.messages.LeadFeeder.CANCELED$%&" + event.getPayload().getStateReason();
-		default:
-			return "feeder.messages.LeadFeeder.OPEN";
+					+ event.getPayload().getVoucherNo() + "$%&" + reason;
+        case "revise":
+            return "feeder.messages.LeadFeeder.REVISE$%&" + identity.getUserName() + "$%&"
+                + event.getPayload().getVoucherNo() + "$%&" + reason;
+        default:
+            return "feeder.messages.LeadFeeder.DEFAULT$%&" + identity.getUserName() + "$%&"
+                + event.getPayload().getVoucherNo();
 		}
 	}
 
 	protected String getMessage(VoucherOwnerChange event) {
 		return "feeder.messages.LeadFeeder.OWNERCHANGE$%&" + identity.getUserName() + "$%&"
-				+ event.getPayload().getVoucherNo() + "$%&" + event.getFrom() + "$%&" + event.getTo() + "$%&"
-				+ event.getPayload().getStateReason();
+				+ event.getPayload().getVoucherNo() + "$%&" + event.getFrom() + "$%&" + event.getTo();
 	}
 }
