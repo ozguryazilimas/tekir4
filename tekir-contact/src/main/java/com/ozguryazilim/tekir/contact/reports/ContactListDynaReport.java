@@ -70,7 +70,7 @@ public class ContactListDynaReport extends DynamicReportBase<ContactListFilter> 
         TextColumnBuilder<String> contactCode = col.column("contactCode", type.stringType())
             .setTitle(msg("ContactListReport.Code")).setFixedWidth(cm(3));
         TextColumnBuilder<String> contactName = col.column("contactName", type.stringType())
-            .setTitle(msg("ContactListReport.Name")).setFixedWidth(cm(3));
+            .setTitle(msg("ContactListReport.Name")).setFixedWidth(cm(6));
         TextColumnBuilder<String> contactInfo = col.column("contactInfo", type.stringType())
             .setTitle(msg("ContactListReport.Info"));
 
@@ -78,7 +78,8 @@ public class ContactListDynaReport extends DynamicReportBase<ContactListFilter> 
             SubreportBuilder sub = cmp.subreport(new SubreportExpression())
                 .setDataSource(exp.subDatasourceBeanCollection("txnList"));
 
-            report.detailFooter(cmp.horizontalList(
+            report
+                .detailFooter(cmp.horizontalList(
                 cmp.horizontalGap(cm(1)), sub));
         }
 
@@ -178,6 +179,24 @@ public class ContactListDynaReport extends DynamicReportBase<ContactListFilter> 
         return sb.toString();
     }
 
+    @Override
+    protected Boolean isReportPotrait() {
+        if (getFilter().getDetail()){
+            return Boolean.FALSE;
+        } else {
+            return Boolean.TRUE;
+        }
+    }
+
+    public List<String> getSuggestions() {
+        suggestionProvider = BeanProvider.getContextualReference(TagSuggestionService.class);
+        return suggestionProvider.getSuggestions("*");
+    }
+
+    public List<String> getRoles() {
+        return ContactRoleRegistery.getFilterableContactRoles();
+    }
+
     private class SubreportExpression extends AbstractSimpleExpression<JasperReportBuilder> {
 
         @Override
@@ -207,7 +226,7 @@ public class ContactListDynaReport extends DynamicReportBase<ContactListFilter> 
                 .column(msg("general.label.LocalAmount"), "localAmount", type.bigDecimalType())
                 .setFixedWidth(cm(3));
             TextColumnBuilder<String> topic = col.column("topic", type.stringType())
-                .setTitle(msg("AccountTxnReport.Topic")).setFixedWidth(cm(3))
+                .setTitle(msg("AccountTxnReport.Topic"))
                 .setHorizontalTextAlignment(HorizontalTextAlignment.RIGHT);
 
             InputStream iss = ContactListDynaReport.class.getResourceAsStream("/" + ConfigResolver
@@ -227,14 +246,5 @@ public class ContactListDynaReport extends DynamicReportBase<ContactListFilter> 
 
             return report;
         }
-    }
-
-    public List<String> getSuggestions() {
-        suggestionProvider = BeanProvider.getContextualReference(TagSuggestionService.class);
-        return suggestionProvider.getSuggestions("*");
-    }
-
-    public List<String> getRoles() {
-        return ContactRoleRegistery.getFilterableContactRoles();
     }
 }
