@@ -142,4 +142,10 @@ public interface ActivityPages extends Pages {
         class CommentActivityFragment implements Comment {
         }
     }
+
+    @SecuredPage
+    @View
+    @PageTitle("report.name.inactiveContactsReport")
+    class InactiveContactsReport implements ActivityPages {
+    }
 }

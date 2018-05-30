@@ -314,4 +314,6 @@ public abstract class AccountTxnRepository extends
 
         return resultList;
     }
+
+    public abstract List<AccountTxn> findByAccountOrderByDateDesc(Contact c);
 }

@@ -3,6 +3,8 @@ package com.ozguryazilim.tekir.contact;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.contact.reports.ContactListFilter;
+import com.ozguryazilim.tekir.contact.reports.InactiveContactsFilter;
+import com.ozguryazilim.tekir.contact.reports.InactiveContactsModel;
 import com.ozguryazilim.tekir.entities.AbstractPerson;
 import com.ozguryazilim.tekir.entities.ContactCategory_;
 import com.ozguryazilim.tekir.entities.Corporation_;
@@ -357,6 +359,67 @@ public abstract class ContactRepository
 
         TypedQuery<ContactListModel> typedQuery = entityManager().createQuery(criteriaQuery);
         List<ContactListModel> resultList = typedQuery.getResultList();
+
+        return resultList;
+    }
+
+    public List<InactiveContactsModel> findByInactiveContactsFilter(InactiveContactsFilter filter) {
+        CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
+        CriteriaQuery<InactiveContactsModel> criteriaQuery = criteriaBuilder.createQuery(InactiveContactsModel.class);
+        Root<Contact> from = criteriaQuery.from(Contact.class);
+
+        criteriaQuery.multiselect(from);
+
+        List<Predicate> predicates = new ArrayList<>();
+
+        if (!Strings.isNullOrEmpty(filter.getCode())) {
+            predicates
+                .add(criteriaBuilder.like(from.get(Contact_.code), "%" + filter.getCode() + "%"));
+        }
+
+        if (!Strings.isNullOrEmpty(filter.getName())) {
+            predicates
+                .add(criteriaBuilder.like(from.get(Contact_.name), "%" + filter.getName() + "%"));
+        }
+
+        if (filter.getContactCategory() != null) {
+            predicates.add(criteriaBuilder
+                .like(from.get(Contact_.category).get(ContactCategory_.path),
+                    filter.getContactCategory().getPath() + "%"));
+        }
+
+        if (filter.getIndustry() != null) {
+            predicates.add(criteriaBuilder.like(from.get(Contact_.industry).get(Industry_.path),
+                filter.getIndustry().getPath() + "%"));
+        }
+
+        if (filter.getTerritory() != null) {
+            predicates
+                .add(criteriaBuilder.equal(from.get(Contact_.territory), filter.getTerritory()));
+        }
+
+        if (filter.getCorporationType() != null) {
+            predicates.add(criteriaBuilder
+                .equal(((Root<Corporation>) (Root<?>) from).get(Corporation_.corporationType),
+                    filter.getCorporationType()));
+        }
+
+        if (filter.getOwner() != null) {
+            predicates
+                .add(criteriaBuilder.equal(from.get(Contact_.owner), filter.getOwner()));
+        }
+
+        if (filter.getRoles() != null && !filter.getRoles().isEmpty()) {
+            filter.getRoles().forEach(role -> predicates.add(
+                criteriaBuilder.like(from.get("contactRoles").as(String.class), "%" + role + "%")));
+        }
+
+        criteriaQuery.where(predicates.toArray(new Predicate[]{}));
+
+        criteriaQuery.orderBy(criteriaBuilder.asc(from.get(Contact_.name)));
+
+        TypedQuery<InactiveContactsModel> typedQuery = entityManager().createQuery(criteriaQuery);
+        List<InactiveContactsModel> resultList = typedQuery.getResultList();
 
         return resultList;
     }
