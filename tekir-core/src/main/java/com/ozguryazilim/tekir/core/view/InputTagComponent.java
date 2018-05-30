@@ -4,9 +4,11 @@ import com.ozguryazilim.tekir.core.query.filter.TagSuggestionService;
 import org.apache.deltaspike.core.api.provider.BeanProvider;
 import org.primefaces.event.SelectEvent;
 
+import javax.el.ValueExpression;
 import javax.faces.component.FacesComponent;
 import javax.faces.component.UINamingContainer;
-import java.io.Serializable;
+import javax.faces.context.FacesContext;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,6 +16,31 @@ import java.util.stream.Collectors;
 public class InputTagComponent extends UINamingContainer{
 
     private TagSuggestionService suggestionService;
+
+    public List<TagResult> getTags() {
+        ValueExpression ve = getValueExpression("value");
+        List<String> valueList = (List<String>) ve.getValue(FacesContext.getCurrentInstance().getELContext());
+        if (valueList == null) {
+            return null;
+        }
+        return valueList.stream().map(TagResult::new).collect(Collectors.toList());
+    }
+
+
+    public void setTags(List<Object> tags) {
+        List<String> valueList;
+        if (tags == null || tags.isEmpty()) {
+            valueList = new ArrayList<>();
+        } else if (tags.get(0) instanceof TagResult) {
+            //çok saçma ama autocomplete bileşeni hatası. Aldığını vermek yerine gösterdiğini veriyor bazen
+            valueList = tags.stream().map(t -> ((TagResult) t).getTag()).collect(Collectors.toList());
+        } else {
+            valueList = tags.stream().map(t -> t.toString()).collect(Collectors.toList());
+        }
+        ValueExpression ve = getValueExpression("value");
+        ve.setValue(FacesContext.getCurrentInstance().getELContext(), valueList);
+
+    }
 
     public List<TagResult> completeTag(String query) {
         List<String> suggestions = getSuggestionService().getSuggestions(getKey());
@@ -48,35 +75,5 @@ public class InputTagComponent extends UINamingContainer{
             suggestionService = BeanProvider.getContextualReference(TagSuggestionService.class);
         }
         return suggestionService;
-    }
-
-    public class TagResult implements Serializable{
-        private String tag;
-        private boolean absent;
-
-        public TagResult(String tag) {
-            this.tag = tag;
-        }
-
-        public TagResult(String tag, boolean absent) {
-            this.tag = tag;
-            this.absent = absent;
-        }
-
-        public String getTag() {
-            return tag;
-        }
-
-        public void setTag(String tag) {
-            this.tag = tag;
-        }
-
-        public boolean isAbsent() {
-            return absent;
-        }
-
-        public void setAbsent(boolean absent) {
-            this.absent = absent;
-        }
     }
 }
