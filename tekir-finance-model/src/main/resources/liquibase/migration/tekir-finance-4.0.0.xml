@@ -135,4 +135,9 @@
     <changeSet author="hates" id="070520181117">
         <renameColumn tableName="TFN_FINANCE_VIREMENT" columnDataType="VARCHAR(2000)" newColumnName="TAGS" oldColumnName="CODE" />
     </changeSet>
+    <changeSet author="hates" id="300520180842">
+        <renameColumn newColumnName="TAGS" oldColumnName="CODE" columnDataType="varchar(2000)"
+                      tableName="TFN_FINANCE_TXN"/>
+    </changeSet>
+
 </databaseChangeLog>
