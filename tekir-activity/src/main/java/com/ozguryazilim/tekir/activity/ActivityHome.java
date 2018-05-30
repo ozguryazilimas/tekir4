@@ -25,6 +25,7 @@ import javax.enterprise.event.Event;
 import javax.inject.Inject;
 
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
+import org.apache.deltaspike.core.api.config.view.metadata.ViewConfigDescriptor;
 import org.apache.deltaspike.core.api.config.view.metadata.ViewConfigResolver;
 import org.primefaces.event.SelectEvent;
 
@@ -32,7 +33,7 @@ import org.primefaces.event.SelectEvent;
  * @author oyas
  */
 @FormEdit(feature = ActivityFeature.class)
-public class ActivityHome extends FormBase<Activity, Long> {
+public class ActivityHome extends FormBase<Activity, Long>{
 
     @Inject
     private ViewConfigResolver viewConfigResolver;
@@ -67,6 +68,14 @@ public class ActivityHome extends FormBase<Activity, Long> {
 
         return "";
     }
+
+    public String getOptionalPanel() {
+        ActivityController ac = ActivityRegistery.getMetaData(getEntity());
+        if (ac == null) return "";
+        ViewConfigDescriptor vcd = viewConfigResolver.getViewConfigDescriptor(ac.optionalPanel());
+        return vcd != null ? vcd.getViewId() : "";
+    }
+
 
     public FeaturePointer getFeaturePointer() {
         FeaturePointer result = new FeaturePointer();

@@ -8,10 +8,14 @@ import com.ozguryazilim.telve.data.RepositoryBase;
 
 /**
  * EPosta activite contol sınıfı
- * 
+ *
  * @author Hakan Uygun
  */
-@ActivityController(activity = EMailActivity.class, editor=ActivityPages.EMail.EMailActivityEditor.class, viewer = ActivityPages.EMail.EMailActivityFragment.class)
+@ActivityController(
+        activity = EMailActivity.class,
+        editor = ActivityPages.EMail.EMailActivityEditor.class,
+        viewer = ActivityPages.EMail.EMailActivityFragment.class,
+        optionalPanel = ActivityPages.EMail.EMailActivityRelatedItems.class)
 public class EMailActivityController extends AbstractActivityController<EMailActivity>{
 
     @Override
@@ -23,5 +27,5 @@ public class EMailActivityController extends AbstractActivityController<EMailAct
     protected EMailActivity createNewEntity() {
         return new EMailActivity();
     }
-    
+
 }
