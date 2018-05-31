@@ -7,6 +7,7 @@ package com.ozguryazilim.tekir.account;
 
 import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.account.reports.AccountStatusFilter;
+import com.ozguryazilim.tekir.contact.reports.ContactListFilter;
 import com.ozguryazilim.tekir.entities.AccountTxn;
 import com.ozguryazilim.tekir.entities.AccountTxn_;
 import com.ozguryazilim.tekir.entities.Contact;
@@ -283,5 +284,37 @@ public abstract class AccountTxnRepository extends
 
         return resultList;
         
+    }
+
+    public List<AccountTxn> findOpenTxnByContactId(Long contactId, ContactListFilter filter) {
+        CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
+        CriteriaQuery<AccountTxn> criteriaQuery = criteriaBuilder.createQuery(AccountTxn.class);
+        Root<AccountTxn> from = criteriaQuery.from(AccountTxn.class);
+
+        criteriaQuery.select(from);
+
+        List<Predicate> predicates = new ArrayList<>();
+
+        predicates.add(criteriaBuilder
+            .equal(from.get(AccountTxn_.account).get(Contact_.id), contactId));
+        predicates.add(criteriaBuilder
+            .or(
+                criteriaBuilder.like(from.get(AccountTxn_.status), "DRAFT%"),
+                criteriaBuilder.like(from.get(AccountTxn_.status), "OPEN%")
+            ));
+
+        if (filter.getTag() != null && !filter.getTag().isEmpty()) {
+            filter.getTag().forEach(
+                tag -> predicates.add(criteriaBuilder.like(from.get("tags").as(String.class), "%|" + tag + "|%")));
+        }
+
+        criteriaQuery.where(predicates.toArray(new Predicate[]{}));
+
+        criteriaQuery.orderBy(criteriaBuilder.desc(from.get(AccountTxn_.date)));
+
+        TypedQuery<AccountTxn> typedQuery = entityManager().createQuery(criteriaQuery);
+        List<AccountTxn> resultList = typedQuery.getResultList();
+
+        return resultList;
     }
 }

@@ -1,0 +1,41 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+              xmlns:composite="http://java.sun.com/jsf/composite"
+              xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <composite:interface>
+        <composite:attribute name="value" required="true"/>
+        <composite:attribute name="label" required="true"/>
+        <composite:attribute name="suggestions" required="true" />
+        <composite:attribute name="required" required="false" type="java.lang.Boolean"
+                             default="false"/>
+        <composite:attribute name="columnClass" required="false" default="col-md-6 col-xs-12"/>
+        <composite:attribute name="last" required="false" type="java.lang.Boolean" default="false"/>
+        <composite:clientBehavior name="change" event="change" targets="#{cc.id}_inp"/>
+    </composite:interface>
+
+    <composite:implementation>
+        <h:outputStylesheet library="filterTemplates" name="tagfilter.css" target="head"/>
+
+        <div id="#{cc.clientId}"
+             class="prop #{ cc.attrs.columnClass} columns #{cc.attrs.last ? 'end' : '' }">
+            <p:outputLabel for="#{cc.id}_inp" value="#{messages[cc.attrs.label]}"
+                           styleClass="name #{invalid?'errors':''}"/>
+            <div class="value">
+                <p:selectCheckboxMenu id="#{cc.id}_inp"
+                                      label="#{messages[cc.attrs.label]}"
+                                      value="#{cc.attrs.value}"
+                                      rendered="#{cc.attrs.rendered}"
+                                      styleClass="tag-filter"
+                                      panelStyleClass="tag-filter-panel">
+                    <f:selectItems value="#{cc.attrs.suggestions}" var="item"
+                                   itemLabel="#{item}"/>
+                </p:selectCheckboxMenu>
+            </div>
+        </div>
+    </composite:implementation>
+
+</ui:component>

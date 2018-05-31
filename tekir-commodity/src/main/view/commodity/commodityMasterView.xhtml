@@ -1,6 +1,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
                 template="/layout/masterViewBase.xhtml">
@@ -33,9 +34,7 @@
                                 <h:outputText value="#{messages['taxDefinition.type.'.concat(it.type)]}" />
                             </td>
                             <td>
-                                <h:outputText value="#{it.rate div 100}">
-                                    <f:convertNumber type="percent" />
-                                </h:outputText>
+                                <h:outputText value="% #{it.rate}" />
                             </td>
                         </tr>
                     </p:repeat>
@@ -51,7 +50,7 @@
                     <ui:include src="/attachment/simpleAttachmentWidget.xhtml">
                         <ui:param name="payload" value="#{commodityHome.entity}" />
                         <ui:param name="featurePointer" value="#{commodityHome.featurePointer}" />
-                    </ui:include>                    
+                    </ui:include>
                 </div>
             </div>
         </div>

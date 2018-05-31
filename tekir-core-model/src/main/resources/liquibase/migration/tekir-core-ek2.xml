@@ -80,4 +80,39 @@
      <changeSet author="oyas (generated)" id="1480327786898-18">
         <dropColumn columnName="RATE" tableName="TCO_EXCHANGE_RATE"/>
     </changeSet>
+    <changeSet author="soner.cirit" id="1526381007356-1">
+        <addUniqueConstraint
+            tableName="TCO_TAX"
+            columnNames="CODE"/>
+    </changeSet>
+    <changeSet author="soner.cirit" id="1526381007356-2">
+        <addUniqueConstraint
+            tableName="TCO_PAYMENT_PLAN"
+            columnNames="CODE"/>
+    </changeSet>
+    <changeSet author="soner.cirit" id="1526381007356-3">
+        <addUniqueConstraint
+            tableName="TCO_INDUSTRY"
+            columnNames="CODE"/>
+    </changeSet>
+    <changeSet author="soner.cirit" id="1526381007356-4">
+        <addUniqueConstraint
+            tableName="TCO_UNIT_SET"
+            columnNames="CODE"/>
+    </changeSet>
+    <changeSet author="soner.cirit" id="1526381007356-5">
+        <addUniqueConstraint
+            tableName="TCO_LOCATION"
+            columnNames="CODE"/>
+    </changeSet>
+    <changeSet author="soner.cirit" id="1526381007356-6">
+        <addUniqueConstraint
+            tableName="TCO_TERRITORY"
+            columnNames="CODE"/>
+    </changeSet>
+    <changeSet author="Adilcan Eren" id="1480327786898-19">
+        <addColumn tableName="TCO_TAX">
+            <column name="GIB_CODE" type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

@@ -20,9 +20,16 @@
             <div class="row">
                 <t:inputText label="general.label.FirstName" value="#{bean.contact.firstName}" columnClass="col-xs-6" required="true"/>
                 <t:inputText label="general.label.LastName" value="#{bean.contact.lastName}" columnClass="col-xs-6" required="true"/>
-                
-            </div>  
-            
+
+            </div>
+
+            <div class="row">
+                <t:inputText label="contact.label.UseName"
+                             value="#{bean.contact.useName}" columnClass="col-xs-6"/>
+                <t:inputEnum itemLabel="gender." hasNullValue="false" columnClass="col-xs-6"
+                             value="#{bean.contact.gender}" label="contact.label.Gender"/>
+            </div>
+
             <div class="row">
                 <t:inputMask label="contact.label.SSN" value="#{bean.contact.ssn}"
                              columnClass="col-xs-6" required="false" mask="99999999999"/>
