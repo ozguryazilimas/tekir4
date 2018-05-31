@@ -17,7 +17,8 @@
 								 lookupListener="financialStatusReport.filter.financeAccount"
 								 placeholder="#{messages['general.info.FinanceAccount']}" columnClass="col-xs-6"/>
 			<t:inputText value="#{financialStatusReport.filter.code}" label="general.label.Code" columnClass="col-xs-6" />
-			<t:inputReportDate value="#{financialStatusReport.filter.date}" label="general.label.Date" columnClass="col-xs-6" />
+			<t:inputReportDate value="#{financialStatusReport.filter.date}"
+							   label="general.label.Date" columnClass="col-xs-6" required="true"/>
 
 		</div>
 	</ui:define>

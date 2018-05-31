@@ -1,6 +1,7 @@
 package com.ozguryazilim.finance.account.reports;
 
 
+import com.google.common.base.Strings;
 import com.ozguryazilim.finance.account.FinanceAccountTxnStatusModel;
 import com.ozguryazilim.finance.account.txn.FinanceAccountTxnRepository;
 import com.ozguryazilim.finance.config.FinancePages;
@@ -49,26 +50,24 @@ public class FinancialStatusReport extends
 	@Override
 	protected void buildReport(JasperReportBuilder report, Boolean forExport) {
 
-		TextColumnBuilder<String> accountName = col.column( "accountName",
-				type.stringType())
-				.setTitle(msg("FinancialStatusReport" +
-						".Name"));
-		TextColumnBuilder<String> code = col.column( "code", type
-				.stringType())
-				.setTitle(msg("FinancialStatusReport" +
-						".Code"))
-				.setFixedWidth(cm(3));
+        TextColumnBuilder<String> accountName = col.column("accountName", type.stringType())
+            .setTitle(msg("FinancialStatusReport.Name"))
+            .setWidth(30);
+        TextColumnBuilder<String> code = col.column("code", type.stringType())
+            .setTitle(msg("FinancialStatusReport.Code"))
+            .setWidth(10);
 		TextColumnBuilder<BigDecimal> debit = col.column( "debit", type.bigDecimalType())
-				.setTitle(msg("FinancialStatusReport.Debit"))
-				.setFixedWidth(cm(3));
+            .setTitle(msg("FinancialStatusReport.Debit"))
+            .setWidth(20);
 		TextColumnBuilder<BigDecimal> credit = col.column( "credit", type.bigDecimalType())
-				.setTitle(msg("FinancialStatusReport.Credit"))
-				.setFixedWidth(cm(3));
+            .setTitle(msg("FinancialStatusReport.Credit"))
+            .setWidth(20);
 		TextColumnBuilder<BigDecimal> balance = col.column( "balance", type.bigDecimalType())
-				.setTitle(msg("FinancialStatusReport.Balance"))
-				.setFixedWidth(cm(3));
+            .setTitle(msg("FinancialStatusReport.Balance"))
+            .setWidth(20);
 
-		report.columns( accountName, code, debit, credit, balance );
+        report.columns(accountName, code, debit, credit, balance)
+            .highlightDetailEvenRows();
 
 		if( !forExport ){
 			report.subtotalsAtSummary(
@@ -87,14 +86,13 @@ public class FinancialStatusReport extends
 
 	@Override
 	protected String getReportSubTitle() {
-		String pattern = msg("general.format.Date");
+        String pattern = Messages.getMessage("general.format.Date");
 		DateFormat df = new SimpleDateFormat(pattern);
 		Date dt = getFilter().getDate().getCalculatedValue();
+        String date = df.format(dt);
 
 		StringBuilder sb = new StringBuilder();
-		sb.append(msg("FinancialStatusReport.asOfDate")).append(" : ").append
-				(df.format(dt))
-				.append('\n');
+        sb.append(date).append(" ").append(Messages.getMessage("general.label.AsOf")).append('\n');
 		if(getFilter().getFinanceAccount() != null){
 			sb.append(msg("FinancialStatusReport.Name")).append(" : ").append
 					(getFilter()
@@ -102,6 +100,10 @@ public class FinancialStatusReport extends
 					.getName())
 					.append('\n');
 		}
+        if (!Strings.isNullOrEmpty(getFilter().getCode())) {
+            sb.append(msg("general.label.Code")).append(" : ").append(getFilter().getCode())
+                .append("\n");
+        }
 
 		return sb.toString();
 	}

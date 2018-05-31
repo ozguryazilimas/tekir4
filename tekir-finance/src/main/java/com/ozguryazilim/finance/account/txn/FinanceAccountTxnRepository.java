@@ -207,10 +207,8 @@ public abstract class FinanceAccountTxnRepository extends RepositoryBase<Finance
         }
 
         if (filter.getFinanceAccount() != null) {
-            predicates.add(criteriaBuilder.like(from.get(FinanceAccountTxn_
-                    .account).get(FinanceAccount_.name), "%" + filter
-                    .getFinanceAccount().getName() +
-                    "%"));
+            predicates.add(criteriaBuilder
+                .equal(from.get(FinanceAccountTxn_.account), filter.getFinanceAccount()));
         }
 
         predicates.add(criteriaBuilder.lessThanOrEqualTo(from.get(FinanceAccountTxn_.date), filter.getDate().getCalculatedValue()));
