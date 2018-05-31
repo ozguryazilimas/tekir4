@@ -145,4 +145,9 @@
     <changeSet author="soner.cirit" id="20180529-2">
         <modifyDataType columnName="TXNDATE" newDataType="date" tableName="TFN_FINANCE_TXN"/>
     </changeSet>
+    <changeSet author="ercan" id="1525860334003-1">
+        <addColumn tableName="TFN_FINANCE_TXN">
+            <column name="CONTACT_ID" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
