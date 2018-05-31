@@ -1,0 +1,61 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/dynamicReportBase.xhtml">
+
+    <ui:param name="title" value="report.name.InactiveContactsReport"/>
+    <ui:param name="bean" value="#{inactiveContactsReport}"/>
+    <ui:param name="supportCSV" value="true"/>
+    <ui:param name="supportXLS" value="true"/>
+
+    <ui:define name="filter">
+        <h:outputStylesheet library="filterTemplates" name="tagfilter.css" target="head"/>
+        <div class="row">
+            <t:inputMask mask="?999" value="#{inactiveContactsReport.filter.dayInterval}"
+                         label="InactiveContactsReport.label.DayInterval"/>
+            <t:inputText value="#{inactiveContactsReport.filter.code}" label="general.label.Code"
+                         columnClass="col-xs-6"/>
+            <t:inputText value="#{inactiveContactsReport.filter.name}" label="general.label.Name"
+                         columnClass="col-xs-6"/>
+            <t:inputAny label="contact.label.ContactRoles">
+                <p:selectCheckboxMenu label="#{messages['contact.label.ContactRoles']}"
+                                      value="#{inactiveContactsReport.filter.roles}"
+                                      style="width: 100%"
+                                      styleClass="tag-filter"
+                                      panelStyleClass="tag-filter-panel">
+                    <f:selectItems value="#{inactiveContactsReport.roles}" var="item"
+                                   itemLabel="#{messages['contact.role.'.concat(item)]}"/>
+                </p:selectCheckboxMenu>
+            </t:inputAny>
+            <t:inputLookupDialog label="contact.label.CorporationType"
+                                 value="#{inactiveContactsReport.filter.corporationType}"
+                                 lookupBean="#{corporationTypeLookup}"
+                                 lookupListener="inactiveContactsReport.filter.corporationType"
+                                 placeholder="#{messages['contact.info.CorporationType']}"/>
+            <t:inputLookupDialog label="general.label.Category"
+                                 value="#{inactiveContactsReport.filter.contactCategory}"
+                                 lookupBean="#{contactCategoryLookup}"
+                                 lookupListener="inactiveContactsReport.filter.contactCategory"
+                                 placeholder="#{messages['general.info.Category']}"/>
+            <t:inputLookupDialog label="general.label.Industry"
+                                 value="#{inactiveContactsReport.filter.industry}"
+                                 lookupBean="#{industryLookup}"
+                                 lookupListener="inactiveContactsReport.filter.industry"
+                                 placeholder="#{messages['general.info.Industry']}"/>
+            <t:inputLookupDialog label="general.label.Territory"
+                                 value="#{inactiveContactsReport.filter.territory}"
+                                 lookupBean="#{territoryLookup}"
+                                 lookupListener="inactiveContactsReport.filter.territory"
+                                 placeholder="#{messages['general.info.Territory']}"/>
+            <t:inputUser value="#{inactiveContactsReport.filter.owner}"
+                         label="general.label.Owner" columnClass="col-xs-6"/>
+            <t:inputCheckboxGroup label="general.label.Activities">
+                <p:selectBooleanCheckbox itemLabel="#{messages['InactiveContactsReport.label.IncludeActivity']}"
+                                         value="#{inactiveContactsReport.filter.includeActivity}"/>
+            </t:inputCheckboxGroup>
+        </div>
+    </ui:define>
+</ui:composition>
