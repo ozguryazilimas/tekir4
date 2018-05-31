@@ -80,11 +80,7 @@ public class FinancialStatusReport extends
 
 	}
 
-	public List<AccountType> getAccountTypes() {
-		return Arrays.asList(AccountType.values());
-	}
-
-	@Override
+    @Override
 	protected String getReportSubTitle() {
         String pattern = Messages.getMessage("general.format.Date");
 		DateFormat df = new SimpleDateFormat(pattern);
