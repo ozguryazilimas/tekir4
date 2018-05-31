@@ -6,7 +6,9 @@
 package com.ozguryazilim.finance.account.txn;
 
 import com.google.common.base.Strings;
+import com.ozguryazilim.finance.account.FinanceAccountTxnStatusModel;
 import com.ozguryazilim.finance.account.FinanceAccountTxnSumModel;
+import com.ozguryazilim.finance.account.reports.FinancialStatusFilter;
 import com.ozguryazilim.tekir.entities.AccountType;
 import com.ozguryazilim.tekir.entities.FinanceAccount;
 import com.ozguryazilim.tekir.entities.FinanceAccount_;
@@ -157,5 +159,72 @@ public abstract class FinanceAccountTxnRepository extends RepositoryBase<Finance
         List<FinanceAccountTxnSumModel> resultList = typedQuery.getResultList();
         
         return resultList;
+    }
+
+    public List<FinanceAccountTxnStatusModel> findAccountStatus(
+            FinancialStatusFilter filter) {
+        CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
+        //Geriye AccidentAnalysisViewModel dönecek cq'yu ona göre oluşturuyoruz.
+        CriteriaQuery<FinanceAccountTxnStatusModel> criteriaQuery = criteriaBuilder.createQuery(FinanceAccountTxnStatusModel.class);
+
+        //From Tabii ki PersonWorkHistory
+        Root<FinanceAccountTxn> from = criteriaQuery.from(FinanceAccountTxn.class);
+
+        criteriaQuery.multiselect(
+                from.get(FinanceAccountTxn_.account).get(FinanceAccount_.id),
+                from.get(FinanceAccountTxn_.account).get(FinanceAccount_.name),
+                from.get(FinanceAccountTxn_.account).get(FinanceAccount_.code),
+                //from.get(AccountTxn_.account).type(),
+                criteriaBuilder.sum(
+                        criteriaBuilder.<Number>selectCase()
+                                .when(criteriaBuilder.equal(from.get
+                                        (FinanceAccountTxn_.debit), Boolean
+                                        .TRUE), from.get(FinanceAccountTxn_.localAmount))
+                                .otherwise(0)
+                ),
+                criteriaBuilder.sum(
+                        criteriaBuilder.<Number>selectCase()
+                                .when(criteriaBuilder.equal(from.get
+                                        (FinanceAccountTxn_.debit), Boolean
+                                        .FALSE), from.get(FinanceAccountTxn_.localAmount))
+                                .otherwise(0)
+                )
+        );
+
+        criteriaQuery.groupBy(
+                from.get(FinanceAccountTxn_.account).get(FinanceAccount_.id),
+                from.get(FinanceAccountTxn_.account).get(FinanceAccount_.name),
+                from.get(FinanceAccountTxn_.account).get(FinanceAccount_.code)
+                //from.get(AccountTxn_.account).type()
+        );
+
+        //Filtreleri ekleyelim.
+        List<Predicate> predicates = new ArrayList<>();
+
+        if (!Strings.isNullOrEmpty(filter.getCode())) {
+            predicates.add(criteriaBuilder.like(from.get(FinanceAccountTxn_
+                    .account).get(FinanceAccount_.code), "%" + filter.getCode() + "%"));
+        }
+
+        if (filter.getFinanceAccount() != null) {
+            predicates.add(criteriaBuilder
+                .equal(from.get(FinanceAccountTxn_.account), filter.getFinanceAccount()));
+        }
+
+        predicates.add(criteriaBuilder.lessThanOrEqualTo(from.get(FinanceAccountTxn_.date), filter.getDate().getCalculatedValue()));
+
+        criteriaQuery.where(predicates.toArray(new Predicate[]{}));
+
+        criteriaQuery.orderBy(criteriaBuilder.asc(from.get(FinanceAccountTxn_
+                .account).get(FinanceAccount_.name)));
+
+        TypedQuery<FinanceAccountTxnStatusModel> typedQuery = entityManager()
+                .createQuery(criteriaQuery);
+        //typedQuery.setMaxResults(limit);
+        List<FinanceAccountTxnStatusModel> resultList = typedQuery
+                .getResultList();
+
+        return resultList;
+
     }
 }
