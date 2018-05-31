@@ -7,10 +7,8 @@ package com.ozguryazilim.finance.account.txn;
 
 import com.google.common.base.Strings;
 import com.ozguryazilim.finance.account.FinanceAccountTxnSumModel;
-import com.ozguryazilim.finance.account.FinanceAccountTxnSumModel;
 import com.ozguryazilim.finance.account.reports.FinanceAccountTxnFilter;
 import com.ozguryazilim.tekir.entities.AccountType;
-import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.tekir.entities.FinanceAccount;
 import com.ozguryazilim.tekir.entities.FinanceAccount_;
 import com.ozguryazilim.tekir.entities.FinanceAccountTxn;

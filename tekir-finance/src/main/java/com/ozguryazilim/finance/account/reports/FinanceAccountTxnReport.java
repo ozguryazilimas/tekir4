@@ -1,7 +1,6 @@
 package com.ozguryazilim.finance.account.reports;
 
 import com.google.common.base.Strings;
-import com.ozguryazilim.finance.account.FinanceAccountTxnSumModel;
 import com.ozguryazilim.finance.account.txn.FinanceAccountTxnRepository;
 import com.ozguryazilim.finance.config.FinancePages;
 import com.ozguryazilim.tekir.entities.FinanceAccountTxn;
