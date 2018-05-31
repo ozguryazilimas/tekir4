@@ -1,0 +1,45 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:composite="http://java.sun.com/jsf/composite"
+              xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <composite:interface componentType="inputTag">
+        <composite:attribute name="value" required="true" />
+        <composite:attribute name="label" required="true" />
+        <composite:attribute name="hasNullValue" required="false" type="java.lang.Boolean" default="true" />
+        <composite:attribute name="required" required="false" type="java.lang.Boolean" default="false" />
+        <composite:attribute name="columnClass" required="false" default="col-md-6 col-xs-12" />
+        <composite:attribute name="last" required="false" type="java.lang.Boolean" default="false" />
+        <composite:attribute name="disabled" required="false" type="java.lang.Boolean" default="false" />
+        <composite:attribute name="key" required="true" type="java.lang.String" default="DEFAULT" />
+        <composite:clientBehavior name="change" event="change" targets="#{cc.id}_inp" />
+    </composite:interface>
+
+    <composite:implementation>
+        <h:outputStylesheet library="telveComponents" name="inputtag.css" target="head" />
+        <div id="#{cc.clientId}" class="prop #{ cc.attrs.columnClass} columns #{cc.attrs.last ? 'end' : '' }">
+            <p:outputLabel for="#{cc.id}_inp" value="#{messages[cc.attrs.label]}"
+                           styleClass="name #{invalid?'errors':''}" />
+            <div class="value">
+                <p:autoComplete id="#{cc.id}_inp"
+                                multiple="true"
+                                value="#{cc.attrs.value}"
+                                forceSelection="true"
+                                completeMethod="#{cc.completeTag}"
+                                var="sr"
+                                itemValue="#{sr.tag}"
+                                itemLabel="#{sr.tag}"
+                                style="height: auto">
+                    <p:column>
+                        <h:outputText value="#{sr.tag} #{sr.absent?messages['inputTag.message.Create']:''}" />
+                    </p:column>
+                    <p:ajax event="itemSelect" listener="#{cc.onItemSelect}" />
+                </p:autoComplete>
+            </div>
+            <p:message for="#{cc.id}_inp" display="tooltip" />
+        </div>
+    </composite:implementation>
+
+</ui:component>

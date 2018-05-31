@@ -1,6 +1,7 @@
 package com.ozguryazilim.tekir.lead;
 
 import java.util.Date;
+import java.util.List;
 
 import com.ozguryazilim.tekir.entities.LeadCategory;
 import com.ozguryazilim.tekir.entities.LeadSource;
@@ -19,12 +20,12 @@ public class LeadViewModel extends VoucherViewModel {
 	private LeadSource leadSource;
 	private LeadCategory leadCategory;
 
-	public LeadViewModel(Long id, String code, String voucherNo, String info, String referenceNo, Date date,
-			String owner, VoucherState state, String stateReason, String stateInfo, Long groupId, String groupNo,
-			String topic, String relatedPersonName, String relatedPersonSurname, String relatedCompanyName,
-			String relatedPhone, String relatedAddress, String relatedEmail, Long leadSourceId, String leadSourceName,
-			Long leadCategoryId, String leadCategoryName) {
-		super(id, code, voucherNo, info, referenceNo, date, owner, state, stateReason, stateInfo, groupId, groupNo,
+	public LeadViewModel(Long id, List<String> tags, String voucherNo, String info, String referenceNo, Date date,
+						 String owner, VoucherState state, String stateReason, String stateInfo, Long groupId, String groupNo,
+						 String topic, String relatedPersonName, String relatedPersonSurname, String relatedCompanyName,
+						 String relatedPhone, String relatedAddress, String relatedEmail, Long leadSourceId, String leadSourceName,
+						 Long leadCategoryId, String leadCategoryName) {
+		super(id, tags, voucherNo, info, referenceNo, date, owner, state, stateReason, stateInfo, groupId, groupNo,
 				topic);
 		this.relatedPersonName = relatedPersonName;
 		this.relatedPersonSurname = relatedPersonSurname;
@@ -42,12 +43,12 @@ public class LeadViewModel extends VoucherViewModel {
 		leadCategory.setName(leadCategoryName);
 	}
 
-	public LeadViewModel(Long id, String code, String voucherNo, String info, String referenceNo, Date date,
+	public LeadViewModel(Long id, List<String> tags, String voucherNo, String info, String referenceNo, Date date,
 			String owner, VoucherState state, String stateReason, String stateInfo, VoucherGroup group, String topic,
 			String relatedPersonName, String relatedPersonSurname, String relatedCompanyName, String relatedPhone,
 			String relatedAddress, String relatedEmail, Long leadSourceId, String leadSourceName, Long leadCategoryId,
 			String leadCategoryName) {
-		super(id, code, voucherNo, info, referenceNo, date, owner, state, stateReason, stateInfo, group, topic);
+		super(id, tags, voucherNo, info, referenceNo, date, owner, state, stateReason, stateInfo, group, topic);
 		this.relatedPersonName = relatedPersonName;
 		this.relatedPersonSurname = relatedPersonSurname;
 		this.relatedCompanyName = relatedCompanyName;

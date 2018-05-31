@@ -74,7 +74,7 @@ public abstract class EmployeeCreditNoteRepository extends VoucherRepositoryBase
     private void buildVieModelSelect(CriteriaQuery<EmployeeCreditNoteViewModel> criteriaQuery, Root<? extends EmployeeCreditNote> from) {
         criteriaQuery.multiselect(
                 from.get(EmployeeCreditNote_.id),
-                from.get(VoucherBase_.code),
+                from.get("tags"),
                 from.get(VoucherBase_.voucherNo),
                 from.get(VoucherBase_.info),
                 from.get(VoucherBase_.referenceNo),

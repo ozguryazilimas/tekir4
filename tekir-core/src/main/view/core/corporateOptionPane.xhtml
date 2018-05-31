@@ -16,8 +16,22 @@
             <t:inputTextarea label="corporateOption.label.address" value="#{corporateOptionPane.invoiceAddress}" columnClass="col-sm-12"/>
         </div>
         <div class="row">
-            <t:inputText label="corporateOption.label.taxOffice" value="#{corporateOptionPane.taxOffice}" />
-            <t:inputText label="corporateOption.label.taxNumber" value="#{corporateOptionPane.taxNumber}" />
+            <t:inputText label="corporateOption.label.country"
+                         value="#{corporateOptionPane.invoiceCountry}"/>
+            <t:inputText label="corporateOption.label.city"
+                         value="#{corporateOptionPane.invoiceCity}"/>
+        </div>
+        <div class="row">
+            <t:inputText label="corporateOption.label.town"
+                         value="#{corporateOptionPane.invoiceTown}"/>
+            <t:inputText label="corporateOption.label.zipCode"
+                         value="#{corporateOptionPane.zipCode}"/>
+        </div>
+        <div class="row">
+            <t:inputText label="corporateOption.label.taxOffice"
+                         value="#{corporateOptionPane.taxOffice}"/>
+            <t:inputText label="corporateOption.label.taxNumber"
+                         value="#{corporateOptionPane.taxNumber}"/>
         </div>
 
     </ui:define>

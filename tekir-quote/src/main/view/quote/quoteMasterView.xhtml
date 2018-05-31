@@ -68,9 +68,10 @@
 
                     <ui:include src="/voucher/voucherReleatedWidget.xhtml">
                         <ui:param name="columnClass" value="col-lg-12 col-md-6" />
-                        <ui:param name="featurePointer" value="#{quoteHome.featurePointer}" />
+                        <ui:param name="matchable"
+                                  value="#{voucherMatcherService.findMatchableByFeature(quoteHome.featurePointer)}"/>
                         <ui:param name="processNo" value="#{quoteHome.entity.process.processNo}" />
-                        <ui:param name="groupNo" value="#{quoteHome.entity.group.groupNo}" />
+                        <ui:param name="group" value="#{quoteHome.entity.group}" />
                     </ui:include>
 
                     <ui:include src="/feeds/feedWidget.xhtml">

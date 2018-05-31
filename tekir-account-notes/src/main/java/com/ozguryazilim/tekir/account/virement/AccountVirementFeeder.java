@@ -54,8 +54,8 @@ public class AccountVirementFeeder extends AbstractFeeder<AccountVirement> {
 
 			List<FeaturePointer> mentions = prepareMentionList(entity);
 
-			sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(), entity.getInfo(),
-					getMessage(event), mentions);
+			sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(),
+				entity.getTopic(), getMessage(event), mentions);
 
 		}
 	}
@@ -70,8 +70,8 @@ public class AccountVirementFeeder extends AbstractFeeder<AccountVirement> {
 
 			List<FeaturePointer> mentions = prepareMentionList(entity);
 
-			sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(), entity.getInfo(),
-					FeederUtils.getEventMessage(event), mentions);
+			sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(),
+				entity.getTopic(), FeederUtils.getEventMessage(event), mentions);
 
 		}
 	}
