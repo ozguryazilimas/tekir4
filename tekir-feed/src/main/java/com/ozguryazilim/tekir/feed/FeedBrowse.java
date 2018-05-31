@@ -10,7 +10,7 @@ import com.ozguryazilim.telve.query.columns.DateColumn;
 import com.ozguryazilim.telve.query.columns.FormattedMessageColumn;
 import com.ozguryazilim.telve.query.columns.MessageColumn;
 import com.ozguryazilim.telve.query.columns.TextColumn;
-import com.ozguryazilim.telve.query.filters.DateFilter;
+import com.ozguryazilim.telve.query.filters.DateTimeFilter;
 import com.ozguryazilim.telve.query.filters.DateValueType;
 import com.ozguryazilim.telve.query.filters.FilterOperand;
 import com.ozguryazilim.telve.query.filters.StringFilter;
@@ -34,7 +34,7 @@ public class FeedBrowse extends BrowseBase<Feed, Feed> {
                 .addFilter(new StringFilter<>(Feed_.type, "general.label.Type"))
                 .addFilter(new StringFilter<>(Feed_.feeder, "general.label.Feeder"))
                 .addFilter(new StringFilter<>(Feed_.user, "general.label.User"))  
-                .addFilter(new DateFilter<>(Feed_.date, "general.label.Date",FilterOperand.All, DateValueType.LastMonth))
+                .addFilter(new DateTimeFilter<>(Feed_.date, "general.label.Date",FilterOperand.All, DateValueType.LastMonth))
                 .addFilter(new StringFilter<>(Feed_.subject, "general.label.Subject"))
                 .addFilter(new StringFilter<>(Feed_.body, "general.label.Body"));
                 
