@@ -94,7 +94,7 @@ public abstract class PaymentRepositoryBase<E extends PaymentBase, V extends Pay
                 from.get(VoucherProcessBase_.account).get(Contact_.id),
                 from.get(VoucherProcessBase_.account).get(Contact_.name),
                 from.get(VoucherProcessBase_.account).type(),
-                from.get(VoucherBase_.code),
+                from.get("tags"),
                 from.get(VoucherBase_.voucherNo),
                 from.get(VoucherBase_.info),
                 from.get(VoucherBase_.referenceNo),

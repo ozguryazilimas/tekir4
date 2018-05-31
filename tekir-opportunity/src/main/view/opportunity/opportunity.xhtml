@@ -55,7 +55,7 @@
                         <t:inputText label="voucher.label.Process" value="#{opportunityHome.entity.process.processNo}" columnClass="col-xs-12"/>
                     </ui:remove>
                     <t:inputLookupDialog label="voucher.label.Group" value="#{opportunityHome.entity.group}" caption="topic" lookupBean="#{voucherGroupLookup}" lookupListener="opportunityHome.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" columnClass="col-xs-12"/>
-                    <t:inputText label="general.label.Code" value="#{opportunityHome.entity.code}" />
+                    <t:inputTag label="general.label.Tag" value="#{opportunityHome.entity.tags}" key="Opportunity" columnClass="col-xs-12"/>
 
 
                 </div>
