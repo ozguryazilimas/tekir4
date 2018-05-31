@@ -162,47 +162,27 @@ public abstract class FinanceAccountTxnRepository extends RepositoryBase<Finance
         return resultList;
     }
 
-    public List<FinanceAccountTxnSumModel> findAccountTransactions(
+    public List<FinanceAccountTxn> findAccountTransactions(
             FinanceAccountTxnFilter filter) {
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
-        //Geriye AccidentAnalysisViewModel dönecek cq'yu ona göre oluşturuyoruz.
-        CriteriaQuery<FinanceAccountTxnSumModel> criteriaQuery =
-                criteriaBuilder.createQuery(FinanceAccountTxnSumModel.class);
+        CriteriaQuery<FinanceAccountTxn> criteriaQuery = criteriaBuilder
+            .createQuery(FinanceAccountTxn.class);
 
-        //From Tabii ki PersonWorkHistory
-        Root<FinanceAccountTxn> from = criteriaQuery.from(FinanceAccountTxn
-                .class);
+        Root<FinanceAccountTxn> from = criteriaQuery.from(FinanceAccountTxn.class);
 
-        criteriaQuery.multiselect(
-                from.get(FinanceAccountTxn_.account).get(FinanceAccount_.id),
-                from.get(FinanceAccountTxn_.account).get(FinanceAccount_.name),
-                //from.get(AccountTxn_.account).type(),
-                from.get(FinanceAccountTxn_.date),
-                from.get(FinanceAccountTxn_.debit),
-                from.get(FinanceAccountTxn_.currency),
-                from.get(FinanceAccountTxn_.localAmount),
-                from.get(FinanceAccountTxn_.feature),
-                from.get(FinanceAccountTxn_.contact).get(Contact_.name),
-                from.get(FinanceAccountTxn_.referenceNo),
-                from.get(FinanceAccountTxn_.status),
-                from.get(FinanceAccountTxn_.amount)
-        );
+        criteriaQuery.select(from);
 
         //Filtreleri ekleyelim.
         List<Predicate> predicates = new ArrayList<>();
 
         if (filter.getFinanceAccount() != null) {
-            predicates.add(criteriaBuilder.like(from.get(FinanceAccountTxn_
-                    .account).get(FinanceAccount_.name), "%" + filter
-                    .getFinanceAccount().getName() +
-                    "%"));
+            predicates.add(criteriaBuilder
+                .equal(from.get(FinanceAccountTxn_.account), filter.getFinanceAccount()));
         }
 
         if (filter.getAccount() != null) {
-            predicates.add(criteriaBuilder.like(from.get(FinanceAccountTxn_
-                    .contact).get(Contact_.name), "%" + filter
-                    .getAccount().getName() +
-                    "%"));
+            predicates.add(
+                criteriaBuilder.equal(from.get(FinanceAccountTxn_.contact), filter.getAccount()));
         }
 
         if (!Strings.isNullOrEmpty(filter.getCode())) {
@@ -210,26 +190,18 @@ public abstract class FinanceAccountTxnRepository extends RepositoryBase<Finance
                     .get(FinanceAccount_.code), "%" + filter.getCode() + "%"));
         }
 
-        if (filter.getStartDate() != null) {
-            predicates.add(criteriaBuilder.greaterThanOrEqualTo(from.get(FinanceAccountTxn_.date),
-                    filter.getStartDate().getCalculatedValue()));
-        }
-
-        if (filter.getEndDate() != null) {
-            predicates.add(criteriaBuilder.lessThanOrEqualTo(from.get(FinanceAccountTxn_.date),
-                    filter.getEndDate().getCalculatedValue()));
+        if (filter.getStartDate() != null && filter.getEndDate() != null) {
+            predicates.add(criteriaBuilder.between(from.get(FinanceAccountTxn_.date),
+                filter.getStartDate().getCalculatedValue(),
+                filter.getEndDate().getCalculatedValue()));
         }
 
         criteriaQuery.where(predicates.toArray(new Predicate[]{}));
 
-        criteriaQuery.orderBy(criteriaBuilder.asc(from.get(FinanceAccountTxn_
-                .account).get(FinanceAccount_.name)));
+        criteriaQuery.orderBy(criteriaBuilder.asc(from.get(FinanceAccountTxn_.date)));
 
-        TypedQuery<FinanceAccountTxnSumModel> typedQuery = entityManager()
-                .createQuery(criteriaQuery);
-        //typedQuery.setMaxResults(limit);
-        List<FinanceAccountTxnSumModel> resultList = typedQuery
-                .getResultList();
+        TypedQuery<FinanceAccountTxn> typedQuery = entityManager().createQuery(criteriaQuery);
+        List<FinanceAccountTxn> resultList = typedQuery.getResultList();
 
         return resultList;
 

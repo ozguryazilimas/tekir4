@@ -1,8 +1,11 @@
 package com.ozguryazilim.finance.account.reports;
 
+import com.google.common.base.Strings;
 import com.ozguryazilim.finance.account.FinanceAccountTxnSumModel;
 import com.ozguryazilim.finance.account.txn.FinanceAccountTxnRepository;
 import com.ozguryazilim.finance.config.FinancePages;
+import com.ozguryazilim.tekir.entities.FinanceAccountTxn;
+import com.ozguryazilim.telve.messages.Messages;
 import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.Date;
@@ -16,27 +19,21 @@ import com.ozguryazilim.telve.config.LocaleSelector;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.query.filters.DateValueType;
 import com.ozguryazilim.telve.reports.DynamicReportBase;
-import com.ozguryazilim.telve.reports.DynamicSubreportBase;
 import com.ozguryazilim.telve.reports.Report;
 import com.ozguryazilim.telve.reports.ReportDate;
-import com.ozguryazilim.telve.reports.SubreportRegistery;
 import com.ozguryazilim.telve.utils.DateUtils;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
-import net.sf.dynamicreports.report.base.expression.AbstractSimpleExpression;
 import net.sf.dynamicreports.report.base.expression.AbstractValueFormatter;
 import net.sf.dynamicreports.report.builder.DynamicReports;
 import net.sf.dynamicreports.report.builder.column.TextColumnBuilder;
 import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
-import net.sf.dynamicreports.report.builder.component.SubreportBuilder;
 import net.sf.dynamicreports.report.constant.HorizontalTextAlignment;
 import net.sf.dynamicreports.report.definition.ReportParameters;
 import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import static net.sf.dynamicreports.report.builder.DynamicReports.cm;
 import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
 import static net.sf.dynamicreports.report.builder.DynamicReports.col;
-import static net.sf.dynamicreports.report.builder.DynamicReports.report;
 import static net.sf.dynamicreports.report.builder.DynamicReports.sbt;
 import static net.sf.dynamicreports.report.builder.DynamicReports.type;
 
@@ -60,7 +57,7 @@ public class FinanceAccountTxnReport extends DynamicReportBase<FinanceAccountTxn
     @Override
     protected void buildReport(JasperReportBuilder report, Boolean forExport) {
         TextColumnBuilder<String> contactName = col.column( msg("finance" +
-                ".label.Account"), "contactName", type.stringType())
+            ".label.Account"), "contact.name", type.stringType())
                 .setHorizontalTextAlignment(HorizontalTextAlignment.CENTER);
         TextColumnBuilder<FeaturePointer> feature = TekirDynamicReportUtils.buildFeatureColumn("feature");
 
@@ -89,17 +86,6 @@ public class FinanceAccountTxnReport extends DynamicReportBase<FinanceAccountTxn
                                 msg("finance.label.CreditInitial");
                     }
                 });
-        //BooleanColumnBuilder debit = col.booleanColumn(msg("general.label.DebitCredit"), "debit").setComponentType(BooleanComponentType.IMAGE_CHECKBOX_1);
-
-
-        //TextColumnBuilder<String> ccy = col.column( "ccy.currencyCode", type.stringType())
-        //                                           .setTitle(msg("general.label.CCY"));
-
-
-
-        SubreportBuilder sub = cmp.subreport(new SubreportExpresstion())
-                .setDataSource(new SubreportDataSource());
-
 
         Locale locale = LocaleSelector.instance().getLocale();
         BigDecimal takeOver = repository.findByAccountBalance(getFilter()
@@ -115,18 +101,13 @@ public class FinanceAccountTxnReport extends DynamicReportBase<FinanceAccountTxn
                 .add(cmp.text(type.bigDecimalType().valueToString(balance, locale)).setHorizontalTextAlignment(HorizontalTextAlignment.RIGHT));
 
         report
-                //.setPageFormat(PageType.A4, PageOrientation.LANDSCAPE)
-                .fields(
-                        DynamicReports.field("currency", Currency.class),
-                        DynamicReports.field("feature", FeaturePointer.class)
-                )
-                .columns(txnDate, status, feature, referenceNo, contactName, debit,
-                        amount,  localAmount )
-                .columnHeader(cmp.verticalGap(4), devir)
-                //.setColumnHeaderStyle(stl.templateStyle("Bold"))
-                .detailFooter(sub)
-                .highlightDetailEvenRows()
-        ;
+            .fields(
+                DynamicReports.field("currency", Currency.class),
+                DynamicReports.field("feature", FeaturePointer.class))
+            .columns(txnDate, status, feature, referenceNo, contactName, debit,
+                amount, localAmount)
+            .columnHeader(cmp.verticalGap(4), devir)
+            .highlightDetailEvenRows();
 
         if( !forExport ){
             report.subtotalsAtSummary(
@@ -148,12 +129,21 @@ public class FinanceAccountTxnReport extends DynamicReportBase<FinanceAccountTxn
     protected String getReportSubTitle() {
         StringBuilder sb = new StringBuilder();
         sb.append(getFilter().getFinanceAccount().getName())
-                .append(" ( ")
-                .append(DateUtils.dateToStr(getFilter().getStartDate()
-                        .getCalculatedValue()))
-                .append(" - ")
-                .append(DateUtils.dateToStr(getFilter().getEndDate().getCalculatedValue()))
-                .append(" )");
+            .append(" ( ")
+            .append(DateUtils.dateToStr(getFilter().getStartDate().getCalculatedValue()))
+            .append(" - ")
+            .append(DateUtils.dateToStr(getFilter().getEndDate().getCalculatedValue()))
+            .append(" )\n");
+        if (!Strings.isNullOrEmpty(getFilter().getCode())) {
+            sb.append(Messages.getMessage("general.label.Code")).append(" : ")
+                .append(getFilter().getCode()).append('\n');
+        }
+        if (getFilter().getAccount() != null) {
+            sb.append(msg("general.label.Account"))
+                .append(getFilter().getAccount().getName()).append("\n");
+
+        }
+
         return sb.toString();
     }
 
@@ -161,8 +151,7 @@ public class FinanceAccountTxnReport extends DynamicReportBase<FinanceAccountTxn
 
     @Override
     protected JRDataSource getReportDataSource() {
-        List<FinanceAccountTxnSumModel> rows = repository.findAccountTransactions
-                (getFilter());
+        List<FinanceAccountTxn> rows = repository.findAccountTransactions(getFilter());
         return new JRBeanCollectionDataSource(rows);
     }
 
@@ -170,39 +159,5 @@ public class FinanceAccountTxnReport extends DynamicReportBase<FinanceAccountTxn
     protected FinanceAccountTxnFilter buildFilter() {
         return new FinanceAccountTxnFilter(new ReportDate(DateValueType.FirstDayOfMonth), new
                 ReportDate(DateValueType.LastDayOfMonth));
-    }
-
-
-    private class SubreportExpresstion extends AbstractSimpleExpression<JasperReportBuilder> {
-
-        @Override
-        public JasperReportBuilder evaluate(ReportParameters reportParameters) {
-            FeaturePointer feature = reportParameters.getValue("feature");
-
-            DynamicSubreportBase rpc = (DynamicSubreportBase) SubreportRegistery.getReport("accountStatement", feature.getFeature());
-            if( rpc == null ){
-                //Boş bir sub report dönüyoruz.
-                return report();
-            }
-            return rpc.getSubreport(reportParameters);
-
-        }
-
-    }
-
-    private class SubreportDataSource extends AbstractSimpleExpression<JRDataSource>{
-
-        @Override
-        public JRDataSource evaluate(ReportParameters reportParameters) {
-            FeaturePointer feature = reportParameters.getValue("feature");
-
-            DynamicSubreportBase rpc = (DynamicSubreportBase) SubreportRegistery.getReport("accountStatement", feature.getFeature());
-            if( rpc == null ){
-                //Boş bir sub report dönüyoruz.
-                return new JREmptyDataSource(0);
-            }
-            return rpc.getDataSource(reportParameters);
-        }
-
     }
 }
