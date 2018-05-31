@@ -62,7 +62,7 @@ public abstract class VoucherBase extends AuditBase{
      * Belgenin Düzenlenme Tarih Saati
      */
     @Column(name = "TXNDATE")
-    @Temporal(value = TemporalType.TIMESTAMP)
+    @Temporal(value = TemporalType.DATE)
     private Date date;
 
     /**

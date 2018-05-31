@@ -19,6 +19,8 @@
                         <t:outputText label="general.label.PaymentPlan" value="#{purchaseInvoiceHome.entity.paymentPlan.name}"  columnClass="col-sm-12"/>
                         <t:outputDate label="general.label.ShippingDate" value="#{purchaseInvoiceHome.entity.shippingDate}"  columnClass="col-sm-12"/>
                         <t:outputText label="general.label.ShippingNote" value="#{purchaseInvoiceHome.entity.shippingNote}"  columnClass="col-sm-12"/>
+                        <t:outputTime label="invoice.label.InvoiceTime"
+                                      value="#{purchaseInvoiceHome.entity.time}"/>
                     </t:accordion>
 
                     <ui:include src="/voucher/voucherInfoWidget.xhtml">
