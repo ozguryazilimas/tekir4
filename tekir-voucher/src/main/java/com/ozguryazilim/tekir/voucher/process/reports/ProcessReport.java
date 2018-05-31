@@ -4,6 +4,7 @@ import static net.sf.dynamicreports.report.builder.DynamicReports.*;
 
 import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.account.AccountTxnRepository;
+import com.ozguryazilim.tekir.core.query.filter.TagSuggestionService;
 import com.ozguryazilim.tekir.core.reports.TekirDynamicReportUtils;
 import com.ozguryazilim.tekir.entities.AccountTxn;
 import com.ozguryazilim.tekir.voucher.config.VoucherPages;
@@ -21,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Currency;
 import java.util.Date;
 import java.util.List;
+import java.util.ListIterator;
 import javax.inject.Inject;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.base.expression.AbstractSimpleExpression;
@@ -34,6 +36,7 @@ import net.sf.dynamicreports.report.definition.ReportParameters;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.apache.deltaspike.core.api.config.ConfigResolver;
+import org.apache.deltaspike.core.api.provider.BeanProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,6 +50,8 @@ public class ProcessReport extends DynamicReportBase<ProcessReportFilter> {
 
     @Inject
     private AccountTxnRepository txnRepository;
+
+    private TagSuggestionService suggestionProvider;
 
     @Override
     protected ProcessReportFilter buildFilter() {
@@ -63,24 +68,22 @@ public class ProcessReport extends DynamicReportBase<ProcessReportFilter> {
     protected void buildReport(JasperReportBuilder report, Boolean forExport) {
 
         TextColumnBuilder<String> processTopic = col.column("topic", type.stringType())
-            .setTitle(msg("ProcessReport.Topic"));
+            .setTitle(msg("ProcessReport.Topic")).setWidth(30);
         TextColumnBuilder<String> processNo = col.column("processNo", type.stringType())
-            .setTitle(msg("ProcessReport.No")).setFixedWidth(cm(3));
+            .setTitle(msg("ProcessReport.No")).setWidth(20);
         TextColumnBuilder<String> processAccountName = col.column("account.name", type.stringType())
-            .setTitle(msg("ProcessReport.AccountName")).setFixedWidth(cm(4));
+            .setTitle(msg("ProcessReport.AccountName")).setWidth(30);
         TextColumnBuilder<String> processType = TekirDynamicReportUtils
-            .buildProcessTypeColumn("type").setFixedWidth(cm(3));
+            .buildProcessTypeColumn("type").setWidth(10);
         TextColumnBuilder<String> processStatus = TekirDynamicReportUtils
-            .buildProcessStatusColumn("status").setFixedWidth(cm(3));
+            .buildProcessStatusColumn("status").setWidth(10);
 
         if (getFilter().getDetail()) {
             SubreportBuilder sub = cmp.subreport(new SubreportExpression())
                 .setDataSource(exp.subDatasourceBeanCollection("detail"));
 
             report.detailFooter(
-                cmp.horizontalList(cmp.horizontalGap(cm(1)), sub),
-                cmp.line(),
-                cmp.verticalGap(cm(1)));
+                cmp.horizontalList(cmp.horizontalGap(15), sub));
         }
 
         report
@@ -95,14 +98,23 @@ public class ProcessReport extends DynamicReportBase<ProcessReportFilter> {
         if (getFilter().getDetail()) {
             for (ProcessReportModel p : rows) {
                 List<AccountTxn> txnRows = txnRepository
-                    .findByProcessIdAndDateBetweenOrderByDate(p.getProcessNo(),
-                        getFilter().getBeginDate().getCalculatedValue(),
+                    .findByProcessIdAndTagsAndDateBetweenOrderByDate(p.getProcessNo(),
+                        getFilter().getTags(), getFilter().getBeginDate().getCalculatedValue(),
                         getFilter().getEndDate().getCalculatedValue());
                 p.setDetail(txnRows);
             }
         }
 
         return new JRBeanCollectionDataSource(rows);
+    }
+
+    @Override
+    protected Boolean isReportPotrait() {
+        if (getFilter().getDetail()) {
+            return Boolean.FALSE;
+        } else {
+            return Boolean.TRUE;
+        }
     }
 
     @Override
@@ -144,8 +156,38 @@ public class ProcessReport extends DynamicReportBase<ProcessReportFilter> {
             sb.append(Messages.getMessage("processReport.filter.AccountOwner")).append(" : ")
                 .append(getFilter().getOwner()).append('\n');
         }
+        if (getFilter().getTags() != null && getFilter().getDetail()) {
+            ListIterator<String> iterator = getFilter().getTags().listIterator();
+
+            if (iterator.hasNext()) {
+                sb.append(Messages.getMessage("general.label.Tag")).append(" : ");
+            }
+
+            while (iterator.hasNext()) {
+                sb.append(iterator.next());
+                if (!iterator.hasNext()) {
+                    sb.append(".\n");
+                } else {
+                    sb.append(", ");
+                }
+            }
+        }
+        if (getFilter().getDetail() &&
+            getFilter().getBeginDate() != null && getFilter().getEndDate() != null) {
+            String beginDate = df.format(getFilter().getBeginDate().getCalculatedValue());
+            String endDate = df.format(getFilter().getEndDate().getCalculatedValue());
+            String result = Messages.getMessageFromData(Messages.getCurrentLocale(),
+                "processReport.filter.BetweenDates$%&" + beginDate + "$%&" + endDate);
+
+            sb.append(result).append("\n");
+        }
 
         return sb.toString();
+    }
+
+    public List<String> getSuggestions() {
+        suggestionProvider = BeanProvider.getContextualReference(TagSuggestionService.class);
+        return suggestionProvider.getSuggestions("*");
     }
 
     private class SubreportExpression extends AbstractSimpleExpression<JasperReportBuilder> {
@@ -155,15 +197,16 @@ public class ProcessReport extends DynamicReportBase<ProcessReportFilter> {
             JasperReportBuilder report = report();
 
             TextColumnBuilder<Date> txnDate = col
-                .column(msg("general.label.Date"), "date", type.dateType()).setFixedWidth(cm(3))
+                .column(msg("general.label.Date"), "date", type.dateType()).setWidth(10)
                 .setPattern(msg("general.format.Date"))
                 .setHorizontalTextAlignment(HorizontalTextAlignment.LEFT);
-            TextColumnBuilder<String> status = TekirDynamicReportUtils.buildStatusColumn("status");
+            TextColumnBuilder<String> status = TekirDynamicReportUtils.buildStatusColumn("status")
+                .setWidth(5);
             TextColumnBuilder<FeaturePointer> feature = TekirDynamicReportUtils
-                .buildFeatureColumn("feature");
+                .buildFeatureColumn("feature").setWidth(25);
             TextColumnBuilder<BigDecimal> amount = col
                 .column(msg("general.label.Amount"), "amount", type.bigDecimalType())
-                .setFixedWidth(cm(4))
+                .setWidth(10)
                 .setValueFormatter(new AbstractValueFormatter<String, BigDecimal>() {
                     @Override
                     public String format(BigDecimal value, ReportParameters reportParameters) {
@@ -175,9 +218,9 @@ public class ProcessReport extends DynamicReportBase<ProcessReportFilter> {
                 });
             TextColumnBuilder<BigDecimal> localAmount = col
                 .column(msg("general.label.LocalAmount"), "localAmount", type.bigDecimalType())
-                .setFixedWidth(cm(3));
+                .setWidth(10);
             TextColumnBuilder<String> topic = col.column("topic", type.stringType())
-                .setTitle(msg("ProcessReport.Topic")).setFixedWidth(cm(3))
+                .setTitle(msg("ProcessReport.Topic")).setWidth(25)
                 .setHorizontalTextAlignment(HorizontalTextAlignment.RIGHT);
 
             InputStream iss = ProcessReport.class.getResourceAsStream("/" + ConfigResolver

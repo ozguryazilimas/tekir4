@@ -42,16 +42,19 @@
             <t:inputCheckboxGroup label="processReport.filter.ProcessDetails">
                 <p:selectBooleanCheckbox itemLabel="#{messages['general.label.Show']}"
                                          value="#{processReport.filter.detail}">
-                    <p:ajax update=":reportForm:dates" event="change" process="@this"/>
+                    <p:ajax update=":reportForm:detailOptions" event="change" process="@this"/>
                 </p:selectBooleanCheckbox>
             </t:inputCheckboxGroup>
-            <h:panelGroup id="dates">
+            <h:panelGroup id="detailOptions">
                 <t:inputReportDate value="#{processReport.filter.beginDate}"
                                    label="general.label.BeginDate" columnClass="col-xs-6"
                                    rendered="#{processReport.filter.detail}"/>
                 <t:inputReportDate value="#{processReport.filter.endDate}"
                                    label="general.label.EndDate" columnClass="col-xs-6"
                                    rendered="#{processReport.filter.detail}"/>
+                <t:selectTag label="general.label.Tag" value="#{processReport.filter.tags}"
+                             rendered="#{processReport.filter.detail}"
+                             suggestions="#{processReport.suggestions}"/>
             </h:panelGroup>
         </div>
     </ui:define>

@@ -8,6 +8,7 @@ import com.ozguryazilim.tekir.entities.ProcessType;
 import com.ozguryazilim.tekir.entities.Territory;
 import com.ozguryazilim.telve.reports.ReportDate;
 import java.io.Serializable;
+import java.util.List;
 
 public class ProcessReportFilter implements Serializable{
 
@@ -21,6 +22,7 @@ public class ProcessReportFilter implements Serializable{
     private ProcessStatus status;
     private ProcessType type;
     private Boolean isDetail;
+    private List<String> tags;
     private ReportDate beginDate;
     private ReportDate endDate;
     private ReportDate date;
@@ -132,5 +134,13 @@ public class ProcessReportFilter implements Serializable{
 
     public void setEndDate(ReportDate endDate) {
         this.endDate = endDate;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 }
