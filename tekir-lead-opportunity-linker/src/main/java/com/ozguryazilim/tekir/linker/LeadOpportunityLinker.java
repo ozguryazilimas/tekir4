@@ -1,5 +1,7 @@
 package com.ozguryazilim.tekir.linker;
 
+import com.ozguryazilim.tekir.core.code.AutoCodeService;
+import com.ozguryazilim.telve.auth.Identity;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
@@ -33,6 +35,9 @@ public class LeadOpportunityLinker implements VoucherRedirectHandler {
 	private ContactRepository contactRepository;
 
 	@Inject
+    private Identity identity;
+
+	@Inject
 	private LeadHome leadHome;
 
 	@Inject
@@ -46,6 +51,9 @@ public class LeadOpportunityLinker implements VoucherRedirectHandler {
 
 	@Inject
 	private TerritoryRepository territoryRepository;
+
+    @Inject
+    private AutoCodeService codeService;
 
 	@Override
 	public Class<? extends ViewConfig> redirect(VoucherStateChange event) {
@@ -104,8 +112,7 @@ public class LeadOpportunityLinker implements VoucherRedirectHandler {
 			fp.setBusinessKey(leadHome.getEntity().getVoucherNo());
 			fp.setPrimaryKey(leadHome.getEntity().getId());
 			fp.setFeature(leadFeature.getName());
-                        
-			person.setCode(leadHome.getEntity().getVoucherNo() + person.getName());
+            person.setCode((codeService.getNewSerialNumber(Person.class.getSimpleName())));
 			person.setTerritory(territory);
 			person.setIndustry(leadHome.getEntity().getIndustry());
                         person.setSourcePointer(fp);
@@ -117,7 +124,8 @@ public class LeadOpportunityLinker implements VoucherRedirectHandler {
 			corporation.getContactRoles().add("CORPORATION");
 			corporation.setOrganizastionName(leadHome.getEntity().getRelatedCompanyName());
 			corporation.setName(leadHome.getEntity().getRelatedCompanyName());
-			corporation.setCode(leadHome.getEntity().getVoucherNo() + corporation.getName());
+            corporation
+                .setCode((codeService.getNewSerialNumber(Corporation.class.getSimpleName())));
 			corporation.setPrimaryContact(person);
 			corporation.setTerritory(territory);
 			corporation.setIndustry(leadHome.getEntity().getIndustry());
