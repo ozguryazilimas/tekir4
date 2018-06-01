@@ -1,11 +1,15 @@
 package com.ozguryazilim.tekir.linker;
 
 import com.ozguryazilim.tekir.entities.Contact;
+import com.ozguryazilim.telve.audit.AuditLogCommand;
+import com.ozguryazilim.telve.audit.AuditLogger;
+import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.forms.EntityChangeAction;
 import com.ozguryazilim.telve.forms.EntityChangeEvent;
 import com.ozguryazilim.telve.qualifiers.AfterLiteral;
 import com.ozguryazilim.telve.qualifiers.BeforeLiteral;
 import com.ozguryazilim.telve.qualifiers.EntityQualifierLiteral;
+import com.ozguryazilim.telve.utils.EntityUtils;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
@@ -41,6 +45,12 @@ public class LeadOpportunityLinker implements VoucherRedirectHandler {
 
     @Inject
     private Event<EntityChangeEvent> entityChangeEvent;
+
+    @Inject
+    private AuditLogger auditLogger;
+
+    @Inject
+    private Identity identity;
 
 	@Inject
 	private LeadHome leadHome;
@@ -132,7 +142,11 @@ public class LeadOpportunityLinker implements VoucherRedirectHandler {
                 .select(new AfterLiteral())
                 .fire(new EntityChangeEvent(person, EntityChangeAction.INSERT));
 
-                        //Contact Corporation
+            auditLogger.actionLog(person.getClass().getSimpleName(), person.getId(),
+                EntityUtils.getBizKeyValue(person), AuditLogCommand.CAT_ENTITY,
+                AuditLogCommand.ACT_INSERT, identity.getLoginName(), "");
+
+            //Contact Corporation
 			Corporation corporation = new Corporation();
 			corporation.getContactRoles().add("CONTACT");
 			corporation.getContactRoles().add("CORPORATION");
@@ -156,7 +170,11 @@ public class LeadOpportunityLinker implements VoucherRedirectHandler {
                 .select(new AfterLiteral())
                 .fire(new EntityChangeEvent(corporation, EntityChangeAction.INSERT));
 
-                        //Opportunity
+            auditLogger.actionLog(corporation.getClass().getSimpleName(), corporation.getId(),
+                EntityUtils.getBizKeyValue(corporation), AuditLogCommand.CAT_ENTITY,
+                AuditLogCommand.ACT_INSERT, identity.getLoginName(), "");
+
+            //Opportunity
 			Class<? extends ViewConfig> result = opportunityHome.create();
 
 			opportunityHome.getEntity().setStarter(fp);
