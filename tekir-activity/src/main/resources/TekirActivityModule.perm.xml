@@ -21,4 +21,10 @@
             <entityActions scope="owner,group"/>
         </permission>
     </permissionGroup>
+    <permissionGroup name="Reports">
+        <permission name="inactiveContactsReport">
+            <action name="select"/>
+            <action name="exec"/>
+        </permission>
+    </permissionGroup>
 </permissions>
