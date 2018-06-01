@@ -1,6 +1,13 @@
 package com.ozguryazilim.tekir.linker;
 
+import com.ozguryazilim.tekir.entities.Contact;
+import com.ozguryazilim.telve.forms.EntityChangeAction;
+import com.ozguryazilim.telve.forms.EntityChangeEvent;
+import com.ozguryazilim.telve.qualifiers.AfterLiteral;
+import com.ozguryazilim.telve.qualifiers.BeforeLiteral;
+import com.ozguryazilim.telve.qualifiers.EntityQualifierLiteral;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
@@ -31,6 +38,9 @@ public class LeadOpportunityLinker implements VoucherRedirectHandler {
 
 	@Inject
 	private ContactRepository contactRepository;
+
+    @Inject
+    private Event<EntityChangeEvent> entityChangeEvent;
 
 	@Inject
 	private LeadHome leadHome;
@@ -109,7 +119,18 @@ public class LeadOpportunityLinker implements VoucherRedirectHandler {
 			person.setTerritory(territory);
 			person.setIndustry(leadHome.getEntity().getIndustry());
                         person.setSourcePointer(fp);
-			contactRepository.save(person);
+
+            entityChangeEvent
+                .select(new EntityQualifierLiteral(Contact.class))
+                .select(new BeforeLiteral())
+                .fire(new EntityChangeEvent(person, EntityChangeAction.INSERT));
+
+            contactRepository.save(person);
+
+            entityChangeEvent
+                .select(new EntityQualifierLiteral(Contact.class))
+                .select(new AfterLiteral())
+                .fire(new EntityChangeEvent(person, EntityChangeAction.INSERT));
 
                         //Contact Corporation
 			Corporation corporation = new Corporation();
@@ -122,7 +143,18 @@ public class LeadOpportunityLinker implements VoucherRedirectHandler {
 			corporation.setTerritory(territory);
 			corporation.setIndustry(leadHome.getEntity().getIndustry());
                         corporation.setSourcePointer(fp);
-			contactRepository.save(corporation);
+
+            entityChangeEvent
+                .select(new EntityQualifierLiteral(Contact.class))
+                .select(new BeforeLiteral())
+                .fire(new EntityChangeEvent(corporation, EntityChangeAction.INSERT));
+
+            contactRepository.save(corporation);
+
+            entityChangeEvent
+                .select(new EntityQualifierLiteral(Contact.class))
+                .select(new AfterLiteral())
+                .fire(new EntityChangeEvent(corporation, EntityChangeAction.INSERT));
 
                         //Opportunity
 			Class<? extends ViewConfig> result = opportunityHome.create();
