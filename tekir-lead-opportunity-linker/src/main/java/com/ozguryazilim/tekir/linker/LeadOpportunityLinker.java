@@ -1,6 +1,17 @@
 package com.ozguryazilim.tekir.linker;
 
+import com.ozguryazilim.tekir.entities.Contact;
+import com.ozguryazilim.telve.audit.AuditLogCommand;
+import com.ozguryazilim.telve.audit.AuditLogger;
+import com.ozguryazilim.telve.auth.Identity;
+import com.ozguryazilim.telve.forms.EntityChangeAction;
+import com.ozguryazilim.telve.forms.EntityChangeEvent;
+import com.ozguryazilim.telve.qualifiers.AfterLiteral;
+import com.ozguryazilim.telve.qualifiers.BeforeLiteral;
+import com.ozguryazilim.telve.qualifiers.EntityQualifierLiteral;
+import com.ozguryazilim.telve.utils.EntityUtils;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
@@ -31,6 +42,15 @@ public class LeadOpportunityLinker implements VoucherRedirectHandler {
 
 	@Inject
 	private ContactRepository contactRepository;
+
+    @Inject
+    private Event<EntityChangeEvent> entityChangeEvent;
+
+    @Inject
+    private AuditLogger auditLogger;
+
+    @Inject
+    private Identity identity;
 
 	@Inject
 	private LeadHome leadHome;
@@ -109,9 +129,24 @@ public class LeadOpportunityLinker implements VoucherRedirectHandler {
 			person.setTerritory(territory);
 			person.setIndustry(leadHome.getEntity().getIndustry());
                         person.setSourcePointer(fp);
-			contactRepository.save(person);
 
-                        //Contact Corporation
+            entityChangeEvent
+                .select(new EntityQualifierLiteral(Contact.class))
+                .select(new BeforeLiteral())
+                .fire(new EntityChangeEvent(person, EntityChangeAction.INSERT));
+
+            contactRepository.save(person);
+
+            entityChangeEvent
+                .select(new EntityQualifierLiteral(Contact.class))
+                .select(new AfterLiteral())
+                .fire(new EntityChangeEvent(person, EntityChangeAction.INSERT));
+
+            auditLogger.actionLog(person.getClass().getSimpleName(), person.getId(),
+                EntityUtils.getBizKeyValue(person), AuditLogCommand.CAT_ENTITY,
+                AuditLogCommand.ACT_INSERT, identity.getLoginName(), "");
+
+            //Contact Corporation
 			Corporation corporation = new Corporation();
 			corporation.getContactRoles().add("CONTACT");
 			corporation.getContactRoles().add("CORPORATION");
@@ -122,9 +157,24 @@ public class LeadOpportunityLinker implements VoucherRedirectHandler {
 			corporation.setTerritory(territory);
 			corporation.setIndustry(leadHome.getEntity().getIndustry());
                         corporation.setSourcePointer(fp);
-			contactRepository.save(corporation);
 
-                        //Opportunity
+            entityChangeEvent
+                .select(new EntityQualifierLiteral(Contact.class))
+                .select(new BeforeLiteral())
+                .fire(new EntityChangeEvent(corporation, EntityChangeAction.INSERT));
+
+            contactRepository.save(corporation);
+
+            entityChangeEvent
+                .select(new EntityQualifierLiteral(Contact.class))
+                .select(new AfterLiteral())
+                .fire(new EntityChangeEvent(corporation, EntityChangeAction.INSERT));
+
+            auditLogger.actionLog(corporation.getClass().getSimpleName(), corporation.getId(),
+                EntityUtils.getBizKeyValue(corporation), AuditLogCommand.CAT_ENTITY,
+                AuditLogCommand.ACT_INSERT, identity.getLoginName(), "");
+
+            //Opportunity
 			Class<? extends ViewConfig> result = opportunityHome.create();
 
 			opportunityHome.getEntity().setStarter(fp);
