@@ -12,4 +12,10 @@
             <entityActions/>
         </permission>
     </permissionGroup>
+    <permissionGroup name="Reports">
+        <permission name="processReport">
+            <action name="select"/>
+            <action name="exec"/>
+        </permission>
+    </permissionGroup>
 </permissions>

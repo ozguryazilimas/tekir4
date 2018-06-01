@@ -23,14 +23,12 @@
 	</permissionGroup>
 	<permissionGroup name="Reports">
 		<permission name="financeAccountTxnReport">
-			<action name="select" scope="owner,group" />
-			<action name="exec" scope="owner,group" />
+			<action name="select"/>
+			<action name="exec"/>
+		</permission>
+		<permission target="financialStatusReport">
+			<action name="select"/>
+			<action name="exec"/>
 		</permission>
 	</permissionGroup>
-    <permissionGroup name="Reports">
-        <permission target="financialStatusReport">
-            <action name="select" scope="owner,group" />
-            <action name="exec" scope="owner,group" />
-        </permission>
-    </permissionGroup>
 </permissions>
