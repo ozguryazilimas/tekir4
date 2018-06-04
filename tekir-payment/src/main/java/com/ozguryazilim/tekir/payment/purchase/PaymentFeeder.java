@@ -50,20 +50,25 @@ public class PaymentFeeder extends PaymentFeederBase<Payment>{
     
 
 	public void feed(@Observes(during = TransactionPhase.IN_PROGRESS) @EntityQualifier(entity = Payment.class) @After EntityChangeEvent event) {
+        Payment entity = (Payment) event.getEntity();
+
+        FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
 
 		if (event.getAction() != EntityChangeAction.DELETE) {
-			Payment entity = (Payment) event.getEntity();
 
-			FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
-			
 			if( entity.getGroup()!=null){
 				voucherGroupTxnService.saveFeature(voucherPointer, entity.getGroup(), entity.getOwner(), entity.getTopic(),
 						entity.getDate(), entity.getState());
 			}
 		}
 
-		// TODO: Delete edildiğinde de gidip txn'den silme yapılmalı.
-	}
+        if (event.getAction() == EntityChangeAction.DELETE) {
+            if (entity.getGroup() != null) {
+                voucherGroupTxnService.deleteFeature(voucherPointer, entity.getGroup());
+            }
+        }
+
+    }
     
 
     

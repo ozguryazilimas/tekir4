@@ -49,11 +49,11 @@ public class PaymentReceivedFeeder extends PaymentFeederBase<PaymentReceived>{
     
 
 	public void feed(@Observes(during = TransactionPhase.IN_PROGRESS) @EntityQualifier(entity = PaymentReceived.class) @After EntityChangeEvent event) {
+        PaymentReceived entity = (PaymentReceived) event.getEntity();
+
+        FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
 
 		if (event.getAction() != EntityChangeAction.DELETE) {
-			PaymentReceived entity = (PaymentReceived) event.getEntity();
-
-			FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
 			
 			if( entity.getGroup()!=null){
 				voucherGroupTxnService.saveFeature(voucherPointer, entity.getGroup(), entity.getOwner(), entity.getTopic(),
@@ -61,8 +61,13 @@ public class PaymentReceivedFeeder extends PaymentFeederBase<PaymentReceived>{
 			}
 		}
 
-		// TODO: Delete edildiğinde de gidip txn'den silme yapılmalı.
-	}
+        if (event.getAction() == EntityChangeAction.DELETE) {
+            if (entity.getGroup() != null) {
+                voucherGroupTxnService.deleteFeature(voucherPointer, entity.getGroup());
+            }
+        }
+
+    }
     
 
     @Override

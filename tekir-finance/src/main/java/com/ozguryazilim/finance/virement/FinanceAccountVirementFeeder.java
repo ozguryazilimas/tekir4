@@ -74,21 +74,25 @@ public class FinanceAccountVirementFeeder extends AbstractFeeder<FinanceAccountV
 	}
 	
 	public void feed(@Observes(during = TransactionPhase.IN_PROGRESS) @EntityQualifier(entity = FinanceAccountVirement.class) @After EntityChangeEvent event) {
+        FinanceAccountVirement entity = (FinanceAccountVirement) event.getEntity();
+
+        FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
 
 		if( event.getAction() != EntityChangeAction.DELETE   ) {
-			FinanceAccountVirement entity = (FinanceAccountVirement) event.getEntity();
-
-			FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
 
 			if( entity.getGroup()!=null){
 				voucherGroupTxnService.saveFeature(voucherPointer, entity.getGroup(), entity.getOwner(), entity.getTopic(),
 						entity.getDate(), entity.getState());
 			}
 		}
-		
-		//TODO: Delete edildiğinde de gidip txn'den silme yapılmalı.
-		
-	}
+
+        if (event.getAction() == EntityChangeAction.DELETE) {
+            if (entity.getGroup() != null) {
+                voucherGroupTxnService.deleteFeature(voucherPointer, entity.getGroup());
+            }
+        }
+
+    }
 
 	/**
 	 * Geriye event bilgilerine bakarak feed body mesajını hazırlayıp döndürür.

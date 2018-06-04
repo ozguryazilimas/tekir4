@@ -108,6 +108,11 @@ public class QuoteFeeder extends AbstractFeeder<Quote> {
 
         if (event.getAction() == EntityChangeAction.DELETE) {
             accountTxnService.deleteFeature(voucherPointer, entity.getAccount());
+
+            if (entity.getGroup() != null) {
+                voucherGroupTxnService.deleteFeature(voucherPointer, entity.getGroup());
+            }
+
         }
 
     }
