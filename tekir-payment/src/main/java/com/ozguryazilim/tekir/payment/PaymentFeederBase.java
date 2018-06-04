@@ -118,6 +118,7 @@ public abstract class PaymentFeederBase<E extends PaymentBase> extends AbstractF
 
         if (event.getAction() == EntityChangeAction.DELETE) {
             accountTxnService.deleteFeature(voucherPointer, entity.getAccount());
+            financeAccountTxnService.deleteFeature(voucherPointer, entity.getFinanceAccount());
         }
 
 	}

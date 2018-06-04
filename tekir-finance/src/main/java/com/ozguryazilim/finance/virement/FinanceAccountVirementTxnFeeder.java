@@ -38,11 +38,11 @@ public class FinanceAccountVirementTxnFeeder implements Serializable{
 	private CurrencyService currencyService;
 
 	public void feed(@Observes(during = TransactionPhase.IN_PROGRESS) @EntityQualifier(entity = FinanceAccountVirement.class) @After EntityChangeEvent event) {
+        FinanceAccountVirement entity = (FinanceAccountVirement) event.getEntity();
 
-		if( event.getAction() != EntityChangeAction.DELETE   ) {
-			FinanceAccountVirement entity = (FinanceAccountVirement) event.getEntity();
+        FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
 
-			FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
+        if( event.getAction() != EntityChangeAction.DELETE   ) {
 
 			BigDecimal fromLocalAmount;
 			BigDecimal toLocalAmount;
@@ -70,9 +70,12 @@ public class FinanceAccountVirementTxnFeeder implements Serializable{
 					entity.getTags(), Boolean.TRUE, Boolean.FALSE, entity.getToCurrency(), entity.getToAmount(),
 					toLocalAmount, entity.getDate(), entity.getOwner(), null, entity.getState().toString(),
 					entity.getStateReason(), null);
-
-			//TODO: Delete edildiğinde de gidip txn'den silme yapılmalı.
-
 		}
-	}
+
+        if (event.getAction() == EntityChangeAction.DELETE) {
+            financeAccountTxnService.deleteFeature(voucherPointer, entity.getFromAccount());
+            financeAccountTxnService.deleteFeature(voucherPointer, entity.getToAccount());
+        }
+
+    }
 }
