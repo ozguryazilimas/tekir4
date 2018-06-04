@@ -66,6 +66,15 @@ public class FinanceAccountTxnService implements Serializable{
 
         repository.save(txn);
     }
+
+    @Transactional
+    public void deleteFeature(FeaturePointer feature, FinanceAccount account) {
+        FinanceAccountTxn txn = repository.findOptionalByFeatureAndAccount(feature, account);
+
+        if (txn != null) {
+            repository.remove(txn);
+        }
+    }
     
     public List<FinanceAccountTxn> getProcessVouchers( String processId ){
         return repository.findByProcessId(processId);
