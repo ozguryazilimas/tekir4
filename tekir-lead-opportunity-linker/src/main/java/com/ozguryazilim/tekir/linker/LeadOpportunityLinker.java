@@ -176,6 +176,10 @@ public class LeadOpportunityLinker implements VoucherRedirectHandler {
                     EntityUtils.getBizKeyValue(corporation), AuditLogCommand.CAT_ENTITY,
                     AuditLogCommand.ACT_INSERT, identity.getLoginName(), "");
 
+            //Corporation'i kaydettikten sonra person'a atiyoruz
+            person.setCorporation(corporation);
+            contactRepository.save(person);
+
             //Opportunity
             Class<? extends ViewConfig> result = opportunityHome.create();
 
