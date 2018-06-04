@@ -87,11 +87,11 @@ public class OpportunityFeeder extends AbstractFeeder<Opportunity> {
 	}
 
 	public void feed(@Observes(during = TransactionPhase.IN_PROGRESS) @EntityQualifier(entity = Opportunity.class) @After EntityChangeEvent event) {
+        Opportunity entity = (Opportunity) event.getEntity();
 
-		if (event.getAction() != EntityChangeAction.DELETE) {
-			Opportunity entity = (Opportunity) event.getEntity();
+        FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
 
-			FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
+        if (event.getAction() != EntityChangeAction.DELETE) {
 
 			accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getInfo(), entity.getTags(),
 					Boolean.FALSE, Boolean.TRUE, entity.getCurrency(), entity.getBudget(), entity.getLocalBudget(),
@@ -105,8 +105,11 @@ public class OpportunityFeeder extends AbstractFeeder<Opportunity> {
 			}
 		}
 
-		// TODO: Delete edildiğinde de gidip txn'den silme yapılmalı.
-	}
+        if (event.getAction() == EntityChangeAction.DELETE) {
+            accountTxnService.deleteFeature(voucherPointer, entity.getAccount());
+        }
+
+    }
 
 	/**
 	 * Geriye event bilgilerine bakarak feed body mesajını hazırlayıp döndürür.

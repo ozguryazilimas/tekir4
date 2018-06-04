@@ -89,11 +89,11 @@ public class QuoteFeeder extends AbstractFeeder<Quote> {
 
 	public void feed(
 			@Observes(during = TransactionPhase.IN_PROGRESS) @EntityQualifier(entity = Quote.class) @After EntityChangeEvent event) {
+        Quote entity = (Quote) event.getEntity();
 
-		if (event.getAction() != EntityChangeAction.DELETE) {
-			Quote entity = (Quote) event.getEntity();
+        FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
 
-			FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
+        if (event.getAction() != EntityChangeAction.DELETE) {
 
 			accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getInfo(), entity.getTags(),
 					Boolean.FALSE, Boolean.FALSE, entity.getCurrency(), entity.getTotal(), entity.getLocalAmount(),
@@ -106,8 +106,11 @@ public class QuoteFeeder extends AbstractFeeder<Quote> {
 			}
 		}
 
-		// TODO: Delete edildiğinde de gidip txn'den silme yapılmalı.
-	}
+        if (event.getAction() == EntityChangeAction.DELETE) {
+            accountTxnService.deleteFeature(voucherPointer, entity.getAccount());
+        }
+
+    }
 
 	/**
 	 * Geriye event bilgilerine bakarak feed body mesajını hazırlayıp döndürür.

@@ -31,19 +31,21 @@ public class AccountCreditNoteAccountTxnFeeder implements Serializable{
     
     
     public void feed(@Observes(during = TransactionPhase.IN_PROGRESS) @EntityQualifier(entity = AccountCreditNote.class) @After EntityChangeEvent event) {
-        
+        AccountCreditNote entity = (AccountCreditNote) event.getEntity();
+
+        FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
+
         if( event.getAction() != EntityChangeAction.DELETE   ) {
-            AccountCreditNote entity = (AccountCreditNote) event.getEntity();
-            
-            FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
 
             accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getInfo(), entity.getTags(),
                     Boolean.TRUE, Boolean.FALSE, entity.getCurrency(), entity.getAmount(), entity.getLocalAmount(),
                     entity.getDate(), entity.getOwner(), null, entity.getState().toString(), entity.getStateReason(),
                     entity.getTopic());
         }
-        
-        //TODO: Delete edildiğinde de gidip txn'den silme yapılmalı.
-            
+
+        if (event.getAction() == EntityChangeAction.DELETE) {
+            accountTxnService.deleteFeature(voucherPointer, entity.getAccount());
+        }
+
     }
 }

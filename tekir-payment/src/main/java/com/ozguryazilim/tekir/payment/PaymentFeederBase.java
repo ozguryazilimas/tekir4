@@ -99,11 +99,11 @@ public abstract class PaymentFeederBase<E extends PaymentBase> extends AbstractF
 	}
 
 	public void feedAccountTxn(EntityChangeEvent event) {
+        E entity = (E) event.getEntity();
+
+        FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
 
 		if (event.getAction() != EntityChangeAction.DELETE) {
-			E entity = (E) event.getEntity();
-
-			FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
 
 			accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getInfo(), entity.getTags(),
 					Boolean.FALSE, getProcessType() == ProcessType.PURCHASE, entity.getCurrency(), entity.getAmount(),
@@ -116,7 +116,9 @@ public abstract class PaymentFeederBase<E extends PaymentBase> extends AbstractF
 					entity.getProcess().getProcessNo(), entity.getState().toString(), entity.getStateReason(), entity.getAccount());
 		}
 
-		// TODO: Delete edildiğinde de gidip txn'den silme yapılmalı.
+        if (event.getAction() == EntityChangeAction.DELETE) {
+            accountTxnService.deleteFeature(voucherPointer, entity.getAccount());
+        }
 
 	}
 

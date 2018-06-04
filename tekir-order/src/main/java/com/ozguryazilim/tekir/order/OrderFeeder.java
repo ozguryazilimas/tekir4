@@ -92,11 +92,11 @@ public abstract class OrderFeeder<E extends Order> extends AbstractFeeder<E> {
 	}
 
 	public void feedAccountTxn(EntityChangeEvent event) {
+        E entity = (E) event.getEntity();
 
-		if (event.getAction() != EntityChangeAction.DELETE) {
-			E entity = (E) event.getEntity();
+        FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
 
-			FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
+        if (event.getAction() != EntityChangeAction.DELETE) {
 
 			accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getInfo(), entity.getTags(),
 					Boolean.FALSE, getProcessType() == ProcessType.PURCHASE, entity.getCurrency(), entity.getTotal(),
@@ -104,7 +104,9 @@ public abstract class OrderFeeder<E extends Order> extends AbstractFeeder<E> {
 					entity.getState().toString(), entity.getStateReason(), entity.getTopic());
 		}
 
-		// TODO: Delete edildiğinde de gidip txn'den silme yapılmalı.
+        if (event.getAction() == EntityChangeAction.DELETE) {
+            accountTxnService.deleteFeature(voucherPointer, entity.getAccount());
+        }
 
 	}
 
