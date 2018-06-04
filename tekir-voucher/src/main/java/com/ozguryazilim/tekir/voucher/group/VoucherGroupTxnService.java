@@ -53,5 +53,14 @@ public class VoucherGroupTxnService implements Serializable{
     public List<VoucherGroupTxn> getGroupVouchers(VoucherGroup voucherGroup ){
         return repository.findByGroupId(voucherGroup);
     }
-    
+
+    @Transactional
+    public void deleteFeature(FeaturePointer feature, VoucherGroup group) {
+        VoucherGroupTxn txn = repository.findOptionalByFeatureAndGroup(feature, group);
+
+        if (txn != null) {
+            repository.remove(txn);
+        }
+    }
+
 }
