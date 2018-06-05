@@ -48,6 +48,8 @@ public abstract class FinanceAccountTxnRepository extends RepositoryBase<Finance
 
     public abstract FinanceAccountTxn findOptionalByFeatureAndAccount(FeaturePointer feature, FinanceAccount account);
 
+    public abstract void deleteByFeature(FeaturePointer feature);
+
     /**
      * Account için verilen tarihten daha büyük değerleri toplar.
      *
