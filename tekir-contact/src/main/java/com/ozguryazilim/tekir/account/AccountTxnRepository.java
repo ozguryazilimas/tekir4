@@ -118,6 +118,8 @@ public abstract class AccountTxnRepository extends
 
     public abstract AccountTxn findOptionalByFeatureAndAccount(FeaturePointer feature, Contact account);
 
+    public abstract void deleteByFeature(FeaturePointer feature);
+
     public abstract List<AccountTxn> findByProcessId(String processId);
 
     public abstract List<AccountTxn> findByAccountAndDateBetweenOrderByDate(Contact account, Date beginDate, Date endDate );

@@ -115,7 +115,7 @@ public abstract class PaymentFeederBase<E extends PaymentBase> extends AbstractF
 					entity.getAmount(), entity.getLocalAmount(), entity.getDate(), entity.getOwner(),
 					entity.getProcess().getProcessNo(), entity.getState().toString(), entity.getStateReason(), entity.getAccount());
 		} else if (event.getAction() == EntityChangeAction.DELETE) {
-            accountTxnService.deleteFeature(voucherPointer, entity.getAccount());
+            accountTxnService.deleteFeature(voucherPointer);
             financeAccountTxnService.deleteFeature(voucherPointer);
         }
 

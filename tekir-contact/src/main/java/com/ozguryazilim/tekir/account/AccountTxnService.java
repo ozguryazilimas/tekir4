@@ -65,12 +65,8 @@ public class AccountTxnService implements Serializable{
     }
 
     @Transactional
-    public void deleteFeature(FeaturePointer feature, Contact account) {
-        AccountTxn txn = repository.findOptionalByFeatureAndAccount(feature, account);
-
-        if (txn != null) {
-            repository.remove(txn);
-        }
+    public void deleteFeature(FeaturePointer feature) {
+        repository.deleteByFeature(feature);
     }
 
     public List<AccountTxn> getAccountOpenVouchers( Contact account ){
