@@ -62,7 +62,7 @@ public class PaymentFeeder extends PaymentFeederBase<Payment>{
 			}
         } else if (event.getAction() == EntityChangeAction.DELETE) {
             if (entity.getGroup() != null) {
-                voucherGroupTxnService.deleteFeature(voucherPointer, entity.getGroup());
+                voucherGroupTxnService.deleteFeature(voucherPointer);
             }
         }
 

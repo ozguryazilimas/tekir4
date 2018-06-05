@@ -108,7 +108,7 @@ public class QuoteFeeder extends AbstractFeeder<Quote> {
             accountTxnService.deleteFeature(voucherPointer, entity.getAccount());
 
             if (entity.getGroup() != null) {
-                voucherGroupTxnService.deleteFeature(voucherPointer, entity.getGroup());
+                voucherGroupTxnService.deleteFeature(voucherPointer);
             }
 
         }

@@ -107,7 +107,7 @@ public class OpportunityFeeder extends AbstractFeeder<Opportunity> {
             accountTxnService.deleteFeature(voucherPointer, entity.getAccount());
 
             if (entity.getGroup() != null) {
-                voucherGroupTxnService.deleteFeature(voucherPointer, entity.getGroup());
+                voucherGroupTxnService.deleteFeature(voucherPointer);
             }
 
         }

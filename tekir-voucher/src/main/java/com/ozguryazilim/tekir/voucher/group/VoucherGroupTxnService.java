@@ -55,12 +55,8 @@ public class VoucherGroupTxnService implements Serializable{
     }
 
     @Transactional
-    public void deleteFeature(FeaturePointer feature, VoucherGroup group) {
-        VoucherGroupTxn txn = repository.findOptionalByFeatureAndGroup(feature, group);
-
-        if (txn != null) {
-            repository.remove(txn);
-        }
+    public void deleteFeature(FeaturePointer feature) {
+        repository.deleteByFeature(feature);
     }
 
 }

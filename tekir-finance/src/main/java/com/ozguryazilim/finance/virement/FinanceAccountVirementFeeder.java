@@ -86,7 +86,7 @@ public class FinanceAccountVirementFeeder extends AbstractFeeder<FinanceAccountV
 			}
 		} else if (event.getAction() == EntityChangeAction.DELETE) {
             if (entity.getGroup() != null) {
-                voucherGroupTxnService.deleteFeature(voucherPointer, entity.getGroup());
+                voucherGroupTxnService.deleteFeature(voucherPointer);
             }
         }
 

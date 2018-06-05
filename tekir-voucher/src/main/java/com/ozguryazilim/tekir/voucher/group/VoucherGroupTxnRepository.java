@@ -64,6 +64,8 @@ public abstract class VoucherGroupTxnRepository extends RepositoryBase<VoucherGr
 
 	public abstract VoucherGroupTxn findOptionalByFeatureAndGroup(FeaturePointer feature, VoucherGroup group);
 
+	public abstract void deleteByFeature(FeaturePointer feature);
+
 	//public abstract List<VoucherGroupTxn> findByGroupId(VoucherGroup voucherGroup);
 	
 	public List<VoucherGroupTxn> findByGroupId(VoucherGroup voucherGroup){
