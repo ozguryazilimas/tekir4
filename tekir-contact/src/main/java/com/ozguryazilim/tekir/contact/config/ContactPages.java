@@ -190,4 +190,9 @@ public interface ContactPages extends Pages {
         @SecuredPage @View
         class QuickContactSetPanel implements ContactPages {}
 
+    @View
+    @SecuredPage
+    class RefreshAccountTxnsCommand implements ContactPages {
+
+    }
 }
