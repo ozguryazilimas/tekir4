@@ -70,9 +70,7 @@ public class FinanceAccountVirementTxnFeeder implements Serializable{
 					entity.getTags(), Boolean.TRUE, Boolean.FALSE, entity.getToCurrency(), entity.getToAmount(),
 					toLocalAmount, entity.getDate(), entity.getOwner(), null, entity.getState().toString(),
 					entity.getStateReason(), null);
-		}
-
-        if (event.getAction() == EntityChangeAction.DELETE) {
+		} else if (event.getAction() == EntityChangeAction.DELETE) {
             financeAccountTxnService.deleteFeature(voucherPointer, entity.getFromAccount());
             financeAccountTxnService.deleteFeature(voucherPointer, entity.getToAccount());
         }

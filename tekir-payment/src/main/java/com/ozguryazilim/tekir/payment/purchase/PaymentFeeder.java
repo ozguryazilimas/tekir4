@@ -60,9 +60,7 @@ public class PaymentFeeder extends PaymentFeederBase<Payment>{
 				voucherGroupTxnService.saveFeature(voucherPointer, entity.getGroup(), entity.getOwner(), entity.getTopic(),
 						entity.getDate(), entity.getState());
 			}
-		}
-
-        if (event.getAction() == EntityChangeAction.DELETE) {
+        } else if (event.getAction() == EntityChangeAction.DELETE) {
             if (entity.getGroup() != null) {
                 voucherGroupTxnService.deleteFeature(voucherPointer, entity.getGroup());
             }
