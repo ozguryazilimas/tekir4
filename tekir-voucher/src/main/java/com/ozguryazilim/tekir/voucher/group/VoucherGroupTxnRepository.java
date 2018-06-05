@@ -114,18 +114,5 @@ public abstract class VoucherGroupTxnRepository extends RepositoryBase<VoucherGr
 		return resultList;
 	}
 
-    public List<VoucherGroupTxn> findByFeature(String feature) {
-        CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
-        CriteriaQuery<VoucherGroupTxn> criteriaQuery = criteriaBuilder
-            .createQuery(VoucherGroupTxn.class);
-        Root<VoucherGroupTxn> from = criteriaQuery.from(VoucherGroupTxn.class);
-
-        List<Predicate> predicates = new ArrayList<>();
-        predicates.add(criteriaBuilder
-            .equal(from.get(VoucherGroupTxn_.feature).get(FeaturePointer_.feature), feature));
-        criteriaQuery.where(predicates.toArray(new Predicate[]{}));
-
-        TypedQuery<VoucherGroupTxn> typedQuery = entityManager().createQuery(criteriaQuery);
-        return typedQuery.getResultList();
-    }
+    public abstract void deleteByFeature_feature(String feature);
 }
