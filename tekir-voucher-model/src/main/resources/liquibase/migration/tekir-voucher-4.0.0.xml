@@ -146,4 +146,7 @@
             tableName="TVO_GROUP"
             columnNames="GROUP_NO"/>
     </changeSet>
+    <changeSet author="soner.cirit" id="20180605-1">
+        <modifyDataType columnName="TXNDATE" newDataType="date" tableName="TVO_GROUP_TXN"/>
+    </changeSet>
 </databaseChangeLog>

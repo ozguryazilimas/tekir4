@@ -60,7 +60,7 @@ public class VoucherGroupTxn extends EntityBase{
      * Belgenin Düzenlenme Tarih Saati
      */
     @Column(name = "TXNDATE")
-    @Temporal(value = TemporalType.TIMESTAMP)
+    @Temporal(value = TemporalType.DATE)
     private Date date;
     
     /*
