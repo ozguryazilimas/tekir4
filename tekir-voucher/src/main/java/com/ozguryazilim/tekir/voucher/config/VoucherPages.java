@@ -96,7 +96,7 @@ public interface VoucherPages extends Pages {
 
         @View
         @SecuredPage
-        class VoucherGroupTxnsRefreshCommand implements Group {
+        class RefreshVoucherGroupTxnsCommand implements Group {
 
         }
 

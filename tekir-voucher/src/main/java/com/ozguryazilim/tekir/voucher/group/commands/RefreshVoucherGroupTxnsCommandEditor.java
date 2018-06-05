@@ -5,8 +5,8 @@ import com.ozguryazilim.telve.messagebus.command.ui.CommandEditor;
 import com.ozguryazilim.telve.messagebus.command.ui.CommandEditorBase;
 
 @CommandEditor(command = RefreshVoucherGroupTxnsCommand.class,
-    page = VoucherPages.Group.VoucherGroupTxnsRefreshCommand.class)
-public class VoucherGroupTxnsRefreshCommandEditor extends
+    page = VoucherPages.Group.RefreshVoucherGroupTxnsCommand.class)
+public class RefreshVoucherGroupTxnsCommandEditor extends
     CommandEditorBase<RefreshVoucherGroupTxnsCommand> {
 
     @Override
