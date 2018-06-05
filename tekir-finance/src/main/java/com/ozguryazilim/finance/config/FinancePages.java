@@ -89,4 +89,10 @@ public interface FinancePages extends Pages {
     class FinancialStatusReport implements FinancePages {
     }
 
+    @View
+    @SecuredPage
+    class RefreshFinanceAccountTxnsCommand implements FinancePages {
+
+    }
+
 }
