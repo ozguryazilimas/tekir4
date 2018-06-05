@@ -35,9 +35,17 @@ public class LeadTxnRefresher {
         for (Lead entity : leads) {
             if (entity.getGroup() != null) {
                 FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
-                voucherGroupTxnService
-                    .saveFeature(voucherPointer, entity.getGroup(), entity.getOwner(),
-                        entity.getTopic(), entity.getDate(), entity.getState());
+
+                VoucherGroupTxn txn = new VoucherGroupTxn();
+
+                txn.setGroup(entity.getGroup());
+                txn.setFeature(voucherPointer);
+                txn.setTopic(entity.getTopic());
+                txn.setDate(entity.getDate());
+                txn.setOwner(entity.getOwner());
+                txn.setState(entity.getState());
+
+                voucherGroupTxnRepository.save(txn);
             }
         }
     }
