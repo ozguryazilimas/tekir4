@@ -114,9 +114,7 @@ public abstract class PaymentFeederBase<E extends PaymentBase> extends AbstractF
 					entity.getTags(), Boolean.FALSE, getProcessType() == ProcessType.PURCHASE, entity.getCurrency(),
 					entity.getAmount(), entity.getLocalAmount(), entity.getDate(), entity.getOwner(),
 					entity.getProcess().getProcessNo(), entity.getState().toString(), entity.getStateReason(), entity.getAccount());
-		}
-
-        if (event.getAction() == EntityChangeAction.DELETE) {
+		} else if (event.getAction() == EntityChangeAction.DELETE) {
             accountTxnService.deleteFeature(voucherPointer, entity.getAccount());
             financeAccountTxnService.deleteFeature(voucherPointer, entity.getFinanceAccount());
         }

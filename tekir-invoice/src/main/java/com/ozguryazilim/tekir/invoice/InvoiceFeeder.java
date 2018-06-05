@@ -105,9 +105,7 @@ public abstract class InvoiceFeeder<E extends Invoice> extends AbstractFeeder<E>
 					Boolean.FALSE,getProcessType() == ProcessType.PURCHASE, entity.getCurrency(), entity.getTotal(),
 					entity.getLocalAmount(), entity.getDate(), entity.getOwner(), entity.getProcess().getProcessNo(),
 					entity.getState().toString(), entity.getStateReason(), entity.getTopic());
-		}
-
-        if (event.getAction() == EntityChangeAction.DELETE) {
+		} else if (event.getAction() == EntityChangeAction.DELETE) {
             accountTxnService.deleteFeature(voucherPointer, entity.getAccount());
         }
 

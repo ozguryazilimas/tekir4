@@ -46,9 +46,7 @@ public class AccountVirementAccountTxnFeeder implements Serializable{
                     Boolean.TRUE, Boolean.FALSE, entity.getCurrency(), entity.getAmount(), entity.getLocalAmount(),
                     entity.getDate(), entity.getOwner(), null, entity.getState().toString(), entity.getStateReason(),
                     entity.getTopic());
-        }
-
-        if (event.getAction() == EntityChangeAction.DELETE) {
+        } else if (event.getAction() == EntityChangeAction.DELETE) {
             accountTxnService.deleteFeature(voucherPointer, entity.getFromAccount());
             accountTxnService.deleteFeature(voucherPointer, entity.getToAccount());
         }
