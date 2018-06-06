@@ -2,11 +2,12 @@ package com.ozguryazilim.tekir.lead;
 
 import com.ozguryazilim.tekir.voucher.group.commands.RefreshVoucherGroupTxnsEvent;
 import com.ozguryazilim.tekir.entities.Lead;
-import com.ozguryazilim.tekir.entities.VoucherGroupTxn;
 import com.ozguryazilim.tekir.voucher.group.VoucherGroupTxnRepository;
+import com.ozguryazilim.tekir.voucher.group.commands.SaveVoucherGroupTxnsCommand;
 import com.ozguryazilim.tekir.voucher.utils.FeatureUtils;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureRegistery;
+import com.ozguryazilim.telve.messagebus.command.CommandSender;
 import java.util.List;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.event.Observes;
@@ -23,6 +24,9 @@ public class LeadTxnRefresher {
     @Inject
     private VoucherGroupTxnRepository voucherGroupTxnRepository;
 
+    @Inject
+    private CommandSender commandSender;
+
     public void refreshVoucherGroupTxns(@Observes RefreshVoucherGroupTxnsEvent event) {
         List<Lead> leads = repository.findByDateBetween(event.getBeginDate().getCalculatedValue(),
             event.getEndDate().getCalculatedValue());
@@ -34,16 +38,15 @@ public class LeadTxnRefresher {
             if (entity.getGroup() != null) {
                 FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
 
-                VoucherGroupTxn txn = new VoucherGroupTxn();
+                SaveVoucherGroupTxnsCommand saveCommand = new SaveVoucherGroupTxnsCommand(
+                    entity.getGroup(),
+                    voucherPointer,
+                    entity.getTopic(),
+                    entity.getDate(),
+                    entity.getOwner(),
+                    entity.getState());
 
-                txn.setGroup(entity.getGroup());
-                txn.setFeature(voucherPointer);
-                txn.setTopic(entity.getTopic());
-                txn.setDate(entity.getDate());
-                txn.setOwner(entity.getOwner());
-                txn.setState(entity.getState());
-
-                voucherGroupTxnRepository.save(txn);
+                commandSender.sendCommand(saveCommand);
             }
         }
     }
