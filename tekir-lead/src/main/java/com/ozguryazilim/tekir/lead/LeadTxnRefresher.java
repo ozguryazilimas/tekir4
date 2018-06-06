@@ -24,13 +24,12 @@ public class LeadTxnRefresher {
     @Inject
     private VoucherGroupTxnRepository voucherGroupTxnRepository;
 
-    @Inject
-    private VoucherGroupTxnService voucherGroupTxnService;
-
     public void refreshVoucherGroupTxns(@Observes RefreshVoucherGroupTxnsEvent event) {
-        List<Lead> leads = repository.findAll();
+        List<Lead> leads = repository.findByDateBetween(event.getBeginDate().getCalculatedValue(),
+            event.getEndDate().getCalculatedValue());
         String feature = FeatureRegistery.getFeatureClass(Lead.class).getSimpleName();
-        voucherGroupTxnRepository.deleteByFeature_feature(feature);
+        voucherGroupTxnRepository.deleteByFeature_featureAndDateBetween(feature,
+            event.getBeginDate().getCalculatedValue(), event.getEndDate().getCalculatedValue());
 
         for (Lead entity : leads) {
             if (entity.getGroup() != null) {

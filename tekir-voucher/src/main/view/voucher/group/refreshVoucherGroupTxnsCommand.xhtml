@@ -6,4 +6,11 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:t="http://java.sun.com/jsf/composite/telveComponents">
 
+    <div class="row">
+        <t:inputReportDate value="#{refreshVoucherGroupTxnsCommandEditor.command.beginDate}"
+                           label="general.label.BeginDate" columnClass="col-xs-6"/>
+        <t:inputReportDate value="#{refreshVoucherGroupTxnsCommandEditor.command.endDate}"
+                           label="general.label.EndDate" columnClass="col-xs-6"/>
+    </div>
+
 </ui:composition>

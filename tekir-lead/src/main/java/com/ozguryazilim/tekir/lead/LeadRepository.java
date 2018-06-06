@@ -154,4 +154,6 @@ public abstract class LeadRepository extends VoucherRepositoryBase<Lead, LeadVie
 
             return resultList;
         }
+
+    public abstract List<Lead> findByDateBetween(Date beginDate, Date endDate);
 }

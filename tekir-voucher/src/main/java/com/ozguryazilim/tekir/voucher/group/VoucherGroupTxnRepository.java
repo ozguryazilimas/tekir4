@@ -3,11 +3,9 @@
  */
 package com.ozguryazilim.tekir.voucher.group;
 
-import java.sql.Date;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import com.google.common.base.Strings;
@@ -114,5 +112,6 @@ public abstract class VoucherGroupTxnRepository extends RepositoryBase<VoucherGr
 		return resultList;
 	}
 
-    public abstract void deleteByFeature_feature(String feature);
+	public abstract void deleteByFeature_featureAndDateBetween(String feature, Date beginDate,
+		Date endDate);
 }

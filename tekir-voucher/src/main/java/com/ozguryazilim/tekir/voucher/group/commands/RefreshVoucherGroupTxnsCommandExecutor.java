@@ -10,11 +10,12 @@ public class RefreshVoucherGroupTxnsCommandExecutor
     extends AbstractCommandExecuter<RefreshVoucherGroupTxnsCommand> {
 
     @Inject
-    private Event<RefreshVoucherGroupTxnsEvent> refreshTxnsEvent;
+    private Event<RefreshVoucherGroupTxnsEvent> refreshVoucherGroupTxnsEvent;
 
     @Override
     public void execute(RefreshVoucherGroupTxnsCommand command) {
-        refreshTxnsEvent.fire(new RefreshVoucherGroupTxnsEvent());
+        refreshVoucherGroupTxnsEvent
+            .fire(new RefreshVoucherGroupTxnsEvent(command.getBeginDate(), command.getEndDate()));
     }
 
 }
