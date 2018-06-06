@@ -217,4 +217,6 @@ public abstract class QuoteRepository extends VoucherRepositoryBase<Quote, Quote
 
         return resultList;
     }
+
+    public abstract List<Quote> findByDateBetween(Date beginDate, Date endDate);
 }
