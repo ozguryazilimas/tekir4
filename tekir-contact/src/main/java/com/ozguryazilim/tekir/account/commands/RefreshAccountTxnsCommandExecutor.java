@@ -14,6 +14,7 @@ public class RefreshAccountTxnsCommandExecutor extends
 
     @Override
     public void execute(RefreshAccountTxnsCommand command) {
-        refreshAccountTxnsEvent.fire(new RefreshAccountTxnsEvent());
+        refreshAccountTxnsEvent.fire(new RefreshAccountTxnsEvent(
+            command.getBeginDate(), command.getEndDate()));
     }
 }
