@@ -15,6 +15,7 @@ import com.ozguryazilim.tekir.voucher.VoucherRepositoryBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.filters.Filter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.Dependent;
 import javax.persistence.TypedQuery;
@@ -110,4 +111,6 @@ public abstract class AccountDebitNoteRepository extends VoucherRepositoryBase<A
             );
         }
     }
+
+    public abstract List<AccountDebitNote> findByDateBetween(Date beginDate, Date endDate);
 }

@@ -1,7 +1,7 @@
-package com.ozguryazilim.tekir.lead;
+package com.ozguryazilim.tekir.account.debit;
 
+import com.ozguryazilim.tekir.entities.AccountDebitNote;
 import com.ozguryazilim.tekir.voucher.group.commands.RefreshVoucherGroupTxnsEvent;
-import com.ozguryazilim.tekir.entities.Lead;
 import com.ozguryazilim.tekir.entities.VoucherGroupTxn;
 import com.ozguryazilim.tekir.voucher.group.VoucherGroupTxnRepository;
 import com.ozguryazilim.tekir.voucher.utils.FeatureUtils;
@@ -15,22 +15,23 @@ import org.apache.deltaspike.jpa.api.transaction.Transactional;
 
 @Dependent
 @Transactional
-public class LeadTxnRefresher {
+public class AccountDebitNoteTxnRefresher {
 
     @Inject
-    private LeadRepository repository;
+    private AccountDebitNoteRepository repository;
 
     @Inject
     private VoucherGroupTxnRepository voucherGroupTxnRepository;
 
     public void refreshVoucherGroupTxns(@Observes RefreshVoucherGroupTxnsEvent event) {
-        List<Lead> leads = repository.findByDateBetween(event.getBeginDate().getCalculatedValue(),
-            event.getEndDate().getCalculatedValue());
-        String feature = FeatureRegistery.getFeatureClass(Lead.class).getSimpleName();
+        List<AccountDebitNote> accountDebitNotes = repository
+            .findByDateBetween(event.getBeginDate().getCalculatedValue(),
+                event.getEndDate().getCalculatedValue());
+        String feature = FeatureRegistery.getFeatureClass(AccountDebitNote.class).getSimpleName();
         voucherGroupTxnRepository.deleteByFeature_featureAndDateBetween(feature,
             event.getBeginDate().getCalculatedValue(), event.getEndDate().getCalculatedValue());
 
-        for (Lead entity : leads) {
+        for (AccountDebitNote entity : accountDebitNotes) {
             if (entity.getGroup() != null) {
                 FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
 
