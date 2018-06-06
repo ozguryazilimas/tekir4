@@ -231,5 +231,6 @@ public abstract class OpportunityRepository extends VoucherRepositoryBase<Opport
 
             return resultList;
         }
-        
+
+    public abstract List<Opportunity> findByDateBetween(Date beginDate, Date endDate);
 }
