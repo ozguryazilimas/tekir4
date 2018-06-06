@@ -7,6 +7,8 @@ package com.ozguryazilim.tekir.payment.sales;
 
 import com.ozguryazilim.tekir.entities.PaymentReceived;
 import com.ozguryazilim.tekir.payment.PaymentRepositoryBase;
+import java.util.Date;
+import java.util.List;
 import javax.enterprise.context.Dependent;
 import org.apache.deltaspike.data.api.Repository;
 
@@ -27,5 +29,6 @@ public abstract class PaymentReceivedRepository extends PaymentRepositoryBase<Pa
     public Class<PaymentReceivedViewModel> getViewModelClass() {
         return PaymentReceivedViewModel.class;
     }
-    
+
+    public abstract List<PaymentReceived> findByDateBetween(Date beginDate, Date endDate);
 }
