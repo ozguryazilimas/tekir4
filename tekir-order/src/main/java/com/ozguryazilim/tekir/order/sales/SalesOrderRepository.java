@@ -7,6 +7,8 @@ package com.ozguryazilim.tekir.order.sales;
 
 import com.ozguryazilim.tekir.entities.SalesOrder;
 import com.ozguryazilim.tekir.order.OrderRepository;
+import java.util.Date;
+import java.util.List;
 import javax.enterprise.context.Dependent;
 import org.apache.deltaspike.data.api.Repository;
 
@@ -27,4 +29,6 @@ public abstract class SalesOrderRepository extends OrderRepository<SalesOrder, S
     public Class<SalesOrderViewModel> getViewModelClass() {
         return SalesOrderViewModel.class;
     }
+
+    public abstract List<SalesOrder> findByDateBetween(Date beginDate, Date endDate);
 }
