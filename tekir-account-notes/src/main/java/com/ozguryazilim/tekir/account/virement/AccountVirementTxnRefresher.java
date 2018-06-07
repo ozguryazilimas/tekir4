@@ -1,5 +1,8 @@
 package com.ozguryazilim.tekir.account.virement;
 
+import com.ozguryazilim.tekir.account.AccountTxnRepository;
+import com.ozguryazilim.tekir.account.commands.RefreshAccountTxnsEvent;
+import com.ozguryazilim.tekir.account.commands.SaveAccountTxnsCommand;
 import com.ozguryazilim.tekir.entities.AccountVirement;
 import com.ozguryazilim.tekir.voucher.group.commands.RefreshVoucherGroupTxnsEvent;
 import com.ozguryazilim.tekir.voucher.group.VoucherGroupTxnRepository;
@@ -23,6 +26,9 @@ public class AccountVirementTxnRefresher {
 
     @Inject
     private VoucherGroupTxnRepository voucherGroupTxnRepository;
+
+    @Inject
+    private AccountTxnRepository accountTxnRepository;
 
     @Inject
     private CommandSender commandSender;
@@ -49,6 +55,35 @@ public class AccountVirementTxnRefresher {
 
                 commandSender.sendCommand(saveCommand);
             }
+        }
+    }
+
+    public void refreshAccountTxns(@Observes RefreshAccountTxnsEvent event) {
+        List<AccountVirement> accountVirements = repository
+            .findByDateBetween(event.getBeginDate().getCalculatedValue(),
+                event.getEndDate().getCalculatedValue());
+        String feature = FeatureRegistery.getFeatureClass(AccountVirement.class).getSimpleName();
+        accountTxnRepository.deleteByFeature_featureAndDateBetween(feature,
+            event.getBeginDate().getCalculatedValue(), event.getEndDate().getCalculatedValue());
+
+        for (AccountVirement entity : accountVirements) {
+            FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
+
+            SaveAccountTxnsCommand saveFromCommand = new SaveAccountTxnsCommand(voucherPointer,
+                entity.getFromAccount(), entity.getInfo(), entity.getTags(), Boolean.TRUE,
+                Boolean.TRUE, entity.getCurrency(), entity.getAmount(), entity.getLocalAmount(),
+                entity.getDate(), entity.getOwner(), null, entity.getState().toString(),
+                entity.getStateReason(), entity.getTopic());
+
+            commandSender.sendCommand(saveFromCommand);
+
+            SaveAccountTxnsCommand saveToCommand = new SaveAccountTxnsCommand(voucherPointer,
+                entity.getToAccount(), entity.getInfo(), entity.getTags(), Boolean.TRUE,
+                Boolean.FALSE, entity.getCurrency(), entity.getAmount(), entity.getLocalAmount(),
+                entity.getDate(), entity.getOwner(), null, entity.getState().toString(),
+                entity.getStateReason(), entity.getTopic());
+            
+            commandSender.sendCommand(saveToCommand);
         }
     }
 }
