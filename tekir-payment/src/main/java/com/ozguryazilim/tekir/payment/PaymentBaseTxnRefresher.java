@@ -1,5 +1,6 @@
 package com.ozguryazilim.tekir.payment;
 
+import com.ozguryazilim.finance.account.txn.commands.SaveFinanceAccounTxnsCommand;
 import com.ozguryazilim.tekir.account.commands.SaveAccountTxnsCommand;
 import com.ozguryazilim.tekir.entities.PaymentBase;
 import com.ozguryazilim.tekir.entities.ProcessType;
@@ -37,6 +38,19 @@ public abstract class PaymentBaseTxnRefresher<E extends PaymentBase> {
             entity.getDate(),
             entity.getOwner(),
             entity.getState());
+
+        commandSender.sendCommand(saveCommand);
+    }
+
+    public void sendFinanceAccountTxnSaveCommand(E entity) {
+        FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
+
+        SaveFinanceAccounTxnsCommand saveCommand = new SaveFinanceAccounTxnsCommand(voucherPointer,
+            entity.getFinanceAccount(), entity.getInfo(), entity.getTags(), Boolean.FALSE,
+            getProcessType() == ProcessType.PURCHASE, entity.getCurrency(), entity.getAmount(),
+            entity.getLocalAmount(), entity.getDate(), entity.getOwner(),
+            entity.getProcess().getProcessNo(), entity.getState().toString(),
+            entity.getStateReason(), entity.getAccount());
 
         commandSender.sendCommand(saveCommand);
     }

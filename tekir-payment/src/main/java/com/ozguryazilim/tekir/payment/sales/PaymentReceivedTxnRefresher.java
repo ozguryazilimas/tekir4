@@ -1,5 +1,7 @@
 package com.ozguryazilim.tekir.payment.sales;
 
+import com.ozguryazilim.finance.account.txn.FinanceAccountTxnRepository;
+import com.ozguryazilim.finance.account.txn.commands.RefreshFinanceAccountTxnsEvent;
 import com.ozguryazilim.tekir.account.AccountTxnRepository;
 import com.ozguryazilim.tekir.account.commands.RefreshAccountTxnsEvent;
 import com.ozguryazilim.tekir.entities.PaymentReceived;
@@ -27,6 +29,9 @@ public class PaymentReceivedTxnRefresher extends PaymentBaseTxnRefresher<Payment
     @Inject
     private AccountTxnRepository accountTxnRepository;
 
+    @Inject
+    private FinanceAccountTxnRepository financeAccountTxnRepository;
+
     public void refreshVoucherGroupTxns(@Observes RefreshVoucherGroupTxnsEvent event) {
         List<PaymentReceived> paymentReceiveds = repository
             .findByDateBetween(event.getBeginDate().getCalculatedValue(),
@@ -52,6 +57,19 @@ public class PaymentReceivedTxnRefresher extends PaymentBaseTxnRefresher<Payment
 
         for (PaymentReceived entity : paymentReceiveds) {
             sendAccountTxnSaveCommand(entity);
+        }
+    }
+
+    public void refreshFinanceAccountTnxs(@Observes RefreshFinanceAccountTxnsEvent event) {
+        List<PaymentReceived> paymentReceiveds = repository
+            .findByDateBetween(event.getBeginDate().getCalculatedValue(),
+                event.getEndDate().getCalculatedValue());
+        String feature = FeatureRegistery.getFeatureClass(PaymentReceived.class).getSimpleName();
+        financeAccountTxnRepository.deleteByFeature_featureAndDateBetween(feature,
+            event.getBeginDate().getCalculatedValue(), event.getEndDate().getCalculatedValue());
+
+        for (PaymentReceived entity : paymentReceiveds) {
+            sendFinanceAccountTxnSaveCommand(entity);
         }
     }
 
