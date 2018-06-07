@@ -346,4 +346,7 @@ public abstract class AccountTxnRepository extends
     }
 
     public abstract List<AccountTxn> findByAccountOrderByDateDesc(Contact c);
+
+    public abstract void deleteByFeature_featureAndDateBetween(String feature, Date beginDate,
+        Date endDate);
 }
