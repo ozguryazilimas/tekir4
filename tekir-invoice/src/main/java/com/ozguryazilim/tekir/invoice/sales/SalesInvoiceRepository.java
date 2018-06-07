@@ -7,8 +7,6 @@ package com.ozguryazilim.tekir.invoice.sales;
 
 import com.ozguryazilim.tekir.entities.SalesInvoice;
 import com.ozguryazilim.tekir.invoice.InvoiceRepository;
-import java.util.Date;
-import java.util.List;
 import javax.enterprise.context.Dependent;
 import org.apache.deltaspike.data.api.Repository;
 
@@ -29,6 +27,4 @@ public abstract class SalesInvoiceRepository extends InvoiceRepository<SalesInvo
     protected Class<SalesInvoiceViewModel> getViewModelClass() {
         return SalesInvoiceViewModel.class;
     }
-
-    public abstract List<SalesInvoice> findByDateBetween(Date beginDate, Date endDate);
 }

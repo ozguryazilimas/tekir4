@@ -2,10 +2,9 @@ package com.ozguryazilim.tekir.order.purchase;
 
 import com.ozguryazilim.tekir.account.AccountTxnRepository;
 import com.ozguryazilim.tekir.account.commands.RefreshAccountTxnsEvent;
-import com.ozguryazilim.tekir.account.commands.SaveAccountTxnsCommand;
+import com.ozguryazilim.tekir.entities.ProcessType;
 import com.ozguryazilim.tekir.entities.PurchaseOrder;
-import com.ozguryazilim.tekir.voucher.utils.FeatureUtils;
-import com.ozguryazilim.telve.entities.FeaturePointer;
+import com.ozguryazilim.tekir.order.OrderTxnRefresher;
 import com.ozguryazilim.telve.feature.FeatureRegistery;
 import com.ozguryazilim.telve.messagebus.command.CommandSender;
 import java.util.List;
@@ -16,7 +15,7 @@ import org.apache.deltaspike.jpa.api.transaction.Transactional;
 
 @Dependent
 @Transactional
-public class PurchaseOrderTxnRefresher {
+public class PurchaseOrderTxnRefresher extends OrderTxnRefresher<PurchaseOrder> {
 
     @Inject
     private PurchaseOrderRepository repository;
@@ -36,15 +35,12 @@ public class PurchaseOrderTxnRefresher {
             event.getBeginDate().getCalculatedValue(), event.getEndDate().getCalculatedValue());
 
         for (PurchaseOrder entity : purchaseOrders) {
-            FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
-
-            SaveAccountTxnsCommand saveCommand = new SaveAccountTxnsCommand(voucherPointer,
-                entity.getAccount(), entity.getInfo(), entity.getTags(), Boolean.FALSE,
-                Boolean.TRUE, entity.getCurrency(), entity.getTotal(), entity.getLocalAmount(),
-                entity.getDate(), entity.getOwner(), entity.getProcess().getProcessNo(),
-                entity.getState().toString(), entity.getStateReason(), entity.getTopic());
-
-            commandSender.sendCommand(saveCommand);
+            sendAccountTxnSaveCommand(entity);
         }
+    }
+
+    @Override
+    protected ProcessType getProcessType() {
+        return ProcessType.PURCHASE;
     }
 }

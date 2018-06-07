@@ -177,4 +177,5 @@ public abstract class OrderRepository<E extends Order, V extends VoucherProcessV
         return resultList;
     }
 
+    public abstract List<E> findByDateBetween(Date beginDate, Date endDate);
 }
