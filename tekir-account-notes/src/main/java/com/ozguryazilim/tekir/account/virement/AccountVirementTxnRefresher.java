@@ -82,7 +82,7 @@ public class AccountVirementTxnRefresher {
                 Boolean.FALSE, entity.getCurrency(), entity.getAmount(), entity.getLocalAmount(),
                 entity.getDate(), entity.getOwner(), null, entity.getState().toString(),
                 entity.getStateReason(), entity.getTopic());
-            
+
             commandSender.sendCommand(saveToCommand);
         }
     }
