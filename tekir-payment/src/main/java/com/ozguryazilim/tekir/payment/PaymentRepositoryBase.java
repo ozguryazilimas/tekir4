@@ -19,6 +19,7 @@ import com.ozguryazilim.tekir.voucher.VoucherRepositoryBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.filters.Filter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -125,4 +126,6 @@ public abstract class PaymentRepositoryBase<E extends PaymentBase, V extends Pay
             );
         }
     }
+
+    public abstract List<E> findByDateBetween(Date beginDate, Date endDate);
 }

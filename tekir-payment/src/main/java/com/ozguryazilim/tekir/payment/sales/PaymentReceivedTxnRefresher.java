@@ -1,13 +1,13 @@
 package com.ozguryazilim.tekir.payment.sales;
 
+import com.ozguryazilim.tekir.account.AccountTxnRepository;
+import com.ozguryazilim.tekir.account.commands.RefreshAccountTxnsEvent;
 import com.ozguryazilim.tekir.entities.PaymentReceived;
+import com.ozguryazilim.tekir.entities.ProcessType;
+import com.ozguryazilim.tekir.payment.PaymentBaseTxnRefresher;
 import com.ozguryazilim.tekir.voucher.group.commands.RefreshVoucherGroupTxnsEvent;
 import com.ozguryazilim.tekir.voucher.group.VoucherGroupTxnRepository;
-import com.ozguryazilim.tekir.voucher.group.commands.SaveVoucherGroupTxnsCommand;
-import com.ozguryazilim.tekir.voucher.utils.FeatureUtils;
-import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureRegistery;
-import com.ozguryazilim.telve.messagebus.command.CommandSender;
 import java.util.List;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.event.Observes;
@@ -16,7 +16,7 @@ import org.apache.deltaspike.jpa.api.transaction.Transactional;
 
 @Dependent
 @Transactional
-public class PaymentReceivedTxnRefresher {
+public class PaymentReceivedTxnRefresher extends PaymentBaseTxnRefresher<PaymentReceived> {
 
     @Inject
     private PaymentReceivedRepository repository;
@@ -25,7 +25,7 @@ public class PaymentReceivedTxnRefresher {
     private VoucherGroupTxnRepository voucherGroupTxnRepository;
 
     @Inject
-    private CommandSender commandSender;
+    private AccountTxnRepository accountTxnRepository;
 
     public void refreshVoucherGroupTxns(@Observes RefreshVoucherGroupTxnsEvent event) {
         List<PaymentReceived> paymentReceiveds = repository
@@ -37,18 +37,26 @@ public class PaymentReceivedTxnRefresher {
 
         for (PaymentReceived entity : paymentReceiveds) {
             if (entity.getGroup() != null) {
-                FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
-
-                SaveVoucherGroupTxnsCommand saveCommand = new SaveVoucherGroupTxnsCommand(
-                    entity.getGroup(),
-                    voucherPointer,
-                    entity.getTopic(),
-                    entity.getDate(),
-                    entity.getOwner(),
-                    entity.getState());
-
-                commandSender.sendCommand(saveCommand);
+                sendVoucherGroupTxnSaveCommand(entity);
             }
         }
+    }
+
+    public void refreshAccountTxns(@Observes RefreshAccountTxnsEvent event) {
+        List<PaymentReceived> paymentReceiveds = repository
+            .findByDateBetween(event.getBeginDate().getCalculatedValue(),
+                event.getEndDate().getCalculatedValue());
+        String feature = FeatureRegistery.getFeatureClass(PaymentReceived.class).getSimpleName();
+        accountTxnRepository.deleteByFeature_featureAndDateBetween(feature,
+            event.getBeginDate().getCalculatedValue(), event.getEndDate().getCalculatedValue());
+
+        for (PaymentReceived entity : paymentReceiveds) {
+            sendAccountTxnSaveCommand(entity);
+        }
+    }
+
+    @Override
+    protected ProcessType getProcessType() {
+        return ProcessType.SALES;
     }
 }
