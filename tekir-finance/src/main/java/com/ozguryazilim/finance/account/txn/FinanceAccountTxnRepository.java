@@ -266,4 +266,6 @@ public abstract class FinanceAccountTxnRepository extends RepositoryBase<Finance
 
     }
 
+    public abstract void deleteByFeature_featureAndDateBetween(String feature, Date beginDate,
+        Date endDate);
 }
