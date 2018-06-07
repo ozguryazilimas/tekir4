@@ -1,5 +1,8 @@
 package com.ozguryazilim.tekir.opportunity;
 
+import com.ozguryazilim.tekir.account.AccountTxnRepository;
+import com.ozguryazilim.tekir.account.commands.RefreshAccountTxnsEvent;
+import com.ozguryazilim.tekir.account.commands.SaveAccountTxnsCommand;
 import com.ozguryazilim.tekir.entities.Opportunity;
 import com.ozguryazilim.tekir.voucher.group.commands.RefreshVoucherGroupTxnsEvent;
 import com.ozguryazilim.tekir.voucher.group.VoucherGroupTxnRepository;
@@ -23,6 +26,9 @@ public class OpportunityTxnRefresher {
 
     @Inject
     private VoucherGroupTxnRepository voucherGroupTxnRepository;
+
+    @Inject
+    private AccountTxnRepository accountTxnRepository;
 
     @Inject
     private CommandSender commandSender;
@@ -49,6 +55,27 @@ public class OpportunityTxnRefresher {
 
                 commandSender.sendCommand(saveCommand);
             }
+        }
+    }
+
+    public void refreshAccountTxns(@Observes RefreshAccountTxnsEvent event) {
+        List<Opportunity> opportunities = repository
+            .findByDateBetween(event.getBeginDate().getCalculatedValue(),
+                event.getEndDate().getCalculatedValue());
+        String feature = FeatureRegistery.getFeatureClass(Opportunity.class).getSimpleName();
+        accountTxnRepository.deleteByFeature_featureAndDateBetween(feature,
+            event.getBeginDate().getCalculatedValue(), event.getEndDate().getCalculatedValue());
+
+        for (Opportunity entity : opportunities) {
+            FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
+
+            SaveAccountTxnsCommand saveCommand = new SaveAccountTxnsCommand(voucherPointer,
+                entity.getAccount(), entity.getInfo(), entity.getTags(), Boolean.FALSE,
+                Boolean.TRUE, entity.getCurrency(), entity.getBudget(), entity.getLocalBudget(),
+                entity.getDate(), entity.getOwner(), entity.getProcess().getProcessNo(),
+                entity.getState().toString(), entity.getStateReason(), entity.getTopic());
+
+            commandSender.sendCommand(saveCommand);
         }
     }
 }
