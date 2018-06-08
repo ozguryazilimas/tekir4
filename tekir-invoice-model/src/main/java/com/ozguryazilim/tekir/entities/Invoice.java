@@ -65,7 +65,11 @@ public class Invoice extends VoucherProcessBase{
 
     @Column(name = "LOCAL_AMOUNT")
     private BigDecimal localAmount = BigDecimal.ZERO;
-    
+
+    @Temporal(TemporalType.TIME)
+    @Column(name = "INV_TIME")
+    private Date time;
+
     @OneToMany(mappedBy = "master", cascade = CascadeType.ALL, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<InvoiceItem> items = new ArrayList<>();
@@ -148,4 +152,11 @@ public class Invoice extends VoucherProcessBase{
         this.localAmount = localAmount;
     }
 
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
 }

@@ -106,6 +106,7 @@ public abstract class InvoiceRepository<E extends Invoice, V extends InvoiceView
                 from.get(VoucherBase_.group).get(VoucherGroup_.id),
                 from.get(VoucherBase_.group).get(VoucherGroup_.groupNo),
                 from.get(VoucherBase_.topic),
+                from.get(Invoice_.time),
                 from.get(Invoice_.total),
                 from.get(Invoice_.currency)
         );

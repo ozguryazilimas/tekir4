@@ -344,7 +344,8 @@
     <changeSet author="hates" id="170520180957">
         <renameColumn newColumnName="TAGS" oldColumnName="CODE" columnDataType="varchar(2000)"
                       tableName="TCC_ACCOUNT_TXN"/>
-        <renameColumn newColumnName="TAGS" oldColumnName="CODE" columnDataType="varchar(2000)"
-                      tableName="TFN_FINANCE_TXN"/>
+    </changeSet>
+    <changeSet author="soner.cirit" id="20180529-1">
+        <modifyDataType columnName="TXNDATE" newDataType="date" tableName="TCC_ACCOUNT_TXN"/>
     </changeSet>
 </databaseChangeLog>

@@ -45,6 +45,13 @@ public interface VoucherPages extends Pages {
         @SecuredPage
         class ProcessLookup implements Process {
         }
+
+        @View
+        @SecuredPage
+        @PageTitle("report.name.ProcessReport")
+        class ProcessReport implements Process {
+
+        }
     }
 
     interface Group extends VoucherPages {

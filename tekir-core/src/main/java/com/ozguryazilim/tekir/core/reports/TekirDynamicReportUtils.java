@@ -41,4 +41,27 @@ public class TekirDynamicReportUtils {
                 });
     }
 
+    public static TextColumnBuilder<String> buildProcessTypeColumn(String fieldName) {
+        return col.column(Messages.getMessage("general.label.Type"), fieldName, type.stringType())
+            .setValueFormatter(new AbstractValueFormatter<String, String>() {
+                @Override
+                public String format(String value, ReportParameters reportParameters) {
+                    //String[] ss = value.split("-");
+                    return Messages.getMessage( "processType." + value );
+                }
+            });
+    }
+
+    public static TextColumnBuilder<String> buildProcessStatusColumn(String fieldName) {
+        return col.column(Messages.getMessage("general.label.Status"), fieldName, type.stringType())
+            .setValueFormatter(new AbstractValueFormatter<String, String>() {
+                @Override
+                public String format(String value, ReportParameters reportParameters) {
+                    //String[] ss = value.split("-");
+                    return Messages.getMessage( "processStatus." + value );
+                }
+            });
+    }
+
+
 }

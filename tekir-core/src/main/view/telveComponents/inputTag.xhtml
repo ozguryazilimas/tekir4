@@ -2,11 +2,10 @@
               xmlns:ui="http://java.sun.com/jsf/facelets"
               xmlns:h="http://java.sun.com/jsf/html"
               xmlns:p="http://primefaces.org/ui"
-              xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
               xmlns:composite="http://java.sun.com/jsf/composite"
               xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <composite:interface>
+    <composite:interface componentType="inputTag">
         <composite:attribute name="value" required="true" />
         <composite:attribute name="label" required="true" />
         <composite:attribute name="hasNullValue" required="false" type="java.lang.Boolean" default="true" />
@@ -26,19 +25,17 @@
             <div class="value">
                 <p:autoComplete id="#{cc.id}_inp"
                                 multiple="true"
-                                value="#{cc.attrs.value}"
-                                forceSelection="false"
-                                completeMethod="#{inputTagController.completeTag}"
+                                value="#{cc.tags}"
+                                forceSelection="true"
+                                completeMethod="#{cc.completeTag}"
                                 var="sr"
                                 itemValue="#{sr.tag}"
                                 itemLabel="#{sr.tag}"
-                                a:key="#{cc.attrs.key}"
-                                cache="true"
                                 style="height: auto">
                     <p:column>
                         <h:outputText value="#{sr.tag} #{sr.absent?messages['inputTag.message.Create']:''}" />
                     </p:column>
-                    <p:ajax event="itemSelect" listener="#{inputTagController.onItemSelect}" />
+                    <p:ajax event="itemSelect" listener="#{cc.onItemSelect}" />
                 </p:autoComplete>
             </div>
             <p:message for="#{cc.id}_inp" display="tooltip" />

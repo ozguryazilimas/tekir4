@@ -74,7 +74,7 @@ public class AccountTxn extends EntityBase{
      * Belgenin Düzenlenme Tarih Saati
      */
     @Column(name="TXNDATE")
-    @Temporal(value = TemporalType.TIMESTAMP)
+    @Temporal(value = TemporalType.DATE)
     private Date date;
 
     /**

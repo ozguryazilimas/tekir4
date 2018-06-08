@@ -5,10 +5,15 @@ import com.google.common.base.Splitter;
 import com.ozguryazilim.telve.query.Operands;
 import com.ozguryazilim.telve.query.filters.Filter;
 import com.ozguryazilim.telve.query.filters.FilterOperand;
+import java.lang.reflect.Member;
 import java.util.List;
+import java.util.ListIterator;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.ManagedType;
+import javax.persistence.metamodel.SingularAttribute;
+import javax.persistence.metamodel.Type;
 import org.apache.deltaspike.data.api.criteria.Criteria;
 
 /**
@@ -29,13 +34,14 @@ public class ListAttributeStringListFilter<E> extends Filter<E, String, String> 
     public ListAttributeStringListFilter(String attributeName, List<String> valueList, String label,
         String itemLabel) {
         super(label);
+        setAttribute(new MockSingularAttribute<>(attributeName));
 
         keyPrefix = itemLabel;
         this.valueList = valueList;
         this.attributeName = attributeName;
 
         setOperands(Operands.getEnumOperands());
-        setOperand(FilterOperand.Equal);
+        setOperand(FilterOperand.All);
     }
 
     @Override
@@ -111,7 +117,19 @@ public class ListAttributeStringListFilter<E> extends Filter<E, String, String> 
 
     @Override
     public String serialize() {
-        return Joiner.on("::").join(getOperand(), getValue() == null ? "null" : getValue());
+        if (getValues() != null) {
+            StringBuilder sb = new StringBuilder();
+            ListIterator<String> iterator = getValues().listIterator();
+            while (iterator.hasNext()) {
+                sb.append(iterator.next());
+                if (iterator.hasNext()) {
+                    sb.append(",");
+                }
+            }
+            return Joiner.on("::").join(getOperand(), sb.toString());
+        } else {
+            return Joiner.on("::").join(getOperand(), "null");
+        }
     }
 
     @Override
@@ -119,10 +137,85 @@ public class ListAttributeStringListFilter<E> extends Filter<E, String, String> 
         List<String> ls = Splitter.on("::").trimResults().splitToList(s);
         setOperand(FilterOperand.valueOf(ls.get(0)));
         if (!"null".equals(ls.get(1))) {
-            setValue(ls.get(1));
+            List<String> values = Splitter.on(",").trimResults().splitToList(ls.get(1));
+            setValues(values);
         } else {
-            setValue(null
+            setValues(null
             );
+        }
+    }
+
+    class MockSingularAttribute<E> implements SingularAttribute<E, String> {
+
+        private String name;
+
+        public MockSingularAttribute(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public boolean isId() {
+            return false;
+        }
+
+        @Override
+        public boolean isVersion() {
+            return false;
+        }
+
+        @Override
+        public boolean isOptional() {
+            return false;
+        }
+
+        @Override
+        public Type<String> getType() {
+            return null;
+        }
+
+        @Override
+        public String getName() {
+            return this.name;
+        }
+
+        @Override
+        public PersistentAttributeType getPersistentAttributeType() {
+            return null;
+        }
+
+        @Override
+        public ManagedType<E> getDeclaringType() {
+            return null;
+        }
+
+        @Override
+        public Class<String> getJavaType() {
+            return null;
+        }
+
+        @Override
+        public Member getJavaMember() {
+            return null;
+        }
+
+        @Override
+        public boolean isAssociation() {
+            return false;
+        }
+
+        @Override
+        public boolean isCollection() {
+            return false;
+        }
+
+        @Override
+        public BindableType getBindableType() {
+            return null;
+        }
+
+        @Override
+        public Class<String> getBindableJavaType() {
+            return null;
         }
     }
 }

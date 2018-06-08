@@ -34,6 +34,7 @@ import com.ozguryazilim.telve.messages.Messages;
 import com.ozguryazilim.telve.reports.JasperReportHandler;
 import java.util.List;
 import javax.inject.Inject;
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,6 +65,7 @@ public abstract class InvoiceHomeBase<E extends Invoice> extends VoucherFormBase
     public void createNew() {
         super.createNew();
         getEntity().setCurrency(currencyService.getDefaultCurrency());
+        getEntity().setTime(LocalDateTime.now().toDate());
     }
 
 

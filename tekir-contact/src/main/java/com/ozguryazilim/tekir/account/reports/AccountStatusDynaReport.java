@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author oyas
  */
-@Report(filterPage = ContactPages.AccountStatusDynaReport.class, permission = "accountStatusReport", path = "/account/status", template = "accountStatusReport")
+@Report(filterPage = ContactPages.AccountStatusDynaReport.class, permission = "accountStatusDynaReport", path = "/account/status", template = "accountStatusReport")
 public class AccountStatusDynaReport extends DynamicReportBase<AccountStatusFilter> {
 
     private static final Logger LOG = LoggerFactory.getLogger(AccountStatusDynaReport.class);

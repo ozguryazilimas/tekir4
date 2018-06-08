@@ -23,6 +23,7 @@ import com.ozguryazilim.telve.query.columns.LinkColumn;
 import com.ozguryazilim.telve.query.columns.MoneyColumn;
 import com.ozguryazilim.telve.query.columns.SubTextColumn;
 import com.ozguryazilim.telve.query.columns.TextColumn;
+import com.ozguryazilim.telve.query.columns.TimeColumn;
 import com.ozguryazilim.telve.query.columns.UserColumn;
 import com.ozguryazilim.telve.query.filters.BigDecimalFilter;
 import com.ozguryazilim.telve.query.filters.DateFilter;
@@ -53,7 +54,8 @@ public abstract class InvoiceBrowse<E extends Invoice, V extends InvoiceViewMode
                 .addColumn(new TextColumn<>(VoucherBase_.stateReason, "voucher.label.StateReason"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.stateInfo, "voucher.label.StateInfo"), false)
                 .addColumn(new VoucherStateColumn<>( VoucherBase_.state, "general.label.State"), false)
-                .addColumn(new SubTextColumn<>(VoucherProcessBase_.process, Process_.processNo, "voucher.label.Process"), false);
+                .addColumn(new SubTextColumn<>(VoucherProcessBase_.process, Process_.processNo, "voucher.label.Process"), false)
+                .addColumn(new TimeColumn<>(Invoice_.time,"invoice.label.InvoiceTime"), false);
         
         queryDefinition
                 .addFilter(new StringFilter<>(VoucherBase_.voucherNo, "voucher.label.VoucherNo"))
