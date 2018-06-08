@@ -9,6 +9,7 @@ import com.ozguryazilim.tekir.entities.Activity;
 import com.ozguryazilim.tekir.entities.ActivityMention;
 import com.ozguryazilim.tekir.entities.ActivityStatus;
 import com.ozguryazilim.tekir.entities.Contact;
+import com.ozguryazilim.tekir.entities.EMailActivity;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.EntityBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
@@ -82,6 +83,14 @@ public class ActivityHome extends FormBase<Activity, Long>{
         result.setBusinessKey(getEntity().getActivityNo());
         result.setFeature(getFeatureClass().getSimpleName());
         result.setPrimaryKey(getEntity().getId());
+        return result;
+    }
+
+    public FeaturePointer getActivityFeaturePointer(Activity activity) {
+        FeaturePointer result = new FeaturePointer();
+        result.setBusinessKey(activity.getActivityNo() + " " + activity.getSubject());
+        result.setFeature(getFeatureClass().getSimpleName());
+        result.setPrimaryKey(activity.getId());
         return result;
     }
 
@@ -294,5 +303,17 @@ public class ActivityHome extends FormBase<Activity, Long>{
         getEntity().setDate(new Date());
         getEntity().setStatus(ActivityStatus.FAILED);
         return save();
+    }
+
+    public List<Activity> getRelatedEMails() {
+        EMailActivity entity = (EMailActivity) getEntity();
+        String referenceId = entity.getReferenceId();
+        String replyId = entity.getReplyId();
+        List<Activity> result = new ArrayList<>();
+
+        result.addAll(repository.findByReplyId(referenceId));
+        result.addAll(repository.findByReferenceId(replyId));
+
+        return result;
     }
 }

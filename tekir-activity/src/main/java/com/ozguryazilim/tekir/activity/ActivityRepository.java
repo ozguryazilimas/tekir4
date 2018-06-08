@@ -14,6 +14,7 @@ import com.ozguryazilim.tekir.entities.ActivityStatus;
 import com.ozguryazilim.tekir.entities.Activity_;
 import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.EMailActivity;
+import com.ozguryazilim.tekir.entities.EMailActivity_;
 import com.ozguryazilim.tekir.entities.Person;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
@@ -301,5 +302,21 @@ public abstract class ActivityRepository extends RepositoryBase<Activity, Activi
         //Haydi bakalım sonuçları alalım
         TypedQuery<T> typedQuery = entityManager().createQuery(criteriaQuery);
         return typedQuery.getResultList();
+    }
+
+    public List<Activity> findByReplyId(String replyId) {
+        CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
+        CriteriaQuery<Activity> criteriaQuery = criteriaBuilder.createQuery(Activity.class);
+        Root<Activity> from = criteriaQuery.from(Activity.class);
+
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(criteriaBuilder
+            .equal(((Root<EMailActivity>) (Root<?>) from).get(EMailActivity_.replyId), replyId));
+        criteriaQuery.where(predicates.toArray(new Predicate[]{}));
+
+        TypedQuery<Activity> typedQuery = entityManager().createQuery(criteriaQuery);
+        List<Activity> resultList = typedQuery.getResultList();
+
+        return resultList;
     }
 }
