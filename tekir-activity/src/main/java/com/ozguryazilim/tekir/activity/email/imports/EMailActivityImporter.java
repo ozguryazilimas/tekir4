@@ -217,8 +217,7 @@ public class EMailActivityImporter implements Serializable {
         activity.setActivityNo(sequenceManager.getNewSerialNumber("ACT", 6));
 
         activity.setReferenceId(message.getMessageId());
-        activity.setReplyId(message.getReplyId());
-        activity.setForwardId(message.getForwardId());
+        activity.setRelatedReferenceId(message.getRelatedReferenceId());
 
         activity.setSubject(message.getSubject());
         activity.setBody(message.getContent());
@@ -288,14 +287,9 @@ public class EMailActivityImporter implements Serializable {
 
 
         //Ayrıca message id üzerinden daha önce kaydedilmiş mail activity aranacak. eğer bulunur ise ilgili kısımları oradan alınan bilgilerle doldurulacak.
-        if (message.isReply()) {
-            List<EMailActivity> acts = activityRepository.findByReferenceId(message.getReplyId(), EMailActivity.class);
-            if (!acts.isEmpty()) {
-                FeaturePointer fp = acts.get(0).getRegarding();
-                activity.setRegarding(fp);
-            }
-        } else if (message.isForwarded()) {
-            List<EMailActivity> acts = activityRepository.findByReferenceId(message.getForwardId(), EMailActivity.class);
+        if (message.isRelated()) {
+            List<EMailActivity> acts = activityRepository
+                .findByReferenceId(message.getRelatedReferenceId(), EMailActivity.class);
             if (!acts.isEmpty()) {
                 FeaturePointer fp = acts.get(0).getRegarding();
                 activity.setRegarding(fp);

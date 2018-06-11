@@ -133,4 +133,11 @@
         <dropColumn columnName="EM_MID"
                     tableName="TCA_ACTIVITY"/>
     </changeSet>
+    <changeSet author="soner.cirit" id="20180611-1">
+        <dropColumn columnName="EM_FID" tableName="TCA_ACTIVITY"/>
+    </changeSet>
+    <changeSet author="soner.cirit" id="20180611-2">
+        <renameColumn columnDataType="varchar(255)" newColumnName="EM_RELATED_REFID"
+            oldColumnName="EM_RID" tableName="TCA_ACTIVITY"/>
+    </changeSet>
 </databaseChangeLog>

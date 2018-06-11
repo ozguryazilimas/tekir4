@@ -24,8 +24,7 @@ public class EMailMessage implements Serializable {
     private List<InternetAddress> bccList = new ArrayList<>();
 
 
-    private String replyId;
-    private String forwardId;
+    private String relatedReferenceId;
     private List<String> references = new ArrayList<>();
 
     private List<EMailAttacment> attachments = new ArrayList<>();
@@ -54,28 +53,16 @@ public class EMailMessage implements Serializable {
         this.content = content;
     }
 
-    public String getReplyId() {
-        return replyId;
+    public String getRelatedReferenceId() {
+        return relatedReferenceId;
     }
 
-    public void setReplyId(String replyId) {
-        this.replyId = replyId;
+    public void setRelatedReferenceId(String relatedReferenceId) {
+        this.relatedReferenceId = relatedReferenceId;
     }
 
-    public boolean isReply() {
-        return !Strings.isNullOrEmpty(replyId);
-    }
-
-    public String getForwardId() {
-        return forwardId;
-    }
-
-    public void setForwardId(String forwardId) {
-        this.forwardId = forwardId;
-    }
-
-    public boolean isForwarded() {
-        return !Strings.isNullOrEmpty(forwardId);
+    public boolean isRelated() {
+        return !Strings.isNullOrEmpty(relatedReferenceId);
     }
 
     public InternetAddress getFrom() {
@@ -136,7 +123,10 @@ public class EMailMessage implements Serializable {
 
     @Override
     public String toString() {
-        return "EMailMessage{" + "messageId=" + messageId + ", subject=" + subject + ", from=" + from + ", toList=" + toList + ", ccList=" + ccList + ", bccList=" + bccList + ", replyId=" + replyId + ", forwardId=" + forwardId + ", references=" + references + ", attachments=" + attachments + '}';
+        return "EMailMessage{" + "messageId=" + messageId + ", subject=" + subject + ", from="
+            + from + ", toList=" + toList + ", ccList=" + ccList + ", bccList=" + bccList
+            + ", relatedReferenceId=" + relatedReferenceId + ", references=" + references
+            + ", attachments=" + attachments + '}';
     }
 
 }

@@ -40,11 +40,8 @@ public class EMailActivity extends Activity {
     @Column(name = "EM_BCC")
     private String bcc;
 
-    @Column(name = "EM_RID")
-    private String replyId;
-    
-    @Column(name = "EM_FID")
-    private String forwardId;
+    @Column(name = "EM_RELATED_REFID")
+    private String relatedReferenceId;
 
     public String getFrom() {
         return from;
@@ -78,19 +75,11 @@ public class EMailActivity extends Activity {
         this.bcc = bcc;
     }
 
-    public String getReplyId() {
-        return replyId;
+    public String getRelatedReferenceId() {
+        return relatedReferenceId;
     }
 
-    public void setReplyId(String replyId) {
-        this.replyId = replyId;
-    }
-
-    public String getForwardId() {
-        return forwardId;
-    }
-
-    public void setForwardId(String forwardId) {
-        this.forwardId = forwardId;
+    public void setRelatedReferenceId(String relatedReferenceId) {
+        this.relatedReferenceId = relatedReferenceId;
     }
 }

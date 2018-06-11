@@ -77,8 +77,7 @@ public class EMailParser {
         result.setSubject(message.getSubject());
         result.setDate(message.getReceivedDate());
 
-        parseReplyId(message);
-        parseForwardId(message);
+        parseRelatedReferenceId(message);
         parseRefrences(message);
 
         parseFrom(message);
@@ -129,19 +128,11 @@ public class EMailParser {
         }
     }
 
-    protected void parseReplyId(MimeMessage message) throws MessagingException {
+    protected void parseRelatedReferenceId(MimeMessage message) throws MessagingException {
         //Eğer bir cevap e-postası ise kime cevap olduğunun id'si
         String[] headers = message.getHeader("In-Reply-To");
         if (headers != null && headers.length > 0) {
-            result.setReplyId(headers[0]);
-        }
-    }
-
-    protected void parseForwardId(MimeMessage message) throws MessagingException {
-        //Eğer bir forward e-postası ise kime neyin forward edildiği id'si
-        String[] headers = message.getHeader("X-Forwarded-Message-Id");
-        if (headers != null && headers.length > 0) {
-            result.setForwardId(headers[0]);
+            result.setRelatedReferenceId(headers[0]);
         }
     }
 

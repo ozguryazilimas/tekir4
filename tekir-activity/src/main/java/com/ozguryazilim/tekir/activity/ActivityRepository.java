@@ -304,14 +304,15 @@ public abstract class ActivityRepository extends RepositoryBase<Activity, Activi
         return typedQuery.getResultList();
     }
 
-    public List<Activity> findByReplyId(String replyId) {
+    public List<Activity> findByRelatedReferenceId(String relatedReferenceId) {
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
         CriteriaQuery<Activity> criteriaQuery = criteriaBuilder.createQuery(Activity.class);
         Root<Activity> from = criteriaQuery.from(Activity.class);
 
         List<Predicate> predicates = new ArrayList<>();
         predicates.add(criteriaBuilder
-            .equal(((Root<EMailActivity>) (Root<?>) from).get(EMailActivity_.replyId), replyId));
+            .equal(((Root<EMailActivity>) (Root<?>) from).get(EMailActivity_.relatedReferenceId),
+                relatedReferenceId));
         criteriaQuery.where(predicates.toArray(new Predicate[]{}));
 
         TypedQuery<Activity> typedQuery = entityManager().createQuery(criteriaQuery);

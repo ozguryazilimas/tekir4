@@ -308,11 +308,11 @@ public class ActivityHome extends FormBase<Activity, Long>{
     public List<Activity> getRelatedEMails() {
         EMailActivity entity = (EMailActivity) getEntity();
         String referenceId = entity.getReferenceId();
-        String replyId = entity.getReplyId();
+        String relatedReferenceId = entity.getRelatedReferenceId();
         List<Activity> result = new ArrayList<>();
 
-        result.addAll(repository.findByReplyId(referenceId));
-        result.addAll(repository.findByReferenceId(replyId));
+        result.addAll(repository.findByRelatedReferenceId(referenceId));
+        result.addAll(repository.findByReferenceId(relatedReferenceId));
 
         return result;
     }
