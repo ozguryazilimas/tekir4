@@ -1,13 +1,16 @@
 (function () {
     var tekir = window.tekir = window.tekir || {};
 
+    var expKeys = [0, 97, 99, 118, 120];
+
     function handleKeyPress(event) {
         var val = event.target.value;
         var charCode = event.charCode;
         if (val.indexOf('+') < 0 && charCode === 43) { //+
             return true;
         }
-        return (charCode > 47 && charCode < 58);
+        return (charCode > 47 && charCode < 58) ||
+            expKeys.indexOf(charCode) !== -1;
     }
 
     function handleKeyUp(event) {
