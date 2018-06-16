@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                template="/layout/dialogBase.xhtml">
+
+    <ui:param name="title" value="#{messages['exchangeRateNotFoundDialog.Title']}"/>
+
+    <ui:define name="form">
+        <h:form id="rateNotFoundForm">
+            #{messages.get('exchangeRateNotFoundDialog.Info')}
+            <h:panelGroup styleClass="row actionButtons" layout="block"
+                          style="position: fixed; bottom: 0; display: block;">
+                <p:commandButton id="select" value="#{messages['general.button.Ok']}"
+                                 icon="fa fa-check"
+                                 action="#{exchangeRateNotFoundDialog.closeDialog()}"
+                                 styleClass="btn-primary"/>
+                <p:commandButton id="close" value="#{messages['general.button.Cancel']}"
+                                 icon="ui-icon-close"
+                                 action="#{exchangeRateNotFoundDialog.cancelDialog()}"/>
+            </h:panelGroup>
+        </h:form>
+    </ui:define>
+</ui:composition>
+
