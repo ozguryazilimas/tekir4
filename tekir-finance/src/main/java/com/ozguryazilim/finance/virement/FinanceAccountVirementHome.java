@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.finance.virement;
 
+import com.ozguryazilim.tekir.core.dialogs.ExchangeRateNotFoundDialog;
 import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 
+import javax.money.convert.CurrencyConversionException;
 import org.primefaces.context.RequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,7 +60,11 @@ public class FinanceAccountVirementHome extends VoucherFormBase<FinanceAccountVi
     
     @Inject
     private JasperReportHandler reportHandler;
-    
+
+    @Inject
+    private ExchangeRateNotFoundDialog exchangeRateNotFoundDialog;
+
+
     private boolean fromCurrencyEditable = true;
     
     private boolean toCurrencyEditable = true;
@@ -106,7 +112,13 @@ public class FinanceAccountVirementHome extends VoucherFormBase<FinanceAccountVi
     		getEntity().setLocalAmount(getEntity().getToAmount());
     	}
     	else{
-        getEntity().setLocalAmount(currencyService.convert(getEntity().getToCurrency(), getEntity().getToAmount(), getEntity().getDate()));
+            try {
+                getEntity().setLocalAmount(currencyService.convert(
+                    getEntity().getToCurrency(), getEntity().getToAmount(), getEntity().getDate()));
+            } catch (CurrencyConversionException CCEx) {
+                exchangeRateNotFoundDialog.openDialog();
+                return false;
+            }
     	}
 
     	if(isExchangeRateTooBig() && !cont){
@@ -221,11 +233,11 @@ public class FinanceAccountVirementHome extends VoucherFormBase<FinanceAccountVi
 													getEntity().getToCurrency().getCurrencyCode());
 		
 		BigDecimal param = new BigDecimal(2);
-		
+
 		if(getEntity().getToAmount().compareTo(result.multiply(param)) == 1){
 			return true;
 		}
-		
+
 		if(getEntity().getToAmount().compareTo(result.divide(param)) == -1){
 			return true;
 		}

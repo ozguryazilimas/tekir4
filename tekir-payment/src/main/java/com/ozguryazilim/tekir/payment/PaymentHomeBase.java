@@ -7,6 +7,7 @@ package com.ozguryazilim.tekir.payment;
 
 import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
+import com.ozguryazilim.tekir.core.dialogs.ExchangeRateNotFoundDialog;
 import com.ozguryazilim.tekir.entities.AbstractPerson;
 import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.tekir.entities.Corporation;
@@ -28,6 +29,7 @@ import com.ozguryazilim.telve.messages.FacesMessages;
 import com.ozguryazilim.telve.reports.JasperReportHandler;
 
 import javax.inject.Inject;
+import javax.money.convert.CurrencyConversionException;
 
 /**
  *
@@ -46,7 +48,9 @@ public abstract class PaymentHomeBase<E extends PaymentBase> extends VoucherForm
     
     @Inject
     private JasperReportHandler reportHandler;
-   
+
+    @Inject
+    private ExchangeRateNotFoundDialog exchangeRateNotFoundDialog;
     
     private VoucherMatchable matchable;
     
@@ -81,7 +85,13 @@ public abstract class PaymentHomeBase<E extends PaymentBase> extends VoucherForm
             getEntity().setProcess(processService.createProcess(getEntity().getAccount(), getEntity().getTopic(), getProcessType()));
         }
 
-        getEntity().setLocalAmount(currencyService.convert(getEntity().getCurrency(), getEntity().getAmount(), getEntity().getDate()));
+        try {
+            getEntity().setLocalAmount(currencyService.convert(
+                getEntity().getCurrency(), getEntity().getAmount(), getEntity().getDate()));
+        } catch (CurrencyConversionException CCEx) {
+            exchangeRateNotFoundDialog.openDialog();
+            return false;
+        }
         
         return super.onBeforeSave();
     }

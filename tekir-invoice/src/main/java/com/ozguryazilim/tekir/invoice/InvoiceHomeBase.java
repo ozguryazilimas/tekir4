@@ -6,6 +6,7 @@
 package com.ozguryazilim.tekir.invoice;
 
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
+import com.ozguryazilim.tekir.core.dialogs.ExchangeRateNotFoundDialog;
 import com.ozguryazilim.tekir.entities.AbstractPerson;
 import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.tekir.entities.Corporation;
@@ -34,6 +35,7 @@ import com.ozguryazilim.telve.messages.Messages;
 import com.ozguryazilim.telve.reports.JasperReportHandler;
 import java.util.List;
 import javax.inject.Inject;
+import javax.money.convert.CurrencyConversionException;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,6 +62,9 @@ public abstract class InvoiceHomeBase<E extends Invoice> extends VoucherFormBase
 
     @Inject
     private JasperReportHandler reportHandler;
+
+    @Inject
+    private ExchangeRateNotFoundDialog exchangeRateNotFoundDialog;
 
     @Override
     public void createNew() {
@@ -123,7 +128,13 @@ public abstract class InvoiceHomeBase<E extends Invoice> extends VoucherFormBase
             getEntity().setProcess(processService.createProcess(getEntity().getAccount(), getEntity().getTopic(), getProcessType()));
         }
 
-        getEntity().setLocalAmount(currencyService.convert(getEntity().getCurrency(), getEntity().getTotal(), getEntity().getDate()));
+        try {
+            getEntity().setLocalAmount(currencyService.convert(
+                getEntity().getCurrency(), getEntity().getTotal(), getEntity().getDate()));
+        } catch (CurrencyConversionException CCEx) {
+            exchangeRateNotFoundDialog.openDialog();
+            return false;
+        }
 
         return super.onBeforeSave();
     }

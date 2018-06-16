@@ -6,6 +6,7 @@
 package com.ozguryazilim.tekir.order;
 
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
+import com.ozguryazilim.tekir.core.dialogs.ExchangeRateNotFoundDialog;
 import com.ozguryazilim.tekir.entities.AbstractPerson;
 import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.tekir.entities.Corporation;
@@ -34,6 +35,7 @@ import com.ozguryazilim.telve.reports.JasperReportHandler;
 import java.util.List;
 import javax.inject.Inject;
 
+import javax.money.convert.CurrencyConversionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,6 +61,9 @@ public abstract class OrderHomeBase<E extends Order> extends VoucherFormBase<E> 
     
     @Inject
     private JasperReportHandler reportHandler;
+
+    @Inject
+    private ExchangeRateNotFoundDialog exchangeRateNotFoundDialog;
     
     @Override
     protected VoucherStateConfig buildStateConfig() {
@@ -102,7 +107,13 @@ public abstract class OrderHomeBase<E extends Order> extends VoucherFormBase<E> 
             getEntity().setProcess(processService.createProcess(getEntity().getAccount(), getEntity().getTopic(), getProcessType()));
         }
 
-        getEntity().setLocalAmount(currencyService.convert(getEntity().getCurrency(), getEntity().getTotal(), getEntity().getDate()));
+        try {
+            getEntity().setLocalAmount(currencyService.convert(
+                getEntity().getCurrency(), getEntity().getTotal(), getEntity().getDate()));
+        } catch (CurrencyConversionException CCEx) {
+            exchangeRateNotFoundDialog.openDialog();
+            return false;
+        }
         
         return super.onBeforeSave();
     }

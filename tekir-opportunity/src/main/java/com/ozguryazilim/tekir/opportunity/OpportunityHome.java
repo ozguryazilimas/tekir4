@@ -4,6 +4,7 @@ import com.ozguryazilim.tekir.account.AccountTxnService;
 import com.ozguryazilim.tekir.activity.ActivityFeature;
 import com.ozguryazilim.tekir.activity.ActivityHome;
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
+import com.ozguryazilim.tekir.core.dialogs.ExchangeRateNotFoundDialog;
 import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.Opportunity;
 import com.ozguryazilim.tekir.entities.OpportunityItem;
@@ -26,6 +27,7 @@ import com.ozguryazilim.telve.forms.FormEdit;
 import com.ozguryazilim.telve.reports.JasperReportHandler;
 
 import javax.inject.Inject;
+import javax.money.convert.CurrencyConversionException;
 import org.apache.deltaspike.core.api.provider.BeanProvider;
 
 import org.slf4j.Logger;
@@ -58,6 +60,9 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
     @Inject
     private JasperReportHandler reportHandler;
 
+    @Inject
+    ExchangeRateNotFoundDialog exchangeRateNotFoundDialog;
+
     private OpportunityItem selectedItem;
     private boolean itemEdit = false;
 
@@ -87,7 +92,13 @@ public class OpportunityHome extends VoucherFormBase<Opportunity>{
             getEntity().setProcess(processService.createProcess(getEntity().getAccount(), getEntity().getTopic(), ProcessType.SALES));
         }
 
-        getEntity().setLocalBudget(currencyService.convert(getEntity().getCurrency(), getEntity().getBudget(), getEntity().getDate()));
+        try {
+            getEntity().setLocalBudget(currencyService.convert(
+                getEntity().getCurrency(), getEntity().getBudget(), getEntity().getDate()));
+        } catch (CurrencyConversionException CCEx) {
+            exchangeRateNotFoundDialog.openDialog();
+            return false;
+        }
 
         return super.onBeforeSave(); //To change body of generated methods, choose Tools | Templates.
     }

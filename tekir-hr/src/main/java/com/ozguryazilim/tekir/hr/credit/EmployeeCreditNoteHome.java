@@ -1,6 +1,7 @@
 package com.ozguryazilim.tekir.hr.credit;
 
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
+import com.ozguryazilim.tekir.core.dialogs.ExchangeRateNotFoundDialog;
 import com.ozguryazilim.tekir.entities.EmployeeCreditNote;
 import com.ozguryazilim.tekir.entities.Employee;
 import com.ozguryazilim.tekir.entities.FinanceAccount;
@@ -22,6 +23,7 @@ import com.ozguryazilim.telve.reports.JasperReportHandler;
 import com.ozguryazilim.telve.sequence.SequenceManager;
 import java.util.Map;
 import javax.inject.Inject;
+import javax.money.convert.CurrencyConversionException;
 import net.sf.jasperreports.engine.JRParameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,6 +48,9 @@ public class EmployeeCreditNoteHome extends VoucherFormBase<EmployeeCreditNote>{
     
     @Inject
     private JasperReportHandler reportHandler;
+
+    @Inject
+    private ExchangeRateNotFoundDialog exchangeRateNotFoundDialog;
     
     @Override
     public void createNew() {
@@ -55,8 +60,14 @@ public class EmployeeCreditNoteHome extends VoucherFormBase<EmployeeCreditNote>{
 
     @Override
     public boolean onBeforeSave() {
-        
-        getEntity().setLocalAmount(currencyService.convert(getEntity().getCurrency(), getEntity().getAmount(), getEntity().getDate()));
+
+        try {
+            getEntity().setLocalAmount(currencyService.convert(
+                getEntity().getCurrency(), getEntity().getAmount(), getEntity().getDate()));
+        } catch (CurrencyConversionException CCEx) {
+            exchangeRateNotFoundDialog.openDialog();
+            return false;
+        }
         
         return super.onBeforeSave();
     }
