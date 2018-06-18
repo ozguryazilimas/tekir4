@@ -1,5 +1,6 @@
 package com.ozguryazilim.tekir.hr.credit;
 
+import com.ozguryazilim.finance.account.txn.FinanceAccountTxnService;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +36,9 @@ public class EmployeeCreditNoteFeeder extends AbstractFeeder<EmployeeCreditNote>
 
     @Inject
     private Identity identity;
+
+    @Inject
+    private FinanceAccountTxnService financeAccountTxnService;
 
     public void feed(EmployeeCreditNote entity) {
 
@@ -106,6 +110,12 @@ public class EmployeeCreditNoteFeeder extends AbstractFeeder<EmployeeCreditNote>
 
             FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
 
+            financeAccountTxnService
+                .saveFeature(voucherPointer, entity.getFinanceAccount(), entity.getInfo(),
+                    entity.getTags(), Boolean.TRUE, Boolean.TRUE, entity.getCurrency(),
+                    entity.getAmount(), entity.getLocalAmount(), entity.getDate(),
+                    entity.getOwner(), null, entity.getState().toString(), entity.getStateReason(),
+                    entity.getEmployee());
         }
     }
 
