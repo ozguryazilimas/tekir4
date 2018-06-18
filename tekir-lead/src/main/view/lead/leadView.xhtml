@@ -22,24 +22,27 @@
 
 	<ui:define name="caption">
 		<div class="row">
-			<div class="col-md-6 col-xs-12">
-				<t:outputText label="voucher.label.Topic"
-					value="#{leadHome.entity.topic}" />
-				<t:outputText label="general.label.Info"
-					value="#{leadHome.entity.info}" />
+			<div class="col-xs-12 col-md-6">
+				<t:outputText label="voucher.label.Topic" value="#{leadHome.entity.topic}"
+							  columnClass="col-xs-12 col-sm-6"/>
+				<t:outputText label="general.label.Info" value="#{leadHome.entity.info}"
+							  columnClass="col-xs-12 col-sm-6"/>
 				<t:outputText label="lead.label.LeadSourceName"
-					value="#{leadHome.entity.leadSource.name}" />
+							  value="#{leadHome.entity.leadSource.name}"
+							  columnClass="col-xs-12 col-sm-6"/>
 				<t:outputText label="lead.label.LeadCategoryName"
-					value="#{leadHome.entity.leadCategory.name}" />
+							  value="#{leadHome.entity.leadCategory.name}"
+							  columnClass="col-xs-12 col-sm-6"/>
 			</div>
 
 			<div class="col-md-6 col-xs-12">
-				<t:outputText label="voucher.label.VoucherNo"
-					value="#{leadHome.entity.voucherNo}" />
+				<t:outputText label="voucher.label.VoucherNo" value="#{leadHome.entity.voucherNo}"
+							  columnClass="col-xs-12 col-sm-6"/>
 				<t:outputText label="voucher.label.ReferenceNo"
-					value="#{leadHome.entity.referenceNo}" />
-				<t:outputTag label="general.label.Tag"
-					value="#{leadHome.entity.tags}" />
+							  value="#{leadHome.entity.referenceNo}"
+							  columnClass="col-xs-12 col-sm-6"/>
+				<t:outputTag label="general.label.Tag" value="#{leadHome.entity.tags}"
+							 columnClass="col-xs-12"/>
 			</div>
 		</div>
 	</ui:define>
