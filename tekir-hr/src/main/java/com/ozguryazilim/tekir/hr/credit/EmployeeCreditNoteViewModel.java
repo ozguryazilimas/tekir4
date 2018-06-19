@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ozguryazilim.tekir.hr.credit;
 
 import com.ozguryazilim.tekir.entities.Employee;
@@ -14,6 +9,7 @@ import com.ozguryazilim.tekir.voucher.VoucherViewModel;
 import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -28,11 +24,11 @@ public class EmployeeCreditNoteViewModel extends VoucherViewModel {
     private Currency currency;
     private BigDecimal amount = BigDecimal.ZERO;
 
-    public EmployeeCreditNoteViewModel(Long id, String code, String voucherNo, String info, 
-            String referenceNo, Date date, String owner, 
-            VoucherState state, String stateReason, String stateInfo, VoucherGroup group,String topic,
-            Employee employee, EmployeeCreditNoteType type, FinanceAccount financeAccount, Date paymentDate, Currency currency, BigDecimal amount) {
-        super(id, code, voucherNo, info, referenceNo, date, owner, state, stateReason, stateInfo, group, topic);
+    public EmployeeCreditNoteViewModel(Long id, List<String> tags, String voucherNo, String info,
+                                       String referenceNo, Date date, String owner,
+                                       VoucherState state, String stateReason, String stateInfo, VoucherGroup group, String topic,
+                                       Employee employee, EmployeeCreditNoteType type, FinanceAccount financeAccount, Date paymentDate, Currency currency, BigDecimal amount) {
+        super(id, tags, voucherNo, info, referenceNo, date, owner, state, stateReason, stateInfo, group, topic);
         
         this.employee = employee;
         this.type = type;

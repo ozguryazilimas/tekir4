@@ -1,0 +1,370 @@
+[
+  {
+    "name": "query.LeadBrowse.Draft",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "voucherNo",
+      "date",
+      "topic",
+      "owner",
+      "relatedCompanyName"
+    ],
+    "filters": [
+      "voucherNo",
+      "date",
+      "topic",
+      "owner",
+      "relatedCompanyName",
+      "relatedPersonName",
+      "relatedPersonSurname",
+      "relatedAddress",
+      "leadSource",
+      "leadCategory",
+      "state"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "date": "All::Today::20170718T0000::Today::null",
+      "owner": "All::",
+      "relatedPersonName": "All::",
+      "relatedAddress": "All::",
+      "leadCategory": "All::",
+      "leadSource": "All::",
+      "topic": "All::",
+      "relatedCompanyName": "All::",
+      "relatedPersonSurname": "All::",
+      "state": "Equal::DRAFT-NEUTRAL-DRAFT"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  },
+  {
+    "name": "query.LeadBrowse.Open",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "voucherNo",
+      "date",
+      "topic",
+      "owner",
+      "relatedCompanyName"
+    ],
+    "filters": [
+      "voucherNo",
+      "date",
+      "topic",
+      "owner",
+      "relatedCompanyName",
+      "relatedPersonName",
+      "relatedPersonSurname",
+      "relatedAddress",
+      "leadSource",
+      "leadCategory",
+      "state"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "date": "All::Today::20170718T0000::Today::null",
+      "owner": "All::",
+      "relatedPersonName": "All::",
+      "relatedAddress": "All::",
+      "leadCategory": "All::",
+      "leadSource": "All::",
+      "topic": "All::",
+      "relatedCompanyName": "All::",
+      "relatedPersonSurname": "All::",
+      "state": "Equal::OPEN-NEUTRAL-OPEN"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  },
+  {
+    "name": "query.LeadBrowse.Successful",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "voucherNo",
+      "date",
+      "topic",
+      "owner",
+      "relatedCompanyName"
+    ],
+    "filters": [
+      "voucherNo",
+      "date",
+      "topic",
+      "owner",
+      "relatedCompanyName",
+      "relatedPersonName",
+      "relatedPersonSurname",
+      "relatedAddress",
+      "leadSource",
+      "leadCategory",
+      "state"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "date": "All::Today::20170718T0000::Today::null",
+      "owner": "All::",
+      "relatedPersonName": "All::",
+      "relatedAddress": "All::",
+      "leadCategory": "All::",
+      "leadSource": "All::",
+      "topic": "All::",
+      "relatedCompanyName": "All::",
+      "relatedPersonSurname": "All::",
+      "state": "Equal::CLOSE-POSITIVE-WON"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  },
+  {
+    "name": "query.LeadBrowse.Unsuccessful",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "voucherNo",
+      "date",
+      "topic",
+      "owner",
+      "relatedCompanyName"
+    ],
+    "filters": [
+      "voucherNo",
+      "date",
+      "topic",
+      "owner",
+      "relatedCompanyName",
+      "relatedPersonName",
+      "relatedPersonSurname",
+      "relatedAddress",
+      "leadSource",
+      "leadCategory",
+      "state"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "date": "All::Today::20170718T0000::Today::null",
+      "owner": "All::",
+      "relatedPersonName": "All::",
+      "relatedAddress": "All::",
+      "leadCategory": "All::",
+      "leadSource": "All::",
+      "topic": "All::",
+      "relatedCompanyName": "All::",
+      "relatedPersonSurname": "All::",
+      "state": "Equal::CLOSE-NEGATIVE-LOSS"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  },
+  {
+    "name": "query.LeadBrowse.Today",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "voucherNo",
+      "date",
+      "topic",
+      "owner",
+      "relatedCompanyName"
+    ],
+    "filters": [
+      "voucherNo",
+      "date",
+      "topic",
+      "owner",
+      "relatedCompanyName",
+      "relatedPersonName",
+      "relatedPersonSurname",
+      "relatedAddress",
+      "leadSource",
+      "leadCategory",
+      "state"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "date": "Equal::Today::20170718T0000::Today::null",
+      "owner": "All::",
+      "relatedPersonName": "All::",
+      "relatedAddress": "All::",
+      "leadCategory": "All::",
+      "leadSource": "All::",
+      "topic": "All::",
+      "relatedCompanyName": "All::",
+      "relatedPersonSurname": "All::",
+      "state": "All::CLOSE-NEUTRAL-CLOSE"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  },
+  {
+    "name": "query.LeadBrowse.All",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "voucherNo",
+      "date",
+      "topic",
+      "owner",
+      "relatedCompanyName"
+    ],
+    "filters": [
+      "voucherNo",
+      "date",
+      "topic",
+      "owner",
+      "relatedCompanyName",
+      "relatedPersonName",
+      "relatedPersonSurname",
+      "relatedAddress",
+      "leadSource",
+      "leadCategory",
+      "state"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "date": "All::Today::20170718T0000::Today::null",
+      "owner": "All::",
+      "relatedPersonName": "All::",
+      "relatedAddress": "All::",
+      "leadCategory": "All::",
+      "leadSource": "All::",
+      "topic": "All::",
+      "relatedCompanyName": "All::",
+      "relatedPersonSurname": "All::",
+      "state": "All::CLOSE-NEGATIVE-LOSS"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  },
+  {
+    "name": "query.LeadBrowse.Closed",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "voucherNo",
+      "date",
+      "topic",
+      "owner",
+      "relatedCompanyName"
+    ],
+    "filters": [
+      "voucherNo",
+      "date",
+      "topic",
+      "owner",
+      "relatedCompanyName",
+      "relatedPersonName",
+      "relatedPersonSurname",
+      "relatedAddress",
+      "leadSource",
+      "leadCategory",
+      "state"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "date": "All::Today::20170718T0000::Today::null",
+      "owner": "All::",
+      "relatedPersonName": "All::",
+      "relatedAddress": "All::",
+      "leadCategory": "All::",
+      "leadSource": "All::",
+      "topic": "All::",
+      "relatedCompanyName": "All::",
+      "relatedPersonSurname": "All::",
+      "state": "Equal::CLOSE-NEUTRAL-CLOSE"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  },
+  {
+    "name": "query.LeadBrowse.LastTenDays",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "voucherNo",
+      "date",
+      "topic",
+      "owner",
+      "relatedCompanyName"
+    ],
+    "filters": [
+      "voucherNo",
+      "date",
+      "topic",
+      "owner",
+      "relatedCompanyName",
+      "relatedPersonName",
+      "relatedPersonSurname",
+      "relatedAddress",
+      "leadSource",
+      "leadCategory",
+      "state"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "date": "In::LastTenDays::20170708T0000::Today::20170718T0000",
+      "owner": "All::",
+      "relatedPersonName": "All::",
+      "relatedAddress": "All::",
+      "leadCategory": "All::",
+      "leadSource": "All::",
+      "topic": "All::",
+      "relatedCompanyName": "All::",
+      "relatedPersonSurname": "All::",
+      "state": "All::CLOSE-NEUTRAL-CLOSE"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  }
+]

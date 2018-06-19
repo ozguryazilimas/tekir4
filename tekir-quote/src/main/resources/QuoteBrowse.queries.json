@@ -1,0 +1,432 @@
+[
+  {
+    "name": "query.QuoteBrowse.Open",
+    "resultLimit": 100,
+    "rowLimit": 20,
+    "columns": [
+      "voucherNo",
+      "account",
+      "topic",
+      "date",
+      "total",
+      "owner"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "total",
+      "account",
+      "process",
+      "date"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "owner": "All::",
+      "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
+      "total": "All::0",
+      "process": "All::null",
+      "code": "All::null",
+      "topic": "All::null",
+      "state": "Equal::OPEN-NEUTRAL-OPEN",
+      "stateReason": "All::null",
+      "account": "All::null",
+      "info": "All::null"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  },
+  {
+    "name": "query.QuoteBrowse.Successful",
+    "resultLimit": 100,
+    "rowLimit": 20,
+    "columns": [
+      "voucherNo",
+      "account",
+      "topic",
+      "date",
+      "total",
+      "owner"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "total",
+      "account",
+      "process",
+      "date"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "owner": "All::",
+      "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
+      "total": "All::0",
+      "process": "All::null",
+      "code": "All::null",
+      "topic": "All::null",
+      "state": "Equal::CLOSE-POSITIVE-WON",
+      "stateReason": "All::null",
+      "account": "All::null",
+      "info": "All::null"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  },
+  {
+    "name": "query.QuoteBrowse.Unsuccessful",
+    "resultLimit": 100,
+    "rowLimit": 20,
+    "columns": [
+      "voucherNo",
+      "account",
+      "topic",
+      "date",
+      "total",
+      "owner"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "total",
+      "account",
+      "process",
+      "date"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "owner": "All::",
+      "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
+      "total": "All::0",
+      "process": "All::null",
+      "code": "All::null",
+      "topic": "All::null",
+      "state": "Equal::CLOSE-NEGATIVE-LOSS",
+      "stateReason": "All::null",
+      "account": "All::null",
+      "info": "All::null"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  },
+  {
+    "name": "query.QuoteBrowse.Today",
+    "resultLimit": 100,
+    "rowLimit": 20,
+    "columns": [
+      "voucherNo",
+      "account",
+      "topic",
+      "date",
+      "total",
+      "owner"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "total",
+      "account",
+      "process",
+      "date"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "owner": "All::",
+      "date": "Equal::Today::20170718T0000::Today::20170718T0000",
+      "total": "All::0",
+      "process": "All::null",
+      "code": "All::null",
+      "topic": "All::null",
+      "state": "All::null",
+      "stateReason": "All::null",
+      "account": "All::null",
+      "info": "All::null"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  },
+  {
+    "name": "query.QuoteBrowse.All",
+    "resultLimit": 100,
+    "rowLimit": 20,
+    "columns": [
+      "voucherNo",
+      "account",
+      "topic",
+      "date",
+      "total",
+      "owner"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "total",
+      "account",
+      "process",
+      "date"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "owner": "All::",
+      "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
+      "total": "All::0",
+      "process": "All::null",
+      "code": "All::null",
+      "topic": "All::null",
+      "state": "All::null",
+      "stateReason": "All::null",
+      "account": "All::null",
+      "info": "All::null"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  },
+  {
+    "name": "query.QuoteBrowse.AllReverseSortedByTotal",
+    "resultLimit": 100,
+    "rowLimit": 20,
+    "columns": [
+      "voucherNo",
+      "account",
+      "topic",
+      "date",
+      "total",
+      "owner"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "total",
+      "account",
+      "process",
+      "date"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "owner": "All::",
+      "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
+      "total": "All::0",
+      "process": "All::null",
+      "code": "All::null",
+      "topic": "All::null",
+      "state": "All::null",
+      "stateReason": "All::null",
+      "account": "All::null",
+      "info": "All::null"
+    },
+    "sorters": [
+      "total"
+    ],
+    "sorterValues": {
+      "total": "D"
+    }
+  },
+  {
+    "name": "query.QuoteBrowse.Closed",
+    "resultLimit": 100,
+    "rowLimit": 20,
+    "columns": [
+      "voucherNo",
+      "account",
+      "topic",
+      "date",
+      "total",
+      "owner"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "total",
+      "account",
+      "process",
+      "date"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "owner": "All::",
+      "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
+      "total": "All::0",
+      "process": "All::null",
+      "code": "All::null",
+      "topic": "All::null",
+      "state": "Equal::CLOSE-NEUTRAL-CLOSE",
+      "stateReason": "All::null",
+      "account": "All::null",
+      "info": "All::null"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  },
+  {
+    "name": "query.QuoteBrowse.LastTenDays",
+    "resultLimit": 100,
+    "rowLimit": 20,
+    "columns": [
+      "voucherNo",
+      "account",
+      "topic",
+      "date",
+      "total",
+      "owner"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "total",
+      "account",
+      "process",
+      "date"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "owner": "All::",
+      "date": "In::LastTenDays::20170708T0000::Today::20170718T0000",
+      "total": "All::0",
+      "process": "All::null",
+      "code": "All::null",
+      "topic": "All::null",
+      "state": "All::null",
+      "stateReason": "All::null",
+      "account": "All::null",
+      "info": "All::null"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  },
+  {
+    "name": "query.QuoteBrowse.Draft",
+    "resultLimit": 100,
+    "rowLimit": 20,
+    "columns": [
+      "voucherNo",
+      "account",
+      "topic",
+      "date",
+      "total",
+      "owner"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "total",
+      "account",
+      "process",
+      "date"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "owner": "All::",
+      "date": "All::LastTenDays::20170708T0000::Today::20170718T0000",
+      "total": "All::0",
+      "process": "All::null",
+      "code": "All::null",
+      "topic": "All::null",
+      "state": "Equal::DRAFT-NEUTRAL-DRAFT",
+      "stateReason": "All::null",
+      "account": "All::null",
+      "info": "All::null"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  }
+]

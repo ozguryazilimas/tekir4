@@ -55,7 +55,7 @@
             <h:form id="cdForm" rendered="#{stakeholderWidget.stakeholder ne null}">
                 
                 <div class="row">
-                    <t:inputLookupDialog value="#{stakeholderWidget.stakeholder.contact}" label="contact.label.Contact"  
+                    <t:inputLookupDialog value="#{stakeholderWidget.stakeholder.contact}" label="general.label.Contact"
                                          caption="name" lookupBean="#{contactLookup}" 
                                          lookupProfile="T:Person"  
                                          lookupListener="stakeholderWidget.stakeholder.contact"  

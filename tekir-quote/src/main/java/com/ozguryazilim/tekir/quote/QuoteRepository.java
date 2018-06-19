@@ -1,6 +1,7 @@
 package com.ozguryazilim.tekir.quote;
 
 import com.google.common.base.Strings;
+import com.ozguryazilim.tekir.entities.Commodity_;
 import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.tekir.entities.Process_;
 import org.apache.deltaspike.data.api.Repository;
@@ -8,6 +9,8 @@ import org.apache.deltaspike.data.api.criteria.Criteria;
 
 import javax.enterprise.context.Dependent;
 import com.ozguryazilim.tekir.entities.Quote;
+import com.ozguryazilim.tekir.entities.QuoteItem;
+import com.ozguryazilim.tekir.entities.QuoteItem_;
 import com.ozguryazilim.tekir.entities.Quote_;
 import com.ozguryazilim.tekir.entities.VoucherBase_;
 import com.ozguryazilim.tekir.entities.VoucherGroup;
@@ -95,7 +98,7 @@ public abstract class QuoteRepository extends VoucherRepositoryBase<Quote, Quote
                 from.get(VoucherProcessBase_.account).get(Contact_.id),
                 from.get(VoucherProcessBase_.account).get(Contact_.name),
                 from.get(VoucherProcessBase_.account).type(),
-                from.get(VoucherBase_.code),
+                from.get("tags"),
                 from.get(VoucherBase_.voucherNo),
                 from.get(VoucherBase_.info),
                 from.get(VoucherBase_.referenceNo),
@@ -166,6 +169,51 @@ public abstract class QuoteRepository extends VoucherRepositoryBase<Quote, Quote
         //Haydi bakalım sonuçları alalım
         TypedQuery<QuoteViewModel> typedQuery = entityManager().createQuery(criteriaQuery);
         List<QuoteViewModel> resultList = typedQuery.getResultList();
+
+        return resultList;
+    }
+    
+    /**
+     * Geriye id'si verilen Quote için QuoteItem listesi döndürür.
+     * 
+     * @param id
+     * @return 
+     */
+    public List<QuoteItemViewModel> findQuoteItems( Long id ){
+        CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
+        //Geriye ViewModel dönecek cq'yu ona göre oluşturuyoruz.
+        CriteriaQuery<QuoteItemViewModel> criteriaQuery = criteriaBuilder.createQuery(QuoteItemViewModel.class);
+
+        //From 
+        Root<QuoteItem> from = criteriaQuery.from(QuoteItem.class);
+
+        
+        criteriaQuery.multiselect(
+                from.get(QuoteItem_.id),
+                from.get(QuoteItem_.commodity).get(Commodity_.id),
+                from.get(QuoteItem_.commodity).get(Commodity_.name),
+                from.get(QuoteItem_.info),
+                from.get(QuoteItem_.quantity),
+                from.get(QuoteItem_.price),
+                from.get(QuoteItem_.discountRate),
+                from.get(QuoteItem_.discount),
+                from.get(QuoteItem_.total),
+                from.get(QuoteItem_.lineTotal)
+        );
+        
+        //Filtreleri ekleyelim.
+        List<Predicate> predicates = new ArrayList<>();
+
+        //Parent id'si üzerinden filtreler. 
+        //Not: Burada type çevrimi ile ilgili sorun var. Gelen sınıf üzerinde id tanımı yok. O yüzden string ile soruyoruz.
+        predicates.add(criteriaBuilder.equal(from.get(QuoteItem_.master).get("id"), id));
+        
+        //Oluşan filtreleri sorgumuza ekliyoruz
+        criteriaQuery.where(predicates.toArray(new Predicate[]{}));
+        
+        //Haydi bakalım sonuçları alalım
+        TypedQuery<QuoteItemViewModel> typedQuery = entityManager().createQuery(criteriaQuery);
+        List<QuoteItemViewModel> resultList = typedQuery.getResultList();
 
         return resultList;
     }

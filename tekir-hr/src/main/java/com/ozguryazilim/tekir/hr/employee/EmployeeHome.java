@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
+import org.apache.deltaspike.core.api.config.view.navigation.NavigationParameterContext;
 import org.apache.deltaspike.core.api.config.view.navigation.ViewNavigationHandler;
 import org.primefaces.event.SelectEvent;
 
@@ -41,6 +42,9 @@ public class EmployeeHome extends FormBase<Employee, Long> {
     private ViewNavigationHandler viewNavigationHandler;
     
     @Inject
+    private NavigationParameterContext navigationParameterContext;
+
+    @Inject
     private EmployeeRepository repository;
 
     @Inject
@@ -55,6 +59,8 @@ public class EmployeeHome extends FormBase<Employee, Long> {
         p.setOwner(identity.getLoginName());
         setEntity(p);
         selectedRoles.clear();
+        navigationParameterContext.addPageParameter("eid", 0);
+
         return EmployeePages.Employee.class;
     }
 
@@ -84,7 +90,7 @@ public class EmployeeHome extends FormBase<Employee, Long> {
         
         //FIXME: Burayı generic bir hale getirmek lazım                
         if( !identity.isPermitted("employee:select:" + getEntity().getOwner())){
-            FacesMessages.error("Kayda erişim için yetkiniz yok!");
+            FacesMessages.error("facesMessages.error.NoPermission");
             createNew();
             viewNavigationHandler.navigateTo(EmployeePages.EmployeeBrowse.class);
             return false;

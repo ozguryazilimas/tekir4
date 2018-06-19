@@ -1,23 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <permissions>
 	<permissionGroup name="Finance">
-		<permission target="financeAccount">
+		<permission name="financeAccount">
 			<entityActions />
+			<action name="changeOwner" scope="owner,group" order="15" />
+		</permission>
+		<permission name="financeAccountVirement">
+			<entityActions />
+			<action name="publish" scope="owner,group" order="12" />
+			<action name="reopen" scope="owner,group" order="13" />
+			<action name="print" scope="owner,group" order="14" />
 			<action name="changeOwner" scope="owner,group" order="15" />
 		</permission>
 	</permissionGroup>
 	<permissionGroup name="Dashlets">
-		<permission target="financeAccountsDashlet">
+		<permission name="financeAccountsDashlet">
 			<action name="select" />
 		</permission>
-		<permission target="financialStatusDashlet">
+		<permission name="financialStatusDashlet">
 			<action name="select" />
 		</permission>
 	</permissionGroup>
 	<permissionGroup name="Reports">
-		<permission target="financeAccountTxnReport">
-			<action name="select" scope="owner,group" />
-			<action name="exec" scope="owner,group" />
+		<permission name="financeAccountTxnReport">
+			<action name="select"/>
+			<action name="exec"/>
+		</permission>
+		<permission target="financialStatusReport">
+			<action name="select"/>
+			<action name="exec"/>
 		</permission>
 	</permissionGroup>
 </permissions>

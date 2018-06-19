@@ -1,0 +1,272 @@
+[
+  {
+    "name": "query.ContactBrowse.All",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "code",
+      "name",
+      "primaryMobile",
+      "primaryPhone",
+      "primaryEmail",
+      "info"
+    ],
+    "filters": [
+      "code",
+      "name",
+      "primaryMobile",
+      "primaryPhone",
+      "primaryEmail",
+      "info",
+      "category",
+      "industry",
+      "territory",
+      "contactRoles",
+      "owner"
+    ],
+    "filterValues": {
+      "owner": "All::null",
+      "primaryPhone": "All::null",
+      "primaryMobile": "All::null",
+      "code": "All::null",
+      "name": "All::null",
+      "industry": "All::null::null",
+      "category": "All::null::null",
+      "primaryEmail": "All::null",
+      "info": "All::null",
+      "territory": "All::null::null",
+      "contactRoles": "All::null"
+    },
+    "sorters": [
+      "name"
+    ],
+    "sorterValues": {
+      "name": "A"
+    }
+  },
+  {
+    "name": "query.ContactBrowse.MyCustomers",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "code",
+      "name",
+      "primaryMobile",
+      "primaryPhone",
+      "primaryEmail",
+      "info"
+    ],
+    "filters": [
+      "code",
+      "name",
+      "primaryMobile",
+      "primaryPhone",
+      "primaryEmail",
+      "info",
+      "category",
+      "industry",
+      "territory",
+      "contactRoles",
+      "owner"
+    ],
+    "filterValues": {
+      "owner": "Equal::ME",
+      "primaryPhone": "All::null",
+      "primaryMobile": "All::null",
+      "code": "All::null",
+      "name": "All::null",
+      "industry": "All::null::null",
+      "category": "All::null::null",
+      "primaryEmail": "All::null",
+      "info": "All::null",
+      "territory": "All::null::null",
+      "contactRoles": "All::null"
+    },
+    "sorters": [
+      "name"
+    ],
+    "sorterValues": {
+      "name": "A"
+    }
+  },
+  {
+    "name": "query.ContactBrowse.Customers",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "code",
+      "name",
+      "primaryMobile",
+      "primaryPhone",
+      "primaryEmail",
+      "info"
+    ],
+    "filters": [
+      "code",
+      "name",
+      "primaryMobile",
+      "primaryPhone",
+      "primaryEmail",
+      "info",
+      "category",
+      "industry",
+      "territory",
+      "contactRoles",
+      "owner"
+    ],
+    "filterValues": {
+      "owner": "All::null",
+      "primaryPhone": "All::null",
+      "primaryMobile": "All::null",
+      "code": "All::null",
+      "name": "All::null",
+      "industry": "All::null::null",
+      "category": "All::null::null",
+      "primaryEmail": "All::null",
+      "info": "All::null",
+      "territory": "All::null::null",
+      "contactRoles": "Equal::CUSTOMER"
+    },
+    "sorters": [
+      "name"
+    ],
+    "sorterValues": {
+      "name": "A"
+    }
+  },
+  {
+    "name": "query.ContactBrowse.Vendors",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "code",
+      "name",
+      "primaryMobile",
+      "primaryPhone",
+      "primaryEmail",
+      "info"
+    ],
+    "filters": [
+      "code",
+      "name",
+      "primaryMobile",
+      "primaryPhone",
+      "primaryEmail",
+      "info",
+      "category",
+      "industry",
+      "territory",
+      "contactRoles",
+      "owner"
+    ],
+    "filterValues": {
+      "owner": "All::null",
+      "primaryPhone": "All::null",
+      "primaryMobile": "All::null",
+      "code": "All::null",
+      "name": "All::null",
+      "industry": "All::null::null",
+      "category": "All::null::null",
+      "primaryEmail": "All::null",
+      "info": "All::null",
+      "territory": "All::null::null",
+      "contactRoles": "Equal::VENDOR"
+    },
+    "sorters": [
+      "name"
+    ],
+    "sorterValues": {
+      "name": "A"
+    }
+  },
+  {
+    "name": "query.ContactBrowse.Persons",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "code",
+      "name",
+      "primaryMobile",
+      "primaryPhone",
+      "primaryEmail",
+      "info"
+    ],
+    "filters": [
+      "code",
+      "name",
+      "primaryMobile",
+      "primaryPhone",
+      "primaryEmail",
+      "info",
+      "category",
+      "industry",
+      "territory",
+      "contactRoles",
+      "owner"
+    ],
+    "filterValues": {
+      "owner": "All::null",
+      "primaryPhone": "All::null",
+      "primaryMobile": "All::null",
+      "code": "All::null",
+      "name": "All::null",
+      "industry": "All::null::null",
+      "category": "All::null::null",
+      "primaryEmail": "All::null",
+      "info": "All::null",
+      "territory": "All::null::null",
+      "contactRoles": "Equal::PERSON"
+    },
+    "sorters": [
+      "name"
+    ],
+    "sorterValues": {
+      "name": "A"
+    }
+  },
+  {
+    "name": "query.ContactBrowse.Accounts",
+    "resultLimit": 200,
+    "rowLimit": 20,
+    "columns": [
+      "code",
+      "name",
+      "primaryMobile",
+      "primaryPhone",
+      "primaryEmail",
+      "info"
+    ],
+    "filters": [
+      "code",
+      "name",
+      "primaryMobile",
+      "primaryPhone",
+      "primaryEmail",
+      "info",
+      "category",
+      "industry",
+      "territory",
+      "contactRoles",
+      "owner"
+    ],
+    "filterValues": {
+      "owner": "All::null",
+      "primaryPhone": "All::null",
+      "primaryMobile": "All::null",
+      "code": "All::null",
+      "name": "All::null",
+      "industry": "All::null::null",
+      "category": "All::null::null",
+      "primaryEmail": "All::null",
+      "info": "All::null",
+      "territory": "All::null::null",
+      "contactRoles": "Equal::ACCOUNT"
+    },
+    "sorters": [
+      "name"
+    ],
+    "sorterValues": {
+      "name": "A"
+    }
+  }
+]

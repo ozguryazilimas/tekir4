@@ -17,6 +17,7 @@
     <ui:define name="metadata">
         <f:metadata>
             <f:viewParam name="eid" value="#{financeAccountVirementHome.id}" />
+            <f:viewAction action="#{financeAccountVirementHome.initData()}" />
         </f:metadata>
     </ui:define>
 
@@ -50,7 +51,7 @@
             <div class="col-md-6 col-xs-12">
                 <t:outputText label="voucher.label.VoucherNo" value="#{financeAccountVirementHome.entity.voucherNo}"  />
                 <t:outputText label="voucher.label.ReferenceNo" value="#{financeAccountVirementHome.entity.referenceNo}" />
-                <t:outputText label="general.label.Code" value="#{financeAccountVirementHome.entity.code}" />
+                <t:outputTag label="general.label.Tag" value="#{financeAccountVirementHome.entity.tags}" />
             </div>
         </div>  
             </ui:remove>

@@ -18,6 +18,8 @@ import java.io.Serializable;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import com.ozguryazilim.telve.messages.Messages;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
 
 /**
@@ -70,9 +72,8 @@ public class SalesOrderInvoiceMenuAction implements Serializable {
         }
 
         invoiceHome.calculateSummaries();
-        
-        //FIXME: i18n
-        FacesMessages.info("Kutlarız. Sipariş tamamlandı!", "" + entity.getVoucherNo() + " " + entity.getTopic() + " şipariş için fatura girişi yapılacak!");
+
+        FacesMessages.info("orderInvoice.messages.OrderSuccessful", Messages.getMessage("orderInvoice.messages.invoice.CREATE", entity.getVoucherNo(), entity.getTopic()));
         return result;
     }
 }

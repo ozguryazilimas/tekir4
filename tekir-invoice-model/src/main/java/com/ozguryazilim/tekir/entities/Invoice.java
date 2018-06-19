@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ozguryazilim.tekir.entities;
 
 import java.math.BigDecimal;
@@ -51,9 +46,7 @@ public class Invoice extends VoucherProcessBase{
     @ManyToOne
     @JoinColumn(name = "PAYMENTPLAN_ID", foreignKey = @ForeignKey(name = "FK_INV_PP"))
     private PaymentPlan paymentPlan;
-    
-    
-    
+
     /**
      * Teslimat tarihi
      */
@@ -72,7 +65,11 @@ public class Invoice extends VoucherProcessBase{
 
     @Column(name = "LOCAL_AMOUNT")
     private BigDecimal localAmount = BigDecimal.ZERO;
-    
+
+    @Temporal(TemporalType.TIME)
+    @Column(name = "INV_TIME")
+    private Date time;
+
     @OneToMany(mappedBy = "master", cascade = CascadeType.ALL, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<InvoiceItem> items = new ArrayList<>();
@@ -154,6 +151,12 @@ public class Invoice extends VoucherProcessBase{
     public void setLocalAmount(BigDecimal localAmount) {
         this.localAmount = localAmount;
     }
-    
-    
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
 }

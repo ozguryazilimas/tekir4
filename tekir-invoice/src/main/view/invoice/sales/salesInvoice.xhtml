@@ -9,6 +9,13 @@
     <ui:param name="homeBean" value="#{salesInvoiceHome}" />
     <ui:param name="entity" value="#{salesInvoiceHome.entity}" />
 
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{salesInvoiceHome.id}" />
+            <f:viewAction action="#{salesInvoiceHome.initData()}" />
+        </f:metadata>
+    </ui:define>
+    
     <ui:define name="form">
         <div class="row">
 
@@ -17,31 +24,44 @@
                     <t:inputLookupDialog label="general.label.Account" value="#{salesInvoiceHome.account}" 
                                          lookupBean="#{contactLookup}" lookupListener="salesInvoiceHome.account" 
                                          lookupProfile="R:ACCOUNT;S:CUSTOMER"
-                                         placeholder="#{messages['general.info.Account']}" update=":form:prss" columnClass="col-xs-12"/>
+                                         placeholder="#{messages['general.info.Account']}" update=":form:prss" 
+                                         required="true" columnClass="col-xs-12"/>
                     
-                    <t:inputText label="voucher.label.Topic" value="#{salesInvoiceHome.entity.topic}"  required="true" columnClass="col-xs-12"/>
+                    <t:inputText label="voucher.label.Topic" value="#{salesInvoiceHome.entity.topic}"  required="true"
+                                 columnClass="col-xs-12"/>
                     
                     <t:inputCurrency label="general.label.Currency" value="#{salesInvoiceHome.entity.currency}" required="true"/>
                     <t:inputDate label="general.label.ShippingDate" value="#{salesInvoiceHome.entity.shippingDate}" />
-                    <t:inputTextarea label="general.label.ShippingNote" value="#{salesInvoiceHome.entity.shippingNote}" columnClass="col-xs-12"/>
+                    <t:inputTextarea label="general.label.ShippingNote" value="#{salesInvoiceHome.entity.shippingNote}"
+                                     columnClass="col-xs-12"/>
                     
-                    <t:inputLookupDialog label="general.label.PaymentPlan" value="#{salesInvoiceHome.entity.paymentPlan}" lookupBean="#{paymentPlanLookup}" lookupListener="salesInvoiceHome.entity.paymentPlan" placeholder="#{messages['general.info.PaymentPlan']}" columnClass="col-xs-12" required="true"/>
+                    <t:inputLookupDialog label="general.label.PaymentPlan" value="#{salesInvoiceHome.entity.paymentPlan}"
+                                         lookupBean="#{paymentPlanLookup}"
+                                         lookupListener="salesInvoiceHome.entity.paymentPlan"
+                                         placeholder="#{messages['general.info.PaymentPlan']}"
+                                         columnClass="col-xs-12" required="true"/>
                 </p:outputPanel>
             </div>
 
             <div class="col-md-6 col-xs-12">
                 <div class="row">
                     <t:inputDate label="voucher.label.Date" value="#{salesInvoiceHome.entity.date}" columnClass="col-md-4"/>
-                    <t:inputText label="voucher.label.VoucherNo" value="#{salesInvoiceHome.entity.voucherNo}"  required="true" readonly="true" columnClass="col-md-4"/>
-                    <t:inputText label="voucher.label.ReferenceNo" value="#{salesInvoiceHome.entity.referenceNo}" columnClass="col-md-4"/>
+                    <t:inputText label="voucher.label.VoucherNo" value="#{salesInvoiceHome.entity.voucherNo}"
+                                 required="true" readonly="true" columnClass="col-md-4"/>
+                    <t:inputText label="voucher.label.ReferenceNo" value="#{salesInvoiceHome.entity.referenceNo}"
+                                 columnClass="col-md-4"/>
                     
                     <p:outputPanel id="prss">
-                    <t:inputProcess value="#{salesInvoiceHome.process}" caption="topic" lookupListener="salesInvoiceHome.process" lookupProfile="A:#{salesInvoiceHome.entity.account.id};T:SALES" update=":form:ddt" />
+                    <t:inputProcess value="#{salesInvoiceHome.process}" caption="topic"
+                                    lookupListener="salesInvoiceHome.process"
+                                    lookupProfile="A:#{salesInvoiceHome.entity.account.id};T:SALES" update=":form:ddt" />
                     </p:outputPanel>
                     
                     <t:inputLookupDialog label="voucher.label.Group" value="#{salesInvoiceHome.entity.group}" caption="topic" lookupBean="#{voucherGroupLookup}" lookupListener="salesInvoiceHome.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" />
                     
-                    <t:inputText label="general.label.Code" value="#{salesInvoiceHome.entity.code}" />
+                    <t:inputTag label="general.label.Tag" value="#{salesInvoiceHome.entity.tags}" key="SalesInvoice" />
+                    <t:inputTime label="invoice.label.InvoiceTime"
+                                 value="#{salesInvoiceHome.entity.time}"/>
                     <t:inputTextarea label="general.label.Info" value="#{salesInvoiceHome.entity.info}" columnClass="col-xs-12"/>
                     
                 </div>

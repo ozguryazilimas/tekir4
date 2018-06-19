@@ -78,17 +78,17 @@
                     <t:accordion icon="fa fa-file-text" label="general.label.Voucher" contentClass="">
 
                         <p:dataTable value="#{financeAccountHome.balanceModels}" var="txn" >
-                            <p:column headerText="Tarih">
+                            <p:column headerText="#{messages['general.label.Date']}">
                                 <t:cellOutputDate value="#{txn.date}" />
                             </p:column>
-                            <p:column headerText="Fiş">
+                            <p:column headerText="#{messages['general.label.Voucher']}">
                                 <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(txn.featurePointer)}" rendered="#{txn.lineType eq 'TXN'}"/>
                                 <h:outputText value="#{messages[txn.topic]}" rendered="#{txn.lineType ne 'TXN'}" style="font-weight: bold;"/>
                             </p:column>
-                            <p:column headerText="Tutar">
+                            <p:column headerText="#{messages['general.label.Amount']}">
                                 <t:cellOutputMoney value="#{txn.amount}" currency="#{txn.ccy.getCurrencyCode()}" styleClass="pull-right #{txn.amount lt 0 ? 'text-red' : ''}" />
                             </p:column>
-                            <p:column headerText="Bakiye">
+                            <p:column headerText="#{messages['general.label.Balance']}">
                                 <t:cellOutputMoney value="#{txn.balance}" currency="#{currencyService.reportCurrency}" styleClass="pull-right #{txn.balance lt 0 ? 'text-red' : ''}" />
                             </p:column>
                         </p:dataTable>
@@ -112,7 +112,7 @@
 
                     <ui:remove>
                         TODO: Belki Group'la bağlanabilirler
-                        <t:accordion icon="fa fa-file" id="cx" label="general.label.ReleatedVouchers" columnClass="col-xs-12">
+                        <t:accordion icon="fa fa-file" id="cx" label="general.label.RelatedVouchers" columnClass="col-xs-12">
                             <ul class="products-list product-list-in-box">
                                 <ui:repeat value="#{accountTxnService.getProcessVouchers(financeAccountHome.entity.process.processNo)}" var="ci" >
                                     <li class="item">

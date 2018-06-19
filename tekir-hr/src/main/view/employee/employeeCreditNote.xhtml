@@ -11,6 +11,12 @@
     <ui:param name="entity" value="#{employeeCreditNoteHome.entity}" />
     <ui:param name="dontShowContentHeader" value="true" />
 
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{employeeCreditNoteHome.id}" />
+            <f:viewAction action="#{employeeCreditNoteHome.initData()}" />
+        </f:metadata>
+    </ui:define>
 
     <ui:define name="form">
         <div class="row">
@@ -32,7 +38,7 @@
 
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <t:inputText label="general.label.Code" value="#{homeBean.entity.code}" columnClass="col-md-4"/>
+                    <t:inputTag label="general.label.Tag" value="#{homeBean.entity.tags}" key="EmployeeCreditNote" columnClass="col-md-4"/>
                     <t:inputText label="voucher.label.VoucherNo" value="#{homeBean.entity.voucherNo}"  required="true" readonly="true" columnClass="col-md-4"/>
                     <t:inputText label="voucher.label.ReferenceNo" value="#{homeBean.entity.referenceNo}" columnClass="col-md-4"/>
                     <t:inputEnum label="employeeCreditNote.label.Type" value="#{homeBean.entity.type}" itemLabel="employeeCreditNote.type.label." hasNullValue="false" required="true"/>

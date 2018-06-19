@@ -20,19 +20,19 @@
         </ui:remove>
         
         <div class="row">
-            <t:inputText label="general.label.VectorName" value="#{contactRelationHome.entity.vectorName}" required="true" placeholder="Çalışan"/>
-            <t:inputText label="general.label.ReversName" value="#{contactRelationHome.entity.reversName}" required="true" placeholder="İş Yeri"/>
+            <t:inputText label="general.label.VectorName" value="#{contactRelationHome.entity.vectorName}" required="true" placeholder="#{messages['contact.label.Employee']}"/>
+            <t:inputText label="general.label.ReversName" value="#{contactRelationHome.entity.reverseName}" required="true" placeholder="#{messages['contact.label.Workplace']}"/>
         </div>
         
         <div class="row">
             <t:inputAny label="contact.label.SourceRoles">
-                <span class="text-muted"><i class="fa fa-question-circle"/> Bu ilişkinin kaynağı hangi tür bağlantılar olabilir - i18n</span>
+                <span class="text-muted"><i class="fa fa-question-circle"/> #{messages['contact.desc.SourceRole']}</span>
                 <p:selectManyCheckbox id="grid3" value="#{contactRelationHome.entity.sourceRoles}" layout="responsive" columns="4">
                     <f:selectItems value="#{contactRelationHome.contactRoles}" var="item" itemLabel="#{messages['contact.role.'.concat( item )]}" itemValue="#{item}" />
                 </p:selectManyCheckbox>
             </t:inputAny>
             <t:inputAny label="contact.label.TargetRoles">
-                <span class="text-muted"><i class="fa fa-question-circle"/> Bu ilişkinin hedefi hangi tür bağlantılar olabilir - i18n</span>
+                <span class="text-muted"><i class="fa fa-question-circle"/> #{messages['contact.desc.TargetRole']}</span>
                 <p:selectManyCheckbox id="grid3" value="#{contactRelationHome.entity.targetRoles}" layout="responsive" columns="4">
                     <f:selectItems value="#{contactRelationHome.contactRoles}" var="item" itemLabel="#{messages['contact.role.'.concat( item )]}" itemValue="#{item}" />
                 </p:selectManyCheckbox>

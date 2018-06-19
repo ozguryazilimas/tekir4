@@ -17,23 +17,19 @@
     <ui:define name="metadata">
         <f:metadata>
             <f:viewParam name="eid" value="#{voucherGroupHome.id}" />
-            <ui:remove>
             <f:viewAction action="#{voucherGroupHome.initData()}" />
-            </ui:remove>
         </f:metadata>
     </ui:define>
     
     <ui:define name="caption">
-        <div class="row">
-            <div>
-            	<t:outputText label="general.label.Topic" value="#{voucherGroupHome.entity.topic}" />
-            	<t:outputText label="general.label.Info" value="#{voucherGroupHome.entity.info}" />
-                <t:outputEnum label="general.label.Status" itemLabel="voucher.groupStatus." value="#{voucherGroupHome.entity.status}"/>
-                <t:outputText label="voucher.label.GroupNo" value="#{voucherGroupHome.entity.groupNo}" />
-            </div>         
-        </div>  
-
-
+        <ul class="caption-states">
+            <t:stateOutputText label="general.label.Topic" value="#{voucherGroupHome.entity.topic}"/>
+            <t:stateOutputText label="voucher.label.GroupNo" value="#{voucherGroupHome.entity.groupNo}" />
+            <t:stateOutputEnum label="general.label.Status" itemLabel="voucher.groupStatus." value="#{voucherGroupHome.entity.status}"/>
+        </ul>
+        <ui:fragment rendered="#{voucherGroupHome.entity.info ne ''}">
+            <p><i class="fa fa-info"/> #{voucherGroupHome.entity.info}</p>
+        </ui:fragment>
     </ui:define>   
 
 </ui:composition>

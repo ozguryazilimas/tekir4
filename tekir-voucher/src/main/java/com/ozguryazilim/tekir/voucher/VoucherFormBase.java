@@ -11,6 +11,7 @@ import com.ozguryazilim.tekir.entities.VoucherBase;
 import com.ozguryazilim.tekir.entities.VoucherProcessBase;
 import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.tekir.entities.VoucherStateType;
+import com.ozguryazilim.tekir.voucher.group.VoucherGroupFeature;
 import com.ozguryazilim.tekir.voucher.number.VoucherSerialService;
 import com.ozguryazilim.tekir.voucher.process.ProcessFeature;
 import com.ozguryazilim.telve.audit.AuditLogger;
@@ -317,8 +318,7 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
 
         //TODO: AfterLoad yerine başka bir method mu yazsak? 
         if (!hasViewPermission()) {
-            //FIXME: i18n
-            FacesMessages.error("Kayda erişim için yetkiniz yok!");
+            FacesMessages.error("facesMessages.error.NoPermission");
             createNew();
             viewNavigationHandler.navigateTo(getBrowsePage());
             return false;
@@ -348,6 +348,27 @@ public abstract class VoucherFormBase<E extends VoucherBase> extends FormBase<E,
             fp.setPrimaryKey(vp.getProcess().getId());
             fp.setFeature(ProcessFeature.class.getSimpleName());
             return fp;
+        }
+        
+        return null;
+    }
+    
+    /**
+     * Eğer VoucherGroup bağlantısı varsa onun için FeaturePointer döndürür.
+     * Aksi halde null döner.
+     * @return 
+     */
+    public FeaturePointer getGroupFeaturePointer() {
+        if( getEntity() instanceof VoucherBase){
+            VoucherBase vp = (VoucherBase) getEntity();
+            //Grup bağlantısı olmak zorunda değil.
+            if( vp.getGroup() != null ){
+                FeaturePointer fp = new FeaturePointer();
+                fp.setBusinessKey(vp.getGroup().getGroupNo());
+                fp.setPrimaryKey(vp.getGroup().getId());
+                fp.setFeature(VoucherGroupFeature.class.getSimpleName());
+                return fp;
+            }
         }
         
         return null;

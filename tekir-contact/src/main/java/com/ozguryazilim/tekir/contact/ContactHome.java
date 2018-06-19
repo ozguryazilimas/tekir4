@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
+import org.apache.deltaspike.core.api.config.view.navigation.NavigationParameterContext;
 import org.apache.deltaspike.core.api.config.view.navigation.ViewNavigationHandler;
 import org.primefaces.event.SelectEvent;
 
@@ -44,6 +45,10 @@ public class ContactHome extends FormBase<Contact, Long> {
     private ViewNavigationHandler viewNavigationHandler;
     
     @Inject
+    private NavigationParameterContext navigationParameterContext;
+
+    
+    @Inject
     private ContactRepository repository;
 
     @Inject
@@ -51,9 +56,6 @@ public class ContactHome extends FormBase<Contact, Long> {
 
     @Inject
     private RelatedContactRepository relatedContactRepository;
-    
-    @Inject
-    private PersonFeeder personFeeder;
     
     @Inject
     private AutoCodeService codeService;
@@ -68,6 +70,8 @@ public class ContactHome extends FormBase<Contact, Long> {
         p.setCode(codeService.getNewSerialNumber(Person.class.getSimpleName()));
         setEntity(p);
         selectedRoles.clear();
+        navigationParameterContext.addPageParameter("eid", 0);
+
         return ContactPages.Contact.class;
     }
 
@@ -79,6 +83,8 @@ public class ContactHome extends FormBase<Contact, Long> {
         p.setCode(codeService.getNewSerialNumber(Corporation.class.getSimpleName()));
         setEntity(p);
         selectedRoles.clear();
+        navigationParameterContext.addPageParameter("eid", 0);
+
         return ContactPages.Contact.class;
     }
 
@@ -93,7 +99,7 @@ public class ContactHome extends FormBase<Contact, Long> {
         List<String> ls = getEntity().getContactRoles().stream()
                 .filter(p -> !getContactRoles().contains(p))
                 .collect(Collectors.toList());
-        
+
         //Şimdi kullanıcın seçtiklerini ekleyelim
         ls.addAll(selectedRoles);
         
@@ -106,9 +112,6 @@ public class ContactHome extends FormBase<Contact, Long> {
 
     @Override
     public boolean onAfterSave() {
-        if( getEntity() instanceof AbstractPerson ){
-            personFeeder.feed((AbstractPerson) getEntity());
-        }
         return super.onAfterSave(); 
     }
     
@@ -119,7 +122,7 @@ public class ContactHome extends FormBase<Contact, Long> {
         
         //FIXME: Burayı generic bir hale getirmek lazım                
         if( !identity.isPermitted("contact:select:" + getEntity().getOwner())){
-            FacesMessages.error("Kayda erişim için yetkiniz yok!");
+            FacesMessages.error("facesMessages.error.NoPermission");
             createNew();
             viewNavigationHandler.navigateTo(ContactPages.ContactBrowse.class);
             return false;
@@ -231,6 +234,20 @@ public class ContactHome extends FormBase<Contact, Long> {
             return (Corporation) getEntity();
         } else {
             return ((AbstractPerson) getEntity()).getCorporation();
+        }
+    }
+
+    public Boolean getIsInternational() {
+        return getEntity().getContactRoles().contains("INTERNATIONAL");
+    }
+
+    public void setIsInternational(Boolean isInternational) {
+        if (isInternational) {
+            if( !getIsInternational() ){
+                getEntity().getContactRoles().add("INTERNATIONAL");
+            }
+        } else {
+            getEntity().getContactRoles().remove("INTERNATIONAL");
         }
     }
 }

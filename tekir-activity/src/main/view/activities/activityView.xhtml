@@ -15,6 +15,7 @@
     <ui:define name="metadata">
         <f:metadata>
             <f:viewParam name="eid" value="#{activityHome.id}" />
+            <f:viewAction action="#{activityHome.initData()}" />
         </f:metadata>
     </ui:define>
 
@@ -68,7 +69,7 @@
                 #{messages['general.button.Add']}
                 <i class="fa fa-caret-down" />
             </a>
-            <ul class="dropdown-menu" arai-labeledby="actNewMenu1" style="z-index: 5000">
+            <ul class="dropdown-menu" aria-labelledby="actNewMenu1" style="z-index: 5000">
                 #{activityWidget.init(activityHome.entity.person, activityHome.entity.corporation, activityHome.entity.regarding, 'NONE')}
                 <ui:repeat value="#{activityWidget.addableActivities}" var="act">
                     <li>

@@ -28,11 +28,6 @@
             <!-- WildFly için yeni Hibernate sürümü modülü yüklenirse...
             <property name="jboss.as.jpa.providerModule" value="org.hibernate:5.2.10.Final" />
             -->
-
-            <!--
-                Artık Connection üzerinden Dialect Buluyor. Elle vermeye gerek yok.
-                <property name="hibernate.dialect" value="${hibernate.dialect}"/> 
-            -->
             <property name="hibernate.hbm2ddl.auto" value="none"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>

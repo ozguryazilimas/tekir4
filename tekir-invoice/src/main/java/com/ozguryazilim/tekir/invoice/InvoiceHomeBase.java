@@ -30,11 +30,11 @@ import com.ozguryazilim.tekir.voucher.process.ProcessService;
 import com.ozguryazilim.tekir.voucher.utils.SummaryCalculator;
 import com.ozguryazilim.tekir.voucher.utils.VoucherItemUtils;
 import com.ozguryazilim.telve.messages.FacesMessages;
+import com.ozguryazilim.telve.messages.Messages;
 import com.ozguryazilim.telve.reports.JasperReportHandler;
-
 import java.util.List;
 import javax.inject.Inject;
-
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,42 +43,44 @@ import org.slf4j.LoggerFactory;
  * @author oyas
  */
 public abstract class InvoiceHomeBase<E extends Invoice> extends VoucherFormBase<E> implements VoucherCommodityItemEditorListener<InvoiceItem> {
-    
+
 	private static Logger LOG = LoggerFactory.getLogger(InvoiceHomeBase.class);
-	
+
     @Inject
     private VoucherCommodityItemEditor commodityItemEditor;
 
     @Inject
     private ProcessService processService;
-    
+
     @Inject
     private VoucherMatcherService matcherService;
-    
+
     @Inject
     private CurrencyService currencyService;
-    
+
     @Inject
     private JasperReportHandler reportHandler;
 
     @Override
     public void createNew() {
-        super.createNew(); 
+        super.createNew();
         getEntity().setCurrency(currencyService.getDefaultCurrency());
+        getEntity().setTime(LocalDateTime.now().toDate());
     }
-    
+
+
     @Override
     protected VoucherStateConfig buildStateConfig() {
         VoucherStateConfig config = new VoucherStateConfig();
-        
+
         VoucherState paid = new VoucherState("PAID", VoucherStateType.CLOSE, VoucherStateEffect.POSITIVE);
         VoucherState partialPaid = new VoucherState("PARTIAL", VoucherStateType.OPEN, VoucherStateEffect.NEUTRAL);
         VoucherState unpaid = new VoucherState("UNPAID", VoucherStateType.CLOSE, VoucherStateEffect.NEGATIVE);
         VoucherState partialUnpaid = new VoucherState("PARTUNPAID", VoucherStateType.CLOSE, VoucherStateEffect.NEGATIVE);
-        
+
         VoucherStateAction paidAction = new VoucherStateAction("paid");
         VoucherStateAction partialPaidAction = new VoucherStateAction("partial");
-        
+
         config.addTranstion(VoucherState.DRAFT, new VoucherStateAction("publish", "fa fa-check"), VoucherState.OPEN);
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("loss", "fa fa-close", true), unpaid);
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("cancel", "fa fa-ban", true), VoucherState.CLOSE);
@@ -89,32 +91,32 @@ public abstract class InvoiceHomeBase<E extends Invoice> extends VoucherFormBase
         config.addTranstion( partialPaid, new VoucherStateAction("cancel", "fa fa-ban", true), VoucherState.CLOSE);
         config.addTranstion(VoucherState.OPEN, new VoucherStateAction("revise", "fa fa-unlock", true), VoucherState.REVISE);
         config.addTranstion(VoucherState.REVISE, new VoucherStateAction("publish", "fa fa-check", true), VoucherState.OPEN);
-        
-        config.addStateAction(VoucherState.REVISE, new VoucherPrintOutAction(this));        
+
+        config.addStateAction(VoucherState.REVISE, new VoucherPrintOutAction(this));
         config.addStateTypeAction(VoucherStateType.OPEN, new VoucherPrintOutAction(this));
         config.addStateTypeAction(VoucherStateType.CLOSE, new VoucherPrintOutAction(this));
         //config.addTranstion(VoucherState.CLOSE, new VoucherStateAction("unlock", "fa fa-unlock", true ), VoucherState.DRAFT);
         return config;
     }
-    
+
     @Override
     public boolean onAfterLoad() {
         if (!getEntity().getAccount().getContactRoles().contains("ACCOUNT")) {
-            FacesMessages.error("Seçtiğiniz bağlantı bir Cari değil!", "Bağlantıyı cariye dönüştürmelisiniz?");
+            FacesMessages.error("facesMessages.contact.NotAccount", "facesMessages.contact.NotAccountDetail");
         }
-        
+
         if( getProcessType() == ProcessType.SALES ){
             if (!getEntity().getAccount().getContactRoles().contains("CUSTOMER")) {
-                FacesMessages.warn("Seçtiğiniz bağlantı bir Müşteri değil.", "Bağlantıyı müşteri olarak işaretlemek ister misiniz?");
+                FacesMessages.warn("facesMessages.contact.NotCustomer", "facesMessages.contact.NotCustomerDetail");
             }
         } else {
             if (!getEntity().getAccount().getContactRoles().contains("VENDOR")) {
-                FacesMessages.warn("Seçtiğiniz bağlantı bir tedatikçi değil.", "Bağlantıyı tedarikçi olarak işaretlemek ister misiniz?");
+                FacesMessages.warn("facesMessages.contact.NotVendor", "facesMessages.contact.NotVendorDetail");
             }
         }
-        return super.onAfterLoad(); 
+        return super.onAfterLoad();
     }
-    
+
     @Override
     public boolean onBeforeSave() {
         if (getEntity().getProcess() == null) {
@@ -122,13 +124,13 @@ public abstract class InvoiceHomeBase<E extends Invoice> extends VoucherFormBase
         }
 
         getEntity().setLocalAmount(currencyService.convert(getEntity().getCurrency(), getEntity().getTotal(), getEntity().getDate()));
-        
+
         return super.onBeforeSave();
     }
-    
+
     @Override
     public boolean onAfterSave() {
-        //Her hangi bir türlü Publish/Open olduğunda : Open, PartialPaid 
+        //Her hangi bir türlü Publish/Open olduğunda : Open, PartialPaid
         if( getEntity().getState().getType().equals(VoucherStateType.OPEN)){
             if( getEntity().getStarter() != null ){
                 matcherService.updateMachters(getEntity().getStarter(), getFeaturePointer(), getEntity().getCurrency(), getEntity().getTotal(), getEntity().getLocalAmount(), getEntity().getProcess().getProcessNo(), false);
@@ -136,23 +138,27 @@ public abstract class InvoiceHomeBase<E extends Invoice> extends VoucherFormBase
         }
         return super.onAfterSave(); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     protected boolean onBeforeTrigger(VoucherStateChange e) {
         if ("publish".equals(e.getAction().getName())) {
             if (!getEntity().getAccount().getContactRoles().contains("ACCOUNT")) {
-                FacesMessages.error("Seçtiğiniz bağlantı bir Cari değil!", "Bağlantıyı cariye dönüştürmelisiniz?");
+                FacesMessages.error("facesMessages.contact.NotAccount", "facesMessages.contact.NotAccountDetail");
                 return false;
             }
         }
         return super.onBeforeTrigger(e);
     }
-    
-    
+
     @Override
     public void addItem() {
-        InvoiceItem item = new InvoiceItem();
-        commodityItemEditor.openDialog(item, getEntity().getCurrency(), this);
+        if (getEntity().getAccount() == null) {
+            FacesMessages.error("facesMessages.AddItem.NoAccountError",
+                "facesMessages.AddItem.NoAccountErrorDetail");
+        } else {
+            InvoiceItem item = new InvoiceItem();
+            commodityItemEditor.openDialog(item, getEntity().getCurrency(), this);
+        }
     }
 
     @Override
@@ -185,15 +191,15 @@ public abstract class InvoiceHomeBase<E extends Invoice> extends VoucherFormBase
         getEntity().setAccount(account);
         getEntity().setProcess(null);
         if (!account.getContactRoles().contains("ACCOUNT")) {
-            FacesMessages.error("Seçtiğiniz bağlantı bir Cari değil!", "Bağlantıyı cariye dönüştürmelisiniz?");
+            FacesMessages.error("facesMessages.contact.NotAccount", "facesMessages.contact.NotAccountDetail");
         }
         if( getProcessType() == ProcessType.SALES ){
             if (!getEntity().getAccount().getContactRoles().contains("CUSTOMER")) {
-                FacesMessages.warn("Seçtiğiniz bağlantı bir Müşteri değil.", "Bağlantıyı müşteri olarak işaretlemek ister misiniz?");
+                FacesMessages.warn("facesMessages.contact.NotCustomer", "facesMessages.contact.NotCustomerDetail");
             }
         } else {
             if (!getEntity().getAccount().getContactRoles().contains("VENDOR")) {
-                FacesMessages.warn("Seçtiğiniz bağlantı bir tedatikçi değil.", "Bağlantıyı tedarikçi olarak işaretlemek ister misiniz?");
+                FacesMessages.warn("facesMessages.contact.NotVendor", "facesMessages.contact.NotVendorDetail");
             }
         }
     }
@@ -235,19 +241,19 @@ public abstract class InvoiceHomeBase<E extends Invoice> extends VoucherFormBase
         getEntity().getItems().remove(item);
         calculateSummaries();
     }
-    
-    
+
+
     protected abstract ProcessType getProcessType();
-    
-    
+
+
     protected void feedMatcherState(MatcherStateChange event) {
         //TODO: Burada nasıl bir şey yapmalı? Home sınıfı sadece state değiştirmek için çok ağır
         // ama bir yandan da onun üzerinde bir dolu kontrol işlemi var.
         // üstelikte FSM onun üzerinde. Ama ekranda açık olan bir form varsa da onu bozarız.
-        
+
         //Önce doğru entityi bir bulalım ( Burada yetkiler araya girer mi acaba?
         setId(event.getMatchable().getFeature().getPrimaryKey());
-        
+
         if( event.getMatchable().getStatus() == ProcessStatus.CLOSE ){
             if( !"PAID".equals(getEntity().getState().getName())){
                 trigger("paid");

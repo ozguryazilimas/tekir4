@@ -10,6 +10,12 @@
     <ui:param name="entity" value="#{financeAccountVirementHome.entity}" />
     <ui:param name="dontShowContentHeader" value="true" />
 
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{financeAccountVirementHome.id}" />
+            <f:viewAction action="#{financeAccountVirementHome.initData()}" />
+        </f:metadata>
+    </ui:define>
 
     <ui:define name="form">
         <div class="row">
@@ -58,7 +64,7 @@
                     <t:inputText label="voucher.label.VoucherNo" value="#{entity.voucherNo}"  required="true" readonly="true" />
                     <t:inputText label="voucher.label.ReferenceNo" value="#{entity.referenceNo}" />
                     
-                    <t:inputText label="general.label.Code" value="#{entity.code}" />
+                    <t:inputTag label="general.label.Tag" value="#{entity.tags}" key="FinanceAccountVirement" />
                     <t:inputLookupDialog label="voucher.label.Group" value="#{entity.group}" caption="topic" lookupBean="#{voucherGroupLookup}" lookupListener="entity.group" placeholder="#{messages['general.info.VoucherGroup']}" />
                     <t:inputDate label="voucher.label.Date" value="#{entity.date}" columnClass="col-xs-12"/>
                 </div>

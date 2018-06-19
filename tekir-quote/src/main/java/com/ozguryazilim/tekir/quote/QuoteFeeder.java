@@ -12,6 +12,7 @@ import com.ozguryazilim.tekir.feed.AbstractFeeder;
 import com.ozguryazilim.tekir.feed.Feeder;
 import com.ozguryazilim.tekir.voucher.VoucherOwnerChange;
 import com.ozguryazilim.tekir.voucher.VoucherStateChange;
+import com.ozguryazilim.tekir.voucher.group.VoucherGroupTxnService;
 import com.ozguryazilim.tekir.voucher.process.ProcessService;
 import com.ozguryazilim.tekir.voucher.utils.FeatureUtils;
 import com.ozguryazilim.tekir.voucher.utils.FeederUtils;
@@ -43,6 +44,9 @@ public class QuoteFeeder extends AbstractFeeder<Quote> {
 
 	@Inject
 	private ProcessService processService;
+	
+	@Inject
+	private VoucherGroupTxnService voucherGroupTxnService;
 
 	public void feed(
 			@Observes(during = TransactionPhase.AFTER_SUCCESS) @FeatureQualifier(feauture = QuoteFeature.class) @After VoucherStateChange event) {
@@ -55,7 +59,7 @@ public class QuoteFeeder extends AbstractFeeder<Quote> {
 			List<FeaturePointer> mentions = prepareMentionList(entity);
 
 			sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(),
-					entity.getVoucherNo(), getMessage(event), mentions);
+					entity.getTopic(), getMessage(event), mentions);
 
 			// Process feed
 			if ("OPEN".equals(event.getTo().getName()) && "DRAFT".equals(event.getFrom().getName())) {
@@ -79,7 +83,7 @@ public class QuoteFeeder extends AbstractFeeder<Quote> {
 			List<FeaturePointer> mentions = prepareMentionList(entity);
 
 			sendFeed(entity.getState().getName(), getClass().getSimpleName(), identity.getLoginName(),
-					entity.getVoucherNo(), FeederUtils.getEventMessage(event), mentions);
+					entity.getTopic(), FeederUtils.getEventMessage(event), mentions);
 		}
 	}
 
@@ -91,10 +95,15 @@ public class QuoteFeeder extends AbstractFeeder<Quote> {
 
 			FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
 
-			accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getCode(), entity.getInfo(),
+			accountTxnService.saveFeature(voucherPointer, entity.getAccount(), entity.getInfo(), entity.getTags(),
 					Boolean.FALSE, Boolean.FALSE, entity.getCurrency(), entity.getTotal(), entity.getLocalAmount(),
 					entity.getDate(), entity.getOwner(), entity.getProcess().getProcessNo(),
-					entity.getState().toString(), entity.getStateReason());
+					entity.getState().toString(), entity.getStateReason(), entity.getTopic());
+			
+			if( entity.getGroup()!=null){
+				voucherGroupTxnService.saveFeature(voucherPointer, entity.getGroup(), entity.getOwner(), entity.getTopic(),
+						entity.getDate(), entity.getState());
+			}
 		}
 
 		// TODO: Delete edildiğinde de gidip txn'den silme yapılmalı.

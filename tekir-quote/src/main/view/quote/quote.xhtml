@@ -9,6 +9,13 @@
     <ui:param name="homeBean" value="#{quoteHome}" />
     <ui:param name="entity" value="#{quoteHome.entity}" />
 
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{quoteHome.id}" />
+            <f:viewAction action="#{quoteHome.initData()}" />
+        </f:metadata>
+    </ui:define>
+    
     <ui:define name="form">
         <div class="row">
 
@@ -17,7 +24,8 @@
                     <t:inputLookupDialog label="general.label.Account" value="#{quoteHome.account}" 
                                          lookupBean="#{contactLookup}" lookupListener="quoteHome.account" 
                                          lookupProfile="S:ACCOUNT,CUSTOMER"
-                                         placeholder="#{messages['general.info.Account']}" update=":form:prss" columnClass="col-xs-12"/>
+                                         placeholder="#{messages['general.info.Account']}" update=":form:prss" 
+                                         required="true" columnClass="col-xs-12"/>
                     
                     <t:inputCurrency label="general.label.Currency" value="#{quoteHome.entity.currency}" required="true"/>
                     <t:inputDate label="general.label.ExpireDate" value="#{quoteHome.entity.expireDate}" />
@@ -39,7 +47,7 @@
                     <t:inputLookupDialog label="voucher.label.Group" value="#{quoteHome.entity.group}" caption="topic" lookupBean="#{voucherGroupLookup}" lookupListener="quoteHome.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" />
                     
                   
-                    <t:inputText label="general.label.Code" value="#{quoteHome.entity.code}" />
+                    <t:inputTag label="general.label.Tag" value="#{quoteHome.entity.tags}" key="Quote" />
                     <t:inputTextarea label="general.label.Info" value="#{quoteHome.entity.info}" columnClass="col-xs-12"/>
                     
                 </div>

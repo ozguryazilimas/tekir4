@@ -18,7 +18,7 @@
                         </ui:remove>
                         <t:outputMoney label="opportunity.label.Budget" value="#{opportunityHome.entity.budget}" currency="#{opportunityHome.entity.currency}" columnClass="col-sm-6"/>
                         <t:outputText label="opportunity.label.Probability" value="%#{opportunityHome.entity.probability}" columnClass="col-sm-6"/>
-                        <t:outputText label="opportunity.label.Sitiuation" value="#{opportunityHome.entity.situation}" columnClass="col-xs-12"/>
+                        <t:outputText label="opportunity.label.Situation" value="#{opportunityHome.entity.situation}" columnClass="col-xs-12"/>
                         <t:outputText label="opportunity.label.CustomerNeed" value="#{opportunityHome.entity.customerNeed}" columnClass="col-xs-12"/>
                         <t:outputText label="opportunity.label.Solution" value="#{opportunityHome.entity.solution}" columnClass="col-xs-12"/>
                     </t:accordion>
@@ -81,9 +81,10 @@
 
                     <ui:include src="/voucher/voucherReleatedWidget.xhtml">
                         <ui:param name="columnClass" value="col-lg-12 col-md-6" />
-                        <ui:param name="featurePointer" value="#{opportunityHome.featurePointer}" />
+                        <ui:param name="matchable"
+                                  value="#{voucherMatcherService.findMatchableByFeature(opportunityHome.featurePointer)}"/>
                         <ui:param name="processNo" value="#{opportunityHome.entity.process.processNo}" />
-                        <ui:param name="groupNo" value="#{opportunityHome.entity.group.groupNo}" />
+                        <ui:param name="group" value="#{opportunityHome.entity.group}" />
                     </ui:include>
                 </div>
             </div>

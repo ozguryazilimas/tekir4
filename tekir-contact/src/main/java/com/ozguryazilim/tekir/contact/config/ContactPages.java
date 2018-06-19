@@ -32,7 +32,7 @@ public interface ContactPages extends Pages {
 	class CorporationType implements ContactPages {
 	}
 
-	@SecuredPage() @View
+	@SecuredPage @View
 	class CorporationTypeLookup
 			implements ContactPages {
 	}
@@ -46,7 +46,7 @@ public interface ContactPages extends Pages {
 				 ContactPages {
 	}
 
-	@SecuredPage() @View
+	@SecuredPage @View
 	class ContactRelationLookup
 			implements
 				ContactPages {
@@ -59,7 +59,7 @@ public interface ContactPages extends Pages {
 	class ContactCategory implements ContactPages {
 	}
 
-	@SecuredPage() @View
+	@SecuredPage @View
 	class ContactCategoryLookup
 			implements
 				ContactPages {
@@ -94,7 +94,7 @@ public interface ContactPages extends Pages {
 				ContactPages {
 	}
 
-	@SecuredPage() @View
+	@SecuredPage @View
 	class ContactLookup
 			implements
 				ContactPages {
@@ -115,43 +115,43 @@ public interface ContactPages extends Pages {
         @SecuredPage("document") @View 
         class DocumentSubView implements Admin {};
         
-        @SecuredPage() @View
+        @SecuredPage @View
 	class NewPersonPopup
 			implements
 				ContactPages {
 	}
         
-        @SecuredPage() @View
+        @SecuredPage @View
 	class NewCorporationPopup
 			implements
 				ContactPages {
 	}
         
-        @SecuredPage() @View
+        @SecuredPage @View
 	class PhoneEditor
 			implements
 				ContactPages {
 	}
         
-        @SecuredPage() @View
+        @SecuredPage @View
 	class BankEditor
 			implements
 				ContactPages {
 	}
         
-        @SecuredPage() @View
+        @SecuredPage @View
 	class EmailEditor
 			implements
 				ContactPages {
 	}
         
-        @SecuredPage() @View
+        @SecuredPage @View
 	class AddressEditor
 			implements
 				ContactPages {
 	}
         
-        @SecuredPage() @View
+        @SecuredPage @View
 	class SocialAccountEditor
 			implements
 				ContactPages {
@@ -163,13 +163,31 @@ public interface ContactPages extends Pages {
 	class AccountStatusReport implements ContactPages {
 	}
         
-        @SecuredPage() @View	
+        @SecuredPage
+	@View
+	@PageTitle("report.name.AccountStatementReport")
+	class AccountStatementReport implements ContactPages {
+	}
+        
+        @SecuredPage
+	@View
+	@PageTitle("report.name.accountStatusReport")
+	class AccountStatusDynaReport implements ContactPages {
+	}
+
+	@SecuredPage
+	@View
+	@PageTitle("report.name.contactListReport")
+	class ContactListDynaReport implements ContactPages {
+	}
+        
+        @SecuredPage @View
         class QuickPersonPanel implements ContactPages {	}
         
-        @SecuredPage() @View	
+        @SecuredPage @View
         class QuickCorporationPanel implements ContactPages {}
         
-        @SecuredPage() @View	
+        @SecuredPage @View
         class QuickContactSetPanel implements ContactPages {}
 
 }

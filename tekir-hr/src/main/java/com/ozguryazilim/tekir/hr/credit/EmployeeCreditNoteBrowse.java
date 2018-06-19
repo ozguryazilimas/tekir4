@@ -1,10 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ozguryazilim.tekir.hr.credit;
 
+import com.ozguryazilim.tekir.core.query.columns.TagColumn;
+import com.ozguryazilim.tekir.core.query.filter.TagFilter;
 import com.ozguryazilim.tekir.entities.EmployeeCreditNote;
 import com.ozguryazilim.tekir.entities.EmployeeCreditNote_;
 import com.ozguryazilim.tekir.entities.Contact_;
@@ -65,7 +62,7 @@ public class EmployeeCreditNoteBrowse extends VoucherBrowseBase<EmployeeCreditNo
                 .addColumn(new LinkColumn<>(VoucherBase_.voucherNo, "voucher.label.VoucherNo"), true)
                 .addColumn(new SubTextColumn<>(EmployeeCreditNote_.employee, Contact_.name, "hr.label.Employee"), true)
                 .addColumn(new TextColumn<>(VoucherBase_.info, "general.label.Info"), true)
-                .addColumn(new TextColumn<>(VoucherBase_.code, "general.label.Code"), false)
+                .addColumn(new TagColumn<>("tags", "general.label.Tag"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.referenceNo, "voucher.label.ReferenceNo"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.stateReason, "voucher.label.StateReason"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.stateInfo, "voucher.label.StateInfo"), false)
@@ -78,7 +75,7 @@ public class EmployeeCreditNoteBrowse extends VoucherBrowseBase<EmployeeCreditNo
         
         queryDefinition
                 .addFilter(new StringFilter<>(VoucherBase_.voucherNo, "voucher.label.VoucherNo"))
-                .addFilter(new StringFilter<>(VoucherBase_.code, "voucher.label.Code"))
+                .addFilter(new TagFilter<>("tags", "general.label.Tag", "EmployeeCreditNote"))
                 .addFilter(new StringFilter<>(VoucherBase_.info, "voucher.label.Info"))
                 .addFilter(new StringFilter<>(VoucherBase_.topic, "voucher.label.Topic"))
                 .addFilter(new VoucherStateFilter<>(VoucherBase_.state, getHome().getStateConfig().getStates(), "general.label.State"))

@@ -16,8 +16,10 @@
     <ui:define name="metadata">
         <f:metadata>
             <f:viewParam name="eid" value="#{quoteHome.id}" />
+            <f:viewAction action="#{quoteHome.initData()}" />
         </f:metadata>
     </ui:define>
+    
 
     <ui:define name="caption-states">
         <t:stateOutputFeatureLink label="general.label.Account" value="#{featureController.getFeatureLink(quoteHome.getAllFeaturePointer(quoteHome.entity.account))}" />
@@ -42,7 +44,7 @@
                 <t:outputText label="voucher.label.VoucherNo" value="#{quoteHome.entity.voucherNo}"  />
                 <t:outputText label="voucher.label.ReferenceNo" value="#{quoteHome.entity.referenceNo}" />
                 <t:outputText label="voucher.label.Process" value="#{quoteHome.entity.process.processNo}" />
-                <t:outputText label="general.label.Code" value="#{quoteHome.entity.code}" />
+                <t:outputTag label="general.label.Tag" value="#{quoteHome.entity.tags}" />
             </div>
         </div>  
         </ui:remove>

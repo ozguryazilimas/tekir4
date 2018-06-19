@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ozguryazilim.tekir.hr.credit;
 
 import com.google.common.base.Strings;
@@ -79,7 +74,7 @@ public abstract class EmployeeCreditNoteRepository extends VoucherRepositoryBase
     private void buildVieModelSelect(CriteriaQuery<EmployeeCreditNoteViewModel> criteriaQuery, Root<? extends EmployeeCreditNote> from) {
         criteriaQuery.multiselect(
                 from.get(EmployeeCreditNote_.id),
-                from.get(VoucherBase_.code),
+                from.get("tags"),
                 from.get(VoucherBase_.voucherNo),
                 from.get(VoucherBase_.info),
                 from.get(VoucherBase_.referenceNo),

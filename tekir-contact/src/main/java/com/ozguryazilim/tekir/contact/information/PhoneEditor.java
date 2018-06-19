@@ -140,7 +140,7 @@ public class PhoneEditor extends AbstractContactInformationEditor<ContactPhone> 
 
     @Override
     public String getEditorCaption() {
-        return "Phone Editor - i18n";
+        return "phoneEditor.label.Title";
     }
 
     @Override
