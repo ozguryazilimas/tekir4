@@ -1,0 +1,65 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/dynamicReportBase.xhtml">
+
+    <ui:param name="title" value="report.name.ContactListDynaReport"/>
+    <ui:param name="bean" value="#{contactListDynaReport}"/>
+    <ui:param name="supportCSV" value="true"/>
+    <ui:param name="supportXLS" value="true"/>
+    <h:outputStylesheet library="filterTemplates" name="tagfilter.css" target="head"/>
+
+    <ui:define name="filter">
+        <div class="row">
+            <t:inputText value="#{contactListDynaReport.filter.code}" label="general.label.Code"
+                         columnClass="col-xs-6"/>
+            <t:inputText value="#{contactListDynaReport.filter.name}" label="general.label.Name"
+                         columnClass="col-xs-6"/>
+            <t:inputAny label="contact.label.ContactRoles">
+                <p:selectCheckboxMenu label="#{messages['contact.label.ContactRoles']}"
+                                      value="#{contactListDynaReport.filter.roles}"
+                                      styleClass="tag-filter"
+                                      panelStyleClass="tag-filter-panel">
+                    <f:selectItems value="#{contactListDynaReport.roles}" var="item"
+                                   itemLabel="#{messages['contact.role.'.concat(item)]}"/>
+                </p:selectCheckboxMenu>
+            </t:inputAny>
+            <t:inputLookupDialog label="contact.label.CorporationType"
+                                 value="#{contactListDynaReport.filter.corporationType}"
+                                 lookupBean="#{corporationTypeLookup}"
+                                 lookupListener="contactListDynaReport.filter.corporationType"
+                                 placeholder="#{messages['contact.info.CorporationType']}"/>
+            <t:inputLookupDialog label="general.label.Category"
+                                 value="#{contactListDynaReport.filter.contactCategory}"
+                                 lookupBean="#{contactCategoryLookup}"
+                                 lookupListener="contactListDynaReport.filter.contactCategory"
+                                 placeholder="#{messages['general.info.Category']}"/>
+            <t:inputLookupDialog label="general.label.Industry"
+                                 value="#{contactListDynaReport.filter.industry}"
+                                 lookupBean="#{industryLookup}"
+                                 lookupListener="contactListDynaReport.filter.industry"
+                                 placeholder="#{messages['general.info.Industry']}"/>
+            <t:inputLookupDialog label="general.label.Territory"
+                                 value="#{contactListDynaReport.filter.territory}"
+                                 lookupBean="#{territoryLookup}"
+                                 lookupListener="contactListDynaReport.filter.territory"
+                                 placeholder="#{messages['general.info.Territory']}"/>
+            <t:inputUser value="#{contactListDynaReport.filter.owner}"
+                         label="general.label.Owner" columnClass="col-xs-6"/>
+            <t:inputCheckboxGroup label="general.label.OpenTxn">
+                <p:selectBooleanCheckbox itemLabel="#{messages['general.label.Show']}"
+                                         value="#{contactListDynaReport.filter.detail}">
+                    <p:ajax update=":reportForm:tag" event="change" process="@this"/>
+                </p:selectBooleanCheckbox>
+            </t:inputCheckboxGroup>
+            <h:panelGroup id="tag">
+                <t:selectTag label="general.label.Tag" value="#{contactListDynaReport.filter.tag}"
+                             rendered="#{contactListDynaReport.filter.detail}"
+                             suggestions="#{contactListDynaReport.suggestions}"/>
+            </h:panelGroup>
+        </div>
+    </ui:define>
+</ui:composition>

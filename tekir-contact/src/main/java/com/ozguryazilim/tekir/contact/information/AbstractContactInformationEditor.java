@@ -42,11 +42,7 @@ public abstract class AbstractContactInformationEditor<E extends ContactInformat
         options.put("modal", true);
         //options.put("draggable", false);  
         options.put("resizable", false);
-        options.put("width", "780");
-        options.put("height", "430");
-        //options.put("contentWidth", 780);
         options.put("contentHeight", 450);
-        options.put("position", "center top");
 
         RequestContext.getCurrentInstance().openDialog(getDialogName(), options, null);
     }

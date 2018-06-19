@@ -16,28 +16,34 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="row">
-                    <t:inputText label="general.label.FirstName" value="#{bean.entity.firstName}" columnClass="col-sm-6" required="true"/>
-                    <t:inputText label="general.label.LastName" value="#{bean.entity.lastName}" columnClass="col-sm-6" required="true"/>
+                    <t:inputText id="aaaa1" label="general.label.FirstName" value="#{bean.entity.firstName}" columnClass="col-sm-6" required="true"/>
+                    <t:inputText id="aaaa2" label="general.label.LastName" value="#{bean.entity.lastName}" columnClass="col-sm-6" required="true"/>
+                </div>
+
+                <div class="row">
+                    <t:inputText label="contact.label.UseName"
+                                 value="#{bean.entity.useName}" columnClass="col-xs-6"/>
+                    <t:inputEnum itemLabel="gender." hasNullValue="false" columnClass="col-xs-6"
+                                 value="#{bean.entity.gender}" label="contact.label.Gender"/>
+                </div>
+
+                <div class="row">
+                    <t:inputPhone id="aaaa3" label="contact.label.PrimaryMobile" value="#{bean.mobile}" columnClass="col-sm-6" required="false"/>
+                    <t:inputEmail id="aaaa4" label="contact.label.PrimaryEmail" value="#{bean.email}" columnClass="col-sm-6" required="false"/>
                 </div>  
 
                 <div class="row">
-                    
-                    <t:inputText label="contact.label.PrimaryMobile" value="#{bean.mobile}" columnClass="col-sm-6" required="false"/>
-                    <t:inputText label="contact.label.PrimaryEmail" value="#{bean.email}" columnClass="col-sm-6" required="false"/>
-                </div>  
-
-                <div class="row">
-                    <t:inputText label="contact.label.JobTitle" value="#{bean.entity.jobTitle}" columnClass="col-sm-6" required="false"/>
-                    <t:inputText label="contact.label.CorporationName" value="#{bean.entity.corporationName}" columnClass="col-sm-6" required="false"/>
-                    <t:inputLookupDialog label="general.label.Corporation" value="#{quickPersonRecord.entity.corporation}" lookupBean="#{contactLookup}" lookupListener="quickPersonRecord.entity.corporation" placeholder="#{messages['general.info.Corparation']}" lookupProfile="T:Corporation" columnClass="col-md-12"/>
+                    <t:inputText id="aaaa5" label="contact.label.JobTitle" value="#{bean.entity.jobTitle}" columnClass="col-sm-6" required="false"/>
+                    <t:inputText id="aaaa6" label="contact.label.CorporationName" value="#{bean.entity.corporationName}" columnClass="col-sm-6" required="false"/>
+                    <t:inputLookupDialog id="aaaa7" label="general.label.Corporation" value="#{quickPersonRecord.entity.corporation}" lookupBean="#{contactLookup}" lookupListener="quickPersonRecord.entity.corporation" placeholder="#{messages['general.info.Corporation']}" lookupProfile="T:Corporation" columnClass="col-md-12"/>
                 </div>
 
 
             </div>
             <div class="col-md-6">
                 <div class="row">
-                    <t:inputText label="general.label.Code" value="#{bean.entity.code}" columnClass="col-md-6" required="true"/>
-                    <t:inputTextarea label="general.label.Info" value="#{bean.entity.info}" columnClass="col-md-12"/>
+                    <t:inputText id="aaaa8"  label="general.label.Code" value="#{bean.entity.code}" columnClass="col-md-6" required="true"/>
+                    <t:inputTextarea id="aaaa9" label="general.label.Info" value="#{bean.entity.info}" columnClass="col-md-12"/>
                 </div>
             </div>
         </div>

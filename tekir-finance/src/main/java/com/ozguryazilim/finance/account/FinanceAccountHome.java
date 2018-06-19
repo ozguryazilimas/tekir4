@@ -8,6 +8,8 @@ package com.ozguryazilim.finance.account;
 import com.google.common.base.Strings;
 import com.ozguryazilim.finance.account.txn.FinanceAccountTxnRepository;
 import com.ozguryazilim.finance.config.FinancePages;
+import com.ozguryazilim.tekir.core.code.AutoCode;
+import com.ozguryazilim.tekir.core.code.AutoCodeService;
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
 import com.ozguryazilim.tekir.entities.AccountType;
 import com.ozguryazilim.tekir.entities.FinanceAccount;
@@ -18,19 +20,18 @@ import com.ozguryazilim.telve.feature.FeatureHandler;
 import com.ozguryazilim.telve.forms.FormBase;
 import com.ozguryazilim.telve.forms.FormEdit;
 import com.ozguryazilim.telve.messages.FacesMessages;
+import com.ozguryazilim.telve.messages.Messages;
 import com.ozguryazilim.telve.utils.DateUtils;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
+import org.apache.deltaspike.core.api.config.view.navigation.NavigationParameterContext;
 import org.apache.deltaspike.core.api.config.view.navigation.ViewNavigationHandler;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.chart.Axis;
@@ -44,7 +45,11 @@ import org.primefaces.model.chart.LineChartSeries;
  * @author oyas
  */
 @FormEdit(feature = FinanceAccountFeature.class)
+@AutoCode(caption = "module.caption.FinanceAccount", size = 3)
 public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
+
+    @Inject 
+    private AutoCodeService codeService;
 
     @Inject
     private FinanceAccountRepository repository;
@@ -54,12 +59,16 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
 
     @Inject
     private Identity identity;
-    
+
     @Inject
     private CurrencyService currencyService;
 
     @Inject
     private ViewNavigationHandler viewNavigationHandler;
+    
+    @Inject
+    private NavigationParameterContext navigationParameterContext;
+
 
     private List<String> selectedRoles = new ArrayList<>();
 
@@ -78,34 +87,30 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
         return this.repository;
     }
 
+    private void newAccount(AccountType type) {
+	FinanceAccount p = new FinanceAccount();
+	p.getAccountRoles().add(type.name());
+	p.setType(type);
+	p.setOwner(identity.getLoginName());
+	p.setCode(codeService.getNewSerialNumber(FinanceAccountHome.class.getSimpleName()));
+	setEntity(p);
+	selectedRoles.clear();
+	navigationParameterContext.addPageParameter("eid", 0);
+    }
+
     public Class<? extends ViewConfig> newCashAccount() {
-        FinanceAccount p = new FinanceAccount();
-        p.getAccountRoles().add("CASH");
-        p.setType(AccountType.CASH);
-        p.setOwner(identity.getLoginName());
-        setEntity(p);
-        selectedRoles.clear();
-        return FinancePages.FinanceAccount.class;
+	newAccount(AccountType.CASH);
+	return FinancePages.FinanceAccount.class;
     }
 
     public Class<? extends ViewConfig> newBankAccount() {
-        FinanceAccount p = new FinanceAccount();
-        p.getAccountRoles().add("BANK");
-        p.setType(AccountType.BANK);
-        p.setOwner(identity.getLoginName());
-        setEntity(p);
-        selectedRoles.clear();
-        return FinancePages.FinanceAccount.class;
+	newAccount(AccountType.BANK);
+	return FinancePages.FinanceAccount.class;
     }
 
     public Class<? extends ViewConfig> newCreditCardAccount() {
-        FinanceAccount p = new FinanceAccount();
-        p.getAccountRoles().add("CREDIT_CARD");
-        p.setType(AccountType.CREDIT_CARD);
-        p.setOwner(identity.getLoginName());
-        setEntity(p);
-        selectedRoles.clear();
-        return FinancePages.FinanceAccount.class;
+	newAccount(AccountType.CREDIT_CARD);
+	return FinancePages.FinanceAccount.class;
     }
 
     @Override
@@ -131,11 +136,17 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
     }
 
     @Override
-    public boolean onAfterLoad() {
+    public boolean onAfterSave() {
+        //Burda refresh atiyoruzki kayit olustuktan sonra olusan ilk chart dogru degerleri alsin
+        refreshTxns();
 
-        //FIXME: Burayı generic bir hale getirmek lazım                
+        return super.onAfterSave();
+    }
+
+    @Override
+    public boolean onAfterLoad() {
         if (!identity.isPermitted("financeAccount:select:" + getEntity().getOwner())) {
-            FacesMessages.error("Kayda erişim için yetkiniz yok!");
+            FacesMessages.error("facesMessages.error.NoPermission");
             createNew();
             viewNavigationHandler.navigateTo(FinancePages.FinanceAccountBrowse.class);
             return false;
@@ -263,23 +274,23 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
         chartModel = new LineChartModel();
 
         LineChartSeries debitSeries = new LineChartSeries();
-        debitSeries.setLabel("Debit");
+        debitSeries.setLabel(Messages.getMessage("finance.label.Debit"));
         debitSeries.setShowLine(false);
         //debitSeries.setDisableStack(true);
 
         LineChartSeries creditSeries = new LineChartSeries();
-        creditSeries.setLabel("Credit");
+        creditSeries.setLabel(Messages.getMessage("finance.label.Credit"));
         creditSeries.setShowLine(false);
         //creditSeries.setDisableStack(true);
 
         LineChartSeries stateSeries = new LineChartSeries();
-        stateSeries.setLabel("Balance");
+        stateSeries.setLabel(Messages.getMessage("general.label.Balance"));
         stateSeries.setFill(true);
         stateSeries.setDisableStack(true);
         stateSeries.setFillAlpha(0.2);
-        
-        //TODO: Configden ( dil dosyalarından ) alınlı i18n
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+        String pattern = Messages.getMessage("general.format.Date");
+        DateFormat df = new SimpleDateFormat(pattern);
         
         for( FinanceAccountBalanceModel bm : balanceModels ){
             String dts = df.format(bm.getDate());
@@ -323,15 +334,17 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
         //Axis xAxis = new CategoryAxis();
         //lineChartModel.getAxes().put(AxisType.X, xAxis);
         
-        DateAxis axis = new DateAxis("Dates");
+        DateAxis axis = new DateAxis(Messages.getMessage("general.label.Date"));
         //axis.setTickAngle(-50);
         axis.setMin(df.format(startDate));
         axis.setMax(df.format(new Date()));
         axis.setTickFormat("%#d %b");
         chartModel.getAxes().put(AxisType.X, axis);
 
+        String yLabel = Messages
+            .getMessage("currency." + getEntity().getCurrency().getCurrencyCode());
         Axis yAxis = chartModel.getAxis(AxisType.Y);
-        yAxis.setLabel(getEntity().getCurrency().getDisplayName());
+        yAxis.setLabel(yLabel);
     }
     
     private void buildCurrencyBalanceMap(){
@@ -344,9 +357,8 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
 
         FinanceAccountBalanceModel m = new FinanceAccountBalanceModel();
         m.setLineType("TAKE-OVER");
-        //TODO: i18n
         m.setDate(startDate);
-        m.setTopic("Take Over");
+        m.setTopic(Messages.getMessage("finance.label.TakeOver"));
         m.setAmount(BigDecimal.ZERO);
         m.setBalance(takeOverTotal);
         balanceModels.add(m);
@@ -372,8 +384,7 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
         m = new FinanceAccountBalanceModel();
         m.setDate(new Date());
         m.setLineType("RESULT");
-        //TODO: i18n
-        m.setTopic("Result");
+        m.setTopic(Messages.getMessage("general.label.Result"));
         m.setAmount(BigDecimal.ZERO);
         m.setBalance(takeOverTotal);
         balanceModels.add(m);

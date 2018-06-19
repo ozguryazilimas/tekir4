@@ -14,6 +14,7 @@ import com.ozguryazilim.tekir.entities.ActivityStatus;
 import com.ozguryazilim.tekir.entities.Activity_;
 import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.EMailActivity;
+import com.ozguryazilim.tekir.entities.Person;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
@@ -303,4 +304,8 @@ public abstract class ActivityRepository extends RepositoryBase<Activity, Activi
     
     @Query("select c from EMailActivity c where messageId = ?1")
     public abstract List<EMailActivity> findByMessageId( String messageId);
+
+    public abstract List<Activity> findByPersonOrderByDueDateDesc(Person p);
+
+    public abstract List<Activity> findByCorporationOrderByDueDateDesc(Corporation c);
 }

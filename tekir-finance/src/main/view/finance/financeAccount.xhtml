@@ -10,7 +10,13 @@
     <ui:param name="entity" value="#{financeAccountHome.entity}" />
     <ui:param name="dontShowContentHeader" value="true" />
 
-
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{financeAccountHome.id}" />
+            <f:viewAction action="#{financeAccountHome.initData()}" />
+        </f:metadata>
+    </ui:define>
+    
     <ui:define name="form">
         <div class="row">
             <div class="col-md-6 col-xs-12">
@@ -21,10 +27,16 @@
                     
                     <t:inputText label="general.label.Name" value="#{financeAccountHome.entity.name}"  required="true" columnClass="col-xs-12"/>
 
-                    <t:inputSuggestion label="general.label.Bank" value="#{financeAccountHome.entity.bank}" group="bank" listener="financeAccountHome.entity.bank" rendered="#{financeAccountHome.entity.type ne 'CASH'}" />
+                    <t:inputSuggestion label="general.label.Bank" value="#{financeAccountHome.entity.bank}" required="true" group="bank" listener="financeAccountHome.entity.bank" rendered="#{financeAccountHome.entity.type ne 'CASH'}" />
                     <t:inputText label="general.label.BankBranch" value="#{financeAccountHome.entity.branch}"  required="true" rendered="#{financeAccountHome.entity.type eq 'BANK'}"/>
-                    <t:inputText label="general.label.AccountNo" value="#{financeAccountHome.entity.accountNo}"  required="true" rendered="#{financeAccountHome.entity.type ne 'CASH'}" />
-                    <t:inputText label="general.label.IBAN" value="#{financeAccountHome.entity.iban}"  required="true" rendered="#{financeAccountHome.entity.type eq 'BANK'}" />
+                    <t:inputMask label="general.label.AccountNo"
+                                 value="#{financeAccountHome.entity.accountNo}" required="true"
+                                 rendered="#{financeAccountHome.entity.type ne 'CASH'}"
+                                 mask="?999999999999999999999999999999"/>
+                    <t:inputMask label="general.label.IBAN"
+                                 value="#{financeAccountHome.entity.iban}" required="true"
+                                 rendered="#{financeAccountHome.entity.type eq 'BANK'}"
+                                 mask="?****-****-****-****-****-****-****-****-**"/>
                 </div>
                 
                 

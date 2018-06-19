@@ -109,4 +109,58 @@
     <changeSet author="oyas (generated)" id="1497633481705-5">
         <addForeignKeyConstraint baseColumnNames="MASTER_ID" baseTableName="THR_SALARY_NOTE_ITEM" constraintName="FK_SALIT_SAL" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="THR_SALARY_NOTE"/>
     </changeSet>
+    
+    <changeSet author="Erdem Uslu (generated)" id="1498821470593-1">
+        <createTable tableName="THR_CREDIT_NOTE">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="THR_CREDIT_NOTEPK"/>
+            </column>
+            <column name="CREATE_DATE" type="datetime"/>
+            <column name="UPDATE_DATE" type="datetime"/>
+            <column name="UPDATE_USER" type="VARCHAR(255)"/>
+            <column name="CODE" type="VARCHAR(30)"/>
+            <column name="TXNDATE" type="datetime"/>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="OWNER" type="VARCHAR(255)"/>
+            <column name="REFERENCE_NO" type="VARCHAR(30)"/>
+            <column name="FEATURE_BK" type="VARCHAR(255)"/>
+            <column name="FEATURE" type="VARCHAR(255)"/>
+            <column name="FEATURE_PK" type="BIGINT"/>
+            <column name="STATE" type="VARCHAR(255)"/>
+            <column name="STATE_INFO" type="VARCHAR(255)"/>
+            <column name="STATE_REASON" type="VARCHAR(255)"/>
+            <column name="TOPIC" type="VARCHAR(255)"/>
+            <column name="VOUCHER_NO" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="AMOUNT" type="DECIMAL(19, 2)"/>
+            <column name="CCY" type="VARCHAR(255)"/>
+            <column name="LOCAL_AMOUNT" type="DECIMAL(19, 2)"/>
+            <column name="PAYMENT_DATE" type="date"/>
+            <column name="TYPE" type="VARCHAR(255)"/>
+            <column name="GROUP_ID" type="BIGINT"/>
+            <column name="EMPLOYEE_ID" type="BIGINT"/>
+            <column name="ACCOUNT_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Erdem Uslu (generated)" id="1498821470593-2">
+        <addForeignKeyConstraint baseColumnNames="ACCOUNT_ID" baseTableName="THR_CREDIT_NOTE" constraintName="FK_CREDIT_NOTE_ACC" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TFN_FINANCE_ACC"/>
+    </changeSet>
+    <changeSet author="Erdem Uslu (generated)" id="1498821470593-3">
+        <addForeignKeyConstraint baseColumnNames="EMPLOYEE_ID" baseTableName="THR_CREDIT_NOTE" constraintName="FK_CREDIT_NOTE_EMP" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+    </changeSet>
+    <changeSet author="hates" id="0405201818">
+        <renameColumn tableName="THR_CREDIT_NOTE" columnDataType="VARCHAR(2000)" newColumnName="TAGS" oldColumnName="CODE" />
+        <renameColumn tableName="THR_LEAVE" columnDataType="VARCHAR(2000)" newColumnName="TAGS" oldColumnName="CODE" />
+        <renameColumn tableName="THR_SALARY_NOTE" columnDataType="VARCHAR(2000)" newColumnName="TAGS" oldColumnName="CODE" />
+    </changeSet>
+    <changeSet author="soner.cirit" id="20180529-1">
+        <modifyDataType columnName="TXNDATE" newDataType="date" tableName="THR_CREDIT_NOTE"/>
+    </changeSet>
+    <changeSet author="soner.cirit" id="20180529-2">
+        <modifyDataType columnName="TXNDATE" newDataType="date" tableName="THR_LEAVE"/>
+    </changeSet>
+    <changeSet author="soner.cirit" id="20180529-3">
+        <modifyDataType columnName="TXNDATE" newDataType="date" tableName="THR_SALARY_NOTE"/>
+    </changeSet>
 </databaseChangeLog>

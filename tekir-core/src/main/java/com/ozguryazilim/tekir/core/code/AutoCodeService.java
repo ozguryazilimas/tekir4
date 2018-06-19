@@ -141,7 +141,7 @@ public class AutoCodeService implements Serializable{
             ent = kahve.get(SERIAL_KEY + meta.getCosumer());
             if( ent != null ){
                 meta.setSerial(ent.getAsString());
-            } else {
+            } else if (Strings.isNullOrEmpty(meta.getSerial())) {
                 meta.setSerial(meta.getCosumer().substring(0, 3).toUpperCase());
             }
             consumers.put(meta.getCosumer(), meta);

@@ -9,6 +9,13 @@
     <ui:param name="homeBean" value="#{purchaseOrderHome}" />
     <ui:param name="entity" value="#{purchaseOrderHome.entity}" />
 
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{purchaseOrderHome.id}" />
+            <f:viewAction action="#{purchaseOrderHome.initData()}" />
+        </f:metadata>
+    </ui:define>
+    
     <ui:define name="form">
         <div class="row">
 
@@ -17,7 +24,8 @@
                     <t:inputLookupDialog label="general.label.Account" value="#{purchaseOrderHome.account}" 
                                          lookupBean="#{contactLookup}" lookupListener="purchaseOrderHome.account" 
                                          lookupProfile="R:ACCOUNT;S:VENDOR"
-                                         placeholder="#{messages['general.info.Account']}" update=":form:prss" columnClass="col-xs-12"/>
+                                         placeholder="#{messages['general.info.Account']}" update=":form:prss"
+                                         required="true" columnClass="col-xs-12"/>
                     
                     <t:inputText label="voucher.label.Topic" value="#{purchaseOrderHome.entity.topic}"  required="true" columnClass="col-xs-12"/>
                     
@@ -41,7 +49,7 @@
                     
                     <t:inputLookupDialog label="voucher.label.Group" value="#{purchaseOrderHome.entity.group}" caption="topic" lookupBean="#{voucherGroupLookup}" lookupListener="purchaseOrderHome.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" />
                     
-                    <t:inputText label="general.label.Code" value="#{purchaseOrderHome.entity.code}" />
+                    <t:inputTag label="general.label.Tag" value="#{purchaseOrderHome.entity.tags}" key="PurchaseOrder" />
                     <t:inputTextarea label="general.label.Info" value="#{purchaseOrderHome.entity.info}" columnClass="col-xs-12"/>
                     
                 </div>

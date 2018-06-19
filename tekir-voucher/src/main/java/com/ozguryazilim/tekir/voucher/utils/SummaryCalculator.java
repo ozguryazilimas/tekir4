@@ -53,29 +53,29 @@ public class SummaryCalculator<E extends VoucherBase, I extends VoucherCommodity
             //Hesaplanacak olan KDV
             BigDecimal vatAmt = BigDecimal.ZERO;
             BigDecimal hundred = new BigDecimal(100);
-            
+            BigDecimal itemTotalTax = BigDecimal.ZERO;
+
             //TODO: KDV Matrah lazım, KDV Tevkifat laxım.
             for (TaxDefinition tax : taxs) {
-
                 BigDecimal taxAmt = BigDecimal.ZERO;
                 
                 if (tax.getType() != TaxType.KDV && tax.getType() != TaxType.TEVKIFAT) {
                     //IOV/OTV v.b. vergileri hesaplayalım.
                     taxAmt = it.getLineTotal().multiply(tax.getRate().divide(hundred));
-                    totalTax = totalTax.add(taxAmt);
+                    itemTotalTax = itemTotalTax.add(taxAmt);
 
                     //Satır toplamının üzerine hesaplanan vergiyi de ekleyelim.
                     vatTotal = vatTotal.add(taxAmt);
                 } else if (tax.getType() == TaxType.KDV) {
                     //KDV Matrah üzerinden KDV hesaplayalım
                     taxAmt = vatTotal.multiply(tax.getRate().divide(hundred));
-                    totalTax = totalTax.add(taxAmt);
+                    itemTotalTax = itemTotalTax.add(taxAmt);
                     vatAmt = vatAmt.add(taxAmt);
 
                 } else if (tax.getType() == TaxType.TEVKIFAT ) {
                     //KDV Tevkifatını hesaplayalım
                     taxAmt = vatAmt.multiply(tax.getRate().divide(hundred));
-                    totalTax = totalTax.subtract(taxAmt);
+                    itemTotalTax = itemTotalTax.subtract(taxAmt);
                 }
 
                 S sm = summaries.get("Tax." + tax.getCode());
@@ -89,9 +89,10 @@ public class SummaryCalculator<E extends VoucherBase, I extends VoucherCommodity
                 } else {
                     sm.setAmount(sm.getAmount().add(taxAmt));
                 }
-
             }
 
+            it.setTaxTotal(itemTotalTax);
+            totalTax = totalTax.add(itemTotalTax);
         }
 
         //Saklamadan hemen önce toplam tutarı hesaplayıp fiş üzerine yazalım.
@@ -119,7 +120,12 @@ public class SummaryCalculator<E extends VoucherBase, I extends VoucherCommodity
         sm = newSummarySupplier.get();
         sm.setRowKey("DiscountRate");
         sm.setMaster(entity);
-        sm.setAmount(discount.multiply(BigDecimal.valueOf(100)).divide(total, MathContext.DECIMAL32));
+        if (total.equals(BigDecimal.ZERO)){
+            sm.setAmount(BigDecimal.ZERO);
+        }
+        else{
+            sm.setAmount(discount.multiply(BigDecimal.valueOf(100)).divide(total, MathContext.DECIMAL32));
+        }
         summaries.put(sm.getRowKey(), sm);
 
         sm = newSummarySupplier.get();

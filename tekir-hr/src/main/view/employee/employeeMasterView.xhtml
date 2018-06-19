@@ -21,6 +21,8 @@
                         <div class="row">
                             <t:outputText label="general.label.FirstName" value="#{employeeHome.entity.firstName}" columnClass="col-xs-12"/>
                             <t:outputText label="general.label.LastName" value="#{employeeHome.entity.lastName}" columnClass="col-xs-12"/>
+                            <t:outputText value="#{employeeHome.entity.useName}" label="contact.label.UseName" columnClass="col-xs-12"/>
+                            <t:outputText value="#{messages['gender.'.concat(employeeHome.entity.gender)]}" label="contact.label.Gender" columnClass="col-xs-12"/>
                             <t:outputText label="contact.label.JobTitle" value="#{employeeHome.entity.jobTitle}" columnClass="col-xs-12"/>
                             <t:outputText label="contact.label.SSN" value="#{employeeHome.entity.ssn}" columnClass="col-xs-12"/>
                             <t:outputText label="Kullanılan İzin Günleri" value="#{employeeHome.usedLeaveDay}" columnClass="col-xs-12"/>
@@ -64,7 +66,7 @@
                     </ui:include>
                     </ui:remove>
 
-                    <t:accordion icon="fa fa-file" id="cx" label="general.label.ReleatedVouchers" columnClass="col-xs-12">
+                    <t:accordion icon="fa fa-file" id="cx" label="general.label.RelatedVouchers" columnClass="col-xs-12">
                         <ui:remove>
                             <div class="no-padding">
                                 <table class="table table-bordered">

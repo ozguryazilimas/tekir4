@@ -2,10 +2,10 @@
 
 <permissions>
     <permissionGroup name="Commodity" order="12">
-        <permission target="commodity" order="1">
+        <permission name="commodity" order="1">
             <entityActions />
         </permission>
-        <permission target="commodityCategory" order="2">
+        <permission name="commodityCategory" order="2">
             <entityActions />
         </permission>
     </permissionGroup>

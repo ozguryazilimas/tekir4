@@ -1,0 +1,418 @@
+[
+  {
+    "name": "query.EmployeeCreditNoteBrowse.All",
+    "resultLimit": 100,
+    "rowLimit": 20,
+    "columns": [
+      "date",
+      "voucherNo",
+      "employee",
+      "info",
+      "owner",
+      "amount"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "amount",
+      "type",
+      "employee",
+      "financeAccount",
+      "paymentDate",
+      "date"
+    ],
+    "filterValues": {
+      "owner": "All::",
+      "date": "All::LastTenDays::20180326T0000::Today::20180405T0000",
+      "amount": "All::0",
+      "code": "All::null",
+      "stateReason": "All::null",
+      "type": "All::SALARY",
+      "employee": "All::null",
+      "voucherNo": "All::null",
+      "financeAccount": "All::null",
+      "topic": "All::null",
+      "state": "All::null",
+      "paymentDate": "All::LastTenDays::20180326T0000::Today::20180405T0000",
+      "info": "All::null"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  },
+  {
+    "name": "query.EmployeeCreditNoteBrowse.Draft",
+    "resultLimit": 100,
+    "rowLimit": 20,
+    "columns": [
+      "date",
+      "voucherNo",
+      "employee",
+      "info",
+      "owner",
+      "amount"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "amount",
+      "type",
+      "employee",
+      "financeAccount",
+      "paymentDate",
+      "date"
+    ],
+    "filterValues": {
+      "owner": "All::",
+      "date": "All::LastTenDays::20180326T0000::Today::20180405T0000",
+      "amount": "All::0",
+      "code": "All::null",
+      "stateReason": "All::null",
+      "type": "All::SALARY",
+      "employee": "All::null",
+      "voucherNo": "All::null",
+      "financeAccount": "All::null",
+      "topic": "All::null",
+      "state": "Equal::DRAFT-NEUTRAL-DRAFT",
+      "paymentDate": "All::LastTenDays::20180326T0000::Today::20180405T0000",
+      "info": "All::null"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  },
+  {
+    "name": "query.EmployeeCreditNoteBrowse.Open",
+    "resultLimit": 100,
+    "rowLimit": 20,
+    "columns": [
+      "date",
+      "voucherNo",
+      "employee",
+      "info",
+      "owner",
+      "amount"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "amount",
+      "type",
+      "employee",
+      "financeAccount",
+      "paymentDate",
+      "date"
+    ],
+    "filterValues": {
+      "owner": "All::",
+      "date": "All::LastTenDays::20180326T0000::Today::20180405T0000",
+      "amount": "All::0",
+      "code": "All::null",
+      "stateReason": "All::null",
+      "type": "All::SALARY",
+      "employee": "All::null",
+      "voucherNo": "All::null",
+      "financeAccount": "All::null",
+      "topic": "All::null",
+      "state": "Equal::OPEN-NEUTRAL-OPEN",
+      "paymentDate": "All::LastTenDays::20180326T0000::Today::20180405T0000",
+      "info": "All::null"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  },
+  {
+    "name": "query.EmployeeCreditNoteBrowse.Revise",
+    "resultLimit": 100,
+    "rowLimit": 20,
+    "columns": [
+      "date",
+      "voucherNo",
+      "employee",
+      "info",
+      "owner",
+      "amount"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "amount",
+      "type",
+      "employee",
+      "financeAccount",
+      "paymentDate",
+      "date"
+    ],
+    "filterValues": {
+      "owner": "All::",
+      "date": "All::LastTenDays::20180326T0000::Today::20180405T0000",
+      "amount": "All::0",
+      "code": "All::null",
+      "stateReason": "All::null",
+      "type": "All::SALARY",
+      "employee": "All::null",
+      "voucherNo": "All::null",
+      "financeAccount": "All::null",
+      "topic": "All::null",
+      "state": "Equal::DRAFT-NEUTRAL-REVISE",
+      "paymentDate": "All::LastTenDays::20180326T0000::Today::20180405T0000",
+      "info": "All::null"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  },
+  {
+    "name": "query.EmployeeCreditNoteBrowse.Complete",
+    "resultLimit": 100,
+    "rowLimit": 20,
+    "columns": [
+      "date",
+      "voucherNo",
+      "employee",
+      "info",
+      "owner",
+      "amount"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "amount",
+      "type",
+      "employee",
+      "financeAccount",
+      "paymentDate",
+      "date"
+    ],
+    "filterValues": {
+      "owner": "All::",
+      "date": "All::LastTenDays::20180326T0000::Today::20180405T0000",
+      "amount": "All::0",
+      "code": "All::null",
+      "stateReason": "All::null",
+      "type": "All::SALARY",
+      "employee": "All::null",
+      "voucherNo": "All::null",
+      "financeAccount": "All::null",
+      "topic": "All::null",
+      "state": "Equal::CLOSE-POSITIVE-COMPLETE",
+      "paymentDate": "All::LastTenDays::20180326T0000::Today::20180405T0000",
+      "info": "All::null"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  },
+  {
+    "name": "query.EmployeeCreditNoteBrowse.Cancel",
+    "resultLimit": 100,
+    "rowLimit": 20,
+    "columns": [
+      "date",
+      "voucherNo",
+      "employee",
+      "info",
+      "owner",
+      "amount"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "amount",
+      "type",
+      "employee",
+      "financeAccount",
+      "paymentDate",
+      "date"
+    ],
+    "filterValues": {
+      "owner": "All::",
+      "date": "All::LastTenDays::20180326T0000::Today::20180405T0000",
+      "amount": "All::0",
+      "code": "All::null",
+      "stateReason": "All::null",
+      "type": "All::SALARY",
+      "employee": "All::null",
+      "voucherNo": "All::null",
+      "financeAccount": "All::null",
+      "topic": "All::null",
+      "state": "Equal::CLOSE-NEGATIVE-CANCEL",
+      "paymentDate": "All::LastTenDays::20180326T0000::Today::20180405T0000",
+      "info": "All::null"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  },
+  {
+    "name": "query.EmployeeCreditNoteBrowse.Today",
+    "resultLimit": 100,
+    "rowLimit": 20,
+    "columns": [
+      "date",
+      "voucherNo",
+      "employee",
+      "info",
+      "owner",
+      "amount"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "amount",
+      "type",
+      "employee",
+      "financeAccount",
+      "paymentDate",
+      "date"
+    ],
+    "filterValues": {
+      "owner": "All::",
+      "date": "Equal::Today::20170718T0000::Today::20170718T0000",
+      "amount": "All::0",
+      "code": "All::null",
+      "stateReason": "All::null",
+      "type": "All::SALARY",
+      "employee": "All::null",
+      "voucherNo": "All::null",
+      "financeAccount": "All::null",
+      "topic": "All::null",
+      "state": "All::null",
+      "paymentDate": "All::LastTenDays::20180326T0000::Today::20180405T0000",
+      "info": "All::null"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  },
+  {
+    "name": "query.EmployeeCreditNoteBrowse.LastTenDays",
+    "resultLimit": 100,
+    "rowLimit": 20,
+    "columns": [
+      "date",
+      "voucherNo",
+      "employee",
+      "info",
+      "owner",
+      "amount"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "amount",
+      "type",
+      "employee",
+      "financeAccount",
+      "paymentDate",
+      "date"
+    ],
+    "filterValues": {
+      "owner": "All::",
+      "date": "In::LastTenDays::20170708T0000::Today::20170718T0000",
+      "amount": "All::0",
+      "code": "All::null",
+      "stateReason": "All::null",
+      "type": "All::SALARY",
+      "employee": "All::null",
+      "voucherNo": "All::null",
+      "financeAccount": "All::null",
+      "topic": "All::null",
+      "state": "All::null",
+      "paymentDate": "All::LastTenDays::20180326T0000::Today::20180405T0000",
+      "info": "All::null"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  }
+]

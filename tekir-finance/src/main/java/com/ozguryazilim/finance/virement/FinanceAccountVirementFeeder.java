@@ -11,12 +11,19 @@ import com.ozguryazilim.tekir.feed.AbstractFeeder;
 import com.ozguryazilim.tekir.feed.Feeder;
 import com.ozguryazilim.tekir.voucher.VoucherOwnerChange;
 import com.ozguryazilim.tekir.voucher.VoucherStateChange;
+import com.ozguryazilim.tekir.voucher.group.VoucherGroupTxnService;
 import com.ozguryazilim.tekir.voucher.utils.FeatureUtils;
 import com.ozguryazilim.tekir.voucher.utils.FeederUtils;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureQualifier;
+import com.ozguryazilim.telve.forms.EntityChangeAction;
+import com.ozguryazilim.telve.forms.EntityChangeEvent;
+import com.ozguryazilim.telve.messages.Messages;
 import com.ozguryazilim.telve.qualifiers.After;
+import com.ozguryazilim.telve.qualifiers.EntityQualifier;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.event.Observes;
@@ -32,6 +39,9 @@ public class FinanceAccountVirementFeeder extends AbstractFeeder<FinanceAccountV
 
 	@Inject
 	private Identity identity;
+	
+	@Inject
+	private VoucherGroupTxnService voucherGroupTxnService;
 
 	public void feed(
 			@Observes(during = TransactionPhase.AFTER_SUCCESS) @FeatureQualifier(feauture = FinanceAccountVirementFeature.class) @After VoucherStateChange event) {
@@ -62,6 +72,23 @@ public class FinanceAccountVirementFeeder extends AbstractFeeder<FinanceAccountV
 
 		}
 	}
+	
+	public void feed(@Observes(during = TransactionPhase.IN_PROGRESS) @EntityQualifier(entity = FinanceAccountVirement.class) @After EntityChangeEvent event) {
+
+		if( event.getAction() != EntityChangeAction.DELETE   ) {
+			FinanceAccountVirement entity = (FinanceAccountVirement) event.getEntity();
+
+			FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
+
+			if( entity.getGroup()!=null){
+				voucherGroupTxnService.saveFeature(voucherPointer, entity.getGroup(), entity.getOwner(), entity.getTopic(),
+						entity.getDate(), entity.getState());
+			}
+		}
+		
+		//TODO: Delete edildiğinde de gidip txn'den silme yapılmalı.
+		
+	}
 
 	/**
 	 * Geriye event bilgilerine bakarak feed body mesajını hazırlayıp döndürür.
@@ -73,13 +100,17 @@ public class FinanceAccountVirementFeeder extends AbstractFeeder<FinanceAccountV
 	 * @return
 	 */
 	protected String getMessage(VoucherStateChange event) {
+		String reason = event.getPayload().getStateReason();
+		if (reason == null) {
+			reason = Messages.getMessage("feed.messages.NullReason");
+		}
 		switch (event.getAction().getName()) {
 		case "CREATE":
 			return "feeder.messages.FinanceAccountVirementFeeder.CREATE$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo();
 		case "publish":
 			return "feeder.messages.FinanceAccountVirementFeeder.PUBLISH$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo();
         case "reopen":
-            return "feeder.messages.FinanceAccountVirementFeeder.REOPEN$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo() + "$%&" + event.getPayload().getStateReason();
+            return "feeder.messages.FinanceAccountVirementFeeder.REOPEN$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo() + "$%&" + reason;
         default:
             return "feeder.messages.FinanceAccountVirementFeeder.DEFAULT$%&" + identity.getUserName() + "$%&" + event.getPayload().getVoucherNo();
 		}
@@ -89,19 +120,27 @@ public class FinanceAccountVirementFeeder extends AbstractFeeder<FinanceAccountV
 		List<FeaturePointer> mentions = new ArrayList<>();
 
 		FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
-		FeaturePointer fromContactPointer = FeatureUtils.getFeaturePointer(FinanceAccountFeature.class,
-				entity.getFromAccount().getName(), entity.getFromAccount().getId());
-		FeaturePointer toContactPointer = FeatureUtils.getFeaturePointer(FinanceAccountFeature.class,
-				entity.getToAccount().getName(), entity.getToAccount().getId());
+        mentions.add(voucherPointer);
+
+        if (entity.getFromAccount() != null) {
+            FeaturePointer fromContactPointer = FeatureUtils
+                .getFeaturePointer(FinanceAccountFeature.class, entity.getFromAccount().getName(),
+                    entity.getFromAccount().getId());
+            mentions.add(fromContactPointer);
+        }
+
+        if (entity.getToAccount() != null) {
+            FeaturePointer toContactPointer = FeatureUtils
+                .getFeaturePointer(FinanceAccountFeature.class, entity.getToAccount().getName(),
+                    entity.getToAccount().getId());
+            mentions.add(toContactPointer);
+        }
 
 		if (entity.getGroup() != null && entity.getGroup().isPersisted()) {
 			FeaturePointer groupPointer = FeatureUtils.getVoucherGroupPointer(entity);
 			mentions.add(groupPointer);
 		}
 
-		mentions.add(voucherPointer);
-		mentions.add(fromContactPointer);
-		mentions.add(toContactPointer);
 
 		return mentions;
 	}

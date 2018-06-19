@@ -46,8 +46,8 @@
 						value="#{leadHome.entity.referenceNo}" columnClass="col-xs-6" />
 					<t:outputText label="voucher.label.Owner"
 						value="#{leadHome.entity.owner}" columnClass="col-xs-6" />
-					<t:outputText label="general.label.Code"
-						value="#{leadHome.entity.code}" columnClass="col-xs-6" />
+					<t:outputTag label="general.label.Tag"
+						value="#{leadHome.entity.tags}" columnClass="col-xs-6" />
 					<t:outputText label="general.label.Info"
 						value="#{leadHome.entity.info}" columnClass="col-xs-12" />
 					<t:outputDate label="voucher.label.Date"
@@ -72,10 +72,9 @@
 					</ui:include>
 
 					<ui:include src="/voucher/voucherReleatedWidget.xhtml">
-						<ui:param name="featurePointer"
-							value="#{leadHome.featurePointer}" />
-						<ui:param name="groupNo"
-							value="#{leadHome.entity.group.groupNo}" />
+						<ui:param name="matchable"
+								  value="#{voucherMatcherService.findMatchableByFeature(leadHome.featurePointer)}"/>
+                        <ui:param name="group" value="#{leadHome.entity.group}" />
 					</ui:include>
 
 			</div>

@@ -1,0 +1,62 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"               
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                template="/layout/voucherMasterViewBase.xhtml">
+
+    <ui:param name="homeBean" value="#{employeeCreditNoteHome}" />
+
+    <ui:define name="content">     
+
+        <div class="row">
+            <div class="col-md-4 col-xs-12">
+                <t:accordion icon="fa fa-stack-exchange" label="general.label.Summary" columnClass="col-xs-12">
+                    <t:outputFeatureLink label="general.label.Account" 
+                                     value="#{featureController.getFeatureLink(employeeCreditNoteHome.getAllFeaturePointer(employeeCreditNoteHome.entity.employee))}" columnClass="col-xs-12"/>
+                    <t:outputFeatureLink label="general.label.FinanceAccount" 
+                                     value="#{featureController.getFeatureLink(employeeCreditNoteHome.getAllFeaturePointer(employeeCreditNoteHome.entity.financeAccount))}" columnClass="col-xs-12"/>
+                    <t:outputEnum label="employeeCreditNote.label.Type" itemLabel="employeeCreditNote.type.label." value="#{employeeCreditNoteHome.entity.type}" columnClass="col-xs-12"/>
+                    <t:outputMoney label="general.label.Amount" value="#{homeBean.entity.amount}" currency="#{homeBean.entity.currency}" columnClass="col-xs-12"/>
+                    <t:outputMoney label="general.label.LocalAmount" value="#{homeBean.entity.localAmount}" currency="#{homeBean.entity.currency}" columnClass="col-xs-12"/>
+                </t:accordion>
+
+                <t:accordion icon="fa fa-file-text" label="general.label.Voucher" columnClass="col-xs-12">
+                    <t:outputText label="voucher.label.VoucherNo" value="#{homeBean.entity.voucherNo}"  columnClass="col-xs-12"/>
+                    <t:outputText label="voucher.label.ReferenceNo" value="#{homeBean.entity.referenceNo}" columnClass="col-xs-12"/>
+                    <t:outputText label="voucher.label.Owner" value="#{homeBean.entity.owner}" columnClass="col-xs-12"/>
+                    <t:outputTag label="general.label.Tag" value="#{homeBean.entity.tags}" columnClass="col-xs-12"/>
+                    <t:outputText label="general.label.Topic" value="#{homeBean.entity.topic}" columnClass="col-xs-12"/>
+                    <t:outputText label="general.label.Info" value="#{homeBean.entity.info}" columnClass="col-xs-12"/>
+                    <t:outputDate label="hr.label.PaymentDate" value="#{homeBean.entity.paymentDate}" columnClass="col-xs-12"/>
+                    <t:outputDate label="voucher.label.Date" value="#{homeBean.entity.date}" columnClass="col-xs-12"/>
+                </t:accordion>
+            </div>
+
+
+            <div class="col-md-4 col-xs-12">
+
+                <ui:include src="/activities/activityWidget.xhtml">
+                    <ui:param name="person" value="#{homeBean.employee}" />
+                    <ui:param name="corporation" value="#{homeBean.employee.corporation}" />
+                    <ui:param name="feature" value="#{homeBean.featurePointer}" />
+                    <ui:param name="attached" value="Feature" />
+                </ui:include>
+
+                <ui:include src="/notes/noteWidget.xhtml">
+                    <ui:param name="featurePointer" value="#{homeBean.featurePointer}" />
+                </ui:include>
+
+                <ui:include src="/feeds/feedWidget.xhtml">
+                    <ui:param name="feature" value="#{homeBean.featureClass.simpleName}" />
+                    <ui:param name="pk" value="#{homeBean.entity.id}" />
+                </ui:include>
+
+            </div>
+
+        </div>
+
+    </ui:define>
+
+</ui:composition>

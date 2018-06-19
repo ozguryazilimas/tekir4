@@ -110,4 +110,10 @@
     <changeSet author="oyas (generated)" id="1506279953350-4">
         <addForeignKeyConstraint baseColumnNames="PROCESS_ID" baseTableName="TCO_OPPOTUNITY" constraintName="FK_PROSS_VOG" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TVO_PROCESS"/>
     </changeSet>
+    <changeSet author="hates" id="070520181133">
+        <renameColumn tableName="TCO_OPPOTUNITY" columnDataType="VARCHAR(2000)" newColumnName="TAGS" oldColumnName="CODE" />
+    </changeSet>
+    <changeSet author="soner.cirit" id="20180529-1">
+        <modifyDataType columnName="TXNDATE" newDataType="date" tableName="TCO_OPPOTUNITY"/>
+    </changeSet>
 </databaseChangeLog>

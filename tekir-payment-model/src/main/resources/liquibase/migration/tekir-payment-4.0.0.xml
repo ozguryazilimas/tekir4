@@ -39,4 +39,10 @@
             <column name="LOCAL_AMOUNT" type="decimal(19, 2)"/>
         </addColumn>
     </changeSet>
+    <changeSet author="hates" id="070520181135">
+        <renameColumn tableName="TPC_PAYMENT" columnDataType="VARCHAR(2000)" newColumnName="TAGS" oldColumnName="CODE" />
+    </changeSet>
+    <changeSet author="soner.cirit" id="20180529-1">
+        <modifyDataType columnName="TXNDATE" newDataType="date" tableName="TPC_PAYMENT"/>
+    </changeSet>
 </databaseChangeLog>

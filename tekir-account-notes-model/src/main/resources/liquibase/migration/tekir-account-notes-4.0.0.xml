@@ -184,4 +184,18 @@
     <changeSet author="oktay (generated)" id="1497628531346-4">
         <dropColumn columnName="PROCESS_ID" tableName="TAN_VIREMENT"/>
     </changeSet>
+    <changeSet author="hates" id="040520181807">
+        <renameColumn tableName="TAN_CREDIT_NOTE" columnDataType="VARCHAR(2000)" newColumnName="TAGS" oldColumnName="CODE" />
+        <renameColumn tableName="TAN_DEBIT_NOTE" columnDataType="VARCHAR(2000)" newColumnName="TAGS" oldColumnName="CODE" />
+        <renameColumn tableName="TAN_VIREMENT" columnDataType="VARCHAR(2000)" newColumnName="TAGS" oldColumnName="CODE" />
+    </changeSet>
+    <changeSet author="soner.cirit" id="20180529-1">
+        <modifyDataType columnName="TXNDATE" newDataType="date" tableName="TAN_CREDIT_NOTE"/>
+    </changeSet>
+    <changeSet author="soner.cirit" id="20180529-2">
+        <modifyDataType columnName="TXNDATE" newDataType="date" tableName="TAN_DEBIT_NOTE"/>
+    </changeSet>
+    <changeSet author="soner.cirit" id="20180529-3">
+        <modifyDataType columnName="TXNDATE" newDataType="date" tableName="TAN_VIREMENT"/>
+    </changeSet>
 </databaseChangeLog>

@@ -17,7 +17,7 @@
             <div class="col-md-6">
                 <div class="row">
                     
-                    <t:inputLookupDialog label="contact.label.CorparationType" value="#{quickCorporationRecord.entity.corporationType}" lookupBean="#{corporationTypeLookup}" lookupListener="quickCorporationRecord.entity.corporationType" placeholder="#{messages['contact.info.CorporationType']}" />
+                    <t:inputLookupDialog label="contact.label.CorporationType" value="#{quickCorporationRecord.entity.corporationType}" lookupBean="#{corporationTypeLookup}" lookupListener="quickCorporationRecord.entity.corporationType" placeholder="#{messages['contact.info.CorporationType']}" />
                     <t:inputText label="general.label.Name" value="#{quickCorporationRecord.entity.name}" columnClass="col-xs-12" required="true"/>
                     <t:inputText label="general.label.OrganizationName" value="#{quickCorporationRecord.entity.organizastionName}" columnClass="col-xs-12" required="true"/>
                     <t:inputLookupDialog label="contact.label.PrimaryContact" value="#{quickCorporationRecord.entity.primaryContact}" lookupBean="#{contactLookup}" lookupListener="quickCorporationRecord.entity.primaryContact" placeholder="#{messages['contact.info.PrimaryContact']}" lookupProfile="T:Person"/>
@@ -26,8 +26,8 @@
 
                 <div class="row">
                     
-                    <t:inputText label="contact.label.PrimaryMobile" value="#{bean.mobile}" columnClass="col-sm-6" required="false"/>
-                    <t:inputText label="contact.label.PrimaryEmail" value="#{bean.email}" columnClass="col-sm-6" required="false"/>
+                    <t:inputPhone label="contact.label.PrimaryMobile" value="#{bean.mobile}" columnClass="col-sm-6" required="false"/>
+                    <t:inputEmail label="contact.label.PrimaryEmail" value="#{bean.email}" columnClass="col-sm-6" required="false"/>
                 </div>  
 
             </div>
@@ -41,3 +41,4 @@
     </ui:define>
 
 </ui:composition>
+

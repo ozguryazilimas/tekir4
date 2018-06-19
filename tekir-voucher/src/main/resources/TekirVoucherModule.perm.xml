@@ -2,11 +2,20 @@
 
 <permissions>
     <permissionGroup name="Voucher" order="13">
-        <permission target="voucherGroup" order="1">
-            <entityActions />
+        <permission name="voucherGroup" order="1">
+            <entityActions/>
         </permission>
-        <permission target="process" order="1">
-            <entityActions />
+        <permission name="process" order="1">
+            <entityActions/>
+        </permission>
+        <permission name="voucherSerial" order="4">
+            <entityActions/>
+        </permission>
+    </permissionGroup>
+    <permissionGroup name="Reports">
+        <permission name="processReport">
+            <action name="select"/>
+            <action name="exec"/>
         </permission>
     </permissionGroup>
 </permissions>

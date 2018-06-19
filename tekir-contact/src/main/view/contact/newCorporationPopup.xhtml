@@ -14,7 +14,7 @@
             <div class="row">
                 <t:inputText label="general.label.Code" value="#{bean.contact.code}" columnClass="col-xs-6" required="true"/>
                 <t:inputLookupDialog label="general.label.Category" value="#{newCorporationDialog.contact.category}" lookupBean="#{contactCategoryLookup}" lookupListener="newCorporationDialog.contact.category" placeholder="#{messages['general.info.Category']}" />
-                <t:inputLookupDialog label="contact.label.CorparationType" value="#{newCorporationDialog.contact.corporationType}" lookupBean="#{corporationTypeLookup}" lookupListener="newCorporationDialog.contact.corporationType" placeholder="#{messages['contact.info.CorporationType']}" />
+                <t:inputLookupDialog label="contact.label.CorporationType" value="#{newCorporationDialog.contact.corporationType}" lookupBean="#{corporationTypeLookup}" lookupListener="newCorporationDialog.contact.corporationType" placeholder="#{messages['contact.info.CorporationType']}" />
                 <t:inputLookupDialog label="general.label.Industry" value="#{newCorporationDialog.contact.industry}" lookupBean="#{industryLookup}" lookupListener="newCorporationDialog.contact.industry" placeholder="#{messages['general.info.Industry']}" />
                 <t:inputLookupDialog label="general.label.Territory" value="#{newCorporationDialog.contact.territory}" lookupBean="#{territoryLookup}" lookupListener="newCorporationDialog.contact.territory" placeholder="#{messages['general.info.Territory']}" />
             </div>

@@ -108,9 +108,8 @@ public class VoucherMatcherService implements Serializable {
     public VoucherMatchable findMatchableByFeature( FeaturePointer feature ) {
         return matchableRepository.findAnyByFeature(feature);
     }
-    
-    public List<VoucherMatcher> findMatchersForFeature( FeaturePointer feature ) {
-        VoucherMatchable vm = findMatchableByFeature( feature );
+
+    public List<VoucherMatcher> findMatchersForMatchable(VoucherMatchable vm) {
         if( vm != null ){
             return matcherRepository.findByMatchable(vm);
         }

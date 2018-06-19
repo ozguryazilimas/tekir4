@@ -65,8 +65,8 @@ public abstract class Contact extends AuditBase{
     @Column( name = "NAME")
     @NotNull @BizKey
     private String name;
-    
-    @Column( name = "CODE")
+
+    @Column(name = "CODE", unique = true)
     @NotNull
     private String code;
     

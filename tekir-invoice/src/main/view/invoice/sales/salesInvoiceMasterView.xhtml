@@ -19,6 +19,8 @@
                         <t:outputText label="general.label.PaymentPlan" value="#{salesInvoiceHome.entity.paymentPlan.name}"  columnClass="col-sm-12"/>
                         <t:outputDate label="general.label.ShippingDate" value="#{salesInvoiceHome.entity.shippingDate}"  columnClass="col-sm-12"/>
                         <t:outputText label="general.label.ShippingNote" value="#{salesInvoiceHome.entity.shippingNote}"  columnClass="col-sm-12"/>
+                        <t:outputTime label="invoice.label.InvoiceTime"
+                                      value="#{salesInvoiceHome.entity.time}"/>
                     </t:accordion>
 
                     <ui:include src="/voucher/voucherInfoWidget.xhtml">
@@ -64,9 +66,10 @@
 
                     <ui:include src="/voucher/voucherReleatedWidget.xhtml">
                         <ui:param name="columnClass" value="col-lg-12 col-md-6" />
-                        <ui:param name="featurePointer" value="#{salesInvoiceHome.featurePointer}" />
+                        <ui:param name="matchable"
+                                  value="#{voucherMatcherService.findMatchableByFeature(salesInvoiceHome.featurePointer)}"/>
                         <ui:param name="processNo" value="#{salesInvoiceHome.entity.process.processNo}" />
-                        <ui:param name="groupNo" value="#{salesInvoiceHome.entity.group.groupNo}" />
+                        <ui:param name="group" value="#{salesInvoiceHome.entity.group}" />
                     </ui:include>
 
                     <ui:include src="/feeds/feedWidget.xhtml">

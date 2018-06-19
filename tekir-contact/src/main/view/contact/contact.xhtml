@@ -11,6 +11,13 @@
     <ui:param name="dontShowContentHeader" value="true" />
 
 
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{contactHome.id}" />
+            <f:viewAction action="#{contactHome.initData()}" />
+        </f:metadata>
+    </ui:define>
+    
     <ui:define name="customHeader">
         <section class="content-header">
             <ui:fragment rendered="#{viewState ne ''}" >
@@ -36,23 +43,32 @@
                         <t:inputText label="general.label.FirstName" value="#{contactHome.entity.firstName}" columnClass="col-xs-6" required="true"/>
                         <t:inputText label="general.label.LastName" value="#{contactHome.entity.lastName}" columnClass="col-xs-6" required="true"/>
 
-                    </div>  
+                    </div>
 
                     <div class="row">
-                        <t:inputText label="contact.label.SSN" value="#{contactHome.entity.ssn}" columnClass="col-xs-6" required="false"/>
+                        <t:inputText label="contact.label.UseName"
+                                     value="#{contactHome.entity.useName}" columnClass="col-xs-6"/>
+                        <t:inputEnum itemLabel="gender." hasNullValue="false" columnClass="col-xs-6"
+                                     value="#{contactHome.entity.gender}"
+                                     label="contact.label.Gender"/>
+                    </div>
+
+                    <div class="row">
+                        <t:inputMask label="contact.label.SSN" value="#{contactHome.entity.ssn}"
+                                     columnClass="col-xs-6" required="false" mask="99999999999"/>
                         <t:inputText label="contact.label.JobTitle" value="#{contactHome.entity.jobTitle}" columnClass="col-xs-6" required="false"/>
 
                     </div>  
 
                     <div class="row">
                         <t:inputText label="contact.label.CorporationName" value="#{contactHome.entity.corporationName}" columnClass="col-xs-6" required="false"/>
-                        <t:inputLookupDialog label="general.label.Corporation" value="#{contactHome.entity.corporation}" lookupBean="#{contactLookup}" lookupListener="contactHome.entity.corporation" placeholder="#{messages['general.info.Corparation']}" lookupProfile="T:Corporation"/>
+                        <t:inputLookupDialog label="general.label.Corporation" value="#{contactHome.entity.corporation}" lookupBean="#{contactLookup}" lookupListener="contactHome.entity.corporation" placeholder="#{messages['general.info.Corporation']}" lookupProfile="T:Corporation"/>
                     </div>
                 </ui:fragment>
 
                 <ui:fragment rendered="#{contactHome.entity.class.simpleName eq 'Corporation'}">
                     <div class="row">
-                        <t:inputLookupDialog label="contact.label.CorparationType" value="#{contactHome.entity.corporationType}" lookupBean="#{corporationTypeLookup}" lookupListener="contactHome.entity.corporationType" placeholder="#{messages['contact.info.CorporationType']}" />
+                        <t:inputLookupDialog label="contact.label.CorporationType" value="#{contactHome.entity.corporationType}" lookupBean="#{corporationTypeLookup}" lookupListener="contactHome.entity.corporationType" placeholder="#{messages['contact.info.CorporationType']}" />
                         <t:inputText label="general.label.Name" value="#{contactHome.entity.name}" columnClass="col-xs-12" required="true"/>
                         <t:inputText label="general.label.OrganizationName" value="#{contactHome.entity.organizastionName}" columnClass="col-xs-12" required="true"/>
                         <t:inputLookupDialog label="contact.label.PrimaryContact" value="#{contactHome.entity.primaryContact}" lookupBean="#{contactLookup}" lookupListener="contactHome.entity.primaryContact" placeholder="#{messages['contact.info.PrimaryContact']}" lookupProfile="T:Person"/>
@@ -95,10 +111,24 @@
 
                 <ui:fragment rendered="#{contactHome.isAccount}">
                     <div class="row">
-                        <t:accordion label="contact.label.Account" >
+                        <t:accordion label="contact.label.Account" id="accountForm">
                             <div class="row">
-                                <t:inputText label="contact.label.TaxOffice" value="#{contactHome.entity.taxOffice}" required="true"/>
-                                <t:inputText label="contact.label.TaxNumber" value="#{contactHome.entity.taxNumber}" required="true"/>
+                                <t:inputCheckboxGroup label="contact.label.FirmOrigin">
+                                    <p:selectBooleanCheckbox itemLabel="#{messages['contact.role.INTERNATIONAL']}"
+                                                             value="#{contactHome.isInternational}">
+                                        <p:ajax update=":form:accountForm:accountVariables"
+                                                event="change" process="@this"/>
+                                    </p:selectBooleanCheckbox>
+                                </t:inputCheckboxGroup>
+                                <h:panelGroup id="accountVariables">
+                                    <t:inputText label="contact.label.TaxOffice"
+                                                 value="#{contactHome.entity.taxOffice}"
+                                                 required="#{!contactHome.isInternational}"/>
+                                    <t:inputMask label="contact.label.TaxNumber"
+                                                 value="#{contactHome.entity.taxNumber}"
+                                                 required="#{!contactHome.isInternational}"
+                                                 mask="9999999999?9"/>
+                                </h:panelGroup>
                                 <t:inputText label="contact.label.BankAccount" value="#{contactHome.entity.bankAccount}" required="false"/>
                                 <t:inputCurrency label="general.label.Currency" value="#{contactHome.entity.currency}" required="true"/>
                                 <t:inputCheckbox label="contact.label.VatWithholding" itemLabel="contact.label.Applicable" value="#{contactHome.entity.vatWithholding}" required="false"/>
@@ -129,23 +159,31 @@
                     <t:inputText label="general.label.FirstName" value="#{contactHome.entity.firstName}" columnClass="col-xs-6" required="true"/>
                     <t:inputText label="general.label.LastName" value="#{contactHome.entity.lastName}" columnClass="col-xs-6" required="true"/>
 
-                </div>  
+                </div>
 
                 <div class="row">
-                    <t:inputText label="contact.label.SSN" value="#{contactHome.entity.ssn}" columnClass="col-xs-6" required="false"/>
+                    <t:inputText label="contact.label.UseName"
+                                 value="#{contactHome.entity.useName}" columnClass="col-xs-6"/>
+                    <t:inputEnum itemLabel="gender." hasNullValue="false" columnClass="col-xs-6"
+                                 value="#{contactHome.entity.gender}" label="contact.label.Gender"/>
+                </div>
+
+                <div class="row">
+                    <t:inputMask label="contact.label.SSN" value="#{contactHome.entity.ssn}"
+                                 columnClass="col-xs-6" required="false" mask="99999999999"/>
                     <t:inputText label="contact.label.JobTitle" value="#{contactHome.entity.jobTitle}" columnClass="col-xs-6" required="false"/>
 
                 </div>  
 
                 <div class="row">
                     <t:inputText label="contact.label.CorporationName" value="#{contactHome.entity.corporationName}" columnClass="col-xs-6" required="false"/>
-                    <t:inputLookupDialog label="general.label.Corporation" value="#{contactHome.entity.corporation}" lookupBean="#{contactLookup}" lookupListener="contactHome.entity.corporation" placeholder="#{messages['general.info.Corparation']}" lookupProfile="T:Corporation"/>
+                    <t:inputLookupDialog label="general.label.Corporation" value="#{contactHome.entity.corporation}" lookupBean="#{contactLookup}" lookupListener="contactHome.entity.corporation" placeholder="#{messages['general.info.Corporation']}" lookupProfile="T:Corporation"/>
                 </div>
             </ui:fragment>
 
             <ui:fragment rendered="#{contactHome.entity.class.simpleName eq 'Corporation'}">
                 <div class="row">
-                    <t:inputLookupDialog label="contact.label.CorparationType" value="#{contactHome.entity.corporationType}" lookupBean="#{corporationTypeLookup}" lookupListener="contactHome.entity.corporationType" placeholder="#{messages['contact.info.CorporationType']}" />
+                    <t:inputLookupDialog label="contact.label.CorporationType" value="#{contactHome.entity.corporationType}" lookupBean="#{corporationTypeLookup}" lookupListener="contactHome.entity.corporationType" placeholder="#{messages['contact.info.CorporationType']}" />
                     <t:inputText label="general.label.Name" value="#{contactHome.entity.name}" columnClass="col-xs-12" required="true"/>
                     <t:inputText label="general.label.OrganizationName" value="#{contactHome.entity.organizastionName}" columnClass="col-xs-12" required="true"/>
                     <t:inputLookupDialog label="contact.label.PrimaryContact" value="#{contactHome.entity.primaryContact}" lookupBean="#{contactLookup}" lookupListener="contactHome.entity.primaryContact" placeholder="#{messages['contact.info.PrimaryContact']}" lookupProfile="T:Person"/>
@@ -169,12 +207,29 @@
 
 
             <ui:fragment rendered="#{contactHome.isAccount}">
-                <div class="row">
-                    <t:inputText label="contact.label.TaxOffice" value="#{contactHome.entity.taxOffice}" required="true"/>
-                    <t:inputText label="contact.label.TaxNumber" value="#{contactHome.entity.taxNumber}" required="true"/>
-                    <t:inputText label="contact.label.BankAccount" value="#{contactHome.entity.bankAccount}" required="false"/>
-                    <t:inputCurrency label="general.label.Currency" value="#{contactHome.entity.currency}" required="true"/>
-                </div>
+                <t:accordion label="contact.label.Account" id="accountForm">
+                    <div class="row">
+                        <t:inputCheckboxGroup label="contact.label.FirmOrigin">
+                            <p:selectBooleanCheckbox itemLabel="#{messages['contact.role.INTERNATIONAL']}"
+                                                     value="#{contactHome.isInternational}">
+                                <p:ajax update=":form:accountForm:accountVariables"
+                                        event="change" process="@this"/>
+                            </p:selectBooleanCheckbox>
+                        </t:inputCheckboxGroup>
+                        <h:panelGroup id="accountVariables">
+                            <t:inputText label="contact.label.TaxOffice"
+                                         value="#{contactHome.entity.taxOffice}"
+                                         required="#{!contactHome.isInternational}"/>
+                            <t:inputMask label="contact.label.TaxNumber"
+                                         value="#{contactHome.entity.taxNumber}"
+                                         required="#{!contactHome.isInternational}"
+                                         mask="9999999999?9"/>
+                        </h:panelGroup>
+                        <t:inputText label="contact.label.BankAccount" value="#{contactHome.entity.bankAccount}" required="false"/>
+                        <t:inputCurrency label="general.label.Currency" value="#{contactHome.entity.currency}" required="true"/>
+                        <t:inputCheckbox label="contact.label.VatWithholding" itemLabel="contact.label.Applicable" value="#{contactHome.entity.vatWithholding}" required="false"/>
+                    </div>
+                </t:accordion>
             </ui:fragment>
 
         </ui:remove>

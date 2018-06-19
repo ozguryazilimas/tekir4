@@ -12,6 +12,7 @@ import com.ozguryazilim.tekir.voucher.VoucherViewModel;
 import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -24,11 +25,11 @@ public class AccountNoteViewModel extends VoucherViewModel{
     private Currency currency;
     private BigDecimal amount = BigDecimal.ZERO;
 
-    public AccountNoteViewModel(Long id, String code, String voucherNo, String info, 
-            String referenceNo, Date date, String owner, 
-            VoucherState state, String stateReason, String stateInfo, VoucherGroup group,String topic,
-            Contact account, Currency currency, BigDecimal amount) {
-        super(id, code, voucherNo, info, referenceNo, date, owner, state, stateReason, stateInfo, group, topic);
+    public AccountNoteViewModel(Long id, List<String> tags, String voucherNo, String info,
+                                String referenceNo, Date date, String owner,
+                                VoucherState state, String stateReason, String stateInfo, VoucherGroup group, String topic,
+                                Contact account, Currency currency, BigDecimal amount) {
+        super(id, tags, voucherNo, info, referenceNo, date, owner, state, stateReason, stateInfo, group, topic);
         
         this.account = account;
         this.currency = currency;
@@ -58,6 +59,5 @@ public class AccountNoteViewModel extends VoucherViewModel{
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
-    
-    
+
 }

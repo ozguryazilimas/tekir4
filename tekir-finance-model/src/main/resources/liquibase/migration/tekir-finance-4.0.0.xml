@@ -127,4 +127,27 @@
     <changeSet author="oyas (generated)" id="1482482197773-7">
         <dropColumn columnName="CCY" tableName="TFN_FINANCE_VIREMENT"/>
     </changeSet>
+    <changeSet author="soner.cirit" id="1526381007356-1">
+        <addUniqueConstraint
+            tableName="TFN_FINANCE_ACC"
+            columnNames="CODE"/>
+    </changeSet>
+    <changeSet author="hates" id="070520181117">
+        <renameColumn tableName="TFN_FINANCE_VIREMENT" columnDataType="VARCHAR(2000)" newColumnName="TAGS" oldColumnName="CODE" />
+    </changeSet>
+    <changeSet author="hates" id="300520180842">
+        <renameColumn newColumnName="TAGS" oldColumnName="CODE" columnDataType="varchar(2000)"
+                      tableName="TFN_FINANCE_TXN"/>
+    </changeSet>
+    <changeSet author="soner.cirit" id="20180529-1">
+        <modifyDataType columnName="TXNDATE" newDataType="date" tableName="TFN_FINANCE_VIREMENT"/>
+    </changeSet>
+    <changeSet author="soner.cirit" id="20180529-2">
+        <modifyDataType columnName="TXNDATE" newDataType="date" tableName="TFN_FINANCE_TXN"/>
+    </changeSet>
+    <changeSet author="ercan" id="1525860334003-1">
+        <addColumn tableName="TFN_FINANCE_TXN">
+            <column name="CONTACT_ID" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

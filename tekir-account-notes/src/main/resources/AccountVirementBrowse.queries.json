@@ -1,0 +1,252 @@
+[
+  {
+    "name": "query.AccountVirementBrowse.All",
+    "resultLimit": 100,
+    "rowLimit": 20,
+    "columns": [
+      "date",
+      "voucherNo",
+      "topic",
+      "fromAccount",
+      "toAccount",
+      "info",
+      "owner",
+      "amount"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "amount",
+      "fromAccount",
+      "toAccount",
+      "date"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "owner": "All::",
+      "date": "All::LastTenDays::20180326T0000::Today::20180405T0000",
+      "amount": "All::0",
+      "toAccount": "All::null",
+      "code": "All::null",
+      "fromAccount": "All::null",
+      "topic": "All::null",
+      "state": "All::null",
+      "stateReason": "All::null",
+      "info": "All::null"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  },
+  {
+    "name": "query.AccountVirementBrowse.Draft",
+    "resultLimit": 100,
+    "rowLimit": 20,
+    "columns": [
+      "date",
+      "voucherNo",
+      "topic",
+      "fromAccount",
+      "toAccount",
+      "info",
+      "owner",
+      "amount"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "amount",
+      "fromAccount",
+      "toAccount",
+      "date"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "owner": "All::",
+      "date": "All::LastTenDays::20180326T0000::Today::20180405T0000",
+      "amount": "All::0",
+      "toAccount": "All::null",
+      "code": "All::null",
+      "fromAccount": "All::null",
+      "topic": "All::null",
+      "state": "Equal::DRAFT-NEUTRAL-DRAFT",
+      "stateReason": "All::null",
+      "info": "All::null"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  },
+  {
+    "name": "query.AccountVirementBrowse.Close",
+    "resultLimit": 100,
+    "rowLimit": 20,
+    "columns": [
+      "date",
+      "voucherNo",
+      "topic",
+      "fromAccount",
+      "toAccount",
+      "info",
+      "owner",
+      "amount"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "amount",
+      "fromAccount",
+      "toAccount",
+      "date"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "owner": "All::",
+      "date": "All::LastTenDays::20180326T0000::Today::20180405T0000",
+      "amount": "All::0",
+      "toAccount": "All::null",
+      "code": "All::null",
+      "fromAccount": "All::null",
+      "topic": "All::null",
+      "state": "Equal::CLOSE-NEUTRAL-CLOSE",
+      "stateReason": "All::null",
+      "info": "All::null"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  },
+  {
+    "name": "query.AccountVirementBrowse.Today",
+    "resultLimit": 100,
+    "rowLimit": 20,
+    "columns": [
+      "date",
+      "voucherNo",
+      "topic",
+      "fromAccount",
+      "toAccount",
+      "info",
+      "owner",
+      "amount"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "amount",
+      "fromAccount",
+      "toAccount",
+      "date"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "owner": "All::",
+      "date": "Equal::Today::20170718T0000::Today::20170718T0000",
+      "amount": "All::0",
+      "toAccount": "All::null",
+      "code": "All::null",
+      "fromAccount": "All::null",
+      "topic": "All::null",
+      "state": "All::null",
+      "stateReason": "All::null",
+      "info": "All::null"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  },
+  {
+    "name": "query.AccountVirementBrowse.LastTenDays",
+    "resultLimit": 100,
+    "rowLimit": 20,
+    "columns": [
+      "date",
+      "voucherNo",
+      "topic",
+      "fromAccount",
+      "toAccount",
+      "info",
+      "owner",
+      "amount"
+    ],
+    "filters": [
+      "voucherNo",
+      "code",
+      "info",
+      "topic",
+      "state",
+      "state",
+      "stateReason",
+      "owner",
+      "amount",
+      "fromAccount",
+      "toAccount",
+      "date"
+    ],
+    "filterValues": {
+      "voucherNo": "All::null",
+      "owner": "All::",
+      "date": "In::LastTenDays::20170708T0000::Today::20170718T0000",
+      "amount": "All::0",
+      "toAccount": "All::null",
+      "code": "All::null",
+      "fromAccount": "All::null",
+      "topic": "All::null",
+      "state": "All::null",
+      "stateReason": "All::null",
+      "info": "All::null"
+    },
+    "sorters": [
+      "date",
+      "voucherNo"
+    ],
+    "sorterValues": {
+      "date": "D",
+      "voucherNo": "D"
+    }
+  }
+]
