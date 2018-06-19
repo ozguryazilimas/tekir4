@@ -165,7 +165,7 @@ public abstract class EmployeeLeaveRepository extends VoucherRepositoryBase<Empl
 	private void buildVieModelSelect(CriteriaQuery<EmployeeLeaveViewModel> criteriaQuery, Root<? extends  EmployeeLeave> from) {
         criteriaQuery.multiselect(    
                 from.get(EmployeeLeave_.id),
-                from.get(VoucherBase_.code),
+				from.get("tags"),
                 from.get(VoucherBase_.voucherNo),
                 from.get(VoucherBase_.info),
                 from.get(VoucherBase_.referenceNo),

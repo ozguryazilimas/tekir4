@@ -14,6 +14,7 @@ import com.ozguryazilim.tekir.entities.VoucherState;
 import com.ozguryazilim.tekir.hr.employee.EmployeeViewModel;
 import com.ozguryazilim.tekir.voucher.Voucher;
 import com.ozguryazilim.tekir.voucher.VoucherViewModel;
+import java.util.List;
 
 /**
  * Employee Leave View Model.
@@ -29,11 +30,11 @@ public class EmployeeLeaveViewModel extends VoucherViewModel{
     private Integer leaveDay;  
     
     
-	public EmployeeLeaveViewModel(Long id, String code, String voucherNo, String info, String referenceNo, Date date,
+	public EmployeeLeaveViewModel(Long id, List<String> tags, String voucherNo, String info, String referenceNo, Date date,
 			String owner, VoucherState state, String stateReason, String stateInfo, VoucherGroup group, String topic,
 			Employee employee, Boolean paid, Boolean annual, Date startDate, Date endDate,
 			Integer leaveDay) {
-		super(id, code, voucherNo, info, referenceNo, date, owner, state, stateReason, stateInfo, group, topic);
+		super(id, tags, voucherNo, info, referenceNo, date, owner, state, stateReason, stateInfo, group, topic);
 		this.employee = employee;
 		this.paid = paid;
 		this.annual = annual;
@@ -43,11 +44,11 @@ public class EmployeeLeaveViewModel extends VoucherViewModel{
 	}
 
 
-	public EmployeeLeaveViewModel(Long id, String code, String voucherNo, String info, String referenceNo, Date date,
+	public EmployeeLeaveViewModel(Long id, List<String> tags, String voucherNo, String info, String referenceNo, Date date,
 			String owner, VoucherState state, String stateReason, String stateInfo, Long groupId,String groupNo, String topic,
 			Long employeeId,String employeeName, Boolean paid, Boolean annual, Date startDate, Date endDate, Integer leaveDay) {
-		super(id, code, voucherNo, info, referenceNo, date, owner, state, stateReason, stateInfo, groupId,groupNo, topic);
-		
+		super(id, tags, voucherNo, info, referenceNo, date, owner, state, stateReason, stateInfo, groupId,groupNo, topic);
+
 		this.employee = new Employee();
 		this.employee.setId(employeeId);
 		this.employee.setName(employeeName);

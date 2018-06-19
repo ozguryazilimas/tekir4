@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.tekir.hr.employee.leave;
 
+import com.ozguryazilim.tekir.core.query.filter.TagFilter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -83,7 +84,7 @@ public class EmployeeLeaveBrowse extends VoucherBrowseBase<EmployeeLeave, Employ
         		.addFilter(new DateFilter<>(EmployeeLeave_.startDate, "hr.label.StartDate",FilterOperand.All,DateValueType.LastMonth))
         		.addFilter(new DateFilter<>(EmployeeLeave_.endDate, "hr.label.EndDate",FilterOperand.All,DateValueType.NextMonth))	
         		.addFilter(new IntegerFilter<>(EmployeeLeave_.leaveDay,"hr.label.LeaveDay"))
-        		.addFilter(new StringFilter<>(VoucherBase_.code, "voucher.label.Code"))
+				.addFilter(new TagFilter<>("tags", "general.label.Tag","EmployeeLeave"))
         		.addFilter(new StringFilter<>(VoucherBase_.info, "voucher.label.Info"))
         		.addFilter(new StringFilter<>(VoucherBase_.topic, "voucher.label.Topic"))
                 .addFilter(new VoucherStateFilter<>(VoucherBase_.state, getHome().getStateConfig().getStates(), "general.label.State"))
@@ -105,7 +106,7 @@ public class EmployeeLeaveBrowse extends VoucherBrowseBase<EmployeeLeave, Employ
 	            .addColumn(new TextColumn<>(VoucherBase_.stateInfo, "voucher.label.StateInfo"), false)
 				.addColumn(new TextColumn<>(VoucherBase_.owner, "voucher.label.Owner"), false)
 				.addColumn(new TextColumn<>(VoucherBase_.referenceNo, "voucher.label.ReferenceNo"), false)
-                .addColumn(new TextColumn<>(VoucherBase_.code, "voucher.label.Code"), false)
+				.addFilter(new TagFilter<>("tags", "general.label.Tag","EmployeeLeave"))
                 .addColumn(new TextColumn<>(VoucherBase_.info, "voucher.label.Info"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.stateReason, "voucher.label.StateReason"), false)
                 .addColumn(new TextColumn<>(VoucherBase_.stateInfo, "voucher.label.StateInfo"), false);
