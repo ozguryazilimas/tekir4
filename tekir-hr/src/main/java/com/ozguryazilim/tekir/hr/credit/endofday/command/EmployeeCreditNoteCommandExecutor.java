@@ -60,8 +60,6 @@ public class EmployeeCreditNoteCommandExecutor extends AbstractCommandExecuter<E
             e.setPaymentDate(command.getPaymentDate().getCalculatedValue());
             e.setGroup(command.getGroup());
             e.setState(VoucherState.CLOSE);
-            // Sorun burada
-            // Home sınıfı için de normal bir şekilde scope hatası alıyorum. Ancak burda home u ne kadar kullanmak dogru olur?
             employeeCreditNoteRepository.saveAndFlush(e);
             
         }
