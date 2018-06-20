@@ -19,6 +19,12 @@
         <t:inputMoney label="general.label.Amount" value="#{employeeCreditNoteCommandEditor.command.amount}"  currency="#{employeeCreditNoteCommandEditor.command.currency}" required="true"/>
         <t:inputEnum label="employeeCreditNote.label.Type" value="#{employeeCreditNoteCommandEditor.command.type}" itemLabel="employeeCreditNote.type.label." hasNullValue="false" required="true"/>
         <t:inputLookupDialog label="voucher.label.Group" value="#{employeeCreditNoteCommandEditor.command.group}" caption="topic" lookupBean="#{voucherGroupLookup}" lookupListener="employeeCreditNoteCommandEditor.command.group" placeholder="#{messages['general.info.VoucherGroup']}" />
+        <t:inputReportDate label="voucher.label.Date"
+                           value="#{employeeCreditNoteCommandEditor.command.date}"
+                           columnClass="col-xs-12 col-sm-6"/>
+        <t:inputReportDate label="hr.label.PaymentDate"
+                           value="#{employeeCreditNoteCommandEditor.command.paymentDate}"
+                           columnClass="col-xs-12 col-sm-6"/>
     </div>
 
 

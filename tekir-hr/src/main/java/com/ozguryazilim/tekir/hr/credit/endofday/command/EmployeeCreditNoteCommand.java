@@ -9,6 +9,8 @@ import com.ozguryazilim.tekir.entities.EmployeeCreditNoteType;
 import com.ozguryazilim.tekir.entities.FinanceAccount;
 import com.ozguryazilim.tekir.entities.VoucherGroup;
 import com.ozguryazilim.telve.messagebus.command.AbstractStorableCommand;
+import com.ozguryazilim.telve.query.filters.DateValueType;
+import com.ozguryazilim.telve.reports.ReportDate;
 import java.math.BigDecimal;
 import java.util.Currency;
 
@@ -38,6 +40,10 @@ public class EmployeeCreditNoteCommand extends AbstractStorableCommand {
     private Currency currency;
     
     private BigDecimal amount = BigDecimal.ZERO;
+
+    private ReportDate date = new ReportDate(DateValueType.Today);
+
+    private ReportDate paymentDate = new ReportDate(DateValueType.Today);
 
     public EmployeeCreditNoteType getType() {
         return type;
@@ -94,5 +100,20 @@ public class EmployeeCreditNoteCommand extends AbstractStorableCommand {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
-    
+
+    public ReportDate getDate() {
+        return date;
+    }
+
+    public void setDate(ReportDate date) {
+        this.date = date;
+    }
+
+    public ReportDate getPaymentDate() {
+        return paymentDate;
+    }
+
+    public void setPaymentDate(ReportDate paymentDate) {
+        this.paymentDate = paymentDate;
+    }
 }
