@@ -8,9 +8,12 @@
 
 
     <div class="row">
-        <t:inputLookupDialog label="general.label.FinanceAccount" value="#{employeeCreditNoteCommandEditor.command.financeAccount}" 
-                             lookupBean="#{financeAccountLookup}" lookupListener="employeeCreditNoteCommandEditor.command.financeAccount" 
-                             placeholder="#{messages['general.info.FinanceAccount']}" required="true"/>
+        <t:inputLookupDialog label="general.label.FinanceAccount"
+                             value="#{employeeCreditNoteCommandEditor.command.financeAccount}"
+                             lookupBean="#{financeAccountLookup}"
+                             lookupListener="employeeCreditNoteCommandEditor.command.financeAccount"
+                             placeholder="#{messages['general.info.FinanceAccount']}"
+                             required="true" columnClass="col-xs-12"/>
         <t:inputText label="voucher.label.Topic" value="#{employeeCreditNoteCommandEditor.command.topic}" columnClass="col-xs-12"/>
         <t:inputCurrency label="general.label.Currency" value="#{employeeCreditNoteCommandEditor.command.currency}"  required="true"/>
         <t:inputMoney label="general.label.Amount" value="#{employeeCreditNoteCommandEditor.command.amount}"  currency="#{employeeCreditNoteCommandEditor.command.currency}" required="true"/>
