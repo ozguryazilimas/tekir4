@@ -8,6 +8,7 @@ package com.ozguryazilim.tekir.hr.employee;
 import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.contact.ContactRoleRegistery;
 import com.ozguryazilim.tekir.contact.information.ContactInformationRepository;
+import com.ozguryazilim.tekir.core.code.AutoCodeService;
 import com.ozguryazilim.tekir.entities.ContactInformation;
 import com.ozguryazilim.tekir.entities.Employee;
 import com.ozguryazilim.tekir.hr.config.EmployeePages;
@@ -50,6 +51,9 @@ public class EmployeeHome extends FormBase<Employee, Long> {
     @Inject
     private ContactInformationRepository informationRepository;
 
+    @Inject
+    private AutoCodeService codeService;
+
     private List<String> selectedRoles = new ArrayList<>();
 
     public Class<? extends ViewConfig> newEmployee() {
@@ -57,6 +61,7 @@ public class EmployeeHome extends FormBase<Employee, Long> {
         p.getContactRoles().add("EMPLOYEE");
         p.getContactRoles().add("ACCOUNT");
         p.setOwner(identity.getLoginName());
+        p.setCode(codeService.getNewSerialNumber(Employee.class.getSimpleName()));
         setEntity(p);
         selectedRoles.clear();
         navigationParameterContext.addPageParameter("eid", 0);
