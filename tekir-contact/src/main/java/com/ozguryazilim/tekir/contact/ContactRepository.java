@@ -9,8 +9,11 @@ import com.ozguryazilim.tekir.entities.AbstractPerson;
 import com.ozguryazilim.tekir.entities.ContactCategory_;
 import com.ozguryazilim.tekir.entities.Corporation_;
 import com.ozguryazilim.tekir.entities.Industry_;
+import org.apache.deltaspike.data.api.QueryParam;
 import org.apache.deltaspike.data.api.Repository;
+
 import javax.enterprise.context.Dependent;
+
 import com.ozguryazilim.telve.data.RepositoryBase;
 import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
 import com.ozguryazilim.tekir.entities.Contact;
@@ -23,6 +26,7 @@ import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.Person;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.filters.Filter;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,6 +37,7 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
 import org.apache.deltaspike.data.api.Query;
 
 /**
@@ -49,7 +54,7 @@ public abstract class ContactRepository
         CriteriaSupport<Contact> {
 
     private List<String> ownerFilter;
-    
+
     @Override
     public List<ContactViewModel> browseQuery(QueryDefinition queryDefinition) {
         List<Filter<Contact, ?, ?>> filters = queryDefinition.getFilters();
@@ -57,7 +62,7 @@ public abstract class ContactRepository
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
         //Geriye PersonViewModel dönecek cq'yu ona göre oluşturuyoruz.
         CriteriaQuery<ContactViewModel> criteriaQuery = criteriaBuilder.createQuery(ContactViewModel.class);
-        
+
 
         //From Tabii ki User
         Root<Contact> from = criteriaQuery.from(Contact.class);
@@ -74,26 +79,26 @@ public abstract class ContactRepository
         List<Predicate> predicates = new ArrayList<>();
 
         decorateFilters(filters, predicates, criteriaBuilder, from);
-        
+
         buildSearchTextControl(queryDefinition.getSearchText(), criteriaBuilder, predicates, from);
-        
+
         //Satır bazlı yetki kontrolü
         //Sorun 1: kullanıcı yetkisi owner, group, all mu nasıl öğreneceğiz?
         //Sorun 2: kullanıcı bilgisini nasıl alacağız?
         //Burada contact:select:owner durumu var
         //predicates.add(criteriaBuilder.equal(from.get(Contact_.owner), identity.getLoginName()));
         //Burada da contact:select:group durumu var
-        if( ownerFilter != null ){
+        if (ownerFilter != null) {
             predicates.add(from.get(Contact_.owner).in(ownerFilter));
         }
-        
+
         //Sadece AbstractPerson ve Corporation'lar gelecek. Employee v.b. farklı tipler gelmesin.
         predicates.add(
                 criteriaBuilder.or(
-                        criteriaBuilder.equal(from.type(), Person.class), 
+                        criteriaBuilder.equal(from.type(), Person.class),
                         criteriaBuilder.equal(from.type(), Corporation.class)
-        ));
-        
+                ));
+
         //Oluşan filtreleri sorgumuza ekliyoruz
         criteriaQuery.where(predicates.toArray(new Predicate[]{}));
 
@@ -112,36 +117,37 @@ public abstract class ContactRepository
         return resultList;
     }
 
-    
+
     @Override
     public List<ContactViewModel> lookupQuery(String searchText) {
         return lookupQuery(searchText, null, "");
     }
-    
+
     public List<ContactViewModel> lookupQuery(String searchText, String type) {
         return lookupQuery(searchText, type, "");
     }
-    
-    
-    public List<ContactViewModel> lookupQuery(String searchText, String type, String roles ) {
+
+
+    public List<ContactViewModel> lookupQuery(String searchText, String type, String roles) {
         List<String> rls = Collections.emptyList();
-        if( !Strings.isNullOrEmpty(roles)){
+        if (!Strings.isNullOrEmpty(roles)) {
             rls = Splitter.on(',').omitEmptyStrings().trimResults().splitToList(roles);
-        } 
-        
+        }
+
         return lookupQuery(searchText, type, rls);
     }
+
     /**
      * Contact sorgusu yapar.
-     * 
+     * <p>
      * rol listesini and ile bağlar : Account, Customer verildiyse ikisinin de role lisesinde olmasını kontrol eder.
-     * 
+     *
      * @param searchText code ve ad içerisinde like ile aranır
-     * @param type AbstractPerson/Corporation değerlerine göre tarama yapar
-     * @param roles virgüllerle ayrılmış olan rollere göre sorgu yapar. farklı değerleri and ile bağlar.
-     * @return 
+     * @param type       AbstractPerson/Corporation değerlerine göre tarama yapar
+     * @param roles      virgüllerle ayrılmış olan rollere göre sorgu yapar. farklı değerleri and ile bağlar.
+     * @return
      */
-    public List<ContactViewModel> lookupQuery(String searchText, String type, List<String> roles ) {
+    public List<ContactViewModel> lookupQuery(String searchText, String type, List<String> roles) {
 
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
         //Geriye PersonViewModel dönecek cq'yu ona göre oluşturuyoruz.
@@ -165,7 +171,7 @@ public abstract class ContactRepository
         } else {
             from = criteriaQuery.from(Contact.class);
         }*/
-        
+
         Root<Contact> from = criteriaQuery.from(Contact.class);
         Join<Contact, ContactPhone> pm = from.join(Contact_.primaryMobile, JoinType.LEFT);
         Join<Contact, ContactPhone> pp = from.join(Contact_.primaryPhone, JoinType.LEFT);
@@ -180,53 +186,53 @@ public abstract class ContactRepository
         List<Predicate> predicates = new ArrayList<>();
 
         buildSearchTextControl(searchText, criteriaBuilder, predicates, from);
-        
-        
-        if( !Strings.isNullOrEmpty(type)){
-            switch( type ){
-                case "AbstractPerson" : 
+
+
+        if (!Strings.isNullOrEmpty(type)) {
+            switch (type) {
+                case "AbstractPerson":
                     predicates.add(criteriaBuilder.equal(from.type(), AbstractPerson.class));
                     break;
-                case "Person" : 
+                case "Person":
                     predicates.add(criteriaBuilder.equal(from.type(), Person.class));
                     break;
-                case "Corporation" : 
+                case "Corporation":
                     predicates.add(criteriaBuilder.equal(from.type(), Corporation.class));
                     break;
                 //Her türlü Contact'ı istiyoruz.
-                case "Contact" :
+                case "Contact":
                     break;
-                default : 
+                default:
                     predicates.add(
-                        criteriaBuilder.or( 
-                            criteriaBuilder.equal(from.type(), Person.class), 
-                            criteriaBuilder.equal(from.type(), Corporation.class)
-                        ));
+                            criteriaBuilder.or(
+                                    criteriaBuilder.equal(from.type(), Person.class),
+                                    criteriaBuilder.equal(from.type(), Corporation.class)
+                            ));
                     break;
             }
         } else {
             //Varsayılan olarak sadece Person ve Corporation geri dönecek.
             predicates.add(
-                criteriaBuilder.or( 
-                    criteriaBuilder.equal(from.type(), Person.class), 
-                    criteriaBuilder.equal(from.type(), Corporation.class)
-            ));
+                    criteriaBuilder.or(
+                            criteriaBuilder.equal(from.type(), Person.class),
+                            criteriaBuilder.equal(from.type(), Corporation.class)
+                    ));
         }
       
         /*
         Hibernate bug'ı yüzünden isim kullanıyor ve as ile arama yapıyoruz. Converter annotation'ı ile derdi var.
         https://hibernate.atlassian.net/browse/HHH-10464
         */
-        if( !roles.isEmpty()){
-            roles.forEach(rs -> predicates.add(criteriaBuilder.like(from.get("contactRoles").as(String.class), "%"+ rs +"%")));
+        if (!roles.isEmpty()) {
+            roles.forEach(rs -> predicates.add(criteriaBuilder.like(from.get("contactRoles").as(String.class), "%" + rs + "%")));
         }
-        
+
         //Oluşan filtreleri sorgumuza ekliyoruz
         criteriaQuery.where(predicates.toArray(new Predicate[]{}));
 
-        
+
         criteriaQuery.orderBy(criteriaBuilder.asc(from.get(Contact_.name)));
-        
+
 
         //Haydi bakalım sonuçları alalım
         TypedQuery<ContactViewModel> typedQuery = entityManager().createQuery(criteriaQuery);
@@ -235,7 +241,7 @@ public abstract class ContactRepository
 
         return resultList;
     }
-    
+
     @Override
     public List<Contact> suggestion(String searchText) {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -276,20 +282,22 @@ public abstract class ContactRepository
     public void setOwnerFilter(List<String> ownerFilter) {
         this.ownerFilter = ownerFilter;
     }
-    
-    
+
+
     /**
      * ParentCorporation değeri verilen contact olan contactları bulur
+     *
      * @param contact
-     * @return 
+     * @return
      */
     @Query("select c from Corporation c where parentCorporation = ?1")
-    public abstract List<Contact> findByParentCorporation( Contact contact);
-    
+    public abstract List<Contact> findByParentCorporation(Contact contact);
+
     /**
      * Corporation bilgisi verilen contact olan contactları bulur
+     *
      * @param contact
-     * @return 
+     * @return
      */
     @Query("select c from Person c where corporation = ?1")
     public abstract List<Contact> findByCorporation( Contact contact);
@@ -423,4 +431,12 @@ public abstract class ContactRepository
 
         return resultList;
     }
+
+    /**
+     * https://hibernate.atlassian.net/browse/HHH-9991 çözüldüğünde criteria query yap
+     * @param role
+     * @return
+     */
+    @Query("select c from Contact c where c.contactRoles like concat('%', ?1, '%')")
+    public abstract List<Contact> findByRole(String role);
 }
