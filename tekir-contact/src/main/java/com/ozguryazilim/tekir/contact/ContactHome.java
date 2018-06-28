@@ -209,7 +209,12 @@ public class ContactHome extends FormBase<Contact, Long> {
     public Boolean hasChangeOwnerPermission() {
         return identity.isPermitted(getPermissionDomain() + ":changeOwner:" + getEntity().getOwner());
     }
-    
+    public Boolean hasContactAdressRole() {
+        return identity.isPermitted("contactAddresses" + ":contactAdressRole:" + getEntity().getOwner());       
+    }
+    public Boolean hasContactAddressPermissions(String action, Contact contact) {
+        return identity.isPermitted("contactAddresses" + ":" + action + ":" + getEntity().getOwner());    
+    }
     /**
      * Belge Sahibini değiştirir.
      * @param event 

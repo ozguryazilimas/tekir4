@@ -9,6 +9,13 @@
         <permission name="corporationType">
             <entityActions/>
         </permission>
+        <permission name="contactAddresses" order="1">
+            <action name="select" scope="owner,group"/>
+            <action name="insert" scope="owner,group"/>
+            <action name="update" scope="owner,group"/>
+            <action name="delete" scope="owner,group"/>
+            <action name="contactAdressRole" scope="owner,group"/>
+        </permission>
         <permission name="contactRelation">
             <entityActions/>
         </permission>
