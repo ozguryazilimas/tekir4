@@ -212,7 +212,7 @@ public class ContactHome extends FormBase<Contact, Long> {
     public Boolean hasContactAdressRole() {
         return identity.isPermitted("contactAddresses" + ":contactAdressRole:" + getEntity().getOwner());       
     }
-    public Boolean hasContactAddressPermissions(String action, Contact contact) {
+    public Boolean hasContactAddressPermissions(String action) {
         return identity.isPermitted("contactAddresses" + ":" + action + ":" + getEntity().getOwner());    
     }
     /**

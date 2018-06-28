@@ -11,7 +11,7 @@
 
     <ui:define name="editorContent">
         <div class="row">
-            <t:inputText label="general.label.Address" value="#{bean.entity.address}" rendered="#{(contactHome.hasContactAddressPermissions('update')) and bean.entity.subTypes.isEmpty())}" />
+            <t:inputText label="general.label.Address" value="#{bean.entity.address}" rendered="#{(contactHome.hasContactAdressRole()) or (contactHome.hasContactAddressPermissions('update') and bean.entity.subTypes.isEmpty())}" />
             <t:inputText label="general.label.ZipCode" value="#{bean.entity.zipCode}" />
             <t:inputLookupDialog label="general.label.Location" value="#{addressEditor.entity.location}" lookupBean="#{locationLookup}" lookupListener="addressEditor.entity.location" columnClass="col-md-6 col-xs-12"/>
         </div>
