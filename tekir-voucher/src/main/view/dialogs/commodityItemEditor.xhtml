@@ -12,7 +12,7 @@
             <div class="row">
                 <t:inputLookupDialog label="general.label.Commodity" value="#{voucherCommodityItemEditor.commodity}" lookupBean="#{commodityLookup}" lookupListener="voucherCommodityItemEditor.commodity" placeholder="#{messages['general.label.Commodity']}" columnClass="col-xs-12"/>
                 <t:inputText label="general.label.Info" value="#{voucherCommodityItemEditor.item.info}" columnClass="col-xs-12"/>
-                <p:outputPanel autoUpdate="true">
+                <p:outputPanel><p:autoUpdate/>
                     <ui:fragment rendered="#{not empty voucherCommodityItemEditor.commodity}">
                         <t:inputNumber label="general.label.Quantity" value="#{voucherCommodityItemEditor.item.quantity.amount}" columnClass="col-xs-8">
                             <p:ajax event="blur" listener="#{voucherCommodityItemEditor.onAmountChange()}" />
