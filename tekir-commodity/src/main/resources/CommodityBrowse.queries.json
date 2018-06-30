@@ -31,7 +31,7 @@
       "unitSet": "All::null",
       "price": "All::0",
       "name": "All::null",
-      "active": "Equal::T",
+      "active": "True",
       "category": "All::null",
       "tax3": "All::null",
       "info": "All::null"
@@ -75,7 +75,7 @@
       "unitSet": "All::null",
       "price": "All::0",
       "name": "All::null",
-      "active": "Equal::T",
+      "active": "True",
       "category": "All::null",
       "tax3": "All::null",
       "info": "All::null"
@@ -119,7 +119,7 @@
       "unitSet": "All::null",
       "price": "All::0",
       "name": "All::null",
-      "active": "Equal::F",
+      "active": "False",
       "category": "All::null",
       "tax3": "All::null",
       "info": "All::null"
@@ -163,7 +163,7 @@
       "unitSet": "All::null",
       "price": "All::0",
       "name": "All::null",
-      "active": "Equal::F",
+      "active": "False",
       "category": "All::null",
       "tax3": "All::null",
       "info": "All::null"
@@ -207,7 +207,7 @@
       "unitSet": "All::null",
       "price": "All::0",
       "name": "All::null",
-      "active": "All::T",
+      "active": "All",
       "category": "All::null",
       "tax3": "All::null",
       "info": "All::null"
@@ -251,7 +251,7 @@
       "unitSet": "All::null",
       "price": "All::0",
       "name": "All::null",
-      "active": "All::T",
+      "active": "All",
       "category": "All::null",
       "tax3": "All::null",
       "info": "All::null"
@@ -295,7 +295,7 @@
       "unitSet": "All::null",
       "price": "All::0",
       "name": "All::null",
-      "active": "All::T",
+      "active": "All",
       "category": "All::null",
       "tax3": "All::null",
       "info": "All::null"
@@ -339,7 +339,7 @@
       "unitSet": "All::null",
       "price": "All::0",
       "name": "All::null",
-      "active": "All::T",
+      "active": "All",
       "category": "All::null",
       "tax3": "All::null",
       "info": "All::null"
