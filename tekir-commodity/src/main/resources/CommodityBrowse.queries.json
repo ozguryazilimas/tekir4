@@ -1,354 +1,354 @@
 [
-  {
-    "name": "query.CommodityBrowse.ActivesSortedByName",
-    "resultLimit": 200,
-    "rowLimit": 20,
-    "columns": [
-      "code",
-      "name",
-      "category",
-      "price",
-      "active"
-    ],
-    "filters": [
-      "code",
-      "name",
-      "unitSet",
-      "defaultUnit",
-      "info",
-      "category",
-      "tax1",
-      "tax2",
-      "tax3",
-      "price",
-      "active"
-    ],
-    "filterValues": {
-      "defaultUnit": "All::null",
-      "tax1": "All::null",
-      "tax2": "All::null",
-      "code": "All::null",
-      "unitSet": "All::null",
-      "price": "All::0",
-      "name": "All::null",
-      "active": "Equal::T",
-      "category": "All::null",
-      "tax3": "All::null",
-      "info": "All::null"
+    {
+        "name": "query.CommodityBrowse.ActivesSortedByName",
+        "resultLimit": 200,
+        "rowLimit": 20,
+        "columns": [
+            "code",
+            "name",
+            "category",
+            "price",
+            "active"
+        ],
+        "filters": [
+            "code",
+            "name",
+            "unitSet",
+            "defaultUnit",
+            "info",
+            "category",
+            "tax1",
+            "tax2",
+            "tax3",
+            "price",
+            "active"
+        ],
+        "filterValues": {
+            "defaultUnit": "All::null",
+            "tax1": "All::null",
+            "tax2": "All::null",
+            "code": "All::null",
+            "unitSet": "All::null",
+            "price": "All::0",
+            "name": "All::null",
+            "active": "True",
+            "category": "All::null",
+            "tax3": "All::null",
+            "info": "All::null"
+        },
+        "sorters": [
+            "name"
+        ],
+        "sorterValues": {
+            "name": "A"
+        }
     },
-    "sorters": [
-      "name"
-    ],
-    "sorterValues": {
-      "name": "A"
-    }
-  },
-  {
-    "name": "query.CommodityBrowse.ActivesReverseSortedByPrice",
-    "resultLimit": 200,
-    "rowLimit": 20,
-    "columns": [
-      "code",
-      "name",
-      "category",
-      "price",
-      "active"
-    ],
-    "filters": [
-      "code",
-      "name",
-      "unitSet",
-      "defaultUnit",
-      "info",
-      "category",
-      "tax1",
-      "tax2",
-      "tax3",
-      "price",
-      "active"
-    ],
-    "filterValues": {
-      "defaultUnit": "All::null",
-      "tax1": "All::null",
-      "tax2": "All::null",
-      "code": "All::null",
-      "unitSet": "All::null",
-      "price": "All::0",
-      "name": "All::null",
-      "active": "Equal::T",
-      "category": "All::null",
-      "tax3": "All::null",
-      "info": "All::null"
+    {
+        "name": "query.CommodityBrowse.ActivesReverseSortedByPrice",
+        "resultLimit": 200,
+        "rowLimit": 20,
+        "columns": [
+            "code",
+            "name",
+            "category",
+            "price",
+            "active"
+        ],
+        "filters": [
+            "code",
+            "name",
+            "unitSet",
+            "defaultUnit",
+            "info",
+            "category",
+            "tax1",
+            "tax2",
+            "tax3",
+            "price",
+            "active"
+        ],
+        "filterValues": {
+            "defaultUnit": "All::null",
+            "tax1": "All::null",
+            "tax2": "All::null",
+            "code": "All::null",
+            "unitSet": "All::null",
+            "price": "All::0",
+            "name": "All::null",
+            "active": "True",
+            "category": "All::null",
+            "tax3": "All::null",
+            "info": "All::null"
+        },
+        "sorters": [
+            "price"
+        ],
+        "sorterValues": {
+            "price": "D"
+        }
     },
-    "sorters": [
-      "price"
-    ],
-    "sorterValues": {
-      "price": "D"
-    }
-  },
-  {
-    "name": "query.CommodityBrowse.PassivesSortedByName",
-    "resultLimit": 200,
-    "rowLimit": 20,
-    "columns": [
-      "code",
-      "name",
-      "category",
-      "price",
-      "active"
-    ],
-    "filters": [
-      "code",
-      "name",
-      "unitSet",
-      "defaultUnit",
-      "info",
-      "category",
-      "tax1",
-      "tax2",
-      "tax3",
-      "price",
-      "active"
-    ],
-    "filterValues": {
-      "defaultUnit": "All::null",
-      "tax1": "All::null",
-      "tax2": "All::null",
-      "code": "All::null",
-      "unitSet": "All::null",
-      "price": "All::0",
-      "name": "All::null",
-      "active": "Equal::F",
-      "category": "All::null",
-      "tax3": "All::null",
-      "info": "All::null"
+    {
+        "name": "query.CommodityBrowse.PassivesSortedByName",
+        "resultLimit": 200,
+        "rowLimit": 20,
+        "columns": [
+            "code",
+            "name",
+            "category",
+            "price",
+            "active"
+        ],
+        "filters": [
+            "code",
+            "name",
+            "unitSet",
+            "defaultUnit",
+            "info",
+            "category",
+            "tax1",
+            "tax2",
+            "tax3",
+            "price",
+            "active"
+        ],
+        "filterValues": {
+            "defaultUnit": "All::null",
+            "tax1": "All::null",
+            "tax2": "All::null",
+            "code": "All::null",
+            "unitSet": "All::null",
+            "price": "All::0",
+            "name": "All::null",
+            "active": "False",
+            "category": "All::null",
+            "tax3": "All::null",
+            "info": "All::null"
+        },
+        "sorters": [
+            "name"
+        ],
+        "sorterValues": {
+            "name": "A"
+        }
     },
-    "sorters": [
-      "name"
-    ],
-    "sorterValues": {
-      "name": "A"
-    }
-  },
-  {
-    "name": "query.CommodityBrowse.PassivesReverseSortedByPrice",
-    "resultLimit": 200,
-    "rowLimit": 20,
-    "columns": [
-      "code",
-      "name",
-      "category",
-      "price",
-      "active"
-    ],
-    "filters": [
-      "code",
-      "name",
-      "unitSet",
-      "defaultUnit",
-      "info",
-      "category",
-      "tax1",
-      "tax2",
-      "tax3",
-      "price",
-      "active"
-    ],
-    "filterValues": {
-      "defaultUnit": "All::null",
-      "tax1": "All::null",
-      "tax2": "All::null",
-      "code": "All::null",
-      "unitSet": "All::null",
-      "price": "All::0",
-      "name": "All::null",
-      "active": "Equal::F",
-      "category": "All::null",
-      "tax3": "All::null",
-      "info": "All::null"
+    {
+        "name": "query.CommodityBrowse.PassivesReverseSortedByPrice",
+        "resultLimit": 200,
+        "rowLimit": 20,
+        "columns": [
+            "code",
+            "name",
+            "category",
+            "price",
+            "active"
+        ],
+        "filters": [
+            "code",
+            "name",
+            "unitSet",
+            "defaultUnit",
+            "info",
+            "category",
+            "tax1",
+            "tax2",
+            "tax3",
+            "price",
+            "active"
+        ],
+        "filterValues": {
+            "defaultUnit": "All::null",
+            "tax1": "All::null",
+            "tax2": "All::null",
+            "code": "All::null",
+            "unitSet": "All::null",
+            "price": "All::0",
+            "name": "All::null",
+            "active": "False",
+            "category": "All::null",
+            "tax3": "All::null",
+            "info": "All::null"
+        },
+        "sorters": [
+            "price"
+        ],
+        "sorterValues": {
+            "price": "D"
+        }
     },
-    "sorters": [
-      "price"
-    ],
-    "sorterValues": {
-      "price": "D"
-    }
-  },
-  {
-    "name": "query.CommodityBrowse.All",
-    "resultLimit": 200,
-    "rowLimit": 20,
-    "columns": [
-      "code",
-      "name",
-      "category",
-      "price",
-      "active"
-    ],
-    "filters": [
-      "code",
-      "name",
-      "unitSet",
-      "defaultUnit",
-      "info",
-      "category",
-      "tax1",
-      "tax2",
-      "tax3",
-      "price",
-      "active"
-    ],
-    "filterValues": {
-      "defaultUnit": "All::null",
-      "tax1": "All::null",
-      "tax2": "All::null",
-      "code": "All::null",
-      "unitSet": "All::null",
-      "price": "All::0",
-      "name": "All::null",
-      "active": "All::T",
-      "category": "All::null",
-      "tax3": "All::null",
-      "info": "All::null"
+    {
+        "name": "query.CommodityBrowse.All",
+        "resultLimit": 200,
+        "rowLimit": 20,
+        "columns": [
+            "code",
+            "name",
+            "category",
+            "price",
+            "active"
+        ],
+        "filters": [
+            "code",
+            "name",
+            "unitSet",
+            "defaultUnit",
+            "info",
+            "category",
+            "tax1",
+            "tax2",
+            "tax3",
+            "price",
+            "active"
+        ],
+        "filterValues": {
+            "defaultUnit": "All::null",
+            "tax1": "All::null",
+            "tax2": "All::null",
+            "code": "All::null",
+            "unitSet": "All::null",
+            "price": "All::0",
+            "name": "All::null",
+            "active": "All",
+            "category": "All::null",
+            "tax3": "All::null",
+            "info": "All::null"
+        },
+        "sorters": [
+            "name"
+        ],
+        "sorterValues": {
+            "name": "A"
+        }
     },
-    "sorters": [
-      "name"
-    ],
-    "sorterValues": {
-      "name": "A"
-    }
-  },
-  {
-    "name": "query.CommodityBrowse.AllReverseSortedByName",
-    "resultLimit": 200,
-    "rowLimit": 20,
-    "columns": [
-      "code",
-      "name",
-      "category",
-      "price",
-      "active"
-    ],
-    "filters": [
-      "code",
-      "name",
-      "unitSet",
-      "defaultUnit",
-      "info",
-      "category",
-      "tax1",
-      "tax2",
-      "tax3",
-      "price",
-      "active"
-    ],
-    "filterValues": {
-      "defaultUnit": "All::null",
-      "tax1": "All::null",
-      "tax2": "All::null",
-      "code": "All::null",
-      "unitSet": "All::null",
-      "price": "All::0",
-      "name": "All::null",
-      "active": "All::T",
-      "category": "All::null",
-      "tax3": "All::null",
-      "info": "All::null"
+    {
+        "name": "query.CommodityBrowse.AllReverseSortedByName",
+        "resultLimit": 200,
+        "rowLimit": 20,
+        "columns": [
+            "code",
+            "name",
+            "category",
+            "price",
+            "active"
+        ],
+        "filters": [
+            "code",
+            "name",
+            "unitSet",
+            "defaultUnit",
+            "info",
+            "category",
+            "tax1",
+            "tax2",
+            "tax3",
+            "price",
+            "active"
+        ],
+        "filterValues": {
+            "defaultUnit": "All::null",
+            "tax1": "All::null",
+            "tax2": "All::null",
+            "code": "All::null",
+            "unitSet": "All::null",
+            "price": "All::0",
+            "name": "All::null",
+            "active": "All",
+            "category": "All::null",
+            "tax3": "All::null",
+            "info": "All::null"
+        },
+        "sorters": [
+            "name"
+        ],
+        "sorterValues": {
+            "name": "D"
+        }
     },
-    "sorters": [
-      "name"
-    ],
-    "sorterValues": {
-      "name": "D"
-    }
-  },
-  {
-    "name": "query.CommodityBrowse.AllSortedByPrice",
-    "resultLimit": 200,
-    "rowLimit": 20,
-    "columns": [
-      "code",
-      "name",
-      "category",
-      "price",
-      "active"
-    ],
-    "filters": [
-      "code",
-      "name",
-      "unitSet",
-      "defaultUnit",
-      "info",
-      "category",
-      "tax1",
-      "tax2",
-      "tax3",
-      "price",
-      "active"
-    ],
-    "filterValues": {
-      "defaultUnit": "All::null",
-      "tax1": "All::null",
-      "tax2": "All::null",
-      "code": "All::null",
-      "unitSet": "All::null",
-      "price": "All::0",
-      "name": "All::null",
-      "active": "All::T",
-      "category": "All::null",
-      "tax3": "All::null",
-      "info": "All::null"
+    {
+        "name": "query.CommodityBrowse.AllSortedByPrice",
+        "resultLimit": 200,
+        "rowLimit": 20,
+        "columns": [
+            "code",
+            "name",
+            "category",
+            "price",
+            "active"
+        ],
+        "filters": [
+            "code",
+            "name",
+            "unitSet",
+            "defaultUnit",
+            "info",
+            "category",
+            "tax1",
+            "tax2",
+            "tax3",
+            "price",
+            "active"
+        ],
+        "filterValues": {
+            "defaultUnit": "All::null",
+            "tax1": "All::null",
+            "tax2": "All::null",
+            "code": "All::null",
+            "unitSet": "All::null",
+            "price": "All::0",
+            "name": "All::null",
+            "active": "All",
+            "category": "All::null",
+            "tax3": "All::null",
+            "info": "All::null"
+        },
+        "sorters": [
+            "price"
+        ],
+        "sorterValues": {
+            "price": "A"
+        }
     },
-    "sorters": [
-      "price"
-    ],
-    "sorterValues": {
-      "price": "A"
+    {
+        "name": "query.CommodityBrowse.AllReverseSortedByPrice",
+        "resultLimit": 200,
+        "rowLimit": 20,
+        "columns": [
+            "code",
+            "name",
+            "category",
+            "price",
+            "active"
+        ],
+        "filters": [
+            "code",
+            "name",
+            "unitSet",
+            "defaultUnit",
+            "info",
+            "category",
+            "tax1",
+            "tax2",
+            "tax3",
+            "price",
+            "active"
+        ],
+        "filterValues": {
+            "defaultUnit": "All::null",
+            "tax1": "All::null",
+            "tax2": "All::null",
+            "code": "All::null",
+            "unitSet": "All::null",
+            "price": "All::0",
+            "name": "All::null",
+            "active": "All",
+            "category": "All::null",
+            "tax3": "All::null",
+            "info": "All::null"
+        },
+        "sorters": [
+            "price"
+        ],
+        "sorterValues": {
+            "price": "D"
+        }
     }
-  },
-  {
-    "name": "query.CommodityBrowse.AllReverseSortedByPrice",
-    "resultLimit": 200,
-    "rowLimit": 20,
-    "columns": [
-      "code",
-      "name",
-      "category",
-      "price",
-      "active"
-    ],
-    "filters": [
-      "code",
-      "name",
-      "unitSet",
-      "defaultUnit",
-      "info",
-      "category",
-      "tax1",
-      "tax2",
-      "tax3",
-      "price",
-      "active"
-    ],
-    "filterValues": {
-      "defaultUnit": "All::null",
-      "tax1": "All::null",
-      "tax2": "All::null",
-      "code": "All::null",
-      "unitSet": "All::null",
-      "price": "All::0",
-      "name": "All::null",
-      "active": "All::T",
-      "category": "All::null",
-      "tax3": "All::null",
-      "info": "All::null"
-    },
-    "sorters": [
-      "price"
-    ],
-    "sorterValues": {
-      "price": "D"
-    }
-  }
 ]
