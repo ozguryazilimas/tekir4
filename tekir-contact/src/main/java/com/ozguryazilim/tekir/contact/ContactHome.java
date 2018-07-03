@@ -12,6 +12,7 @@ import com.ozguryazilim.tekir.entities.ContactInformation;
 import com.ozguryazilim.tekir.entities.Person;
 import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.AbstractPerson;
+import com.ozguryazilim.tekir.entities.ContactAddress;
 import com.ozguryazilim.tekir.entities.RelatedContact;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
@@ -209,12 +210,21 @@ public class ContactHome extends FormBase<Contact, Long> {
     public Boolean hasChangeOwnerPermission() {
         return identity.isPermitted(getPermissionDomain() + ":changeOwner:" + getEntity().getOwner());
     }
-    public Boolean hasContactAdressRole() {
-        return identity.isPermitted("contactAddresses" + ":contactAdressRole:" + getEntity().getOwner());       
+
+    public Boolean hasContactInfoPermissions(ContactInformation contactInfo, String action) {
+        if (contactInfo instanceof ContactAddress) {
+            Boolean permission = identity.isPermitted("contactAddresses" + ":" + action + ":" + getEntity().getOwner());
+            ContactAddress entity = (ContactAddress) contactInfo;
+            if (!entity.getSubTypes().isEmpty() && !action.equals("contactAdressRole") && !action.equals("insert")) {
+                Boolean subTypePerm = identity.isPermitted("contactAddresses" + ":" + "contactAdressRole" + ":" + getEntity().getOwner());
+                return permission && subTypePerm;
+            }
+            return permission;
+        } else {
+            return true;
+        }
     }
-    public Boolean hasContactAddressPermissions(String action) {
-        return identity.isPermitted("contactAddresses" + ":" + action + ":" + getEntity().getOwner());    
-    }
+
     /**
      * Belge Sahibini değiştirir.
      * @param event 

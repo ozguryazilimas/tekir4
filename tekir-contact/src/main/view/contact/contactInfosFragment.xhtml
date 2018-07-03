@@ -26,7 +26,7 @@
                         </p:commandLink>
                     </li>
                     <li>
-                        <p:commandLink id="aa" action="#{addressEditor.create(contact)}" process="@this" rendered="#{contactHome.hasContactAddressPermissions('insert')}">
+                        <p:commandLink id="aa" action="#{addressEditor.create(contact)}" process="@this" rendered="#{contactHome.hasContactInfoPermissions(contactHome.entity.primaryAddress, 'insert')}">
                             <i class="fa fa-map-o" /> #{messages['contact.button.AddAddress']}
                             <p:ajax event="dialogReturn" update=":ci:contactInfos" partialSubmit="true" process="@this" />   
                         </p:commandLink>
@@ -57,11 +57,11 @@
                         </div>
                         <div class="product-info">
                             <div class="box-tools pull-right">
-                                <p:commandLink action="#{contactInformationController.edit(ci)}" process="@this" styleClass="btn btn-box-tool" rendered="#{contactHome.hasContactAddressPermissions('update')}">
+                                <p:commandLink action="#{contactInformationController.edit(ci)}" process="@this" styleClass="btn btn-box-tool" rendered="#{contactHome.hasContactInfoPermissions(ci,'update')}">
                                     <i class="fa fa-pencil" />
                                     <p:ajax event="dialogReturn" update=":ci:contactInfos" partialSubmit="true" process="@this" />   
                                 </p:commandLink>
-                                <p:commandLink action="#{contactInformationController.delete(ci)}" process="@this" styleClass="btn btn-box-tool" update=":ci:contactInfos" rendered="#{contactHome.hasContactAddressPermissions('delete')}">
+                                <p:commandLink action="#{contactInformationController.delete(ci)}" process="@this" styleClass="btn btn-box-tool" update=":ci:contactInfos" rendered="#{contactHome.hasContactInfoPermissions(ci,'delete')}">
                                     <i class="fa fa-trash" />
                                     <p:confirm header="#{messages['general.caption.Confirm']}" message="#{messages['general.message.confirm.Delete']}" icon="fa fa-2x fa-exclamation-triangle btn-delete" />
                                 </p:commandLink>
@@ -73,7 +73,7 @@
                                     <ui:repeat value="#{ci.roles}" var="item" >
                                         <li><i class="fa fa-tag" /> #{messages['contactInfo.role.'.concat(item)]}</li>
                                     </ui:repeat>
-                                    <ui:repeat value="#{ci.subTypes}" var="item" >
+                                    <ui:repeat value="#{ci.subTypes}" var="item">
                                         <li><i class="fa fa-tag" /> #{messages['contactInfo.role.'.concat(item)]}</li>
                                     </ui:repeat>
                                 </ul>
