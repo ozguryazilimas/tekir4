@@ -26,7 +26,7 @@
                         </p:commandLink>
                     </li>
                     <li>
-                        <p:commandLink id="aa" action="#{addressEditor.create(contact)}" process="@this" rendered="#{contactHome.hasContactInfoPermissions(contactHome.entity.primaryAddress, 'insert')}">
+                        <p:commandLink id="aa" action="#{addressEditor.create(contact)}" process="@this" rendered="#{contactHome.hasContactInfoPermissions(null, 'insert')}">
                             <i class="fa fa-map-o" /> #{messages['contact.button.AddAddress']}
                             <p:ajax event="dialogReturn" update=":ci:contactInfos" partialSubmit="true" process="@this" />   
                         </p:commandLink>

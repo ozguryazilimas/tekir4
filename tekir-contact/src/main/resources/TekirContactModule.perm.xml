@@ -10,7 +10,6 @@
             <entityActions/>
         </permission>
         <permission name="contactAddresses" order="1">
-            <action name="select" scope="owner,group"/>
             <action name="insert" scope="owner,group"/>
             <action name="update" scope="owner,group"/>
             <action name="delete" scope="owner,group"/>
