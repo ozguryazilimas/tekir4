@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="oyas (generated)" id="1531229985890-1">
+        <createTable tableName="TRC_ADVERT">
+            <column name="ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATE_DATE" type="timestamp"/>
+            <column name="UPDATE_DATE" type="timestamp"/>
+            <column name="UPDATE_USER" type="VARCHAR(255)"/>
+            <column name="END_DATE" type="date"/>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="OWNER" type="VARCHAR(255)"/>
+            <column name="SERIAL" type="VARCHAR(255)"/>
+            <column name="SKILLS" type="VARCHAR(255)"/>
+            <column name="START_DATE" type="date"/>
+            <column name="STATUS" type="VARCHAR(255)"/>
+            <column name="TOPIC" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1531229985890-2">
+        <createTable tableName="TRC_APPLICATION">
+            <column name="ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATE_DATE" type="timestamp"/>
+            <column name="UPDATE_DATE" type="timestamp"/>
+            <column name="UPDATE_USER" type="VARCHAR(255)"/>
+            <column name="TXNDATE" type="date"/>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="OWNER" type="VARCHAR(255)"/>
+            <column name="STATE" type="VARCHAR(255)"/>
+            <column name="ADVERT_ID" type="BIGINT"/>
+            <column name="APPLICANT_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1531229985890-3">
+        <createTable tableName="TRC_CERTIFICATE">
+            <column name="ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATE_DATE" type="timestamp"/>
+            <column name="UPDATE_DATE" type="timestamp"/>
+            <column name="UPDATE_USER" type="VARCHAR(255)"/>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="ISSUE_DATE" type="date"/>
+            <column name="NAME" type="VARCHAR(255)"/>
+            <column name="CERT_TYPE" type="VARCHAR(255)"/>
+            <column name="APPLICANT_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1531229985890-4">
+        <createTable tableName="TRC_EDUCATION">
+            <column name="ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATE_DATE" type="timestamp"/>
+            <column name="UPDATE_DATE" type="timestamp"/>
+            <column name="UPDATE_USER" type="VARCHAR(255)"/>
+            <column name="END_DATE" type="date"/>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="NAME" type="VARCHAR(255)"/>
+            <column name="START_DATE" type="date"/>
+            <column name="EDU_TYPE" type="VARCHAR(255)"/>
+            <column name="APPLICANT_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1531229985890-5">
+        <createTable tableName="TRC_EVALUATION">
+            <column name="ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATE_DATE" type="timestamp"/>
+            <column name="UPDATE_DATE" type="timestamp"/>
+            <column name="UPDATE_USER" type="VARCHAR(255)"/>
+            <column name="TXNDATE" type="date"/>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="OWNER" type="VARCHAR(255)"/>
+            <column name="RATING" type="INT"/>
+            <column name="STATE" type="VARCHAR(255)"/>
+            <column name="STATE_REASON" type="VARCHAR(255)"/>
+            <column name="TYPE" type="VARCHAR(255)"/>
+            <column name="APPLICANT_ID" type="BIGINT"/>
+            <column name="APPLICATION_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1531229985890-6">
+        <createTable tableName="TRC_WORK_HISTORY">
+            <column name="ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATE_DATE" type="timestamp"/>
+            <column name="UPDATE_DATE" type="timestamp"/>
+            <column name="UPDATE_USER" type="VARCHAR(255)"/>
+            <column name="END_DATE" type="date"/>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="JOB" type="VARCHAR(255)"/>
+            <column name="NAME" type="VARCHAR(255)"/>
+            <column name="START_DATE" type="date"/>
+            <column name="TITLE" type="VARCHAR(255)"/>
+            <column name="WORK_TYPE" type="VARCHAR(255)"/>
+            <column name="APPLICANT_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1531229985890-7">
+        <addPrimaryKey columnNames="ID" constraintName="TRC_ADVERTPK" tableName="TRC_ADVERT"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1531229985890-8">
+        <addPrimaryKey columnNames="ID" constraintName="TRC_APPLICATIONPK" tableName="TRC_APPLICATION"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1531229985890-9">
+        <addPrimaryKey columnNames="ID" constraintName="TRC_CERTIFICATEPK" tableName="TRC_CERTIFICATE"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1531229985890-10">
+        <addPrimaryKey columnNames="ID" constraintName="TRC_EDUCATIONPK" tableName="TRC_EDUCATION"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1531229985890-11">
+        <addPrimaryKey columnNames="ID" constraintName="TRC_EVALUATIONPK" tableName="TRC_EVALUATION"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1531229985890-12">
+        <addPrimaryKey columnNames="ID" constraintName="TRC_WORK_HISTORYPK" tableName="TRC_WORK_HISTORY"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1531229985890-13">
+        <addForeignKeyConstraint baseColumnNames="APPLICANT_ID" baseTableName="TRC_EDUCATION" constraintName="FK_EDU_APPLICANT" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1531229985890-14">
+        <addForeignKeyConstraint baseColumnNames="APPLICATION_ID" baseTableName="TRC_EVALUATION" constraintName="FK_EVAL_APP" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TRC_APPLICATION"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1531229985890-15">
+        <addForeignKeyConstraint baseColumnNames="APPLICANT_ID" baseTableName="TRC_EVALUATION" constraintName="FK_EVAL_APPLICANT" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1531229985890-16">
+        <addForeignKeyConstraint baseColumnNames="ADVERT_ID" baseTableName="TRC_APPLICATION" constraintName="FK_JOBAPP_ADVERT" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TRC_ADVERT"/>
+    </changeSet>
+    <changeSet author="oyas (generated)" id="1531229985890-17">
+        <addForeignKeyConstraint baseColumnNames="APPLICANT_ID" baseTableName="TRC_APPLICATION" constraintName="FK_JOBAPP_APPLICANT" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
+    </changeSet>
+</databaseChangeLog>

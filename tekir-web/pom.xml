@@ -194,6 +194,12 @@
         	<artifactId>tekir-lead-opportunity-linker</artifactId>
         	<version>${version.tekir}</version>
         </dependency>
+        
+        <dependency>
+        	<groupId>com.ozguryazilim.mutfak</groupId>
+        	<artifactId>tekir-recruit</artifactId>
+        	<version>${version.tekir}</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -26,6 +26,7 @@
     <include file="liquibase/tekir-payment.xml" />
     <include file="liquibase/tekir-lead.xml"/>
     <include file="liquibase/tekir-hr.xml"/>
+    <include file="liquibase/tekir-recruit.xml"/>
     
     
     

@@ -348,4 +348,10 @@
     <changeSet author="soner.cirit" id="20180529-1">
         <modifyDataType columnName="TXNDATE" newDataType="date" tableName="TCC_ACCOUNT_TXN"/>
     </changeSet>
+    
+    <changeSet author="huygun" id="20180610-1">
+        <addColumn tableName="TCC_CONTACT">
+            <column name="BIRTH_DATE" type="date" />
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

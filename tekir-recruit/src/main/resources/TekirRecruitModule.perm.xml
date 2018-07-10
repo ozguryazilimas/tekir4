@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<permissions>
+    <permissionGroup name="Contact" order="10">
+        <permission name="contact" order="1">
+            <entityActions scope="owner,group"/>
+            <action name="changeOwner" scope="owner,group" order="15"/>
+        </permission>
+        <permission name="corporationType">
+            <entityActions/>
+        </permission>
+        <permission name="contactRelation">
+            <entityActions/>
+        </permission>
+        <permission name="contactCategory">
+            <entityActions/>
+        </permission>
+        <permission name="accountTxn" order="100">
+            <entityActions/>
+        </permission>
+        <permissionGroup name="Dashlets" order="13">
+            <permission name="activeContactsDashlet">
+                <action name="select" scope="owner,group"/>
+            </permission>
+            <permission name="topAccountsDashlet">
+                <action name="select" scope="owner,group"/>
+            </permission>
+        </permissionGroup>
+    </permissionGroup>
+    <permissionGroup name="Reports">
+        <permission name="accountTxnReport">
+            <action name="select"/>
+            <action name="exec"/>
+        </permission>
+        <permission name="accountStatusReport">
+            <action name="select"/>
+            <action name="exec"/>
+        </permission>
+        <permission name="contactListReport">
+            <action name="select"/>
+            <action name="exec"/>
+        </permission>
+        <permission name="accountStatementReport">
+            <action name="select"/>
+            <action name="exec"/>
+        </permission>
+        <permission name="accountStatusDynaReport">
+            <action name="select"/>
+            <action name="exec"/>
+        </permission>
+    </permissionGroup>
+</permissions>
