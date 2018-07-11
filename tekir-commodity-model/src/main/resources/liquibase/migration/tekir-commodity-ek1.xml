@@ -90,4 +90,10 @@
             tableName="TCO_COMMOTITY"
             columnNames="CODE"/>
     </changeSet>
+    <changeSet id="20180711-29397-1" author="scirit">
+        <customChange class="com.ozguryazilim.telve.query.filters.migration.UserSavedFiltersRemoveValue">
+            <param name="className" value="::query.CommodityBrowse."/>
+            <param name="filter" value="active"/>
+        </customChange>
+    </changeSet>
 </databaseChangeLog>
