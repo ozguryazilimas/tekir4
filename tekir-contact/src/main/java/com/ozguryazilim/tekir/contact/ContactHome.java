@@ -212,17 +212,19 @@ public class ContactHome extends FormBase<Contact, Long> {
     }
 
     public Boolean hasContactInfoPermissions(ContactInformation contactInfo, String action) {
-        Boolean permission = identity.isPermitted("contactAddresses" + ":" + action + ":" + getEntity().getOwner());
-        if (contactInfo instanceof ContactAddress) {//if controlunun yapılmasının tek amacı adresler üzerinde subTypes varsa bu adreslere contactAdressRole permission lazım.          
+        if (contactInfo instanceof ContactAddress) {
+             Boolean permission = identity.isPermitted("contactAddresses" + ":" + action + ":" + getEntity().getOwner());
             ContactAddress entity = (ContactAddress) contactInfo;           
-            if (!entity.getSubTypes().isEmpty() && !action.equals("contactAdressRole") && !action.equals("insert")) {
+            if (!entity.getSubTypes().isEmpty() && !action.equals("contactAdressRole") && !action.equals("insert")) { //if controlunun yapılmasının tek amacı adresler üzerinde subTypes varsa bu adreslere contactAdressRole permission lazım.
                 Boolean subTypePerm = identity.isPermitted("contactAddresses" + ":" + "contactAdressRole" + ":" + getEntity().getOwner());
                 return permission && subTypePerm;
             }
             return permission;
-        }           
+        }
+        else if(contactInfo==null && action!=null)//contactInfo'yu null gönderdiğimiz yerler için
+            return identity.isPermitted("contactAddresses" + ":" + action + ":" + getEntity().getOwner());
         else {
-            return permission;
+            return true;
         }
     }
 
