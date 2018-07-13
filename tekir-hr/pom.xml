@@ -48,6 +48,12 @@
             <artifactId>tekir-voucher</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>tekir-finance</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>
  
