@@ -5,7 +5,7 @@
             <entityActions scope="owner,group"/>
             <action name="changeOwner" scope="owner,group"/>
         </permission>
-        
+
         <permission name="employeeCreditNote">
             <entityActions scope="owner,group" />
             <action name="changeOwner" scope="owner,group" order="7"/>
@@ -16,5 +16,19 @@
             <action name="print" scope="owner,group" order="12" />
         </permission>
     </permissionGroup>
+
+		<permission target="employeeLeave">
+			<entityActions scope="owner,group" />
+			<action name="changeOwner" scope="owner,group" />
+			<action name="publish" scope="owner,group" order="7" />
+			<action name="cancel" scope="owner,group" order="8" />
+			<action name="revise" scope="owner,group" order="9" />
+			<action name="print" scope="owner,group" order="10" />
+			<action name="changeOwner" scope="owner,group" order="11" />
+			<action name="won" scope="owner,group" order="12" />
+			<action name="loss" scope="owner,group" order="13" />
+		</permission>
+
+	</permissionGroup>
 </permissions>
 

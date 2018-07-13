@@ -163,4 +163,11 @@
     <changeSet author="soner.cirit" id="20180529-3">
         <modifyDataType columnName="TXNDATE" newDataType="date" tableName="THR_SALARY_NOTE"/>
     </changeSet>
+    <changeSet author="soner.cirit" id="20180619-24223-1">
+        <modifyDataType columnName="START_DATE" newDataType="date" tableName="THR_LEAVE"/>
+    </changeSet>
+    <changeSet author="soner.cirit" id="20180619-24223-2">
+        <modifyDataType columnName="END_DATE" newDataType="date" tableName="THR_LEAVE"/>
+    </changeSet>
+
 </databaseChangeLog>

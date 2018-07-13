@@ -49,11 +49,11 @@ public class EmployeeLeave extends VoucherBase{
     private Boolean annual = Boolean.TRUE;
     
     @Column(name = "START_DATE")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date startDate;
     
     @Column(name = "END_DATE")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date endDate;
     
     /**
