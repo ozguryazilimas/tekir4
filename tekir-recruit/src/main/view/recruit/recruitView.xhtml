@@ -1,0 +1,34 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/containerViewTabBase.xhtml">
+
+    <ui:param name="bean" value="#{recruitHome}" />
+    <ui:param name="entityName" value="jobAdvert" />
+    <ui:param name="viewIdentifier" value="#{recruitHome.entity.name}" />
+    <ui:param name="showCaption" value="true"/>
+    <ui:param name="dontShowContentHeader" value="true" />
+
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{recruitHome.id}" />
+            <f:viewAction action="#{recruitHome.initData()}" />
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="customHeader">
+        <p:outputLabel value="custom Header" />
+    </ui:define>
+
+    <ui:define name="caption">
+        <p:outputLabel value="caption" />
+    </ui:define>
+
+    <ui:define name="context-menu">
+        <p:outputLabel value="context Menü" />
+    </ui:define>
+
+</ui:composition>
