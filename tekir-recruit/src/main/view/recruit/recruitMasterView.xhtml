@@ -6,8 +6,21 @@
                 xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
                 template="/layout/masterViewBase.xhtml">
 
-    <ui:define name="content">     
-        <p:outputLabel value="content" />
+    <ui:define name="content">
+            
+        <div class="col-xs-12">
+            <p><i class="fa fa-pencil" /><strong>İlan Tanımı</strong></p> 
+            <p>#{recruitHome.entity.info}</p>
+        </div>
+        
+        <div class="col-xs-12">
+            <p><i class="fa fa-pencil" /><strong>Pozisyon Gereksinimleri</strong></p> 
+        </div>
+        <p:dataList value="#{recruitHome.entity.skills}" var="item" type="ordered">
+            #{item}
+        </p:dataList>
+         
+        
     </ui:define>
 
 </ui:composition>

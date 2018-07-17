@@ -21,7 +21,9 @@
         <jar-file>lib/tekir-finance-model-${version.tekir}.jar</jar-file>
         <jar-file>lib/tekir-lead-model-${version.tekir}.jar</jar-file>
         <jar-file>lib/tekir-hr-model-${version.tekir}.jar</jar-file>
-	<jar-file>lib/tekir-recruit-model-${version.tekir}.jar</jar-file>
+        <jar-file>lib/tekir-recruit-model-${version.tekir}.jar</jar-file>
+
+
         <properties>
             <!-- Properties for Hibernate -->
             

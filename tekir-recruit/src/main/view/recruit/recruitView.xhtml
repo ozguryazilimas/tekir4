@@ -20,15 +20,38 @@
     </ui:define>
 
     <ui:define name="customHeader">
-        <p:outputLabel value="custom Header" />
+        <section class="content-header">
+            <p:outputPanel id="states">
+            <ul class="states pull-right">
+                <li role="presentation">
+                    <div style="font-weight: bold;"> İlan Sahibi </div>
+                    <div>
+                        #{recruitHome.entity.owner}
+                    </div>
+                </li>
+                <li role="presentation">
+                    <div style="font-weight: bold;"> Durum </div>
+                    <div>
+                        #{recruitHome.entity.status}
+                    </div>
+                </li>
+            </ul>
+            </p:outputPanel>
+        </section>
     </ui:define>
 
     <ui:define name="caption">
-        <p:outputLabel value="caption" />
+        <div class="row">
+            <t:outputText label="Konu" value="#{recruitHome.entity.topic}" />
+        </div>            
+        <div class="row">
+            <t:outputText label="Başlangıç Tarihi" value="#{recruitHome.entity.startDate}" />
+            <t:outputText label="Bitiş Tarihi" value="#{recruitHome.entity.endDate}" />
+        </div> 
     </ui:define>
 
-    <ui:define name="context-menu">
-        <p:outputLabel value="context Menü" />
+    <ui:define name="context-menu"> 
+          
     </ui:define>
 
 </ui:composition>
