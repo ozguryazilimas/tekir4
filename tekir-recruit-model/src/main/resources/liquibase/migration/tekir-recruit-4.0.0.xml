@@ -3,6 +3,25 @@
                    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    
+    <changeSet author="deniz" id="1531832044987-1">
+        <addColumn tableName="TCC_CONTACT">
+            <column name="SKILLS" type="VARCHAR(255)"/>
+        </addColumn>
+        <addColumn tableName="TCC_CONTACT">
+            <column name="CLASSIFICATIONS" type="VARCHAR(255)"/>
+        </addColumn>
+        <addColumn tableName="TCC_CONTACT">
+            <column name="RATING" type="integer"/>
+        </addColumn>
+        <addColumn tableName="TCC_CONTACT">
+            <column name="MILITARY_DUTY" type="BOOLEAN"/>
+        </addColumn>
+        <addColumn tableName="TCC_CONTACT">
+            <column name="MARRIED" type="BOOLEAN"/>
+        </addColumn>
+    </changeSet>
+    
     <changeSet author="oyas (generated)" id="1531229985890-1">
         <createTable tableName="TRC_ADVERT">
             <column name="ID" type="BIGINT">

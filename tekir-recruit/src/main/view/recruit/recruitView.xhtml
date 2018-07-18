@@ -8,7 +8,7 @@
 
     <ui:param name="bean" value="#{recruitHome}" />
     <ui:param name="entityName" value="jobAdvert" />
-    <ui:param name="viewIdentifier" value="#{recruitHome.entity.name}" />
+    <ui:param name="viewIdentifier" value="Deneme" />
     <ui:param name="showCaption" value="true"/>
     <ui:param name="dontShowContentHeader" value="true" />
 
@@ -37,21 +37,24 @@
                 </li>
             </ul>
             </p:outputPanel>
+            <i class="fa fa-3x #{messages['feature.icon.'.concat(bean.feature.name)]} pull-left" />
+            <small class="text-muted">#{ messages[pageTitleResolver.pageTitle] }</small>
+            <h1>#{messages['contact.class.'.concat(recruitHome.entity.class.simpleName)]}</h1> 
         </section>
     </ui:define>
 
     <ui:define name="caption">
-        <div class="row">
-            <t:outputText label="Konu" value="#{recruitHome.entity.topic}" />
+        <div class="caption-states pull-left">
+            <t:stateOutputText label="Konu" value="#{recruitHome.entity.topic}" />
         </div>            
-        <div class="row">
-            <t:outputText label="Başlangıç Tarihi" value="#{recruitHome.entity.startDate}" />
-            <t:outputText label="Bitiş Tarihi" value="#{recruitHome.entity.endDate}" />
-        </div> 
+        <ul class="caption-states pull-right">
+            <t:stateOutputText label="Başlangıç Tarihi" value="#{recruitHome.entity.startDate}" />
+            <t:stateOutputText label="Bitiş Tarihi" value="#{recruitHome.entity.endDate}" />
+         </ul>
     </ui:define>
 
     <ui:define name="context-menu"> 
-          
+        
     </ui:define>
 
 </ui:composition>

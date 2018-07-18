@@ -7,16 +7,22 @@
                 template="/layout/masterViewBase.xhtml">
 
     <ui:define name="content">
-            
+       
+        <div class="col-xs-12 list-inline">
+            <i class="fa fa-pencil" />
+            <strong>İş Tanımı</strong>
+        </div>
         <div class="col-xs-12">
-            <p><i class="fa fa-pencil" /><strong>İlan Tanımı</strong></p> 
-            <p>#{recruitHome.entity.info}</p>
+            #{recruitHome.entity.info}
         </div>
         
-        <div class="col-xs-12">
-            <p><i class="fa fa-pencil" /><strong>Pozisyon Gereksinimleri</strong></p> 
+  
+        
+        <div class="col-xs-12 list-inline">
+            <i class="fa fa-pencil" />
+            <strong>Genel Nitelikler</strong>
         </div>
-        <p:dataList value="#{recruitHome.entity.skills}" var="item" type="ordered">
+        <p:dataList value="#{recruitHome.entity.skills}" var="item" type="ordered" emptyMessage="Herhangi bir nitelik bulunamadı">
             #{item}
         </p:dataList>
          
