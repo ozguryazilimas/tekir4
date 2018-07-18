@@ -8,25 +8,23 @@
 
     <ui:define name="content">
        
-        <div class="col-xs-12 list-inline">
-            <i class="fa fa-pencil" />
-            <strong>İş Tanımı</strong>
-        </div>
-        <div class="col-xs-12">
-            #{recruitHome.entity.info}
+        <div class="panel panel-default">
+            <div class="panel-heading"> <i class="fa fa-pencil" /> #{messages['general.label.JobDescription']} </div>
+            <div class="panel-body">#{recruitHome.entity.info}</div>
         </div>
         
-  
-        
-        <div class="col-xs-12 list-inline">
-            <i class="fa fa-pencil" />
-            <strong>Genel Nitelikler</strong>
+        <div class="panel panel-default">
+            <div class="panel-heading"> <i class="fa fa-list" /> #{messages['general.label.Skills']} </div>
+            <div class="panel-body">
+                <ui:repeat value="#{recruitHome.entity.skills}" var="item">
+                    <div class="col-xs-12 list-inline">
+                        <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+                        #{item}
+                    </div>  
+                </ui:repeat>
+            </div>
         </div>
-        <p:dataList value="#{recruitHome.entity.skills}" var="item" type="ordered" emptyMessage="Herhangi bir nitelik bulunamadı">
-            #{item}
-        </p:dataList>
-         
-        
+          
     </ui:define>
 
 </ui:composition>

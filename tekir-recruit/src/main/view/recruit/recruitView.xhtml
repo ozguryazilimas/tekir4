@@ -8,7 +8,7 @@
 
     <ui:param name="bean" value="#{recruitHome}" />
     <ui:param name="entityName" value="jobAdvert" />
-    <ui:param name="viewIdentifier" value="Deneme" />
+    <ui:param name="viewIdentifier" value="#{recruitHome.entity.serial}" />
     <ui:param name="showCaption" value="true"/>
     <ui:param name="dontShowContentHeader" value="true" />
 
@@ -24,13 +24,13 @@
             <p:outputPanel id="states">
             <ul class="states pull-right">
                 <li role="presentation">
-                    <div style="font-weight: bold;"> İlan Sahibi </div>
+                    <div style="font-weight: bold;">#{messages['general.label.AdvertOwner']} </div>
                     <div>
                         #{recruitHome.entity.owner}
                     </div>
                 </li>
                 <li role="presentation">
-                    <div style="font-weight: bold;"> Durum </div>
+                    <div style="font-weight: bold;"> #{messages['general.label.Status']} </div>
                     <div>
                         #{recruitHome.entity.status}
                     </div>
@@ -39,18 +39,18 @@
             </p:outputPanel>
             <i class="fa fa-3x #{messages['feature.icon.'.concat(bean.feature.name)]} pull-left" />
             <small class="text-muted">#{ messages[pageTitleResolver.pageTitle] }</small>
-            <h1>#{messages['contact.class.'.concat(recruitHome.entity.class.simpleName)]}</h1> 
+            <h1>#{messages['contact.class.'.concat(recruitHome.entity.class.simpleName)]} <small>[#{ viewIdentifier }]</small> </h1> 
         </section>
     </ui:define>
 
     <ui:define name="caption">
-        <div class="caption-states pull-left">
-            <t:stateOutputText label="Konu" value="#{recruitHome.entity.topic}" />
-        </div>            
-        <ul class="caption-states pull-right">
-            <t:stateOutputText label="Başlangıç Tarihi" value="#{recruitHome.entity.startDate}" />
-            <t:stateOutputText label="Bitiş Tarihi" value="#{recruitHome.entity.endDate}" />
-         </ul>
+        
+        <div class="row">
+            <t:outputText label="general.label.Topic" value="#{recruitHome.entity.topic}" columnClass="col-xs-12 col-md-8"  />
+            <t:outputDate label="#{messages['general.label.EndDate']}" value="#{recruitHome.entity.endDate}" columnClass="col-xs-12 col-md-2 pull-right"/>
+            <t:outputDate label="#{messages['general.label.StartDate']}" value="#{recruitHome.entity.startDate}" columnClass="col-xs-12 col-md-2 pull-right"/>
+        </div>
+       
     </ui:define>
 
     <ui:define name="context-menu"> 
