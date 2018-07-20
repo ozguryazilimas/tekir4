@@ -6,7 +6,7 @@
     
     <changeSet author="deniz" id="1531832044987-1">
         <addColumn tableName="TCC_CONTACT">
-            <column name="SKILLS" type="VARCHAR(255)"/>
+            <column name="SKILLS" type="VARCHAR(2000)"/>
         </addColumn>
         <addColumn tableName="TCC_CONTACT">
             <column name="CLASSIFICATIONS" type="VARCHAR(255)"/>
