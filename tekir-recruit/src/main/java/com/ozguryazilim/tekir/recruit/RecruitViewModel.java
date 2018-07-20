@@ -14,28 +14,28 @@ import java.util.List;
  *
  * @author deniz
  */
-public class RecruitViewModel implements ViewModel, Serializable{
-    
+public class RecruitViewModel implements ViewModel, Serializable {
+
     private Long id;
     private String serial;
     private String topic;
     private String info;
     private Date startDate;
     private Date endDate;
-    private List<String> skills;
     private String owner;
     private String status;
+    private List<String> skills;
 
-    public RecruitViewModel(Long id, String serial, String topic, String info, Date startDate, Date endDate, List<String> skills, String owner, String status) {
+    public RecruitViewModel(Long id, String serial, String topic, String info, Date startDate, Date endDate, String owner, String status, List<String> skills) {
         this.id = id;
         this.serial = serial;
         this.topic = topic;
         this.info = info;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.skills = skills;
         this.owner = owner;
         this.status = status;
+        this.skills = skills;
     }
 
     @Override
@@ -87,14 +87,6 @@ public class RecruitViewModel implements ViewModel, Serializable{
         this.endDate = endDate;
     }
 
-    public List<String> getSkills() {
-        return skills;
-    }
-
-    public void setSkills(List<String> skills) {
-        this.skills = skills;
-    }
-
     public String getOwner() {
         return owner;
     }
@@ -111,10 +103,12 @@ public class RecruitViewModel implements ViewModel, Serializable{
         this.status = status;
     }
 
- 
+    public List<String> getSkills() {
+        return skills;
+    }
 
- 
-   
-    
-    
+    public void setSkills(List<String> skills) {
+        this.skills = skills;
+    }
+
 }
