@@ -221,8 +221,6 @@ public class ContactHome extends FormBase<Contact, Long> {
             }
             return permission;
         }
-        else if(contactInfo==null && action!=null)//contactInfo'yu null gönderdiğimiz yerler için
-            return identity.isPermitted("contactAddresses" + ":" + action + ":" + getEntity().getOwner());
         else {
             return true;
         }
