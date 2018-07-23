@@ -85,7 +85,9 @@ public abstract class RecruitRepository extends
     private void buildSearchTextControl(String searchText, CriteriaBuilder criteriaBuilder, List<Predicate> predicates, Root<? extends JobAdvert> from) {
         if (!Strings.isNullOrEmpty(searchText)) {
             predicates.add(criteriaBuilder.or(criteriaBuilder.like(from.get(JobAdvert_.topic), "%" + searchText + "%"),
-                    criteriaBuilder.like(from.get(JobAdvert_.info), "%" + searchText + "%")));
+                    criteriaBuilder.like(from.get(JobAdvert_.info), "%" + searchText + "%"),
+                    criteriaBuilder.like(from.get(JobAdvert_.owner), "%" + searchText + "%"),
+                    criteriaBuilder.like(from.get(JobAdvert_.status), "%" + searchText + "%")));
         }
     }
 }

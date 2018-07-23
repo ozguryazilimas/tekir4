@@ -39,7 +39,7 @@ public class RecruitBrowse extends BrowseBase<JobAdvert, RecruitViewModel> {
                 .addFilter(new StringFilter<>(JobAdvert_.topic, "general.label.Topic"))
                 .addFilter(new DateFilter<>(JobAdvert_.startDate, "general.label.startDate"))
                 .addFilter(new DateFilter<>(JobAdvert_.endDate, "general.label.endDate"))
-                .addFilter(new TagFilter("skills", "general.label.Skills", "*"))
+                .addFilter(new TagFilter("skills", "general.label.Skills", "Recruit"))
                 .addFilter(new StringFilter<>(JobAdvert_.owner, "general.label.Owner"))
                 .addFilter(new StringFilter<>(JobAdvert_.status, "general.label.Status"));
 
@@ -49,7 +49,7 @@ public class RecruitBrowse extends BrowseBase<JobAdvert, RecruitViewModel> {
                 .addColumn(new TextColumn<>(JobAdvert_.info, "general.label.Info"), true)
                 .addColumn(new DateColumn<>(JobAdvert_.startDate, "general.label.startDate"), true)
                 .addColumn(new DateColumn<>(JobAdvert_.endDate, "general.label.endDate"), true)
-                .addColumn(new DateColumn<>(JobAdvert_.endDate, "general.label.endDate"), true);
+                .addColumn(new TextColumn<>(JobAdvert_.status, "general.label.Status"), true);
 
     }
 
