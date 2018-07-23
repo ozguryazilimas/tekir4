@@ -15,6 +15,6 @@ public class RecruitNavigationSection extends AbstractNavigationSection {
 
     @Override
     public Integer getOrder() {
-        return 100;
+        return 80;
     }
 }
