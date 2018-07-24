@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ozguryazilim.tekir.recruit.config;
 
 import com.ozguryazilim.telve.auth.SecuredPage;
@@ -20,7 +15,6 @@ import org.apache.deltaspike.jsf.api.config.view.View;
 @Folder(name = "./recruit")
 public interface RecruitPages extends Pages {
     
-   
     @View
     @SecuredPage("recruit")
     @PageTitle("module.caption.JobAdvert")
@@ -32,6 +26,5 @@ public interface RecruitPages extends Pages {
     @PageTitle("module.caption.JobAdvertMasterView")
     class RecruitMasterView implements RecruitPages {
     }
-    
-    
+
 }
