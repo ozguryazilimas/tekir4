@@ -26,5 +26,11 @@ public interface RecruitPages extends Pages {
     @PageTitle("module.caption.JobAdvertMasterView")
     class RecruitMasterView implements RecruitPages {
     }
+    
+    @View
+    @SecuredPage("recruit")
+    @PageTitle("module.caption.JobAdvert")
+    class Recruit implements RecruitPages {
+    }
 
 }

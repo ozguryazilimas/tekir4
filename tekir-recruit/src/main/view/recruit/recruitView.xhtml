@@ -46,7 +46,7 @@
     <ui:define name="caption">
         
         <div class="row">
-            <t:outputText label="general.label.Topic" value="#{recruitHome.entity.topic}" columnClass="col-xs-12 col-md-8"  />
+            <t:outputText label="#{messages['general.label.Topic']}" value="#{recruitHome.entity.topic}" columnClass="col-xs-12 col-md-8"  />
             <t:outputDate label="#{messages['general.label.EndDate']}" value="#{recruitHome.entity.endDate}" columnClass="col-xs-12 col-md-2 pull-right"/>
             <t:outputDate label="#{messages['general.label.StartDate']}" value="#{recruitHome.entity.startDate}" columnClass="col-xs-12 col-md-2 pull-right"/>
         </div>
@@ -54,7 +54,18 @@
     </ui:define>
 
     <ui:define name="context-menu"> 
-        
+        <li>
+            <p:commandLink action="#{recruitHome.newAdvert()}" styleClass="context-command" >
+                <i class="fa fa-briefcase"></i>
+                <h:outputText value=" #{messages['recruit.label.AddAdvert']}" />
+            </p:commandLink>
+        </li>
+        <li>
+            <p:commandLink action="#{recruitHome.edit()}" styleClass="context-command" rendered="#{identity.hasPermission( entityName, 'update') and hideEditBtn ne 'true' }">
+                <i class="fa fa-edit"></i>
+                <h:outputText value=" #{messages['general.button.Edit']}" />
+            </p:commandLink>
+        </li>  
     </ui:define>
 
 </ui:composition>

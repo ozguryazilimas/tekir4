@@ -14,6 +14,7 @@ import com.ozguryazilim.telve.feature.PageType;
 @Feature(permission = "recruit", forEntity = JobAdvert.class )
 @Page(type = PageType.VIEW, page = RecruitPages.RecruitView.class )
 @Page(type = PageType.MASTER_VIEW, page = RecruitPages.RecruitMasterView.class)
+@Page( type = PageType.EDIT, page = RecruitPages.Recruit.class )
 public class RecruitFeature extends AbstractFeatureHandler {
     
 }
