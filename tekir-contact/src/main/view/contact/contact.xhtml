@@ -17,7 +17,7 @@
             <f:viewAction action="#{contactHome.initData()}" />
         </f:metadata>
     </ui:define>
-    
+
     <ui:define name="customHeader">
         <section class="content-header">
             <ui:fragment rendered="#{viewState ne ''}" >
@@ -84,7 +84,7 @@
                             <t:inputDialog label="contact.label.PrimaryPhone" value="#{contactHome.entity.primaryPhone.caption}" action="#{phoneEditor.editPrimaryPhone(contactHome.entity, contactHome.entity.primaryPhone)}" icon="fa fa-phone"/>
                             <t:inputDialog label="contact.label.PrimaryFax" value="#{contactHome.entity.primaryFax.caption}" action="#{phoneEditor.editPrimaryFax(contactHome.entity, contactHome.entity.primaryFax)}" icon="fa fa-fax"/>
                             <t:inputDialog label="contact.label.PrimaryEmail" value="#{contactHome.entity.primaryEmail.caption}" action="#{emailEditor.editPrimaryEmail(contactHome.entity, contactHome.entity.primaryEmail)}" icon="fa fa-envelope-o"/>
-                            <t:inputDialog label="contact.label.PrimaryAddress" value="#{contactHome.entity.primaryAddress.caption}" action="#{addressEditor.editPrimaryAddress(contactHome.entity, contactHome.entity.primaryAddress)}" icon="fa fa-map-o" rendered="#{(contactHome.hasContactInfoPermissions(contactHome.entity.primaryAddress,'update') and (contactHome.entity.id!=null)) or (contactHome.hasContactInfoPermissions(contactHome.entity.primaryAddress,'insert') and (contactHome.entity.id==null))}" />
+                            <t:inputDialog label="contact.label.PrimaryAddress" value="#{contactHome.entity.primaryAddress.caption}" action="#{addressEditor.editPrimaryAddress(contactHome.entity, contactHome.entity.primaryAddress)}" icon="fa fa-map-o" rendered="#{(contactHome.hasContactInfoPermissions(contactHome.getnewContactAddress(),'update') and (contactHome.entity.id!=null)) or (contactHome.hasContactInfoPermissions(contactHome.getnewContactAddress(),'insert') and (contactHome.entity.id==null))}" />
                             <t:inputDialog label="contact.label.PrimaryBank" value="#{contactHome.entity.primaryBank.caption}" action="#{bankEditor.editPrimaryBank(contactHome.entity, contactHome.entity.primaryBank)}" icon="fa fa-bank"/>
                         </div>
                     </t:accordion>
@@ -92,7 +92,7 @@
             </div>
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    
+
                     <t:inputLookupDialog label="general.label.Industry" value="#{contactHome.entity.industry}" lookupBean="#{industryLookup}" lookupListener="contactHome.entity.industry" placeholder="#{messages['general.info.Industry']}" />
                     <t:inputLookupDialog label="general.label.Territory" value="#{contactHome.entity.territory}" lookupBean="#{territoryLookup}" lookupListener="contactHome.entity.territory" placeholder="#{messages['general.info.Territory']}" />
                 </div>

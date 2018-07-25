@@ -36,19 +36,18 @@ import org.primefaces.event.SelectEvent;
  *
  * @author
  */
-@FormEdit( feature = ContactFeature.class )
+@FormEdit(feature = ContactFeature.class)
 public class ContactHome extends FormBase<Contact, Long> {
 
     @Inject
     private Identity identity;
-    
+
     @Inject
     private ViewNavigationHandler viewNavigationHandler;
-    
+
     @Inject
     private NavigationParameterContext navigationParameterContext;
 
-    
     @Inject
     private ContactRepository repository;
 
@@ -57,10 +56,10 @@ public class ContactHome extends FormBase<Contact, Long> {
 
     @Inject
     private RelatedContactRepository relatedContactRepository;
-    
+
     @Inject
     private AutoCodeService codeService;
-    
+
     private List<String> selectedRoles = new ArrayList<>();
 
     public Class<? extends ViewConfig> newPerson() {
@@ -103,41 +102,37 @@ public class ContactHome extends FormBase<Contact, Long> {
 
         //Şimdi kullanıcın seçtiklerini ekleyelim
         ls.addAll(selectedRoles);
-        
+
         //Şimdi de yeni durumu yerleştirelim.
-        getEntity().getContactRoles().clear(); 
+        getEntity().getContactRoles().clear();
         getEntity().getContactRoles().addAll(ls);
-        
+
         return super.onBeforeSave(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean onAfterSave() {
-        return super.onAfterSave(); 
+        return super.onAfterSave();
     }
-    
-    
 
     @Override
     public boolean onAfterLoad() {
-        
+
         //FIXME: Burayı generic bir hale getirmek lazım                
-        if( !identity.isPermitted("contact:select:" + getEntity().getOwner())){
+        if (!identity.isPermitted("contact:select:" + getEntity().getOwner())) {
             FacesMessages.error("facesMessages.error.NoPermission");
             createNew();
             viewNavigationHandler.navigateTo(ContactPages.ContactBrowse.class);
             return false;
         }
-        
+
         selectedRoles = getEntity().getContactRoles().stream()
-                            .filter(p -> getContactRoles().contains(p))
-                            .collect(Collectors.toList());
-        
+                .filter(p -> getContactRoles().contains(p))
+                .collect(Collectors.toList());
+
         return super.onAfterLoad();
     }
 
-    
-    
     @Override
     protected RepositoryBase<Contact, ContactViewModel> getRepository() {
         return repository;
@@ -152,16 +147,15 @@ public class ContactHome extends FormBase<Contact, Long> {
         return informationRepository.findByContact(getEntity());
     }
 
-    
     public List<RelatedContact> getRelatedContacts() {
-        return relatedContactRepository.findBySourceContact( getEntity());
+        return relatedContactRepository.findBySourceContact(getEntity());
     }
-    
+
     //TODO:Method ismini düzeltelim
     public List<RelatedContact> getRelatedContactsRevers() {
-        return relatedContactRepository.findByTargetContact( getEntity());
+        return relatedContactRepository.findByTargetContact(getEntity());
     }
-    
+
     public List<String> getContactRoles() {
         return ContactRoleRegistery.getSelectableContactRoles();
     }
@@ -173,39 +167,41 @@ public class ContactHome extends FormBase<Contact, Long> {
     public void setSelectedRoles(List<String> selectedRoles) {
         this.selectedRoles = selectedRoles;
     }
-    
+
     /**
      * Seçili olan contact'ı bir account'a çevirmek için accout home'a gönder.
      */
-    public Class<? extends ViewConfig> convertToAccount(){
+    public Class<? extends ViewConfig> convertToAccount() {
         getEntity().getContactRoles().add("ACCOUNT");
         //repository.save(getEntity());
         return getEditPage();
     }
-    
-    
-    public Boolean getIsAccount(){
+
+    public Boolean getIsAccount() {
         return getEntity().getContactRoles().contains("ACCOUNT");
     }
-    
-    public Class<? extends FeatureHandler> getFeatureClass(){
+
+    public Class<? extends FeatureHandler> getFeatureClass() {
         return FeatureRegistery.getFeatureClass(getEntity().getClass());
     }
-    
-    public FeaturePointer getFeaturePointer(){
+
+    public FeaturePointer getFeaturePointer() {
         FeaturePointer result = new FeaturePointer();
         result.setBusinessKey(getEntity().getName());
         result.setFeature(getFeatureClass().getSimpleName());
         result.setPrimaryKey(getEntity().getId());
         return result;
     }
+
     // FeatureLink yönlendirmesi
-    public FeaturePointer getAllFeaturePointer(EntityBase contact){
-    		return FeatureUtils.getFeaturePointer(contact);
+    public FeaturePointer getAllFeaturePointer(EntityBase contact) {
+        return FeatureUtils.getFeaturePointer(contact);
     }
+
     /**
      * Belge sahipliğini değiştirme yetkisi var mı?
-     * @return 
+     *
+     * @return
      */
     public Boolean hasChangeOwnerPermission() {
         return identity.isPermitted(getPermissionDomain() + ":changeOwner:" + getEntity().getOwner());
@@ -213,30 +209,32 @@ public class ContactHome extends FormBase<Contact, Long> {
 
     public Boolean hasContactInfoPermissions(ContactInformation contactInfo, String action) {
         if (contactInfo instanceof ContactAddress) {
-             Boolean permission = identity.isPermitted("contactAddresses" + ":" + action + ":" + getEntity().getOwner());
-            ContactAddress entity = (ContactAddress) contactInfo;           
+            Boolean permission = identity.isPermitted("contactAddresses" + ":" + action + ":" + getEntity().getOwner());
+            ContactAddress entity = (ContactAddress) contactInfo;
             if (!entity.getSubTypes().isEmpty() && !action.equals("contactAdressRole") && !action.equals("insert")) { //if controlunun yapılmasının tek amacı adresler üzerinde subTypes varsa bu adreslere contactAdressRole permission lazım.
                 Boolean subTypePerm = identity.isPermitted("contactAddresses" + ":" + "contactAdressRole" + ":" + getEntity().getOwner());
                 return permission && subTypePerm;
             }
             return permission;
-        }
-        else {
+        } else {
             return true;
         }
     }
 
     /**
      * Belge Sahibini değiştirir.
-     * @param event 
+     *
+     * @param event
      */
     public void onOwnerChange(SelectEvent event) {
         String userName = (String) event.getObject();
-        if( Strings.isNullOrEmpty(userName)) return;
+        if (Strings.isNullOrEmpty(userName)) {
+            return;
+        }
         getEntity().setOwner(userName);
         save();
     }
-    
+
     public AbstractPerson getPerson() {
         if (getEntity() instanceof AbstractPerson) {
             return (AbstractPerson) getEntity();
@@ -246,7 +244,7 @@ public class ContactHome extends FormBase<Contact, Long> {
     }
 
     public Corporation getCorporation() {
-        if (getEntity()instanceof Corporation) {
+        if (getEntity() instanceof Corporation) {
             return (Corporation) getEntity();
         } else {
             return ((AbstractPerson) getEntity()).getCorporation();
@@ -259,11 +257,16 @@ public class ContactHome extends FormBase<Contact, Long> {
 
     public void setIsInternational(Boolean isInternational) {
         if (isInternational) {
-            if( !getIsInternational() ){
+            if (!getIsInternational()) {
                 getEntity().getContactRoles().add("INTERNATIONAL");
             }
         } else {
             getEntity().getContactRoles().remove("INTERNATIONAL");
         }
     }
+
+    public ContactAddress getnewContactAddress() {
+        return new ContactAddress();
+    }
+
 }
