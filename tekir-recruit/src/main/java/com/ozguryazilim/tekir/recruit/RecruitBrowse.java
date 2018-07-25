@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ozguryazilim.tekir.recruit;
 
 import com.ozguryazilim.tekir.core.query.filter.TagFilter;
@@ -50,16 +45,11 @@ public class RecruitBrowse extends BrowseBase<JobAdvert, RecruitViewModel> {
                 .addColumn(new DateColumn<>(JobAdvert_.startDate, "general.label.startDate"), true)
                 .addColumn(new DateColumn<>(JobAdvert_.endDate, "general.label.endDate"), true)
                 .addColumn(new TextColumn<>(JobAdvert_.status, "general.label.Status"), true);
-
     }
-
     @Override
     protected RepositoryBase<JobAdvert, RecruitViewModel> getRepository() {
-
         return recruitRepository;
-
     }
-
     public JobAdvert getJobAdvert() {
         if (getSelectedItem() != null) {
             return recruitRepository.findBy(getSelectedItem().getId());

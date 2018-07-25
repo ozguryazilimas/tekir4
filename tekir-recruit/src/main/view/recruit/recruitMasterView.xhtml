@@ -7,20 +7,24 @@
                 template="/layout/masterViewBase.xhtml">
 
     <ui:define name="content">
-            
-        <div class="col-xs-12">
-            <p><i class="fa fa-pencil" /><strong>İlan Tanımı</strong></p> 
-            <p>#{recruitHome.entity.info}</p>
+       
+        <div class="panel panel-default">
+            <div class="panel-heading"> <i class="fa fa-pencil" /> #{messages['recruit.label.JobDescription']} </div>
+            <div class="panel-body">#{recruitHome.entity.info}</div>
         </div>
         
-        <div class="col-xs-12">
-            <p><i class="fa fa-pencil" /><strong>Pozisyon Gereksinimleri</strong></p> 
+        <div class="panel panel-default">
+            <div class="panel-heading"> <i class="fa fa-list" /> #{messages['recruit.label.Skills']} </div>
+            <div class="panel-body">
+                <ui:repeat value="#{recruitHome.entity.skills}" var="item">
+                    <div class="col-xs-12 list-inline">
+                        <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+                        #{item}
+                    </div>  
+                </ui:repeat>
+            </div>
         </div>
-        <p:dataList value="#{recruitHome.entity.skills}" var="item" type="ordered">
-            #{item}
-        </p:dataList>
-         
-        
+          
     </ui:define>
 
 </ui:composition>
