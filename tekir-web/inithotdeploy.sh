@@ -32,6 +32,7 @@ rm -rf WEB-INF/lib/tekir-payment-4.0.0-SNAPSHOT.jar
 rm -rf WEB-INF/lib/tekir-finance-4.0.0-SNAPSHOT.jar
 rm -rf WEB-INF/lib/tekir-lead-4.0.0-SNAPSHOT.jar
 rm -rf WEB-INF/lib/tekir-hr-4.0.0-SNAPSHOT.jar
+rm -rf WEB-INF/lib/tekir-recruit-4.0.0-SNAPSHOT.jar
 
 
 
@@ -65,6 +66,7 @@ ln -s ~/git/tekir4/tekir-payment/target/classes/ WEB-INF/lib/tekir-payment-4.0.0
 ln -s ~/git/tekir4/tekir-finance/target/classes/ WEB-INF/lib/tekir-finance-4.0.0-SNAPSHOT.jar
 ln -s ~/git/tekir4/tekir-lead/target/classes/ WEB-INF/lib/tekir-lead-4.0.0-SNAPSHOT.jar
 ln -s ~/git/tekir4/tekir-hr/target/classes/ WEB-INF/lib/tekir-hr-4.0.0-SNAPSHOT.jar
+ln -s ~/git/tekir4/tekir-recruit/target/classes/ WEB-INF/lib/tekir-recruit-4.0.0-SNAPSHOT.jar
 
 
 cd ..
