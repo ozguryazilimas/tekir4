@@ -37,7 +37,6 @@ public class ApplicantBrowse extends BrowseBase<Applicant, ApplicantViewModel>{
         queryDefinition
                 .addColumn(new TextColumn<>(Applicant_.firstName, "Applicant.label.FirstName"),true)
                 .addColumn(new TextColumn<>(Applicant_.lastName, "Applicant.label.LastName"),true)
-                .addColumn(new DateColumn<>(Applicant_.birthDate, "Applicant.label.BirthDate"),true)
                 .addColumn(new BooleanColumn<>(Applicant_.married,"Applicant.label.Married","Married."),true)
                 .addColumn(new BooleanColumn<>(Applicant_.militaryDuty,"Applicant.label.militaryDuty","militaryDuty."),true)
                 .addColumn(new EnumColumn(Applicant_.gender,"Applicant.label.Gender","gender."),true)
