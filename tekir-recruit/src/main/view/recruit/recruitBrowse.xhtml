@@ -1,0 +1,33 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"               
+                xmlns:ui="http://java.sun.com/jsf/facelets"               
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"                
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/layout/browseBase.xhtml">
+
+    <ui:param name="bean" value="#{recruitBrowse}" />
+    <ui:param name="advanceEnabled" value="true" />
+    <ui:param name="saveEnabled" value="true" />
+    <ui:param name="filterEnabled" value="true" />
+    <ui:param name="permission" value="recruit" />
+    <ui:param name="showQuickSearch" value="true" />
+    <ui:param name="showDetailPanel" value="true" />
+
+    <ui:define name="beforeColumns">
+        <p:column styleClass="actionColumn">
+            <i class="fa fa-user" />
+        </p:column>
+    </ui:define>
+
+    <ui:define name="detailBar">
+        <div class="row">
+            <t:outputText label="JobAdvert.label.Topic" value="#{recruitBrowse.jobAdvert.topic}" columnClass="col-xs-12" rendered="#{not empty recruitBrowse.jobAdvert.topic}"/>
+            <t:outputText label="JobAdvert.label.Info" value="#{recruitBrowse.jobAdvert.info}" columnClass="col-xs-12" rendered="#{not empty recruitBrowse.jobAdvert.info}"/>
+            <t:outputText label="JobAdvert.label.startDate" value="#{recruitBrowse.jobAdvert.startDate}" columnClass="col-xs-12" rendered="#{not empty recruitBrowse.jobAdvert.startDate}"/>
+            <t:outputText label="JobAdvert.label.endDate" value="#{recruitBrowse.jobAdvert.endDate}" columnClass="col-xs-12" rendered="#{not empty recruitBrowse.jobAdvert.endDate}"/>         
+            <t:outputText label="JobAdvert.label.Owner" value="#{recruitBrowse.jobAdvert.owner}" columnClass="col-xs-12" rendered="#{not empty recruitBrowse.jobAdvert.owner}"/>
+            <t:outputText label="JobAdvert.label.Skills" value="#{recruitBrowse.jobAdvert.skills}" columnClass="col-xs-12" rendered="#{not empty recruitBrowse.jobAdvert.skills}"/>
+            <t:outputText label="JobAdvert.label.Status" value="#{recruitBrowse.jobAdvert.status}" columnClass="col-xs-12" rendered="#{not empty recruitBrowse.jobAdvert.status}"/>
+        </div>
+    </ui:define>
+</ui:composition>
