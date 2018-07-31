@@ -15,6 +15,11 @@
         <permission name="contactCategory">
             <entityActions/>
         </permission>
+        <permission name="contactAddresses" order="1">
+            <action name="insert" scope="owner,group"/>
+            <action name="update" scope="owner,group"/>
+            <action name="delete" scope="owner,group"/>
+        </permission>
         <permission name="accountTxn" order="100">
             <entityActions/>
         </permission>

@@ -12,6 +12,7 @@ import com.ozguryazilim.tekir.entities.ContactInformation;
 import com.ozguryazilim.tekir.entities.Person;
 import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.AbstractPerson;
+import com.ozguryazilim.tekir.entities.ContactAddress;
 import com.ozguryazilim.tekir.entities.RelatedContact;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
@@ -250,4 +251,14 @@ public class ContactHome extends FormBase<Contact, Long> {
             getEntity().getContactRoles().remove("INTERNATIONAL");
         }
     }
+    
+    public boolean hasContactInfoPermission(ContactInformation contactInfo,String action){        
+        
+        if (contactInfo instanceof ContactAddress) {
+            return identity.isPermitted("contactAddresses"+":"+action+":"+getEntity().getOwner());
+        }
+        
+        return false;
+    }
+    
 }

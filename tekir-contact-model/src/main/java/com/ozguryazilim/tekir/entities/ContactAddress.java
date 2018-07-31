@@ -7,6 +7,7 @@ package com.ozguryazilim.tekir.entities;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.bean.ManagedBean;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -21,6 +22,7 @@ import javax.persistence.ManyToOne;
  */
 @Entity
 @DiscriminatorValue(value = "ADR")
+@ManagedBean
 public class ContactAddress extends ContactInformation{
 
 
