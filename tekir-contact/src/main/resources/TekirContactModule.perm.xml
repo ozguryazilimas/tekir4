@@ -19,6 +19,7 @@
             <action name="insert" scope="owner,group"/>
             <action name="update" scope="owner,group"/>
             <action name="delete" scope="owner,group"/>
+            <action name="contactAdressRole" scope="owner,group"/>
         </permission>
         <permission name="accountTxn" order="100">
             <entityActions/>

@@ -18,7 +18,7 @@
                     </p:selectManyCheckbox>
                 </t:inputAny>
 
-                <t:inputAny label="contact.label.SubTypes" columnClass="col-xs-12" rendered="#{not empty bean.entity.acceptedSubTypes}">
+                <t:inputAny label="contact.label.SubTypes" columnClass="col-xs-12" rendered="#{not empty bean.entity.acceptedSubTypes and contactHome.hasContactInfoPermission(contactAddress, 'contactAdressRole')}">
                     <p:selectManyCheckbox value="#{bean.entity.subTypes}" layout="grid" columns="4">
                         <f:selectItems value="#{bean.entity.acceptedSubTypes}" var="item" itemLabel="#{messages['contactInfo.role.'.concat( item )]}" itemValue="#{item}" />
                     </p:selectManyCheckbox>
