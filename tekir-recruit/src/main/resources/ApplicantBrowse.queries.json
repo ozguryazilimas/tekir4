@@ -3,11 +3,13 @@
         "name": "query.ApplicantBrowse.All",
         "resultLimit": 100,
         "rowLimit": 20,
-        "columns": ["firstName", "lastName", "birthDate", "married", "militaryDuty", "gender"],
-        "filters": ["married", "militaryDuty", "rating"],
+        "columns": ["code", "name", "married", "militaryDuty", "primaryMobile", "primaryPhone", "primaryEmail"],
+        "filters": ["code", "name", "married", "militaryDuty", "rating"],
         "filterValues": {
+            "code": "All::null",
             "militaryDuty": "All::T",
-            "rating": "All::0",
+            "name": "All::null",
+            "rating": "All::5",
             "married": "All::T"
         },
         "sorters": [],

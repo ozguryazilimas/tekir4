@@ -1,40 +1,32 @@
 package com.ozguryazilim.tekir.recruit.applicant;
 
-import com.ozguryazilim.telve.entities.ViewModel;
-import java.io.Serializable;
+import com.ozguryazilim.tekir.contact.ContactViewModel;
+import com.ozguryazilim.tekir.entities.Contact;
 import java.util.List;
 
 /**
  *
  * @author yusuf
  */
-public class ApplicantViewModel implements ViewModel,Serializable{
+public class ApplicantViewModel extends ContactViewModel {
 
-    private Long id;
     private List<String> skills;
     private List<String> classifications;
     private Boolean militaryDuty;
     private Integer rating;
     private Boolean married;
 
-    public ApplicantViewModel(Long id,List<String> skills, List<String> classifications, Boolean militaryDuty, Integer rating, Boolean married) {
-        this.id=id;
+    public ApplicantViewModel(Long id, String code, String name, List<String> skills, List<String> classifications,
+            Boolean militaryDuty, Integer rating, Boolean married, String info, Boolean active, Class<? extends Contact> type, Long pmMobileId, 
+    		String pmMobile, Long pmPhoneId, String pmPhone, Long pmEmailId, String pmEmail) {
+        super(id, code, name, info, active, type, pmMobileId, pmMobile, pmPhoneId, pmPhone, pmEmailId, pmEmail);
         this.skills = skills;
         this.classifications = classifications;
         this.militaryDuty = militaryDuty;
         this.rating = rating;
         this.married = married;
     }
-    
-    @Override
-    public Long getId() {
-        return id;
-    }
-    
-    public void setId(Long id) {
-        this.id = id;
-    }
-    
+
     public List<String> getSkills() {
         return skills;
     }
@@ -74,5 +66,5 @@ public class ApplicantViewModel implements ViewModel,Serializable{
     public void setMarried(Boolean married) {
         this.married = married;
     }
-    
+
 }
