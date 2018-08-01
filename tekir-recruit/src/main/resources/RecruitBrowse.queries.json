@@ -1,0 +1,34 @@
+[
+    {
+        "name": "query.RecruitBrowse.All",
+        "resultLimit": 100,
+        "rowLimit": 20,
+        "columns": [
+            "serial",
+            "topic",
+            "info",
+            "startDate",
+            "endDate"
+        ],
+        "filters": [
+            "info",
+            "topic",
+            "startDate",
+            "endDate",
+            "owner",
+            "status"
+        ],
+        "filterValues": {
+            "owner": "All::null",
+            "endDate": "All::LastTenDays::20180710T0000::Today::20180720T0000",
+            "topic": "All::null",
+            "startDate": "All::LastTenDays::20180710T0000::Today::20180720T0000",
+            "info": "All::null",
+            "status": "All::null"
+        },
+        "sorters": ["topic"],
+        "sorterValues": {
+            "topic": "D"
+        }
+    }
+]
