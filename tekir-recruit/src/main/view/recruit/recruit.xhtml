@@ -31,31 +31,16 @@
     </ui:define>
 
     <ui:define name="form">
-
-        <div class="row">
-            <t:inputText label="#{messages['general.label.SerialNumber']}" value="#{recruitHome.entity.serial}" columnClass="col-xs-12 col-md-3" required="true"/>
-            <t:inputCombobox label="#{messages['general.label.Status']}" value="#{recruitHome.entity.status}" columnClass="col-xs-12 col-md-3" last="true" required="true" >
-                <f:selectItem itemLabel="#{messages['general.value.NotSelected']}" itemValue="" />
-                <f:selectItem itemLabel="#{messages['recruit.label.StatusDraft']}" itemValue="draft" />
-                <f:selectItem itemLabel="#{messages['recruit.label.StatusOpen']}" itemValue="open" />
-                <f:selectItem itemLabel="#{messages['recruit.label.StatusClose']}" itemValue="close" />
-            </t:inputCombobox>
-        </div>
-        <div class="row">
-            <t:inputDate label="#{messages['general.label.StartDate']}" value="#{recruitHome.entity.startDate }"  columnClass="col-md-3 col-xs-6" />
-            <t:inputDate label="#{messages['general.label.EndDate']}" value="#{recruitHome.entity.endDate }"  columnClass="col-md-3 col-xs-6" />
-            
-        </div>
-        <div class="row">
-            <t:inputText label="#{messages['general.label.Topic']}" value="#{recruitHome.entity.topic}" columnClass="col-md-6 col-xs-12" />  
-        </div>
-        <div class="row">
+        <div class="row col-xs-12 col-md-3">
+            <t:inputText label="#{messages['general.label.SerialNumber']}" value="#{recruitHome.entity.serial}" columnClass="col-md-12" required="true"/>
+            <t:inputDate label="#{messages['general.label.StartDate']}" value="#{recruitHome.entity.startDate }"  columnClass="col-md-12 col-xs-6" />
+            <t:inputDate label="#{messages['general.label.EndDate']}" value="#{recruitHome.entity.endDate }"  columnClass="col-md-12 col-xs-6" />
+        </div>     
+        <div class="row col-xs-12 col-md-9">
+            <t:inputText label="#{messages['general.label.Topic']}" value="#{recruitHome.entity.topic}" columnClass="col-md-12" />  
             <t:inputTextarea label="#{messages['recruit.label.JobDescription']}" value="#{recruitHome.entity.info}" columnClass="col-md-12" />  
+            <t:inputTag label="#{messages['recruit.label.Skills']}" value="#{recruitHome.entity.skills}" columnClass="col-md-12" />            
         </div>
-        <div class="row">
-            <t:inputTag label="#{messages['recruit.label.Skills']}" value="#{recruitHome.entity.skills}" columnClass="col-xs-12" />            
-        </div>
-        
     </ui:define> 
 
 </ui:composition>
