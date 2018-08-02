@@ -27,17 +27,19 @@ public class ApplicantBrowse extends BrowseBase<Applicant, ApplicantViewModel>{
 
     @Inject
     private ApplicantRepository applicantRepository;
+    
+    private Integer ratingLength=5;
       
     @Override
     protected void buildQueryDefinition(QueryDefinition<Applicant, ApplicantViewModel> queryDefinition) {
         queryDefinition
                 .addFilter(new StringFilter<>(Contact_.code, "general.label.Code"))
                 .addFilter(new StringFilter<>(Contact_.name, "general.label.Name"))
-                .addFilter(new TagFilter<>("skills", "Applicant.label.Skills", "Applicant"))
-                .addFilter(new TagFilter<>("classifications", "Applicant.label.Classifications", "Applicant"))
+               // .addFilter(new TagFilter<>("skills", "Applicant.label.Skills", "Applicant"))
+                //.addFilter(new TagFilter<>("classifications", "Applicant.label.Classifications", "Applicant"))
                 .addFilter(new BooleanFilter<>(Applicant_.married, "Applicant.label.Married", "Married."))
                 .addFilter(new BooleanFilter<>(Applicant_.militaryDuty, "Applicant.label.militaryDuty", "militaryDuty."))             
-                .addFilter(new RatingFilter<>(Applicant_.rating,"Applicant.label.Rating",0,5));                       
+                .addFilter(new RatingFilter<>(Applicant_.rating,"Applicant.label.Rating",0,ratingLength));                       
                 
         queryDefinition
                 .addColumn(new LinkColumn<>(Contact_.code, "general.label.Code"), true)
@@ -61,5 +63,15 @@ public class ApplicantBrowse extends BrowseBase<Applicant, ApplicantViewModel>{
         } else {
             return null;
         }
-    }     
+    }
+
+    public Integer getRatingLength() {
+        return ratingLength;
+    }
+
+    public void setRatingLength(Integer ratingLength) {
+        this.ratingLength = ratingLength;
+    }
+
+     
 }
