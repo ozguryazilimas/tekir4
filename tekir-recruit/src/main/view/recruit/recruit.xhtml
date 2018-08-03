@@ -35,11 +35,12 @@
             <t:inputText label="#{messages['general.label.SerialNumber']}" value="#{recruitHome.entity.serial}" columnClass="col-md-12" required="true"/>
             <t:inputDate label="#{messages['general.label.StartDate']}" value="#{recruitHome.entity.startDate }"  columnClass="col-md-12 col-xs-6" />
             <t:inputDate label="#{messages['general.label.EndDate']}" value="#{recruitHome.entity.endDate }"  columnClass="col-md-12 col-xs-6" />
+            <t:inputSuggestion label="general.label.Status" value="#{recruitHome.entity.status}" group="#{recruitHome.entity.class.simpleName}" listener="" required="true" columnClass="col-md-12"/>
         </div>     
         <div class="row col-xs-12 col-md-9">
             <t:inputText label="#{messages['general.label.Topic']}" value="#{recruitHome.entity.topic}" columnClass="col-md-12" />  
             <t:inputTextarea label="#{messages['recruit.label.JobDescription']}" value="#{recruitHome.entity.info}" columnClass="col-md-12" />  
-            <t:inputTag label="#{messages['recruit.label.Skills']}" value="#{recruitHome.entity.skills}" columnClass="col-md-12" />            
+            <t:inputTag label="#{messages['recruit.label.Skills']}" value="#{recruitHome.entity.skills}" columnClass="col-md-12" /> 
         </div>
     </ui:define> 
 
