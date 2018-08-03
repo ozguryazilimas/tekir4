@@ -252,12 +252,17 @@ public class ContactHome extends FormBase<Contact, Long> {
         }
     }
     
-    public boolean hasContactInfoPermission(ContactInformation contactInfo,String action){        
-        
+    //Kullanıcının PrimaryAddress girişleri üzerindeki yetkisi kontrol edilir
+    public boolean hasContactInfoPermission(ContactInformation contactInfo, String action) {
         if (contactInfo instanceof ContactAddress) {
-            return identity.isPermitted("contactAddresses"+":"+action+":"+getEntity().getOwner());
+            boolean valid = identity.isPermitted("contactAddresses" + ":" + action + ":" + getEntity().getOwner());
+            //Fatura adresi olarak kullanılan adres üzerinde islem yapabilmek
+            //için fatura adresi düzenleme yetkisine sahip olunması gerekir.
+            if (contactInfo.getSubTypes().contains("INVOICE") && (action.equals("update") || action.equals("delete"))) {
+                return valid && identity.isPermitted("contactAddresses" + ":contactInvoiceAddress:" + getEntity().getOwner());
+            }
+            return valid;
         }
-        
         return false;
     }
     
