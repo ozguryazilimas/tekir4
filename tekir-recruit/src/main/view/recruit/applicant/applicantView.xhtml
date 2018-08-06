@@ -1,0 +1,61 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/containerViewTabBase.xhtml">
+
+    <ui:param name="bean" value="#{applicantHome}" />
+    <ui:param name="entityName" value="applicant" />
+    <ui:param name="viewIdentifier" value="#{applicantHome.entity.name}" />
+    <ui:param name="showCaption" value="true"/>
+    <ui:param name="dontShowContentHeader" value="true" />
+
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{applicantHome.id}" />
+            <f:viewAction action="#{applicantHome.initData()}" />
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="customHeader">
+        <section class="content-header">
+            <p:outputPanel id="states">
+                <ul class="states pull-right">
+                    <li role="presentation">
+                        <div style="font-weight: bold;">#{messages['JobAdvert.label.Owner']}</div>
+                        <div>
+                            #{applicantHome.entity.owner}
+                        </div>
+                    </li>
+                </ul>
+            </p:outputPanel>
+            <i class="fa fa-3x #{messages['feature.icon.'.concat(bean.feature.name)]} pull-left" />
+            <small class="text-muted">#{ messages[pageTitleResolver.pageTitle] }</small>
+            <h1>#{messages['module.caption.ApplicantView']}<small>#{applicantHome.entity.name}</small> </h1> 
+        </section>
+    </ui:define>
+
+    <ui:define name="caption">
+        <div class="row">
+            <t:outputText label="general.label.Name" value="#{applicantHome.entity.name}" />
+            <t:outputText label="general.label.Code" value="#{applicantHome.entity.code}" />
+        </div>            
+        <div class="row">        
+            <t:outputText label="general.label.Info" value="#{applicantHome.entity.info}" />
+            <t:outputBoolean label="general.label.Status" itemLabel="general.boolean.active." value="#{applicantHome.entity.active}" />
+        </div>
+
+    </ui:define>
+
+    <ui:define name="context-menu"> 
+        <li>
+            <p:commandLink action="#{applicantHome.edit()}" styleClass="context-command" rendered="#{identity.hasPermission( entityName, 'update') and hideEditBtn ne 'true' }">
+                <i class="fa fa-edit"></i>
+                <h:outputText value=" #{messages['general.button.Edit']}" />
+            </p:commandLink>
+        </li>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,157 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"               
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                template="/layout/masterViewBase.xhtml">
+
+    <ui:define name="content">     
+
+
+        <div class="row">
+            <div class="col-md-4 col-xs-12">
+
+                <t:accordion icon="fa fa-stack-exchange" label="general.label.Summary" columnClass="col-xs-12">
+                    <div class="row">
+                        <t:outputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(applicantHome.entity.sourcePointer)}" columnClass="col-xs-12"/>
+                    </div>
+
+
+                    <div class="row">
+                        <t:outputText label="general.label.FirstName" value="#{applicantHome.entity.firstName}" columnClass="col-xs-12"/>
+                        <t:outputText label="general.label.LastName" value="#{applicantHome.entity.lastName}" columnClass="col-xs-12"/>
+                        <t:outputText value="#{messages['gender.'.concat(applicantHome.entity.gender)]}" label="contact.label.Gender" columnClass="col-xs-12"/>
+                        <t:outputText label="contact.label.SSN" value="#{applicantHome.entity.ssn}" columnClass="col-xs-12"/>
+                        <t:outputBoolean label="Applicant.label.militaryDuty" itemLabel="militaryDuty." value="#{applicantHome.entity.militaryDuty}" columnClass="col-xs-12"/>
+                        <t:outputBoolean label="Applicant.label.Married" itemLabel="Married." value="#{applicantHome.entity.married}" columnClass="col-xs-12"/>
+                    </div>            
+                </t:accordion>
+
+            </div>
+
+            <div class="col-md-4 col-xs-12">
+
+                <ui:include src="/notes/noteWidget.xhtml">
+                    <ui:param name="featurePointer" value="#{applicantHome.featurePointer}" />
+                </ui:include>
+
+                <t:accordion icon="fa fa-stack-exchange" label="Applicant.label.Applications" columnClass="col-xs-12">
+
+                    <p:dataTable var="ja" value="#{applicantHome.jobApplication}" >
+
+                        <p:column headerText="#{messages['Applicant.label.AdvertId']}">
+                            <h:outputText value="#{ja.advert.id}" />
+                        </p:column>
+
+                        <p:column headerText="#{messages['JobAdvert.label.Topic']}">
+                            <h:outputText value="#{ja.advert.topic}" />
+                        </p:column>
+
+                    </p:dataTable>
+
+                </t:accordion>
+
+            </div>
+
+            <div class="col-md-4 col-xs-12">
+
+                <ui:include src="/contact/contactInfosFragment.xhtml">
+                    <ui:param name="contact" value="#{applicantHome.entity.primaryContact}" />
+                    <ui:param name="contactInformations" value="#{applicantHome.contactInformations}" />
+                </ui:include>
+            </div>
+
+
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading"> <i class="fa fa-pencil" />#{messages['Applicant.label.WorkHistory']}</div>
+            <div class="panel-body">
+
+                <p:dataTable var="wh" value="#{applicantHome.workHistory}">
+
+                    <p:column headerText="#{messages['contact.label.JobTitle']}">
+                        <h:outputText value="#{wh.title}" />
+                    </p:column>
+
+                    <p:column headerText="#{messages['ContactListReport.Name']}">
+                        <h:outputText value="#{wh.name}" />
+                    </p:column>
+
+                    <p:column headerText="#{messages['Applicant.label.Job']}">
+                        <h:outputText value="#{wh.job}" />
+                    </p:column>
+
+                    <p:column headerText="#{messages['JobAdvert.label.startDate']}">
+                        <h:outputText value="#{wh.startDate}" />
+                    </p:column>
+
+                    <p:column headerText="#{messages['JobAdvert.label.endDate']}">
+                        <h:outputText value="#{wh.endDate}" />
+                    </p:column>
+
+                    <p:column headerText="#{messages['JobAdvert.label.Info']}">
+                        <h:outputText value="#{wh.info}" />
+                    </p:column>
+
+                </p:dataTable>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading"> <i class="fa fa-pencil" /> #{messages['Applicant.label.EducationInfo']} </div>
+            <div class="panel-body">
+                <p:dataTable var="ed" value="#{applicantHome.education}">
+
+                    <p:column headerText="#{messages['Applicant.label.EducationType']}">
+                        <h:outputText value="#{ed.type}" />
+                    </p:column>
+
+                    <p:column headerText="#{messages['JobAdvert.label.startDate']}">
+                        <h:outputText value="#{ed.startDate}" />
+                    </p:column>
+
+                    <p:column headerText="#{messages['JobAdvert.label.endDate']}">
+                        <h:outputText value="#{ed.endDate}" />
+                    </p:column>
+
+                    <p:column headerText="#{messages['ContactListReport.Name']}">
+                        <h:outputText value="#{ed.name}" />
+                    </p:column>
+
+                    <p:column headerText="#{messages['JobAdvert.label.Info']}">
+                        <h:outputText value="#{ed.info}" />
+                    </p:column>
+
+                </p:dataTable>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading"> <i class="fa fa-pencil" /> #{messages['Applicant.label.Certificates']} </div>
+            <div class="panel-body">
+                <p:dataTable var="ce" value="#{applicantHome.certificate}">
+
+                    <p:column headerText="#{messages['Applicant.label.CertificateType']}">
+                        <h:outputText value="#{ce.type}" />
+                    </p:column>
+
+                    <p:column headerText="#{messages['Applicant.label.IssueDate']}">
+                        <h:outputText value="#{ce.issueDate}" />
+                    </p:column>
+
+                    <p:column headerText="#{messages['ContactListReport.Name']}">
+                        <h:outputText value="#{ce.name}" />
+                    </p:column>
+
+                    <p:column headerText="#{messages['JobAdvert.label.Info']}">
+                        <h:outputText value="#{ce.info}" />
+                    </p:column>
+
+                </p:dataTable>    
+            </div>
+        </div>
+
+    </ui:define>
+
+</ui:composition>
