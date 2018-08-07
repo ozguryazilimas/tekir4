@@ -1,4 +1,4 @@
-package com.ozguryazilim.tekir.recruit;
+package com.ozguryazilim.tekir.recruit.jobadvert;
 
 import com.ozguryazilim.tekir.entities.JobAdvert;
 import com.ozguryazilim.tekir.recruit.config.RecruitPages;
@@ -12,10 +12,10 @@ import com.ozguryazilim.telve.feature.PageType;
  * @author deniz
  */
 @Feature(permission = "recruit", forEntity = JobAdvert.class)
-@Page(type = PageType.VIEW, page = RecruitPages.RecruitView.class)
-@Page(type = PageType.MASTER_VIEW, page = RecruitPages.RecruitMasterView.class)
-@Page(type = PageType.BROWSE, page = RecruitPages.RecruitBrowse.class)
-@Page(type = PageType.EDIT, page = RecruitPages.Recruit.class)
-public class RecruitFeature extends AbstractFeatureHandler {
+@Page(type = PageType.VIEW, page = RecruitPages.JobAdvertView.class)
+@Page(type = PageType.MASTER_VIEW, page = RecruitPages.JobAdvertMasterView.class)
+@Page(type = PageType.BROWSE, page = RecruitPages.JobAdvertBrowse.class)
+@Page(type = PageType.EDIT, page = RecruitPages.JobAdvert.class)
+public class JobAdvertFeature extends AbstractFeatureHandler {
 
 }

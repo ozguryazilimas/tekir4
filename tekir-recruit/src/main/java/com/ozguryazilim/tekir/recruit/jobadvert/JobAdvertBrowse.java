@@ -1,4 +1,4 @@
-package com.ozguryazilim.tekir.recruit;
+package com.ozguryazilim.tekir.recruit.jobadvert;
 
 import com.ozguryazilim.tekir.core.query.filter.TagFilter;
 import com.ozguryazilim.tekir.entities.JobAdvert;
@@ -10,6 +10,7 @@ import com.ozguryazilim.telve.forms.Browse;
 import com.ozguryazilim.telve.forms.BrowseBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.columns.DateColumn;
+import com.ozguryazilim.telve.query.columns.LinkColumn;
 import com.ozguryazilim.telve.query.columns.TextColumn;
 import com.ozguryazilim.telve.query.filters.DateFilter;
 import com.ozguryazilim.telve.query.filters.StringFilter;
@@ -24,11 +25,11 @@ import javax.inject.Inject;
  *
  * @author yusuf
  */
-@Browse(feature = RecruitFeature.class)
-public class RecruitBrowse extends BrowseBase<JobAdvert, RecruitViewModel> {
+@Browse(feature = JobAdvertFeature.class)
+public class JobAdvertBrowse extends BrowseBase<JobAdvert, JobAdvertViewModel> {
 
     @Inject
-    private RecruitRepository recruitRepository;
+    private JobAdvertRepository recruitRepository;
 
     @Inject
     private Identity identity;
@@ -39,7 +40,7 @@ public class RecruitBrowse extends BrowseBase<JobAdvert, RecruitViewModel> {
     List<String> suggestionList;
     
     @Override
-    protected void buildQueryDefinition(QueryDefinition<JobAdvert, RecruitViewModel> queryDefinition) {
+    protected void buildQueryDefinition(QueryDefinition<JobAdvert, JobAdvertViewModel> queryDefinition) {
         
         suggestionList=new ArrayList<>();
         List<SuggestionItem> si=(List<SuggestionItem>) suggestionRepository.findByGroupAndKey(JobAdvert.SUGGESTIONSTATUSGROUP, JobAdvert.SUGGESTIONSTATUSKEY);
@@ -52,21 +53,21 @@ public class RecruitBrowse extends BrowseBase<JobAdvert, RecruitViewModel> {
                 .addFilter(new StringFilter<>(JobAdvert_.topic, "JobAdvert.label.Topic"))
                 .addFilter(new DateFilter<>(JobAdvert_.startDate, "JobAdvert.label.startDate"))
                 .addFilter(new DateFilter<>(JobAdvert_.endDate, "JobAdvert.label.endDate"))
-                .addFilter(new TagFilter<>("skills", "JobAdvert.label.Skills", "*"))
+                .addFilter(new TagFilter<>("skills", "JobAdvert.label.Skills", "Recruit::skills"))
                 .addFilter(new UserFilter<>(JobAdvert_.owner, "JobAdvert.label.Owner"))
                 .addFilter(new StringFilter<>(JobAdvert_.info, "JobAdvert.label.Info"))
                 .addFilter(new StringListFilter<>(JobAdvert_.status,suggestionList,"JobAdvert.label.Status",""));
 
         queryDefinition
-                .addColumn(new TextColumn<>(JobAdvert_.serial, "JobAdvert.label.Serial"), true)
-                .addColumn(new TextColumn<>(JobAdvert_.topic, "JobAdvert.label.Topic"), true)
+                .addColumn(new LinkColumn<>(JobAdvert_.serial, "JobAdvert.label.Serial"), true)
+                .addColumn(new LinkColumn<>(JobAdvert_.topic, "JobAdvert.label.Topic"), true)
                 .addColumn(new TextColumn<>(JobAdvert_.info, "JobAdvert.label.Info"), true)
                 .addColumn(new DateColumn<>(JobAdvert_.startDate, "JobAdvert.label.startDate"), true)
                 .addColumn(new DateColumn<>(JobAdvert_.endDate, "JobAdvert.label.endDate"), true)
                 .addColumn(new TextColumn<>(JobAdvert_.status, "JobAdvert.label.Status"), true);
     }
     @Override
-    protected RepositoryBase<JobAdvert, RecruitViewModel> getRepository() {
+    protected RepositoryBase<JobAdvert, JobAdvertViewModel> getRepository() {
         return recruitRepository;
     }
     public JobAdvert getJobAdvert() {
