@@ -1,4 +1,4 @@
-package com.ozguryazilim.tekir.recruit;
+package com.ozguryazilim.tekir.recruit.jobadvert;
 
 import com.ozguryazilim.tekir.entities.JobAdvert;
 import com.ozguryazilim.tekir.recruit.config.RecruitPages;
@@ -14,29 +14,29 @@ import org.apache.deltaspike.core.api.config.view.navigation.NavigationParameter
  *
  * @author deniz
  */
-@FormEdit( feature = RecruitFeature.class )
-public class RecruitHome extends FormBase<JobAdvert, Long> {
+@FormEdit( feature = JobAdvertFeature.class )
+public class JobAdvertHome extends FormBase<JobAdvert, Long> {
     
     @Inject
     private NavigationParameterContext navigationParameterContext;
 
     @Inject
     private Identity identity;
-    
+
     @Inject
-    private RecruitRepository repository;
+    private JobAdvertRepository repository;
 
     @Override
-    protected RepositoryBase<JobAdvert, RecruitViewModel> getRepository() {
+    protected RepositoryBase<JobAdvert, JobAdvertViewModel> getRepository() {
         return repository;
     }
-    
+
     public Class<? extends ViewConfig> newAdvert() {
         JobAdvert j = new JobAdvert();
         j.setOwner(identity.getLoginName());
         setEntity(j);
-        navigationParameterContext.addPageParameter("eid", 0);        
+        navigationParameterContext.addPageParameter("eid", 0);
         return RecruitPages.Recruit.class;
     }
-      
+
 }
