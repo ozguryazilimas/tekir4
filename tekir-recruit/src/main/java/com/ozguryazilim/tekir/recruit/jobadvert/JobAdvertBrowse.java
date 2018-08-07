@@ -10,6 +10,7 @@ import com.ozguryazilim.telve.forms.Browse;
 import com.ozguryazilim.telve.forms.BrowseBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.columns.DateColumn;
+import com.ozguryazilim.telve.query.columns.LinkColumn;
 import com.ozguryazilim.telve.query.columns.TextColumn;
 import com.ozguryazilim.telve.query.filters.DateFilter;
 import com.ozguryazilim.telve.query.filters.StringFilter;
@@ -58,8 +59,8 @@ public class JobAdvertBrowse extends BrowseBase<JobAdvert, JobAdvertViewModel> {
                 .addFilter(new StringListFilter<>(JobAdvert_.status,suggestionList,"JobAdvert.label.Status",""));
 
         queryDefinition
-                .addColumn(new TextColumn<>(JobAdvert_.serial, "JobAdvert.label.Serial"), true)
-                .addColumn(new TextColumn<>(JobAdvert_.topic, "JobAdvert.label.Topic"), true)
+                .addColumn(new LinkColumn<>(JobAdvert_.serial, "JobAdvert.label.Serial"), true)
+                .addColumn(new LinkColumn<>(JobAdvert_.topic, "JobAdvert.label.Topic"), true)
                 .addColumn(new TextColumn<>(JobAdvert_.info, "JobAdvert.label.Info"), true)
                 .addColumn(new DateColumn<>(JobAdvert_.startDate, "JobAdvert.label.startDate"), true)
                 .addColumn(new DateColumn<>(JobAdvert_.endDate, "JobAdvert.label.endDate"), true)
