@@ -1,6 +1,6 @@
 [
     {
-        "name": "query.RecruitBrowse.All",
+        "name": "query.JobAdvertBrowse.All",
         "resultLimit": 100,
         "rowLimit": 20,
         "columns": [

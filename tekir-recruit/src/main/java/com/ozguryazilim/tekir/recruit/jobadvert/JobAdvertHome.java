@@ -1,4 +1,4 @@
-package com.ozguryazilim.tekir.recruit;
+package com.ozguryazilim.tekir.recruit.jobadvert;
 
 import com.ozguryazilim.tekir.entities.JobAdvert;
 import com.ozguryazilim.telve.data.RepositoryBase;
@@ -10,14 +10,14 @@ import javax.inject.Inject;
  *
  * @author deniz
  */
-@FormEdit( feature = RecruitFeature.class )
-public class RecruitHome extends FormBase<JobAdvert, Long> {
+@FormEdit( feature = JobAdvertFeature.class )
+public class JobAdvertHome extends FormBase<JobAdvert, Long> {
     
     @Inject
-    private RecruitRepository repository;
+    private JobAdvertRepository repository;
 
     @Override
-    protected RepositoryBase<JobAdvert, RecruitViewModel> getRepository() {
+    protected RepositoryBase<JobAdvert, JobAdvertViewModel> getRepository() {
         return repository;
     }
       
