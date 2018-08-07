@@ -30,5 +30,100 @@
         "sorterValues": {
             "topic": "D"
         }
+    },
+
+    {
+        "name": "query.RecruitBrowse.startLast10days",
+        "resultLimit": 100,
+        "rowLimit": 20,
+        "columns": [
+            "serial",
+            "topic",
+            "info", 
+            "startDate", 
+            "endDate"
+        ],
+        "filters": [
+            "topic", 
+            "startDate", 
+            "endDate", 
+            "owner", 
+            "info", 
+            "status"
+        ],
+        "filterValues": {
+            "owner": "All::null", 
+            "endDate": "All::LastTenDays::20180722T0000::Today::20180801T0000", 
+            "topic": "All::null", 
+            "startDate": "In::LastTenDays::20180722T0000::Today::20180801T0000", 
+            "info": "All::null", 
+            "status": "All::null"
+        },
+        "sorters": ["topic"], 
+        "sorterValues": {
+            "topic": "D"
+        }
+    },
+
+    {
+        "name": "query.RecruitBrowse.startLastMonth",
+        "resultLimit": 100,
+        "rowLimit": 20,
+        "columns": ["serial", "topic", "info", "startDate", "endDate"],
+        "filters": ["topic", "startDate", "endDate", "owner", "info", "status"],
+        "filterValues": {
+            "owner": "All::null",
+            "endDate": "All::LastTenDays::20180722T0000::Today::20180801T0000",
+            "topic": "All::null",
+            "startDate": "In::LastMonth::20180701T0000::Today::20180731T0000",
+            "info": "All::null",
+            "status": "All::null"
+        },
+        "sorters": ["topic"],
+        "sorterValues": {
+            "topic": "D"
+        }
+    },
+
+    {
+        "name": "query.RecruitBrowse.expired",
+        "resultLimit": 100,
+        "rowLimit": 20,
+        "columns": ["serial", "topic", "info", "startDate", "endDate"],
+        "filters": ["topic", "startDate", "endDate", "owner", "info", "status"],
+        "filterValues": {
+            "owner": "All::null",
+            "endDate": "Lesser::Today::20180722T0000::Today::20180801T0000",
+            "topic": "All::null",
+            "startDate": "All::Today::20180801T0000::Today::20180731T0000",
+            "info": "All::null",
+            "status": "All::null"
+        },
+        "sorters": ["topic"],
+        "sorterValues": {
+            "topic": "D"
+        }
+    },
+
+    {
+        "name": "query.RecruitBrowse.ongoing",
+        "resultLimit": 100,
+        "rowLimit": 20,
+        "columns": ["serial", "topic", "info", "startDate", "endDate"],
+        "filters": ["topic", "startDate", "endDate", "owner", "info", "status"],
+        "filterValues": {
+            "owner": "All::null",
+            "endDate": "Greater::Today::20180722T0000::Today::20180801T0000",
+            "topic": "All::null",
+            "startDate": "All::Today::20180801T0000::Today::20180731T0000",
+            "info": "All::null",
+            "status": "All::null"
+        },
+        "sorters": ["topic"],
+        "sorterValues": {
+            "topic": "D"
+        }
     }
+
+
 ]
