@@ -1,4 +1,4 @@
-package com.ozguryazilim.tekir.recruit;
+package com.ozguryazilim.tekir.recruit.jobadvert;
 
 import com.ozguryazilim.telve.entities.ViewModel;
 import java.io.Serializable;
@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author deniz
  */
-public class RecruitViewModel implements ViewModel, Serializable {
+public class JobAdvertViewModel implements ViewModel, Serializable {
 
     private Long id;
     private String serial;
@@ -21,7 +21,7 @@ public class RecruitViewModel implements ViewModel, Serializable {
     private String status;
     private List<String> skills;
 
-    public RecruitViewModel(Long id, String serial, String topic, String info, Date startDate, Date endDate, String owner, String status, List<String> skills) {
+    public JobAdvertViewModel(Long id, String serial, String topic, String info, Date startDate, Date endDate, String owner, String status, List<String> skills) {
         this.id = id;
         this.serial = serial;
         this.topic = topic;
