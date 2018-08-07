@@ -4,7 +4,7 @@ import com.ozguryazilim.telve.auth.SecuredPage;
 import com.ozguryazilim.telve.nav.Navigation;
 import com.ozguryazilim.telve.view.PageTitle;
 import com.ozguryazilim.telve.view.Pages;
-import com.ozguryazilim.tekir.recruit.RecruitFeature;
+import com.ozguryazilim.tekir.recruit.jobadvert.JobAdvertFeature;
 import com.ozguryazilim.tekir.recruit.applicant.ApplicantFeature;
 import javax.enterprise.context.ApplicationScoped;
 import org.apache.deltaspike.jsf.api.config.view.Folder;
@@ -20,29 +20,29 @@ public interface RecruitPages extends Pages {
 
     @View
     @SecuredPage("recruit")
-    @PageTitle("module.caption.RecruitBrowse")
+    @PageTitle("module.caption.JobAdvertBrowse")
     @Navigation(label = "module.caption.RecruitBrowse",
-            feature = RecruitFeature.class,
+            feature = JobAdvertFeature.class,
             section = RecruitNavigationSection.class)
-    class RecruitBrowse implements RecruitPages {
-    }
-
-    @View
-    @SecuredPage("recruit")
-    @PageTitle("module.caption.Recruit")
-    class Recruit implements RecruitPages {
+    class JobAdvertBrowse implements RecruitPages {
     }
 
     @View
     @SecuredPage("recruit")
     @PageTitle("module.caption.JobAdvert")
-    class RecruitView implements RecruitPages {
+    class JobAdvert implements RecruitPages {
+    }
+
+    @View
+    @SecuredPage("recruit")
+    @PageTitle("module.caption.JobAdvert")
+    class JobAdvertView implements RecruitPages {
     }
 
     @View
     @SecuredPage("recruit")
     @PageTitle("module.caption.JobAdvertMasterView")
-    class RecruitMasterView implements RecruitPages {
+    class JobAdvertMasterView implements RecruitPages {
     }
 
     interface applicant extends RecruitPages {

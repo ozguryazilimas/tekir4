@@ -1,21 +1,22 @@
-package com.ozguryazilim.tekir.recruit;
+package com.ozguryazilim.tekir.recruit.jobadvert;
 
 import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.entities.JobAdvert;
 import com.ozguryazilim.tekir.entities.JobAdvert_;
-import javax.enterprise.context.Dependent;
-import org.apache.deltaspike.data.api.Repository;
-import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.filters.Filter;
-import java.util.ArrayList;
-import java.util.List;
+import org.apache.deltaspike.data.api.Repository;
+import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
+
+import javax.enterprise.context.Dependent;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -23,29 +24,22 @@ import javax.persistence.criteria.Root;
  */
 @Repository
 @Dependent
-public abstract class RecruitRepository extends
-        RepositoryBase<JobAdvert, RecruitViewModel>
+public abstract class JobAdvertRepository extends
+        RepositoryBase<JobAdvert, JobAdvertViewModel>
         implements
         CriteriaSupport<JobAdvert> {
 
     @Override
-    public List<RecruitViewModel> browseQuery(QueryDefinition queryDefinition) {
+    public List<JobAdvertViewModel> browseQuery(QueryDefinition queryDefinition) {
         List<Filter<JobAdvert, ?, ?>> filters = queryDefinition.getFilters();
-
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
-
-        CriteriaQuery<RecruitViewModel> criteriaQuery = criteriaBuilder.createQuery(RecruitViewModel.class);
-
+        CriteriaQuery<JobAdvertViewModel> criteriaQuery = criteriaBuilder.createQuery(JobAdvertViewModel.class);
         Root<JobAdvert> from = criteriaQuery.from(JobAdvert.class);
 
         buildVieModelSelect(criteriaQuery, from);
-
         List<Predicate> predicates = new ArrayList<>();
-
         decorateFilters(filters, predicates, criteriaBuilder, from);
-
         buildSearchTextControl(queryDefinition.getSearchText(), criteriaBuilder, predicates, from);
-
         //TODO satır bazlı yetki kontrolü yapılmadı (owner,group,all)
         criteriaQuery.where(predicates.toArray(new Predicate[]{}));
 
@@ -55,15 +49,13 @@ public abstract class RecruitRepository extends
             criteriaQuery.orderBy(decorateSorts(queryDefinition.getSorters(), criteriaBuilder, from));
         }
 
-        TypedQuery<RecruitViewModel> typedQuery = entityManager().createQuery(criteriaQuery);
+        TypedQuery<JobAdvertViewModel> typedQuery = entityManager().createQuery(criteriaQuery);
         typedQuery.setMaxResults(queryDefinition.getResultLimit());
-        List<RecruitViewModel> resultList = typedQuery.getResultList();
-
+        List<JobAdvertViewModel> resultList = typedQuery.getResultList();
         return resultList;
-
     }
 
-    private void buildVieModelSelect(CriteriaQuery<RecruitViewModel> criteriaQuery, Root<? extends JobAdvert> from) {
+    private void buildVieModelSelect(CriteriaQuery<JobAdvertViewModel> criteriaQuery, Root<? extends JobAdvert> from) {
         criteriaQuery.multiselect(
                 from.get(JobAdvert_.id),
                 from.get(JobAdvert_.serial),

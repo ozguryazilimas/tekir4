@@ -6,16 +6,16 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/layout/containerViewTabBase.xhtml">
 
-    <ui:param name="bean" value="#{recruitHome}" />
+    <ui:param name="bean" value="#{jobAdvertHome}" />
     <ui:param name="entityName" value="jobAdvert" />
-    <ui:param name="viewIdentifier" value="#{recruitHome.entity.serial}" />
+    <ui:param name="viewIdentifier" value="#{jobAdvertHome.entity.serial}" />
     <ui:param name="showCaption" value="true"/>
     <ui:param name="dontShowContentHeader" value="true" />
 
     <ui:define name="metadata">
         <f:metadata>
-            <f:viewParam name="eid" value="#{recruitHome.id}" />
-            <f:viewAction action="#{recruitHome.initData()}" />
+            <f:viewParam name="eid" value="#{jobAdvertHome.id}" />
+            <f:viewAction action="#{jobAdvertHome.initData()}" />
         </f:metadata>
     </ui:define>
 
@@ -26,29 +26,29 @@
                 <li role="presentation">
                     <div style="font-weight: bold;">#{messages['recruit.label.AdvertOwner']} </div>
                     <div>
-                        #{recruitHome.entity.owner}
+                        #{jobAdvertHome.entity.owner}
                     </div>
                 </li>
                 <li role="presentation">
                     <div style="font-weight: bold;"> #{messages['general.label.Status']} </div>
                     <div>
-                        #{recruitHome.entity.status}
+                        #{jobAdvertHome.entity.status}
                     </div>
                 </li>
             </ul>
             </p:outputPanel>
             <i class="fa fa-3x #{messages['feature.icon.'.concat(bean.feature.name)]} pull-left" />
             <small class="text-muted">#{ messages[pageTitleResolver.pageTitle] }</small>
-            <h1>#{messages['contact.class.'.concat(recruitHome.entity.class.simpleName)]} <small>[#{ viewIdentifier }]</small> </h1> 
+            <h1>#{messages['contact.class.'.concat(jobAdvertHome.entity.class.simpleName)]} <small>[#{ viewIdentifier }]</small> </h1>
         </section>
     </ui:define>
 
     <ui:define name="caption">
         
         <div class="row">
-            <t:outputText label="general.label.Topic" value="#{recruitHome.entity.topic}" columnClass="col-xs-12 col-md-8"  />
-            <t:outputDate label="#{messages['general.label.EndDate']}" value="#{recruitHome.entity.endDate}" columnClass="col-xs-12 col-md-2 pull-right"/>
-            <t:outputDate label="#{messages['general.label.StartDate']}" value="#{recruitHome.entity.startDate}" columnClass="col-xs-12 col-md-2 pull-right"/>
+            <t:outputText label="general.label.Topic" value="#{jobAdvertHome.entity.topic}" columnClass="col-xs-12 col-md-8"  />
+            <t:outputDate label="#{messages['general.label.EndDate']}" value="#{jobAdvertHome.entity.endDate}" columnClass="col-xs-12 col-md-2 pull-right"/>
+            <t:outputDate label="#{messages['general.label.StartDate']}" value="#{jobAdvertHome.entity.startDate}" columnClass="col-xs-12 col-md-2 pull-right"/>
         </div>
        
     </ui:define>
