@@ -1,0 +1,18 @@
+[
+    {
+        "name": "deneme1",
+        "resultLimit": 100,
+        "rowLimit": 20,
+        "columns": ["JobApplication.label.Info", "JobApplication.label.Owner", "JobApplication.label.Serial", "JobApplication.label.Topic"],
+        "filters": ["advert", "date", "advert", "advert", "applicant", "owner", "state"],
+        "filterValues": {
+            "date": "All::LastMonth::20180701T0000::Today::20180731T0000",
+            "owner": "All::",
+            "advert": "All::Tue Jul 24 00:00:00 EET 2018",
+            "state": "All::null",
+            "applicant": "All::null"
+        },
+        "sorters": [],
+        "sorterValues": {}
+    }
+]

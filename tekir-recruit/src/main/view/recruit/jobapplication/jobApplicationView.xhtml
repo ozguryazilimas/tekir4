@@ -1,0 +1,20 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/containerViewTabBase.xhtml">
+
+    <ui:param name="bean" value="#{jobApplicationHome}" />
+    <ui:param name="entityName" value="jobAdvert" />
+    <ui:param name="viewIdentifier" value="#{jobApplicationHome.entity.info}" />
+    <ui:param name="showCaption" value="true"/>
+    <ui:param name="dontShowContentHeader" value="true" />
+
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{jobApplicationHome.id}" />
+            <f:viewAction action="#{jobApplicationHome.initData()}" />
+        </f:metadata>
+    </ui:define>
+</ui:composition>
