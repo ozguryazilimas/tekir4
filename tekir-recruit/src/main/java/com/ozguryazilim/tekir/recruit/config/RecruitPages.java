@@ -19,31 +19,35 @@ import javax.enterprise.context.ApplicationScoped;
 @Folder(name = "./recruit")
 public interface RecruitPages extends Pages {
 
-    @View
-    @SecuredPage("recruit")
-    @PageTitle("module.caption.JobAdvertBrowse")
-    @Navigation(label = "module.caption.RecruitBrowse",
-            feature = JobAdvertFeature.class,
-            section = RecruitNavigationSection.class)
-    class JobAdvertBrowse implements RecruitPages {
-    }
+    @Folder(name = "./jobAdvert")
+    interface JobAdvertPages extends RecruitPages{
+        @View
+        @SecuredPage("recruit")
+        @PageTitle("module.caption.JobAdvertBrowse")
+        @Navigation(label = "module.caption.RecruitBrowse",
+                feature = JobAdvertFeature.class,
+                section = RecruitNavigationSection.class)
+        class JobAdvertBrowse implements JobAdvertPages{
+        }
 
-    @View
-    @SecuredPage("recruit")
-    @PageTitle("module.caption.JobAdvert")
-    class JobAdvert implements RecruitPages {
-    }
+        @View
+        @SecuredPage("recruit")
+        @PageTitle("module.caption.JobAdvert")
+        class JobAdvert implements JobAdvertPages{
+        }
 
-    @View
-    @SecuredPage("recruit")
-    @PageTitle("module.caption.JobAdvert")
-    class JobAdvertView implements RecruitPages {
-    }
+        @View
+        @SecuredPage("recruit")
+        @PageTitle("module.caption.JobAdvert")
+        class JobAdvertView implements JobAdvertPages{
+        }
 
-    @View
-    @SecuredPage("recruit")
-    @PageTitle("module.caption.JobAdvertMasterView")
-    class JobAdvertMasterView implements RecruitPages {
+        @View
+        @SecuredPage("recruit")
+        @PageTitle("module.caption.JobAdvertMasterView")
+        class JobAdvertMasterView implements JobAdvertPages{
+        }
+
     }
 
     @Folder(name = "./aplicant")
