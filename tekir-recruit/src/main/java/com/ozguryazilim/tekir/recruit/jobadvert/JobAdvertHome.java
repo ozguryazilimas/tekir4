@@ -36,7 +36,7 @@ public class JobAdvertHome extends FormBase<JobAdvert, Long> {
         j.setOwner(identity.getLoginName());
         setEntity(j);
         navigationParameterContext.addPageParameter("eid", 0);
-        return RecruitPages.Recruit.class;
+        return RecruitPages.JobAdvert.class;
     }
 
 }

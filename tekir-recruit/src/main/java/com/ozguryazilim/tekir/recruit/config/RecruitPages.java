@@ -20,7 +20,7 @@ public interface RecruitPages extends Pages {
     @View
     @SecuredPage("recruit")
     @PageTitle("module.caption.JobAdvertBrowse")
-    @Navigation(label = "module.caption.RecruitBrowse",
+    @Navigation(label = "module.caption.JobAdvertBrowse",
             feature = JobAdvertFeature.class,
             section = RecruitNavigationSection.class)
     class JobAdvertBrowse implements RecruitPages {
