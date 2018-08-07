@@ -19,7 +19,7 @@ import javax.enterprise.context.ApplicationScoped;
 public interface RecruitPages extends Pages {
 
     @Folder(name = "./jobAdvert")
-    interface JobAdvertPages extends RecruitPages{
+    interface JobAdvertPages extends RecruitPages {
 
         @View
         @SecuredPage("recruit")
@@ -27,25 +27,56 @@ public interface RecruitPages extends Pages {
         @Navigation(label = "module.caption.RecruitBrowse",
                 feature = JobAdvertFeature.class,
                 section = RecruitNavigationSection.class)
-        class JobAdvertBrowse implements JobAdvertPages{
+        class JobAdvertBrowse implements JobAdvertPages {
         }
 
         @View
         @SecuredPage("recruit")
         @PageTitle("module.caption.JobAdvert")
-        class JobAdvert implements JobAdvertPages{
-        }
-
-        @View
-        @SecuredPage("recruit")
-        @PageTitle("module.caption.JobAdvert")
-        class JobAdvertView implements JobAdvertPages{
+        class JobAdvert implements JobAdvertPages {
         }
 
         @View
         @SecuredPage("recruit")
         @PageTitle("module.caption.JobAdvertMasterView")
-        class JobAdvertMasterView implements JobAdvertPages{
+        class JobAdvertMasterView implements JobAdvertPages {
+        }
+
+        @View
+        @SecuredPage("recruit")
+        @PageTitle("module.caption.JobAdvert")
+        class JobAdvertView implements JobAdvertPages {
         }
     }
+
+    interface jobapplication extends RecruitPages {
+
+        @View
+        @SecuredPage("application")
+        @PageTitle("module.caption.JobApplicationBrowse")
+        @Navigation(label = "module.caption.JobApplicationBrowse",
+                feature = JobApplicationFeature.class,
+                section = RecruitNavigationSection.class)
+        class JobApplicationBrowse implements RecruitPages {
+        }
+
+        @View
+        @SecuredPage
+        @PageTitle("module.caption.JobApplication")
+        class JobApplication implements RecruitPages {
+        }
+
+        @View
+        @SecuredPage
+        @PageTitle("module.caption.JobApplicationView")
+        class JobApplicationView implements RecruitPages {
+        }
+
+        @View
+        @SecuredPage
+        @PageTitle("module.caption.JobApplicationMasterView")
+        class JobApplicationMasterView implements RecruitPages {
+        }
+    }
+    
 }
