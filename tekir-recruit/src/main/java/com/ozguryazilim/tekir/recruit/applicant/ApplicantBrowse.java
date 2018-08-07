@@ -16,6 +16,7 @@ import com.ozguryazilim.telve.query.columns.SubTextColumn;
 import com.ozguryazilim.telve.query.filters.BooleanFilter;
 import com.ozguryazilim.telve.query.filters.RatingFilter;
 import com.ozguryazilim.telve.query.filters.StringFilter;
+
 import javax.inject.Inject;
 
 /**
@@ -48,8 +49,7 @@ public class ApplicantBrowse extends BrowseBase<Applicant, ApplicantViewModel>{
                 .addColumn(new BooleanColumn<>(Applicant_.militaryDuty,"Applicant.label.militaryDuty","militaryDuty."),true)
                 .addColumn(new SubTextColumn<>(Contact_.primaryMobile, ContactPhone_.address, "contact.label.PrimaryMobile"), true)
                 .addColumn(new SubTextColumn<>(Contact_.primaryPhone, ContactPhone_.address, "contact.label.PrimaryPhone"), true)
-                .addColumn(new SubTextColumn<>(Contact_.primaryEmail, ContactEMail_.address, "contact.label.PrimaryEmail"), true)
-                ;
+                .addColumn(new SubTextColumn<>(Contact_.primaryEmail, ContactEMail_.address, "contact.label.PrimaryEmail"), true);
     }
 
     @Override
