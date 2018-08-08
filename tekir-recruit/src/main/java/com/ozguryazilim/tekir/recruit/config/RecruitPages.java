@@ -49,6 +49,11 @@ public interface RecruitPages extends Pages {
         }
     }
 
+    @View
+    @SecuredPage
+    class JobAdvertLookup implements RecruitPages {
+    }
+
     interface applicant extends RecruitPages {
 
         @View
