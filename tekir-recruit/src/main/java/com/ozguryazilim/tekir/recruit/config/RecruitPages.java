@@ -47,11 +47,11 @@ public interface RecruitPages extends Pages {
         @PageTitle("module.caption.JobAdvert")
         class JobAdvertView implements JobAdvertPages {
         }
-    }
 
-    @View
-    @SecuredPage
-    class JobAdvertLookup implements RecruitPages {
+        @View
+        @SecuredPage
+        class JobAdvertLookup implements RecruitPages {
+        }
     }
 
     interface applicant extends RecruitPages {
