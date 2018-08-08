@@ -1,0 +1,57 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"                
+                template="/layout/editBase.xhtml">
+
+    <ui:param name="homeBean" value="#{jobApplicationHome}" />
+    <ui:param name="entity" value="#{jobApplicationHome.entity}" />
+    <ui:param name="dontShowContentHeader" value="true" />
+
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{jobApplicationHome.id}" />
+            <f:viewAction action="#{jobApplicationHome.initData()}" />
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="customHeader">
+        <section class="content-header">
+            <ui:fragment rendered="#{viewState ne ''}" >
+                <div class="pull-right">
+                    #{viewState}
+                </div>
+            </ui:fragment>
+            <small class="text-muted">#{ messages[pageTitleResolver.pageTitle] }</small>
+            <h1>#{messages['contact.class.'.concat(jobApplicationHome.entity.class.simpleName)]}</h1> 
+        </section>
+    </ui:define>
+
+    <ui:define name="form">
+
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <t:inputLookupDialog label="contact.class.JobAdvert" value="#{jobApplicationHome.entity.advert}" lookupBean="#{jobAdvertLookup}" lookupListener="jobApplicationHome.entity.advert" required="true" placeholder="#{messages['contact.info.JobAdvert']}" />
+                <t:inputLookupDialog label="contact.class.Applicant" value="#{jobApplicationHome.entity.applicant}" lookupBean="#{applicantLookup}" lookupListener="jobApplicationHome.entity.applicant" required="true" placeholder="#{messages['contact.info.Applicant']}" />
+                <t:inputUser label="general.label.Owner" value="#{jobApplicationHome.entity.owner}" required="true"  columnClass="col-sm-6"/>
+                <t:inputDate label="#{messages['general.label.Date']}" value="#{jobApplicationHome.entity.date }"  columnClass="col-sm-6" />
+                <t:inputSuggestion label="general.label.State" value="#{jobApplicationHome.entity.state}" group="#{jobApplicationHome.entity.class.simpleName}" listener="jobApplicationHome.entity.state" required="true" columnClass="col-sm-6"/>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <t:inputTextarea label="general.label.Info" value="#{jobApplicationHome.entity.info}" columnClass="col-xs-12"/>
+            </div>
+
+            <div class="row col-md-12 col-xs-12">
+                <t:accordion label="jobApplication.label.ApplicantInformations" >
+                    <div class="row">
+                        <!-- Burada ilgili applicant için bazı temel bilgiler alınacak. -->
+                    </div>
+                </t:accordion>
+            </div>
+        </div>
+
+    </ui:define>
+
+</ui:composition>
