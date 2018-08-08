@@ -70,7 +70,8 @@ public class JobApplication extends AuditBase{
     @Column(name = "STATE")
     private String state;
     
-    
+    public static final String SUGGESTIONSTATUSGROUP="Recruit";
+    public static final String SUGGESTIONSTATUSKEY="JobApplication.State";
     
     @Override
     public Long getId() {
