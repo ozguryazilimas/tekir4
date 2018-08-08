@@ -49,6 +49,15 @@ public interface RecruitPages extends Pages {
         }
     }
 
+    interface applicant extends RecruitPages {
+
+        @View
+        @SecuredPage
+        class ApplicantLookup implements RecruitPages {
+        }
+
+    }
+
     interface jobapplication extends RecruitPages {
 
         @View
@@ -78,5 +87,5 @@ public interface RecruitPages extends Pages {
         class JobApplicationMasterView implements RecruitPages {
         }
     }
-    
+
 }
