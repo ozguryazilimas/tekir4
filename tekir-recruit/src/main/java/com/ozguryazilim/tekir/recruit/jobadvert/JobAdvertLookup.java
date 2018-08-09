@@ -12,8 +12,6 @@ import javax.inject.Inject;
 /**
  * JobAdvert için Lookup Dialog Sınıfı.
  * 
- * FIXME: Dialog araması için düzenlenmesi gerek.
- * 
  * @author Erdem Uslu
  */
 @Lookup(dialogPage = RecruitPages.JobAdvertPages.JobAdvertLookup.class)
