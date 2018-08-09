@@ -50,7 +50,7 @@ public interface RecruitPages extends Pages {
 
     }
 
-    @Folder(name = "./aplicant")
+    @Folder(name = "./applicant")
     interface ApplicantPages extends RecruitPages{
 
         @View
