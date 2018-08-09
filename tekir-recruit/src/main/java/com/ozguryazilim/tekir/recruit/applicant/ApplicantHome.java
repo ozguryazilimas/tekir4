@@ -43,7 +43,7 @@ public class ApplicantHome extends FormBase<Applicant, Long> {
 
         navigationParameterContext.addPageParameter("eid", 0);
 
-        return RecruitPages.applicant.Applicant.class;
+        return RecruitPages.ApplicantPages.Applicant.class;
     }
 
     @Override

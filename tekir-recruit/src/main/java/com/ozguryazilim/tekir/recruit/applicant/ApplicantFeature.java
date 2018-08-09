@@ -12,8 +12,8 @@ import com.ozguryazilim.telve.feature.PageType;
  * @author yusuf
  */
 @Feature(permission = "applicant", forEntity = Applicant.class)
-@Page(type = PageType.BROWSE, page = RecruitPages.applicant.ApplicantBrowse.class)
-@Page(type = PageType.EDIT, page = RecruitPages.applicant.Applicant.class)
+@Page(type = PageType.BROWSE, page = RecruitPages.ApplicantPages.ApplicantBrowse.class)
+@Page(type = PageType.EDIT, page = RecruitPages.ApplicantPages.Applicant.class)
 public class ApplicantFeature extends AbstractFeatureHandler{
     
 }
