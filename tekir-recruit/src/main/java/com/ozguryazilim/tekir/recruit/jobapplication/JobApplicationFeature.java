@@ -11,9 +11,9 @@ import com.ozguryazilim.telve.feature.PageType;
  *
  * @author Erdem Uslu
  */
-@Feature(permission="jobapplication",forEntity = JobApplication.class)
-@Page(type=PageType.BROWSE,page=RecruitPages.jobapplication.JobApplicationBrowse.class)
-@Page(type=PageType.EDIT,page=RecruitPages.jobapplication.JobApplication.class)
+@Feature(permission="jobApplication",forEntity = JobApplication.class)
+@Page(type=PageType.BROWSE,page=RecruitPages.JobApplicationPages.JobApplicationBrowse.class)
+@Page(type=PageType.EDIT,page=RecruitPages.JobApplicationPages.JobApplication.class)
 public class JobApplicationFeature extends AbstractFeatureHandler{
     
 }

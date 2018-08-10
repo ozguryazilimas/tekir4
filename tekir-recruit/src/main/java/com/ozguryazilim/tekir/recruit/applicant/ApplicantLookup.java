@@ -17,7 +17,7 @@ import javax.inject.Inject;
  *  
  * @author Erdem Uslu
  */
-@Lookup(dialogPage = RecruitPages.applicant.ApplicantLookup.class)
+@Lookup(dialogPage = RecruitPages.ApplicantPages.ApplicantLookup.class)
 public class ApplicantLookup extends LookupTableControllerBase<Applicant, ApplicantViewModel> {
 
     @Inject

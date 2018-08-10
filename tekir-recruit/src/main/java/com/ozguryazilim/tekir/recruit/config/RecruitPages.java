@@ -1,6 +1,5 @@
 package com.ozguryazilim.tekir.recruit.config;
 
-import com.ozguryazilim.tekir.recruit.applicant.ApplicantFeature;
 import com.ozguryazilim.tekir.recruit.jobadvert.JobAdvertFeature;
 import com.ozguryazilim.telve.auth.SecuredPage;
 import com.ozguryazilim.telve.nav.Navigation;
@@ -55,22 +54,8 @@ public interface RecruitPages extends Pages {
         }
     }
 
-    interface applicant extends RecruitPages {
-
-        @View
-        @SecuredPage
-        @PageTitle("module.caption.Applicant")
-        class Applicant implements RecruitPages {
-        }
-        
-        @View
-        @SecuredPage("applicant")
-        @PageTitle("module.caption.ApplicantBrowse")
-        @Navigation(label = "module.caption.ApplicantBrowse",
-                feature = ApplicantFeature.class,
-                section = RecruitNavigationSection.class)
-        class ApplicantBrowse implements RecruitPages {
-        }
+    @Folder(name = "./applicant")
+    interface ApplicantPages extends RecruitPages {
 
         @View
         @SecuredPage
@@ -83,11 +68,12 @@ public interface RecruitPages extends Pages {
         }
 
     }
-
-    interface jobapplication extends RecruitPages {
+    
+    @Folder(name = "./jobApplication")
+    interface JobApplicationPages extends RecruitPages {
 
         @View
-        @SecuredPage("application")
+        @SecuredPage("jobApplication")
         @PageTitle("module.caption.JobApplicationBrowse")
         @Navigation(label = "module.caption.JobApplicationBrowse",
                 feature = JobApplicationFeature.class,
@@ -96,7 +82,7 @@ public interface RecruitPages extends Pages {
         }
 
         @View
-        @SecuredPage
+        @SecuredPage("jobApplication")
         @PageTitle("module.caption.JobApplication")
         class JobApplication implements RecruitPages {
         }

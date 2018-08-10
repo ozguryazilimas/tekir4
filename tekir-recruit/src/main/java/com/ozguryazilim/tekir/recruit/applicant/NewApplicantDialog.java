@@ -63,7 +63,7 @@ public class NewApplicantDialog implements Serializable {
      * @return
      */
     public String getDialogName() {
-        String viewId = viewConfigResolver.getViewConfigDescriptor(RecruitPages.applicant.NewApplicantPopup.class).getViewId();
+        String viewId = viewConfigResolver.getViewConfigDescriptor(RecruitPages.ApplicantPages.NewApplicantPopup.class).getViewId();
         return viewId.substring(0, viewId.indexOf(".xhtml"));
     }
     
