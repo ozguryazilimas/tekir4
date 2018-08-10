@@ -8,4 +8,8 @@
     <ui:param name="noStandartFilter" value="false" />
     <ui:param name="useCustomColumns" value="false" />
     
+    <ui:define name="actionButtons">
+        <p:commandButton value="#{messages['general.button.Add']}" icon="fa fa-plus-circle" action="#{newApplicantDialog.openDialog()}" rendered="#{identity.hasPermission( applicant, 'insert')}" styleClass="pull-left btn-success" />
+    </ui:define>
+    
 </ui:composition>

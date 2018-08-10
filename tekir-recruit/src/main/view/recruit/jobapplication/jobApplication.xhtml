@@ -33,8 +33,8 @@
 
         <div class="row">
             <div class="col-md-6 col-xs-12">
-                <t:inputLookupDialog label="contact.class.JobAdvert" value="#{jobApplicationHome.entity.advert}" lookupBean="#{jobAdvertLookup}" lookupListener="jobApplicationHome.entity.advert" required="true" placeholder="#{messages['contact.info.JobAdvert']}" />
-                <t:inputLookupDialog label="contact.class.Applicant" value="#{jobApplicationHome.entity.applicant}" lookupBean="#{applicantLookup}" lookupListener="jobApplicationHome.entity.applicant" required="true" placeholder="#{messages['contact.info.Applicant']}" update="@form"/>
+                <t:inputLookupDialog label="contact.class.JobAdvert" value="#{jobApplicationHome.entity.advert}" lookupBean="#{jobAdvertLookup}" lookupListener="jobApplicationHome.entity.advert" required="true" placeholder="#{messages['contact.info.JobAdvert']}" />      
+                <t:inputLookupDialog label="contact.class.Applicant" value="#{jobApplicationHome.entity.applicant}" lookupBean="#{applicantLookup}" lookupListener="jobApplicationHome.entity.applicant" required="true" placeholder="#{messages['contact.info.Applicant']}" update="@form"/>               
                 <t:inputUser label="general.label.Owner" value="#{jobApplicationHome.entity.owner}" required="true"  columnClass="col-sm-6"/>
                 <t:inputDate label="#{messages['general.label.Date']}" value="#{jobApplicationHome.entity.date }"  columnClass="col-sm-6" />
                 <t:inputSuggestion label="general.label.State" value="#{jobApplicationHome.entity.state}" group="#{jobApplicationHome.entity.class.simpleName}" listener="jobApplicationHome.entity.state" required="true" columnClass="col-sm-6"/>

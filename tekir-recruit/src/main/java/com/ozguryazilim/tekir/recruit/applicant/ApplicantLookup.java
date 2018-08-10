@@ -3,9 +3,8 @@ package com.ozguryazilim.tekir.recruit.applicant;
 import com.ozguryazilim.tekir.entities.Applicant;
 import com.ozguryazilim.tekir.entities.Applicant_;
 import com.ozguryazilim.telve.lookup.LookupTableControllerBase;
-import com.ozguryazilim.tekir.recruit.applicant.ApplicantViewModel;
-import com.ozguryazilim.tekir.recruit.applicant.ApplicantRepository;
 import com.ozguryazilim.tekir.recruit.config.RecruitPages;
+import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.lookup.Lookup;
 import com.ozguryazilim.telve.lookup.LookupTableModel;
@@ -23,6 +22,9 @@ public class ApplicantLookup extends LookupTableControllerBase<Applicant, Applic
 
     @Inject
     private ApplicantRepository applicantRepository;
+    
+    @Inject
+    private Identity identity;
 
     @Override
     protected void buildModel(LookupTableModel<ApplicantViewModel> model) {
@@ -39,5 +41,5 @@ public class ApplicantLookup extends LookupTableControllerBase<Applicant, Applic
     public String getCaptionFieldName() {
         return Applicant_.name.getName();
     }
-
+    
 }
