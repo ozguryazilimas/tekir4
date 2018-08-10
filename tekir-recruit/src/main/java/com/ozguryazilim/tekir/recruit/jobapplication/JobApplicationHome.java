@@ -46,8 +46,7 @@ public class JobApplicationHome extends FormBase<JobApplication, Long> {
 
     @Override
     public boolean onBeforeSave() {
-
-        applicantRepository.saveAndFlushAndRefresh(getApplicant());
+        applicantRepository.saveAndFlush(getApplicant());  
         
         return super.onBeforeSave();
     }
