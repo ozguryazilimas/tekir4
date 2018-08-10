@@ -3,7 +3,7 @@
         "name": "query.JobApplicationBrowse.All",
         "resultLimit": 100,
         "rowLimit": 20,
-        "columns": ["adverttopic", "applicantname", "advertstartDate", "advertendDate", "date"],
+        "columns": ["advertserial", "applicantname", "adverttopic", "advertstartDate", "advertendDate", "date"],
         "filters": ["adverttopic", "date", "advertstartDate", "advertendDate", "applicantname", "owner", "state"],
         "filterValues": {
             "date": "All::LastMonth::20180701T0000::Today::20180731T0000",
@@ -19,10 +19,10 @@
     },
 
     {
-        "name": "query.JobApplication.settingDateLast10Days",
+        "name": "query.JobApplicationBrowse.settingDateLast10Days",
         "resultLimit": 100,
         "rowLimit": 20,
-        "columns": ["adverttopic", "applicantname", "advertstartDate", "advertendDate", "date"],
+        "columns": ["advertserial", "applicantname", "adverttopic", "advertstartDate", "advertendDate", "date"],
         "filters": ["adverttopic", "date", "advertstartDate", "advertendDate", "applicantname", "owner", "state"],
         "filterValues": {
             "date": "In::LastTenDays::20180729T0000::Today::20180808T0000",
@@ -38,10 +38,10 @@
     },
 
     {
-        "name": "query.JobApplication.settingDateThisMonth",
+        "name": "query.JobApplicationBrowse.settingDateThisMonth",
         "resultLimit": 100,
         "rowLimit": 20,
-        "columns": ["adverttopic", "applicantname", "advertstartDate", "advertendDate", "date"],
+       "columns": ["advertserial", "applicantname", "adverttopic", "advertstartDate", "advertendDate", "date"],
         "filters": ["adverttopic", "date", "advertstartDate", "advertendDate", "applicantname", "owner", "state"],
         "filterValues": {
             "date": "In::ThisMonth::20180801T0000::Today::20180831T0000",
@@ -57,10 +57,10 @@
     },
 
     {
-        "name": "query.JobApplication.endDateThisMonth",
+        "name": "query.JobApplicationBrowse.endDateThisMonth",
         "resultLimit": 100,
         "rowLimit": 20,
-        "columns": ["adverttopic", "applicantname", "advertstartDate", "advertendDate", "date"],
+        "columns": ["advertserial", "applicantname", "adverttopic", "advertstartDate", "advertendDate", "date"],
         "filters": ["adverttopic", "date", "advertstartDate", "advertendDate", "applicantname", "owner", "state"],
         "filterValues": {
             "date": "All::ThisMonth::20180801T0000::Today::20180831T0000",
@@ -76,10 +76,10 @@
     },
 
     {
-        "name": "query.JobApplication.endDateNext10Days",
+        "name": "query.JobApplicationBrowse.endDateNext10Days",
         "resultLimit": 100,
         "rowLimit": 20,
-        "columns": ["adverttopic", "applicantname", "advertstartDate", "advertendDate", "date"],
+        "columns": ["advertserial", "applicantname", "adverttopic", "advertstartDate", "advertendDate", "date"],
         "filters": ["adverttopic", "date", "advertstartDate", "advertendDate", "applicantname", "owner", "state"],
         "filterValues": {
             "date": "All::ThisMonth::20180801T0000::Today::20180831T0000",
@@ -95,10 +95,10 @@
     },
 
     {
-        "name": "query.JobApplication.startDateThisMonth",
+        "name": "query.JobApplicationBrowse.startDateThisMonth",
         "resultLimit": 100,
         "rowLimit": 20,
-        "columns": ["adverttopic", "applicantname", "advertstartDate", "advertendDate", "date"],
+       "columns": ["advertserial", "applicantname", "adverttopic", "advertstartDate", "advertendDate", "date"],
         "filters": ["adverttopic", "date", "advertstartDate", "advertendDate", "applicantname", "owner", "state"],
         "filterValues": {
             "date": "All::ThisMonth::20180801T0000::Today::20180831T0000",
