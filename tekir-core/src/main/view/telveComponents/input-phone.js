@@ -1,6 +1,14 @@
 (function () {
     var tekir = window.tekir = window.tekir || {};
 
+    /*
+    charCode's for firefox
+    0 = backspace
+    97 = Ctrl + A
+    99 = Ctrl + C
+    118 = Ctrl + V
+    120 = Ctrl + X
+     */
     var expKeys = [0, 97, 99, 118, 120];
 
     function handleKeyPress(event) {
