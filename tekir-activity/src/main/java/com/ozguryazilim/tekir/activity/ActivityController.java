@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ozguryazilim.tekir.activity;
 
 import com.ozguryazilim.tekir.entities.Activity;
@@ -18,7 +13,7 @@ import org.apache.deltaspike.core.api.scope.GroupedConversationScoped;
 
 /**
  * ActivityController Controller işaretlemek için kullanılır.
- * 
+ *
  * @author Hakan Uygun
  */
 @Stereotype
@@ -28,9 +23,10 @@ import org.apache.deltaspike.core.api.scope.GroupedConversationScoped;
 @Named
 @Documented
 public @interface ActivityController {
-    
+
     Class<? extends Activity> activity();
     Class<? extends ViewConfig> editor() default ViewConfig.class;
     Class<? extends ViewConfig> viewer();
-    
+    Class<? extends ViewConfig> optionalPanel() default ViewConfig.class;
+
 }

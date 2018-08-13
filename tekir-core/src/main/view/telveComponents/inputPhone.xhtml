@@ -21,7 +21,7 @@
                     <p:inputText id="#{cc.id}_inp" value="#{cc.attrs.value}" size="32"
                                  required="#{cc.attrs.required}" placeholder="+90 212 999 99 99"/>
             </span>
-            <p:message id="#{cc.id}_msg" for="#{cc.id}_inp" autoUpdate="true"/>
+            <p:message id="#{cc.id}_msg" for="#{cc.id}_inp"><p:autoUpdate/></p:message>
             <script>
                 tekir.attachPhoneInput("#{cc.clientId}:#{cc.id}_inp");
             </script>

@@ -8,6 +8,7 @@ package com.ozguryazilim.tekir.entities;
 import com.ozguryazilim.telve.annotations.BizKey;
 import com.ozguryazilim.telve.entities.EntityBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,29 +31,37 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  * Bir contact ile gerçekleştirilen her hangi bir iletişim aktivitesini tanımlar.
- * 
+ *
  * @author Hakan Uygun
  */
 @Entity
-@Table( name = "TCA_ACTIVITY")
+@Table(name = "TCA_ACTIVITY")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "ACTIVITY_TYPE")
-public class Activity extends EntityBase{
+public class Activity extends EntityBase {
 
 
-    @Id 
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "genericSeq")
     @Column(name = "ID")
     private Long id;
-    
-    @Column(name = "ACT_NO") @BizKey
+
+    @Column(name = "ACT_NO")
+    @BizKey
     private String activityNo;
-    
+
+    /**
+     * Başka kaynaklardan içe aktarındığında kaynak tekil id'si
+     */
+    @Column(name = "REF_ID")
+    private String referenceId;
+
     /**
      * Kimle : bir aktivite aslında hep bir person ile olacak.
      */
@@ -60,13 +69,13 @@ public class Activity extends EntityBase{
     @JoinColumn(name = "PERSON_ID", foreignKey = @ForeignKey(name = "FK_ACC_PER"))
     private AbstractPerson person;
     /**
-     * Hangi firma adına. 
+     * Hangi firma adına.
      * Contact/Person zaman içinde farklı firmalarda çalışıyor olabilir.
      */
     @ManyToOne
     @JoinColumn(name = "CORPORATION_ID", foreignKey = @ForeignKey(name = "FK_ACC_COR"))
     private Corporation corporation;
-    
+
     /**
      * Hangi belge ile ilşikili?
      * Aslında burada 3lü bir yapı gerek.
@@ -74,8 +83,8 @@ public class Activity extends EntityBase{
      */
     @Embedded
     private FeaturePointer regarding;
-    
-    
+
+
     /**
      * Bu iletişimin yönü nedir?
      * Incoming / Outgoing
@@ -83,48 +92,48 @@ public class Activity extends EntityBase{
     @Enumerated(EnumType.STRING)
     @Column(name = "DIRECTION")
     private ActivityDirection direction = ActivityDirection.INCOMING;
-    
+
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS")
     private ActivityStatus status = ActivityStatus.DRAFT;
-    
+
     @Column(name = "STATUS_REASON")
     private String statusReason;
-    
-    
+
+
     /**
      * Bu görüşme ne zaman yapılacak?
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "DUE_DATE")
     private Date dueDate;
-    
+
     /**
      * Bu iletişimin yapıldığı tarih / saat
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "ACT_DATE")
     private Date date;
-    
+
     /**
-     * Dakika? Saniye? cinsinden ne kadar sürdüğü
+     * Saniye cinsinden ne kadar sürdüğü
      */
     @Column(name = "DURATION")
     private Long duration;
-    
+
     /**
      * Öncelik
      */
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "PRIORITY")
     private ActivityPriority priority = ActivityPriority.MEDIUM;
-    
+
     /**
      * Kimin yapacağı : User
      */
     @Column(name = "ASSIGNEE")
     private String assignee;
-    
+
     /**
      * Görüşme konusu
      */
@@ -135,27 +144,27 @@ public class Activity extends EntityBase{
      */
     @Column(name = "BODY")
     private String body;
-    
+
     /**
      * Konu hakkında ek not
      */
     @Column(name = "INFO")
     private String info;
-    
-    
+
+
     /**
      * Sonuç notu
      */
     @Column(name = "RESULT_NOTE")
     private String resultNote;
-    
+
     /**
-     * Bir sonraki iletişim adımı varsa o. 
+     * Bir sonraki iletişim adımı varsa o.
      */
     @ManyToOne
     @JoinColumn(name = "FOLLOWUP_ID", foreignKey = @ForeignKey(name = "FK_ACC_FOLL"))
     private Activity followup;
-    
+
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<ActivityMention> mentions = new ArrayList<>();
@@ -167,6 +176,14 @@ public class Activity extends EntityBase{
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getReferenceId() {
+        return referenceId;
+    }
+
+    public void setReferenceId(String referenceId) {
+        this.referenceId = referenceId;
     }
 
     public AbstractPerson getPerson() {
@@ -296,15 +313,14 @@ public class Activity extends EntityBase{
     public void setFollowup(Activity followup) {
         this.followup = followup;
     }
-    
-    
-    
-    public List<String> getResultStatus(){
+
+
+    public List<String> getResultStatus() {
         List<String> ls = new ArrayList<>();
-        
+
         ls.add("Closed");
         ls.add("Canceled");
-        
+
         return ls;
     }
 
@@ -324,5 +340,5 @@ public class Activity extends EntityBase{
         this.activityNo = activityNo;
     }
 
-    
+
 }
