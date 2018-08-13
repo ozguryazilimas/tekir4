@@ -6,7 +6,7 @@
     "columns": [
       "topic",
       "processNo",
-      "account",
+      "account.name",
       "type",
       "status"
     ],
@@ -15,12 +15,12 @@
       "processNo",
       "type",
       "status",
-      "account"
+      "account.name"
     ],
     "filterValues": {
       "topic": "All::null",
       "type": "All::PURCHASE",
-      "account": "All::null",
+      "account.name": "All::null",
       "processNo": "All::54",
       "status": "Equal::OPEN"
     },
@@ -38,7 +38,7 @@
     "columns": [
       "topic",
       "processNo",
-      "account",
+      "account.name",
       "type",
       "status"
     ],
@@ -47,12 +47,12 @@
       "processNo",
       "type",
       "status",
-      "account"
+      "account.name"
     ],
     "filterValues": {
       "topic": "All::null",
       "type": "All::SALES",
-      "account": "All::null",
+      "account.name": "All::null",
       "processNo": "All::null",
       "status": "All::OPEN"
     },
@@ -70,7 +70,7 @@
     "columns": [
       "topic",
       "processNo",
-      "account",
+      "account.name",
       "type",
       "status"
     ],
@@ -79,12 +79,12 @@
       "processNo",
       "type",
       "status",
-      "account"
+      "account.name"
     ],
     "filterValues": {
       "topic": "All::null",
       "type": "All::PURCHASE",
-      "account": "All::null",
+      "account.name": "All::null",
       "processNo": "All::54",
       "status": "Equal::CLOSE"
     },
@@ -102,7 +102,7 @@
     "columns": [
       "topic",
       "processNo",
-      "account",
+      "account.name",
       "type",
       "status"
     ],
@@ -111,12 +111,12 @@
       "processNo",
       "type",
       "status",
-      "account"
+      "account.name"
     ],
     "filterValues": {
       "topic": "All::null",
       "type": "Equal::PURCHASE",
-      "account": "All::null",
+      "account.name": "All::null",
       "processNo": "All::54",
       "status": "All::OPEN"
     },
@@ -134,7 +134,7 @@
     "columns": [
       "topic",
       "processNo",
-      "account",
+      "account.name",
       "type",
       "status"
     ],
@@ -143,12 +143,12 @@
       "processNo",
       "type",
       "status",
-      "account"
+      "account.name"
     ],
     "filterValues": {
       "topic": "All::null",
       "type": "Equal::SALES",
-      "account": "All::null",
+      "account.name": "All::null",
       "processNo": "All::54",
       "status": "All::OPEN"
     },
