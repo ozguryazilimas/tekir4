@@ -101,7 +101,7 @@ public class PhoneEditor extends AbstractContactInformationEditor<ContactPhone> 
 
     /**
      * Yeni contact'ı save eder.
-     * @return 
+     * @return
      */
     @Override
     public boolean onBeforeClose() {
@@ -116,7 +116,7 @@ public class PhoneEditor extends AbstractContactInformationEditor<ContactPhone> 
 
         if (getContact().isPersisted()) {
             //FIXME: Burada başk abir primary var ise onunla yer değiştirmek lazım.
-            
+
             //Önce bileşeni save edelim.
             contactInformationRepository.save(getEntity());
 
@@ -153,4 +153,7 @@ public class PhoneEditor extends AbstractContactInformationEditor<ContactPhone> 
         return new ContactPhone();
     }
 
+    public Boolean permissionCheck(ContactPhone contactPhone, String subType) {
+        return Boolean.FALSE;
+    }
 }
