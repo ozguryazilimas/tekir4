@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"               
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                template="/layout/masterViewBase.xhtml">
+
+    <ui:define name="content">
+       
+        <div class="panel panel-default">
+            <div class="panel-heading"> <i class="fa fa-pencil" /> #{messages['recruit.label.JobDescription']} </div>
+            <div class="panel-body">#{jobAdvertHome.entity.info}</div>
+        </div>
+        
+        <div class="panel panel-default">
+            <div class="panel-heading"> <i class="fa fa-list" /> #{messages['recruit.label.Skills']} </div>
+            <div class="panel-body">
+                <ui:repeat value="#{jobAdvertHome.entity.skills}" var="item">
+                    <div class="col-xs-12 list-inline">
+                        <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+                        #{item}
+                    </div>  
+                </ui:repeat>
+            </div>
+        </div>
+          
+    </ui:define>
+
+</ui:composition>

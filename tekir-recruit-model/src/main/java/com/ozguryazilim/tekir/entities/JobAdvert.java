@@ -83,6 +83,9 @@ public class JobAdvert extends AuditBase{
     @Column(name = "STATUS")
     private String status;
     
+    public static final String SUGGESTIONSTATUSGROUP="Recruit";
+    public static final String SUGGESTIONSTATUSKEY="JobAdvert.Status";
+    
     @Override
     public Long getId() {
         return id;

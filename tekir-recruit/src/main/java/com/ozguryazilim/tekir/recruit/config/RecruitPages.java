@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ozguryazilim.tekir.recruit.config;
 
+import com.ozguryazilim.tekir.recruit.jobadvert.JobAdvertFeature;
 import com.ozguryazilim.telve.auth.SecuredPage;
 import com.ozguryazilim.telve.nav.Navigation;
 import com.ozguryazilim.telve.view.PageTitle;
@@ -16,6 +12,8 @@ import javax.enterprise.context.ApplicationScoped;
 import org.apache.deltaspike.jsf.api.config.view.Folder;
 import org.apache.deltaspike.jsf.api.config.view.View;
 
+import javax.enterprise.context.ApplicationScoped;
+
 /**
  *
  * @author deniz
@@ -24,32 +22,29 @@ import org.apache.deltaspike.jsf.api.config.view.View;
 @Folder(name = "./recruit")
 public interface RecruitPages extends Pages {
 
-    @View
-    @SecuredPage("recruit")
-    @PageTitle("module.caption.RecruitBrowse")
-    @Navigation(label = "module.caption.RecruitBrowse",
-            feature = RecruitFeature.class,
-            section = RecruitNavigationSection.class)
-    class RecruitBrowse implements RecruitPages {
-    }
+    @Folder(name = "./jobAdvert")
+    interface JobAdvertPages extends RecruitPages{
 
-    @View
-    @SecuredPage("recruit")
-    @PageTitle("module.caption.Recruit")
-    class Recruit implements RecruitPages {
-    }
+        @View
+        @SecuredPage("recruit")
+        @PageTitle("module.caption.JobAdvertBrowse")
+        @Navigation(label = "module.caption.RecruitBrowse",
+                feature = JobAdvertFeature.class,
+                section = RecruitNavigationSection.class)
+        class JobAdvertBrowse implements JobAdvertPages{
+        }
 
-    @View
-    @SecuredPage("recruit")
-    @PageTitle("module.caption.RecruitView")
-    class RecruitView implements RecruitPages {
-    }
+        @View
+        @SecuredPage("recruit")
+        @PageTitle("module.caption.JobAdvert")
+        class JobAdvert implements JobAdvertPages{
+        }
 
-    @View
-    @SecuredPage("recruit")
-    @PageTitle("module.caption.RecruitMasterView")
-    class RecruitMasterView implements RecruitPages {
-    }
+        @View
+        @SecuredPage("recruit")
+        @PageTitle("module.caption.JobAdvert")
+        class JobAdvertView implements JobAdvertPages{
+        }
 
     interface applicant extends RecruitPages{
 
