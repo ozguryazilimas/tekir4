@@ -3,7 +3,7 @@
         "name": "query.ApplicantBrowse.All",
         "resultLimit": 100,
         "rowLimit": 20,
-        "columns": ["code", "name", "married", "militaryDuty", "primaryMobileaddress", "primaryPhoneaddress", "primaryEmailaddress"],
+        "columns": ["code", "name", "married", "militaryDuty", "primaryMobile.address", "primaryPhone.address", "primaryEmail.address"],
         "filters": ["code", "name", "married", "militaryDuty", "rating"],
         "filterValues": {
             "code": "All::null",
