@@ -21,29 +21,30 @@ public interface RecruitPages extends Pages {
 
     @Folder(name = "./jobAdvert")
     interface JobAdvertPages extends RecruitPages{
+        
         @View
-        @SecuredPage("recruit")
+        @SecuredPage("jobAdvert")
         @PageTitle("module.caption.JobAdvertBrowse")
-        @Navigation(label = "module.caption.RecruitBrowse",
+        @Navigation(label = "module.caption.JobAdvertBrowse",
                 feature = JobAdvertFeature.class,
                 section = RecruitNavigationSection.class)
         class JobAdvertBrowse implements JobAdvertPages{
         }
 
         @View
-        @SecuredPage("recruit")
+        @SecuredPage("jobAdvert")
         @PageTitle("module.caption.JobAdvert")
         class JobAdvert implements JobAdvertPages{
         }
 
         @View
-        @SecuredPage("recruit")
+        @SecuredPage("jobAdvert")
         @PageTitle("module.caption.JobAdvert")
         class JobAdvertView implements JobAdvertPages{
         }
 
         @View
-        @SecuredPage("recruit")
+        @SecuredPage("jobAdvert")
         @PageTitle("module.caption.JobAdvertMasterView")
         class JobAdvertMasterView implements JobAdvertPages{
         }
