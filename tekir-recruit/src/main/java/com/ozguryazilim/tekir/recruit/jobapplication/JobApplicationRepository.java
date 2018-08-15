@@ -2,9 +2,7 @@ package com.ozguryazilim.tekir.recruit.jobapplication;
 
 import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.entities.Applicant;
-import com.ozguryazilim.tekir.entities.Applicant_;
 import com.ozguryazilim.tekir.entities.JobAdvert;
-import com.ozguryazilim.tekir.entities.JobAdvert_;
 import com.ozguryazilim.tekir.entities.JobApplication;
 import com.ozguryazilim.tekir.entities.JobApplication_;
 import com.ozguryazilim.telve.data.RepositoryBase;
@@ -58,6 +56,7 @@ public abstract class JobApplicationRepository extends RepositoryBase<JobApplica
         } else {
             criteriaQuery.orderBy(decorateSorts(queryDefinition.getSorters(), criteriaBuilder, from));
         }
+        
         TypedQuery<JobApplicationViewModel> typedQuery = entityManager().createQuery(criteriaQuery);
         typedQuery.setMaxResults(queryDefinition.getResultLimit());
         List<JobApplicationViewModel> resultList = typedQuery.getResultList();
@@ -73,11 +72,7 @@ public abstract class JobApplicationRepository extends RepositoryBase<JobApplica
                 from.get(JobApplication_.state),
                 from.get(JobApplication_.info),
                 from.get(JobApplication_.advert),
-                from.get(JobApplication_.applicant),
-                from.get(JobApplication_.advert).get(JobAdvert_.topic),
-                from.get(JobApplication_.advert).get(JobAdvert_.startDate),
-                from.get(JobApplication_.advert).get(JobAdvert_.endDate),
-                from.get(JobApplication_.applicant).get(Applicant_.name)
+                from.get(JobApplication_.applicant)
         );
     }
 

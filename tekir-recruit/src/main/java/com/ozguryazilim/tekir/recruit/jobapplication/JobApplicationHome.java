@@ -1,6 +1,7 @@
 package com.ozguryazilim.tekir.recruit.jobapplication;
 
 import com.ozguryazilim.tekir.entities.JobApplication;
+import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.EntityBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
@@ -19,7 +20,7 @@ public class JobApplicationHome extends FormBase<JobApplication, Long> {
 
     @Inject
     private JobApplicationRepository repository;
-
+    
     @Override
     protected RepositoryBase<JobApplication, JobApplicationViewModel> getRepository() {
         return repository;
