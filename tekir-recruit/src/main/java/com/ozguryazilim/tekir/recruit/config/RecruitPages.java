@@ -71,7 +71,7 @@ public interface RecruitPages extends Pages {
         
     }
     
-    @Folder(name = "./jobapplication")
+    @Folder(name = "./jobApplication")
     interface JobApplicationPages extends RecruitPages {
 
         @View

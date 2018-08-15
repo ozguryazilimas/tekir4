@@ -10,7 +10,7 @@ import com.ozguryazilim.telve.feature.PageType;
  *
  * @author yusuf
  */
-@Feature(permission="jobapplication",forEntity = JobApplication.class)
+@Feature(permission="jobApplication",forEntity = JobApplication.class)
 @Page(type = PageType.VIEW, page = JobApplicationPages.JobApplicationView.class)
 @Page(type = PageType.MASTER_VIEW, page = JobApplicationPages.JobApplicationMasterView.class)
 @Page(type=PageType.BROWSE,page=JobApplicationPages.JobApplicationBrowse.class)

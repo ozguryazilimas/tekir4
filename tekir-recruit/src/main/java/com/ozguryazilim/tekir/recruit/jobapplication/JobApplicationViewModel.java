@@ -19,10 +19,6 @@ public class JobApplicationViewModel implements ViewModel, Serializable {
     private String info;
     private JobAdvert advert;
     private Applicant applicant;
-    private String adverttopic;
-    private Date advertstartDate;
-    private Date advertendDate;
-    private String applicantname;
 
     public JobApplicationViewModel(
             Long id,
@@ -31,11 +27,7 @@ public class JobApplicationViewModel implements ViewModel, Serializable {
             String state,
             String info,
             JobAdvert advert,
-            Applicant applicant,
-            String adverttopic,
-            Date advertstartDate,
-            Date advertendDate,
-            String applicantname) {
+            Applicant applicant) {
         this.id = id;
         this.date = date;
         this.owner = owner;
@@ -43,10 +35,6 @@ public class JobApplicationViewModel implements ViewModel, Serializable {
         this.info = info;
         this.advert = advert;
         this.applicant = applicant;
-        this.adverttopic=advert.getTopic();
-        this.advertstartDate=advert.getStartDate();
-        this.advertendDate=advert.getEndDate();
-        this.applicantname=this.applicant.getName();
     }
 
     @Override
@@ -101,40 +89,5 @@ public class JobApplicationViewModel implements ViewModel, Serializable {
     public void setApplicant(Applicant applicant) {
         this.applicant = applicant;
     }
-
-    public String getAdverttopic() {
-        return adverttopic;
-    }
-
-    public void setAdverttopic(String adverttopic) {
-        this.adverttopic = adverttopic;
-    }
-
-    public Date getAdvertstartDate() {
-        return advertstartDate;
-    }
-
-    public void setAdvertstartDate(Date advertstartDate) {
-        this.advertstartDate = advertstartDate;
-    }
-
-    public Date getAdvertendDate() {
-        return advertendDate;
-    }
-
-    public void setAdvertendDate(Date advertendDate) {
-        this.advertendDate = advertendDate;
-    }
-
-    public String getApplicantname() {
-        return applicantname;
-    }
-
-    public void setApplicantname(String applicantname) {
-        this.applicantname = applicantname;
-    }
-
-    
-
 
 }
