@@ -66,7 +66,8 @@ public interface RecruitPages extends Pages {
         @View
         @SecuredPage("applicant")
         @PageTitle("module.caption.Applicant")
-        class Applicant implements ApplicantPages{
+        class Applicant implements ApplicantPages {
+ 
         }
     }
 }
