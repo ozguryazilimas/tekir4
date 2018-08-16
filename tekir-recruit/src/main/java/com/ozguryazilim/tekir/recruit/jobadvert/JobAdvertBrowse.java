@@ -53,7 +53,7 @@ public class JobAdvertBrowse extends BrowseBase<JobAdvert, JobAdvertViewModel> {
                 .addFilter(new StringFilter<>(JobAdvert_.topic, "JobAdvert.label.Topic"))
                 .addFilter(new DateFilter<>(JobAdvert_.startDate, "JobAdvert.label.startDate"))
                 .addFilter(new DateFilter<>(JobAdvert_.endDate, "JobAdvert.label.endDate"))
-                .addFilter(new TagFilter<>("skills", "JobAdvert.label.Skills", "Recruit::skills"))
+                .addFilter(new TagFilter<>("skills", "JobAdvert.label.Skills", "JobAdvert::skills"))
                 .addFilter(new UserFilter<>(JobAdvert_.owner, "JobAdvert.label.Owner"))
                 .addFilter(new StringFilter<>(JobAdvert_.info, "JobAdvert.label.Info"))
                 .addFilter(new StringListFilter<>(JobAdvert_.status,suggestionList,"JobAdvert.label.Status",""));

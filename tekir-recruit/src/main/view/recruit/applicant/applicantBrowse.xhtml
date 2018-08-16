@@ -1,0 +1,48 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"               
+                xmlns:ui="http://java.sun.com/jsf/facelets"               
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/layout/browseBase.xhtml">
+
+    <ui:param name="bean" value="#{applicantBrowse}" />
+    <ui:param name="advanceEnabled" value="true" />
+    <ui:param name="saveEnabled" value="true" />
+    <ui:param name="filterEnabled" value="true" />
+    <ui:param name="permission" value="applicant" />
+    <ui:param name="showQuickSearch" value="true" />
+    <ui:param name="showDetailPanel" value="true" />
+
+    <ui:define name="beforeColumns">
+        <p:column styleClass="actionColumn">
+            <i class="fa fa-user" />
+        </p:column>
+    </ui:define>
+    <ui:define name="detailBar">
+        <div class="row">
+            <t:outputText label="Applicant.label.FirstName" value="#{applicantBrowse.applicant.firstName}" columnClass="col-xs-12" rendered="#{not empty applicantBrowse.applicant.firstName}"/>
+            <t:outputText label="Applicant.label.LastName" value="#{applicantBrowse.applicant.lastName}" columnClass="col-xs-12" rendered="#{not empty applicantBrowse.applicant.lastName}"/>
+            <t:outputText value="#{messages['gender.'.concat(applicantBrowse.applicant.gender)]}" label="contact.label.Gender" rendered="#{not empty applicantBrowse.applicant.gender}" columnClass="col-xs-12"/>
+            <t:outputBoolean label="Applicant.label.Married" itemLabel="Married." value="#{applicantBrowse.applicant.married}" rendered="#{not empty applicantBrowse.applicant.married}" columnClass="col-xs-12"/>
+            <t:outputBoolean label="Applicant.label.militaryDuty" itemLabel="militaryDuty." value="#{applicantBrowse.applicant.militaryDuty}" rendered="#{not empty applicantBrowse.applicant.militaryDuty}" columnClass="col-xs-12"/>
+        </div>
+
+        <div class="row">
+            <t:outputText label="Applicant.label.Classifications" value="#{applicantBrowse.applicant.classifications}" rendered="#{not empty applicantBrowse.applicant.classifications}" columnClass="col-xs-12"/>
+            <t:outputText label="Applicant.label.Skills" value="#{applicantBrowse.applicant.skills}" rendered="#{not empty applicantBrowse.applicant.skills}" columnClass="col-xs-12"/>
+        </div>
+
+        <div class="row">   
+            <t:outputText label="contact.label.PrimaryMobile" value="#{applicantBrowse.applicant.primaryMobile.caption}" rendered="#{not empty applicantBrowse.applicant.primaryMobile.caption}" columnClass="col-xs-12" />
+            <t:outputText label="contact.label.PrimaryPhone" value="#{applicantBrowse.applicant.primaryPhone.caption}" rendered="#{not empty applicantBrowse.applicant.primaryPhone.caption}" columnClass="col-xs-12" />
+            <t:outputText label="contact.label.PrimaryEmail" value="#{applicantBrowse.applicant.primaryEmail.caption}" rendered="#{not empty applicantBrowse.applicant.primaryEmail.caption}" columnClass="col-xs-12" />
+        </div>
+
+        <div columnClass="col-xs-12" style="padding-top:5px;">
+            <h:panelGroup layout="block">
+                <h:outputLabel for="rating" value="#{messages['Applicant.label.Rating']}" rendered="#{applicantBrowse.applicant.rating ne null}" />
+                <p:rating id="rating"  value="#{applicantBrowse.applicant.rating}" stars="#{applicantBrowse.ratingLength}" rendered="#{applicantBrowse.applicant.rating ne null}" readonly="true"/> 
+            </h:panelGroup>
+        </div>
+    </ui:define>
+</ui:composition>
