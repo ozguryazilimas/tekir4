@@ -52,13 +52,8 @@
 
             </div>
             <div class="row">
-                <t:inputAny label="#{messages['applicant.label.MilitaryDuty']}" columnClass="col-xs-6">
-                    <p:selectBooleanCheckbox value="#{applicantHome.entity.married}" itemLabel="#{messages['militaryDuty.Completed']}"/>
-                </t:inputAny>
-
-                <t:inputAny label="#{messages['applicant.label.MaritalStatus']}" columnClass="col-xs-6">
-                    <p:selectBooleanCheckbox value="#{applicantHome.entity.married}" itemLabel="#{messages['maritalStatus.Married']}"/>
-                </t:inputAny>
+                <t:inputCheckbox label="#{messages['Applicant.label.militaryDuty']}" itemLabel="#{messages['Applicant.militaryDuty.True']}" value="#{applicantHome.entity.militaryDuty}" columnClass="col-xs-6" />
+                <t:inputCheckbox label="#{messages['Applicant.label.Married']}" itemLabel="#{messages['Applicant.Married.True']}" value="#{applicantHome.entity.married}" columnClass="col-xs-6" />
             </div>
         </div>
         <div class="col-xs-12 col-md-6">
@@ -66,10 +61,10 @@
                 <t:inputText label="#{messages['contact.label.JobTitle']}" value="#{applicantHome.entity.jobTitle}" columnClass="col-md-12" required="true"/>
             </div>
             <div class="row">
-                <t:inputTag label="#{messages['recruit.label.Skills']}" value="#{applicantHome.entity.skills}" columnClass="col-md-12" />
+                <t:inputTag label="#{messages['Applicant.label.Skills']}" value="#{applicantHome.entity.skills}" columnClass="col-md-12" />
             </div>
             <div class="row">
-                <t:inputTextarea label="#{messages['applicant.label.AdditionalInfo']}" value="#{applicantHome.entity.info}" columnClass="col-md-12" /> 
+                <t:inputTextarea label="#{messages['Applicant.label.Info']}" value="#{applicantHome.entity.info}" columnClass="col-md-12" /> 
             </div>
         </div>
 

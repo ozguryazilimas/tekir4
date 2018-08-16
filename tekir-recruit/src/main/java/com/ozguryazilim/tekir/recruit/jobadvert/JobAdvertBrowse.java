@@ -66,10 +66,12 @@ public class JobAdvertBrowse extends BrowseBase<JobAdvert, JobAdvertViewModel> {
                 .addColumn(new DateColumn<>(JobAdvert_.endDate, "JobAdvert.label.endDate"), true)
                 .addColumn(new TextColumn<>(JobAdvert_.status, "JobAdvert.label.Status"), true);
     }
+    
     @Override
     protected RepositoryBase<JobAdvert, JobAdvertViewModel> getRepository() {
         return recruitRepository;
     }
+    
     public JobAdvert getJobAdvert() {
         if (getSelectedItem() != null) {
             return recruitRepository.findBy(getSelectedItem().getId());
