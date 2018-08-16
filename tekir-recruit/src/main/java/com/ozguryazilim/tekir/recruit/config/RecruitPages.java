@@ -1,13 +1,11 @@
 package com.ozguryazilim.tekir.recruit.config;
 
+import com.ozguryazilim.tekir.recruit.applicant.ApplicantFeature;
 import com.ozguryazilim.tekir.recruit.jobadvert.JobAdvertFeature;
 import com.ozguryazilim.telve.auth.SecuredPage;
 import com.ozguryazilim.telve.nav.Navigation;
 import com.ozguryazilim.telve.view.PageTitle;
 import com.ozguryazilim.telve.view.Pages;
-import com.ozguryazilim.tekir.recruit.jobadvert.JobAdvertFeature;
-import com.ozguryazilim.tekir.recruit.applicant.ApplicantFeature;
-import javax.enterprise.context.ApplicationScoped;
 import org.apache.deltaspike.jsf.api.config.view.Folder;
 import org.apache.deltaspike.jsf.api.config.view.View;
 
@@ -23,38 +21,38 @@ public interface RecruitPages extends Pages {
 
     @Folder(name = "./jobAdvert")
     interface JobAdvertPages extends RecruitPages{
-
+        
         @View
-        @SecuredPage("recruit")
+        @SecuredPage("jobAdvert")
         @PageTitle("module.caption.JobAdvertBrowse")
-        @Navigation(label = "module.caption.RecruitBrowse",
+        @Navigation(label = "module.caption.JobAdvertBrowse",
                 feature = JobAdvertFeature.class,
                 section = RecruitNavigationSection.class)
         class JobAdvertBrowse implements JobAdvertPages{
         }
 
         @View
-        @SecuredPage("recruit")
+        @SecuredPage("jobAdvert")
         @PageTitle("module.caption.JobAdvert")
         class JobAdvert implements JobAdvertPages{
         }
 
         @View
-        @SecuredPage("recruit")
+        @SecuredPage("jobAdvert")
         @PageTitle("module.caption.JobAdvert")
         class JobAdvertView implements JobAdvertPages{
         }
-        
+
         @View
-        @SecuredPage("recruit")
+        @SecuredPage("jobAdvert")
         @PageTitle("module.caption.JobAdvertMasterView")
         class JobAdvertMasterView implements JobAdvertPages{
-            
         }
+
     }
 
-    @Folder(name = "./applicant")    
-    interface ApplicantPages extends RecruitPages {
+    @Folder(name = "./applicant")
+    interface ApplicantPages extends RecruitPages{
 
         @View
         @SecuredPage("applicant")
@@ -66,7 +64,7 @@ public interface RecruitPages extends Pages {
         }
 
         @View
-        @SecuredPage
+        @SecuredPage("applicant")
         @PageTitle("module.caption.Applicant")
         class Applicant implements ApplicantPages {
  

@@ -1,6 +1,5 @@
 package com.ozguryazilim.tekir.recruit.applicant;
 
-import com.ozguryazilim.tekir.entities.Applicant;
 import com.ozguryazilim.tekir.recruit.config.RecruitPages;
 import com.ozguryazilim.telve.feature.AbstractFeatureHandler;
 import com.ozguryazilim.telve.feature.Feature;
