@@ -23,8 +23,8 @@
             <t:outputText label="Applicant.label.FirstName" value="#{applicantBrowse.applicant.firstName}" columnClass="col-xs-12" rendered="#{not empty applicantBrowse.applicant.firstName}"/>
             <t:outputText label="Applicant.label.LastName" value="#{applicantBrowse.applicant.lastName}" columnClass="col-xs-12" rendered="#{not empty applicantBrowse.applicant.lastName}"/>
             <t:outputText value="#{messages['gender.'.concat(applicantBrowse.applicant.gender)]}" label="contact.label.Gender" rendered="#{not empty applicantBrowse.applicant.gender}" columnClass="col-xs-12"/>
-            <t:outputText label="Applicant.label.Married" value="#{messages['Married.'.concat(applicantBrowse.applicant.married)]}" rendered="#{not empty applicantBrowse.applicant.married}" columnClass="col-xs-12"/>
-            <t:outputText label="Applicant.label.militaryDuty" value="#{messages['militaryDuty.'.concat(applicantBrowse.applicant.militaryDuty)]}" rendered="#{not empty applicantBrowse.applicant.militaryDuty}" columnClass="col-xs-12"/>
+            <t:outputBoolean label="Applicant.label.Married" itemLabel="Married." value="#{applicantBrowse.applicant.married}" rendered="#{not empty applicantBrowse.applicant.married}" columnClass="col-xs-12"/>
+            <t:outputBoolean label="Applicant.label.militaryDuty" itemLabel="militaryDuty." value="#{applicantBrowse.applicant.militaryDuty}" rendered="#{not empty applicantBrowse.applicant.militaryDuty}" columnClass="col-xs-12"/>
         </div>
 
         <div class="row">
