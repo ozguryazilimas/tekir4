@@ -8,7 +8,6 @@ import com.ozguryazilim.telve.forms.Browse;
 import com.ozguryazilim.telve.forms.BrowseBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.columns.BooleanColumn;
-import com.ozguryazilim.telve.query.columns.DateColumn;
 import com.ozguryazilim.telve.query.columns.EnumColumn;
 import com.ozguryazilim.telve.query.columns.TextColumn;
 import com.ozguryazilim.telve.query.filters.BooleanFilter;
