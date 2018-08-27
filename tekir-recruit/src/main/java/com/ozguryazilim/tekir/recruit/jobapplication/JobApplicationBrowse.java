@@ -13,6 +13,7 @@ import com.ozguryazilim.telve.query.columns.DateColumn;
 import com.ozguryazilim.telve.query.columns.SubLinkColumn;
 import com.ozguryazilim.telve.query.columns.SubDateColumn;
 import com.ozguryazilim.telve.query.columns.SubTextColumn;
+import com.ozguryazilim.telve.query.columns.TextColumn;
 import com.ozguryazilim.telve.query.filters.DateFilter;
 import com.ozguryazilim.telve.query.filters.DateValueType;
 import com.ozguryazilim.telve.query.filters.FilterOperand;
@@ -66,7 +67,8 @@ public class JobApplicationBrowse extends BrowseBase<JobApplication, JobApplicat
                 .addColumn(new SubTextColumn<>(JobApplication_.advert,JobAdvert_.topic,"JobAdvert.label.Topic"),true)
                 .addColumn(new SubDateColumn<>(JobApplication_.advert,JobAdvert_.startDate,"JobAdvert.label.startDate"),true)
                 .addColumn(new SubDateColumn<>(JobApplication_.advert,JobAdvert_.endDate,"JobAdvert.label.endDate"),true)           
-                .addColumn(new DateColumn<>(JobApplication_.date,"general.label.Date"),true);
+                .addColumn(new DateColumn<>(JobApplication_.date,"general.label.Date"),true)
+                .addColumn(new TextColumn<>(JobApplication_.state, "JobApplication.label.State"), true);
                 
     }
 
