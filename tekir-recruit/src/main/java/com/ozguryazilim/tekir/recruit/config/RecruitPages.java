@@ -6,9 +6,9 @@ import com.ozguryazilim.telve.auth.SecuredPage;
 import com.ozguryazilim.telve.nav.Navigation;
 import com.ozguryazilim.telve.view.PageTitle;
 import com.ozguryazilim.telve.view.Pages;
+import com.ozguryazilim.tekir.recruit.jobapplication.JobApplicationFeature;
 import org.apache.deltaspike.jsf.api.config.view.Folder;
 import org.apache.deltaspike.jsf.api.config.view.View;
-
 import javax.enterprise.context.ApplicationScoped;
 
 /**
@@ -67,7 +67,28 @@ public interface RecruitPages extends Pages {
         @SecuredPage("applicant")
         @PageTitle("module.caption.Applicant")
         class Applicant implements ApplicantPages {
- 
         }
+        
     }
+    
+    @Folder(name = "./jobApplication")
+    interface JobApplicationPages extends RecruitPages {
+
+        @View
+        @SecuredPage("jobApplication")
+        @PageTitle("module.caption.JobApplicationBrowse")
+        @Navigation(label = "module.caption.JobApplicationBrowse",
+                feature = JobApplicationFeature.class,
+                section = RecruitNavigationSection.class)
+        class JobApplicationBrowse implements RecruitPages {
+        }
+
+        @View
+        @SecuredPage("jobApplication")
+        @PageTitle("module.caption.JobApplication")
+        class JobApplication implements RecruitPages {
+        }
+        
+    }
+    
 }
