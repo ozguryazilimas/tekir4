@@ -13,11 +13,9 @@ import com.ozguryazilim.telve.query.columns.DateColumn;
 import com.ozguryazilim.telve.query.columns.SubLinkColumn;
 import com.ozguryazilim.telve.query.columns.SubDateColumn;
 import com.ozguryazilim.telve.query.columns.SubTextColumn;
-import com.ozguryazilim.telve.query.columns.TextColumn;
 import com.ozguryazilim.telve.query.filters.DateFilter;
 import com.ozguryazilim.telve.query.filters.DateValueType;
 import com.ozguryazilim.telve.query.filters.FilterOperand;
-import com.ozguryazilim.telve.query.filters.StringFilter;
 import com.ozguryazilim.telve.query.filters.StringListFilter;
 import com.ozguryazilim.telve.query.filters.SubDateFilter;
 import com.ozguryazilim.telve.query.filters.SubStringFilter;
@@ -42,7 +40,7 @@ public class JobApplicationBrowse extends BrowseBase<JobApplication, JobApplicat
     
     List<String> suggestionList;
 
-
+    
     @Override
     protected void buildQueryDefinition(QueryDefinition<JobApplication, JobApplicationViewModel> queryDefinition) {
         
@@ -68,10 +66,7 @@ public class JobApplicationBrowse extends BrowseBase<JobApplication, JobApplicat
                 .addColumn(new SubTextColumn<>(JobApplication_.advert,JobAdvert_.topic,"JobAdvert.label.Topic"),true)
                 .addColumn(new SubDateColumn<>(JobApplication_.advert,JobAdvert_.startDate,"JobAdvert.label.startDate"),true)
                 .addColumn(new SubDateColumn<>(JobApplication_.advert,JobAdvert_.endDate,"JobAdvert.label.endDate"),true)           
-                .addColumn(new DateColumn<>(JobApplication_.date,"JobApplication.label.Date"),true)
-                
-                
-              ;
+                .addColumn(new DateColumn<>(JobApplication_.date,"JobApplication.label.Date"),true);
                 
     }
 

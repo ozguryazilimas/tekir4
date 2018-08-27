@@ -2,9 +2,7 @@ package com.ozguryazilim.tekir.recruit.jobapplication;
 
 import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.entities.Applicant;
-import com.ozguryazilim.tekir.entities.Applicant_;
 import com.ozguryazilim.tekir.entities.JobAdvert;
-import com.ozguryazilim.tekir.entities.JobAdvert_;
 import com.ozguryazilim.tekir.entities.JobApplication;
 import com.ozguryazilim.tekir.entities.JobApplication_;
 import com.ozguryazilim.telve.data.RepositoryBase;
@@ -29,14 +27,15 @@ import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
  */
 @Repository
 @Dependent
-public abstract class JobApplicationRepository extends RepositoryBase<JobApplication, JobApplicationViewModel> implements CriteriaSupport<JobApplication> {
+public abstract class JobApplicationRepository 
+        extends RepositoryBase<JobApplication, JobApplicationViewModel> 
+        implements CriteriaSupport<JobApplication> {
 
     @Override
     public List<JobApplicationViewModel> browseQuery(QueryDefinition queryDefinition) {
         List<Filter<JobApplication, ?, ?>> filters = queryDefinition.getFilters();
 
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
-
         CriteriaQuery<JobApplicationViewModel> criteriaQuery = criteriaBuilder.createQuery(JobApplicationViewModel.class);
 
         Root<JobApplication> from = criteriaQuery.from(JobApplication.class);
@@ -46,7 +45,7 @@ public abstract class JobApplicationRepository extends RepositoryBase<JobApplica
         buildViewModelSelect(criteriaQuery, from);
 
         List<Predicate> predicates = new ArrayList<>();
-
+        
         decorateFilters(filters, predicates, criteriaBuilder, from);
 
         buildSearchTextControl(queryDefinition.getSearchText(), criteriaBuilder, predicates, from);
@@ -58,6 +57,7 @@ public abstract class JobApplicationRepository extends RepositoryBase<JobApplica
         } else {
             criteriaQuery.orderBy(decorateSorts(queryDefinition.getSorters(), criteriaBuilder, from));
         }
+        
         TypedQuery<JobApplicationViewModel> typedQuery = entityManager().createQuery(criteriaQuery);
         typedQuery.setMaxResults(queryDefinition.getResultLimit());
         List<JobApplicationViewModel> resultList = typedQuery.getResultList();

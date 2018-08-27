@@ -90,39 +90,4 @@ public class JobApplicationViewModel implements ViewModel, Serializable {
         this.applicant = applicant;
     }
 
-   /* public String getAdverttopic() {
-        return adverttopic;
-    }
-
-    public void setAdverttopic(String adverttopic) {
-        this.adverttopic = adverttopic;
-    }
-
-    public Date getAdvertstartDate() {
-        return advertstartDate;
-    }
-
-    public void setAdvertstartDate(Date advertstartDate) {
-        this.advertstartDate = advertstartDate;
-    }
-
-    public Date getAdvertendDate() {
-        return advertendDate;
-    }
-
-    public void setAdvertendDate(Date advertendDate) {
-        this.advertendDate = advertendDate;
-    }
-
-    public String getApplicantname() {
-        return applicantname;
-    }
-
-    public void setApplicantname(String applicantname) {
-        this.applicantname = applicantname;
-    }*/
-
-    
-
-
 }
