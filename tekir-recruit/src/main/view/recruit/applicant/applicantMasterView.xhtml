@@ -41,7 +41,7 @@
                     <p:dataTable var="ja" value="#{applicantHome.jobApplication}" >
 
                         <p:column headerText="#{messages['Applicant.label.AdvertId']}">
-                            <h:outputText value="#{ja.advert.id}" />
+                            <t:cellOutputFeatureLink label="#{ja.advert.serial}" value="#{featureController.getFeatureLink(applicantHome.getAllFeaturePointer(ja.advert))}"/>
                         </p:column>
 
                         <p:column headerText="#{messages['JobAdvert.label.Topic']}">

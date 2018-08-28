@@ -9,7 +9,9 @@ import com.ozguryazilim.tekir.entities.ContactInformation;
 import com.ozguryazilim.tekir.entities.JobApplication;
 
 import com.ozguryazilim.telve.data.RepositoryBase;
+import com.ozguryazilim.telve.entities.EntityBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
+import com.ozguryazilim.telve.feature.FeatureUtils;
 import com.ozguryazilim.telve.forms.FormBase;
 import com.ozguryazilim.telve.forms.FormEdit;
 
@@ -103,6 +105,11 @@ public class ApplicantHome extends FormBase<Applicant, Long> {
         result.setFeature(getFeatureClass().getSimpleName());
         result.setPrimaryKey(getEntity().getId());
         return result;
+    }
+    
+    // FeatureLink yönlendirmesi
+    public FeaturePointer getAllFeaturePointer(EntityBase entityBase) {
+        return FeatureUtils.getFeaturePointer(entityBase);
     }
 
 }
