@@ -29,7 +29,7 @@ import javax.inject.Inject;
 public class JobAdvertBrowse extends BrowseBase<JobAdvert, JobAdvertViewModel> {
 
     @Inject
-    private JobAdvertRepository recruitRepository;
+    private JobAdvertRepository jobAdvertRepository;
 
     @Inject
     private Identity identity;
@@ -69,12 +69,12 @@ public class JobAdvertBrowse extends BrowseBase<JobAdvert, JobAdvertViewModel> {
     
     @Override
     protected RepositoryBase<JobAdvert, JobAdvertViewModel> getRepository() {
-        return recruitRepository;
+        return jobAdvertRepository;
     }
     
     public JobAdvert getJobAdvert() {
         if (getSelectedItem() != null) {
-            return recruitRepository.findBy(getSelectedItem().getId());
+            return jobAdvertRepository.findBy(getSelectedItem().getId());
         } else {
             return null;
         }
