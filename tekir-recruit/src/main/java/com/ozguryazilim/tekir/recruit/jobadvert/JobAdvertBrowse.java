@@ -29,7 +29,7 @@ import javax.inject.Inject;
 public class JobAdvertBrowse extends BrowseBase<JobAdvert, JobAdvertViewModel> {
 
     @Inject
-    private JobAdvertRepository recruitRepository;
+    private JobAdvertRepository jobAdvertRepository;
 
     @Inject
     private Identity identity;
@@ -53,7 +53,7 @@ public class JobAdvertBrowse extends BrowseBase<JobAdvert, JobAdvertViewModel> {
                 .addFilter(new StringFilter<>(JobAdvert_.topic, "JobAdvert.label.Topic"))
                 .addFilter(new DateFilter<>(JobAdvert_.startDate, "JobAdvert.label.startDate"))
                 .addFilter(new DateFilter<>(JobAdvert_.endDate, "JobAdvert.label.endDate"))
-                .addFilter(new TagFilter<>("skills", "JobAdvert.label.Skills", "Recruit::skills"))
+                .addFilter(new TagFilter<>("skills", "JobAdvert.label.Skills", "JobAdvert::skills"))
                 .addFilter(new UserFilter<>(JobAdvert_.owner, "JobAdvert.label.Owner"))
                 .addFilter(new StringFilter<>(JobAdvert_.info, "JobAdvert.label.Info"))
                 .addFilter(new StringListFilter<>(JobAdvert_.status,suggestionList,"JobAdvert.label.Status",""));
@@ -66,13 +66,15 @@ public class JobAdvertBrowse extends BrowseBase<JobAdvert, JobAdvertViewModel> {
                 .addColumn(new DateColumn<>(JobAdvert_.endDate, "JobAdvert.label.endDate"), true)
                 .addColumn(new TextColumn<>(JobAdvert_.status, "JobAdvert.label.Status"), true);
     }
+    
     @Override
     protected RepositoryBase<JobAdvert, JobAdvertViewModel> getRepository() {
-        return recruitRepository;
+        return jobAdvertRepository;
     }
+    
     public JobAdvert getJobAdvert() {
         if (getSelectedItem() != null) {
-            return recruitRepository.findBy(getSelectedItem().getId());
+            return jobAdvertRepository.findBy(getSelectedItem().getId());
         } else {
             return null;
         }
