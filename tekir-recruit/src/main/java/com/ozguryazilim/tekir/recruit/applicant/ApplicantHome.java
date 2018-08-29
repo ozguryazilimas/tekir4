@@ -2,9 +2,6 @@ package com.ozguryazilim.tekir.recruit.applicant;
 
 import com.ozguryazilim.tekir.contact.information.ContactInformationRepository;
 import com.ozguryazilim.tekir.entities.Applicant;
-import com.ozguryazilim.tekir.entities.ApplicantCertificate;
-import com.ozguryazilim.tekir.entities.ApplicantEducation;
-import com.ozguryazilim.tekir.entities.ApplicantWorkHistory;
 import com.ozguryazilim.tekir.entities.ContactInformation;
 import com.ozguryazilim.tekir.entities.JobApplication;
 
@@ -20,7 +17,7 @@ import javax.inject.Inject;
 
 /**
  * Repository sınıfları ile ön taraf arasında köprü görevi yapıyor.
- *
+ * 
  * @author serdar
  */
 @FormEdit(feature = ApplicantFeature.class)
@@ -30,52 +27,17 @@ public class ApplicantHome extends FormBase<Applicant, Long> {
     private ApplicantRepository repository;
 
     @Inject
-    private ApplicantWorkHistoryRepository workHistoryRepository;
-
-    @Inject
-    private ApplicantCertificateRepository certificateRepository;
-
-    @Inject
-    private ApplicantEducationRepository educationRepository;
-
+    private JobApplicantRepository jobApplicantRepository;
+    
     @Inject
     private ContactInformationRepository informationRepository;
-
-    @Inject
-    private JobApplicantRepository jobApplicantRepository;
-
+        
     @Override
     protected RepositoryBase<Applicant, ApplicantViewModel> getRepository() {
         return repository;
     }
 
-    /**
-     * Adayın iş geçmişi bilgilerini ilgili Repository sınıfından aldık.
-     *
-     * @return
-     */
-    public List<ApplicantWorkHistory> getWorkHistory() {
-        return workHistoryRepository.findByApplicant(getEntity());
-    }
-
-    /**
-     * Adayın Sertifika bilgilerini ilgili Repository sınıfından aldık.
-     *
-     * @return
-     */
-    public List<ApplicantCertificate> getCertificate() {
-        return certificateRepository.findByApplicant(getEntity());
-    }
-
-    /**
-     * Adayın Eğitim bilgilerini ilgili Repository sınıfından aldık.
-     *
-     * @return
-     */
-    public List<ApplicantEducation> getEducation() {
-        return educationRepository.findByApplicant(getEntity());
-    }
-
+    
     /**
      * Adayın iletişim bilgilerini ilgili Repository sınıfından aldık.
      *
@@ -84,7 +46,7 @@ public class ApplicantHome extends FormBase<Applicant, Long> {
     public List<ContactInformation> getContactInformations() {
         return informationRepository.findByContact(getEntity());
     }
-
+    
     /**
      * Adayın başvurduğu tüm ilanları aldık.
      *
