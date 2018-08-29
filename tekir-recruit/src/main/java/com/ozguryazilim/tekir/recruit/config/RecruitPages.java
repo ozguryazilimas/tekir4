@@ -1,15 +1,14 @@
 package com.ozguryazilim.tekir.recruit.config;
 
+import com.ozguryazilim.tekir.recruit.applicant.ApplicantFeature;
 import com.ozguryazilim.tekir.recruit.jobadvert.JobAdvertFeature;
 import com.ozguryazilim.telve.auth.SecuredPage;
 import com.ozguryazilim.telve.nav.Navigation;
 import com.ozguryazilim.telve.view.PageTitle;
 import com.ozguryazilim.telve.view.Pages;
-import com.ozguryazilim.tekir.recruit.applicant.ApplicantFeature;
 import com.ozguryazilim.tekir.recruit.jobapplication.JobApplicationFeature;
 import org.apache.deltaspike.jsf.api.config.view.Folder;
 import org.apache.deltaspike.jsf.api.config.view.View;
-
 import javax.enterprise.context.ApplicationScoped;
 
 /**
@@ -22,7 +21,7 @@ public interface RecruitPages extends Pages {
 
     @Folder(name = "./jobAdvert")
     interface JobAdvertPages extends RecruitPages{
-
+        
         @View
         @SecuredPage("jobAdvert")
         @PageTitle("module.caption.JobAdvertBrowse")
@@ -51,8 +50,16 @@ public interface RecruitPages extends Pages {
         }
     }
 
-    @Folder(name = "./applicant")    
-    interface ApplicantPages extends RecruitPages {
+        @View
+        @SecuredPage("jobAdvert")
+        @PageTitle("module.caption.JobAdvertMasterView")
+        class JobAdvertMasterView implements JobAdvertPages{
+        }
+
+    }
+
+    @Folder(name = "./applicant")
+    interface ApplicantPages extends RecruitPages{
 
         @View
         @SecuredPage("applicant")
@@ -99,6 +106,7 @@ public interface RecruitPages extends Pages {
         @SecuredPage("jobApplication")
         class JobApplicationMasterView implements JobApplicationPages {
         }
+        
     }
-
+    
 }

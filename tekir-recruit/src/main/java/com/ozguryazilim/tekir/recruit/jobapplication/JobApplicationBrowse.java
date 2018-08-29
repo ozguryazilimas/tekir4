@@ -40,7 +40,7 @@ public class JobApplicationBrowse extends BrowseBase<JobApplication, JobApplicat
     
     List<String> suggestionList;
 
-
+    
     @Override
     protected void buildQueryDefinition(QueryDefinition<JobApplication, JobApplicationViewModel> queryDefinition) {
         
@@ -53,22 +53,21 @@ public class JobApplicationBrowse extends BrowseBase<JobApplication, JobApplicat
 
         queryDefinition
                 .addFilter(new SubStringFilter<>(JobApplication_.advert,JobAdvert_.topic,"JobAdvert.label.Topic"))
-                .addFilter(new DateFilter<>(JobApplication_.date,"JobApplication.label.Date",FilterOperand.All, DateValueType.LastMonth))
+                .addFilter(new DateFilter<>(JobApplication_.date,"general.label.Date",FilterOperand.All, DateValueType.LastMonth))
                 .addFilter(new SubDateFilter<>(JobApplication_.advert,JobAdvert_.startDate,"JobAdvert.label.startDate",FilterOperand.All, DateValueType.LastMonth))
                 .addFilter(new SubDateFilter<>(JobApplication_.advert,JobAdvert_.endDate,"JobAdvert.label.endDate",FilterOperand.All, DateValueType.LastMonth))
-                .addFilter(new SubStringFilter<>(JobApplication_.applicant,Applicant_.name,"JobApplication.label.Name"))
+                .addFilter(new SubStringFilter<>(JobApplication_.applicant,Applicant_.name,"general.label.Name"))
                 .addFilter(new UserFilter<>(JobApplication_.owner, "JobAdvert.label.Owner"))
                 .addFilter(new StringListFilter<>(JobApplication_.state,suggestionList,"JobApplication.label.State",""));
         
         queryDefinition
+                .addColumn(new SubLinkColumn<>(JobApplication_.advert,JobAdvert_.serial,"JobAdvert.label.Serial"),true)
+                .addColumn(new SubLinkColumn<>(JobApplication_.applicant,Applicant_.name,"general.label.Name"),true)
                 .addColumn(new SubTextColumn<>(JobApplication_.advert,JobAdvert_.topic,"JobAdvert.label.Topic"),true)
-                .addColumn(new SubLinkColumn<>(JobApplication_.applicant,Applicant_.name,"JobApplication.label.Name"),true)
                 .addColumn(new SubDateColumn<>(JobApplication_.advert,JobAdvert_.startDate,"JobAdvert.label.startDate"),true)
-                .addColumn(new SubDateColumn<>(JobApplication_.advert,JobAdvert_.endDate,"JobAdvert.label.endDate"),true)
-                .addColumn(new DateColumn<>(JobApplication_.date,"JobApplication.label.Date"),true)
-                
-                
-              ;
+                .addColumn(new SubDateColumn<>(JobApplication_.advert,JobAdvert_.endDate,"JobAdvert.label.endDate"),true)           
+                .addColumn(new DateColumn<>(JobApplication_.date,"general.label.Date"),true)
+                .addColumn(new TextColumn<>(JobApplication_.state, "JobApplication.label.State"), true);
                 
     }
 

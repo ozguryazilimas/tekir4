@@ -1,0 +1,48 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"                
+                template="/layout/editBase.xhtml">
+
+    <ui:param name="homeBean" value="#{jobAdvertHome}" />
+    <ui:param name="entity" value="#{jobAdvertHome.entity}" />
+    <ui:param name="dontShowContentHeader" value="true" />
+
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{jobAdvertHome.id}" />
+            <f:viewAction action="#{jobAdvertHome.initData()}" />
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="customHeader">
+        <section class="content-header">
+            <ui:fragment rendered="#{viewState ne ''}" >
+                <div class="pull-right">
+                    #{viewState}
+                </div>
+            </ui:fragment>
+            <small class="text-muted">#{ messages[pageTitleResolver.pageTitle] }</small>
+            <h1>#{messages['contact.class.'.concat(jobAdvertHome.entity.class.simpleName)]}</h1>  
+        </section>
+
+    </ui:define>
+
+    <ui:define name="form">
+        <div class="row col-xs-12 col-md-3">
+            <t:inputText label="#{messages['general.label.SerialNumber']}" value="#{jobAdvertHome.entity.serial}" columnClass="col-md-12" required="true"/>
+            <t:inputDate label="#{messages['general.label.StartDate']}" value="#{jobAdvertHome.entity.startDate }"  columnClass="col-md-12 col-xs-6" />
+            <t:inputDate label="#{messages['general.label.EndDate']}" value="#{jobAdvertHome.entity.endDate }"  columnClass="col-md-12 col-xs-6" />
+            <t:inputSuggestion label="general.label.Status" value="#{jobAdvertHome.entity.status}" group="#{jobAdvertHome.entity.class.simpleName}" listener="" required="true" columnClass="col-md-12"/>
+        </div>     
+        <div class="row col-xs-12 col-md-9">
+            <t:inputText label="#{messages['general.label.Topic']}" value="#{jobAdvertHome.entity.topic}" columnClass="col-md-8" /> 
+            <t:inputUser label="general.label.Owner" value="#{jobAdvertHome.entity.owner}" required="true"  columnClass="col-md-4"/>
+            <t:inputTextarea label="#{messages['JobAdvert.label.JobDescription']}" value="#{jobAdvertHome.entity.info}" columnClass="col-md-12" />  
+            <t:inputTag label="#{messages['JobAdvert.label.Skills']}" value="#{jobAdvertHome.entity.skills}" columnClass="col-md-12" /> 
+        </div>
+    </ui:define> 
+
+</ui:composition>

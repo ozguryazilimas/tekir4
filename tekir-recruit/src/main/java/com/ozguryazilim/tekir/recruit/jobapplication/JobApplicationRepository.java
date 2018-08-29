@@ -27,14 +27,15 @@ import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
  */
 @Repository
 @Dependent
-public abstract class JobApplicationRepository extends RepositoryBase<JobApplication, JobApplicationViewModel> implements CriteriaSupport<JobApplication> {
+public abstract class JobApplicationRepository 
+        extends RepositoryBase<JobApplication, JobApplicationViewModel> 
+        implements CriteriaSupport<JobApplication> {
 
     @Override
     public List<JobApplicationViewModel> browseQuery(QueryDefinition queryDefinition) {
         List<Filter<JobApplication, ?, ?>> filters = queryDefinition.getFilters();
 
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
-
         CriteriaQuery<JobApplicationViewModel> criteriaQuery = criteriaBuilder.createQuery(JobApplicationViewModel.class);
 
         Root<JobApplication> from = criteriaQuery.from(JobApplication.class);
@@ -44,7 +45,7 @@ public abstract class JobApplicationRepository extends RepositoryBase<JobApplica
         buildViewModelSelect(criteriaQuery, from);
 
         List<Predicate> predicates = new ArrayList<>();
-
+        
         decorateFilters(filters, predicates, criteriaBuilder, from);
 
         buildSearchTextControl(queryDefinition.getSearchText(), criteriaBuilder, predicates, from);
