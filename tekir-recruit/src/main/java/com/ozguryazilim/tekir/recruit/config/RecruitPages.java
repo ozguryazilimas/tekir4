@@ -42,13 +42,12 @@ public interface RecruitPages extends Pages {
         @PageTitle("module.caption.JobAdvert")
         class JobAdvertView implements JobAdvertPages{
         }
-
+        
         @View
         @SecuredPage("jobAdvert")
         @PageTitle("module.caption.JobAdvertMasterView")
         class JobAdvertMasterView implements JobAdvertPages{
         }
-
     }
 
     @Folder(name = "./applicant")
@@ -80,13 +79,25 @@ public interface RecruitPages extends Pages {
         @Navigation(label = "module.caption.JobApplicationBrowse",
                 feature = JobApplicationFeature.class,
                 section = RecruitNavigationSection.class)
-        class JobApplicationBrowse implements RecruitPages {
+        class JobApplicationBrowse implements JobApplicationPages {
         }
 
         @View
         @SecuredPage("jobApplication")
         @PageTitle("module.caption.JobApplication")
-        class JobApplication implements RecruitPages {
+        class JobApplication implements JobApplicationPages {
+        }
+
+        @View
+        @SecuredPage("jobApplication")
+        @PageTitle("module.caption.JobApplication")
+        class JobApplicationView implements JobApplicationPages {
+        }
+
+        @View
+        @SecuredPage("jobApplication")
+        @PageTitle("module.caption.JobApplicationMasterView")
+        class JobApplicationMasterView implements JobApplicationPages {
         }
         
     }

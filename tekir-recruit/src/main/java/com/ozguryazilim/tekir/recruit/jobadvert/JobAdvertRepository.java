@@ -8,7 +8,6 @@ import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.filters.Filter;
 import org.apache.deltaspike.data.api.Repository;
 import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
-
 import javax.enterprise.context.Dependent;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;

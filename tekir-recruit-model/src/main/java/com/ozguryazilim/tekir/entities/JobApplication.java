@@ -71,7 +71,7 @@ public class JobApplication extends AuditBase{
     private String state;
     
     public static final String SUGGESTIONSTATUSGROUP="Recruit";
-    public static final String SUGGESTIONSTATUSKEY="JobApplication.Status";
+    public static final String SUGGESTIONSTATUSKEY="JobApplication.State";
 
     
     @Override

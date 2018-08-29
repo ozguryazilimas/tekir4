@@ -16,7 +16,6 @@ import com.ozguryazilim.telve.query.columns.SubTextColumn;
 import com.ozguryazilim.telve.query.filters.BooleanFilter;
 import com.ozguryazilim.telve.query.filters.RatingFilter;
 import com.ozguryazilim.telve.query.filters.StringFilter;
-
 import javax.inject.Inject;
 
 /**
