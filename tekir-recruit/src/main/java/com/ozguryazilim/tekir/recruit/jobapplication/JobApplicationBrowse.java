@@ -13,6 +13,7 @@ import com.ozguryazilim.telve.query.columns.DateColumn;
 import com.ozguryazilim.telve.query.columns.SubLinkColumn;
 import com.ozguryazilim.telve.query.columns.SubDateColumn;
 import com.ozguryazilim.telve.query.columns.SubTextColumn;
+import com.ozguryazilim.telve.query.columns.TextColumn;
 import com.ozguryazilim.telve.query.filters.DateFilter;
 import com.ozguryazilim.telve.query.filters.DateValueType;
 import com.ozguryazilim.telve.query.filters.FilterOperand;

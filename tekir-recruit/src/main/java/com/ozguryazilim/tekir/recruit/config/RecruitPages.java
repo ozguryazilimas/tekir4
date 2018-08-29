@@ -50,14 +50,6 @@ public interface RecruitPages extends Pages {
         }
     }
 
-        @View
-        @SecuredPage("jobAdvert")
-        @PageTitle("module.caption.JobAdvertMasterView")
-        class JobAdvertMasterView implements JobAdvertPages{
-        }
-
-    }
-
     @Folder(name = "./applicant")
     interface ApplicantPages extends RecruitPages{
 
@@ -104,6 +96,7 @@ public interface RecruitPages extends Pages {
 
         @View
         @SecuredPage("jobApplication")
+        @PageTitle("module.caption.JobApplicationMasterView")
         class JobApplicationMasterView implements JobApplicationPages {
         }
         

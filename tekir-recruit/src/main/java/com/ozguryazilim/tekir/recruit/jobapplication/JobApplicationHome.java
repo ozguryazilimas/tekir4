@@ -19,11 +19,11 @@ import javax.inject.Inject;
 public class JobApplicationHome extends FormBase<JobApplication, Long> {
 
     @Inject
-    private JobApplicationRepository repository;
+    private JobApplicationRepository jobApplicationRepository;
     
     @Override
     protected RepositoryBase<JobApplication, JobApplicationViewModel> getRepository() {
-        return repository;
+        return jobApplicationRepository;
     }
 
     /**
