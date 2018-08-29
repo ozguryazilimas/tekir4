@@ -29,19 +29,23 @@
                             #{jobApplicationHome.entity.owner}
                         </div>
                     </li>
+                    <li role="presentation">
+                        <div style="font-weight: bold;"> #{messages['JobApplication.label.State']} </div>
+                        <div>
+                            #{jobApplicationHome.entity.state}
+                        </div>
+                    </li>
                 </ul>
             </p:outputPanel>
             <i class="fa fa-3x #{messages['feature.icon.'.concat(bean.feature.name)]} pull-left" />
             <small class="text-muted">#{ messages[pageTitleResolver.pageTitle] }</small>
-            <h1>#{messages['module.caption.JobApplicationView']}<small>#{jobApplicationHome.id}</small> </h1> 
+            <h1>#{messages['module.caption.JobApplication']}</h1> 
         </section>
     </ui:define>
 
     <ui:define name="caption">
-        <div class="row">
-            <t:outputDate label="JobApplication.label.startDate" value="#{jobApplicationHome.entity.createDate}" />
-            <t:outputText label="general.label.Info" value="#{jobApplicationHome.entity.info}" />
-        </div>
+        <t:outputText label="general.label.Info" value="#{jobApplicationHome.entity.info}"  columnClass="col-md-10 col-xs-12"/>
+        <t:outputDate label="general.label.Date" value="#{jobApplicationHome.entity.date}" columnClass="col-md-2 col-xs-12"/>
     </ui:define>
 
     <ui:define name="context-menu"> 
@@ -51,7 +55,7 @@
                 <h:outputText value=" #{messages['general.button.Add']}" />
             </p:commandLink>
         </li>
-        
+
         <li>
             <p:commandLink action="#{jobApplicationHome.edit()}" styleClass="context-command" rendered="#{identity.hasPermission( entityName, 'update') and hideEditBtn ne 'true' }">
                 <i class="fa fa-edit"></i>

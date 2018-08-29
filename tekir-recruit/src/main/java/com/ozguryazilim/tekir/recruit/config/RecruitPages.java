@@ -84,13 +84,13 @@ public interface RecruitPages extends Pages {
 
         @View
         @SecuredPage("jobApplication")
-        @PageTitle("module.caption.JobApplicationView")
+        @PageTitle("module.caption.JobApplication")
         class JobApplication implements JobApplicationPages {
         }
 
         @View
         @SecuredPage("jobApplication")
-        @PageTitle("module.caption.JobApplicationView")
+        @PageTitle("module.caption.JobApplication")
         class JobApplicationView implements JobApplicationPages {
         }
 

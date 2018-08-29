@@ -1,14 +1,12 @@
 package com.ozguryazilim.tekir.recruit.jobapplication;
 
 import com.ozguryazilim.tekir.entities.JobApplication;
-import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.EntityBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureUtils;
 import com.ozguryazilim.telve.forms.FormBase;
 import com.ozguryazilim.telve.forms.FormEdit;
-
 import javax.inject.Inject;
 
 /**
