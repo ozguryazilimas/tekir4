@@ -12,8 +12,6 @@ import javax.inject.Inject;
 
 /**
  * Applicant için Lookup Dialog Sınıfı.
- * 
- * FIXME: Dialog araması için düzenlenmesi gerek.
  *  
  * @author Erdem Uslu
  */

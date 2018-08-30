@@ -22,36 +22,37 @@ public interface RecruitPages extends Pages {
     interface JobAdvertPages extends RecruitPages {
 
         @View
-        @SecuredPage("recruit")
+        @SecuredPage("JobAdvert")
         @PageTitle("module.caption.JobAdvertBrowse")
-        @Navigation(label = "module.caption.RecruitBrowse",
+        @Navigation(label = "module.caption.JobAdvertBrowse",
                 feature = JobAdvertFeature.class,
                 section = RecruitNavigationSection.class)
         class JobAdvertBrowse implements JobAdvertPages {
         }
 
         @View
-        @SecuredPage("recruit")
+        @SecuredPage("JobAdvert")
         @PageTitle("module.caption.JobAdvert")
         class JobAdvert implements JobAdvertPages {
         }
-
+        
         @View
-        @SecuredPage("recruit")
-        @PageTitle("module.caption.JobAdvertMasterView")
-        class JobAdvertMasterView implements JobAdvertPages {
+        @SecuredPage("JobAdvert")
+        @PageTitle("module.caption.JobAdvert")
+        class JobAdvertView implements JobAdvertPages {
         }
 
         @View
-        @SecuredPage("recruit")
-        @PageTitle("module.caption.JobAdvert")
-        class JobAdvertView implements JobAdvertPages {
+        @SecuredPage("JobAdvert")
+        @PageTitle("module.caption.JobAdvertMasterView")
+        class JobAdvertMasterView implements JobAdvertPages {
         }
 
         @View
         @SecuredPage
         class JobAdvertLookup implements RecruitPages {
         }
+        
     }
 
     @Folder(name = "./applicant")
@@ -62,11 +63,6 @@ public interface RecruitPages extends Pages {
         class ApplicantLookup implements RecruitPages {
         }
         
-        @View
-        @SecuredPage
-        class NewApplicantPopup implements RecruitPages {
-        }
-
     }
     
     @Folder(name = "./jobApplication")
@@ -86,6 +82,7 @@ public interface RecruitPages extends Pages {
         @PageTitle("module.caption.JobApplication")
         class JobApplication implements RecruitPages {
         }
+        
     }
 
 }
