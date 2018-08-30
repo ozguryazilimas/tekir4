@@ -36,7 +36,6 @@ public abstract class JobApplicationRepository
         List<Filter<JobApplication, ?, ?>> filters = queryDefinition.getFilters();
 
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
-
         CriteriaQuery<JobApplicationViewModel> criteriaQuery = criteriaBuilder.createQuery(JobApplicationViewModel.class);
 
         Root<JobApplication> from = criteriaQuery.from(JobApplication.class);
@@ -58,6 +57,7 @@ public abstract class JobApplicationRepository
         } else {
             criteriaQuery.orderBy(decorateSorts(queryDefinition.getSorters(), criteriaBuilder, from));
         }
+        
         TypedQuery<JobApplicationViewModel> typedQuery = entityManager().createQuery(criteriaQuery);
         typedQuery.setMaxResults(queryDefinition.getResultLimit());
         List<JobApplicationViewModel> resultList = typedQuery.getResultList();

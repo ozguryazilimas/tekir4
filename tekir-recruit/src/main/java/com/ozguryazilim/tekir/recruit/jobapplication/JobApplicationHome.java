@@ -46,17 +46,9 @@ public class JobApplicationHome extends FormBase<JobApplication, Long> {
 
     @Override
     public boolean onBeforeSave() {
-        applicantRepository.saveAndFlush(getApplicant());  
+        applicantRepository.saveAndFlush(getEntity().getApplicant());  
         
         return super.onBeforeSave();
-    }
-
-    public JobAdvert getAdvert() {
-        return getEntity().getAdvert();
-    }
-
-    public Applicant getApplicant() {
-        return getEntity().getApplicant();
     }
 
     // FeatureLink yönlendirmesi
