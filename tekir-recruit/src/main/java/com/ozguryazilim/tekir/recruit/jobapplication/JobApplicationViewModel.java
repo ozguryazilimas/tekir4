@@ -8,7 +8,7 @@ import java.util.Date;
 
 /**
  *
- * @author Erdem Uslu
+ * @author yusuf
  */
 public class JobApplicationViewModel implements ViewModel, Serializable {
 

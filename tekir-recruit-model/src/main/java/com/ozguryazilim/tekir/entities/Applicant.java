@@ -58,6 +58,7 @@ public class Applicant extends AbstractPerson{
     
     /**
      * Evli mi?
+     * TODO: Bu alan boolean dışına çıkabilir. Evli, Bekar, Dul gibi vs.
      */
     @Column( name = "MARRIED")
     private Boolean married = Boolean.FALSE;

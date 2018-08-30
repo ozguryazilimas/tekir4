@@ -1,0 +1,51 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"               
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                template="/layout/masterViewBase.xhtml">
+
+    <ui:define name="content">
+
+        <div class="row">
+
+            <div class="col-md-4 col-xs-12">
+                <t:accordion icon="fa fa-stack-exchange" label="JobApplication.label.ApplicantInformations" columnClass="col-xs-12">
+                    <p:panel header="#{messages['module.caption.Applicant']} :">
+                        <t:cellOutputFeatureLink label="#{jobApplicationHome.entity.applicant.code} - #{jobApplicationHome.entity.applicant.name}" value="#{featureController.getFeatureLink(jobApplicationHome.getAllFeaturePointer(jobApplicationHome.entity.applicant))}" columnClass="col-xs-12"/>
+                    </p:panel>
+                    <t:outputText label="general.label.Name" value="#{jobApplicationHome.entity.applicant.name}" columnClass="col-xs-12"/>
+                    <t:outputText label="contact.label.JobTitle" value="#{jobApplicationHome.entity.applicant.jobTitle}" columnClass="col-xs-12"/>
+                    <t:outputText label="Applicant.label.Skills" value="#{jobApplicationHome.entity.applicant.skills}" columnClass="col-xs-12"/>
+                    <t:outputText label="Applicant.label.Info" value="#{jobApplicationHome.entity.applicant.info}" columnClass="col-xs-12"/>
+                    <t:outputBoolean label="Applicant.label.Married" itemLabel="Applicant.Married." value="#{jobApplicationHome.entity.applicant.married}"  columnClass="col-xs-12"/>
+                    <t:outputBoolean label="Applicant.label.militaryDuty" itemLabel="Applicant.militaryDuty." value="#{jobApplicationHome.entity.applicant.militaryDuty}"  columnClass="col-xs-12"/>          
+                </t:accordion>
+            </div>
+
+            <div class="col-md-4 col-xs-12">
+                <t:accordion icon="fa fa-stack-exchange" label="JobApplication.label.JobAdvertInformations" columnClass="col-xs-12">
+                    <p:panel header="#{messages['module.caption.JobAdvert']} :">
+                        <t:cellOutputFeatureLink label="#{jobApplicationHome.entity.advert.serial} - #{jobApplicationHome.entity.advert.topic}" value="#{featureController.getFeatureLink(jobApplicationHome.getAllFeaturePointer(jobApplicationHome.entity.advert))}" columnClass="col-xs-12"/>
+                    </p:panel>
+                    <t:outputText label="JobAdvert.label.Topic" value="#{jobApplicationHome.entity.advert.topic}" columnClass="col-xs-12"/>
+                    <t:outputText label="JobAdvert.label.Status" value="#{jobApplicationHome.entity.advert.status}" columnClass="col-xs-12"/>
+                    <t:outputText label="JobAdvert.label.Skills" value="#{jobApplicationHome.entity.advert.skills}" columnClass="col-xs-12"/>
+                    <t:outputText label="JobAdvert.label.Info" value="#{jobApplicationHome.entity.advert.info}" columnClass="col-xs-12" />
+                    <t:outputDate label="JobAdvert.label.startDate" value="#{jobApplicationHome.entity.advert.startDate}" columnClass="col-xs-12"/>
+                    <t:outputDate label="JobAdvert.label.endDate" value="#{jobApplicationHome.entity.advert.endDate}" columnClass="col-xs-12"/>          
+                </t:accordion>
+            </div>
+
+            <div class="col-md-4 col-xs-12">
+                <ui:include src="/notes/noteWidget.xhtml">
+                    <ui:param name="featurePointer" value="#{jobApplicationHome.featurePointer}" />
+                </ui:include>
+            </div>
+
+        </div>
+
+    </ui:define>
+
+</ui:composition>

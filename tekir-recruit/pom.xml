@@ -66,6 +66,12 @@
             <version>${project.version}</version>
         </dependency>
         
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>tekir-contact</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        
         
         <!-- Test -->
         <dependency>
@@ -111,7 +117,18 @@
             <scope>test</scope>
         </dependency>
         -->
-        
+        <dependency>
+            <groupId>com.ozguryazilim.mutfak</groupId>
+            <artifactId>tekir-contact</artifactId>
+            <version>4.0.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.ozguryazilim.mutfak</groupId>
+            <artifactId>tekir-voucher</artifactId>
+            <version>4.0.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 </project>
  

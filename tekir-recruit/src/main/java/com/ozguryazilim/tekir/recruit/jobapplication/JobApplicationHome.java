@@ -1,7 +1,5 @@
 package com.ozguryazilim.tekir.recruit.jobapplication;
 
-import com.ozguryazilim.tekir.entities.Applicant;
-import com.ozguryazilim.tekir.entities.JobAdvert;
 import com.ozguryazilim.tekir.entities.JobApplication;
 import com.ozguryazilim.tekir.recruit.applicant.ApplicantRepository;
 import com.ozguryazilim.telve.auth.Identity;
@@ -49,6 +47,14 @@ public class JobApplicationHome extends FormBase<JobApplication, Long> {
         applicantRepository.saveAndFlush(getEntity().getApplicant());  
         
         return super.onBeforeSave();
+    }
+    
+    public FeaturePointer getFeaturePointer() {
+        FeaturePointer result = new FeaturePointer();
+        result.setBusinessKey(getEntity().getInfo());
+        result.setFeature(getFeatureClass().getSimpleName());
+        result.setPrimaryKey(getEntity().getId());
+        return result;
     }
 
     // FeatureLink yönlendirmesi
