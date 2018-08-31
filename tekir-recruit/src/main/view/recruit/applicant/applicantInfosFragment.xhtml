@@ -1,0 +1,54 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <t:accordion id="ei" label="applicant.label.EducationInformations" columnClass="#{columnClass}">
+        <f:facet name="toolbar">
+            <div class="dropdown">
+                <p:commandLink class="btn btn-box-tool dropdown-toogle" process="@this" action="#{educationEditor.create()}">
+                    <i class="fa fa-plus"/>
+                    <p:ajax event="dialogReturn" update="applicantInfos" partialSubmit="true" process="@this" />   
+                </p:commandLink>
+            </div>
+
+        </f:facet>
+        <p:outputPanel id="applicantInfos" layout="block" class="box-body">
+            <ul class="products-list product-list-in-box">
+                <ui:repeat value="#{educationInfos}" var="ei" >
+                    <li class="item">
+                        <div class="product-img">
+                            <i class="#{educationEditor.getIcon(ei)}"/>
+                        </div>
+                        <div class="product-info">
+                            <div class="box-tools pull-right">
+                                <p:commandLink action="#{educationEditor.edit(ei)}" process="@this" styleClass="btn btn-box-tool">
+                                    <i class="fa fa-pencil" />
+                                    <p:ajax event="dialogReturn" update="#{updateField}" partialSubmit="true" process="@this" />   
+                                </p:commandLink>
+                                <p:commandLink action="#{educationEditor.delete(ei)}" process="@this" styleClass="btn btn-box-tool" update="#{updateField}">
+                                    <i class="fa fa-trash" />
+                                    <p:confirm header="#{messages['general.caption.Confirm']}" message="#{messages['general.message.confirm.Delete']}" icon="fa fa-2x fa-exclamation-triangle btn-delete" />
+                                </p:commandLink>
+                            </div>
+                            <span class="product-title">#{ei.name}</span>
+                            <span class="product-description text-sm">#{ei.type}</span>
+                            <div class="row">
+                                <h:outputText class="col-xs-3 col-md-3 product-description text-sm" value="#{ei.startDate}">
+                                    <f:convertDateTime pattern="#{messages['general.format.Date']}" />
+                                </h:outputText>
+                                <h:outputText class="col-xs-3 col-md-3 product-description text-sm" value="#{ei.endDate}">
+                                    <f:convertDateTime pattern="#{messages['general.format.Date']}" />
+                                </h:outputText>
+                            </div>
+                        </div>
+                    </li>
+                </ui:repeat>
+            </ul>
+        </p:outputPanel>
+    </t:accordion>
+
+</ui:composition>
