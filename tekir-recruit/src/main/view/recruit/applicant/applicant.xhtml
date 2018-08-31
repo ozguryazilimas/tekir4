@@ -31,42 +31,7 @@
     </ui:define>
 
     <ui:define name="form">
-
-        <div class="col-xs-12 col-md-6">
-            <div class="row">
-                <t:inputText label="#{messages['general.label.Code']}" value="#{applicantHome.entity.code}" columnClass="col-xs-12 col-md-6" required="true"/>
-                <t:inputEnum itemLabel="gender." hasNullValue="false"  value="#{applicantHome.entity.gender}" label="contact.label.Gender" columnClass="col-md-6 col-xs-12" />
-            </div>
-            <div class="row">
-                <t:inputText label="#{messages['general.label.FirstName']}" value="#{applicantHome.entity.firstName}" columnClass="col-xs-12 col-md-6" required="true"/>
-                <t:inputText label="#{messages['general.label.LastName']}" value="#{applicantHome.entity.lastName}" columnClass="col-xs-12 col-md-6" required="true"/>
-
-            </div>
-            <div class="row">
-                <t:inputDialog label="contact.label.PrimaryAddress" value="#{applicantHome.entity.primaryAddress.caption}" action="#{addressEditor.editPrimaryAddress(applicantHome.entity, applicantHome.entity.primaryAddress)}" icon="fa fa-map-o"/>
-                <t:inputDialog label="contact.label.PrimaryEmail" value="#{applicantHome.entity.primaryEmail.caption}" action="#{emailEditor.editPrimaryEmail(applicantHome.entity, applicantHome.entity.primaryEmail)}" icon="fa fa-envelope-o" />
-            </div>
-            <div class="row">
-                <t:inputDialog label="contact.label.PrimaryMobile" value="#{applicantHome.entity.primaryMobile.caption}" action="#{phoneEditor.editPrimaryMobile(applicantHome.entity, applicantHome.entity.primaryMobile)}" icon="fa fa-mobile" />
-                <t:inputDialog label="contact.label.PrimaryPhone" value="#{applicantHome.entity.primaryPhone.caption}" action="#{phoneEditor.editPrimaryPhone(applicantHome.entity, applicantHome.entity.primaryPhone)}" icon="fa fa-phone"/>
-            </div>
-            <div class="row">
-                <t:inputDate label="#{messages['general.label.BirthDate']}" value="#{applicantHome.entity.birthDate}"  columnClass="col-xs-12 col-md-6" />
-                <t:inputCheckbox label="#{messages['Applicant.label.militaryDuty']}" itemLabel="#{messages['Applicant.militaryDuty.True']}" value="#{applicantHome.entity.militaryDuty}" columnClass="col-xs-6 col-md-3" />
-                <t:inputCheckbox label="#{messages['Applicant.label.Married']}" itemLabel="#{messages['Applicant.Married.True']}" value="#{applicantHome.entity.married}" columnClass="col-xs-6 col-md-3" />
-            </div>
-        </div>
-        <div class="col-xs-12 col-md-6">
-            <div class="row">
-                <t:inputText label="#{messages['contact.label.JobTitle']}" value="#{applicantHome.entity.jobTitle}" columnClass="col-md-12" required="true"/>
-            </div>
-            <div class="row">
-                <t:inputTag label="#{messages['Applicant.label.Skills']}" value="#{applicantHome.entity.skills}" columnClass="col-md-12" />
-            </div>
-            <div class="row">
-                <t:inputTextarea label="#{messages['Applicant.label.Info']}" value="#{applicantHome.entity.info}" columnClass="col-md-12" /> 
-            </div>
-        </div>
-
-    </ui:define> 
+        <ui:include src="/recruit/applicant/applicantEditor.xhtml" />
+    </ui:define>
+    
 </ui:composition>

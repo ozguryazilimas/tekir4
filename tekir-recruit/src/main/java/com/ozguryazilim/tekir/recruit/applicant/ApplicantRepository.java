@@ -3,6 +3,7 @@ package com.ozguryazilim.tekir.recruit.applicant;
 import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.entities.Applicant;
 import com.ozguryazilim.tekir.entities.Applicant_;
+import com.ozguryazilim.tekir.entities.ContactAddress;
 import com.ozguryazilim.tekir.entities.ContactEMail;
 import com.ozguryazilim.tekir.entities.ContactInformation_;
 import com.ozguryazilim.tekir.entities.ContactPhone;
@@ -93,10 +94,45 @@ public abstract class ApplicantRepository extends
 
     private void buildSearchTextControl(String searchText, CriteriaBuilder criteriaBuilder, List<Predicate> predicates, Root<? extends Applicant> from) {
         if (!Strings.isNullOrEmpty(searchText)) {
-            predicates.add(criteriaBuilder.or(criteriaBuilder.like(from.get(Contact_.code), "%" + searchText + "%"),
+            predicates.add(criteriaBuilder.or(
+                    criteriaBuilder.like(from.get(Contact_.code), "%" + searchText + "%"),
                     criteriaBuilder.like(from.get(Contact_.name), "%" + searchText + "%")
             ));
         }
     }
+    
+    /**
+     *
+     * ApplicantLookup Dialog için lookupQuery metodu.
+     *
+     * Aranan text e bagli olarak sorgu olusur ve dialog da gosterilir.
+     * Bos text aramasi tum applicant lari getirir.
+     * 
+     * @param searchText Applicant arama-dialog içinde arama yapılacak text
+     * @return Applicant sonuc listesi
+     */
+    @Override
+    public List<ApplicantViewModel> lookupQuery(String searchText) {
+        CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
+        CriteriaQuery<ApplicantViewModel> criteriaQuery = criteriaBuilder.createQuery(ApplicantViewModel.class);
+        
+        Root<Applicant> from = criteriaQuery.from(Applicant.class);
+        Join<Applicant, ContactPhone> pm = from.join(Contact_.primaryMobile, JoinType.LEFT);
+        Join<Applicant, ContactPhone> pp = from.join(Contact_.primaryPhone, JoinType.LEFT);
+        Join<Applicant, ContactEMail> pe = from.join(Contact_.primaryEmail, JoinType.LEFT);
+        
+        buildViewModelSelect(criteriaQuery, from);
+        
+        List<Predicate> predicates = new ArrayList<>();
 
+        buildSearchTextControl(searchText, criteriaBuilder, predicates, from);
+        
+        criteriaQuery.where(predicates.toArray(new Predicate[]{}));
+        criteriaQuery.orderBy(criteriaBuilder.asc(from.get(Applicant_.name)));
+        
+        TypedQuery<ApplicantViewModel> typedQuery = entityManager().createQuery(criteriaQuery);
+        List<ApplicantViewModel> resultList = typedQuery.getResultList();
+        
+        return resultList;
+    }
 }

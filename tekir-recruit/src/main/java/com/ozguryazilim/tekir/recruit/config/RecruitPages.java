@@ -7,9 +7,9 @@ import com.ozguryazilim.telve.nav.Navigation;
 import com.ozguryazilim.telve.view.PageTitle;
 import com.ozguryazilim.telve.view.Pages;
 import com.ozguryazilim.tekir.recruit.jobapplication.JobApplicationFeature;
+import javax.enterprise.context.ApplicationScoped;
 import org.apache.deltaspike.jsf.api.config.view.Folder;
 import org.apache.deltaspike.jsf.api.config.view.View;
-import javax.enterprise.context.ApplicationScoped;
 
 /**
  *
@@ -20,34 +20,40 @@ import javax.enterprise.context.ApplicationScoped;
 public interface RecruitPages extends Pages {
 
     @Folder(name = "./jobAdvert")
-    interface JobAdvertPages extends RecruitPages{
-        
+    interface JobAdvertPages extends RecruitPages {
+
         @View
-        @SecuredPage("jobAdvert")
+        @SecuredPage("JobAdvert")
         @PageTitle("module.caption.JobAdvertBrowse")
         @Navigation(label = "module.caption.JobAdvertBrowse",
                 feature = JobAdvertFeature.class,
                 section = RecruitNavigationSection.class)
-        class JobAdvertBrowse implements JobAdvertPages{
+        class JobAdvertBrowse implements JobAdvertPages {
         }
 
         @View
-        @SecuredPage("jobAdvert")
+        @SecuredPage("JobAdvert")
         @PageTitle("module.caption.JobAdvert")
-        class JobAdvert implements JobAdvertPages{
-        }
-
-        @View
-        @SecuredPage("jobAdvert")
-        @PageTitle("module.caption.JobAdvert")
-        class JobAdvertView implements JobAdvertPages{
+        class JobAdvert implements JobAdvertPages {
         }
         
         @View
-        @SecuredPage("jobAdvert")
-        @PageTitle("module.caption.JobAdvertMasterView")
-        class JobAdvertMasterView implements JobAdvertPages{
+        @SecuredPage("JobAdvert")
+        @PageTitle("module.caption.JobAdvert")
+        class JobAdvertView implements JobAdvertPages {
         }
+        
+        @View
+        @SecuredPage("JobAdvert")
+        @PageTitle("module.caption.JobAdvertMasterView")
+        class JobAdvertMasterView implements JobAdvertPages {
+        }
+
+        @View
+        @SecuredPage
+        class JobAdvertLookup implements RecruitPages {
+        }
+        
     }
 
     @Folder(name = "./applicant")
@@ -68,6 +74,15 @@ public interface RecruitPages extends Pages {
         class Applicant implements ApplicantPages {
         }
         
+        @View
+        @SecuredPage
+        class ApplicantQuickPanel implements ApplicantPages {
+        }
+        
+        @View
+        @SecuredPage
+        class ApplicantLookup implements ApplicantPages {
+        }
     }
     
     @Folder(name = "./jobApplication")

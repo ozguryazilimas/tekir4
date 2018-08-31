@@ -23,12 +23,12 @@ import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
 
 /**
  *
- * @author yusuf
+ * @author Erdem Uslu
  */
-@Repository
 @Dependent
-public abstract class JobApplicationRepository 
-        extends RepositoryBase<JobApplication, JobApplicationViewModel> 
+@Repository
+public abstract class JobApplicationRepository
+        extends RepositoryBase<JobApplication, JobApplicationViewModel>
         implements CriteriaSupport<JobApplication> {
 
     @Override
@@ -39,13 +39,13 @@ public abstract class JobApplicationRepository
         CriteriaQuery<JobApplicationViewModel> criteriaQuery = criteriaBuilder.createQuery(JobApplicationViewModel.class);
 
         Root<JobApplication> from = criteriaQuery.from(JobApplication.class);
-        Join<JobApplication,JobAdvert> jj=from.join(JobApplication_.advert,JoinType.LEFT);
-        Join<JobApplication,Applicant> ja=from.join(JobApplication_.applicant,JoinType.LEFT);
+        Join<JobApplication, JobAdvert> jj = from.join(JobApplication_.advert, JoinType.LEFT);
+        Join<JobApplication, Applicant> ja = from.join(JobApplication_.applicant, JoinType.LEFT);
 
         buildViewModelSelect(criteriaQuery, from);
 
         List<Predicate> predicates = new ArrayList<>();
-        
+
         decorateFilters(filters, predicates, criteriaBuilder, from);
 
         buildSearchTextControl(queryDefinition.getSearchText(), criteriaBuilder, predicates, from);
@@ -65,7 +65,10 @@ public abstract class JobApplicationRepository
         return resultList;
     }
 
-    private void buildViewModelSelect(CriteriaQuery<JobApplicationViewModel> criteriaQuery, Root<? extends JobApplication> from) {
+    private void buildViewModelSelect(
+            CriteriaQuery<JobApplicationViewModel> criteriaQuery,
+            Root<? extends JobApplication> from) {
+
         criteriaQuery.multiselect(
                 from.get(JobApplication_.id),
                 from.get(JobApplication_.date),
@@ -77,7 +80,12 @@ public abstract class JobApplicationRepository
         );
     }
 
-    private void buildSearchTextControl(String searchText, CriteriaBuilder criteriaBuilder, List<Predicate> predicates, Root<? extends JobApplication> from) {
+    private void buildSearchTextControl(
+            String searchText,
+            CriteriaBuilder criteriaBuilder,
+            List<Predicate> predicates,
+            Root<? extends JobApplication> from) {
+
         if (!Strings.isNullOrEmpty(searchText)) {
             predicates.add(criteriaBuilder.or(criteriaBuilder.like(from.get(JobApplication_.owner), "%" + searchText + "%"),
                     criteriaBuilder.like(from.get(JobApplication_.state), "%" + searchText + "%"),

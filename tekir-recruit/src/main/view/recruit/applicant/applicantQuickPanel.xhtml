@@ -1,0 +1,22 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"                
+                template="/layout/quickRecordPanelBase.xhtml">
+
+    <ui:param name="bean" value="#{applicantQuickRecord}" />
+    <ui:param name="showDefaultHeader" value="false" />
+    <ui:param name="showDefaultActions" value="true" />
+
+    <ui:define name="custom-header">
+        <i class="fa #{messages['feature.icon.'.concat(applicantHome.feature.name)]}"/> 
+        #{messages['contact.class.'.concat(applicantHome.entity.class.simpleName)]}
+    </ui:define>
+
+    <ui:define name="content">
+        <ui:include src="/recruit/applicant/applicantEditor.xhtml" />
+    </ui:define>
+    
+</ui:composition>

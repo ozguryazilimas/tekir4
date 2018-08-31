@@ -76,10 +76,43 @@ public abstract class JobAdvertRepository extends
 
     private void buildSearchTextControl(String searchText, CriteriaBuilder criteriaBuilder, List<Predicate> predicates, Root<? extends JobAdvert> from) {
         if (!Strings.isNullOrEmpty(searchText)) {
-            predicates.add(criteriaBuilder.or(criteriaBuilder.like(from.get(JobAdvert_.topic), "%" + searchText + "%"),
+            predicates.add(criteriaBuilder.or(criteriaBuilder.like(from.get(JobAdvert_.serial), "%" + searchText + "%"),
+                    criteriaBuilder.like(from.get(JobAdvert_.topic), "%" + searchText + "%"),
                     criteriaBuilder.like(from.get(JobAdvert_.info), "%" + searchText + "%"),
                     criteriaBuilder.like(from.get(JobAdvert_.owner), "%" + searchText + "%"),
                     criteriaBuilder.like(from.get(JobAdvert_.status), "%" + searchText + "%")));
         }
+    }
+    
+    /**
+     *
+     * JobAdvertLookup Dialog için lookupQuery metodu.
+     *
+     * Aranan text e bagli olarak sorgu olusur ve dialog da gosterilir.
+     * Bos text aramasi tum jobAdvert lari getirir.
+     * 
+     * @param searchText JobAdvert arama-dialog içinde arama yapılacak text
+     * @return JobAdvert sonuc listesi
+     */
+    @Override
+    public List<JobAdvertViewModel> lookupQuery(String searchText) {
+        CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
+        CriteriaQuery<JobAdvertViewModel> criteriaQuery = criteriaBuilder.createQuery(JobAdvertViewModel.class);
+        
+        Root<JobAdvert> from = criteriaQuery.from(JobAdvert.class);
+        
+        buildViewModelSelect(criteriaQuery, from);
+        
+        List<Predicate> predicates = new ArrayList<>();
+
+        buildSearchTextControl(searchText, criteriaBuilder, predicates, from);
+        
+        criteriaQuery.where(predicates.toArray(new Predicate[]{}));
+        criteriaQuery.orderBy(criteriaBuilder.asc(from.get(JobAdvert_.topic)));
+        
+        TypedQuery<JobAdvertViewModel> typedQuery = entityManager().createQuery(criteriaQuery);
+        List<JobAdvertViewModel> resultList = typedQuery.getResultList();
+        
+        return resultList;
     }
 }
