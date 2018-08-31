@@ -30,55 +30,41 @@
     </ui:define>
 
     <ui:define name="form">
-
         <div class="row">
             <div class="col-md-6 col-xs-12">
-                <t:inputLookupDialog label="contact.class.JobAdvert" value="#{jobApplicationHome.entity.advert}" lookupBean="#{jobAdvertLookup}" lookupListener="jobApplicationHome.entity.advert" required="true" placeholder="#{messages['contact.info.JobAdvert']}" />      
-                <t:inputLookupDialog label="contact.class.Applicant" value="#{jobApplicationHome.entity.applicant}" lookupBean="#{applicantLookup}" lookupListener="jobApplicationHome.entity.applicant" required="true" placeholder="#{messages['contact.info.Applicant']}" update="@form"/>               
-                <t:inputUser label="general.label.Owner" value="#{jobApplicationHome.entity.owner}" required="true"  columnClass="col-sm-6"/>
-                <t:inputDate label="#{messages['general.label.Date']}" value="#{jobApplicationHome.entity.date }"  columnClass="col-sm-6" />
-                <t:inputSuggestion label="general.label.State" value="#{jobApplicationHome.entity.state}" group="#{jobApplicationHome.entity.class.simpleName}" listener="jobApplicationHome.entity.state" required="true" columnClass="col-sm-6"/>
+                <t:inputLookupDialog label="contact.class.JobAdvert" value="#{jobApplicationHome.entity.advert}" lookupBean="#{jobAdvertLookup}" lookupListener="jobApplicationHome.entity.advert" required="true" placeholder="#{messages['contact.info.JobAdvert']}" columnClass="col-md-6 col-xs-12"/>      
+                <t:inputLookupDialog label="contact.class.Applicant" value="#{jobApplicationHome.entity.applicant}" lookupBean="#{applicantLookup}" lookupListener="jobApplicationHome.entity.applicant" required="true" placeholder="#{messages['contact.info.Applicant']}" update="@form" columnClass="col-md-6 col-xs-12"/>
+                
+                <t:inputSuggestion label="JobApplication.label.State" value="#{jobApplicationHome.entity.state}" group="#{jobApplicationHome.entity.class.simpleName}" listener="jobApplicationHome.entity.state" required="true" columnClass="col-md-6 col-xs-12"/>
+                <t:inputDate label="#{messages['general.label.Date']}" value="#{jobApplicationHome.entity.date }"  columnClass="col-md-6 col-xs-12" />
+                
+                <t:inputUser label="general.label.Owner" value="#{jobApplicationHome.entity.owner}" required="true"  columnClass="col-md-6 col-xs-12"/>
             </div>
             <div class="col-md-6 col-xs-12">
-                <t:inputTextarea label="general.label.Info" value="#{jobApplicationHome.entity.info}" columnClass="col-xs-12"/>
-            </div>
-
-            <div class="col-md-12 col-xs-12">
-                <t:accordion label="jobApplication.label.ApplicantInformations" >
-                    <div class="row">
-                        <div class="col-md-6 col-xs-12">
-                            <div class="row">
-                                <t:inputDialog label="contact.label.PrimaryEmail" value="#{jobApplicationHome.entity.applicant.primaryEmail.caption}" action="#{emailEditor.editPrimaryEmail(jobApplicationHome.entity.applicant, jobApplicationHome.entity.applicant.primaryEmail)}" icon="fa fa-envelope-o" />
-                                <t:inputDate label="#{messages['general.label.BirthDate']}" value="#{jobApplicationHome.entity.applicant.birthDate}"  columnClass="col-md-6 col-xs-12" />
-                            </div>
-                            <div class="row">
-                                <t:inputDialog label="contact.label.PrimaryMobile" value="#{jobApplicationHome.entity.applicant.primaryMobile.caption}" action="#{phoneEditor.editPrimaryMobile(jobApplicationHome.entity.applicant, jobApplicationHome.entity.applicant.primaryMobile)}" icon="fa fa-mobile" />
-                                <t:inputDialog label="contact.label.PrimaryPhone" value="#{jobApplicationHome.entity.applicant.primaryPhone.caption}" action="#{phoneEditor.editPrimaryPhone(jobApplicationHome.entity.applicant, jobApplicationHome.entity.applicant.primaryPhone)}" icon="fa fa-phone"/>
-                            </div>
-                            <div class="row">
-                                <t:inputAny label="#{messages['applicant.label.MilitaryDuty']}" columnClass="col-xs-6">
-                                    <p:selectBooleanCheckbox value="#{jobApplicationHome.entity.applicant.militaryDuty}" itemLabel="#{messages['militaryDuty.Completed']}"/>
-                                </t:inputAny>
-
-                                <t:inputAny label="#{messages['applicant.label.MaritalStatus']}" columnClass="col-xs-6">
-                                    <p:selectBooleanCheckbox value="#{jobApplicationHome.entity.applicant.married}" itemLabel="#{messages['maritalStatus.Married']}"/>
-                                </t:inputAny>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-xs-12">
-                            <div class="row">
-                                <t:inputTag label="#{messages['recruit.label.Skills']}" value="#{jobApplicationHome.entity.applicant.skills}" columnClass="col-md-12" />
-                            </div>
-                            <div class="row">
-                                <t:inputTextarea label="#{messages['applicant.label.AdditionalInfo']}" value="#{jobApplicationHome.entity.applicant.info}" columnClass="col-md-12" /> 
-                            </div>
-                        </div>
-                    </div>
-                </t:accordion>
+                <t:inputTextarea label="general.label.Info" value="#{jobApplicationHome.entity.info}" columnClass="col-md-12 col-xs-12"/>
             </div>
         </div>
-
+    </ui:define>
+        
+    <ui:define name="context-menu">
+        <li>
+            <p:commandLink title="#{messages['general.button.Save']}" onclick="jQuery('#form\\:save').click();return false;" rendered="#{not hideSave and (( not empty entity.id and homeBean.hasUpdatePermission()) or ( empty entity.id and homeBean.hasInsertPermission()))}">
+                <i class="fa fa-save"></i>
+                <h:outputText value=" #{messages['general.button.Save']}" />
+            </p:commandLink>
+        </li>
+        <li>
+            <p:commandLink action="#{homeBean.createApplicantQuickPanel()}" process="@this" oncomplete="quickPanelToogle();" update="quickPanelContent" rendered="#{empty entity.id and identity.hasPermission('applicant', 'insert')}">
+                <i class="fa fa-user"></i> 
+                <h:outputText value=" #{messages['JobApplication.button.AddApplicant']}" />
+            </p:commandLink>
+        </li>
+        <li>
+            <p:commandLink title="#{messages['general.button.Delete']}" action="#{homeBean.delete()}" rendered="#{not hideDelete and not empty entity.id and homeBean.hasDeletePermission() }">
+                <i class="fa fa-trash-o"></i>
+                <h:outputText value=" #{messages['general.button.Delete']}" />
+            </p:commandLink>
+        </li>
     </ui:define>
 
 </ui:composition>

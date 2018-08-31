@@ -76,6 +76,11 @@ public interface RecruitPages extends Pages {
         
         @View
         @SecuredPage
+        class ApplicantQuickPanel implements ApplicantPages {
+        }
+        
+        @View
+        @SecuredPage
         class ApplicantLookup implements ApplicantPages {
         }
     }

@@ -1,7 +1,6 @@
 package com.ozguryazilim.tekir.recruit.jobapplication;
 
 import com.ozguryazilim.tekir.entities.JobApplication;
-import com.ozguryazilim.tekir.recruit.applicant.ApplicantRepository;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.EntityBase;
@@ -9,6 +8,7 @@ import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureUtils;
 import com.ozguryazilim.telve.forms.FormBase;
 import com.ozguryazilim.telve.forms.FormEdit;
+import com.ozguryazilim.telve.quick.QuickRecordController;
 import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +26,7 @@ public class JobApplicationHome extends FormBase<JobApplication, Long> {
     private JobApplicationRepository repository;
 
     @Inject
-    private ApplicantRepository applicantRepository;
+    private QuickRecordController quickRecordController;
 
     @Inject
     private Identity identity;
@@ -42,13 +42,18 @@ public class JobApplicationHome extends FormBase<JobApplication, Long> {
         getEntity().setOwner(identity.getLoginName());
     }
 
-    @Override
-    public boolean onBeforeSave() {
-        applicantRepository.saveAndFlush(getEntity().getApplicant());  
-        
-        return super.onBeforeSave();
+    /**
+     * Yeni Başvuru Adayı için quickPanelContect'i başvuru aday formuna ayarlar.
+     */
+    public void createApplicantQuickPanel() {
+        quickRecordController.setName("applicantQuickRecord");
     }
     
+    /**
+     * NoteWidget için gerekli.
+     *
+     * @return
+     */
     public FeaturePointer getFeaturePointer() {
         FeaturePointer result = new FeaturePointer();
         result.setBusinessKey(getEntity().getInfo());
