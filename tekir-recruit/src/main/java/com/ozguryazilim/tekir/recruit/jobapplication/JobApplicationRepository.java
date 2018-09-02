@@ -18,6 +18,7 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.apache.deltaspike.data.api.Query;
 import org.apache.deltaspike.data.api.Repository;
 import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
 
@@ -31,6 +32,15 @@ public abstract class JobApplicationRepository
         extends RepositoryBase<JobApplication, JobApplicationViewModel>
         implements CriteriaSupport<JobApplication> {
 
+    /**
+     * Verilen İş İlanına'a ait tüm iş başvurularını döndürür.
+     * 
+     * @param advert
+     * @return 
+     */
+    @Query("select c from JobApplication c where advert = ?1")
+    public abstract List<JobApplication> findByJobAdvert(JobAdvert advert);
+    
     @Override
     public List<JobApplicationViewModel> browseQuery(QueryDefinition queryDefinition) {
         List<Filter<JobApplication, ?, ?>> filters = queryDefinition.getFilters();

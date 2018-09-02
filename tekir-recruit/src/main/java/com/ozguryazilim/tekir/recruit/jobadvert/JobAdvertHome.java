@@ -3,10 +3,16 @@ package com.ozguryazilim.tekir.recruit.jobadvert;
 import com.ozguryazilim.tekir.core.code.AutoCode;
 import com.ozguryazilim.tekir.core.code.AutoCodeService;
 import com.ozguryazilim.tekir.entities.JobAdvert;
+import com.ozguryazilim.tekir.entities.JobApplication;
+import com.ozguryazilim.tekir.recruit.jobapplication.JobApplicationRepository;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
+import com.ozguryazilim.telve.entities.EntityBase;
+import com.ozguryazilim.telve.entities.FeaturePointer;
+import com.ozguryazilim.telve.feature.FeatureUtils;
 import com.ozguryazilim.telve.forms.FormBase;
 import com.ozguryazilim.telve.forms.FormEdit;
+import java.util.List;
 import javax.inject.Inject;
 
 /**
@@ -24,6 +30,9 @@ public class JobAdvertHome extends FormBase<JobAdvert, Long> {
     private JobAdvertRepository repository;
     
     @Inject
+    private JobApplicationRepository jobApplicationRepository;
+    
+    @Inject
     private AutoCodeService codeService;
 
     @Override
@@ -38,4 +47,31 @@ public class JobAdvertHome extends FormBase<JobAdvert, Long> {
         getEntity().setSerial(codeService.getNewSerialNumber(JobAdvert.class.getSimpleName()));
     }
 
+    /**
+     * Geriye ilgili İş İlanına'a ait iş başvurularını döndürür.
+     *
+     * @return
+     */
+    public List<JobApplication> getJobApplications() {
+        return jobApplicationRepository.findByJobAdvert(getEntity());
+    }
+    
+    /**
+     * NoteWidget için gerekli.
+     *
+     * @return
+     */
+    public FeaturePointer getFeaturePointer() {
+        FeaturePointer result = new FeaturePointer();
+        result.setBusinessKey(getEntity().getSerial());
+        result.setFeature(getFeatureClass().getSimpleName());
+        result.setPrimaryKey(getEntity().getId());
+        return result;
+    }
+    
+    // FeatureLink yönlendirmesi
+    public FeaturePointer getAllFeaturePointer(EntityBase entityBase) {
+        return FeatureUtils.getFeaturePointer(entityBase);
+    }
+    
 }

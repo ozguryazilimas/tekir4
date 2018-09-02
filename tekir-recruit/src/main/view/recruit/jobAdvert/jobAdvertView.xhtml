@@ -44,13 +44,16 @@
     </ui:define>
 
     <ui:define name="caption">
-        
-        <div class="row">
-            <t:outputText label="general.label.Topic" value="#{jobAdvertHome.entity.topic}" columnClass="col-xs-12 col-md-8"  />
-            <t:outputDate label="#{messages['general.label.EndDate']}" value="#{jobAdvertHome.entity.endDate}" columnClass="col-xs-12 col-md-2 pull-right"/>
-            <t:outputDate label="#{messages['general.label.StartDate']}" value="#{jobAdvertHome.entity.startDate}" columnClass="col-xs-12 col-md-2 pull-right"/>
-        </div>
-       
+        <ul class="caption-states">
+            <t:stateOutputText label="general.label.Topic" value="#{jobAdvertHome.entity.topic}"/>
+            <t:stateOutputText label="JobAdvert.label.jobApplicationsTotal" value="#{jobAdvertHome.jobApplications.size()}"/>
+            <t:stateOutputTag label="JobAdvert.label.Skills" value="#{jobAdvertHome.entity.skills}"/>
+            <t:stateOutputDate label="general.label.EndDate" value="#{jobAdvertHome.entity.endDate}"/>
+            <t:stateOutputDate label="general.label.StartDate" value="#{jobAdvertHome.entity.startDate}"/>
+        </ul>
+        <ui:fragment rendered="#{jobAdvertHome.entity.info ne ''}">
+            <p><i class="fa fa-info"/> #{jobAdvertHome.entity.info}</p>
+        </ui:fragment>
     </ui:define>
 
 </ui:composition>
