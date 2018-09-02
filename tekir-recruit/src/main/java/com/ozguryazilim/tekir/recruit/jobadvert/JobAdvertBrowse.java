@@ -3,6 +3,8 @@ package com.ozguryazilim.tekir.recruit.jobadvert;
 import com.ozguryazilim.tekir.core.query.filter.TagFilter;
 import com.ozguryazilim.tekir.entities.JobAdvert;
 import com.ozguryazilim.tekir.entities.JobAdvert_;
+import com.ozguryazilim.tekir.entities.JobApplication;
+import com.ozguryazilim.tekir.recruit.jobapplication.JobApplicationRepository;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.SuggestionItem;
@@ -30,6 +32,9 @@ public class JobAdvertBrowse extends BrowseBase<JobAdvert, JobAdvertViewModel> {
 
     @Inject
     private JobAdvertRepository jobAdvertRepository;
+    
+    @Inject
+    private JobApplicationRepository jobApplicationRepository;
 
     @Inject
     private Identity identity;
@@ -78,6 +83,15 @@ public class JobAdvertBrowse extends BrowseBase<JobAdvert, JobAdvertViewModel> {
         } else {
             return null;
         }
+    }
+    
+    /**
+     * Geriye seçilen İş İlanına'a ait iş başvurularını döndürür.
+     *
+     * @return
+     */
+    public List<JobApplication> getJobApplications() {
+        return jobApplicationRepository.findByJobAdvert(getJobAdvert());
     }
 
 }
