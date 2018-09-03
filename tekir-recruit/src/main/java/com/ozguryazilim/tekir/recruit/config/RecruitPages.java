@@ -75,6 +75,18 @@ public interface RecruitPages extends Pages {
         }
         
         @View
+        @SecuredPage("applicant")
+        @PageTitle("module.caption.Applicant")
+        class ApplicantView implements ApplicantPages {
+        }
+
+        @View
+        @SecuredPage("applicant")
+        @PageTitle("module.caption.ApplicantMasterView")
+        class ApplicantMasterView implements ApplicantPages {
+        }
+        
+        @View
         @SecuredPage
         class ApplicantQuickPanel implements ApplicantPages {
         }
