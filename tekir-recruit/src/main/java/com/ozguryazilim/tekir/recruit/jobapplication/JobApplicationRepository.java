@@ -41,6 +41,15 @@ public abstract class JobApplicationRepository
     @Query("select c from JobApplication c where advert = ?1")
     public abstract List<JobApplication> findByJobAdvert(JobAdvert advert);
     
+    /**
+     * Verilen Başvuru Adayına ait tüm iş başvurularını döndürür.
+     * 
+     * @param applicant
+     * @return 
+     */
+    @Query("select c from JobApplication c where applicant = ?1")
+    public abstract List<JobApplication> findByApplicant(Applicant applicant);
+    
     @Override
     public List<JobApplicationViewModel> browseQuery(QueryDefinition queryDefinition) {
         List<Filter<JobApplication, ?, ?>> filters = queryDefinition.getFilters();
