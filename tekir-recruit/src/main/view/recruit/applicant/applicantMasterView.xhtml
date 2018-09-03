@@ -98,6 +98,12 @@
                         </p:dataTable>
                     </div>
                 </t:accordion>
+
+                <ui:include src="/attachment/simpleAttachmentWidget.xhtml">
+                    <ui:param name="columnClass" value="col-xs-12" />
+                    <ui:param name="featurePointer" value="#{applicantHome.featurePointer}" />
+                    <ui:param name="payload" value="#{applicantHome.entity}" />
+                </ui:include>
             </div>
         </div>
 
