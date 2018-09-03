@@ -1,0 +1,67 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/containerViewTabBase.xhtml">
+
+    <ui:param name="bean" value="#{jobApplicationHome}" />
+    <ui:param name="entityName" value="jobApplication" />
+    <ui:param name="viewIdentifier" value="#{jobApplicationHome.entity.info}" />
+    <ui:param name="showCaption" value="true"/>
+    <ui:param name="dontShowContentHeader" value="true" />
+
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{jobApplicationHome.id}" />
+            <f:viewAction action="#{jobApplicationHome.initData()}" />
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="customHeader">
+        <section class="content-header">
+            <p:outputPanel id="states">
+                <ul class="states pull-right">
+                    <li role="presentation">
+                        <div style="font-weight: bold;">#{messages['JobAdvert.label.Owner']}</div>
+                        <div>
+                            #{jobApplicationHome.entity.owner}
+                        </div>
+                    </li>
+                    <li role="presentation">
+                        <div style="font-weight: bold;"> #{messages['JobApplication.label.State']} </div>
+                        <div>
+                            #{jobApplicationHome.entity.state}
+                        </div>
+                    </li>
+                </ul>
+            </p:outputPanel>
+            <i class="fa fa-3x #{messages['feature.icon.'.concat(bean.feature.name)]} pull-left" />
+            <small class="text-muted">#{ messages[pageTitleResolver.pageTitle] }</small>
+            <h1>#{messages['module.caption.JobApplication']}</h1> 
+        </section>
+    </ui:define>
+
+    <ui:define name="caption">
+        <t:outputText label="general.label.Info" value="#{jobApplicationHome.entity.info}"  columnClass="col-md-10 col-xs-12"/>
+        <t:outputDate label="general.label.Date" value="#{jobApplicationHome.entity.date}" columnClass="col-md-2 col-xs-12"/>
+    </ui:define>
+
+    <ui:define name="context-menu"> 
+        <li>
+            <p:commandLink action="#{jobApplicationHome.create()}" styleClass="context-command" ajax="false" >
+                <i class="fa fa-plus-circle"></i>
+                <h:outputText value=" #{messages['general.button.Add']}" />
+            </p:commandLink>
+        </li>
+
+        <li>
+            <p:commandLink action="#{jobApplicationHome.edit()}" styleClass="context-command" rendered="#{identity.hasPermission( entityName, 'update') and hideEditBtn ne 'true' }">
+                <i class="fa fa-edit"></i>
+                <h:outputText value=" #{messages['general.button.Edit']}" />
+            </p:commandLink>
+        </li>
+    </ui:define>
+
+</ui:composition>
