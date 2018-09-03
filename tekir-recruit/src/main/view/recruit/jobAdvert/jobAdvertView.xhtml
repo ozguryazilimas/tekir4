@@ -8,7 +8,7 @@
 
     <ui:param name="bean" value="#{jobAdvertHome}" />
     <ui:param name="entityName" value="jobAdvert" />
-    <ui:param name="viewIdentifier" value="#{jobAdvertHome.entity.serial}" />
+    <ui:param name="viewIdentifier" value="[#{jobAdvertHome.entity.serial}]" />
     <ui:param name="showCaption" value="true"/>
     <ui:param name="dontShowContentHeader" value="true" />
 
@@ -26,7 +26,7 @@
                 <li role="presentation">
                     <div style="font-weight: bold;">#{messages['JobAdvert.label.AdvertOwner']} </div>
                     <div>
-                        #{jobAdvertHome.entity.owner}
+                        #{userLookup.getUserName(jobAdvertHome.entity.owner)}
                     </div>
                 </li>
                 <li role="presentation">
@@ -39,7 +39,7 @@
             </p:outputPanel>
             <i class="fa fa-3x #{messages['feature.icon.'.concat(bean.feature.name)]} pull-left" />
             <small class="text-muted">#{ messages[pageTitleResolver.pageTitle] }</small>
-            <h1>#{messages['contact.class.'.concat(jobAdvertHome.entity.class.simpleName)]} <small>[#{ viewIdentifier }]</small> </h1>
+            <h1>#{messages['contact.class.'.concat(jobAdvertHome.entity.class.simpleName)]} <small>#{ viewIdentifier }</small> </h1>
         </section>
     </ui:define>
 
@@ -48,8 +48,8 @@
             <t:stateOutputText label="general.label.Topic" value="#{jobAdvertHome.entity.topic}"/>
             <t:stateOutputText label="JobAdvert.label.jobApplicationsTotal" value="#{jobAdvertHome.jobApplications.size()}"/>
             <t:stateOutputTag label="JobAdvert.label.Skills" value="#{jobAdvertHome.entity.skills}"/>
-            <t:stateOutputDate label="general.label.EndDate" value="#{jobAdvertHome.entity.endDate}"/>
             <t:stateOutputDate label="general.label.StartDate" value="#{jobAdvertHome.entity.startDate}"/>
+            <t:stateOutputDate label="general.label.EndDate" value="#{jobAdvertHome.entity.endDate}"/>
         </ul>
         <ui:fragment rendered="#{jobAdvertHome.entity.info ne ''}">
             <p><i class="fa fa-info"/> #{jobAdvertHome.entity.info}</p>
