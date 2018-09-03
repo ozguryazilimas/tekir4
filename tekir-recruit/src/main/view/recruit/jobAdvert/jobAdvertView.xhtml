@@ -26,7 +26,7 @@
                 <li role="presentation">
                     <div style="font-weight: bold;">#{messages['JobAdvert.label.AdvertOwner']} </div>
                     <div>
-                        #{jobAdvertHome.entity.owner}
+                        #{userLookup.getUserName(jobAdvertHome.entity.owner)}
                     </div>
                 </li>
                 <li role="presentation">
@@ -48,8 +48,8 @@
             <t:stateOutputText label="general.label.Topic" value="#{jobAdvertHome.entity.topic}"/>
             <t:stateOutputText label="JobAdvert.label.jobApplicationsTotal" value="#{jobAdvertHome.jobApplications.size()}"/>
             <t:stateOutputTag label="JobAdvert.label.Skills" value="#{jobAdvertHome.entity.skills}"/>
-            <t:stateOutputDate label="general.label.EndDate" value="#{jobAdvertHome.entity.endDate}"/>
             <t:stateOutputDate label="general.label.StartDate" value="#{jobAdvertHome.entity.startDate}"/>
+            <t:stateOutputDate label="general.label.EndDate" value="#{jobAdvertHome.entity.endDate}"/>
         </ul>
         <ui:fragment rendered="#{jobAdvertHome.entity.info ne ''}">
             <p><i class="fa fa-info"/> #{jobAdvertHome.entity.info}</p>

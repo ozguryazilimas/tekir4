@@ -26,7 +26,7 @@
                     <li role="presentation">
                         <div style="font-weight: bold;">#{messages['JobAdvert.label.Owner']}</div>
                         <div>
-                            #{jobApplicationHome.entity.owner}
+                            #{userLookup.getUserName(jobApplicationHome.entity.owner)}
                         </div>
                     </li>
                     <li role="presentation">

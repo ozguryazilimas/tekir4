@@ -7,62 +7,97 @@
                 template="/layout/masterViewBase.xhtml">
 
     <ui:define name="content">     
+        <style>
+            .ui-datatable table {
+                table-layout: auto;
+            }
 
+            .ui-datatable thead th {
+                text-align: unset;
+                border-width: 0px;
+            }
+
+            .ui-datatable tbody td {
+                border-style: unset;
+            }
+
+            .ui-datatable-odd {
+                background-color: transparent;
+            }
+
+            th.ui-state-default {
+                background-color: transparent;
+            }
+
+            .ui-paginator .ui-paginator-page,
+            .ui-paginator .ui-paginator-pages,
+            .ui-paginator .ui-paginator-next,
+            .ui-paginator .ui-paginator-last,
+            .ui-paginator .ui-paginator-first,
+            .ui-paginator .ui-paginator-prev,
+            .ui-paginator .ui-paginator-current {
+                display: inline-flex;
+            }
+        </style>
         <div class="row">
-            <div class="col-md-4 col-xs-12">
+            <div class="col-lg-4 col-md-12">
                 <t:accordion icon="fa fa-stack-exchange" label="general.label.Summary" columnClass="col-xs-12">
-                    <div class="row">
-                        <t:outputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(applicantHome.entity.sourcePointer)}" columnClass="col-xs-12"/>
-                    </div>
-                    
                     <div class="row">
                         <t:outputText label="general.label.FirstName" value="#{applicantHome.entity.firstName}" columnClass="col-xs-12"/>
                         <t:outputText label="general.label.LastName" value="#{applicantHome.entity.lastName}" columnClass="col-xs-12"/>
-                        <t:outputDate label="Applicant.label.BirthDate" value="#{applicantHome.entity.birthDate}" columnClass="col-xs-12" />
-                        <t:outputText value="#{messages['gender.'.concat(applicantHome.entity.gender)]}" label="contact.label.Gender" columnClass="col-xs-12"/>
-                        <t:outputText label="contact.label.SSN" value="#{applicantHome.entity.ssn}" columnClass="col-xs-12"/>
-                        <t:outputBoolean label="Applicant.label.militaryDuty" itemLabel="militaryDuty." value="#{applicantHome.entity.militaryDuty}" columnClass="col-xs-12"/>
-                        <t:outputBoolean label="Applicant.label.Married" itemLabel="Married." value="#{applicantHome.entity.married}" columnClass="col-xs-12"/>
+                        <t:outputDate label="general.label.BirthDate" value="#{applicantHome.entity.birthDate}" columnClass="col-xs-12" />
+                        <t:outputEnum label="contact.label.Gender" itemLabel="gender." value="#{applicantHome.entity.gender}" columnClass="col-xs-12"/>
+                        <t:outputBoolean label="Applicant.label.militaryDuty" itemLabel="Applicant.militaryDuty." value="#{applicantHome.entity.militaryDuty}" columnClass="col-xs-12"/>
+                        <t:outputBoolean label="Applicant.label.Married" itemLabel="Applicant.Married." value="#{applicantHome.entity.married}" columnClass="col-xs-12"/>
+                        <t:outputText label="contact.label.JobTitle" value="#{applicantHome.entity.jobTitle}" columnClass="col-xs-12"/>
+                        <t:outputTag label="Applicant.label.Skills" value="#{applicantHome.entity.skills}" columnClass="col-xs-12"/>
                     </div>            
                 </t:accordion>
             </div>
 
-            <div class="col-md-4 col-xs-12">
-                <ui:include src="/notes/noteWidget.xhtml">
-                    <ui:param name="featurePointer" value="#{applicantHome.featurePointer}" />
-                </ui:include>
-            </div>
-            
-            <div class="col-md-4 col-xs-12">     
-                <t:accordion icon="fa fa-stack-exchange" label="Applicant.label.Applications" columnClass="col-xs-12">
-                    <p:dataTable var="ja" value="#{applicantHome.jobApplication}" >
-                        <p:column headerText="#{messages['Applicant.label.AdvertId']}">
-                            <t:cellOutputFeatureLink label="#{ja.advert.serial}" value="#{featureController.getFeatureLink(applicantHome.getAllFeaturePointer(ja.advert))}"/>
-                        </p:column>
+            <div class="col-lg-4 col-md-12">
+                <div class="row">
+                    <ui:include src="/notes/noteWidget.xhtml">
+                        <ui:param name="columnClass" value="col-xs-12" />
+                        <ui:param name="featurePointer" value="#{applicantHome.featurePointer}" />
+                    </ui:include>
 
-                        <p:column headerText="#{messages['JobAdvert.label.Topic']}">
-                            <h:outputText value="#{ja.advert.topic}" />
-                        </p:column>
-                    </p:dataTable>
-                </t:accordion>
-                
-                <ui:include src="/contact/contactInfosFragment.xhtml">
-                    <ui:param name="contact" value="#{applicantHome.entity.primaryContact}" />
-                    <ui:param name="contactInformations" value="#{applicantHome.contactInformations}" />
-                </ui:include>
-                
+                    <ui:include src="/activities/activityWidget.xhtml">
+                        <ui:param name="columnClass" value="col-xs-12" />
+                        <ui:param name="person" value="#{applicantHome.entity}" />
+                        <ui:param name="corporation" value="#{applicantHome.entity.corporation}" />
+                        <ui:param name="feature" value="#{null}" />
+                        <ui:param name="attached" value="Person" />
+                    </ui:include>
+
+                    <ui:include src="/contact/contactInfosFragment.xhtml">
+                        <ui:param name="columnClass" value="col-xs-12" />
+                        <ui:param name="contact" value="#{applicantHome.entity}" />
+                        <ui:param name="contactInformations" value="#{applicantHome.contactInformations}" />
+                    </ui:include>
+                </div>
             </div>
-        </div>
-        
-        <div class="panel panel-default">
-            <div class="panel-heading"> <i class="fa fa-list" /> #{messages['JobAdvert.label.Skills']} </div>
-            <div class="panel-body">
-                <ui:repeat value="#{applicantHome.entity.skills}" var="item">
-                    <div class="col-xs-12 list-inline">
-                        <i class="fa fa-hand-o-right" aria-hidden="true"></i>
-                        #{item}
-                    </div>  
-                </ui:repeat>
+
+            <div class="col-lg-4 col-md-12">     
+                <t:accordion icon="fa fa-file" label="Applicant.label.JobApplications" columnClass="col-xs-12">
+                    <div class="table-responsive no-padding">
+                        <p:dataTable var="ja" value="#{applicantHome.jobApplications}" tableStyleClass="table table-condensed table-hover"
+                                     paginator="true" rows="5"
+                                     paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                     paginatorPosition="bottom" 
+                                     paginatorAlwaysVisible="false" >
+                            <p:column headerText="#{messages['contact.class.JobAdvert']}">
+                                <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(applicantHome.getAllFeaturePointer(ja.advert))}" columnClass="col-xs-12"/>
+                            </p:column>
+                            <p:column headerText="#{messages['JobAdvert.label.Topic']}">
+                                <h:outputText value="#{ja.advert.topic}"/>
+                            </p:column>
+                            <p:column headerText="#{messages['JobAdvert.label.Status']}">
+                                <h:outputText value="#{ja.advert.status}" styleClass="label label-primary"/>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </t:accordion>
             </div>
         </div>
 
