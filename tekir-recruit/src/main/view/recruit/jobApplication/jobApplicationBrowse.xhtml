@@ -31,7 +31,7 @@
         <div class="row">
             <t:outputText label="Applicant.label.FirstName" value="#{jobApplicationBrowse.jobApplication.applicant.firstName}" columnClass="col-xs-12" rendered="#{not empty jobApplicationBrowse.jobApplication.applicant.firstName}"/>
             <t:outputText label="Applicant.label.LastName" value="#{jobApplicationBrowse.jobApplication.applicant.lastName}" columnClass="col-xs-12" rendered="#{not empty jobApplicationBrowse.jobApplication.applicant.lastName}"/>
-            <t:outputText label="Applicant.label.Skills" value="#{jobApplicationBrowse.jobApplication.applicant.skills}" columnClass="col-xs-12" rendered="#{not empty jobApplicationBrowse.jobApplication.applicant.skills}"/>
+            <t:outputTag label="Applicant.label.Skills" value="#{jobApplicationBrowse.jobApplication.applicant.skills}" columnClass="col-xs-12" rendered="#{not empty jobApplicationBrowse.jobApplication.applicant.skills}"/>
         </div>
         <div class="row">
             <t:outputText label="JobApplication.label.State" value="#{jobApplicationBrowse.jobApplication.state}" columnClass="col-xs-12" rendered="#{not empty jobApplicationBrowse.jobApplication.state}"/>
