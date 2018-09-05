@@ -1,17 +1,15 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
                 xmlns:p="http://primefaces.org/ui"                
                 template="/layout/dialogBase.xhtml">
 
     <ui:define name="form">
-        <h:form id="applicantEducationInfoEditor">
+        <h:form id="applicantInformationEditor">
             
             <ui:insert name="editorContent" />
       
-            <h:panelGroup styleClass="row actionButtons" layout="block" >
+            <h:panelGroup styleClass="row actionButtons" layout="block" style="position: fixed; bottom: 0; display: block;" >
                 <ui:insert name="actionButtons" />
                 <p:commandButton id="select" 
                                  value="#{messages['general.button.Ok']}" 
