@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"                
+                template="/layout/dialogBase.xhtml">
+
+    <ui:define name="form">
+        <h:form id="applicantInformationEditor">
+            
+            <ui:insert name="editorContent" />
+      
+            <h:panelGroup styleClass="row actionButtons" layout="block" style="position: fixed; bottom: 0; display: block;" >
+                <ui:insert name="actionButtons" />
+                <p:commandButton id="select" 
+                                 value="#{messages['general.button.Ok']}" 
+                                 icon="fa fa-check" 
+                                 disabled="#{facesContext.validationFailed}"
+                                 validateClient="true"
+                                 action="#{bean.closeDialog()}" 
+                                 styleClass="btn-primary" />
+                <p:commandButton id="close" 
+                                 value="#{messages['general.button.Cancel']}" 
+                                 icon="ui-icon-close" 
+                                 action="#{bean.cancelDialog()}" 
+                                 partialSubmit="true" 
+                                 process="@this"/>
+            </h:panelGroup>
+        </h:form>
+    </ui:define> 
+</ui:composition>
