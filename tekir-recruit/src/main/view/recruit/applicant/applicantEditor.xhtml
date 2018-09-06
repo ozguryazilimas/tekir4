@@ -5,14 +5,14 @@
                 xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
                 xmlns:p="http://primefaces.org/ui">
 
-    <div class="col-xs-12 col-md-6">
+    <div class="col-lg-6 col-md-12">
         <div class="row">
-            <t:inputText label="#{messages['general.label.Code']}" value="#{applicantHome.entity.code}" columnClass="col-xs-12 col-md-6" required="true"/>
-            <t:inputEnum itemLabel="gender." hasNullValue="false"  value="#{applicantHome.entity.gender}" label="contact.label.Gender" columnClass="col-md-6 col-xs-12" />
+            <t:inputText label="#{messages['general.label.Code']}" value="#{applicantHome.entity.code}" columnClass="col-md-12 col-lg-6" required="true"/>
+            <t:inputEnum itemLabel="gender." hasNullValue="false"  value="#{applicantHome.entity.gender}" label="contact.label.Gender" columnClass="col-md-12 col-lg-6" />
         </div>
         <div class="row">
-            <t:inputText label="#{messages['general.label.FirstName']}" value="#{applicantHome.entity.firstName}" columnClass="col-xs-12 col-md-6" required="true"/>
-            <t:inputText label="#{messages['general.label.LastName']}" value="#{applicantHome.entity.lastName}" columnClass="col-xs-12 col-md-6" required="true"/>
+            <t:inputText label="#{messages['general.label.FirstName']}" value="#{applicantHome.entity.firstName}" columnClass="col-md-12 col-lg-6" required="true"/>
+            <t:inputText label="#{messages['general.label.LastName']}" value="#{applicantHome.entity.lastName}" columnClass="col-md-12 col-lg-6" required="true"/>
 
         </div>
         <div class="row">
@@ -24,12 +24,12 @@
             <t:inputDialog label="contact.label.PrimaryPhone" value="#{applicantHome.entity.primaryPhone.caption}" action="#{phoneEditor.editPrimaryPhone(applicantHome.entity, applicantHome.entity.primaryPhone)}" icon="fa fa-phone"/>
         </div>
         <div class="row">
-            <t:inputDate label="#{messages['general.label.BirthDate']}" value="#{applicantHome.entity.birthDate}"  columnClass="col-xs-12 col-md-6" />
-            <t:inputCheckbox label="#{messages['Applicant.label.militaryDuty']}" itemLabel="#{messages['Applicant.militaryDuty.True']}" value="#{applicantHome.entity.militaryDuty}" columnClass="col-xs-6 col-md-3" />
-            <t:inputCheckbox label="#{messages['Applicant.label.Married']}" itemLabel="#{messages['Applicant.Married.True']}" value="#{applicantHome.entity.married}" columnClass="col-xs-6 col-md-3" />
+            <t:inputDate label="#{messages['general.label.BirthDate']}" value="#{applicantHome.entity.birthDate}"  columnClass="col-md-12 col-lg-6" />
+            <t:inputCheckbox label="#{messages['Applicant.label.militaryDuty']}" itemLabel="#{messages['Applicant.militaryDuty.True']}" value="#{applicantHome.entity.militaryDuty}" columnClass="col-md-6 col-lg-3" />
+            <t:inputCheckbox label="#{messages['Applicant.label.Married']}" itemLabel="#{messages['Applicant.Married.True']}" value="#{applicantHome.entity.married}" columnClass="col-md-6 col-lg-3" />
         </div>
     </div>
-    <div class="col-xs-12 col-md-6">
+    <div class="col-lg-6 col-md-12">
         <div class="row">
             <t:inputText label="#{messages['contact.label.JobTitle']}" value="#{applicantHome.entity.jobTitle}" columnClass="col-md-12" required="true"/>
         </div>
@@ -39,6 +39,14 @@
         <div class="row">
             <t:inputTextarea label="#{messages['Applicant.label.Info']}" value="#{applicantHome.entity.info}" columnClass="col-md-12" /> 
         </div>
+    </div>
+    
+    <div class="col-md-12 row">
+        <ui:include src="/recruit/applicant/applicantEducationWidget.xhtml">
+            <ui:param name="columnClass" value="col-lg-4 col-md-12" />
+            <ui:param name="applicant" value="#{applicantHome.entity}" />
+            <ui:param name="pageType" value="EDIT" />
+        </ui:include>
     </div>
 
 </ui:composition>
