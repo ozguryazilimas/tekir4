@@ -1,0 +1,66 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui">
+
+    #{applicantEducationEditor.init(applicant,pageType)}
+
+    <t:accordion id="applicantEducations" icon="fa fa-university" label="Applicant.label.applicantEducations" columnClass="#{columnClass}">
+
+        <f:facet name="toolbar">
+            <div class="dropdown">
+                <p:commandLink class="btn btn-box-tool" process="@this" action="#{applicantEducationEditor.create()}">
+                    <i class="fa fa-plus"/>
+                    <p:ajax event="dialogReturn" update="#{pageType eq 'EDIT' ? ':form:applicantEducations' : ':applicantEducations'}" partialSubmit="true" process="@this" />   
+                </p:commandLink>
+            </div>
+        </f:facet>
+
+        <p:outputPanel layout="block" class="box-body">
+            <ul class="products-list product-list-in-box">
+                <ui:repeat value="#{applicantEducationEditor.entityList}" var="ae" >
+                    <li class="item">
+                        <div class="product-img">
+                            <span class="fa-stack" style="color: #999;">
+                                <i class="fa fa-graduation-cap fa-border fa-2x" style="width: 45px;"/>
+                                <i class="fa #{applicantEducationEditor.getIcon(ae)} overlay-icon2"/>
+                            </span>
+                        </div>
+                        <div class="product-info">
+                            <div class="box-tools pull-right">
+                                <p:commandLink action="#{applicantEducationEditor.edit(ae)}" process="@this" styleClass="btn btn-box-tool">
+                                    <i class="fa fa-pencil" />
+                                    <p:ajax event="dialogReturn" update="#{pageType eq 'EDIT' ? ':form:applicantEducations' : ':applicantEducations'}" partialSubmit="true" process="@this" />   
+                                </p:commandLink>
+                                <p:commandLink action="#{applicantEducationEditor.delete(ae)}" process="@this" styleClass="btn btn-box-tool" update="#{pageType eq 'EDIT' ? ':form:applicantEducations' : ':applicantEducations'}">
+                                    <i class="fa fa-trash" />
+                                    <p:confirm header="#{messages['general.caption.Confirm']}" message="#{messages['general.message.confirm.Delete']}" icon="fa fa-2x fa-exclamation-triangle btn-delete" />
+                                </p:commandLink>
+                            </div>
+                            <span class="product-title">#{ae.name}</span>
+                            <ui:fragment rendered="#{ae.info ne ''}" >
+                                <span class="product-description"><i class="fa fa-info fa-fw" />#{ae.info}</span>
+                            </ui:fragment>
+                            <span class="product-description text-sm">
+                                <i class="fa fa-tag fa-fw" /> #{ae.type}
+                                <ui:fragment rendered="#{ae.startDate ne null}">
+                                    <i class="fa fa-calendar fa-fw" /><t:cellOutputDate value="#{ae.startDate}"/>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{ae.startDate ne null and ae.endDate ne null}">
+                                    <i class="fa fa-long-arrow-right fa-fw" /> 
+                                </ui:fragment>
+                                <ui:fragment rendered="#{ae.endDate ne null}">
+                                    <i class="fa fa-calendar-check-o fa-fw" /><t:cellOutputDate value="#{ae.endDate}"/>
+                                </ui:fragment>
+                            </span>  
+                        </div>
+                    </li>
+                </ui:repeat>
+            </ul>
+        </p:outputPanel>
+        
+    </t:accordion>
+
+</ui:composition>

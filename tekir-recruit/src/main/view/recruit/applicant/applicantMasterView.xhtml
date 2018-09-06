@@ -57,28 +57,40 @@
 
             <div class="col-lg-4 col-md-12">
                 <div class="row">
-                    <ui:include src="/notes/noteWidget.xhtml">
+                    <ui:include src="/recruit/applicant/applicantEducationWidget.xhtml">
                         <ui:param name="columnClass" value="col-xs-12" />
-                        <ui:param name="featurePointer" value="#{applicantHome.featurePointer}" />
-                    </ui:include>
-
-                    <ui:include src="/activities/activityWidget.xhtml">
-                        <ui:param name="columnClass" value="col-xs-12" />
-                        <ui:param name="person" value="#{applicantHome.entity}" />
-                        <ui:param name="corporation" value="#{applicantHome.entity.corporation}" />
-                        <ui:param name="feature" value="#{null}" />
-                        <ui:param name="attached" value="Person" />
-                    </ui:include>
-
-                    <ui:include src="/contact/contactInfosFragment.xhtml">
-                        <ui:param name="columnClass" value="col-xs-12" />
-                        <ui:param name="contact" value="#{applicantHome.entity}" />
-                        <ui:param name="contactInformations" value="#{applicantHome.contactInformations}" />
+                        <ui:param name="applicant" value="#{applicantHome.entity}" />
+                        <ui:param name="pageType" value="MASTER_VIEW" />
                     </ui:include>
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-12">     
+            <div class="col-lg-4 col-md-12"> 
+                <ui:include src="/attachment/simpleAttachmentWidget.xhtml">
+                    <ui:param name="columnClass" value="col-xs-12" />
+                    <ui:param name="featurePointer" value="#{applicantHome.featurePointer}" />
+                    <ui:param name="payload" value="#{applicantHome.entity}" />
+                </ui:include>
+
+                <ui:include src="/notes/noteWidget.xhtml">
+                    <ui:param name="columnClass" value="col-xs-12" />
+                    <ui:param name="featurePointer" value="#{applicantHome.featurePointer}" />
+                </ui:include>
+
+                <ui:include src="/contact/contactInfosFragment.xhtml">
+                    <ui:param name="columnClass" value="col-xs-12" />
+                    <ui:param name="contact" value="#{applicantHome.entity}" />
+                    <ui:param name="contactInformations" value="#{applicantHome.contactInformations}" />
+                </ui:include>
+
+                <ui:include src="/activities/activityWidget.xhtml">
+                    <ui:param name="columnClass" value="col-xs-12" />
+                    <ui:param name="person" value="#{applicantHome.entity}" />
+                    <ui:param name="corporation" value="#{applicantHome.entity.corporation}" />
+                    <ui:param name="feature" value="#{null}" />
+                    <ui:param name="attached" value="Person" />
+                </ui:include>
+
                 <t:accordion icon="fa fa-file" label="Applicant.label.JobApplications" columnClass="col-xs-12">
                     <div class="table-responsive no-padding">
                         <p:dataTable var="ja" value="#{applicantHome.jobApplications}" tableStyleClass="table table-condensed table-hover"
@@ -98,12 +110,6 @@
                         </p:dataTable>
                     </div>
                 </t:accordion>
-
-                <ui:include src="/attachment/simpleAttachmentWidget.xhtml">
-                    <ui:param name="columnClass" value="col-xs-12" />
-                    <ui:param name="featurePointer" value="#{applicantHome.featurePointer}" />
-                    <ui:param name="payload" value="#{applicantHome.entity}" />
-                </ui:include>
             </div>
         </div>
 

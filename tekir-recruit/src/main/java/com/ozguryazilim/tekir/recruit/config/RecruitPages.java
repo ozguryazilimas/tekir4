@@ -95,6 +95,12 @@ public interface RecruitPages extends Pages {
         @SecuredPage
         class ApplicantLookup implements ApplicantPages {
         }
+        
+        @View
+        @SecuredPage
+        class ApplicantEducationEditor implements ApplicantPages {
+        }
+        
     }
     
     @Folder(name = "./jobApplication")
