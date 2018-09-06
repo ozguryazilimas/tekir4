@@ -7,6 +7,7 @@ import com.ozguryazilim.tekir.recruit.applicant.information.ApplicantInformation
 import com.ozguryazilim.tekir.recruit.applicant.information.ApplicantInformationRepositoryBase;
 import com.ozguryazilim.tekir.recruit.config.RecruitPages;
 import javax.inject.Inject;
+import org.joda.time.LocalDate;
 
 /**
  *
@@ -25,7 +26,16 @@ public class ApplicantEducationEditor extends AbstractApplicantInformationEditor
 
     @Override
     public String getIcon(ApplicantEducation entity) {
-        return "fa fa-graduation-cap";
+        if(entity.getEndDate() == null)
+            if(entity.getStartDate() == null)
+                return "fa-calendar-o text-yellow";
+            else
+                return "fa-calendar";
+        
+        if(entity.getEndDate().before(LocalDate.now().toDate()))
+            return "fa-calendar-check-o text-green";
+        else
+            return "fa-calendar";
     }
 
     @Override
