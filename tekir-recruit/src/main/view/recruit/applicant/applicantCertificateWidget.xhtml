@@ -13,7 +13,7 @@
             <div class="dropdown">
                 <p:commandLink class="btn btn-box-tool" process="@this" action="#{applicantCertificateEditor.create()}">
                     <i class="fa fa-plus"/>
-                    <p:ajax event="dialogReturn" update="#{pageType eq 'EDIT' ? ':form:applicantCertificates' : ':applicantCertificates'}" partialSubmit="true" process="@this" />   
+                    <p:ajax event="dialogReturn" update="#{pageType eq 'EDIT' ? '@form:applicantCertificates' : ':applicantCertificates'}" partialSubmit="true" process="@this" />   
                 </p:commandLink>
             </div>
         </f:facet>
@@ -31,16 +31,16 @@
                             <div class="box-tools pull-right">
                                 <p:commandLink action="#{applicantCertificateEditor.edit(ac)}" process="@this" styleClass="btn btn-box-tool">
                                     <i class="fa fa-pencil" />
-                                    <p:ajax event="dialogReturn" update="#{pageType eq 'EDIT' ? ':form:applicantCertificates' : ':applicantCertificates'}" partialSubmit="true" process="@this" />   
+                                    <p:ajax event="dialogReturn" update="#{pageType eq 'EDIT' ? '@form:applicantCertificates' : ':applicantCertificates'}" partialSubmit="true" process="@this" />   
                                 </p:commandLink>
-                                <p:commandLink action="#{applicantCertificateEditor.delete(ac)}" process="@this" styleClass="btn btn-box-tool" update="#{pageType eq 'EDIT' ? ':form:applicantCertificates' : ':applicantCertificates'}">
+                                <p:commandLink action="#{applicantCertificateEditor.delete(ac)}" process="@this" styleClass="btn btn-box-tool" update="#{pageType eq 'EDIT' ? '@form:applicantCertificates' : ':applicantCertificates'}">
                                     <i class="fa fa-trash" />
                                     <p:confirm header="#{messages['general.caption.Confirm']}" message="#{messages['general.message.confirm.Delete']}" icon="fa fa-2x fa-exclamation-triangle btn-delete" />
                                 </p:commandLink>
                             </div>
                             <span class="product-title">#{ac.name}</span>
                             <ui:fragment rendered="#{ac.info ne ''}" >
-                                <span class="product-description"><i class="fa fa-info fa-fw" />#{ac.info}</span>
+                                <span class="product-description"><i class="fa fa-info-circle fa-fw" />#{ac.info}</span>
                             </ui:fragment>
                             <span class="product-description text-sm">
                                 <i class="fa fa-tag fa-fw" /> #{ac.type}
