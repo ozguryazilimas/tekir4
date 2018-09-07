@@ -48,11 +48,17 @@
             <ui:param name="pageType" value="EDIT" />
         </ui:include>
 
-        <ui:include src="/recruit/applicant/applicantCertificateWidget.xhtml">
+        <ui:include src="/recruit/applicant/applicantWorkHistoryWidget.xhtml">
             <ui:param name="columnClass" value="col-lg-4 col-md-12" />
             <ui:param name="applicant" value="#{applicantHome.entity}" />
             <ui:param name="pageType" value="EDIT" />
         </ui:include>
+        
+        <ui:include src="/recruit/applicant/applicantCertificateWidget.xhtml">
+            <ui:param name="columnClass" value="col-lg-4 col-md-12" />
+            <ui:param name="applicant" value="#{applicantHome.entity}" />
+            <ui:param name="pageType" value="EDIT" />
+        </ui:include>   
     </div>
 
 </ui:composition>

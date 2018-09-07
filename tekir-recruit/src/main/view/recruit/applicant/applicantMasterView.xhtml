@@ -63,11 +63,17 @@
                         <ui:param name="pageType" value="MASTER_VIEW" />
                     </ui:include>
                     
-                    <ui:include src="/recruit/applicant/applicantCertificateWidget.xhtml">
+                    <ui:include src="/recruit/applicant/applicantWorkHistoryWidget.xhtml">
                         <ui:param name="columnClass" value="col-xs-12" />
                         <ui:param name="applicant" value="#{applicantHome.entity}" />
                         <ui:param name="pageType" value="MASTER_VIEW" />
                     </ui:include>
+                    
+                    <ui:include src="/recruit/applicant/applicantCertificateWidget.xhtml">
+                        <ui:param name="columnClass" value="col-xs-12" />
+                        <ui:param name="applicant" value="#{applicantHome.entity}" />
+                        <ui:param name="pageType" value="MASTER_VIEW" />
+                    </ui:include>    
                 </div>
             </div>
 
