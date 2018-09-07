@@ -25,7 +25,7 @@ public class ApplicantWorkHistoryEditor extends AbstractApplicantInformationEdit
 
     @Override
     public String getIcon(ApplicantWorkHistory entity) {
-        return "fa-certificate";
+        return "fa-briefcase";
     }
 
     @Override

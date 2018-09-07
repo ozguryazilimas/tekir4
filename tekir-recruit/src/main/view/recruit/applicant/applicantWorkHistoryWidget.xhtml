@@ -1,0 +1,71 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui">
+
+    #{applicantWorkHistoryEditor.init(applicant,pageType)}
+
+    <t:accordion id="applicantWorkHistories" icon="fa fa-building" label="Applicant.label.applicantWorkHistories" columnClass="#{columnClass}">
+
+        <f:facet name="toolbar">
+            <div class="dropdown">
+                <p:commandLink class="btn btn-box-tool" process="@this" action="#{applicantWorkHistoryEditor.create()}">
+                    <i class="fa fa-plus"/>
+                    <p:ajax event="dialogReturn" update="#{pageType eq 'EDIT' ? '@form:applicantWorkHistories' : ':applicantWorkHistories'}" partialSubmit="true" process="@this" />   
+                </p:commandLink>
+            </div>
+        </f:facet>
+
+        <p:outputPanel layout="block" class="box-body">
+            <ul class="products-list product-list-in-box">
+                <ui:repeat value="#{applicantWorkHistoryEditor.entityList}" var="awh" >
+                    <li class="item">
+                        <div class="product-img">
+                            <span class="fa-stack" style="color: #999;">
+                                <i class="fa #{applicantWorkHistoryEditor.getIcon(awh)} fa-border fa-2x" style="width: 45px;"/>
+                            </span>
+                        </div>
+                        <div class="product-info">
+                            <div class="box-tools pull-right">
+                                <p:commandLink action="#{applicantWorkHistoryEditor.edit(awh)}" process="@this" styleClass="btn btn-box-tool">
+                                    <i class="fa fa-pencil" />
+                                    <p:ajax event="dialogReturn" update="#{pageType eq 'EDIT' ? '@form:applicantWorkHistories' : ':applicantWorkHistories'}" partialSubmit="true" process="@this" />   
+                                </p:commandLink>
+                                <p:commandLink action="#{applicantWorkHistoryEditor.delete(awh)}" process="@this" styleClass="btn btn-box-tool" update="#{pageType eq 'EDIT' ? '@form:applicantWorkHistories' : ':applicantWorkHistories'}">
+                                    <i class="fa fa-trash" />
+                                    <p:confirm header="#{messages['general.caption.Confirm']}" message="#{messages['general.message.confirm.Delete']}" icon="fa fa-2x fa-exclamation-triangle btn-delete" />
+                                </p:commandLink>
+                            </div>
+                            <span class="product-title">#{awh.name}</span>
+                            <span class="product-description">
+                                <i class="fa fa-id-badge fa-fw" />#{awh.title}
+                                <ui:fragment rendered="#{awh.job ne null}">
+                                    <i class="fa fa-building-o fa-fw" />#{awh.job}
+                                </ui:fragment>
+                            </span>
+                            <ui:fragment rendered="#{awh.info ne ''}" >
+                                <span class="product-description text-sm"><i class="fa fa-info-circle fa-fw" />#{awh.info}</span>
+                            </ui:fragment>
+                            <span class="product-description text-sm">
+                                <i class="fa fa-tag fa-fw" /> #{awh.type}
+                                <ui:fragment rendered="#{awh.startDate ne null}">
+                                    <i class="fa fa-calendar fa-fw" /><t:cellOutputDate value="#{awh.startDate}"/>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{awh.startDate ne null and awh.endDate ne null}">
+                                    <i class="fa fa-long-arrow-right fa-fw" /> 
+                                </ui:fragment>
+                                <ui:fragment rendered="#{awh.endDate ne null}">
+                                    <i class="fa fa-calendar-check-o fa-fw" /><t:cellOutputDate value="#{awh.endDate}"/>
+                                </ui:fragment>
+                            </span>
+                        </div>
+                    </li>
+                </ui:repeat>
+            </ul>
+        </p:outputPanel>
+
+    </t:accordion>
+
+</ui:composition>
