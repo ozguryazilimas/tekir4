@@ -25,7 +25,7 @@ public class ApplicantCertificateEditor extends AbstractApplicantInformationEdit
 
     @Override
     public String getIcon(ApplicantCertificate entity) {
-        return "";
+        return "fa-certificate";
     }
 
     @Override
