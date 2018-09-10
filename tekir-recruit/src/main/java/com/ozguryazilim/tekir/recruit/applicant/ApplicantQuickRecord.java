@@ -3,6 +3,7 @@ package com.ozguryazilim.tekir.recruit.applicant;
 import com.ozguryazilim.tekir.recruit.config.RecruitPages;
 import com.ozguryazilim.telve.quick.QuickRecord;
 import com.ozguryazilim.telve.quick.QuickRecordBase;
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 /**
@@ -14,6 +15,11 @@ public class ApplicantQuickRecord extends QuickRecordBase {
 
     @Inject
     private ApplicantHome applicantHome;
+    
+    @PostConstruct
+    public void init() {
+        applicantHome.createNew();
+    }
     
     @Override
     public void save() {
