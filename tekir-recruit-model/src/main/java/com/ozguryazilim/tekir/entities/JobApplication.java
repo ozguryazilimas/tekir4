@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.tekir.entities;
 
+import com.ozguryazilim.telve.annotations.BizKey;
 import com.ozguryazilim.telve.entities.AuditBase;
 import java.util.Date;
 import javax.persistence.Column;
@@ -18,6 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -32,6 +34,9 @@ public class JobApplication extends AuditBase{
     @Column(name = "ID")
     private Long id;
 
+    @Column(name = "SERIAL")
+    @BizKey @NotNull
+    private String serial;
     
     /**
      * Bu baş vurunun kime ait olduğu
@@ -129,6 +134,14 @@ public class JobApplication extends AuditBase{
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public String getSerial() {
+        return serial;
+    }
+
+    public void setSerial(String serial) {
+        this.serial = serial;
     }
 
     
