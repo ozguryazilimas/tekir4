@@ -162,4 +162,9 @@
             <column name="REQUIREMENT" type="clob"/>
         </addColumn>
     </changeSet>
+    <changeSet author="erdem.uslu (generated)" id="1536925140427-1">
+        <addColumn tableName="TRC_APPLICATION">
+            <column name="SERIAL" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
