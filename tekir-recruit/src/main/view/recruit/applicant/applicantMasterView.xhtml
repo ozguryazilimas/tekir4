@@ -110,14 +110,11 @@
                                      paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                      paginatorPosition="bottom" 
                                      paginatorAlwaysVisible="false" >
-                            <p:column headerText="#{messages['contact.class.JobAdvert']}">
-                                <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(applicantHome.getAllFeaturePointer(ja.advert))}" columnClass="col-xs-12"/>
+                            <p:column headerText="#{messages['contact.class.JobApplication']}">
+                                <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(applicantHome.getAllFeaturePointer(ja))}" columnClass="col-xs-12"/>
                             </p:column>
-                            <p:column headerText="#{messages['JobAdvert.label.Topic']}">
-                                <h:outputText value="#{ja.advert.topic}"/>
-                            </p:column>
-                            <p:column headerText="#{messages['JobAdvert.label.Status']}">
-                                <h:outputText value="#{ja.advert.status}" styleClass="label label-primary"/>
+                            <p:column headerText="#{messages['JobApplication.label.State']}">
+                                <h:outputText value="#{ja.state}" styleClass="label label-primary"/>
                             </p:column>
                         </p:dataTable>
                     </div>

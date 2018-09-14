@@ -1,5 +1,7 @@
 package com.ozguryazilim.tekir.recruit.jobapplication;
 
+import com.ozguryazilim.tekir.core.code.AutoCode;
+import com.ozguryazilim.tekir.core.code.AutoCodeService;
 import com.ozguryazilim.tekir.entities.JobApplication;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
@@ -18,6 +20,7 @@ import org.slf4j.LoggerFactory;
  * @author Erdem Uslu
  */
 @FormEdit(feature = JobApplicationFeature.class)
+@AutoCode(cosumer = "JobApplication", caption = "module.caption.JobApplicaiton", serial = "JAP")
 public class JobApplicationHome extends FormBase<JobApplication, Long> {
 
     private static Logger LOG = LoggerFactory.getLogger(JobApplicationHome.class);
@@ -30,6 +33,9 @@ public class JobApplicationHome extends FormBase<JobApplication, Long> {
 
     @Inject
     private Identity identity;
+    
+    @Inject
+    private AutoCodeService codeService;
 
     @Override
     protected RepositoryBase<JobApplication, ?> getRepository() {
@@ -40,6 +46,7 @@ public class JobApplicationHome extends FormBase<JobApplication, Long> {
     public void createNew() {
         super.createNew();
         getEntity().setOwner(identity.getLoginName());
+        getEntity().setSerial(codeService.getNewSerialNumber(JobApplication.class.getSimpleName()));
     }
 
     /**
@@ -56,7 +63,7 @@ public class JobApplicationHome extends FormBase<JobApplication, Long> {
      */
     public FeaturePointer getFeaturePointer() {
         FeaturePointer result = new FeaturePointer();
-        result.setBusinessKey(getEntity().getInfo());
+        result.setBusinessKey(getEntity().getSerial());
         result.setFeature(getFeatureClass().getSimpleName());
         result.setPrimaryKey(getEntity().getId());
         return result;
