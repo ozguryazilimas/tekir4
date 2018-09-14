@@ -157,4 +157,9 @@
     <changeSet author="oyas (generated)" id="1531229985890-17">
         <addForeignKeyConstraint baseColumnNames="APPLICANT_ID" baseTableName="TRC_APPLICATION" constraintName="FK_JOBAPP_APPLICANT" deferrable="false" initiallyDeferred="false" referencedColumnNames="ID" referencedTableName="TCC_CONTACT"/>
     </changeSet>
+    <changeSet author="erdem.uslu (generated)" id="1536922522133-1">
+        <addColumn tableName="TRC_ADVERT">
+            <column name="REQUIREMENT" type="clob"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
