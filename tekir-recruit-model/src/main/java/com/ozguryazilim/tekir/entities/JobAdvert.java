@@ -17,6 +17,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -46,11 +47,17 @@ public class JobAdvert extends AuditBase{
     private String topic;
     
     /**
-     * Ek açıklama
+     * İş tanımı
      */
     @Column(name = "INFO")
     private String info;
-
+    
+    /**
+     * Gereksinimler
+     */
+    @Lob
+    @Column(name = "REQUIREMENT")
+    private String requirement;
     
     @Column( name = "START_DATE")
     @Temporal(TemporalType.DATE)
@@ -158,7 +165,13 @@ public class JobAdvert extends AuditBase{
     public void setStatus(String status) {
         this.status = status;
     }
-    
-    
+
+    public String getRequirement() {
+        return requirement;
+    }
+
+    public void setRequirement(String requirement) {
+        this.requirement = requirement;
+    }
      
 }
