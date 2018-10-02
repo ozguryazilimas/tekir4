@@ -1,0 +1,44 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                template="/layout/dialogBase.xhtml"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:param name="title" value="Değerlendirme Ekle" />
+    <ui:define name="form">
+        <h:form>
+            <h:panelGrid columns="5" cellpadding="20">
+                <h:outputText style="margin-right: 10px;" value="Değerlendirme Notu:" />
+                <p:rating value="#{evaluationNoteEditor.entity.rating}" required="true"/>
+            </h:panelGrid>
+            <div class="row">
+                <t:inputText label="Değerlendirme Sonucu" value="#{evaluationNoteEditor.entity.state}" required="true"/>
+            </div>
+            <div class="row">
+                <t:inputText label="Değerlendirme Sebebi" value="#{evaluationNoteEditor.entity.stateReason}"/>
+            </div>
+            <div class="row">
+                <t:inputTextarea label="Ek Açıklama" value="#{evaluationNoteEditor.entity.info}"/>
+            </div>
+            <h:panelGroup styleClass="row actionButtons" layout="block" style="position: fixed; bottom: 0; display: block;" >
+                <ui:insert name="actionButtons" />
+                <p:commandButton id="select" 
+                                 value="#{messages['general.button.Ok']}" 
+                                 icon="fa fa-check" 
+                                 disabled="#{facesContext.validationFailed}"
+                                 validateClient="true"
+                                 action="#{evaluationNoteEditor.closeDialog()}" 
+                                 styleClass="btn-primary" />
+                <p:commandButton id="close" 
+                                 value="#{messages['general.button.Cancel']}" 
+                                 icon="ui-icon-close" 
+                                 action="#{evaluationNoteEditor.cancelDialog()}" 
+                                 partialSubmit="true" 
+                                 process="@this"/>
+            </h:panelGroup>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

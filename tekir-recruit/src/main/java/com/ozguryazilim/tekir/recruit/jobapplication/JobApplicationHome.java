@@ -1,6 +1,7 @@
 package com.ozguryazilim.tekir.recruit.jobapplication;
 
 import com.ozguryazilim.tekir.entities.JobApplication;
+import com.ozguryazilim.tekir.recruit.jobapplication.evaluationnotes.EvaluationNoteRepository;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.EntityBase;
@@ -30,6 +31,9 @@ public class JobApplicationHome extends FormBase<JobApplication, Long> {
 
     @Inject
     private Identity identity;
+    
+    @Inject
+    private EvaluationNoteRepository evaluationNoteRepository;
 
     @Override
     protected RepositoryBase<JobApplication, ?> getRepository() {
@@ -65,6 +69,10 @@ public class JobApplicationHome extends FormBase<JobApplication, Long> {
     // FeatureLink yönlendirmesi
     public FeaturePointer getAllFeaturePointer(EntityBase entityBase) {
         return FeatureUtils.getFeaturePointer(entityBase);
+    }
+    
+        public boolean isCanEvaluate() {
+        return evaluationNoteRepository.findByApplicationAndOwner(getEntity(), identity.getLoginName());
     }
 
 }
