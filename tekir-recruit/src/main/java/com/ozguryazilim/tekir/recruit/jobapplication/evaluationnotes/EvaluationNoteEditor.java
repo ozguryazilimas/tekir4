@@ -18,40 +18,36 @@ import javax.inject.Inject;
  */
 @JobApplicationInformationEditor(page = RecruitPages.JobApplicationPages.EvaluationNotesEditor.class)
 public class EvaluationNoteEditor extends AbstractJobApplicationInformationEditor<EvaluationNote> {
-    
+
     @Inject
     private EvaluationNoteRepository evaluationNotesRepository;
-    
+
     @Inject
     private Identity identity;
-    
+
     @Override
     protected JobApplicationInformationRepositoryBase<EvaluationNote, ?> getRepository() {
         return evaluationNotesRepository;
     }
-    
+
     @Override
     public String getIcon(EvaluationNote entity) {
         return "fa-briefcase";
     }
-    
+
     @Override
     public void setJobApplicationOfEntity(JobApplication jobApplication) {
         getEntity().setOwner(identity.getLoginName());
         getEntity().setApplication(jobApplication);
     }
-    
-    
-//    public void editEvaluation(){
-//        
-//        getEntityList().forEach(en ->{
-//            if(en.getOwner().equals(identity.getLoginName())){
-//                edit(en);
-//            }
-//        });
-//    }
-    
-    public EvaluationNote getEvaluationEntity(JobApplication jobApplication) {
-       return evaluationNotesRepository.findSingleResultByApplicationAndOwner(jobApplication, identity.getLoginName());
+
+    public void editEvaluation() {
+
+        getEntityList().forEach(en -> {
+            if (en.getOwner().equals(identity.getLoginName())) {
+                edit(en);
+            }
+        });
     }
+
 }

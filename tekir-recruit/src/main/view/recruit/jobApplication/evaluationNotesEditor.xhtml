@@ -10,17 +10,17 @@
     <ui:define name="form">
         <h:form>
             <h:panelGrid columns="5" cellpadding="20">
-                <h:outputText style="margin-right: 10px;" value="Değerlendirme Notu:" />
+                <h:outputText style="margin-right: 10px;margin-bottom: 10px;font-weight: 700;" value="#{messages['EvaluationNote.label.rating']}" />
                 <p:rating value="#{evaluationNoteEditor.entity.rating}" required="true"/>
             </h:panelGrid>
             <div class="row">
-                <t:inputText label="Değerlendirme Sonucu" value="#{evaluationNoteEditor.entity.state}" required="true"/>
+                <t:inputText label="EvaluationNote.label.state" value="#{evaluationNoteEditor.entity.state}" required="true"/>
             </div>
             <div class="row">
-                <t:inputText label="Değerlendirme Sebebi" value="#{evaluationNoteEditor.entity.stateReason}"/>
+                <t:inputText label="EvaluationNote.label.stateReason" value="#{evaluationNoteEditor.entity.stateReason}"/>
             </div>
             <div class="row">
-                <t:inputTextarea label="Ek Açıklama" value="#{evaluationNoteEditor.entity.info}"/>
+                <t:inputTextarea label="EvaluationNote.label.info" value="#{evaluationNoteEditor.entity.info}"/>
             </div>
             <h:panelGroup styleClass="row actionButtons" layout="block" style="position: fixed; bottom: 0; display: block;" >
                 <ui:insert name="actionButtons" />
@@ -35,6 +35,14 @@
                                  value="#{messages['general.button.Cancel']}" 
                                  icon="ui-icon-close" 
                                  action="#{evaluationNoteEditor.cancelDialog()}" 
+                                 partialSubmit="true" 
+                                 process="@this"/>
+                <p:commandButton id="delete" 
+                                 value="#{messages['general.button.Delete']}" 
+                                 icon="ui-icon-trash"
+                                 style="color:red;"
+                                 rendered="#{!jobApplicationHome.canEvaluate}"
+                                 action="#{evaluationNoteEditor.delete(evaluationNoteEditor.entity)}" 
                                  partialSubmit="true" 
                                  process="@this"/>
             </h:panelGroup>

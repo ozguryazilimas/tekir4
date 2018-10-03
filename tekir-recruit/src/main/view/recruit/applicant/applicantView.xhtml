@@ -49,9 +49,6 @@
             <t:stateOutputEnum label="contact.label.Gender" itemLabel="gender." value="#{applicantHome.entity.gender}"/>
             <t:stateOutputDate label="general.label.BirthDate" value="#{applicantHome.entity.birthDate}"/>
             <t:stateOutputText label="contact.label.JobTitle" value="#{applicantHome.entity.jobTitle}"/>
-            <t:stateOutputAny label="Applicant.label.Rating">
-                <p:rating value="#{applicantHome.entity.rating}" stars="5" readonly="true"/> 
-            </t:stateOutputAny>
         </ul>            
         <ui:fragment rendered="#{applicantHome.entity.info ne ''}">
             <p><i class="fa fa-info"/> #{applicantHome.entity.info}</p>

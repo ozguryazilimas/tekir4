@@ -7,31 +7,28 @@
 
     #{evaluationNoteEditor.init(jobApplication,pageType)}
 
-    <t:accordion id="evaluationNotes" icon="fa fa-file" label="Değerlendirmeler" columnClass="#{columnClass}">
+    <t:accordion id="evaluationNotes" icon="fa fa-file" label="EvaluationNote.label.evaluations" columnClass="#{columnClass}">
         <div class="table-responsive no-padding">
             <p:dataTable var="ja" value="#{evaluationNoteEditor.entityList}" tableStyleClass="table table-condensed table-hover"
                          paginator="true" rows="5"
                          paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                          paginatorPosition="bottom" 
-                         paginatorAlwaysVisible="false" >
-                <p:column headerText="Değerlendiren">
+                         paginatorAlwaysVisible="false"
+                         emptyMessage="#{messages['EvaluationNote.table.emptyMessage']}">
+                <p:column headerText="#{messages['EvaluationNote.headerText.owner']}">
                     <h:outputText value="#{ja.owner}"/>
                 </p:column>
-                <p:column headerText="Değerlendirme Puanı">
+                <p:column headerText="#{messages['EvaluationNote.headerText.rating']}">
                     <h:outputText value="#{ja.rating}"/>
                 </p:column>
-                <p:column headerText="Sebep">
+                <p:column headerText="#{messages['EvaluationNote.headerText.state']}">
                     <h:outputText value="#{ja.state}" styleClass="label label-primary"/>
                 </p:column>
-                <p:column headerText="Detay">
+                <p:column headerText="#{messages['EvaluationNote.headerText.stateReason']}">
                     <h:outputText value="#{ja.stateReason}" styleClass="label label-primary"/>
                 </p:column>
-                <p:column headerText="Sil">
-                    <p:commandLink action="#{evaluationNoteEditor.deleteEvaluation()}" process="@this" styleClass="btn btn-box-tool" update="#{pageType eq 'EDIT' ? '@form:evaluationNotes' : ':evaluationNotes'}">
-                        <i class="fa fa-trash" />
-                        <h:outputText value="Sil" />
-                        <p:confirm header="#{messages['general.caption.Confirm']}" message="#{messages['general.message.confirm.Delete']}" icon="fa fa-2x fa-exclamation-triangle btn-delete" />
-                    </p:commandLink>
+                <p:column headerText="#{messages['EvaluationNote.headerText.info']}">
+                    <h:outputText value="#{ja.info}" styleClass="label label-primary"/>
                 </p:column>
             </p:dataTable>
         </div>

@@ -111,7 +111,7 @@
                                      paginatorPosition="bottom" 
                                      paginatorAlwaysVisible="false" >
                             <p:column headerText="#{messages['contact.class.JobAdvert']}">
-                                <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(applicantHome.getAllFeaturePointer(ja.advert))}" columnClass="col-xs-12"/>
+                                <t:cellOutputFeatureLink label="#{ja.advert.serial}" value="#{featureController.getFeatureLink(jobApplicationHome.getAllFeaturePointer(ja))}" columnClass="col-xs-12"/>
                             </p:column>
                             <p:column headerText="#{messages['JobAdvert.label.Topic']}">
                                 <h:outputText value="#{ja.advert.topic}"/>

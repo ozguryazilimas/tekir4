@@ -110,8 +110,12 @@ public abstract class AbstractJobApplicationInformationEditor<E extends EntityBa
 
     @Transactional
     public void delete(E entity) {
-        getRepository().remove(entity);
+        if (isJobApplicationViewPage()) {
+            getRepository().remove(entity);
+        }
+
         getEntityList().remove(entity);
+        RequestContext.getCurrentInstance().closeDialog(null);
     }
 
     @Transactional

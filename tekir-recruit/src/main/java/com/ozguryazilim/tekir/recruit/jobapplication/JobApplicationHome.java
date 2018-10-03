@@ -31,7 +31,7 @@ public class JobApplicationHome extends FormBase<JobApplication, Long> {
 
     @Inject
     private Identity identity;
-    
+
     @Inject
     private EvaluationNoteRepository evaluationNoteRepository;
 
@@ -52,7 +52,7 @@ public class JobApplicationHome extends FormBase<JobApplication, Long> {
     public void createApplicantQuickPanel() {
         quickRecordController.setName("applicantQuickRecord");
     }
-    
+
     /**
      * NoteWidget için gerekli.
      *
@@ -70,8 +70,8 @@ public class JobApplicationHome extends FormBase<JobApplication, Long> {
     public FeaturePointer getAllFeaturePointer(EntityBase entityBase) {
         return FeatureUtils.getFeaturePointer(entityBase);
     }
-    
-        public boolean isCanEvaluate() {
+
+    public boolean isCanEvaluate() {
         return evaluationNoteRepository.findByApplicationAndOwner(getEntity(), identity.getLoginName());
     }
 

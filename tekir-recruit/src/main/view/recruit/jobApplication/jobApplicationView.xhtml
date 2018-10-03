@@ -65,25 +65,16 @@
         <li>
             <p:commandLink action="#{evaluationNoteEditor.create()}" styleClass="context-command" rendered="#{jobApplicationHome.canEvaluate}" ajax="true">
                 <i class="fa fa-star"></i>
-                <h:outputText value=" Değerlendirme Ekle"/>
+                <h:outputText value=" #{messages['EvaluationNote.button.add']}"/>
                 <f:ajax event="dialogReturn" render="@all" />
             </p:commandLink>
 
-            <p:commandLink action="#{evaluationNoteEditor.edit(evaluationNoteEditor.getEvaluationEntity)}" styleClass="context-command" rendered="#{!jobApplicationHome.canEvaluate}" ajax="true">
+            <p:commandLink action="#{evaluationNoteEditor.editEvaluation()}" styleClass="context-command" rendered="#{!jobApplicationHome.canEvaluate}" ajax="true">
                 <i class="fa fa-edit"></i>
-                <h:outputText value=" Değerlendirmeni Değiştir"/>
+                <h:outputText value=" #{messages['EvaluationNote.button.edit']}"/>
                 <f:ajax event="dialogReturn" render="@all" />
             </p:commandLink>
         </li>
-        <li>
-            <p:commandLink action="#{evaluationNoteEditor.delete(evaluationNoteEditor.getEvaluationEntity)}" styleClass="context-command" rendered="#{!jobApplicationHome.canEvaluate}" ajax="true">
-                <i class="fa fa-edit"></i>
-                <h:outputText value=" Değerlendirmeni Sil"/>
-                <p:confirm header="#{messages['general.caption.Confirm']}" message="#{messages['general.message.confirm.Delete']}" icon="fa fa-2x fa-exclamation-triangle btn-delete" />
-                <f:ajax event="dialogReturn" render="@all" />
-            </p:commandLink>
-        </li>
-
     </ui:define>
 
 </ui:composition>

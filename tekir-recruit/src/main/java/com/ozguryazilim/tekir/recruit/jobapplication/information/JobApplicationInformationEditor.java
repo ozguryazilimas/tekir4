@@ -21,7 +21,7 @@ import org.apache.deltaspike.core.api.config.view.ViewConfig;
 @Named
 @Documented
 public @interface JobApplicationInformationEditor {
-    
+
     Class<? extends ViewConfig> page();
-    
+
 }
