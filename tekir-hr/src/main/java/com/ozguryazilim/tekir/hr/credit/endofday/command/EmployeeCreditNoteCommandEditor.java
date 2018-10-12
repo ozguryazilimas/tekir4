@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ozguryazilim.tekir.hr.credit.endofday.command;
 
 import com.ozguryazilim.tekir.core.currency.CurrencyService;
@@ -15,7 +10,7 @@ import javax.inject.Inject;
  * Personel Alacak Fişi oluşturma için komut editörü.
  *
  * Personel Alacak Fişi komutunun oluşturulduğu ve düzenlendiği sınıf.
- * 
+ *
  * @author Erdem Uslu
  * @version 4.0.0
  * @since 2017-07-10
@@ -29,14 +24,14 @@ public class EmployeeCreditNoteCommandEditor extends CommandEditorBase<EmployeeC
 
     @Inject
     private CurrencyService currencyService;
-    
+
     @Override
     public EmployeeCreditNoteCommand createNewCommand() {
         EmployeeCreditNoteCommand result = new EmployeeCreditNoteCommand();
-        
+
         result.setCurrency(currencyService.getDefaultCurrency());
-        
+
         return result;
     }
-    
+
 }
