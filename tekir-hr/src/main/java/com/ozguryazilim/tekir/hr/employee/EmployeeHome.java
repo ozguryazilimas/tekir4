@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ozguryazilim.tekir.hr.employee;
 
 import com.google.common.base.Strings;
@@ -10,6 +5,7 @@ import com.ozguryazilim.tekir.contact.relation.RelatedContactRepository;
 import com.ozguryazilim.tekir.contact.ContactRoleRegistery;
 import com.ozguryazilim.tekir.contact.information.ContactInformationRepository;
 import com.ozguryazilim.tekir.core.code.AutoCodeService;
+import com.ozguryazilim.tekir.entities.ContactAddress;
 import com.ozguryazilim.tekir.entities.ContactInformation;
 import com.ozguryazilim.tekir.entities.Employee;
 import com.ozguryazilim.tekir.entities.EmployeeLeave;
@@ -37,15 +33,15 @@ import org.primefaces.event.SelectEvent;
  *
  * @author oyas
  */
-@FormEdit( feature = EmployeeFeature.class )
+@FormEdit(feature = EmployeeFeature.class)
 public class EmployeeHome extends FormBase<Employee, Long> {
-    
+
     @Inject
     private Identity identity;
-    
+
     @Inject
     private ViewNavigationHandler viewNavigationHandler;
-    
+
     @Inject
     private NavigationParameterContext navigationParameterContext;
 
@@ -54,10 +50,10 @@ public class EmployeeHome extends FormBase<Employee, Long> {
 
     @Inject
     private EmployeeLeaveRepository employeeLeaveRepository;
-    
+
     @Inject
     private ContactInformationRepository informationRepository;
-    
+
     @Inject
     private RelatedContactRepository relatedContactRepository;
 
@@ -65,8 +61,8 @@ public class EmployeeHome extends FormBase<Employee, Long> {
     private AutoCodeService codeService;
 
     private List<String> selectedRoles = new ArrayList<>();
-    
-    private Integer usedLeaveDay=0;
+
+    private Integer usedLeaveDay = 0;
 
     public Class<? extends ViewConfig> newEmployee() {
         Employee p = new Employee();
@@ -85,52 +81,52 @@ public class EmployeeHome extends FormBase<Employee, Long> {
     public boolean onBeforeSave() {
         //Eğer person ise name alanını düzeltmek lazım
         getEntity().setName(getEntity().getFirstName() + " " + getEntity().getLastName());
-        
+
 
         //Önce kullanıcı seçimli olmayan rolleri bir toparlayalım
         List<String> ls = getEntity().getContactRoles().stream()
                 .filter(p -> !getContactRoles().contains(p))
                 .collect(Collectors.toList());
-        
+
         //Şimdi kullanıcın seçtiklerini ekleyelim
         ls.addAll(selectedRoles);
-        
+
         //Şimdi de yeni durumu yerleştirelim.
-        getEntity().getContactRoles().clear(); 
+        getEntity().getContactRoles().clear();
         getEntity().getContactRoles().addAll(ls);
-        
+
         return super.onBeforeSave(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean onAfterLoad() {
-        
-        //FIXME: Burayı generic bir hale getirmek lazım                
-        if( !identity.isPermitted("employee:select:" + getEntity().getOwner())){
+
+        //FIXME: Burayı generic bir hale getirmek lazım
+        if (!identity.isPermitted("employee:select:" + getEntity().getOwner())) {
             FacesMessages.error("facesMessages.error.NoPermission");
             createNew();
             viewNavigationHandler.navigateTo(EmployeePages.EmployeeBrowse.class);
             return false;
         }
-        
+
         selectedRoles = getEntity().getContactRoles().stream()
-                            .filter(p -> getContactRoles().contains(p))
-                            .collect(Collectors.toList());
+                .filter(p -> getContactRoles().contains(p))
+                .collect(Collectors.toList());
         calculateLeaveDay();
         return super.onAfterLoad();
     }
-    
+
 
     public void calculateLeaveDay() {
-			List<EmployeeLeave> empls =getEmployeeLeaves();
-			int temp=0;
-			for(EmployeeLeave empl : empls){
-				System.out.println("emp :"+empl.getEmployee()+" gün :"+empl.getLeaveDay());
-				temp+=empl.getLeaveDay();
-	    	}
-			setUsedLeaveDay(temp);
+        List<EmployeeLeave> empls = getEmployeeLeaves();
+        int temp=0;
+
+        for (EmployeeLeave empl : empls) {
+            temp+=empl.getLeaveDay();
+        }
+        setUsedLeaveDay(temp);
     }
-    
+
     @Override
     protected RepositoryBase<Employee, EmployeeViewModel> getRepository() {
         return repository;
@@ -145,20 +141,20 @@ public class EmployeeHome extends FormBase<Employee, Long> {
         return informationRepository.findByContact(getEntity());
     }
 
-    
+
     public List<RelatedContact> getRelatedContacts() {
-        return relatedContactRepository.findBySourceContact( getEntity());
+        return relatedContactRepository.findBySourceContact(getEntity());
     }
-    
+
     //TODO:Method ismini düzeltelim
     public List<RelatedContact> getRelatedContactsRevers() {
-        return relatedContactRepository.findByTargetContact( getEntity());
+        return relatedContactRepository.findByTargetContact(getEntity());
     }
-    
-	public List<EmployeeLeave> getEmployeeLeaves(){
-		return employeeLeaveRepository.getEmployeeLeaves( getEntity());
-	}
-    
+
+    public List<EmployeeLeave> getEmployeeLeaves() {
+        return employeeLeaveRepository.getEmployeeLeaves(getEntity());
+    }
+
     public List<String> getContactRoles() {
         return ContactRoleRegistery.getSelectableContactRoles();
     }
@@ -170,11 +166,11 @@ public class EmployeeHome extends FormBase<Employee, Long> {
     public void setSelectedRoles(List<String> selectedRoles) {
         this.selectedRoles = selectedRoles;
     }
-    
+
     public Class<? extends FeatureHandler> getFeatureClass(){
         return FeatureRegistery.getFeatureClass(getEntity().getClass());
     }
-    
+
     public FeaturePointer getFeaturePointer(){
         FeaturePointer result = new FeaturePointer();
         result.setBusinessKey(getEntity().getName());
@@ -182,33 +178,45 @@ public class EmployeeHome extends FormBase<Employee, Long> {
         result.setPrimaryKey(getEntity().getId());
         return result;
     }
-    
+
     /**
      * Belge sahipliğini değiştirme yetkisi var mı?
-     * @return 
+     * @return
      */
     public Boolean hasChangeOwnerPermission() {
         return identity.isPermitted(getPermissionDomain() + ":changeOwner:" + getEntity().getOwner());
     }
-    
+
     /**
      * Belge Sahibini değiştirir.
-     * @param event 
+     * @param event
      */
     public void onOwnerChange(SelectEvent event) {
         String userName = (String) event.getObject();
-        if( Strings.isNullOrEmpty(userName)) return;
+        if (Strings.isNullOrEmpty(userName)) return;
         getEntity().setOwner(userName);
         save();
     }
 
-	public Integer getUsedLeaveDay() {
-		return usedLeaveDay;
-	}
+    public Integer getUsedLeaveDay() {
+        return usedLeaveDay;
+    }
 
-	public void setUsedLeaveDay(Integer usedLeaveDay) {
-		this.usedLeaveDay = usedLeaveDay;
-	}
+    public void setUsedLeaveDay(Integer usedLeaveDay) {
+        this.usedLeaveDay = usedLeaveDay;
+    }
     
-    
+    //Kullanıcının PrimaryAddress girişleri üzerindeki yetkisi kontrol edilir
+    public boolean hasContactInfoPermission(ContactInformation contactInfo, String action) {
+        if (contactInfo instanceof ContactAddress) {
+            boolean valid = identity.isPermitted("employeeAddresses" + ":" + action + ":" + getEntity().getOwner());
+            //Fatura adresi olarak kullanılan adres üzerinde islem yapabilmek
+            //için fatura adresi düzenleme yetkisine sahip olunması gerekir.
+            if (contactInfo.getSubTypes().contains("INVOICE") && (action.equals("update") || action.equals("delete"))) {
+                return valid && identity.isPermitted("employeeAddresses" + ":employeeInvoiceAddress:" + getEntity().getOwner());
+            }
+            return valid;
+        }
+        return false;
+    }
 }

@@ -28,7 +28,7 @@
                             <t:outputText value="#{messages['gender.'.concat(employeeHome.entity.gender)]}" label="contact.label.Gender" columnClass="col-xs-12"/>
                             <t:outputText label="contact.label.JobTitle" value="#{employeeHome.entity.jobTitle}" columnClass="col-xs-12"/>
                             <t:outputText label="contact.label.SSN" value="#{employeeHome.entity.ssn}" columnClass="col-xs-12"/>
-                            <t:outputText label="Kullanılan İzin Günleri" value="#{employeeHome.usedLeaveDay}" columnClass="col-xs-12"/>
+                            <t:outputText label="hr.label.UsedLeaveDay" value="#{employeeHome.usedLeaveDay}" columnClass="col-xs-12"/>
                         </div>            
 
                     <div class="row">
@@ -94,7 +94,10 @@
                                 <li class="item">
                                     <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
 
-                                    <span class="text-muted pull-right"><h:outputText value="#{messages['voucherState.name.'.concat(ci.status)]}" styleClass="#{ ci.status.startsWith('OPEN', 0) ? 'label label-primary' : 'label label-warning' }" /> </span>
+                                    <span class="text-muted pull-right">
+                                        <h:outputText value="#{messages['voucherState.name.'.concat(ci.status)]}"
+                                                      styleClass="#{ ci.status.startsWith('OPEN', 0) ? 'label label-primary' : 'label label-warning' }" />
+                                    </span>
 
                                     <div class="text-sm">
                                         #{ci.info}

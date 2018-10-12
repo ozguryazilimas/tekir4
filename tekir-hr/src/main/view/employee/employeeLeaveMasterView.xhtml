@@ -1,10 +1,10 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
-	template="/layout/voucherMasterViewBase.xhtml">
+				xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:p="http://primefaces.org/ui"
+				xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+				template="/layout/voucherMasterViewBase.xhtml">
 
 
 	<ui:define name="content">
@@ -12,60 +12,60 @@
 		<div class="row">
 			<div class="col-md-4 col-xs-12">
 				<t:accordion icon="fa fa-stack-exchange" label="general.label.Summary" columnClass="col-xs-12">
-			          	<t:outputFeatureLink label="general.label.Name" 
-                      		value="#{featureController.getFeatureLink(employeeLeaveHome.getAllFeaturePointer(employeeLeaveHome.entity.employee))}" columnClass="col-xs-12"/>      
-		        		<t:outputDate label="hr.label.StartDate" value="#{employeeLeaveHome.entity.startDate}" columnClass="col-xs-12"/>
-			         	<t:outputDate label="hr.label.EndDate" value="#{employeeLeaveHome.entity.endDate}" columnClass="col-xs-12"/>
-			            <t:outputBoolean label="hr.label.Paid" itemLabel="general.boolean.yesno."  value="#{employeeLeaveHome.entity.paid}" columnClass="col-xs-12"/>
-			            <t:outputBoolean label="hr.label.Annual" itemLabel="general.boolean.yesno."  value="#{employeeLeaveHome.entity.annual}" columnClass="col-xs-12"/>	
-	      				<t:outputText label="hr.label.LeaveDay" value="#{employeeLeaveHome.entity.leaveDay}" columnClass="col-xs-12"/>
-		       
-		        </t:accordion>   
-		        
-		     	<t:accordion icon="fa fa-file-text" label="general.label.Voucher" columnClass="col-xs-12">	
-		     	    <t:outputText label="voucher.label.VoucherNo" value="#{employeeLeaveHome.entity.voucherNo}" columnClass="col-xs-12" />
-                	<t:outputText label="voucher.label.ReferenceNo" value="#{employeeLeaveHome.entity.referenceNo}" columnClass="col-xs-12"/>
-                	<t:outputText label="voucher.label.Owner" value="#{employeeLeaveHome.entity.owner}"  columnClass="col-xs-12"/>
+					<t:outputFeatureLink label="general.label.Name"
+										 value="#{featureController.getFeatureLink(employeeLeaveHome.getAllFeaturePointer(employeeLeaveHome.entity.employee))}" columnClass="col-xs-12"/>
+					<t:outputDate label="hr.label.StartDate" value="#{employeeLeaveHome.entity.startDate}" columnClass="col-xs-12"/>
+					<t:outputDate label="hr.label.EndDate" value="#{employeeLeaveHome.entity.endDate}" columnClass="col-xs-12"/>
+					<t:outputBoolean label="hr.label.Paid" itemLabel="general.boolean.yesno."  value="#{employeeLeaveHome.entity.paid}" columnClass="col-xs-12"/>
+					<t:outputBoolean label="hr.label.Annual" itemLabel="general.boolean.yesno."  value="#{employeeLeaveHome.entity.annual}" columnClass="col-xs-12"/>
+					<t:outputText label="hr.label.LeaveDay" value="#{employeeLeaveHome.entity.leaveDay}" columnClass="col-xs-12"/>
+
+				</t:accordion>
+
+				<t:accordion icon="fa fa-file-text" label="general.label.Voucher" columnClass="col-xs-12">
+					<t:outputText label="voucher.label.VoucherNo" value="#{employeeLeaveHome.entity.voucherNo}" columnClass="col-xs-12" />
+					<t:outputText label="voucher.label.ReferenceNo" value="#{employeeLeaveHome.entity.referenceNo}" columnClass="col-xs-12"/>
+					<t:outputText label="voucher.label.Owner" value="#{employeeLeaveHome.entity.owner}"  columnClass="col-xs-12"/>
 					<t:outputTag label="general.label.Tag" value="#{employeeLeaveHome.entity.tags}"/>
-		     		<t:outputText label="general.label.Info" value="#{employeeLeaveHome.entity.info}" columnClass="col-xs-12"/> 
-		     		<t:outputDate label="general.label.Date" value="#{employeeLeaveHome.entity.date}" columnClass="col-xs-12"/> 
-				 </t:accordion>			              	
-		    </div>		      	  
-			
+					<t:outputText label="general.label.Info" value="#{employeeLeaveHome.entity.info}" columnClass="col-xs-12"/>
+					<t:outputDate label="general.label.Date" value="#{employeeLeaveHome.entity.date}" columnClass="col-xs-12"/>
+				</t:accordion>
+			</div>
+
 			<div class="col-md-4 col-xs-12">
-			 	<t:accordion label="hr.label.EmployeeInformations" columnClass="col-xs-12"> 
-			 		<t:outputText label="contact.label.SSN" value="#{employeeLeaveHome.entity.employee.ssn}" columnClass="col-xs-12" />	
-			 		<t:outputText label="contact.label.JobTitle" value="#{employeeLeaveHome.entity.employee.jobTitle}" columnClass="col-xs-12" />
-			 		<t:outputText label="general.label.Category" value="#{employeeLeaveHome.entity.employee.category.name}" columnClass="col-xs-12" />
-	            	<t:outputText label="general.label.Industry" value="#{employeeLeaveHome.entity.employee.industry.name}" columnClass="col-xs-12" />
-	            	<t:outputText label="general.label.Territory" value="#{employeeLeaveHome.entity.employee.territory.name}" columnClass="col-xs-12" />   	        
+				<t:accordion label="hr.label.EmployeeInformations" columnClass="col-xs-12">
+					<t:outputText label="contact.label.SSN" value="#{employeeLeaveHome.entity.employee.ssn}" columnClass="col-xs-12" />
+					<t:outputText label="contact.label.JobTitle" value="#{employeeLeaveHome.entity.employee.jobTitle}" columnClass="col-xs-12" />
+					<t:outputText label="general.label.Category" value="#{employeeLeaveHome.entity.employee.category.name}" columnClass="col-xs-12" />
+					<t:outputText label="general.label.Industry" value="#{employeeLeaveHome.entity.employee.industry.name}" columnClass="col-xs-12" />
+					<t:outputText label="general.label.Territory" value="#{employeeLeaveHome.entity.employee.territory.name}" columnClass="col-xs-12" />
 					<t:outputText label="contact.label.PrimaryMobile" value="#{employeeLeaveHome.entity.employee.primaryMobile.caption}" columnClass="col-xs-12" />
 					<t:outputText label="contact.label.PrimaryPhone" value="#{employeeLeaveHome.entity.employee.primaryPhone.caption}" columnClass="col-xs-12" />
 					<t:outputText label="contact.label.PrimaryEmail" value="#{employeeLeaveHome.entity.employee.primaryEmail.caption}" columnClass="col-xs-12" />
 					<t:outputText label="contact.label.PrimaryAddress" value="#{employeeLeaveHome.entity.employee.primaryAddress.caption}" columnClass="col-xs-12" />
 				</t:accordion>
-				
-			</div> 
-            <div class="col-md-4 col-xs-12">
-        
-                <ui:include src="/activities/activityWidget.xhtml">
-                    <ui:param name="person" value="#{employeeLeaveHome.entity.employee}" />    
-                    <ui:param name="corporation" value="#{employeeLeaveHome.entity.employee.corporation}" />        
-                    <ui:param name="feature" value="#{employeeLeaveHome.featurePointer}" />
-                    <ui:param name="attached" value="Feature" />
-                </ui:include>
 
-                <ui:include src="/notes/noteWidget.xhtml">
-                    <ui:param name="featurePointer" value="#{employeeLeaveHome.featurePointer}" />
-                </ui:include>
+			</div>
+			<div class="col-md-4 col-xs-12">
 
-                <ui:include src="/feeds/feedWidget.xhtml">
-                    <ui:param name="feature" value="#{employeeLeaveHome.featureClass.simpleName}" />
-                    <ui:param name="pk" value="#{employeeLeaveHome.entity.id}" />
-                </ui:include>
-				
-            </div>
+				<ui:include src="/activities/activityWidget.xhtml">
+					<ui:param name="person" value="#{employeeLeaveHome.entity.employee}" />
+					<ui:param name="corporation" value="#{employeeLeaveHome.entity.employee.corporation}" />
+					<ui:param name="feature" value="#{employeeLeaveHome.featurePointer}" />
+					<ui:param name="attached" value="Feature" />
+				</ui:include>
+
+				<ui:include src="/notes/noteWidget.xhtml">
+					<ui:param name="featurePointer" value="#{employeeLeaveHome.featurePointer}" />
+				</ui:include>
+
+				<ui:include src="/feeds/feedWidget.xhtml">
+					<ui:param name="feature" value="#{employeeLeaveHome.featureClass.simpleName}" />
+					<ui:param name="pk" value="#{employeeLeaveHome.entity.id}" />
+				</ui:include>
+
+			</div>
 		</div>
-				 
+
 	</ui:define>
 </ui:composition>

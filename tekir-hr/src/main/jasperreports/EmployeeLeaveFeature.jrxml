@@ -29,6 +29,7 @@ where eml.ID =  $P{EID}]]>
 	<field name="TXNDATE" class="java.sql.Timestamp"/>
 	<field name="INFO" class="java.lang.String"/>
 	<field name="OWNER" class="java.lang.String"/>
+	<field name="FEATURE" class="java.lang.String"/>
 	<field name="FEATURE_BK" class="java.lang.String"/>
 	<field name="REFERENCE_NO" class="java.lang.String"/>
 	<field name="STATE" class="java.lang.String"/>
@@ -51,6 +52,10 @@ where eml.ID =  $P{EID}]]>
 	<field name="JOB_TITLE" class="java.lang.String"/>
 	<field name="SECOND_NAME" class="java.lang.String"/>
 	<field name="LAST_NAME" class="java.lang.String"/>
+	<variable name="Feature" class="java.lang.String" resetType="Column">
+		<variableExpression><![CDATA[str("feature.caption."+$F{FEATURE}.toString())]]></variableExpression>
+	</variable>
+
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -61,7 +66,7 @@ where eml.ID =  $P{EID}]]>
 				<textElement>
 					<font size="50"/>
 				</textElement>
-				<textFieldExpression><![CDATA["		İzin Belgesi"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{Feature}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ozguryazilim.tekir.hr.employee.leave;
 
 import com.ozguryazilim.tekir.entities.EmployeeLeave;
@@ -30,38 +25,38 @@ public class EmployeeLeaveHandler extends AbstractFeatureSearchHandler{
 
     @Inject
     private EmployeeLeaveRepository repository;
-    
+
     @Inject
     private Identity indentity;
-    
+
     @Override
     public List<FeatureSearchResult> search(String searchText, Map<String,Object> params ) {
-        
+
         QueryDefinition<EmployeeLeave, EmployeeLeaveViewModel> query = new QueryDefinition<>();
-        
+
         query.setSearchText(searchText);
-        
-        
-        if( params.get("MINE_ONLY") != null ){
+
+
+        if (params.get("MINE_ONLY") != null) {
             Boolean b = (Boolean) params.get("MINE_ONLY");
-            if( b ){
+            if (b) {
                 StringFilter sf = new StringFilter<>(VoucherBase_.owner, "voucher.label.Owner");
                 sf.setOperand(FilterOperand.Equal);
                 sf.setValue(indentity.getLoginName());
-                query.addFilter( sf );
+                query.addFilter(sf);
             }
         }
-        
-        if( params.get("ACTIVES") != null ){
+
+        if (params.get("ACTIVES") != null) {
             Boolean b = (Boolean) params.get("ACTIVES");
-            if( b ){
+            if (b) {
                 VoucherStateTypeFilter filter = new VoucherStateTypeFilter<>(VoucherBase_.state, "general.label.state");
                 filter.setOperand(FilterOperand.NotEqual);
                 filter.setValue(VoucherStateType.CLOSE);
-                query.addFilter( filter );
+                query.addFilter(filter);
             }
         }
-        
+
         List<FeatureSearchResult> result = new ArrayList<>();
         for( EmployeeLeaveViewModel eml : repository.browseQuery(query) ){
             FeatureSearchResult sr = new FeatureSearchResult(
@@ -71,11 +66,11 @@ public class EmployeeLeaveHandler extends AbstractFeatureSearchHandler{
                     eml.getTopic(),
                     eml.getInfo()
             );
-            
+
             result.add(sr);
         }
-        
+
         return result;
     }
-    
+
 }

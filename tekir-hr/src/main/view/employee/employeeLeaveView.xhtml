@@ -1,117 +1,137 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
-                xmlns:p="http://primefaces.org/ui"                
-                template="/layout/voucherViewBase.xhtml">
+				xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+				xmlns:p="http://primefaces.org/ui"
+				template="/layout/voucherViewBase.xhtml">
 
-    <ui:param name="bean" value="#{employeeLeaveHome}" />
-    <ui:param name="entityName" value="employeeLeave" />
-    <ui:param name="viewIdentifier" value="#{employeeLeaveHome.entity.voucherNo}" />
-    <ui:param name="viewState" value="#{employeeLeaveHome.entity.state.name} #{employeeLeaveHome.entity.stateReason}" />
-    <ui:param name="showCaption" value="true"/>
-    <ui:param name="dontShowContentHeader" value="false" />
+	<ui:param name="bean" value="#{employeeLeaveHome}" />
+	<ui:param name="entityName" value="employeeLeave" />
+	<ui:param name="viewIdentifier" value="#{employeeLeaveHome.entity.voucherNo}" />
+	<ui:param name="viewState" value="#{employeeLeaveHome.entity.state.name} #{employeeLeaveHome.entity.stateReason}" />
+	<ui:param name="showCaption" value="true"/>
+	<ui:param name="dontShowContentHeader" value="false" />
 
-    <ui:define name="metadata">
-        <f:metadata>
-            <f:viewParam name="eid" value="#{employeeLeaveHome.id}" />
-        </f:metadata>
-    </ui:define>
-    
-   	<ui:define name="caption">
-        <div class="row">
-        	<div class="col-md-6 col-xs-12">
-	           	<t:outputFeatureLink label="general.label.Name" 
-	            		value="#{featureController.getFeatureLink(employeeLeaveHome.getAllFeaturePointer(employeeLeaveHome.entity.employee))}" />      
-	           	<t:outputText label="hr.label.LeaveDay" value="#{employeeLeaveHome.entity.leaveDay}" />
-	           	<t:outputDate label="hr.label.StartDate" value="#{employeeLeaveHome.entity.startDate}" />
-			   	<t:outputDate label="hr.label.EndDate" value="#{employeeLeaveHome.entity.endDate}" />   
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="eid" value="#{employeeLeaveHome.id}" />
+		</f:metadata>
+	</ui:define>
 
-	      	</div>
-          <div class="col-md-6 col-xs-12">
-                <t:outputText label="voucher.label.VoucherNo" value="#{employeeLeaveHome.entity.voucherNo}"  />
-                <t:outputText label="voucher.label.ReferenceNo" value="#{employeeLeaveHome.entity.referenceNo}" />
-			    <t:outputTag label="general.label.Tag" value="#{employeeLeaveHome.entity.tags}"/>
-            </div>
+	<ui:define name="caption">
+		<div class="row">
+			<div class="col-md-6 col-xs-12">
+				<t:outputFeatureLink label="general.label.Name"
+									 value="#{featureController.getFeatureLink(employeeLeaveHome.getAllFeaturePointer(employeeLeaveHome.entity.employee))}" />
+				<t:outputText label="hr.label.LeaveDay" value="#{employeeLeaveHome.entity.leaveDay}" />
+				<t:outputDate label="hr.label.StartDate" value="#{employeeLeaveHome.entity.startDate}" />
+				<t:outputDate label="hr.label.EndDate" value="#{employeeLeaveHome.entity.endDate}" />
+
+			</div>
+			<div class="col-md-6 col-xs-12">
+				<t:outputText label="voucher.label.VoucherNo" value="#{employeeLeaveHome.entity.voucherNo}"  />
+				<t:outputText label="voucher.label.ReferenceNo" value="#{employeeLeaveHome.entity.referenceNo}" />
+				<t:outputTag label="general.label.Tag" value="#{employeeLeaveHome.entity.tags}"/>
+			</div>
 		</div>
-		
-	    <ui:remove>
-		    <ui:define name="context-menu">
-		        <li>
-		            <p:commandLink action="#{employeeLeaveHome.create()}" styleClass="context-command" ajax="false">
-		                <i class="fa fa-plus-circle"></i>
-		                <h:outputText value=" #{messages['general.button.Add']}" />
-		            </p:commandLink>
-		        </li>
-		        
-		        <ui:repeat value="#{employeeLeaveHome.permittedStateActions}" var="act">
-		            <li>
-		            <p:commandLink action="#{employeeLeaveHome.trigger(act)}" styleClass="context-command" ajax="false" >
-		                <i class="#{act.icon}"></i>
-		                <h:outputText value=" #{messages['general.button.'.concat( act.name )]}" />
-		            </p:commandLink>
-		        </li>
-		        </ui:repeat>
-		        
-		        <ui:remove>
-		        <li>
-		            <p:commandLink action="#{employeeLeaveHome.closeWin()}" styleClass="context-command" ajax="false" rendered="#{employeeLeaveHome.entity.status eq 'OPEN'}">
-		                <i class="fa fa-check"></i>
-		                <h:outputText value=" #{messages['general.button.CloseWin']}" />
-		            </p:commandLink>
-		        </li>
-		        <li>
-		            <p:commandLink  styleClass="context-command" rendered="#{employeeLeaveHome.entity.status eq 'OPEN'}" update="closeLoss" oncomplete="PF('closeLoss').show()" >
-		                <i class="fa fa-close"></i>
-		                <h:outputText value=" #{messages['general.button.CloseLoss']}" />
-		            </p:commandLink >
-		        </li>
-		        <li>
-		            <p:commandLink  styleClass="context-command" rendered="#{employeeLeaveHome.entity.status eq 'OPEN'}" update="closeCancel" oncomplete="PF('closeCancel').show()" >
-		                <i class="fa fa-ban"></i>
-		                <h:outputText value=" #{messages['general.button.CloseCancel']}" />
-		            </p:commandLink >
-		        </li>
-		            </ui:remove>
-		
-		    </ui:define>
-	    </ui:remove>
-	    
+
 		<ui:remove>
-		    <ui:define name="includes">
-		        
-		        <p:dialog header="#{messages['dialog.caption.Lost']}" id="closeLoss" widgetVar="closeLoss">
-		            <h:form id="lossForm" style="width: 250px;">
-		                <div class="row">
-		                    <t:inputTextarea label="general.label.Reason" value="#{employeeLeaveHome.entity.statusReason}" columnClass="col-xs-12"/>
-		                    <t:inputLookupDialog label="general.label.Competitor" value="#{employeeLeaveHome.entity.competitor}" lookupBean="#{personLookup}" lookupListener="employeeLeaveHome.entity.competitor" placeholder="#{messages['general.info.Competitor']}" columnClass="col-xs-12"/>
-		                </div>
-		
-		                <div class="row actionButtons">
-		                    <div class="col-xs-12 pull-right">
-		                        <p:commandButton id="select" value="#{messages['general.button.Ok']}" icon="fa fa-check" action="#{employeeLeaveHome.closeLoss()}" styleClass="btn-primary" oncomplete="PF('closeLoss').hide()"/>
-		                        <p:commandButton id="close" value="#{messages['general.button.Cancel']}" icon="ui-icon-close" onclick="PF('closeLoss').hide()" />
-		                    </div>
-		                </div>
-		            </h:form>
-		        </p:dialog>
-		        <p:dialog header="#{messages['dialog.caption.Cancel']}" id="closeCancel" widgetVar="closeCancel">
-		            <h:form id="cancelForm" style="width: 250px;">
-		                <div class="row">
-		                    <t:inputTextarea label="general.label.Reason" value="#{employeeLeaveHome.entity.statusReason}" columnClass="col-xs-12"/>
-		                </div>
-		
-		                <div class="row actionButtons">
-		                    <div class="col-xs-12 pull-right">
-		                        <p:commandButton id="select" value="#{messages['general.button.Ok']}" icon="fa fa-check" action="#{employeeLeaveHome.closeCancel()}" styleClass="btn-primary" oncomplete="PF('closeCancel').hide()"/>
-		                        <p:commandButton id="close" value="#{messages['general.button.Cancel']}" icon="ui-icon-close" onclick="PF('closeCancel').hide()" />
-		                    </div>
-		                </div>
-		            </h:form>
-		        </p:dialog>
-		            
-		    </ui:define>
-	    </ui:remove>    
-	</ui:define> 
+			<ui:define name="context-menu">
+				<li>
+					<p:commandLink action="#{employeeLeaveHome.create()}" styleClass="context-command" ajax="false">
+						<i class="fa fa-plus-circle"></i>
+						<h:outputText value=" #{messages['general.button.Add']}" />
+					</p:commandLink>
+				</li>
+
+				<ui:repeat value="#{employeeLeaveHome.permittedStateActions}" var="act">
+					<li>
+						<p:commandLink action="#{employeeLeaveHome.trigger(act)}" styleClass="context-command" ajax="false" >
+							<i class="#{act.icon}"></i>
+							<h:outputText value=" #{messages['general.button.'.concat( act.name )]}" />
+						</p:commandLink>
+					</li>
+				</ui:repeat>
+
+				<ui:remove>
+					<li>
+						<p:commandLink action="#{employeeLeaveHome.closeWin()}"
+									   styleClass="context-command" ajax="false"
+									   rendered="#{employeeLeaveHome.entity.status eq 'OPEN'}">
+							<i class="fa fa-check"></i>
+							<h:outputText value=" #{messages['general.button.CloseWin']}" />
+						</p:commandLink>
+					</li>
+					<li>
+						<p:commandLink  styleClass="context-command"
+										rendered="#{employeeLeaveHome.entity.status eq 'OPEN'}"
+										update="closeLoss" oncomplete="PF('closeLoss').show()" >
+							<i class="fa fa-close"></i>
+							<h:outputText value=" #{messages['general.button.CloseLoss']}" />
+						</p:commandLink >
+					</li>
+					<li>
+						<p:commandLink  styleClass="context-command"
+										rendered="#{employeeLeaveHome.entity.status eq 'OPEN'}"
+										update="closeCancel" oncomplete="PF('closeCancel').show()" >
+							<i class="fa fa-ban"></i>
+							<h:outputText value=" #{messages['general.button.CloseCancel']}" />
+						</p:commandLink >
+					</li>
+				</ui:remove>
+
+			</ui:define>
+		</ui:remove>
+
+		<ui:remove>
+			<ui:define name="includes">
+
+				<p:dialog header="#{messages['dialog.caption.Lost']}" id="closeLoss" widgetVar="closeLoss">
+					<h:form id="lossForm" style="width: 250px;">
+						<div class="row">
+							<t:inputTextarea label="general.label.Reason"
+											 value="#{employeeLeaveHome.entity.statusReason}"
+											 columnClass="col-xs-12"/>
+							<t:inputLookupDialog label="general.label.Competitor"
+												 value="#{employeeLeaveHome.entity.competitor}"
+												 lookupBean="#{personLookup}"
+												 lookupListener="employeeLeaveHome.entity.competitor"
+												 placeholder="#{messages['general.info.Competitor']}"
+												 columnClass="col-xs-12"/>
+						</div>
+
+						<div class="row actionButtons">
+							<div class="col-xs-12 pull-right">
+								<p:commandButton id="select" value="#{messages['general.button.Ok']}" icon="fa fa-check"
+												 action="#{employeeLeaveHome.closeLoss()}" styleClass="btn-primary"
+												 oncomplete="PF('closeLoss').hide()"/>
+								<p:commandButton id="close" value="#{messages['general.button.Cancel']}"
+												 icon="ui-icon-close" onclick="PF('closeLoss').hide()" />
+							</div>
+						</div>
+					</h:form>
+				</p:dialog>
+				<p:dialog header="#{messages['dialog.caption.Cancel']}" id="closeCancel" widgetVar="closeCancel">
+					<h:form id="cancelForm" style="width: 250px;">
+						<div class="row">
+							<t:inputTextarea label="general.label.Reason"
+											 value="#{employeeLeaveHome.entity.statusReason}" columnClass="col-xs-12"/>
+						</div>
+
+						<div class="row actionButtons">
+							<div class="col-xs-12 pull-right">
+								<p:commandButton id="select" value="#{messages['general.button.Ok']}"
+												 icon="fa fa-check" action="#{employeeLeaveHome.closeCancel()}"
+												 styleClass="btn-primary" oncomplete="PF('closeCancel').hide()"/>
+								<p:commandButton id="close" value="#{messages['general.button.Cancel']}"
+												 icon="ui-icon-close" onclick="PF('closeCancel').hide()" />
+							</div>
+						</div>
+					</h:form>
+				</p:dialog>
+
+			</ui:define>
+		</ui:remove>
+	</ui:define>
 </ui:composition>
