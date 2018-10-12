@@ -41,8 +41,21 @@
                     <t:inputTag label="general.label.Tag" value="#{homeBean.entity.tags}" key="EmployeeCreditNote" columnClass="col-md-4"/>
                     <t:inputText label="voucher.label.VoucherNo" value="#{homeBean.entity.voucherNo}"  required="true" readonly="true" columnClass="col-md-4"/>
                     <t:inputText label="voucher.label.ReferenceNo" value="#{homeBean.entity.referenceNo}" columnClass="col-md-4"/>
-                    <t:inputEnum label="employeeCreditNote.label.Type" value="#{homeBean.entity.type}" itemLabel="employeeCreditNote.type.label." hasNullValue="false" required="true"/>
-                    <t:inputLookupDialog label="voucher.label.Group" value="#{homeBean.entity.group}" caption="topic" lookupBean="#{voucherGroupLookup}" lookupListener="#{homeBeanName}.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" />
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xs-12">
+                <div class="row">
+                    <t:inputEnum label="employeeCreditNote.label.Type"
+                                 value="#{homeBean.entity.type}"
+                                 itemLabel="employeeCreditNote.type.label." hasNullValue="false"
+                                 required="true" columnClass="col-xs-12 col-sm-6"/>
+                    <t:inputLookupDialog label="voucher.label.Group"
+                                         value="#{homeBean.entity.group}" caption="topic"
+                                         lookupBean="#{voucherGroupLookup}"
+                                         lookupListener="#{homeBeanName}.entity.group"
+                                         placeholder="#{messages['general.info.VoucherGroup']}"
+                                         columnClass="col-xs-12 col-sm-6"/>
                     <t:inputTextarea label="general.label.Info" value="#{homeBean.entity.info}" columnClass="col-xs-12"/>
                 </div>
             </div>

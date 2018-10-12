@@ -1,18 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ozguryazilim.tekir.activity.email.imports;
 
 import com.ozguryazilim.tekir.activity.email.imports.model.EMailMessage;
 import com.ozguryazilim.tekir.activity.email.imports.model.EMailAttacment;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
@@ -24,8 +21,10 @@ import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Part;
 import javax.mail.Session;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
 import org.apache.commons.io.IOUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
@@ -34,16 +33,16 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Parametre olarak alınan e-postayı parse eder.
- *
+ * <p>
  * - Eposta'dan mümkünse Text metni ve attachmentları çıkarır. HTML ve Gömülü
  * resimleri safdışı eder.
- *
+ * <p>
  * - E-posta header'larından bu e-postanın bir cevap olup olmadığını ve cevap
  * ise orjinal id'leri ayıklar
- *
+ * <p>
  * - E-posta eğer bir Forward ise içinden orjinal olanı bulmaya çalışır.
  * Orjnalin ID'sini de yakalar
- *
+ * <p>
  * - Reply e-postaların içinden reply kısmını bulup sadece onu döndürebilir?
  *
  * @author Hakan Uygun
@@ -68,7 +67,7 @@ public class EMailParser {
         MimeMessage message = new MimeMessage(s, messageStream);
 
         if (LOG.isDebugEnabled()) {
-            for (Enumeration<Header> e = message.getAllHeaders(); e.hasMoreElements();) {
+            for (Enumeration<Header> e = message.getAllHeaders(); e.hasMoreElements(); ) {
                 Header h = e.nextElement();
                 LOG.debug("{}:{}", h.getName(), h.getValue());
             }
@@ -78,8 +77,7 @@ public class EMailParser {
         result.setSubject(message.getSubject());
         result.setDate(message.getReceivedDate());
 
-        parseReplyId(message);
-        parseForwardId(message);
+        parseRelatedReferenceId(message);
         parseRefrences(message);
 
         parseFrom(message);
@@ -96,8 +94,13 @@ public class EMailParser {
         //From bir tane mi olacak?
         Address[] from = message.getFrom();
         if (from != null && from.length > 0) {
-            LOG.debug("Address: {}", from[0]);
-            result.setFrom(new InternetAddress(from[0].toString()));
+            Address sender = from[0];
+            LOG.debug("Address: {}", sender);
+            try {
+                result.setFrom((InternetAddress) sender);
+            } catch (Exception ex) {
+                result.setFrom(new InternetAddress(sender.toString()));
+            }
         }
     }
 
@@ -105,10 +108,7 @@ public class EMailParser {
 
         Address[] toa = message.getRecipients(Message.RecipientType.TO);
         if (toa != null) {
-            for (Address adr : toa) {
-                LOG.debug("Address: {}", adr);
-                result.getToList().add(new InternetAddress(adr.toString()));
-            }
+            result.setToList(toInternetAddressList(toa));
         }
     }
 
@@ -116,10 +116,7 @@ public class EMailParser {
 
         Address[] toa = message.getRecipients(Message.RecipientType.CC);
         if (toa != null) {
-            for (Address adr : toa) {
-                LOG.debug("Address: {}", adr);
-                result.getCcList().add(new InternetAddress(adr.toString()));
-            }
+            result.setCcList(toInternetAddressList(toa));
         }
     }
 
@@ -127,26 +124,15 @@ public class EMailParser {
 
         Address[] toa = message.getRecipients(Message.RecipientType.BCC);
         if (toa != null) {
-            for (Address adr : toa) {
-                LOG.debug("Address: {}", adr);
-                result.getBccList().add(new InternetAddress(adr.toString()));
-            }
+            result.setBccList(toInternetAddressList(toa));
         }
     }
 
-    protected void parseReplyId(MimeMessage message) throws MessagingException {
+    protected void parseRelatedReferenceId(MimeMessage message) throws MessagingException {
         //Eğer bir cevap e-postası ise kime cevap olduğunun id'si
         String[] headers = message.getHeader("In-Reply-To");
         if (headers != null && headers.length > 0) {
-            result.setReplyId(headers[0]);
-        }
-    }
-
-    protected void parseForwardId(MimeMessage message) throws MessagingException {
-        //Eğer bir forward e-postası ise kime neyin forward edildiği id'si
-        String[] headers = message.getHeader("X-Forwarded-Message-Id");
-        if (headers != null && headers.length > 0) {
-            result.setForwardId(headers[0]);
+            result.setRelatedReferenceId(headers[0]);
         }
     }
 
@@ -212,9 +198,9 @@ public class EMailParser {
         //Eğer daha önce Text hali alınmamış ise
         if (Strings.isNullOrEmpty(result.getContent())) {
             // get pretty printed html with preserved br and p tags
-            //String prettyPrintedBodyFragment = Jsoup.clean(html, "", Whitelist.none().addTags("br", "p"), new OutputSettings().prettyPrint(true));
+            // String prettyPrintedBodyFragment = Jsoup.clean(html, "", Whitelist.none().addTags("br", "p"), new OutputSettings().prettyPrint(true));
             // get plain text with preserved line breaks by disabled prettyPrint
-            //String text = Jsoup.clean(prettyPrintedBodyFragment, "", Whitelist.none(), new OutputSettings().prettyPrint(false));
+            // String text = Jsoup.clean(prettyPrintedBodyFragment, "", Whitelist.none(), new OutputSettings().prettyPrint(false));
 
             String text = Jsoup.clean(html, Whitelist.basic());
 
@@ -244,4 +230,20 @@ public class EMailParser {
         }
 
     }
+
+    private List<InternetAddress> toInternetAddressList(Address[] addresses) throws AddressException {
+        if (addresses == null) {
+            return new ArrayList<>();
+        }
+        List<InternetAddress> list = new ArrayList<>(addresses.length);
+        for (Address address : addresses) {
+            if (address instanceof InternetAddress) {
+                list.add((InternetAddress) address);
+            } else {
+                list.add(new InternetAddress(address.toString()));
+            }
+        }
+        return list;
+    }
+
 }

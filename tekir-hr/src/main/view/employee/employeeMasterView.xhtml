@@ -14,7 +14,10 @@
 
                 <t:accordion icon="fa fa-stack-exchange" label="general.label.Summary" columnClass="col-xs-12">
                     <div class="row">
-                        <t:outputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(employeeHome.entity.sourcePointer)}" columnClass="col-xs-12"/>
+                        <t:outputFeatureLink label="general.label.Source"
+                                             value="#{featureController.getFeatureLink(employeeHome.entity.sourcePointer)}"
+                                             rendered="#{employeeHome.entity.sourcePointer ne null}"
+                                             columnClass="col-xs-12"/>
                     </div>
 
                     
@@ -25,6 +28,7 @@
                             <t:outputText value="#{messages['gender.'.concat(employeeHome.entity.gender)]}" label="contact.label.Gender" columnClass="col-xs-12"/>
                             <t:outputText label="contact.label.JobTitle" value="#{employeeHome.entity.jobTitle}" columnClass="col-xs-12"/>
                             <t:outputText label="contact.label.SSN" value="#{employeeHome.entity.ssn}" columnClass="col-xs-12"/>
+                            <t:outputText label="hr.label.UsedLeaveDay" value="#{employeeHome.usedLeaveDay}" columnClass="col-xs-12"/>
                         </div>            
 
                     <div class="row">
@@ -90,7 +94,10 @@
                                 <li class="item">
                                     <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>
 
-                                    <span class="text-muted pull-right"><h:outputText value="#{messages['voucherState.name.'.concat(ci.status)]}" styleClass="#{ ci.status.startsWith('OPEN', 0) ? 'label label-primary' : 'label label-warning' }" /> </span>
+                                    <span class="text-muted pull-right">
+                                        <h:outputText value="#{messages['voucherState.name.'.concat(ci.status)]}"
+                                                      styleClass="#{ ci.status.startsWith('OPEN', 0) ? 'label label-primary' : 'label label-warning' }" />
+                                    </span>
 
                                     <div class="text-sm">
                                         #{ci.info}

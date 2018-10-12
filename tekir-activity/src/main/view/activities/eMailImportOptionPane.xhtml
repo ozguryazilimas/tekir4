@@ -11,11 +11,23 @@
     <ui:define name="content">
 
         <div class="row">
-            <t:inputText label="eMailImportOptionPane.label.Protocol" value="#{eMailImportOptionPane.protocol.asString}" columnClass="col-sm-12"/>
+            <t:inputCombobox label="eMailImportOptionPane.label.Protocol" value="#{eMailImportOptionPane.protocol.asString}" columnClass="col-sm-12" >
+                <f:selectItem itemLabel="imap" itemValue="imap"/>
+                <f:selectItem itemLabel="pop3" itemValue="pop3"/>
+                <p:ajax event="change" update=":paneForm"/>
+            </t:inputCombobox>
             <t:inputText label="eMailImportOptionPane.label.Host" value="#{eMailImportOptionPane.host.asString}" columnClass="col-sm-12"/>
             <t:inputText label="eMailImportOptionPane.label.Port" value="#{eMailImportOptionPane.port.asString}" columnClass="col-sm-12"/>
             <t:inputText label="eMailImportOptionPane.label.SSL" value="#{eMailImportOptionPane.ssl.asString}" columnClass="col-sm-12"/>
-            <t:inputText label="eMailImportOptionPane.label.Folder" value="#{eMailImportOptionPane.folder.asString}" columnClass="col-sm-12"/>
+            <t:inputText label="eMailImportOptionPane.label.folder" value="#{eMailImportOptionPane.folder.asString}" columnClass="col-sm-12"/>
+            <t:inputText id="archiveFolder" label="eMailImportOptionPane.label.archive.folder"
+                         value="#{eMailImportOptionPane.archiveFolder.asString}"
+                         rendered="#{eMailImportOptionPane.protocol.asString eq 'imap'}"
+                         columnClass="col-sm-12"/>
+            <t:inputText label="eMailImportOptionPane.label.domain" value="#{eMailImportOptionPane.domain.asString}" columnClass="col-sm-12"/>
+            <t:inputCombobox label="eMailImportOptionPane.label.default.user" value="#{eMailImportOptionPane.defaultUser.asString}" columnClass="col-sm-12">
+                <f:selectItems value="#{eMailImportOptionPane.userNames}"/>
+            </t:inputCombobox>
         </div>
         <div class="row">
             <t:inputText label="eMailImportOptionPane.label.User" value="#{eMailImportOptionPane.user.asString}" />
@@ -23,9 +35,5 @@
         </div>
 
     </ui:define>
-
-
-
-
 
 </ui:composition>

@@ -45,14 +45,25 @@
     </ui:define>
 
     <ui:define name="caption">
-        <div class="row">
-            <t:outputText label="general.label.Name" value="#{employeeHome.entity.name}" />
-            <t:outputText label="general.label.Code" value="#{employeeHome.entity.code}" />
-        </div>            
-        <div class="row">        
-            <t:outputText label="general.label.Info" value="#{employeeHome.entity.info}" />
-            <t:outputBoolean label="general.label.Status" itemLabel="general.boolean.active." value="#{employeeHome.entity.active}" />
-        </div>  
+          	<div class="col-md-6 col-xs-12">
+            	<div class="row">
+            		<t:outputText label="general.label.Name" value="#{employeeHome.entity.name}" />
+           			<t:outputText label="general.label.Code" value="#{employeeHome.entity.code}" />
+           			<t:outputText label="general.label.Info" value="#{employeeHome.entity.info}" />
+           			<t:outputBoolean label="general.label.Status" itemLabel="general.boolean.active." value="#{employeeHome.entity.active}" />
+      		
+             	</div>  
+          	</div> 
+          	
+          	<div class="col-md-6 col-xs-12">
+                <div class="row">
+            		<t:outputText label="hr.label.LeaveDay" value="#{employeeHome.entity.anualLeaveDay}" />
+      				<t:outputMoney label="general.label.TotalAmount" value="#{employeeHome.entity.salaryAmount}" currency="#{employeeHome.entity.salaryCurrency}" />
+      				<t:outputText label="hr.label.UsedLeaveDay" value="#{employeeHome.usedLeaveDay}" />
+   		 		
+             	</div>  
+          	</div> 
+
         <div class="row">        
             <div class="col-md-6 col-xs-12">
                 <ul class="list-inline text-sm text-muted">
@@ -62,7 +73,6 @@
                 </ul>
             </div>
         </div>
-
     </ui:define>
 
     <ui:define name="context-menu">

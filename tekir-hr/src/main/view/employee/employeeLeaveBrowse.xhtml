@@ -1,0 +1,62 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/voucherBrowseBase.xhtml">
+
+    <ui:param name="bean" value="#{employeeLeaveBrowse}" />
+    <ui:param name="advanceEnabled" value="true" />
+    <ui:param name="saveEnabled" value="true" />
+    <ui:param name="filterEnabled" value="true" />
+    <ui:param name="permission" value="employeeLeave" />
+    <ui:param name="showQuickSearch" value="true" />
+    <ui:param name="showDetailPanel" value="true" />
+
+    <ui:define name="beforeColumns">
+        <p:column styleClass="actionColumn">
+            <i class="fa #{item.state.type eq 'CLOSE' ? 'fa-lock' : 'fa-unlock-alt' }" />
+        </p:column>
+        <p:column styleClass="actionColumn">
+            <i class="fa #{item.state.effect eq 'POSITIVE' ? 'fa-check' : item.state.effect eq 'NEGATIVE' ? 'fa-ban' : '' } #{item.state.effect eq 'POSITIVE' ? 'text-success' : item.state.effect eq 'NEGATIVE' ? 'text-danger' : '' }" />
+        </p:column>
+    </ui:define>
+
+    <ui:define name="detailBar">
+
+        <div class="row">
+            <t:outputFeatureLink label="general.label.Name"
+                                 value="#{featureController.getFeatureLink(employeeLeaveBrowse.getAllFeaturePointer(employeeLeaveBrowse.employeeLeave.employee))}"
+                                 rendered="#{not empty employeeLeaveBrowse.employeeLeave.employee}" columnClass="col-xs-12"/>
+            <t:outputText label="contact.label.JobTitle" value="#{employeeLeaveBrowse.employeeLeave.employee.jobTitle}"
+                          columnClass="col-xs-12" rendered="#{not empty employeeLeaveBrowse.employeeLeave.employee.jobTitle}"/>
+            <t:outputText label="contact.label.SSN" value="#{employeeLeaveBrowse.employeeLeave.employee.ssn}"
+                          columnClass="col-xs-12" rendered="#{not empty employeeLeaveBrowse.employeeLeave.employee.ssn}"/>
+
+        </div>
+
+        <div class="row">
+            <t:outputText label="general.label.Category" value="#{employeeLeaveBrowse.employeeLeave.employee.category.name}"
+                          columnClass="col-xs-12" rendered="#{not empty employeeLeaveBrowse.employeeLeave.employee.category}"/>
+            <t:outputText label="general.label.Industry" value="#{employeeLeaveBrowse.employeeLeave.employee.industry.name}"
+                          columnClass="col-xs-12" rendered="#{not empty employeeLeaveBrowse.employeeLeave.employee.industry}"/>
+            <t:outputText label="general.label.Territory" value="#{employeeLeaveBrowse.employeeLeave.employee.territory.name}"
+                          columnClass="col-xs-12" rendered="#{not empty employeeLeaveBrowse.employeeLeave.employee.territory}"/>
+        </div>
+
+        <div class="row">
+            <t:outputText label="contact.label.PrimaryMobile" value="#{employeeLeaveBrowse.employeeLeave.employee.primaryMobile.caption}"
+                          columnClass="col-xs-12" rendered="#{not empty employeeLeaveBrowse.employeeLeave.employee.primaryMobile}"/>
+            <t:outputText label="contact.label.PrimaryPhone" value="#{employeeLeaveBrowse.employeeLeave.employee.primaryPhone.caption}"
+                          columnClass="col-xs-12" rendered="#{not empty employeeLeaveBrowse.employeeLeave.employee.primaryPhone}"/>
+            <t:outputText label="contact.label.PrimaryEmail" value="#{employeeLeaveBrowse.employeeLeave.employee.primaryEmail.caption}"
+                          columnClass="col-xs-12" rendered="#{not empty employeeLeaveBrowse.employeeLeave.employee.primaryEmail}"/>
+            <t:outputText label="contact.label.PrimaryAddress" value="#{employeeLeaveBrowse.employeeLeave.employee.primaryAddress.caption}"
+                          columnClass="col-xs-12" rendered="#{not empty employeeLeaveBrowse.employeeLeave.employee.primaryAddress}"/>
+        </div>
+
+    </ui:define>
+
+
+</ui:composition>

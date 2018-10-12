@@ -1,0 +1,69 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+				xmlns:p="http://primefaces.org/ui"
+				template="/layout/voucherEditBase.xhtml">
+
+	<ui:param name="homeBean" value="#{employeeLeaveHome}" />
+	<ui:param name="entity" value="#{employeeLeaveHome.entity}" />
+	<ui:param name="dontShowContentHeader" value="true" />
+
+
+	<ui:define name="form">
+		<div class="row">
+			<div class="col-md-6 col-xs-12">
+				<div class="row">
+					<t:inputLookupDialog label="hr.label.Employee" value="#{employeeLeaveHome.entity.employee}"
+										 lookupBean="#{employeeLookup}" lookupListener="employeeLeaveHome.entity.employee"
+										 placeholder="#{messages['hr.info.Employee']}"
+										 lookupProfile="T:Employee"  required="true"/>
+					<t:inputNumber label="hr.label.LeaveDay" value="#{employeeLeaveHome.entity.leaveDay}" decimalPlaces="0"
+								   columnClass="col-xs-6" required="true"/>
+
+				</div>
+
+				<div class="row">
+					<t:inputDate label="hr.label.StartDate" value="#{employeeLeaveHome.entity.startDate}"
+								 columnClass="col-xs-6" required="true"/>
+					<t:inputDate label="hr.label.EndDate" value="#{employeeLeaveHome.entity.endDate}"
+								 columnClass="col-xs-6" required="true"/>
+
+				</div>
+
+				<div class="row">
+					<t:inputCheckboxGroup label="hr.label.Paid" columnClass="col-xs-6">
+						<p:selectBooleanCheckbox value="#{employeeLeaveHome.entity.paid}"
+												 itemLabel="#{messages['general.label.yes']}"/>
+					</t:inputCheckboxGroup>
+					<t:inputCheckboxGroup label="hr.label.Annual" columnClass="col-xs-6">
+						<p:selectBooleanCheckbox value="#{employeeLeaveHome.entity.annual}"
+												 itemLabel="#{messages['general.label.yes']}"/>
+					</t:inputCheckboxGroup>
+
+				</div>
+			</div>
+
+			<div class="col-md-6 col-xs-12">
+				<div class="row">
+					<t:inputText label="voucher.label.ReferenceNo" value="#{employeeLeaveHome.entity.referenceNo}"
+								 columnClass="col-md-6"/>
+					<t:inputTag label="general.label.Tag" value="#{employeeLeaveHome.entity.tags}" key="EmployeeLeave" />
+					<t:inputLookupDialog label="voucher.label.Group" value="#{employeeLeaveHome.entity.group}"
+										 caption="topic" lookupBean="#{voucherGroupLookup}"
+										 lookupListener="employeeLeaveHome.entity.group"
+										 placeholder="#{messages['general.info.VoucherGroup']}" columnClass="col-xs-6"/>
+					<t:inputDate label="voucher.label.Date" value="#{opportunityHome.entity.date}" columnClass="col-md-6"/>
+					<t:inputTextarea label="general.label.Info" value="#{employeeLeaveHome.entity.info}" columnClass="col-xs-12"/>
+
+					<ui:remove>
+						<t:inputText label="voucher.label.Process" value="#{employeeLeaveHome.entity.process.processNo}" columnClass="col-xs-6"/>
+					</ui:remove>
+
+				</div>
+			</div>
+
+		</div>
+	</ui:define>
+</ui:composition>

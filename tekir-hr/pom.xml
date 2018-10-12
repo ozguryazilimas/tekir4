@@ -42,10 +42,22 @@
             <artifactId>tekir-hr-model</artifactId>
             <version>${project.version}</version>
         </dependency>
-        
+
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>tekir-voucher</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ozguryazilim.mutfak</groupId>
+            <artifactId>telve-core</artifactId>
+            <version>${version.telve}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>tekir-finance</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 6.4.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="employeeLeave" pageWidth="595" pageHeight="500" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c3201058-efc7-46f6-b116-94fa18e9c20e">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="EID" class="java.lang.Long">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[new Long( 21052 )]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from  THR_LEAVE eml 
+inner join TCC_CONTACT c on eml.EMPLOYEE_ID = c.ID
+where eml.ID =  $P{EID}]]>
+	</queryString>
+	<field name="ID" class="java.lang.Long"/>
+	<field name="CREATE_DATE" class="java.sql.Timestamp"/>
+	<field name="UPDATE_DATE" class="java.sql.Timestamp"/>
+	<field name="UPDATE_USER" class="java.lang.String"/>
+	<field name="CODE" class="java.lang.String"/>
+	<field name="TXNDATE" class="java.sql.Timestamp"/>
+	<field name="INFO" class="java.lang.String"/>
+	<field name="OWNER" class="java.lang.String"/>
+	<field name="FEATURE" class="java.lang.String"/>
+	<field name="FEATURE_BK" class="java.lang.String"/>
+	<field name="REFERENCE_NO" class="java.lang.String"/>
+	<field name="STATE" class="java.lang.String"/>
+	<field name="STATE_INFO" class="java.lang.String"/>
+	<field name="TOPIC" class="java.lang.String"/>
+	<field name="STATE_REASON" class="java.lang.String"/>
+	<field name="VOUCHER_NO" class="java.lang.String"/>
+	<field name="ANNUAL" class="java.lang.Boolean"/>
+	<field name="END_DATE" class="java.sql.Timestamp"/>
+	<field name="PAID" class="java.lang.Boolean"/>
+	<field name="LEAVE_DAY" class="java.lang.Integer"/>
+	<field name="START_DATE" class="java.sql.Timestamp"/>
+	<field name="GROUP_ID" class="java.lang.Long"/>
+	<field name="EMPLOYEE_ID" class="java.lang.Long"/>
+	<field name="NAME" class="java.lang.String"/>
+	<field name="ROLES" class="java.lang.String"/>
+	<field name="FIRST_NAME" class="java.lang.String"/>
+	<field name="COMPANY_TITLE" class="java.lang.String"/>
+	<field name="ORG_NAME" class="java.lang.String"/>
+	<field name="JOB_TITLE" class="java.lang.String"/>
+	<field name="SECOND_NAME" class="java.lang.String"/>
+	<field name="LAST_NAME" class="java.lang.String"/>
+	<variable name="Feature" class="java.lang.String" resetType="Column">
+		<variableExpression><![CDATA[str("feature.caption."+$F{FEATURE}.toString())]]></variableExpression>
+	</variable>
+
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="100" splitType="Stretch">
+			<textField>
+				<reportElement x="40" y="20" width="450" height="70" uuid="72288c7d-5217-4a7e-acd9-85d861040659"/>
+				<textElement>
+					<font size="50"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Feature}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="45" splitType="Stretch">
+			<textField>
+				<reportElement x="60" y="15" width="100" height="30" uuid="66ebd9ce-7917-490a-b4ca-f1a86ac4f1a1"/>
+				<textFieldExpression><![CDATA[$F{NAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="430" y="10" width="100" height="30" uuid="a5ee35ed-f215-4d1a-9d02-4a79e6724a1f"/>
+				<textFieldExpression><![CDATA[$F{VOUCHER_NO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="105" splitType="Stretch">
+			<textField pattern="dd.MM.yyyy">
+				<reportElement x="430" y="10" width="100" height="30" uuid="2bfa3da8-a310-4dc9-bd37-500b1350a8f4"/>
+				<textFieldExpression><![CDATA[$F{TXNDATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="60" width="100" height="30" uuid="65145fc3-42cc-434c-89f2-c4a28ba3436a"/>
+				<textFieldExpression><![CDATA[$F{START_DATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="60" width="100" height="30" uuid="e0247f9c-5e9e-428e-8825-588921be3674"/>
+				<textFieldExpression><![CDATA[$F{END_DATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="60" width="100" height="30" uuid="51036248-6f54-4a28-b9a6-943e412eb146"/>
+				<textFieldExpression><![CDATA[$F{LEAVE_DAY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="410" y="60" width="100" height="30" uuid="f21911f9-9445-440f-9385-8e79e4cb1cd7"/>
+				<textFieldExpression><![CDATA[$F{ANNUAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="15" y="70" width="530" height="30" uuid="e58d0f16-40f5-46f0-b4d3-9dbeca004c54"/>
+				<textFieldExpression><![CDATA[$F{INFO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="30" width="100" height="30" uuid="e04397d4-a372-4008-9fd9-f1819fe0b903"/>
+				<textFieldExpression><![CDATA[$F{COMPANY_TITLE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="30" width="100" height="30" uuid="0f138875-b968-4857-851a-10fd2dc2b20a"/>
+				<textFieldExpression><![CDATA[$F{ORG_NAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="30" width="100" height="30" uuid="cc4e199b-b516-4e5c-87b1-a9ec45774182"/>
+				<textFieldExpression><![CDATA[$F{JOB_TITLE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="430" y="85" width="100" height="30" uuid="92badded-3fb1-4434-a7ba-30141f2840d6"/>
+				<textFieldExpression><![CDATA[$F{OWNER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

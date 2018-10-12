@@ -118,4 +118,26 @@
                 newDataType="varchar(2000)"
                 tableName="TCA_ACTIVITY"/>
     </changeSet>
+    <changeSet author="hates" id="160220181121">
+        <addColumn tableName="TCA_ACTIVITY">
+            <column name="REF_ID" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="hates" id="160220181128">
+        <createIndex indexName="TCA_ACTIVITY_REF_ID_IDX"
+                     tableName="TCA_ACTIVITY">
+            <column name="REF_ID" type="varchar(255)"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="hates" id="160220181244">
+        <dropColumn columnName="EM_MID"
+                    tableName="TCA_ACTIVITY"/>
+    </changeSet>
+    <changeSet author="soner.cirit" id="20180611-1">
+        <dropColumn columnName="EM_FID" tableName="TCA_ACTIVITY"/>
+    </changeSet>
+    <changeSet author="soner.cirit" id="20180611-2">
+        <renameColumn columnDataType="varchar(255)" newColumnName="EM_RELATED_REFID"
+            oldColumnName="EM_RID" tableName="TCA_ACTIVITY"/>
+    </changeSet>
 </databaseChangeLog>

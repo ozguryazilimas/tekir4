@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ozguryazilim.tekir.entities;
 
 import com.ozguryazilim.telve.entities.EntityBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
+
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -19,15 +15,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- *
  * @author oyas
  */
 @Entity
-@Table( name = "TCA_ACT_MENTION" )
-public class ActivityMention extends EntityBase{
-  
-    @Id @GeneratedValue( strategy = GenerationType.AUTO, generator="genericSeq")
-    @Column(name="ID")
+@Table(name = "TCA_ACT_MENTION")
+public class ActivityMention extends EntityBase {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "genericSeq")
+    @Column(name = "ID")
     private Long id;
 
     @Embedded
@@ -36,15 +32,15 @@ public class ActivityMention extends EntityBase{
     @ManyToOne
     @JoinColumn(name = "ACTIVITY_ID", foreignKey = @ForeignKey(name = "FK_ACTIVITY_FEED"))
     private Activity activity;
-    
+
     /**
      * Mention'ın taşıdığı özel bir davranış hali.
-     * 
-     * Örneğin : PRIMARY | NORMAL 
-     * 
+     * <p>
+     * Örneğin : PRIMARY | NORMAL
+     * <p>
      * Primary değerler master'da olacak.
      */
-    @Column(name="TYPE")
+    @Column(name = "TYPE")
     private String type = "NORMAL";
 
     @Override
@@ -80,7 +76,4 @@ public class ActivityMention extends EntityBase{
         this.type = type;
     }
 
-    
-    
-    
 }
