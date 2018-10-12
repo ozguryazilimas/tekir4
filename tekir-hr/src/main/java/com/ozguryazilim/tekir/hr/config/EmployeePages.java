@@ -80,9 +80,10 @@ public interface EmployeePages extends Pages {
     }
 
     @View
-	@SecuredPage("employeeLeaveBrowse")
-	@PageTitle("module.caption.EmployeeLeaveBrowse")
-	@Navigation(label = "module.caption.EmployeeLeaveBrowse", feature = EmployeeLeaveFeature.class, section = HRNavigationSection.class)
+    @SecuredPage("employeeLeaveBrowse")
+    @PageTitle("module.caption.EmployeeLeaveBrowse")
+    @Navigation(label = "module.caption.EmployeeLeaveBrowse", feature = EmployeeLeaveFeature.class,
+            section = HRNavigationSection.class)
 	class EmployeeLeaveBrowse implements EmployeePages {
 	}
 
@@ -95,17 +96,13 @@ public interface EmployeePages extends Pages {
 	@View
 	@SecuredPage("employeeLeave")
 	@PageTitle("module.caption.EmployeeLeave")
-	class EmployeeLeaveView
-			implements
-				EmployeePages {
+	class EmployeeLeaveView implements EmployeePages {
 	}
 
 	@View
 	@SecuredPage("employeeLeave")
 	@PageTitle("module.caption.EmployeeLeaveMasterView")
-	class EmployeeLeaveMasterView
-			implements
-				EmployeePages {
+	class EmployeeLeaveMasterView implements EmployeePages {
 	}
 
 }
