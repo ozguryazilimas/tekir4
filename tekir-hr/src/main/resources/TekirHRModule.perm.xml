@@ -5,6 +5,12 @@
             <entityActions scope="owner,group"/>
             <action name="changeOwner" scope="owner,group"/>
         </permission>
+        <permission name="employeeAddresses" order="1">
+            <action name="insert" scope="owner,group"/>
+            <action name="update" scope="owner,group"/>
+            <action name="delete" scope="owner,group"/>
+            <action name="employeeInvoiceAddress" scope="owner,group"/>
+        </permission>
         <permission name="employeeCreditNote">
             <entityActions scope="owner,group" />
             <action name="changeOwner" scope="owner,group" order="7"/>

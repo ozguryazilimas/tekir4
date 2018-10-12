@@ -30,13 +30,13 @@
             <artifactId>telve-core</artifactId>
             <version>${version.telve}</version>
         </dependency>
-        
+
         <dependency>
             <groupId>com.ozguryazilim.mutfak</groupId>
             <artifactId>telve-calendar</artifactId>
             <version>${version.telve}</version>
         </dependency>
-        
+
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>tekir-core</artifactId>
@@ -48,13 +48,13 @@
             <artifactId>tekir-contact</artifactId>
             <version>${project.version}</version>
         </dependency>
-        
+
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>tekir-feed</artifactId>
             <version>${project.version}</version>
         </dependency>
-        
+
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>tekir-activity-model</artifactId>
@@ -65,7 +65,11 @@
             <artifactId>jsoup</artifactId>
             <version>1.10.3</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.mnode.ical4j</groupId>
+            <artifactId>ical4j</artifactId>
+            <version>2.1.5</version>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

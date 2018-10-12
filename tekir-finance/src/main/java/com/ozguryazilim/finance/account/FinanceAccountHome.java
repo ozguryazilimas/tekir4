@@ -88,29 +88,29 @@ public class FinanceAccountHome extends FormBase<FinanceAccount, Long> {
     }
 
     private void newAccount(AccountType type) {
-	FinanceAccount p = new FinanceAccount();
-	p.getAccountRoles().add(type.name());
-	p.setType(type);
-	p.setOwner(identity.getLoginName());
-	p.setCode(codeService.getNewSerialNumber(FinanceAccountHome.class.getSimpleName()));
-	setEntity(p);
-	selectedRoles.clear();
-	navigationParameterContext.addPageParameter("eid", 0);
+        FinanceAccount p = new FinanceAccount();
+        p.getAccountRoles().add(type.name());
+        p.setType(type);
+        p.setOwner(identity.getLoginName());
+        p.setCode(codeService.getNewSerialNumber(FinanceAccountHome.class.getSimpleName()));
+        setEntity(p);
+        selectedRoles.clear();
+        navigationParameterContext.addPageParameter("eid", 0);
     }
 
     public Class<? extends ViewConfig> newCashAccount() {
-	newAccount(AccountType.CASH);
-	return FinancePages.FinanceAccount.class;
+        newAccount(AccountType.CASH);
+        return FinancePages.FinanceAccount.class;
     }
 
     public Class<? extends ViewConfig> newBankAccount() {
-	newAccount(AccountType.BANK);
-	return FinancePages.FinanceAccount.class;
+        newAccount(AccountType.BANK);
+        return FinancePages.FinanceAccount.class;
     }
 
     public Class<? extends ViewConfig> newCreditCardAccount() {
-	newAccount(AccountType.CREDIT_CARD);
-	return FinancePages.FinanceAccount.class;
+        newAccount(AccountType.CREDIT_CARD);
+        return FinancePages.FinanceAccount.class;
     }
 
     @Override

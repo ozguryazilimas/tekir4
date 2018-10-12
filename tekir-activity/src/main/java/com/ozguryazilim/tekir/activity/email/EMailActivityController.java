@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ozguryazilim.tekir.activity.email;
 
 import com.ozguryazilim.tekir.activity.AbstractActivityController;
@@ -13,10 +8,14 @@ import com.ozguryazilim.telve.data.RepositoryBase;
 
 /**
  * EPosta activite contol sınıfı
- * 
+ *
  * @author Hakan Uygun
  */
-@ActivityController(activity = EMailActivity.class, editor=ActivityPages.EMail.EMailActivityEditor.class, viewer = ActivityPages.EMail.EMailActivityFragment.class)
+@ActivityController(
+        activity = EMailActivity.class,
+        editor = ActivityPages.EMail.EMailActivityEditor.class,
+        viewer = ActivityPages.EMail.EMailActivityFragment.class,
+        optionalPanel = ActivityPages.EMail.EMailActivityRelatedItems.class)
 public class EMailActivityController extends AbstractActivityController<EMailActivity>{
 
     @Override
@@ -28,5 +27,5 @@ public class EMailActivityController extends AbstractActivityController<EMailAct
     protected EMailActivity createNewEntity() {
         return new EMailActivity();
     }
-    
+
 }

@@ -5,7 +5,7 @@
     "rowLimit": 20,
     "columns": [
       "voucherNo",
-      "account",
+      "account.name",
       "topic",
       "date",
       "total",
@@ -21,8 +21,8 @@
       "stateReason",
       "owner",
       "total",
-      "account",
-      "process",
+      "account.name",
+      "process.processNo",
       "date"
     ],
     "filterValues": {
@@ -30,12 +30,12 @@
       "owner": "All::",
       "date": "All::LastTenDays::20180326T0000::Today::20180405T0000",
       "total": "All::0",
-      "process": "All::null",
+      "process.processNo": "All::null",
       "code": "All::null",
       "topic": "All::null",
       "state": "All::null",
       "stateReason": "All::null",
-      "account": "All::null",
+      "account.name": "All::null",
       "info": "All::null"
     },
     "sorters": [
@@ -54,7 +54,7 @@
     "rowLimit": 20,
     "columns": [
       "voucherNo",
-      "account",
+      "account.name",
       "topic",
       "date",
       "total",
@@ -70,8 +70,8 @@
       "stateReason",
       "owner",
       "total",
-      "account",
-      "process",
+      "account.name",
+      "process.processNo",
       "date"
     ],
     "filterValues": {
@@ -79,12 +79,12 @@
       "owner": "All::",
       "date": "All::LastTenDays::20180326T0000::Today::20180405T0000",
       "total": "All::0",
-      "process": "All::null",
+      "process.processNo": "All::null",
       "code": "All::null",
       "topic": "All::null",
       "state": "Equal::DRAFT-NEUTRAL-DRAFT",
       "stateReason": "All::null",
-      "account": "All::null",
+      "account.name": "All::null",
       "info": "All::null"
     },
     "sorters": [
@@ -102,7 +102,7 @@
     "rowLimit": 20,
     "columns": [
       "voucherNo",
-      "account",
+      "account.name",
       "topic",
       "date",
       "total",
@@ -118,8 +118,8 @@
       "stateReason",
       "owner",
       "total",
-      "account",
-      "process",
+      "account.name",
+      "process.processNo",
       "date"
     ],
     "filterValues": {
@@ -127,12 +127,12 @@
       "owner": "All::",
       "date": "All::LastTenDays::20180326T0000::Today::20180405T0000",
       "total": "All::0",
-      "process": "All::null",
+      "process.processNo": "All::null",
       "code": "All::null",
       "topic": "All::null",
       "state": "Equal::OPEN-NEUTRAL-OPEN",
       "stateReason": "All::null",
-      "account": "All::null",
+      "account.name": "All::null",
       "info": "All::null"
     },
     "sorters": [
@@ -150,7 +150,7 @@
     "rowLimit": 20,
     "columns": [
       "voucherNo",
-      "account",
+      "account.name",
       "topic",
       "date",
       "total",
@@ -166,8 +166,8 @@
       "stateReason",
       "owner",
       "total",
-      "account",
-      "process",
+      "account.name",
+      "process.processNo",
       "date"
     ],
     "filterValues": {
@@ -175,12 +175,12 @@
       "owner": "All::",
       "date": "All::LastTenDays::20180326T0000::Today::20180405T0000",
       "total": "All::0",
-      "process": "All::null",
+      "process.processNo": "All::null",
       "code": "All::null",
       "topic": "All::null",
       "state": "Equal::CLOSE-POSITIVE-COMPLETE",
       "stateReason": "All::null",
-      "account": "All::null",
+      "account.name": "All::null",
       "info": "All::null"
     },
     "sorters": [
@@ -198,7 +198,7 @@
     "rowLimit": 20,
     "columns": [
       "voucherNo",
-      "account",
+      "account.name",
       "topic",
       "date",
       "total",
@@ -214,8 +214,8 @@
       "stateReason",
       "owner",
       "total",
-      "account",
-      "process",
+      "account.name",
+      "process.processNo",
       "date"
     ],
     "filterValues": {
@@ -223,12 +223,12 @@
       "owner": "All::",
       "date": "All::LastTenDays::20180326T0000::Today::20180405T0000",
       "total": "All::0",
-      "process": "All::null",
+      "process.processNo": "All::null",
       "code": "All::null",
       "topic": "All::null",
       "state": "Equal::CLOSE-NEGATIVE-LOSS",
       "stateReason": "All::null",
-      "account": "All::null",
+      "account.name": "All::null",
       "info": "All::null"
     },
     "sorters": [
@@ -246,7 +246,7 @@
     "rowLimit": 20,
     "columns": [
       "voucherNo",
-      "account",
+      "account.name",
       "topic",
       "date",
       "total",
@@ -262,8 +262,8 @@
       "stateReason",
       "owner",
       "total",
-      "account",
-      "process",
+      "account.name",
+      "process.processNo",
       "date"
     ],
     "filterValues": {
@@ -271,12 +271,12 @@
       "owner": "All::",
       "date": "All::LastTenDays::20180326T0000::Today::20180405T0000",
       "total": "All::0",
-      "process": "All::null",
+      "process.processNo": "All::null",
       "code": "All::null",
       "topic": "All::null",
       "state": "Equal::DRAFT-NEUTRAL-REVISE",
       "stateReason": "All::null",
-      "account": "All::null",
+      "account.name": "All::null",
       "info": "All::null"
     },
     "sorters": [
@@ -294,7 +294,7 @@
     "rowLimit": 20,
     "columns": [
       "voucherNo",
-      "account",
+      "account.name",
       "topic",
       "date",
       "total",
@@ -310,8 +310,8 @@
       "stateReason",
       "owner",
       "total",
-      "account",
-      "process",
+      "account.name",
+      "process.processNo",
       "date"
     ],
     "filterValues": {
@@ -319,12 +319,12 @@
       "owner": "All::",
       "date": "All::LastTenDays::20180326T0000::Today::20180405T0000",
       "total": "All::0",
-      "process": "All::null",
+      "process.processNo": "All::null",
       "code": "All::null",
       "topic": "All::null",
       "state": "Equal::CLOSE-NEUTRAL-CLOSE",
       "stateReason": "All::null",
-      "account": "All::null",
+      "account.name": "All::null",
       "info": "All::null"
     },
     "sorters": [
@@ -342,7 +342,7 @@
     "rowLimit": 20,
     "columns": [
       "voucherNo",
-      "account",
+      "account.name",
       "topic",
       "date",
       "total",
@@ -358,8 +358,8 @@
       "stateReason",
       "owner",
       "total",
-      "account",
-      "process",
+      "account.name",
+      "process.processNo",
       "date"
     ],
     "filterValues": {
@@ -367,12 +367,12 @@
       "owner": "All::",
       "date": "Equal::Today::20170718T0000::Today::20170718T0000",
       "total": "All::0",
-      "process": "All::null",
+      "process.processNo": "All::null",
       "code": "All::null",
       "topic": "All::null",
       "state": "All::null",
       "stateReason": "All::null",
-      "account": "All::null",
+      "account.name": "All::null",
       "info": "All::null"
     },
     "sorters": [
@@ -390,7 +390,7 @@
     "rowLimit": 20,
     "columns": [
       "voucherNo",
-      "account",
+      "account.name",
       "topic",
       "date",
       "total",
@@ -406,8 +406,8 @@
       "stateReason",
       "owner",
       "total",
-      "account",
-      "process",
+      "account.name",
+      "process.processNo",
       "date"
     ],
     "filterValues": {
@@ -415,12 +415,12 @@
       "owner": "All::",
       "date": "In::LastTenDays::20170708T0000::Today::20170718T0000",
       "total": "All::0",
-      "process": "All::null",
+      "process.processNo": "All::null",
       "code": "All::null",
       "topic": "All::null",
       "state": "All::null",
       "stateReason": "All::null",
-      "account": "All::null",
+      "account.name": "All::null",
       "info": "All::null"
     },
     "sorters": [

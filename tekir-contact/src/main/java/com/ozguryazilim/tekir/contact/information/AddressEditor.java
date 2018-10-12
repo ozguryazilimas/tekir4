@@ -10,6 +10,7 @@ import com.ozguryazilim.tekir.contact.config.ContactPages;
 import com.ozguryazilim.tekir.entities.Contact;
 import com.ozguryazilim.tekir.entities.ContactAddress;
 import com.ozguryazilim.tekir.entities.ContactInformation;
+import com.ozguryazilim.telve.auth.Identity;
 import javax.inject.Inject;
 
 /**
@@ -21,7 +22,9 @@ import javax.inject.Inject;
 public class AddressEditor extends AbstractContactInformationEditor<ContactAddress>{
 
     private Boolean primaryAddress = Boolean.FALSE;
-    
+
+    @Inject
+    private Identity identity;    
 
     @Inject
     private ContactInformationRepository contactInformationRepository;
@@ -94,6 +97,25 @@ public class AddressEditor extends AbstractContactInformationEditor<ContactAddre
     @Override
     public boolean acceptType(ContactInformation information) {
         return information instanceof ContactAddress;
+    }
+    
+    //Bu fonksiyon ile fatura adresi girişleri kullanıcı yetkisine bağlanmıştır.
+    public boolean permissionCheck(ContactAddress contactAddress, String subType) {
+        //Kullanıcının editoru hangi sınıf üzerinden açtığının (Emplooye,Contact)
+        //bulunması için gerekli koşuldur.
+        if (contactAddress.getContact().getContactRoles().contains("CONTACT")) {
+            if (subType.equals("INVOICE")) {
+                return !identity.isPermitted("contactAddresses:contactInvoiceAddress:" + getEntity().getContact().getOwner());
+            }
+            return false;
+        } else if (contactAddress.getContact().getContactRoles().contains("EMPLOYEE")) {
+            if (subType.equals("INVOICE")) {
+                boolean valid = identity.isPermitted("employeeAddresses:employeeInvoiceAddress:" + getEntity().getContact().getOwner());
+                return !valid;
+            }
+            return false;
+        }
+        return false;
     }
     
 }

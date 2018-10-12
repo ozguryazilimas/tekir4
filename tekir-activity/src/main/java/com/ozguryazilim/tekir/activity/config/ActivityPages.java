@@ -99,6 +99,11 @@ public interface ActivityPages extends Pages {
         @SecuredPage
         class EMailActivityFragment implements EMail {
         }
+
+        @View
+        @SecuredPage
+        class EMailActivityRelatedItems implements EMail {
+        }
     }
 
     @SecuredPage

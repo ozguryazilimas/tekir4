@@ -22,7 +22,7 @@
                                 pattern="^(|[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z])$"/>
                     </p:inputText>
             </span>
-            <p:message id="#{cc.id}_msg" for="#{cc.id}_inp" autoUpdate="true"/>
+                <p:message id="#{cc.id}_msg" for="#{cc.id}_inp"><p:autoUpdate/></p:message>
         </div>
     </composite:implementation>
 

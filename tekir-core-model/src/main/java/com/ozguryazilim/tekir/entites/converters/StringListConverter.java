@@ -13,10 +13,14 @@ import javax.persistence.Converter;
 
 /**
  * Gelen String listesini virgüllerle ayırarak tek bir String olarak yazılmasını sağlar.
- * 
+ *
+ * Bunun kullanılması dönüştürülen alan üzerinde CONTAINS yapıldığında
+ * https://hibernate.atlassian.net/browse/HHH-9991 sorununa sebep olmaktadır.
+ *
  * JPA 2.1 / Java 8 bağımlılıkları
  * 
  * @author Hakan Uygun
+ * @see https://hibernate.atlassian.net/browse/HHH-9991
  */
 @Converter
 public class StringListConverter implements AttributeConverter<List<String>, String>{

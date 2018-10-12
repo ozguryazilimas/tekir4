@@ -4,6 +4,7 @@ import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.contact.relation.RelatedContactRepository;
 import com.ozguryazilim.tekir.contact.ContactRoleRegistery;
 import com.ozguryazilim.tekir.contact.information.ContactInformationRepository;
+import com.ozguryazilim.tekir.entities.ContactAddress;
 import com.ozguryazilim.tekir.entities.ContactInformation;
 import com.ozguryazilim.tekir.entities.Employee;
 import com.ozguryazilim.tekir.entities.EmployeeLeave;
@@ -199,6 +200,18 @@ public class EmployeeHome extends FormBase<Employee, Long> {
     public void setUsedLeaveDay(Integer usedLeaveDay) {
         this.usedLeaveDay = usedLeaveDay;
     }
-
-
+    
+    //Kullanıcının PrimaryAddress girişleri üzerindeki yetkisi kontrol edilir
+    public boolean hasContactInfoPermission(ContactInformation contactInfo, String action) {
+        if (contactInfo instanceof ContactAddress) {
+            boolean valid = identity.isPermitted("employeeAddresses" + ":" + action + ":" + getEntity().getOwner());
+            //Fatura adresi olarak kullanılan adres üzerinde islem yapabilmek
+            //için fatura adresi düzenleme yetkisine sahip olunması gerekir.
+            if (contactInfo.getSubTypes().contains("INVOICE") && (action.equals("update") || action.equals("delete"))) {
+                return valid && identity.isPermitted("employeeAddresses" + ":employeeInvoiceAddress:" + getEntity().getOwner());
+            }
+            return valid;
+        }
+        return false;
+    }
 }

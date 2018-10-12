@@ -7,7 +7,7 @@
       "date",
       "voucherNo",
       "topic",
-      "account",
+      "account.name",
       "info",
       "owner",
       "amount"
@@ -22,7 +22,7 @@
       "stateReason",
       "owner",
       "amount",
-      "account",
+      "account.name",
       "date"
     ],
     "filterValues": {
@@ -34,7 +34,7 @@
       "topic": "All::null",
       "state": "All::null",
       "stateReason": "All::null",
-      "account": "All::null",
+      "account.name": "All::null",
       "info": "All::null"
     },
     "sorters": [
@@ -54,7 +54,7 @@
       "date",
       "voucherNo",
       "topic",
-      "account",
+      "account.name",
       "info",
       "owner",
       "amount"
@@ -69,7 +69,7 @@
       "stateReason",
       "owner",
       "amount",
-      "account",
+      "account.name",
       "date"
     ],
     "filterValues": {
@@ -81,7 +81,7 @@
       "topic": "All::null",
       "state": "Equal::DRAFT-NEUTRAL-DRAFT",
       "stateReason": "All::null",
-      "account": "All::null",
+      "account.name": "All::null",
       "info": "All::null"
     },
     "sorters": [
@@ -101,7 +101,7 @@
       "date",
       "voucherNo",
       "topic",
-      "account",
+      "account.name",
       "info",
       "owner",
       "amount"
@@ -116,7 +116,7 @@
       "stateReason",
       "owner",
       "amount",
-      "account",
+      "account.name",
       "date"
     ],
     "filterValues": {
@@ -128,7 +128,7 @@
       "topic": "All::null",
       "state": "Equal::CLOSE-NEUTRAL-CLOSE",
       "stateReason": "All::null",
-      "account": "All::null",
+      "account.name": "All::null",
       "info": "All::null"
     },
     "sorters": [
@@ -148,7 +148,7 @@
       "date",
       "voucherNo",
       "topic",
-      "account",
+      "account.name",
       "info",
       "owner",
       "amount"
@@ -163,7 +163,7 @@
       "stateReason",
       "owner",
       "amount",
-      "account",
+      "account.name",
       "date"
     ],
     "filterValues": {
@@ -175,7 +175,7 @@
       "topic": "All::null",
       "state": "All::null",
       "stateReason": "All::null",
-      "account": "All::null",
+      "account.name": "All::null",
       "info": "All::null"
     },
     "sorters": [
@@ -195,7 +195,7 @@
       "date",
       "voucherNo",
       "topic",
-      "account",
+      "account.name",
       "info",
       "owner",
       "amount"
@@ -210,7 +210,7 @@
       "stateReason",
       "owner",
       "amount",
-      "account",
+      "account.name",
       "date"
     ],
     "filterValues": {
@@ -222,7 +222,7 @@
       "topic": "All::null",
       "state": "All::null",
       "stateReason": "All::null",
-      "account": "All::null",
+      "account.name": "All::null",
       "info": "All::null"
     },
     "sorters": [
