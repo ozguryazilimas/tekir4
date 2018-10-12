@@ -84,25 +84,25 @@ public interface EmployeePages extends Pages {
     @PageTitle("module.caption.EmployeeLeaveBrowse")
     @Navigation(label = "module.caption.EmployeeLeaveBrowse", feature = EmployeeLeaveFeature.class,
             section = HRNavigationSection.class)
-	class EmployeeLeaveBrowse implements EmployeePages {
-	}
+    class EmployeeLeaveBrowse implements EmployeePages {
+    }
 
-	@View
-	@SecuredPage("employeeLeave")
-	@PageTitle("module.caption.EmployeeLeave")
-	class EmployeeLeave implements EmployeePages {
-	}
+    @View
+    @SecuredPage("employeeLeave")
+    @PageTitle("module.caption.EmployeeLeave")
+    class EmployeeLeave implements EmployeePages {
+    }
 
-	@View
-	@SecuredPage("employeeLeave")
-	@PageTitle("module.caption.EmployeeLeave")
-	class EmployeeLeaveView implements EmployeePages {
-	}
+    @View
+    @SecuredPage("employeeLeave")
+    @PageTitle("module.caption.EmployeeLeave")
+    class EmployeeLeaveView implements EmployeePages {
+    }
 
-	@View
-	@SecuredPage("employeeLeave")
-	@PageTitle("module.caption.EmployeeLeaveMasterView")
-	class EmployeeLeaveMasterView implements EmployeePages {
-	}
+    @View
+    @SecuredPage("employeeLeave")
+    @PageTitle("module.caption.EmployeeLeaveMasterView")
+    class EmployeeLeaveMasterView implements EmployeePages {
+    }
 
 }
