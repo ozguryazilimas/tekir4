@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ozguryazilim.tekir.hr.credit.endofday.command;
 
 import com.ozguryazilim.tekir.entities.EmployeeCreditNoteType;
@@ -16,9 +11,9 @@ import java.util.Currency;
 
 /**
  * Personel Alacak Fişi Gün Sonu Komutu.
- * 
+ *
  * Zamanlanmış görev olarak çalışacak.
- * 
+ *
  * @author Erdem Uslu
  * @version 4.0.0
  * @since 2017-07-10
@@ -26,19 +21,19 @@ import java.util.Currency;
  * @see EmployeeCreditNoteType
  */
 public class EmployeeCreditNoteCommand extends AbstractStorableCommand {
-    
+
     private EmployeeCreditNoteType type;
-    
+
     private FinanceAccount financeAccount;
-    
+
     private VoucherGroup group;
-    
+
     private String topic;
-    
+
     private String info;
 
     private Currency currency;
-    
+
     private BigDecimal amount = BigDecimal.ZERO;
 
     private ReportDate date = new ReportDate(DateValueType.Today);

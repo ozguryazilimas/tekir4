@@ -14,11 +14,18 @@
                              lookupListener="employeeCreditNoteCommandEditor.command.financeAccount"
                              placeholder="#{messages['general.info.FinanceAccount']}"
                              required="true" columnClass="col-xs-12"/>
-        <t:inputText label="voucher.label.Topic" value="#{employeeCreditNoteCommandEditor.command.topic}" columnClass="col-xs-12"/>
-        <t:inputCurrency label="general.label.Currency" value="#{employeeCreditNoteCommandEditor.command.currency}"  required="true"/>
-        <t:inputMoney label="general.label.Amount" value="#{employeeCreditNoteCommandEditor.command.amount}"  currency="#{employeeCreditNoteCommandEditor.command.currency}" required="true"/>
-        <t:inputEnum label="employeeCreditNote.label.Type" value="#{employeeCreditNoteCommandEditor.command.type}" itemLabel="employeeCreditNote.type.label." hasNullValue="false" required="true"/>
-        <t:inputLookupDialog label="voucher.label.Group" value="#{employeeCreditNoteCommandEditor.command.group}" caption="topic" lookupBean="#{voucherGroupLookup}" lookupListener="employeeCreditNoteCommandEditor.command.group" placeholder="#{messages['general.info.VoucherGroup']}" />
+        <t:inputText label="voucher.label.Topic" value="#{employeeCreditNoteCommandEditor.command.topic}"
+                     columnClass="col-xs-12"/>
+        <t:inputCurrency label="general.label.Currency" value="#{employeeCreditNoteCommandEditor.command.currency}"
+                         required="true"/>
+        <t:inputMoney label="general.label.Amount" value="#{employeeCreditNoteCommandEditor.command.amount}"
+                      currency="#{employeeCreditNoteCommandEditor.command.currency}" required="true"/>
+        <t:inputEnum label="employeeCreditNote.label.Type" value="#{employeeCreditNoteCommandEditor.command.type}"
+                     itemLabel="employeeCreditNote.type.label." hasNullValue="false" required="true"/>
+        <t:inputLookupDialog label="voucher.label.Group" value="#{employeeCreditNoteCommandEditor.command.group}"
+                             caption="topic" lookupBean="#{voucherGroupLookup}"
+                             lookupListener="employeeCreditNoteCommandEditor.command.group"
+                             placeholder="#{messages['general.info.VoucherGroup']}" />
         <t:inputReportDate label="voucher.label.Date"
                            value="#{employeeCreditNoteCommandEditor.command.date}"
                            columnClass="col-xs-12 col-sm-6"/>
