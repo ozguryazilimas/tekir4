@@ -31,7 +31,8 @@
             <t:outputText label="general.label.FirstName" value="#{bean.employee.firstName}" columnClass="col-xs-12"/>
             <t:outputText label="general.label.LastName" value="#{bean.employee.lastName}" columnClass="col-xs-12"/>
             <t:outputText value="#{bean.employee.useName}" label="contact.label.UseName" columnClass="col-xs-12"/>
-            <t:outputText value="#{messages['gender.'.concat(bean.employee.gender)]}" label="contact.label.Gender" columnClass="col-xs-12"/>
+            <t:outputText label="contact.label.Gender" columnClass="col-xs-12"
+                          value="#{bean.employee.gender ne null ? messages['gender.'.concat(bean.employee.gender)] : ''}"/>
             <t:outputText label="general.label.Info" value="#{bean.employee.info}" columnClass="col-xs-12" rendered="#{not empty bean.employee.info}"/>
             <t:outputText label="contact.label.JobTitle" value="#{bean.employee.jobTitle}" columnClass="col-xs-12" rendered="#{not empty bean.employee.jobTitle}"/>
             <t:outputText label="contact.label.SSN" value="#{bean.employee.ssn}" columnClass="col-xs-12" rendered="#{not empty bean.employee.ssn}"/>

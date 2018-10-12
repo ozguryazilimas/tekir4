@@ -38,7 +38,8 @@
                 <t:outputText label="general.label.FirstName" value="#{employeeBrowse.employee.firstName}" columnClass="col-xs-12"/>
                 <t:outputText label="general.label.LastName" value="#{employeeBrowse.employee.lastName}" columnClass="col-xs-12"/>
                 <t:outputText value="#{employeeBrowse.employee.useName}" label="contact.label.UseName" columnClass="col-xs-12"/>
-                <t:outputText value="#{messages['gender.'.concat(employeeBrowse.employee.gender)]}" label="contact.label.Gender" columnClass="col-xs-12"/>
+                <t:outputText label="contact.label.Gender" columnClass="col-xs-12"
+                              value="#{employeeBrowse.employee.gender ne null ? messages['gender.'.concat(employeeBrowse.employee.gender)] : ''}"/>
                 <t:outputText label="general.label.Info" value="#{employeeBrowse.employee.info}" columnClass="col-xs-12" rendered="#{not empty employeeBrowse.employee.info}"/>
                 <t:outputText label="contact.label.JobTitle" value="#{employeeBrowse.employee.jobTitle}" columnClass="col-xs-12" rendered="#{not empty employeeBrowse.employee.jobTitle}"/>
                 <t:outputText label="contact.label.SSN" value="#{employeeBrowse.employee.ssn}" columnClass="col-xs-12" rendered="#{not empty employeeBrowse.employee.ssn}"/>

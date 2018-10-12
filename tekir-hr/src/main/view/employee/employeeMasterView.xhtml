@@ -14,8 +14,10 @@
 
                 <t:accordion icon="fa fa-stack-exchange" label="general.label.Summary" columnClass="col-xs-12">
                     <div class="row">
-                        <t:outputFeatureLink label="general.label.Source" value="#{featureController.getFeatureLink(employeeHome.entity.sourcePointer)}" 
-                                             rendered="#{feature.caption ne null}" columnClass="col-xs-12"/>
+                        <t:outputFeatureLink label="general.label.Source"
+                                             value="#{featureController.getFeatureLink(employeeHome.entity.sourcePointer)}"
+                                             rendered="#{employeeHome.entity.sourcePointer ne null}"
+                                             columnClass="col-xs-12"/>
                     </div>
 
                     

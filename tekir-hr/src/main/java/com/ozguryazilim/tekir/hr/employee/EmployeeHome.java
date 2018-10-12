@@ -4,6 +4,7 @@ import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.contact.relation.RelatedContactRepository;
 import com.ozguryazilim.tekir.contact.ContactRoleRegistery;
 import com.ozguryazilim.tekir.contact.information.ContactInformationRepository;
+import com.ozguryazilim.tekir.core.code.AutoCodeService;
 import com.ozguryazilim.tekir.entities.ContactAddress;
 import com.ozguryazilim.tekir.entities.ContactInformation;
 import com.ozguryazilim.tekir.entities.Employee;
@@ -56,6 +57,9 @@ public class EmployeeHome extends FormBase<Employee, Long> {
     @Inject
     private RelatedContactRepository relatedContactRepository;
 
+    @Inject
+    private AutoCodeService codeService;
+
     private List<String> selectedRoles = new ArrayList<>();
 
     private Integer usedLeaveDay = 0;
@@ -65,6 +69,7 @@ public class EmployeeHome extends FormBase<Employee, Long> {
         p.getContactRoles().add("EMPLOYEE");
         p.getContactRoles().add("ACCOUNT");
         p.setOwner(identity.getLoginName());
+        p.setCode(codeService.getNewSerialNumber(Employee.class.getSimpleName()));
         setEntity(p);
         selectedRoles.clear();
         navigationParameterContext.addPageParameter("eid", 0);

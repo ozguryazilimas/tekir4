@@ -5,6 +5,7 @@
  */
 package com.ozguryazilim.tekir.hr.employee;
 
+import com.ozguryazilim.tekir.core.code.AutoCode;
 import com.ozguryazilim.tekir.entities.Employee;
 import com.ozguryazilim.tekir.hr.config.EmployeePages;
 import com.ozguryazilim.telve.feature.AbstractFeatureHandler;
@@ -21,6 +22,7 @@ import com.ozguryazilim.telve.feature.PageType;
 @Page( type = PageType.VIEW, page = EmployeePages.EmployeeView.class )
 @Page( type = PageType.MASTER_VIEW, page = EmployeePages.EmployeeMasterView.class )
 @Page( type = PageType.EDIT, page = EmployeePages.Employee.class )
+@AutoCode(cosumer = "Employee", caption = "feature.caption.EmployeeFeature", serial = "EMPL")
 public class EmployeeFeature extends AbstractFeatureHandler{
     
 }

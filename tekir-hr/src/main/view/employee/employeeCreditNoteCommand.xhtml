@@ -1,0 +1,31 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents">
+
+
+    <div class="row">
+        <t:inputLookupDialog label="general.label.FinanceAccount"
+                             value="#{employeeCreditNoteCommandEditor.command.financeAccount}"
+                             lookupBean="#{financeAccountLookup}"
+                             lookupListener="employeeCreditNoteCommandEditor.command.financeAccount"
+                             placeholder="#{messages['general.info.FinanceAccount']}"
+                             required="true" columnClass="col-xs-12"/>
+        <t:inputText label="voucher.label.Topic" value="#{employeeCreditNoteCommandEditor.command.topic}" columnClass="col-xs-12"/>
+        <t:inputCurrency label="general.label.Currency" value="#{employeeCreditNoteCommandEditor.command.currency}"  required="true"/>
+        <t:inputMoney label="general.label.Amount" value="#{employeeCreditNoteCommandEditor.command.amount}"  currency="#{employeeCreditNoteCommandEditor.command.currency}" required="true"/>
+        <t:inputEnum label="employeeCreditNote.label.Type" value="#{employeeCreditNoteCommandEditor.command.type}" itemLabel="employeeCreditNote.type.label." hasNullValue="false" required="true"/>
+        <t:inputLookupDialog label="voucher.label.Group" value="#{employeeCreditNoteCommandEditor.command.group}" caption="topic" lookupBean="#{voucherGroupLookup}" lookupListener="employeeCreditNoteCommandEditor.command.group" placeholder="#{messages['general.info.VoucherGroup']}" />
+        <t:inputReportDate label="voucher.label.Date"
+                           value="#{employeeCreditNoteCommandEditor.command.date}"
+                           columnClass="col-xs-12 col-sm-6"/>
+        <t:inputReportDate label="hr.label.PaymentDate"
+                           value="#{employeeCreditNoteCommandEditor.command.paymentDate}"
+                           columnClass="col-xs-12 col-sm-6"/>
+    </div>
+
+
+</ui:composition>
