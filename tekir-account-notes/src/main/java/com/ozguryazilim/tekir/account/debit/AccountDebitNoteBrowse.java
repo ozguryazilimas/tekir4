@@ -65,7 +65,7 @@ public class AccountDebitNoteBrowse extends VoucherBrowseBase<AccountDebitNote, 
                 
         queryDefinition
                 .addFilter(new StringFilter<>(VoucherBase_.voucherNo, "voucher.label.VoucherNo"))
-                .addFilter(new TagFilter<>("tags", "general.label.Tag", "AccountCreditNote"))
+                .addFilter(new TagFilter<>("tags", "general.label.Tag", "AccountDebitNote"))
                 .addFilter(new StringFilter<>(VoucherBase_.info, "voucher.label.Info"))
                 .addFilter(new StringFilter<>(VoucherBase_.topic, "voucher.label.Topic"))
                 .addFilter(new VoucherStateFilter<>(VoucherBase_.state, getHome().getStateConfig().getStates(), "general.label.State"))
