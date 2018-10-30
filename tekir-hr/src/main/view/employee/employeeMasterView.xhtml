@@ -73,7 +73,7 @@
                         <ui:remove>
                             <div class="no-padding">
                                 <table class="table table-bordered">
-                                    <ui:repeat value="#{accountTxnService.getAccountOpenVouchers(employeeHome.entity)}" var="ci" >
+                                    <ui:repeat value="#{accountTxnService.fin(employeeHome.entity)}" var="ci" >
                                         <tr>
                                             <td>
                                                 <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(ci.feature)}" columnClass="col-xs-12"/>

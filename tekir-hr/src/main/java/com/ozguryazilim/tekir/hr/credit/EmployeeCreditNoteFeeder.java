@@ -1,6 +1,5 @@
 package com.ozguryazilim.tekir.hr.credit;
 
-import com.ozguryazilim.finance.account.txn.FinanceAccountTxnService;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,14 +7,14 @@ import javax.enterprise.event.Observes;
 import javax.enterprise.event.TransactionPhase;
 import javax.inject.Inject;
 
+import com.ozguryazilim.finance.account.txn.FinanceAccountTxnService;
 import com.ozguryazilim.tekir.account.AccountTxnService;
 import com.ozguryazilim.tekir.entities.EmployeeCreditNote;
-import com.ozguryazilim.tekir.entities.VoucherStateType;
 import com.ozguryazilim.tekir.feed.AbstractFeeder;
 import com.ozguryazilim.tekir.feed.Feeder;
-import com.ozguryazilim.tekir.entities.VoucherBase;
 import com.ozguryazilim.tekir.voucher.VoucherOwnerChange;
 import com.ozguryazilim.tekir.voucher.VoucherStateChange;
+import com.ozguryazilim.tekir.voucher.group.VoucherGroupTxnService;
 import com.ozguryazilim.tekir.voucher.utils.FeatureUtils;
 import com.ozguryazilim.tekir.voucher.utils.FeederUtils;
 import com.ozguryazilim.telve.auth.Identity;
@@ -39,6 +38,12 @@ public class EmployeeCreditNoteFeeder extends AbstractFeeder<EmployeeCreditNote>
 
     @Inject
     private FinanceAccountTxnService financeAccountTxnService;
+
+    @Inject
+    private AccountTxnService accountTxnService;
+
+    @Inject
+    private VoucherGroupTxnService voucherGroupTxnService;
 
     public void feed(EmployeeCreditNote entity) {
 
@@ -110,12 +115,22 @@ public class EmployeeCreditNoteFeeder extends AbstractFeeder<EmployeeCreditNote>
 
             FeaturePointer voucherPointer = FeatureUtils.getFeaturePointer(entity);
 
+            accountTxnService.saveFeature(voucherPointer, entity.getEmployee(), entity.getInfo(), entity.getTags(),
+                    Boolean.FALSE, Boolean.FALSE, entity.getCurrency(), entity.getAmount(), entity.getLocalAmount(),
+                    entity.getDate(), entity.getOwner(), null,
+                    entity.getState().toString(), entity.getStateReason(), entity.getTopic());
+
+            if(entity.getGroup() != null){
+                voucherGroupTxnService.saveFeature(voucherPointer, entity.getGroup(), entity.getOwner(), entity.getTopic(),
+                        entity.getDate(), entity.getState());
+            }
+
             financeAccountTxnService
-                .saveFeature(voucherPointer, entity.getFinanceAccount(), entity.getInfo(),
-                    entity.getTags(), Boolean.TRUE, Boolean.TRUE, entity.getCurrency(),
-                    entity.getAmount(), entity.getLocalAmount(), entity.getDate(),
-                    entity.getOwner(), null, entity.getState().toString(), entity.getStateReason(),
-                    entity.getEmployee());
+                    .saveFeature(voucherPointer, entity.getFinanceAccount(), entity.getInfo(),
+                            entity.getTags(), Boolean.TRUE, Boolean.TRUE, entity.getCurrency(),
+                            entity.getAmount(), entity.getLocalAmount(), entity.getDate(),
+                            entity.getOwner(), null, entity.getState().toString(), entity.getStateReason(),
+                            entity.getEmployee());
         }
     }
 
@@ -149,7 +164,7 @@ public class EmployeeCreditNoteFeeder extends AbstractFeeder<EmployeeCreditNote>
             default:
                 return "feeder.messages.EmployeeCreditNoteFeeder.DEFAULT$%&" + identity.getUserName() + "$%&"
                         + event.getPayload().getVoucherNo();
-        }   
+        }
     }
-    
+
 }
