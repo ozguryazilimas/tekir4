@@ -10,8 +10,9 @@
     <ui:define name="form">
         <h:form>
             <h:panelGrid columns="5" cellpadding="20">
-                <h:outputText style="margin-right: 10px;margin-bottom: 10px;font-weight: 700;" value="#{messages['EvaluationNote.label.rating']}" />
-                <p:rating value="#{evaluationNoteEditor.entity.rating}" required="true"/>
+                <p:inputNumber label='EvaluationNote.label.rating'
+                               value="#{evaluationNoteEditor.entity.rating}"
+                               converter="javax.faces.Integer" minValue="0" maxValue="100"/>
             </h:panelGrid>
             <div class="row">
                 <t:inputText label="EvaluationNote.label.state" value="#{evaluationNoteEditor.entity.state}" required="true"/>

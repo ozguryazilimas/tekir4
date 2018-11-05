@@ -44,7 +44,7 @@ public class Applicant extends AbstractPerson{
     
     
     /**
-     * Değerlendirme sonuçlarına göre verilebilecek 1-5 arası bir puan arayüzde yıldız v.s. yapılır.
+     * Değerlendirme sonuçlarına göre verilebilecek 1-100 arası bir puan.
      */
     @Column( name = "RATING")
     private Integer rating = 0;

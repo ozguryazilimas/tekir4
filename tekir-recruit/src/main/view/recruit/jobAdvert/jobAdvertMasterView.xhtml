@@ -51,7 +51,7 @@
                             <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(jobAdvertHome.getAllFeaturePointer(ja.applicant))}" columnClass="col-xs-12"/>
                         </p:column>
                         <p:column headerText="#{messages['Applicant.label.Rating']}">
-                            <p:rating value="#{ja.applicant.rating}" stars="5" readonly="true"/> 
+                            <t:outputText value="#{ja.applicant.rating}" />
                         </p:column>
                         <p:column headerText="#{messages['general.label.Date']}">
                             <t:cellOutputDate value="#{ja.date}"/>
