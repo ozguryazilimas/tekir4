@@ -36,12 +36,41 @@
             <t:inputDate label="#{messages['general.label.StartDate']}" value="#{jobAdvertHome.entity.startDate }"  columnClass="col-md-12 col-xs-6" />
             <t:inputDate label="#{messages['general.label.EndDate']}" value="#{jobAdvertHome.entity.endDate }"  columnClass="col-md-12 col-xs-6" />
             <t:inputSuggestion label="general.label.Status" value="#{jobAdvertHome.entity.status}" group="#{jobAdvertHome.entity.class.simpleName}" listener="" required="true" columnClass="col-md-12"/>
+            <t:inputUser label="general.label.Owner" value="#{jobAdvertHome.entity.owner}" required="true"  columnClass="col-md-12"/>
         </div>     
         <div class="row col-xs-12 col-md-9">
-            <t:inputText label="#{messages['general.label.Topic']}" value="#{jobAdvertHome.entity.topic}" columnClass="col-md-8" /> 
-            <t:inputUser label="general.label.Owner" value="#{jobAdvertHome.entity.owner}" required="true"  columnClass="col-md-4"/>
-            <t:inputTextarea label="#{messages['JobAdvert.label.JobDescription']}" value="#{jobAdvertHome.entity.info}" columnClass="col-md-12" />  
-            <t:inputTag label="#{messages['JobAdvert.label.Skills']}" value="#{jobAdvertHome.entity.skills}" columnClass="col-md-12" /> 
+            <t:inputText label="#{messages['general.label.Topic']}" value="#{jobAdvertHome.entity.topic}" columnClass="col-md-12" required="true"/> 
+            <t:inputTag label="#{messages['JobAdvert.label.Skills']}" value="#{jobAdvertHome.entity.skills}" columnClass="col-md-12" />
+            <t:inputTextarea label="#{messages['JobAdvert.label.JobDescription']}" value="#{jobAdvertHome.entity.info}" columnClass="col-md-12" /> 
+            <t:inputAny label="#{messages['JobAdvert.label.Requirement']}" columnClass="col-md-12">
+                <p:textEditor widgetVar="requirement" value="#{jobAdvertHome.entity.requirement}">
+                    <f:facet name="toolbar">
+                        <span class="ql-formats">
+                            <button class="ql-bold"></button>
+                            <button class="ql-italic"></button>
+                            <button class="ql-underline"></button>
+                            <button class="ql-strike"></button>
+                        </span>
+                        <span class="ql-formats">
+                            <button class="ql-header" value="1" />
+                            <button class="ql-header" value="2" />
+                        </span>
+                        <span class="ql-formats">
+                            <button class="ql-list" value="ordered" />
+                            <button class="ql-list" value="bullet" />
+                            <button class="ql-indent" value="-1" />
+                            <button class="ql-indent" value="+1" />
+                        </span>
+                        <span class="ql-formats">
+                            <button class="ql-direction" value="rtl" />
+                            <select class="ql-align" />
+                        </span>
+                        <span class="ql-formats">
+                            <button class="ql-clean" />
+                        </span>
+                    </f:facet>
+                </p:textEditor>
+            </t:inputAny>
         </div>
     </ui:define> 
 

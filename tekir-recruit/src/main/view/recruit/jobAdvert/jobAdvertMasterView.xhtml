@@ -11,24 +11,24 @@
             .ui-datatable table {
                 table-layout: auto;
             }
-            
+
             .ui-datatable thead th {
                 text-align: unset;
                 border-width: 0px;
             }
-            
+
             .ui-datatable tbody td {
                 border-style: unset;
             }
-            
+
             .ui-datatable-odd {
                 background-color: transparent;
             }
-            
+
             th.ui-state-default {
                 background-color: transparent;
             }
-            
+
             .ui-paginator .ui-paginator-page,
             .ui-paginator .ui-paginator-pages,
             .ui-paginator .ui-paginator-next,
@@ -63,13 +63,36 @@
                 </div>
             </t:accordion>  
 
-            <div class="col-lg-4 col-md-12">
+            <div class="col-lg-6 col-md-12">
                 <ui:include src="/notes/noteWidget.xhtml">
                     <ui:param name="featurePointer" value="#{jobAdvertHome.featurePointer}" />
                 </ui:include>
-            </div>   		
+
+                <t:accordion icon="fa fa-file" id="cx" label="JobAdvert.label.jobApplications" columnClass="col-md-12" contentClass="">
+                    <div class="table-responsive no-padding">
+                        <p:dataTable var="ja" value="#{jobAdvertHome.jobApplications}" tableStyleClass="table table-condensed table-hover"
+                                     paginator="true" rows="10" rowsPerPageTemplate="5,10,15,20"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     paginatorPosition="bottom"
+                                     paginatorAlwaysVisible="false" >
+                            <p:column headerText="#{messages['contact.class.Applicant']}">
+                                <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(jobAdvertHome.getAllFeaturePointer(ja.applicant))}" columnClass="col-xs-12"/>
+                            </p:column>
+                            <p:column headerText="#{messages['contact.class.JobApplication']}">
+                                <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(jobAdvertHome.getAllFeaturePointer(ja))}"/>
+                            </p:column>
+                            <p:column headerText="#{messages['general.label.Date']}">
+                                <t:cellOutputDate value="#{ja.date}"/>
+                            </p:column>
+                            <p:column headerText="#{messages['JobApplication.label.State']}">
+                                <h:outputText value="#{ja.state}" styleClass="label label-primary"/>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </t:accordion>
+            </div>
         </div>
-        
+
     </ui:define>
 
 </ui:composition>
