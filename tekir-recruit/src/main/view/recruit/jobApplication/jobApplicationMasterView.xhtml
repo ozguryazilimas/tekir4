@@ -15,19 +15,25 @@
                     <p:panel header="#{messages['module.caption.Applicant']} :">
                         <t:cellOutputFeatureLink label="#{jobApplicationHome.entity.applicant.code}" value="#{featureController.getFeatureLink(jobApplicationHome.getAllFeaturePointer(jobApplicationHome.entity.applicant))}" columnClass="col-xs-12"/>
                     </p:panel>
-                    <t:outputText label="general.label.Name" value="#{jobApplicationHome.entity.applicant.name}" columnClass="col-xs-12"/>
-                    <t:outputText label="contact.label.JobTitle" value="#{jobApplicationHome.entity.applicant.jobTitle}" columnClass="col-xs-12"/>
-                    <t:outputText label="Applicant.label.Info" value="#{jobApplicationHome.entity.applicant.info}" columnClass="col-xs-12"/>
-                    <t:outputBoolean label="Applicant.label.Married" itemLabel="Applicant.Married." value="#{jobApplicationHome.entity.applicant.married}"  columnClass="col-xs-12"/>
-                    <t:outputBoolean label="Applicant.label.militaryDuty" itemLabel="Applicant.militaryDuty." value="#{jobApplicationHome.entity.applicant.militaryDuty}"  columnClass="col-xs-12"/>          
-                    <t:outputTag label="Applicant.label.Skills" value="#{jobApplicationHome.entity.applicant.skills}" columnClass="col-xs-12"/>
+                    <t:outputText label="general.label.Name" value="#{jobApplicationHome.entity.applicant.name}"
+                                  columnClass="col-xs-12"/>
+                    <t:outputText label="contact.label.JobTitle" value="#{jobApplicationHome.entity.applicant.jobTitle}"
+                                  columnClass="col-xs-12"/>
+                    <t:outputText label="Applicant.label.Info" value="#{jobApplicationHome.entity.applicant.info}"
+                                  columnClass="col-xs-12"/>
+                    <t:outputBoolean label="Applicant.label.Married" itemLabel="Applicant.Married."
+                                     value="#{jobApplicationHome.entity.applicant.married}" columnClass="col-xs-12"/>
+                    <t:outputTag label="Applicant.label.Skills" value="#{jobApplicationHome.entity.applicant.skills}"
+                                 columnClass="col-xs-12"/>
                 </t:accordion>
             </div>
 
             <div class="col-md-4 col-xs-12">
                 <t:accordion icon="fa fa-stack-exchange" label="JobApplication.label.JobAdvertInformations" columnClass="col-xs-12">
                     <p:panel header="#{messages['module.caption.JobAdvert']} :">
-                        <t:cellOutputFeatureLink label="#{jobApplicationHome.entity.advert.serial}" value="#{featureController.getFeatureLink(jobApplicationHome.getAllFeaturePointer(jobApplicationHome.entity.advert))}" columnClass="col-xs-12"/>
+                        <t:cellOutputFeatureLink label="#{jobApplicationHome.entity.advert.code}"
+                                                 value="#{featureController.getFeatureLink(jobApplicationHome.getAllFeaturePointer(jobApplicationHome.entity.advert))}"
+                                                 columnClass="col-xs-12"/>
                     </p:panel>
                     <t:outputText label="JobAdvert.label.Topic" value="#{jobApplicationHome.entity.advert.topic}" columnClass="col-xs-12"/>
                     <t:outputText label="JobAdvert.label.Status" value="#{jobApplicationHome.entity.advert.status}" columnClass="col-xs-12"/>

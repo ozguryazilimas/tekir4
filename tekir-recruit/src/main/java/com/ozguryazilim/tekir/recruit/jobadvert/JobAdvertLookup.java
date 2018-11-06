@@ -22,7 +22,7 @@ public class JobAdvertLookup extends LookupTableControllerBase<JobAdvert, JobAdv
 
     @Override
     protected void buildModel(LookupTableModel<JobAdvertViewModel> model) {
-        model.addColumn("serial", "general.label.SerialNumber");
+        model.addColumn("code", "general.label.SerialNumber");
         model.addColumn("topic", "general.label.Topic");
     }
 
