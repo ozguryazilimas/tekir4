@@ -28,7 +28,7 @@
                     <t:inputLookupDialog label="general.label.FinanceAccount" value="#{homeBean.entity.financeAccount}" 
                                          lookupBean="#{financeAccountLookup}" lookupListener="#{homeBeanName}.entity.financeAccount" 
                                          placeholder="#{messages['general.info.FinanceAccount']}" required="true"/>
-                    <t:inputText label="voucher.label.Topic" value="#{quoteHome.entity.topic}" columnClass="col-xs-12"/>
+                    <t:inputText label="voucher.label.Topic" value="#{homeBean.entity.topic}" columnClass="col-xs-12"/>
                     <t:inputCurrency label="general.label.Currency" value="#{homeBean.entity.currency}"  required="true"/>
                     <t:inputMoney label="general.label.Amount" value="#{homeBean.entity.amount}"  currency="#{homeBean.entity.currency}" required="true"/>
                     <t:inputDate label="voucher.label.Date" value="#{homeBean.entity.date}"/>
