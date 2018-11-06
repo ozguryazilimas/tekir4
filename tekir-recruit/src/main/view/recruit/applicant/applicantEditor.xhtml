@@ -42,7 +42,10 @@
             <t:inputText label="#{messages['contact.label.JobTitle']}" value="#{applicantHome.entity.jobTitle}" columnClass="col-md-12" required="true"/>
         </div>
         <div class="row">
-            <t:inputTag label="#{messages['Applicant.label.Skills']}" value="#{applicantHome.entity.skills}" columnClass="col-md-12" />
+            <t:inputTag label="#{messages['Applicant.label.Skills']}"
+                        value="#{applicantHome.entity.skills}"
+                        key="Applicant::skills"
+                        columnClass="col-md-12" />
         </div>
         <div class="row">
             <t:inputTextarea label="#{messages['Applicant.label.Info']}" value="#{applicantHome.entity.info}" columnClass="col-md-12" /> 

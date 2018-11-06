@@ -40,7 +40,10 @@
         </div>     
         <div class="row col-xs-12 col-md-9">
             <t:inputText label="#{messages['general.label.Topic']}" value="#{jobAdvertHome.entity.topic}" columnClass="col-md-12" required="true"/> 
-            <t:inputTag label="#{messages['JobAdvert.label.Skills']}" value="#{jobAdvertHome.entity.skills}" columnClass="col-md-12" />
+            <t:inputTag label="#{messages['JobAdvert.label.Skills']}"
+                        key="JobAdvert::skills"
+                        value="#{jobAdvertHome.entity.skills}"
+                        columnClass="col-md-12" />
             <t:inputTextarea label="#{messages['JobAdvert.label.JobDescription']}" value="#{jobAdvertHome.entity.info}" columnClass="col-md-12" /> 
             <t:inputAny label="#{messages['JobAdvert.label.Requirement']}" columnClass="col-md-12">
                 <p:textEditor widgetVar="requirement" value="#{jobAdvertHome.entity.requirement}">
