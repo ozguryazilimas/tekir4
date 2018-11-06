@@ -3,6 +3,7 @@ package com.ozguryazilim.tekir.recruit.jobapplication;
 import com.ozguryazilim.tekir.core.code.AutoCode;
 import com.ozguryazilim.tekir.core.code.AutoCodeService;
 import com.ozguryazilim.tekir.entities.JobApplication;
+import com.ozguryazilim.tekir.recruit.jobapplication.evaluationnotes.EvaluationNoteRepository;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.entities.EntityBase;
@@ -37,6 +38,9 @@ public class JobApplicationHome extends FormBase<JobApplication, Long> {
     @Inject
     private AutoCodeService codeService;
 
+    @Inject
+    private EvaluationNoteRepository evaluationNoteRepository;
+
     @Override
     protected RepositoryBase<JobApplication, ?> getRepository() {
         return repository;
@@ -55,7 +59,7 @@ public class JobApplicationHome extends FormBase<JobApplication, Long> {
     public void createApplicantQuickPanel() {
         quickRecordController.setName("applicantQuickRecord");
     }
-    
+
     /**
      * NoteWidget için gerekli.
      *
@@ -72,6 +76,10 @@ public class JobApplicationHome extends FormBase<JobApplication, Long> {
     // FeatureLink yönlendirmesi
     public FeaturePointer getAllFeaturePointer(EntityBase entityBase) {
         return FeatureUtils.getFeaturePointer(entityBase);
+    }
+
+    public boolean isCanEvaluate() {
+        return evaluationNoteRepository.findByApplicationAndOwner(getEntity(), identity.getLoginName());
     }
 
 }

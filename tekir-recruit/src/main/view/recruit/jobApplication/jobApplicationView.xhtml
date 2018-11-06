@@ -48,7 +48,7 @@
         <t:outputDate label="general.label.Date" value="#{jobApplicationHome.entity.date}" columnClass="col-md-2 col-xs-12"/>
     </ui:define>
 
-    <ui:define name="context-menu"> 
+    <ui:define name="context-menu" id="contextMenu"> 
         <li>
             <p:commandLink action="#{jobApplicationHome.create()}" styleClass="context-command" ajax="false" >
                 <i class="fa fa-plus-circle"></i>
@@ -60,6 +60,19 @@
             <p:commandLink action="#{jobApplicationHome.edit()}" styleClass="context-command" rendered="#{identity.hasPermission( entityName, 'update') and hideEditBtn ne 'true' }">
                 <i class="fa fa-edit"></i>
                 <h:outputText value=" #{messages['general.button.Edit']}" />
+            </p:commandLink>
+        </li>
+        <li>
+            <p:commandLink action="#{evaluationNoteEditor.create()}" styleClass="context-command" rendered="#{jobApplicationHome.canEvaluate}" ajax="true">
+                <i class="fa fa-star"></i>
+                <h:outputText value=" #{messages['EvaluationNote.button.add']}"/>
+                <f:ajax event="dialogReturn" render="@all" />
+            </p:commandLink>
+
+            <p:commandLink action="#{evaluationNoteEditor.editEvaluation()}" styleClass="context-command" rendered="#{!jobApplicationHome.canEvaluate}" ajax="true">
+                <i class="fa fa-edit"></i>
+                <h:outputText value=" #{messages['EvaluationNote.button.edit']}"/>
+                <f:ajax event="dialogReturn" render="@all" />
             </p:commandLink>
         </li>
     </ui:define>

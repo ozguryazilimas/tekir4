@@ -148,6 +148,11 @@ public interface RecruitPages extends Pages {
         class JobApplicationMasterView implements JobApplicationPages {
         }
         
+        @View
+        @SecuredPage
+        class EvaluationNotesEditor implements JobApplicationPages {
+        }
+        
     }
     
 }

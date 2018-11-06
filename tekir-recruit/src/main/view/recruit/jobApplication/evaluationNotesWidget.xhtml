@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui">
+
+    #{evaluationNoteEditor.init(jobApplication,pageType)}
+
+    <t:accordion id="evaluationNotes" icon="fa fa-file" label="EvaluationNote.label.evaluations" columnClass="#{columnClass}">
+        <div class="table-responsive no-padding">
+            <p:dataTable var="ja" value="#{evaluationNoteEditor.entityList}" tableStyleClass="table table-condensed table-hover"
+                         paginator="true" rows="5"
+                         paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                         paginatorPosition="bottom" 
+                         paginatorAlwaysVisible="false"
+                         emptyMessage="#{messages['EvaluationNote.table.emptyMessage']}">
+                <p:column headerText="#{messages['EvaluationNote.headerText.owner']}">
+                    <h:outputText value="#{ja.owner}"/>
+                </p:column>
+                <p:column headerText="#{messages['EvaluationNote.headerText.rating']}">
+                    <h:outputText value="#{ja.rating}"/>
+                </p:column>
+                <p:column headerText="#{messages['EvaluationNote.headerText.state']}">
+                    <h:outputText value="#{ja.state}" styleClass="label label-primary"/>
+                </p:column>
+                <p:column headerText="#{messages['EvaluationNote.headerText.stateReason']}">
+                    <h:outputText value="#{ja.stateReason}" styleClass="label label-primary"/>
+                </p:column>
+                <p:column headerText="#{messages['EvaluationNote.headerText.info']}">
+                    <h:outputText value="#{ja.info}" styleClass="label label-primary"/>
+                </p:column>
+            </p:dataTable>
+        </div>
+    </t:accordion>
+
+</ui:composition>

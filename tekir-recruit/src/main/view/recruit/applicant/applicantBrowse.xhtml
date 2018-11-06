@@ -57,7 +57,7 @@
         <div columnClass="col-xs-12" style="padding-top:5px;">
             <h:panelGroup layout="block">
                 <h:outputLabel for="rating" value="#{messages['Applicant.label.Rating']}" rendered="#{applicantBrowse.applicant.rating ne null}" />
-                <p:rating id="rating"  value="#{applicantBrowse.applicant.rating}" stars="#{applicantBrowse.ratingLength}" rendered="#{applicantBrowse.applicant.rating ne null}" readonly="true"/> 
+                <t:outputText id="rating"  value="#{applicantBrowse.applicant.rating}" readonly="true"/>
             </h:panelGroup>
         </div>
     </ui:define>
