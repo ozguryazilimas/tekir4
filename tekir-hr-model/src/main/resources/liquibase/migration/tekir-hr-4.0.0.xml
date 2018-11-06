@@ -163,4 +163,9 @@
     <changeSet author="soner.cirit" id="20180529-3">
         <modifyDataType columnName="TXNDATE" newDataType="date" tableName="THR_SALARY_NOTE"/>
     </changeSet>
+    <changeSet author="ercan" id="1541447028-2">
+        <modifyDataType tableName="THR_CREDIT_NOTE" columnName="TAGS" newDataType="VARCHAR(2000)" />
+        <modifyDataType tableName="THR_LEAVE" columnName="TAGS" newDataType="VARCHAR(2000)" />
+        <modifyDataType tableName="THR_SALARY_NOTE" columnName="TAGS" newDataType="VARCHAR(2000)" />
+    </changeSet>
 </databaseChangeLog>
