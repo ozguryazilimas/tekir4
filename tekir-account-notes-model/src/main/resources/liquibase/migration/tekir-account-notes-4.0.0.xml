@@ -198,4 +198,9 @@
     <changeSet author="soner.cirit" id="20180529-3">
         <modifyDataType columnName="TXNDATE" newDataType="date" tableName="TAN_VIREMENT"/>
     </changeSet>
+    <changeSet author="ercan" id="1541447028-11">
+        <modifyDataType tableName="TAN_CREDIT_NOTE" columnName="TAGS" newDataType="VARCHAR(2000)" />
+        <modifyDataType tableName="TAN_DEBIT_NOTE" columnName="TAGS" newDataType="VARCHAR(2000)" />
+        <modifyDataType tableName="TAN_VIREMENT" columnName="TAGS" newDataType="VARCHAR(2000)" />
+    </changeSet>
 </databaseChangeLog>

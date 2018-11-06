@@ -116,4 +116,7 @@
     <changeSet author="soner.cirit" id="20180529-1">
         <modifyDataType columnName="TXNDATE" newDataType="date" tableName="TCO_OPPOTUNITY"/>
     </changeSet>
+    <changeSet author="ercan" id="1541447028-10">
+        <modifyDataType tableName="TCO_OPPOTUNITY" columnName="TAGS" newDataType="VARCHAR(2000)" />
+    </changeSet>
 </databaseChangeLog>

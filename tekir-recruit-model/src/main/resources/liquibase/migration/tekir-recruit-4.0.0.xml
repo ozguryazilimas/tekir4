@@ -187,4 +187,7 @@
     <changeSet author="ercan" id="1540279012-4">
         <renameColumn tableName="TRC_ADVERT" oldColumnName="SERIAL" newColumnName="CODE" />
     </changeSet>
+    <changeSet id="ercan" author="1540279012-5">
+        <dropColumn tableName="TCC_CONTACT" columnName="MILITARY_DUTY" />
+    </changeSet>
 </databaseChangeLog>

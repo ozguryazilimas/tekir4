@@ -111,4 +111,7 @@
     <changeSet author="soner.cirit" id="20180529-1">
         <modifyDataType columnName="TXNDATE" newDataType="date" tableName="TLE_LEAD"/>
     </changeSet>
+    <changeSet author="ercan" id="1541447028-3">
+        <modifyDataType tableName="TLE_LEAD" columnName="TAGS" newDataType="VARCHAR(2000)" />
+    </changeSet>
 </databaseChangeLog>

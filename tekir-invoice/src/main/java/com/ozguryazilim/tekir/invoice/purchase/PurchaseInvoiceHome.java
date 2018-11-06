@@ -28,6 +28,8 @@ import javax.inject.Inject;
 @FormEdit(feature = PurchaseInvoiceFeature.class)
 public class PurchaseInvoiceHome extends InvoiceHomeBase<PurchaseInvoice> {
 
+    private final static String tagKey = "PurchaseInvoice";
+
     @Inject
     private PurchaseInvoiceRepository repository;
 
@@ -58,4 +60,9 @@ public class PurchaseInvoiceHome extends InvoiceHomeBase<PurchaseInvoice> {
     public FeaturePointer getAllFeaturePointer(EntityBase contact){
 		return FeatureUtils.getFeaturePointer(contact);
     }
+
+    public String getTagKey() {
+        return tagKey;
+    }
+
 }
