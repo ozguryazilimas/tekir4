@@ -3,7 +3,6 @@ package com.ozguryazilim.tekir.recruit.applicant;
 import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.entities.Applicant;
 import com.ozguryazilim.tekir.entities.Applicant_;
-import com.ozguryazilim.tekir.entities.ContactAddress;
 import com.ozguryazilim.tekir.entities.ContactEMail;
 import com.ozguryazilim.tekir.entities.ContactInformation_;
 import com.ozguryazilim.tekir.entities.ContactPhone;
