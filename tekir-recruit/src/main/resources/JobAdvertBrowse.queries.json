@@ -4,7 +4,6 @@
         "resultLimit": 100,
         "rowLimit": 20,
         "columns": [
-            "serial",
             "topic",
             "info",
             "startDate",
@@ -37,7 +36,6 @@
         "resultLimit": 100,
         "rowLimit": 20,
         "columns": [
-            "serial",
             "topic",
             "info", 
             "startDate", 
@@ -69,7 +67,7 @@
         "name": "query.JobAdvertBrowse.startLastMonth",
         "resultLimit": 100,
         "rowLimit": 20,
-        "columns": ["serial", "topic", "info", "startDate", "endDate"],
+        "columns": ["topic", "info", "startDate", "endDate"],
         "filters": ["topic", "startDate", "endDate", "owner", "info", "status"],
         "filterValues": {
             "owner": "All::null",
@@ -89,7 +87,7 @@
         "name": "query.JobAdvertBrowse.expired",
         "resultLimit": 100,
         "rowLimit": 20,
-        "columns": ["serial", "topic", "info", "startDate", "endDate"],
+        "columns": ["topic", "info", "startDate", "endDate"],
         "filters": ["topic", "startDate", "endDate", "owner", "info", "status"],
         "filterValues": {
             "owner": "All::null",
@@ -109,7 +107,7 @@
         "name": "query.JobAdvertBrowse.ongoing",
         "resultLimit": 100,
         "rowLimit": 20,
-        "columns": ["serial", "topic", "info", "startDate", "endDate"],
+        "columns": ["topic", "info", "startDate", "endDate"],
         "filters": ["topic", "startDate", "endDate", "owner", "info", "status"],
         "filterValues": {
             "owner": "All::null",
