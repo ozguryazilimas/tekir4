@@ -45,4 +45,7 @@
     <changeSet author="soner.cirit" id="20180529-1">
         <modifyDataType columnName="TXNDATE" newDataType="date" tableName="TPC_PAYMENT"/>
     </changeSet>
+    <changeSet author="ercan" id="1541447028-1">
+        <modifyDataType tableName="TPC_PAYMENT" columnName="TAGS" newDataType="VARCHAR(2000)" />
+    </changeSet>
 </databaseChangeLog>

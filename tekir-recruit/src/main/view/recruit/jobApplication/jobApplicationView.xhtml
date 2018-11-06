@@ -6,9 +6,9 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/layout/containerViewTabBase.xhtml">
 
-    <ui:param name="bean" value="#{jobApplicationHome}" />
-    <ui:param name="entityName" value="jobApplication" />
-    <ui:param name="viewIdentifier" value="[#{jobApplicationHome.entity.serial}]" />
+    <ui:param name="bean" value="#{jobApplicationHome}"/>
+    <ui:param name="entityName" value="jobApplication"/>
+    <ui:param name="viewIdentifier" value="[#{jobApplicationHome.entity.code}]"/>
     <ui:param name="showCaption" value="true"/>
     <ui:param name="dontShowContentHeader" value="true" />
 

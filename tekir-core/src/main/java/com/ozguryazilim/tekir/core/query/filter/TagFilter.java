@@ -38,7 +38,7 @@ public class TagFilter<E> extends Filter<E, List<String>, List<String>>{
         super(null, label);
         this.key = key;
         setAttribute(new MockSingularAttribute<>(attributeName));
-        this.setOperands(Arrays.asList(FilterOperand.All, FilterOperand.Contains, FilterOperand.NotContains));
+        this.setOperands(Arrays.asList(FilterOperand.All, FilterOperand.Equal, FilterOperand.NotEqual));
         this.setOperand(FilterOperand.Equal);
         this.suggestionProvider = BeanProvider.getContextualReference(TagSuggestionService.class);
     }

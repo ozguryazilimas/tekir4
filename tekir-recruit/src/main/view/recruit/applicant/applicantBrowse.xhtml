@@ -3,7 +3,8 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
                 xmlns:h="http://java.sun.com/jsf/html"
-                template="/layout/browseBase.xhtml">
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                template="/recruit/recruitBrowseBase.xhtml">
 
     <ui:param name="bean" value="#{applicantBrowse}" />
     <ui:param name="advanceEnabled" value="true" />
@@ -20,22 +21,37 @@
     </ui:define>
     <ui:define name="detailBar">
         <div class="row">
-            <t:outputText label="Applicant.label.FirstName" value="#{applicantBrowse.applicant.firstName}" columnClass="col-xs-12" rendered="#{not empty applicantBrowse.applicant.firstName}"/>
-            <t:outputText label="Applicant.label.LastName" value="#{applicantBrowse.applicant.lastName}" columnClass="col-xs-12" rendered="#{not empty applicantBrowse.applicant.lastName}"/>
-            <t:outputText value="#{messages['gender.'.concat(applicantBrowse.applicant.gender)]}" label="contact.label.Gender" rendered="#{not empty applicantBrowse.applicant.gender}" columnClass="col-xs-12"/>
-            <t:outputBoolean label="Applicant.label.Married" itemLabel="Applicant.Married." value="#{applicantBrowse.applicant.married}" rendered="#{not empty applicantBrowse.applicant.married}" columnClass="col-xs-12"/>
-            <t:outputBoolean label="Applicant.label.militaryDuty" itemLabel="Applicant.militaryDuty." value="#{applicantBrowse.applicant.militaryDuty}" rendered="#{not empty applicantBrowse.applicant.militaryDuty}" columnClass="col-xs-12"/>
+            <t:outputText label="Applicant.label.FirstName" value="#{applicantBrowse.applicant.firstName}"
+                          columnClass="col-xs-12" rendered="#{not empty applicantBrowse.applicant.firstName}"/>
+            <t:outputText label="Applicant.label.LastName" value="#{applicantBrowse.applicant.lastName}"
+                          columnClass="col-xs-12" rendered="#{not empty applicantBrowse.applicant.lastName}"/>
+            <t:outputText value="#{messages['gender.'.concat(applicantBrowse.applicant.gender)]}"
+                          label="contact.label.Gender" rendered="#{not empty applicantBrowse.applicant.gender}"
+                          columnClass="col-xs-12"/>
+            <t:outputBoolean label="Applicant.label.Married" itemLabel="Applicant.Married."
+                             value="#{applicantBrowse.applicant.married}"
+                             rendered="#{not empty applicantBrowse.applicant.married}" columnClass="col-xs-12"/>
         </div>
 
         <div class="row">
-            <t:outputText label="Applicant.label.Classifications" value="#{applicantBrowse.applicant.classifications}" rendered="#{not empty applicantBrowse.applicant.classifications}" columnClass="col-xs-12"/>
-            <t:outputTag label="Applicant.label.Skills" value="#{applicantBrowse.applicant.skills}" rendered="#{not empty applicantBrowse.applicant.skills}" columnClass="col-xs-12"/>
+            <t:outputTag label="Applicant.label.Classifications" value="#{applicantBrowse.applicant.classifications}"
+                         rendered="#{not empty applicantBrowse.applicant.classifications}" columnClass="col-xs-12"/>
+            <t:outputTag label="Applicant.label.Skills" value="#{applicantBrowse.applicant.skills}"
+                         rendered="#{not empty applicantBrowse.applicant.skills}" columnClass="col-xs-12"/>
         </div>
 
-        <div class="row">   
-            <t:outputText label="contact.label.PrimaryMobile" value="#{applicantBrowse.applicant.primaryMobile.caption}" rendered="#{not empty applicantBrowse.applicant.primaryMobile.caption}" columnClass="col-xs-12" />
-            <t:outputText label="contact.label.PrimaryPhone" value="#{applicantBrowse.applicant.primaryPhone.caption}" rendered="#{not empty applicantBrowse.applicant.primaryPhone.caption}" columnClass="col-xs-12" />
-            <t:outputText label="contact.label.PrimaryEmail" value="#{applicantBrowse.applicant.primaryEmail.caption}" rendered="#{not empty applicantBrowse.applicant.primaryEmail.caption}" columnClass="col-xs-12" />
+        <div class="row">
+            <t:outputText label="contact.label.PrimaryMobile" value="#{applicantBrowse.applicant.primaryMobile.caption}"
+                          rendered="#{not empty applicantBrowse.applicant.primaryMobile.caption}"
+                          columnClass="col-xs-12"/>
+            <t:outputText label="contact.label.PrimaryPhone" value="#{applicantBrowse.applicant.primaryPhone.caption}"
+                          rendered="#{not empty applicantBrowse.applicant.primaryPhone.caption}"
+                          columnClass="col-xs-12"/>
+            <t:outputText label="contact.label.PrimaryEmail" value="#{applicantBrowse.applicant.primaryEmail.caption}"
+                          rendered="#{not empty applicantBrowse.applicant.primaryEmail.caption}"
+                          columnClass="col-xs-12"/>
+            <t:outputText label="JobAdvert.label.Topic" value="#{applicantBrowse.education}"
+                          columnClass="col-xs-12"/>
         </div>
 
         <div columnClass="col-xs-12" style="padding-top:5px;">

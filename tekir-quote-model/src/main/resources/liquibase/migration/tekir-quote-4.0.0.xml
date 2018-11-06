@@ -144,4 +144,7 @@
     <changeSet author="soner.cirit" id="20180529-1">
         <modifyDataType columnName="TXNDATE" newDataType="date" tableName="TSQ_QUOTE"/>
     </changeSet>
+    <changeSet author="ercan" id="1541447028-5">
+        <modifyDataType tableName="TSQ_QUOTE" columnName="TAGS" newDataType="VARCHAR(2000)" />
+    </changeSet>
 </databaseChangeLog>

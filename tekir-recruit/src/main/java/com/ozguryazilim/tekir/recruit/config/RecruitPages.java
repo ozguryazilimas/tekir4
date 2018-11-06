@@ -110,7 +110,12 @@ public interface RecruitPages extends Pages {
         @SecuredPage
         class ApplicantWorkHistoryEditor implements ApplicantPages {
         }
-        
+
+        @View
+        @SecuredPage
+        class ApplicantMilitaryServiceEditor implements ApplicantPages {
+        }
+
     }
     
     @Folder(name = "./jobApplication")

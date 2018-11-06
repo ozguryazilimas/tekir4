@@ -35,5 +35,10 @@ public class SalesInvoiceBrowse extends InvoiceBrowse<SalesInvoice, SalesInvoice
 		// TODO Auto-generated method stub
 		return home;
 	}
+
+    @Override
+    public String getTagKey() {
+        return home.getTagKey();
+    }
     
 }

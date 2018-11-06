@@ -106,4 +106,7 @@
     <changeSet author="soner.cirit" id="20180529-1">
         <modifyDataType columnName="TXNDATE" newDataType="date" tableName="TOR_ORDER"/>
     </changeSet>
+    <changeSet author="ercan" id="1541447028-4">
+        <modifyDataType tableName="TOR_ORDER" columnName="TAGS" newDataType="VARCHAR(2000)" />
+    </changeSet>
 </databaseChangeLog>

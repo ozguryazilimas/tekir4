@@ -50,7 +50,7 @@ public class JobApplicationHome extends FormBase<JobApplication, Long> {
     public void createNew() {
         super.createNew();
         getEntity().setOwner(identity.getLoginName());
-        getEntity().setSerial(codeService.getNewSerialNumber(JobApplication.class.getSimpleName()));
+        getEntity().setCode(codeService.getNewSerialNumber(JobApplication.class.getSimpleName()));
     }
 
     /**
@@ -67,7 +67,7 @@ public class JobApplicationHome extends FormBase<JobApplication, Long> {
      */
     public FeaturePointer getFeaturePointer() {
         FeaturePointer result = new FeaturePointer();
-        result.setBusinessKey(getEntity().getSerial());
+        result.setBusinessKey(getEntity().getCode());
         result.setFeature(getFeatureClass().getSimpleName());
         result.setPrimaryKey(getEntity().getId());
         return result;

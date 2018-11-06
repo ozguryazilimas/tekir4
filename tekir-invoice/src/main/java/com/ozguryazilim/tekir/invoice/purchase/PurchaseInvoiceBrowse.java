@@ -36,4 +36,9 @@ public class PurchaseInvoiceBrowse extends InvoiceBrowse<PurchaseInvoice, Purcha
 		return home;
 	}
 
+    @Override
+    public String getTagKey() {
+        return home.getTagKey();
+    }
+
 }

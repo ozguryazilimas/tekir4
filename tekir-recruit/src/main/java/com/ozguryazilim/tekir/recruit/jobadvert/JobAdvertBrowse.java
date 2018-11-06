@@ -64,7 +64,7 @@ public class JobAdvertBrowse extends BrowseBase<JobAdvert, JobAdvertViewModel> {
                 .addFilter(new StringListFilter<>(JobAdvert_.status,suggestionList,"JobAdvert.label.Status",""));
 
         queryDefinition
-                .addColumn(new LinkColumn<>(JobAdvert_.serial, "JobAdvert.label.Serial"), true)
+                .addColumn(new LinkColumn<>(JobAdvert_.code, "JobAdvert.label.Serial"), true)
                 .addColumn(new LinkColumn<>(JobAdvert_.topic, "JobAdvert.label.Topic"), true)
                 .addColumn(new TextColumn<>(JobAdvert_.info, "JobAdvert.label.Info"), true)
                 .addColumn(new DateColumn<>(JobAdvert_.startDate, "JobAdvert.label.startDate"), true)

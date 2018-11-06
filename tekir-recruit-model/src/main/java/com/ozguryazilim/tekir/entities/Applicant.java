@@ -48,14 +48,7 @@ public class Applicant extends AbstractPerson{
      */
     @Column( name = "RATING")
     private Integer rating = 0;
-    
-    /**
-     * Askerlik durumu?
-     * TODO: Bu alan boolean dışına çıkabilir. 2 yıl tecil gibi?
-     */
-    @Column( name = "MILITARY_DUTY")
-    private Boolean militaryDuty = Boolean.FALSE;
-    
+
     /**
      * Evli mi?
      * TODO: Bu alan boolean dışına çıkabilir. Evli, Bekar, Dul gibi vs.
@@ -85,14 +78,6 @@ public class Applicant extends AbstractPerson{
 
     public void setRating(Integer rating) {
         this.rating = rating;
-    }
-
-    public Boolean getMilitaryDuty() {
-        return militaryDuty;
-    }
-
-    public void setMilitaryDuty(Boolean militaryDuty) {
-        this.militaryDuty = militaryDuty;
     }
 
     public Boolean getMarried() {
