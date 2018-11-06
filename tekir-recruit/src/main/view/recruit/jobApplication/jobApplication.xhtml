@@ -32,14 +32,28 @@
     <ui:define name="form">
         <div class="row">
             <div class="col-md-6 col-xs-12">
-                <t:inputText label="#{messages['general.label.SerialNumber']}" value="#{jobApplicationHome.entity.serial}" columnClass="col-md-6 col-xs-12" required="true"/>
-                <t:inputDate label="#{messages['general.label.Date']}" value="#{jobApplicationHome.entity.date }"  columnClass="col-md-6 col-xs-12" />
-                
-                <t:inputLookupDialog label="contact.class.JobAdvert" value="#{jobApplicationHome.entity.advert}" lookupBean="#{jobAdvertLookup}" lookupListener="jobApplicationHome.entity.advert" required="true" placeholder="#{messages['contact.info.JobAdvert']}" columnClass="col-md-6 col-xs-12"/>      
-                <t:inputLookupDialog label="contact.class.Applicant" value="#{jobApplicationHome.entity.applicant}" lookupBean="#{applicantLookup}" lookupListener="jobApplicationHome.entity.applicant" required="true" placeholder="#{messages['contact.info.Applicant']}" update="@form" columnClass="col-md-6 col-xs-12"/>
-                
-                <t:inputSuggestion label="JobApplication.label.State" value="#{jobApplicationHome.entity.state}" group="#{jobApplicationHome.entity.class.simpleName}" listener="jobApplicationHome.entity.state" required="true" columnClass="col-md-6 col-xs-12"/>
-                <t:inputUser label="general.label.Owner" value="#{jobApplicationHome.entity.owner}" required="true"  columnClass="col-md-6 col-xs-12"/>
+                <t:inputText label="#{messages['general.label.SerialNumber']}"
+                             value="#{jobApplicationHome.entity.serial}" columnClass="col-md-6 col-xs-12"
+                             required="true"/>
+                <t:inputDate label="#{messages['general.label.Date']}" value="#{jobApplicationHome.entity.date }"
+                             columnClass="col-md-6 col-xs-12"/>
+
+                <t:inputLookupDialog label="contact.class.JobAdvert" value="#{jobApplicationHome.entity.advert}"
+                                     lookupBean="#{jobAdvertLookup}" lookupListener="jobApplicationHome.entity.advert"
+                                     required="true" placeholder="#{messages['contact.info.JobAdvert']}"
+                                     columnClass="col-md-6 col-xs-12"/>
+                <t:inputLookupDialog label="contact.class.Applicant" value="#{jobApplicationHome.entity.applicant}"
+                                     lookupBean="#{applicantLookup}"
+                                     lookupListener="jobApplicationHome.entity.applicant" required="true"
+                                     placeholder="#{messages['contact.info.Applicant']}"
+                                     columnClass="col-md-6 col-xs-12"/>
+
+                <t:inputSuggestion label="JobApplication.label.State" value="#{jobApplicationHome.entity.state}"
+                                   group="#{jobApplicationHome.entity.class.simpleName}"
+                                   listener="jobApplicationHome.entity.state" required="true"
+                                   columnClass="col-md-6 col-xs-12"/>
+                <t:inputUser label="general.label.Owner" value="#{jobApplicationHome.entity.owner}" required="true"
+                             columnClass="col-md-6 col-xs-12"/>
             </div>
             <div class="col-md-6 col-xs-12">
                 <t:inputTextarea label="general.label.Info" value="#{jobApplicationHome.entity.info}" columnClass="col-md-12 col-xs-12"/>
