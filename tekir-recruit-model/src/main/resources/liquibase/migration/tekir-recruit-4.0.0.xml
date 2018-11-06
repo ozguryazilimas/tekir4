@@ -167,4 +167,21 @@
             <column name="SERIAL" type="varchar(255)"/>
         </addColumn>
     </changeSet>
+    <changeSet author="ercan" id="1540279012-1">
+        <createTable tableName="TRC_MILITARY_SERVICE">
+            <column name="ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATE_DATE" type="timestamp"/>
+            <column name="UPDATE_DATE" type="timestamp"/>
+            <column name="UPDATE_USER" type="VARCHAR(255)"/>
+            <column name="POSTPONED_TO" type="date"/>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="STATUS" type="VARCHAR(255)"/>
+            <column name="APPLICANT_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="ercan" author="1540279012-5">
+        <dropColumn tableName="TCC_CONTACT" columnName="MILITARY_DUTY" />
+    </changeSet>
 </databaseChangeLog>

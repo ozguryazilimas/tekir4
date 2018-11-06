@@ -77,7 +77,6 @@ public abstract class ApplicantRepository extends
                 from.get(Contact_.name),
                 from.get("skills"),
                 from.get("classifications"),
-                from.get(Applicant_.militaryDuty),
                 from.get(Applicant_.rating),
                 from.get(Applicant_.married),
                 from.get(Contact_.info),
