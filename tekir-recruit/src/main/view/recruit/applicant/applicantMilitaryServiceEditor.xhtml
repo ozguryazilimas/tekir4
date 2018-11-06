@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/recruit/applicant/applicantInformationEditor.xhtml">
+
+    <ui:param name="title" value="militaryServiceEditor.label.Title"/>
+    <ui:param name="bean" value="#{applicantMilitaryServiceEditor}"/>
+
+    <ui:define name="editorContent">
+        <h:panelGroup id="militaryServiceInformation">
+            <div class="row">
+                <t:inputEnum value="#{applicantMilitaryServiceEditor.entity.status}" label="Applicant.label.militaryService"
+                             itemLabel="militaryService.status."
+                             hasNullValue="false" columnClass="col-xs-6" >
+                    <p:ajax event="change" update=":#{p:component('militaryServiceInformation')}" />
+                </t:inputEnum>
+            </div>
+            <h:panelGroup rendered="#{applicantMilitaryServiceEditor.entity.status eq 'POSTPONED'}">
+                <div class="row">
+                    <t:inputDate label="militaryService.label.PostponedTo"
+                                 value="#{applicantMilitaryServiceEditor.entity.postponedTo}"
+                                 required="#{applicantMilitaryServiceEditor.entity.status == 'POSTPONED'}" />
+                </div>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{applicantMilitaryServiceEditor.entity.status eq 'EXEMPT'}">
+                <div class="row">
+                    <t:inputTextarea label="militaryService.label.Info"
+                                     value="#{applicantMilitaryServiceEditor.entity.info}"
+                                     required="#{applicantMilitaryServiceEditor.entity.status == 'EXEMPT'}" />
+                </div>
+            </h:panelGroup>
+        </h:panelGroup>
+    </ui:define>
+
+</ui:composition>
