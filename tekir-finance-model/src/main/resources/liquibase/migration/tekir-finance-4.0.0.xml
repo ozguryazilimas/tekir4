@@ -153,7 +153,4 @@
     <changeSet author="ercan" id="1541447028-7">
         <modifyDataType tableName="TFN_FINANCE_TXN" columnName="TAGS" newDataType="VARCHAR(2000)" />
     </changeSet>
-    <changeSet author="ercan" id="1541447028-8">
-        <modifyDataType tableName="TFN_FINANCE_TXN" columnName="TAGS" newDataType="VARCHAR(2000)" />
-    </changeSet>
 </databaseChangeLog>
