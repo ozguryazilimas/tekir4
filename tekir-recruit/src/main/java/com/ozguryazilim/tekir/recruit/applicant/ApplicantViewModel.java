@@ -12,17 +12,15 @@ public class ApplicantViewModel extends ContactViewModel {
 
     private List<String> skills;
     private List<String> classifications;
-    private Boolean militaryDuty;
     private Integer rating;
     private Boolean married;
 
     public ApplicantViewModel(Long id, String code, String name, List<String> skills, List<String> classifications,
-            Boolean militaryDuty, Integer rating, Boolean married, String info, Boolean active, Class<? extends Contact> type, Long pmMobileId, 
-    		String primaryMobileaddress, Long pmPhoneId, String primaryPhoneaddress, Long pmEmailId, String primaryEmailaddress) {
+                              Integer rating, Boolean married, String info, Boolean active, Class<? extends Contact> type, Long pmMobileId,
+                              String primaryMobileaddress, Long pmPhoneId, String primaryPhoneaddress, Long pmEmailId, String primaryEmailaddress) {
         super(id, code, name, info, active, type, pmMobileId, primaryMobileaddress, pmPhoneId, primaryPhoneaddress, pmEmailId, primaryEmailaddress);
         this.skills = skills;
         this.classifications = classifications;
-        this.militaryDuty = militaryDuty;
         this.rating = rating;
         this.married = married;
     }
@@ -41,14 +39,6 @@ public class ApplicantViewModel extends ContactViewModel {
 
     public void setClassifications(List<String> classifications) {
         this.classifications = classifications;
-    }
-
-    public Boolean getMilitaryDuty() {
-        return militaryDuty;
-    }
-
-    public void setMilitaryDuty(Boolean militaryDuty) {
-        this.militaryDuty = militaryDuty;
     }
 
     public Integer getRating() {
