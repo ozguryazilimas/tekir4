@@ -21,12 +21,24 @@
 
     <ui:define name="detailBar">
         <div class="row">
-            <t:outputText label="JobAdvert.label.Topic" value="#{jobApplicationBrowse.jobApplication.advert.topic}" columnClass="col-xs-12" rendered="#{not empty jobApplicationBrowse.jobApplication.advert.topic}"/>
-            <t:outputText label="general.label.Date" value="#{jobApplicationBrowse.jobApplication.date}" columnClass="col-xs-12" rendered="#{not empty jobApplicationBrowse.jobApplication.date}"/>
-            <t:outputText label="JobAdvert.label.startDate" value="#{jobApplicationBrowse.jobApplication.advert.startDate}" columnClass="col-xs-12" rendered="#{not empty jobApplicationBrowse.jobApplication.advert.startDate}"/>
-            <t:outputText label="JobAdvert.label.endDate" value="#{jobApplicationBrowse.jobApplication.advert.endDate}" columnClass="col-xs-12" rendered="#{not empty jobApplicationBrowse.jobApplication.advert.endDate}"/>
-            <t:outputText label="JobAdvert.label.Skills" value="#{jobApplicationBrowse.jobApplication.advert.skills}" columnClass="col-xs-12" rendered="#{not empty jobApplicationBrowse.jobApplication.advert.skills}"/>
-            <t:outputText label="JobAdvert.label.Status" value="#{jobApplicationBrowse.jobApplication.advert.status}" columnClass="col-xs-12" rendered="#{not empty jobApplicationBrowse.jobApplication.advert.status}"/>
+            <t:outputText label="JobAdvert.label.Topic" value="#{jobApplicationBrowse.jobApplication.advert.topic}"
+                          columnClass="col-xs-12"
+                          rendered="#{not empty jobApplicationBrowse.jobApplication.advert.topic}"/>
+            <t:outputText label="general.label.Date" value="#{jobApplicationBrowse.jobApplication.date}"
+                          columnClass="col-xs-12" rendered="#{not empty jobApplicationBrowse.jobApplication.date}"/>
+            <t:outputText label="JobAdvert.label.startDate"
+                          value="#{jobApplicationBrowse.jobApplication.advert.startDate}" columnClass="col-xs-12"
+                          rendered="#{not empty jobApplicationBrowse.jobApplication.advert.startDate}"/>
+            <t:outputText label="JobAdvert.label.endDate" value="#{jobApplicationBrowse.jobApplication.advert.endDate}"
+                          columnClass="col-xs-12"
+                          rendered="#{not empty jobApplicationBrowse.jobApplication.advert.endDate}"/>
+            <t:outputTag label="JobAdvert.label.Skills"
+                         value="#{jobApplicationBrowse.jobApplication.advert.skills}"
+                         columnClass="col-xs-12"
+                         rendered="#{not empty jobApplicationBrowse.jobApplication.advert.skills}"/>
+            <t:outputText label="JobAdvert.label.Status" value="#{jobApplicationBrowse.jobApplication.advert.status}"
+                          columnClass="col-xs-12"
+                          rendered="#{not empty jobApplicationBrowse.jobApplication.advert.status}"/>
         </div>
         <div class="row">
             <t:outputText label="Applicant.label.FirstName" value="#{jobApplicationBrowse.jobApplication.applicant.firstName}" columnClass="col-xs-12" rendered="#{not empty jobApplicationBrowse.jobApplication.applicant.firstName}"/>
