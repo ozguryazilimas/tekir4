@@ -354,4 +354,8 @@
             <column name="BIRTH_DATE" type="date" />
         </addColumn>
     </changeSet>
+
+    <changeSet author="ercan" id="1541447028-6">
+        <modifyDataType tableName="TCC_ACCOUNT_TXN" columnName="TAGS" newDataType="VARCHAR(2000)" />
+    </changeSet>
 </databaseChangeLog>

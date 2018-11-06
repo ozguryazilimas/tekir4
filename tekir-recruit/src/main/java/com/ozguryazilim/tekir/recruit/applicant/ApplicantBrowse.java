@@ -35,17 +35,15 @@ public class ApplicantBrowse extends BrowseBase<Applicant, ApplicantViewModel>{
         queryDefinition
                 .addFilter(new StringFilter<>(Contact_.code, "general.label.Code"))
                 .addFilter(new StringFilter<>(Contact_.name, "general.label.Name"))
-                .addFilter(new TagFilter<>("skills", "Applicant.label.Skills", "Applicant"))
-                .addFilter(new TagFilter<>("classifications", "Applicant.label.Classifications", "Applicant"))
+                .addFilter(new TagFilter<>("skills", "Applicant.label.Skills", "Applicant::skills"))
+                .addFilter(new TagFilter<>("classifications", "Applicant.label.Classifications", "Applicant::classifications"))
                 .addFilter(new BooleanFilter<>(Applicant_.married, "Applicant.label.Married", "Applicant.Married."))
-                .addFilter(new BooleanFilter<>(Applicant_.militaryDuty, "Applicant.label.militaryDuty", "Applicant.militaryDuty."))             
-                .addFilter(new RatingFilter<>(Applicant_.rating,"Applicant.label.Rating",0,ratingLength));                       
-                
+                .addFilter(new RatingFilter<>(Applicant_.rating, "Applicant.label.Rating", 0, ratingLength));
+
         queryDefinition
                 .addColumn(new LinkColumn<>(Contact_.code, "general.label.Code"), true)
                 .addColumn(new LinkColumn<>(Contact_.name, "general.label.Name"), true)
-                .addColumn(new BooleanColumn<>(Applicant_.married,"Applicant.label.Married","Applicant.Married."),true)
-                .addColumn(new BooleanColumn<>(Applicant_.militaryDuty,"Applicant.label.militaryDuty","Applicant.militaryDuty."),true)
+                .addColumn(new BooleanColumn<>(Applicant_.married, "Applicant.label.Married", "Applicant.Married."), true)
                 .addColumn(new SubTextColumn<>(Contact_.primaryMobile, ContactPhone_.address, "contact.label.PrimaryMobile"), true)
                 .addColumn(new SubTextColumn<>(Contact_.primaryPhone, ContactPhone_.address, "contact.label.PrimaryPhone"), true)
                 .addColumn(new SubTextColumn<>(Contact_.primaryEmail, ContactEMail_.address, "contact.label.PrimaryEmail"), true);

@@ -59,7 +59,7 @@ public abstract class InvoiceBrowse<E extends Invoice, V extends InvoiceViewMode
         
         queryDefinition
                 .addFilter(new StringFilter<>(VoucherBase_.voucherNo, "voucher.label.VoucherNo"))
-                .addFilter(new TagFilter<>("tags", "general.label.Tag","Invoice"))
+                .addFilter(new TagFilter<>("tags", "general.label.Tag", getTagKey()))
                 .addFilter(new StringFilter<>(VoucherBase_.info, "voucher.label.Info"))
                 .addFilter(new StringFilter<>(VoucherBase_.topic, "voucher.label.Topic"))
                 .addFilter(new VoucherStateFilter<>(VoucherBase_.state, getHome().getStateConfig().getStates(), "general.label.State"))
@@ -71,4 +71,6 @@ public abstract class InvoiceBrowse<E extends Invoice, V extends InvoiceViewMode
                 .addFilter(new SubStringFilter<>(VoucherProcessBase_.process, Process_.processNo, "voucher.label.Process"))
                 .addFilter(new DateFilter<>(VoucherBase_.date, "voucher.label.Date", FilterOperand.In, DateValueType.LastTenDays));
     }
+
+    protected abstract String getTagKey();
 }

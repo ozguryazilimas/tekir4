@@ -35,5 +35,10 @@ public class SalesOrderBrowse extends OrderBrowseBase<SalesOrder, SalesOrderView
 		// TODO Auto-generated method stub
 		return home;
 	}
-    
+
+    @Override
+    public String getTagKey() {
+        return home.getTagKey();
+    }
+
 }

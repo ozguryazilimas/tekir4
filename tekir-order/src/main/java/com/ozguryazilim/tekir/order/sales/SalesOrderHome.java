@@ -22,6 +22,8 @@ import javax.inject.Inject;
 @FormEdit(feature = SalesOrderFeature.class)
 public class SalesOrderHome extends OrderHomeBase<SalesOrder> {
 
+    private final static String tagKey = "SalesOrder";
+
     @Inject
     private SalesOrderRepository repository;
 
@@ -38,4 +40,9 @@ public class SalesOrderHome extends OrderHomeBase<SalesOrder> {
     public FeaturePointer getAllFeaturePointer(EntityBase contact){
     		return FeatureUtils.getFeaturePointer(contact);
     }
+
+    public String getTagKey() {
+        return tagKey;
+    }
+
 }

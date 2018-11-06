@@ -1,0 +1,69 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui">
+
+    #{applicantMilitaryServiceEditor.init(applicant,pageType)}
+
+    <t:accordion id="militaryService" icon="fas fa-fighter-jet" label="Applicant.label.militaryService"
+                 columnClass="#{columnClass}">
+
+        <f:facet name="toolbar">
+            <div class="dropdown">
+                <p:commandLink class="btn btn-box-tool" process="@this" action="#{applicantMilitaryServiceEditor.create()}">
+                    <i class="fa fa-plus"/>
+                    <p:ajax event="dialogReturn"
+                            update="#{pageType eq 'EDIT' ? '@form:militaryService' : ':militaryService'}"
+                            partialSubmit="true" process="@this"/>
+                </p:commandLink>
+            </div>
+        </f:facet>
+
+        <p:outputPanel layout="block" class="box-body">
+            <ul class="products-list product-list-in-box">
+                <ui:repeat value="#{applicantMilitaryServiceEditor.entityList}" var="md">
+                    <li class="item">
+                        <div class="product-img">
+                            <span class="fa-stack" style="color: #999;">
+                                <i class="fa fas fa-fighter-jet fa-2x" style="width: 45px;"/>
+                                <i class="fa #{applicantMilitaryServiceEditor.getIcon(md)} overlay-icon2"/>
+                            </span>
+                        </div>
+                        <div class="product-info">
+                            <div class="box-tools pull-right">
+                                <p:commandLink action="#{applicantMilitaryServiceEditor.edit(md)}" process="@this"
+                                               styleClass="btn btn-box-tool">
+                                    <i class="fa fa-pencil"/>
+                                    <p:ajax event="dialogReturn"
+                                            update="#{pageType eq 'EDIT' ? '@form:militaryService' : ':militaryService'}"
+                                            partialSubmit="true" process="@this"/>
+                                </p:commandLink>
+                                <p:commandLink action="#{applicantMilitaryServiceEditor.delete(md)}" process="@this"
+                                               styleClass="btn btn-box-tool"
+                                               update="#{pageType eq 'EDIT' ? '@form:militaryService' : ':militaryService'}">
+                                    <i class="fa fa-trash"/>
+                                    <p:confirm header="#{messages['general.caption.Confirm']}"
+                                               message="#{messages['general.message.confirm.Delete']}"
+                                               icon="fa fa-2x fa-exclamation-triangle btn-delete"/>
+                                </p:commandLink>
+                            </div>
+                            <span class="product-title">#{md.status}</span>
+                            <ui:fragment rendered="#{md.info ne ''}">
+                                <span class="product-description"><i class="fa fa-info-circle fa-fw"/>#{md.info}</span>
+                            </ui:fragment>
+                            <span class="product-description text-sm">
+                                <i class="fa fa-tag fa-fw"/> #{md.status}
+                                <ui:fragment rendered="#{md.postponedTo ne null}">
+                                    <i class="fa fa-calendar fa-fw"/><t:cellOutputDate value="#{md.postponedTo}"/>
+                                </ui:fragment>
+                            </span>
+                        </div>
+                    </li>
+                </ui:repeat>
+            </ul>
+        </p:outputPanel>
+
+    </t:accordion>
+
+</ui:composition>

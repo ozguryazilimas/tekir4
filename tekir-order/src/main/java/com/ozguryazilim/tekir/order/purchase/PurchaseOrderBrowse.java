@@ -35,5 +35,10 @@ public class PurchaseOrderBrowse extends OrderBrowseBase<PurchaseOrder, Purchase
 		// TODO Auto-generated method stub
 		return home;
 	}
-    
+
+    @Override
+    public String getTagKey() {
+        return home.getTagKey();
+    }
+
 }
