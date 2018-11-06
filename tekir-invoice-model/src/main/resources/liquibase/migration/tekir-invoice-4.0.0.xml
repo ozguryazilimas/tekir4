@@ -91,4 +91,7 @@
             <column name="INV_TIME" type="time"/>
         </addColumn>
     </changeSet>
+    <changeSet author="ercan" id="1541447028-9">
+        <modifyDataType tableName="TIV_INVOICE" columnName="TAGS" newDataType="VARCHAR(2000)" />
+    </changeSet>
 </databaseChangeLog>
