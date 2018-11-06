@@ -181,6 +181,12 @@
             <column name="APPLICANT_ID" type="BIGINT"/>
         </createTable>
     </changeSet>
+    <changeSet author="ercan" id="1540279012-3">
+        <renameColumn tableName="TRC_APPLICATION" oldColumnName="SERIAL" newColumnName="CODE" />
+    </changeSet>
+    <changeSet author="ercan" id="1540279012-4">
+        <renameColumn tableName="TRC_ADVERT" oldColumnName="SERIAL" newColumnName="CODE" />
+    </changeSet>
     <changeSet id="ercan" author="1540279012-5">
         <dropColumn tableName="TCC_CONTACT" columnName="MILITARY_DUTY" />
     </changeSet>

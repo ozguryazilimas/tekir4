@@ -36,9 +36,9 @@ public class JobAdvert extends AuditBase{
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "SERIAL")
+    @Column(name = "CODE")
     @BizKey @NotNull
-    private String serial;
+    private String code;
     
     /**
      * İlan adı
@@ -102,12 +102,12 @@ public class JobAdvert extends AuditBase{
         this.id = id;
     }
 
-    public String getSerial() {
-        return serial;
+    public String getCode() {
+        return code;
     }
 
-    public void setSerial(String serial) {
-        this.serial = serial;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getTopic() {

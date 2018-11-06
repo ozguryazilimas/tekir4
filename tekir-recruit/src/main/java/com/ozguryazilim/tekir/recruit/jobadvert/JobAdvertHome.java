@@ -44,7 +44,7 @@ public class JobAdvertHome extends FormBase<JobAdvert, Long> {
     public void createNew() {
         super.createNew(); 
         getEntity().setOwner(identity.getLoginName());
-        getEntity().setSerial(codeService.getNewSerialNumber(JobAdvert.class.getSimpleName()));
+        getEntity().setCode(codeService.getNewSerialNumber(JobAdvert.class.getSimpleName()));
     }
 
     /**
@@ -63,7 +63,7 @@ public class JobAdvertHome extends FormBase<JobAdvert, Long> {
      */
     public FeaturePointer getFeaturePointer() {
         FeaturePointer result = new FeaturePointer();
-        result.setBusinessKey(getEntity().getSerial());
+        result.setBusinessKey(getEntity().getCode());
         result.setFeature(getFeatureClass().getSimpleName());
         result.setPrimaryKey(getEntity().getId());
         return result;

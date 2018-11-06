@@ -12,7 +12,7 @@ import java.util.List;
 public class JobAdvertViewModel implements ViewModel, Serializable {
 
     private Long id;
-    private String serial;
+    private String code;
     private String topic;
     private String info;
     private Date startDate;
@@ -21,9 +21,11 @@ public class JobAdvertViewModel implements ViewModel, Serializable {
     private String status;
     private List<String> skills;
 
-    public JobAdvertViewModel(Long id, String serial, String topic, String info, Date startDate, Date endDate, String owner, String status, List<String> skills) {
+    public JobAdvertViewModel(Long id, String code,
+                              String topic, String info, Date startDate,
+                              Date endDate, String owner, String status, List<String> skills) {
         this.id = id;
-        this.serial = serial;
+        this.code = code;
         this.topic = topic;
         this.info = info;
         this.startDate = startDate;
@@ -42,12 +44,12 @@ public class JobAdvertViewModel implements ViewModel, Serializable {
         this.id = id;
     }
 
-    public String getSerial() {
-        return serial;
+    public String getCode() {
+        return code;
     }
 
-    public void setSerial(String serial) {
-        this.serial = serial;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getTopic() {

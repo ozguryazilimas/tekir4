@@ -62,12 +62,12 @@ public class JobApplicationBrowse extends BrowseBase<JobApplication, JobApplicat
                 .addFilter(new StringListFilter<>(JobApplication_.state,suggestionList,"JobApplication.label.State",""));
         
         queryDefinition
-                .addColumn(new SubLinkColumn<>(JobApplication_.advert,JobAdvert_.serial,"JobAdvert.label.Serial"),true)
-                .addColumn(new SubLinkColumn<>(JobApplication_.applicant,Applicant_.name,"general.label.Name"),true)
-                .addColumn(new SubTextColumn<>(JobApplication_.advert,JobAdvert_.topic,"JobAdvert.label.Topic"),true)
-                .addColumn(new SubDateColumn<>(JobApplication_.advert,JobAdvert_.startDate,"JobAdvert.label.startDate"),true)
-                .addColumn(new SubDateColumn<>(JobApplication_.advert,JobAdvert_.endDate,"JobAdvert.label.endDate"),true)           
-                .addColumn(new DateColumn<>(JobApplication_.date,"general.label.Date"),true)
+                .addColumn(new SubLinkColumn<>(JobApplication_.advert, JobAdvert_.code, "JobAdvert.label.Serial"), true)
+                .addColumn(new SubLinkColumn<>(JobApplication_.applicant, Applicant_.name, "general.label.Name"), true)
+                .addColumn(new SubTextColumn<>(JobApplication_.advert, JobAdvert_.topic, "JobAdvert.label.Topic"), true)
+                .addColumn(new SubDateColumn<>(JobApplication_.advert, JobAdvert_.startDate, "JobAdvert.label.startDate"), true)
+                .addColumn(new SubDateColumn<>(JobApplication_.advert, JobAdvert_.endDate, "JobAdvert.label.endDate"), true)
+                .addColumn(new DateColumn<>(JobApplication_.date, "general.label.Date"), true)
                 .addColumn(new TextColumn<>(JobApplication_.state, "JobApplication.label.State"), true);
                 
     }

@@ -66,7 +66,7 @@ public abstract class JobAdvertRepository extends
     private void buildViewModelSelect(CriteriaQuery<JobAdvertViewModel> criteriaQuery, Root<? extends JobAdvert> from) {
         criteriaQuery.multiselect(
                 from.get(JobAdvert_.id),
-                from.get(JobAdvert_.serial),
+                from.get(JobAdvert_.code),
                 from.get(JobAdvert_.topic),
                 from.get(JobAdvert_.info),
                 from.get(JobAdvert_.startDate),
@@ -79,7 +79,7 @@ public abstract class JobAdvertRepository extends
 
     private void buildSearchTextControl(String searchText, CriteriaBuilder criteriaBuilder, List<Predicate> predicates, Root<? extends JobAdvert> from) {
         if (!Strings.isNullOrEmpty(searchText)) {
-            predicates.add(criteriaBuilder.or(criteriaBuilder.like(from.get(JobAdvert_.serial), "%" + searchText + "%"),
+            predicates.add(criteriaBuilder.or(criteriaBuilder.like(from.get(JobAdvert_.code), "%" + searchText + "%"),
                     criteriaBuilder.like(from.get(JobAdvert_.topic), "%" + searchText + "%"),
                     criteriaBuilder.like(from.get(JobAdvert_.info), "%" + searchText + "%"),
                     criteriaBuilder.like(from.get(JobAdvert_.owner), "%" + searchText + "%"),
