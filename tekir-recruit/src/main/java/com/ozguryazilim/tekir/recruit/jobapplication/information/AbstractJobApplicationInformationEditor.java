@@ -137,22 +137,26 @@ public abstract class AbstractJobApplicationInformationEditor<E extends EntityBa
 
         switch (event.getAction()) {
             case INSERT:
-                getEntityList().forEach((e) -> {
-                    getRepository().save(e);
-                });
+                if (getEntityList() != null) {
+                    getEntityList().forEach((e) -> {
+                        getRepository().save(e);
+                    });
+                }
                 break;
             case UPDATE:
-                List<E> resultList = getRepository().findByJobApplication(getJobApplication());
-                List<Long> entityIdList = getEntityList().stream().map(E::getId).collect(Collectors.toList());
+                if (getEntityList() != null) {
+                    List<E> resultList = getRepository().findByJobApplication(getJobApplication());
+                    List<Long> entityIdList = getEntityList().stream().map(E::getId).collect(Collectors.toList());
 
-                resultList.stream().filter((e) -> (!entityIdList.contains(e.getId()))).forEachOrdered((e) -> {
-                    getRepository().remove(e);
-                });
+                    resultList.stream().filter((e) -> (!entityIdList.contains(e.getId()))).forEachOrdered((e) -> {
+                        getRepository().remove(e);
+                    });
 
-                getEntityList().stream().filter((e) -> (!e.isPersisted() || !resultList.contains(e))).forEachOrdered((e) -> {
-                    getRepository().save(e);
-                });
-
+                    getEntityList().stream().filter((e) -> (!e.isPersisted() || !resultList.contains(e)))
+                        .forEachOrdered((e) -> {
+                            getRepository().save(e);
+                        });
+                }
                 break;
         }
     }
@@ -161,7 +165,7 @@ public abstract class AbstractJobApplicationInformationEditor<E extends EntityBa
 
         switch (event.getAction()) {
             case DELETE:
-                getRepository().deleteByJobApplication(getJobApplication());
+                getRepository().deleteByApplication(getJobApplication());
                 break;
         }
     }

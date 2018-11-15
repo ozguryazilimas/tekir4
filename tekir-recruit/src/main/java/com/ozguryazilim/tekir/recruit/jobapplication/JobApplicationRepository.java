@@ -21,6 +21,7 @@ import javax.persistence.criteria.Root;
 import org.apache.deltaspike.data.api.Query;
 import org.apache.deltaspike.data.api.Repository;
 import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
+import org.apache.deltaspike.jpa.api.transaction.Transactional;
 
 /**
  *
@@ -28,6 +29,7 @@ import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
  */
 @Dependent
 @Repository
+@Transactional
 public abstract class JobApplicationRepository
         extends RepositoryBase<JobApplication, JobApplicationViewModel>
         implements CriteriaSupport<JobApplication> {

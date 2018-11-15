@@ -1,10 +1,9 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"               
-                xmlns:ui="http://java.sun.com/jsf/facelets"               
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:c="http://java.sun.com/jsp/jstl/core"
-                template="/recruit/recruitBrowseBase.xhtml">
+                template="/layout/browseBase.xhtml">
 
     <ui:param name="bean" value="#{applicantBrowse}" />
     <ui:param name="advanceEnabled" value="true" />
@@ -50,14 +49,14 @@
             <t:outputText label="contact.label.PrimaryEmail" value="#{applicantBrowse.applicant.primaryEmail.caption}"
                           rendered="#{not empty applicantBrowse.applicant.primaryEmail.caption}"
                           columnClass="col-xs-12"/>
-            <t:outputText label="JobAdvert.label.Topic" value="#{applicantBrowse.education}"
-                          columnClass="col-xs-12"/>
         </div>
 
         <div columnClass="col-xs-12" style="padding-top:5px;">
             <h:panelGroup layout="block">
                 <h:outputLabel for="rating" value="#{messages['Applicant.label.Rating']}" rendered="#{applicantBrowse.applicant.rating ne null}" />
-                <t:outputText id="rating"  value="#{applicantBrowse.applicant.rating}" readonly="true"/>
+                <p:rating id="rating" value="#{applicantBrowse.applicant.rating}"
+                          stars="#{applicantBrowse.ratingLength}" rendered="#{applicantBrowse.applicant.rating ne null}"
+                          readonly="true"/>
             </h:panelGroup>
         </div>
     </ui:define>

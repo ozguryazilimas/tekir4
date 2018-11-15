@@ -20,7 +20,5 @@ public abstract class JobApplicationInformationRepositoryBase<E extends EntityBa
     @Query("select c from EvaluationNote c where application = ?1")
     public abstract List<E> findByJobApplication(JobApplication application);
 
-    @Query("delete c from EvaluationNote c where application = ?1")
-    public abstract void deleteByJobApplication(JobApplication jobApplication);
-
+    public abstract void deleteByApplication(JobApplication jobApplication);
 }

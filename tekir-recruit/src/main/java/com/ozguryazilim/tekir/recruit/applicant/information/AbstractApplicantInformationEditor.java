@@ -248,22 +248,26 @@ public abstract class AbstractApplicantInformationEditor<E extends EntityBase> i
 
         switch (event.getAction()) {
             case INSERT:
-                getEntityList().forEach((e) -> {
-                    getRepository().save(e);
-                });
+                if (getEntityList() != null) {
+                    getEntityList().forEach(e ->
+                        getRepository().save(e)
+                    );
+                }
                 break;
             case UPDATE:
-                List<E> resultList = getRepository().findByApplicant(getApplicant());
-                List<Long> entityIdList = getEntityList().stream().map(E::getId).collect(Collectors.toList());
+                if (getEntityList() != null) {
+                    List<E> resultList = getRepository().findByApplicant(getApplicant());
+                    List<Long> entityIdList = getEntityList().stream().map(E::getId).collect(Collectors.toList());
 
-                resultList.stream().filter((e) -> (!entityIdList.contains(e.getId()))).forEachOrdered((e) -> {
-                    getRepository().remove(e);
-                });
+                    resultList.stream().filter((e) -> (!entityIdList.contains(e.getId()))).forEachOrdered((e) -> {
+                        getRepository().remove(e);
+                    });
 
-                getEntityList().stream().filter((e) -> (!e.isPersisted() || !resultList.contains(e))).forEachOrdered((e) -> {
-                    getRepository().save(e);
-                });
-
+                    getEntityList().stream().filter((e) -> (!e.isPersisted() || !resultList.contains(e)))
+                        .forEachOrdered((e) -> {
+                            getRepository().save(e);
+                        });
+                }
                 break;
         }
     }
