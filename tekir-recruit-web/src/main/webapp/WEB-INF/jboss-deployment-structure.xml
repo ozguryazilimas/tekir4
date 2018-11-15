@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-deployment-structure>
+    <deployment>
+        <!--
+        <exclude-subsystems>
+            <subsystem name="infinispan"/>
+        </exclude-subsystems>
+        -->
+        <dependencies>
+            <module name="com.ozguryazilim.telve">
+                <imports>
+                  <include path="META-INF**"/>
+                </imports>
+            </module>
+            <module name="org.dom4j"/>
+            <module name="javax.mail.api"/>
+        </dependencies>
+    </deployment>
+</jboss-deployment-structure>

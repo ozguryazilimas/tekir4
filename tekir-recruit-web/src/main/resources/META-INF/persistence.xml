@@ -1,0 +1,35 @@
+<persistence version="2.1"
+             xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+    <persistence-unit name="tekir" transaction-type="JTA">
+        <jta-data-source>java:jboss/datasources/TekirDS</jta-data-source>
+        <shared-cache-mode>DISABLE_SELECTIVE</shared-cache-mode>
+        <jar-file>lib/telve-core-model-${version.telve}.jar</jar-file>
+        <jar-file>lib/telve-idm-model-${version.telve}.jar</jar-file>
+        <jar-file>lib/tekir-core-model-${version.tekir}.jar</jar-file>
+        <jar-file>lib/tekir-contact-model-${version.tekir}.jar</jar-file>
+        <jar-file>lib/tekir-recruit-model-${version.tekir}.jar</jar-file>
+        <properties>
+            <!-- Properties for Hibernate -->
+            
+            <!-- WildFly için yeni Hibernate sürümü modülü yüklenirse...
+            <property name="jboss.as.jpa.providerModule" value="org.hibernate:5.2.10.Final" />
+            -->
+            <property name="hibernate.hbm2ddl.auto" value="none"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup"/>
+            <property name="hibernate.connection.release_mode" value="after_statement"/>
+            
+            <!-- cache config -->
+            <property name="hibernate.cache.use_second_level_cache" value="true" />
+            <property name="hibernate.cache.use_query_cache" value="true" />
+            
+            <!--
+            <property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.infinispan.JndiInfinispanRegionFactory" />
+            <property name="hibernate.cache.infinispan.cachemanager" value="java:CacheManager" /> 
+            -->
+        </properties>
+    </persistence-unit>
+    
+</persistence>
