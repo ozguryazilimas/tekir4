@@ -8,9 +8,9 @@
       "name",
       "employeeNo",
       "sgkNo",
-      "primaryMobile",
-      "primaryPhone",
-      "primaryEmail",
+      "primaryMobile.address",
+      "primaryPhone.address",
+      "primaryEmail.address",
       "info"
     ],
     "filters": [

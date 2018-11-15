@@ -12,6 +12,7 @@ import com.ozguryazilim.tekir.entities.ContactInformation;
 import com.ozguryazilim.tekir.entities.Person;
 import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.AbstractPerson;
+import com.ozguryazilim.tekir.entities.ContactAddress;
 import com.ozguryazilim.tekir.entities.RelatedContact;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
@@ -250,4 +251,19 @@ public class ContactHome extends FormBase<Contact, Long> {
             getEntity().getContactRoles().remove("INTERNATIONAL");
         }
     }
+    
+    //Kullanıcının PrimaryAddress girişleri üzerindeki yetkisi kontrol edilir
+    public boolean hasContactInfoPermission(ContactInformation contactInfo, String action) {
+        if (contactInfo instanceof ContactAddress) {
+            boolean valid = identity.isPermitted("contactAddresses" + ":" + action + ":" + getEntity().getOwner());
+            //Fatura adresi olarak kullanılan adres üzerinde islem yapabilmek
+            //için fatura adresi düzenleme yetkisine sahip olunması gerekir.
+            if (contactInfo.getSubTypes().contains("INVOICE") && (action.equals("update") || action.equals("delete"))) {
+                return valid && identity.isPermitted("contactAddresses" + ":contactInvoiceAddress:" + getEntity().getOwner());
+            }
+            return valid;
+        }
+        return false;
+    }
+    
 }
