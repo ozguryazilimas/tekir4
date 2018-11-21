@@ -65,7 +65,7 @@
         <li>
             <h:link outcome="/recruit/jobApplication/quickJobApplication.xhtml"
                     styleClass="context-command"
-                    rendered="#{jobApplicationBrowse.hasInsertPermission()}">
+                    rendered="#{jobApplicationBrowse.hasInsertPermission() and applicantBrowse.hasInsertPermission()}">
                 <i class="fa fa-plus-circle"/>
                 <h:outputText value=" #{messages['applicant.button.QuickAdd']}"/>
                 <f:param name="eid" value="0"/>

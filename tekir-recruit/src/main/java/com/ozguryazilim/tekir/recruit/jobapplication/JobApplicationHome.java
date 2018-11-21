@@ -126,23 +126,25 @@ public class JobApplicationHome extends FormBase<JobApplication, Long> {
 
     @Override
     public boolean onBeforeSave() {
-        Applicant applicant = getEntity().getApplicant();
+        if (isQuick) {
+            Applicant applicant = getEntity().getApplicant();
 
-        ContactPhone contactPhone = new ContactPhone();
-        contactPhone.setContact(applicant);
-        contactPhone.setRoles(Collections.singletonList("PRIMARY"));
-        contactPhone.setAddress(quickPhone);
-        contactInformationRepository.save(contactPhone);
-        applicant.setPrimaryMobile(contactPhone);
+            ContactPhone contactPhone = new ContactPhone();
+            contactPhone.setContact(applicant);
+            contactPhone.setRoles(Collections.singletonList("PRIMARY"));
+            contactPhone.setAddress(quickPhone);
+            contactInformationRepository.save(contactPhone);
+            applicant.setPrimaryMobile(contactPhone);
 
-        ContactEMail contactEMail = new ContactEMail();
-        contactEMail.setEmailAddress(quickEmail);
-        contactEMail.setContact(applicant);
-        contactEMail.setRoles(Collections.singletonList("PRIMARY"));
-        contactInformationRepository.save(contactEMail);
-        applicant.setPrimaryEmail(contactEMail);
+            ContactEMail contactEMail = new ContactEMail();
+            contactEMail.setEmailAddress(quickEmail);
+            contactEMail.setContact(applicant);
+            contactEMail.setRoles(Collections.singletonList("PRIMARY"));
+            contactInformationRepository.save(contactEMail);
+            applicant.setPrimaryEmail(contactEMail);
 
-        applicantHome.save();
+            applicantHome.save();
+        }
         return super.onBeforeSave();
     }
 }
