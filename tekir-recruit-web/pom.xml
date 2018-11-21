@@ -101,20 +101,6 @@
 
         <dependency>
             <groupId>com.ozguryazilim.mutfak</groupId>
-            <artifactId>telve-attachment</artifactId>
-            <version>${version.telve}</version>
-            <type>ejb</type>
-        </dependency>
-
-        <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
-            <artifactId>telve-attachment-modeshape</artifactId>
-            <version>${version.telve}</version>
-            <type>ejb</type>
-        </dependency>
-
-        <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
             <artifactId>tekir-recruit</artifactId>
             <version>${version.tekir}</version>
         </dependency>
@@ -174,7 +160,7 @@
                         <artifactId>maven-war-plugin</artifactId>
                         <version>2.3</version>
                         <configuration>
-                            <webappDirectory>${basedir}/target/deployments/tekir.war</webappDirectory>
+                            <webappDirectory>${basedir}/target/deployments/tekir-recruit.war</webappDirectory>
                             <failOnMissingWebXml>false</failOnMissingWebXml>
                             <archive>
                                 <index>true</index>
