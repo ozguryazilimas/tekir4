@@ -27,6 +27,7 @@
         <keycloak.version>2.3.0.Final</keycloak.version>
         <timestamp>${maven.build.timestamp}</timestamp>
         <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+        <build.number>DEV</build.number>
     </properties>
 
     <dependencies>
