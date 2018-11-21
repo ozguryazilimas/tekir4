@@ -21,10 +21,12 @@
         <version.telve>4.0.0.Beta4</version.telve>
         <version.tekir>4.0.0-SNAPSHOT</version.tekir>
         -->
-        <app.title>Tekir</app.title>
+        <app.title>Tekir Recruit</app.title>
         <project.stage>Test</project.stage>
         <property name="hibernate.show_sql" value="false"/>
         <keycloak.version>2.3.0.Final</keycloak.version>
+        <timestamp>${maven.build.timestamp}</timestamp>
+        <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
     </properties>
 
     <dependencies>
