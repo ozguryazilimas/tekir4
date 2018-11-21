@@ -13,7 +13,7 @@ import com.ozguryazilim.telve.forms.SubViewPageBase;
  *
  * @author oyas
  */
-@SubView(containerPage = RecruitPages.ApplicantPages.ApplicantView.class, viewPage = RecruitPages.ApplicantPages.DocumentSubView.class, permission = "document", order = 42)
+@SubView(containerPage = RecruitPages.ApplicantPages.ApplicantView.class, viewPage = RecruitPages.ApplicantPages.DocumentSubView.class, permission = "applicantDocument", order = 42)
 public class ApplicantDocumentSubView extends SubViewPageBase{
     @Override
     public void reload() {

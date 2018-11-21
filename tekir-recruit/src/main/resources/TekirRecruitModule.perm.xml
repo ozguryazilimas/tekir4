@@ -10,5 +10,8 @@
         <permission name="jobApplication" >
             <entityActions scope="owner,group"/>
         </permission>
+        <permission name="applicantDocument" >
+            <entityActions scope="owner,group"/>
+        </permission>
     </permissionGroup>
 </permissions>
