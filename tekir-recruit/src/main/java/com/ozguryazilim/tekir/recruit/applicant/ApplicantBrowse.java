@@ -14,7 +14,7 @@ import com.ozguryazilim.telve.query.columns.BooleanColumn;
 import com.ozguryazilim.telve.query.columns.LinkColumn;
 import com.ozguryazilim.telve.query.columns.SubTextColumn;
 import com.ozguryazilim.telve.query.filters.BooleanFilter;
-import com.ozguryazilim.telve.query.filters.IntegerFilter;
+import com.ozguryazilim.telve.query.filters.RatingFilter;
 import com.ozguryazilim.telve.query.filters.StringFilter;
 import javax.inject.Inject;
 
@@ -28,6 +28,16 @@ public class ApplicantBrowse extends BrowseBase<Applicant, ApplicantViewModel>{
     @Inject
     private ApplicantRepository applicantRepository;
 
+    private Integer ratingLength = 5;
+
+    public Integer getRatingLength() {
+        return ratingLength;
+    }
+
+    public void setRatingLength(Integer ratingLength) {
+        this.ratingLength = ratingLength;
+    }
+
     @Override
     protected void buildQueryDefinition(QueryDefinition<Applicant, ApplicantViewModel> queryDefinition) {
         queryDefinition
@@ -36,7 +46,7 @@ public class ApplicantBrowse extends BrowseBase<Applicant, ApplicantViewModel>{
                 .addFilter(new TagFilter<>("skills", "Applicant.label.Skills", "Applicant::skills"))
                 .addFilter(new TagFilter<>("classifications", "Applicant.label.Classifications", "Applicant::classifications"))
                 .addFilter(new BooleanFilter<>(Applicant_.married, "Applicant.label.Married", "Applicant.Married."))
-                .addFilter(new IntegerFilter<>(Applicant_.rating, "Applicant.label.Rating"));
+                .addFilter(new RatingFilter<>(Applicant_.rating, "Applicant.label.Rating", 0, ratingLength));
         queryDefinition
                 .addColumn(new LinkColumn<>(Contact_.code, "general.label.Code"), true)
                 .addColumn(new LinkColumn<>(Contact_.name, "general.label.Name"), true)
@@ -50,7 +60,7 @@ public class ApplicantBrowse extends BrowseBase<Applicant, ApplicantViewModel>{
     protected RepositoryBase<Applicant, ApplicantViewModel> getRepository() {
         return applicantRepository;
     }
-    
+
     public Applicant getApplicant() {
         if (getSelectedItem() != null) {
             return applicantRepository.findBy(getSelectedItem().getId());
@@ -58,5 +68,5 @@ public class ApplicantBrowse extends BrowseBase<Applicant, ApplicantViewModel>{
             return null;
         }
     }
-     
+
 }

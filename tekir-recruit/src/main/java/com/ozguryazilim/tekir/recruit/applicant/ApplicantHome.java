@@ -5,6 +5,7 @@ import com.ozguryazilim.tekir.entities.ContactInformation;
 import com.ozguryazilim.tekir.core.code.AutoCode;
 import com.ozguryazilim.tekir.core.code.AutoCodeService;
 import com.ozguryazilim.tekir.entities.Applicant;
+import com.ozguryazilim.tekir.entities.Gender;
 import com.ozguryazilim.tekir.entities.JobApplication;
 import com.ozguryazilim.tekir.recruit.jobapplication.JobApplicationRepository;
 import com.ozguryazilim.telve.auth.Identity;
@@ -93,6 +94,10 @@ public class ApplicantHome extends FormBase<Applicant, Long> {
     // FeatureLink yönlendirmesi
     public FeaturePointer getAllFeaturePointer(EntityBase entityBase) {
         return FeatureUtils.getFeaturePointer(entityBase);
+    }
+
+    public Boolean isMale(Applicant applicant) {
+        return applicant.getGender().equals(Gender.MALE);
     }
   
 }

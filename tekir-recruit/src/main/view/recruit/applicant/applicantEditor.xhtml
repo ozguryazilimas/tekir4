@@ -12,7 +12,7 @@
             <t:inputEnum itemLabel="gender." hasNullValue="false" value="#{applicantHome.entity.gender}"
                          label="contact.label.Gender" columnClass="col-md-12 col-lg-6">
 
-                <p:ajax event="change" update=":form:militaryServicePanel" />
+                <p:ajax event="change" listener="#{applicantHome.isMale(applicantHome.entity)}"/>
             </t:inputEnum>
         </div>
         <div class="row">
@@ -47,7 +47,7 @@
                         columnClass="col-md-12" />
         </div>
         <div class="row">
-            <t:inputTextarea label="#{messages['Applicant.label.Info']}" value="#{applicantHome.entity.info}" columnClass="col-md-12" /> 
+            <t:inputTextarea label="#{messages['Applicant.label.Info']}" value="#{applicantHome.entity.info}" columnClass="col-md-12" />
         </div>
     </div>
 
@@ -63,15 +63,15 @@
             <ui:param name="applicant" value="#{applicantHome.entity}" />
             <ui:param name="pageType" value="EDIT" />
         </ui:include>
-        
+
         <ui:include src="/recruit/applicant/applicantCertificateWidget.xhtml">
             <ui:param name="columnClass" value="col-lg-4 col-md-12"/>
             <ui:param name="applicant" value="#{applicantHome.entity}"/>
             <ui:param name="pageType" value="EDIT"/>
         </ui:include>
 
-        <p:outputPanel id="militaryServicePanel">
-            <h:panelGroup rendered="#{applicantHome.entity.gender eq 'MALE'}">
+        <p:outputPanel id="militaryServicePanel" autoUpdate="true">
+            <h:panelGroup rendered="#{applicantHome.isMale(applicantHome.entity)}">
                 <ui:include src="/recruit/applicant/applicantMilitaryServiceWidget.xhtml">
                     <ui:param name="columnClass" value="col-xs-12"/>
                     <ui:param name="applicant" value="#{applicantHome.entity}"/>
