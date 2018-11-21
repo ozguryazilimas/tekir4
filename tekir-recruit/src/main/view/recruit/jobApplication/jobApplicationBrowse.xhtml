@@ -1,8 +1,9 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"               
-                xmlns:ui="http://java.sun.com/jsf/facelets"               
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
                 xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
                 template="/layout/browseBase.xhtml">
 
     <ui:param name="bean" value="#{jobApplicationBrowse}" />
@@ -50,5 +51,28 @@
             <t:outputText label="general.label.Info" value="#{jobApplicationBrowse.jobApplication.advert.info}" columnClass="col-xs-12" rendered="#{not empty jobApplicationBrowse.jobApplication.advert.info}"/>
         </div>
     </ui:define>
+
+    <ui:define name="context-menu">
+        <li>
+            <h:link outcome="#{jobApplicationBrowse.getEditViewId()}"
+                    styleClass="context-command"
+                    rendered="#{jobApplicationBrowse.hasInsertPermission()}">
+                <i class="fa fa-plus-circle"/>
+                <h:outputText value=" #{messages['general.button.Add']}"/>
+                <f:param name="eid" value="0"/>
+            </h:link>
+        </li>
+        <li>
+            <h:link outcome="/recruit/jobApplication/quickJobApplication.xhtml"
+                    styleClass="context-command"
+                    rendered="#{jobApplicationBrowse.hasInsertPermission()}">
+                <i class="fa fa-plus-circle"/>
+                <h:outputText value=" #{messages['applicant.button.QuickAdd']}"/>
+                <f:param name="eid" value="0"/>
+                <f:param name="isQuick" value="true"/>
+            </h:link>
+        </li>
+    </ui:define>
+
 </ui:composition>
 

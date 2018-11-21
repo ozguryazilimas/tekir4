@@ -75,6 +75,17 @@
                 <f:ajax event="dialogReturn" render="@all" />
             </p:commandLink>
         </li>
+
+        <li>
+            <h:link outcome="/recruit/jobApplication/quickJobApplication.xhtml"
+                    styleClass="context-command"
+                    rendered="#{jobApplicationBrowse.hasInsertPermission()}">
+                <i class="fa fa-plus-circle"/>
+                <h:outputText value=" #{messages['applicant.button.QuickAdd']}"/>
+                <f:param name="eid" value="0"/>
+                <f:param name="isQuick" value="true"/>
+            </h:link>
+        </li>
     </ui:define>
 
 </ui:composition>

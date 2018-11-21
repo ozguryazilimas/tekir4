@@ -1,0 +1,63 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                template="/layout/editBase.xhtml">
+
+    <ui:param name="homeBean" value="#{jobApplicationHome}"/>
+    <ui:param name="entity" value="#{jobApplicationHome.entity}"/>
+    <ui:param name="dontShowContentHeader" value="true"/>
+
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{jobApplicationHome.id}"/>
+            <f:viewAction action="#{jobApplicationHome.initData()}"/>
+        </f:metadata>
+    </ui:define>
+
+    <!--<ui:define name="customHeader">-->
+    <!--<section class="content-header">-->
+    <!--<ui:fragment rendered="#{viewState ne ''}" >-->
+    <!--<div class="pull-right">-->
+    <!--#{viewState}-->
+    <!--</div>-->
+    <!--</ui:fragment>-->
+    <!--<small class="text-muted">#{ messages[pageTitleResolver.pageTitle] }</small>-->
+    <!--<h1>#{messages['contact.class.'.concat(jobApplicationHome.entity.class.simpleName)]}</h1>-->
+    <!--</section>-->
+    <!--</ui:define>-->
+
+    <ui:define name="form">
+        <div class="row">
+            <t:inputText label="#{messages['general.label.FirstName']}"
+                         value="#{jobApplicationHome.entity.applicant.firstName}"
+                         columnClass="col-md-12 col-lg-6"
+                         required="true"/>
+            <t:inputText label="#{messages['general.label.LastName']}"
+                         value="#{jobApplicationHome.entity.applicant.lastName}"
+                         columnClass="col-md-12 col-lg-6"
+                         required="true"/>
+        </div>
+        <div class="row">
+            <t:inputEmail label="#{messages['contact.label.PrimaryEmail']}"
+                          columnClass="col-md-12 col-lg-6"
+                          value="#{jobApplicationHome.quickEmail}"/>
+            <t:inputPhone label="#{messages['contact.label.PrimaryPhone']}"
+                          value="#{jobApplicationHome.quickPhone}"
+                          columnClass="col-md-12 col-lg-6"/>
+        </div>
+        <div class="row">
+            <t:inputLookupDialog label="contact.class.JobAdvert"
+                                 value="#{jobApplicationHome.entity.advert}"
+                                 lookupBean="#{jobAdvertLookup}"
+                                 lookupListener="jobApplicationHome.entity.advert"
+                                 required="true"
+                                 placeholder="#{messages['contact.info.JobAdvert']}"
+                                 columnClass="col-md-6 col-xs-12"/>
+            <t:inputDate label="#{messages['general.label.Date']}"
+                         value="#{jobApplicationHome.entity.date }"
+                         columnClass="col-md-6 col-xs-12"/>
+        </div>
+    </ui:define>
+
+</ui:composition>

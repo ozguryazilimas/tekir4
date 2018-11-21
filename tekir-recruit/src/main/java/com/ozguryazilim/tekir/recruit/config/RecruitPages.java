@@ -137,6 +137,12 @@ public interface RecruitPages extends Pages {
         }
 
         @View
+        @SecuredPage("quickJobApplication")
+        @PageTitle("module.caption.JobApplication")
+        class QuickJobApplication implements JobApplicationPages {
+        }
+
+        @View
         @SecuredPage("jobApplication")
         @PageTitle("module.caption.JobApplication")
         class JobApplicationView implements JobApplicationPages {
