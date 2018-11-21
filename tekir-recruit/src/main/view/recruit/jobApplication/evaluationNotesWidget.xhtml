@@ -7,28 +7,28 @@
 
     #{evaluationNoteEditor.init(jobApplication,pageType)}
 
-    <t:accordion id="evaluationNotes" icon="fa fa-file" label="EvaluationNote.label.evaluations" columnClass="#{columnClass}">
+    <t:accordion id="evaluationNotes" icon="fa fa-file" label="EvaluationNote.label.evaluations" columnClass="#{columnClass}" contentClass="">
         <div class="table-responsive no-padding">
-            <p:dataTable var="ja" value="#{evaluationNoteEditor.entityList}" tableStyleClass="table table-condensed table-hover"
+            <p:dataTable var="ja" value="#{evaluationNoteEditor.entityList}" 
                          paginator="true" rows="5"
                          paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                          paginatorPosition="bottom" 
                          paginatorAlwaysVisible="false"
                          emptyMessage="#{messages['EvaluationNote.table.emptyMessage']}">
                 <p:column headerText="#{messages['EvaluationNote.headerText.owner']}">
-                    <h:outputText value="#{ja.owner}"/>
+                    <h:outputText value="#{userLookup.getUserName(ja.owner)}"/>
                 </p:column>
                 <p:column headerText="#{messages['EvaluationNote.headerText.rating']}">
                     <h:outputText value="#{ja.rating}"/>
                 </p:column>
                 <p:column headerText="#{messages['EvaluationNote.headerText.state']}">
-                    <h:outputText value="#{ja.state}" styleClass="label label-primary"/>
+                    <h:outputText value="#{ja.state}" />
                 </p:column>
                 <p:column headerText="#{messages['EvaluationNote.headerText.stateReason']}">
-                    <h:outputText value="#{ja.stateReason}" styleClass="label label-primary"/>
+                    <h:outputText value="#{ja.stateReason}" />
                 </p:column>
                 <p:column headerText="#{messages['EvaluationNote.headerText.info']}">
-                    <h:outputText value="#{ja.info}" styleClass="label label-primary"/>
+                    <h:outputText value="#{ja.info}" />
                 </p:column>
             </p:dataTable>
         </div>

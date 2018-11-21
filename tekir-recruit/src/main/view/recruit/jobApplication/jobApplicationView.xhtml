@@ -44,8 +44,17 @@
     </ui:define>
 
     <ui:define name="caption">
-        <t:outputText label="general.label.Info" value="#{jobApplicationHome.entity.info}"  columnClass="col-md-10 col-xs-12"/>
-        <t:outputDate label="general.label.Date" value="#{jobApplicationHome.entity.date}" columnClass="col-md-2 col-xs-12"/>
+        <ul class="caption-states">
+            <t:stateOutputFeatureLink label="module.caption.Applicant" 
+                            	value="#{featureController.getFeatureLink(jobApplicationHome.getAllFeaturePointer(jobApplicationHome.entity.applicant))}" />
+            <t:stateOutputFeatureLink label="module.caption.JobAdvert" 
+                            	value="#{featureController.getFeatureLink(jobApplicationHome.getAllFeaturePointer(jobApplicationHome.entity.advert))}" />
+            
+            <t:stateOutputDate label="general.label.Date" value="#{jobApplicationHome.entity.date}" /> 
+        </ul>
+        <ui:fragment rendered="#{not empty jobApplicationHome.entity.info}">
+            <p><i class="fa fa-info"/> #{jobApplicationHome.entity.info}</p>
+        </ui:fragment>
     </ui:define>
 
     <ui:define name="context-menu" id="contextMenu"> 

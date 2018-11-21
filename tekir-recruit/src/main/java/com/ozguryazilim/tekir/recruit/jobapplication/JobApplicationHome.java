@@ -126,7 +126,7 @@ public class JobApplicationHome extends FormBase<JobApplication, Long> {
 
     @Override
     public boolean onBeforeSave() {
-        if (isQuick) {
+        if (isQuick != null && isQuick) {
             Applicant applicant = getEntity().getApplicant();
 
             ContactPhone contactPhone = new ContactPhone();
