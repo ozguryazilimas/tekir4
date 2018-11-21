@@ -101,6 +101,20 @@
 
         <dependency>
             <groupId>com.ozguryazilim.mutfak</groupId>
+            <artifactId>telve-attachment</artifactId>
+            <version>${version.telve}</version>
+            <type>ejb</type>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ozguryazilim.mutfak</groupId>
+            <artifactId>telve-attachment-modeshape</artifactId>
+            <version>${version.telve}</version>
+            <type>ejb</type>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ozguryazilim.mutfak</groupId>
             <artifactId>tekir-recruit</artifactId>
             <version>${version.tekir}</version>
         </dependency>
