@@ -86,6 +86,9 @@ public interface RecruitPages extends Pages {
         class ApplicantMasterView implements ApplicantPages {
         }
         
+        @SecuredPage("document") @View 
+        class DocumentSubView implements ApplicantPages {};
+        
         @View
         @SecuredPage
         class ApplicantQuickPanel implements ApplicantPages {
