@@ -1,9 +1,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
-                xmlns:p="http://primefaces.org/ui">
+>
 
     <div class="row">
         <t:inputText label="activity.label.From" value="" columnClass="col-md-6 col-sm-12"/>
@@ -13,6 +11,9 @@
     </div>
     <div class="row">
         <t:inputText label="activity.label.Subject" value="#{activityHome.entity.subject}" required="true" columnClass="col-sm-12"/>
-        <t:inputTextarea label="activity.label.Body" value="#{activityHome.entity.body}" columnClass="col-sm-12"/>
+        <t:inputTextarea label="activity.label.Body"
+                         value="#{activityHome.entity.body}"
+                         columnClass="col-sm-12"
+                         maxlength="2000"/>
     </div>
 </ui:composition>
