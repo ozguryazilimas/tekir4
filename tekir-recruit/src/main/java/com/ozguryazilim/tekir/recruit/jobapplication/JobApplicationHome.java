@@ -87,7 +87,7 @@ public class JobApplicationHome extends FormBase<JobApplication, Long> {
         super.createNew();
         getEntity().setOwner(identity.getLoginName());
         getEntity().setCode(codeService.getNewSerialNumber(JobApplication.class.getSimpleName()));
-        if (isQuick) {
+        if (isQuick != null && isQuick) {
             quickPhone = null;
             quickEmail = null;
             applicantHome.createNew();
