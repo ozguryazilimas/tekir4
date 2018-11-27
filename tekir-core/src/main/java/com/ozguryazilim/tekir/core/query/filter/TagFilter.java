@@ -58,10 +58,10 @@ public class TagFilter<E> extends Filter<E, List<String>, List<String>>{
         if (tags == null || tags.isEmpty()) return;
         Expression<String> tagsExp = root.get(this.getAttribute().getName()).as(String.class);
         switch (this.getOperand()) {
-            case Contains:
+            case Equal:
                 tags.forEach(tag -> predicates.add(cb.like(tagsExp, "%|" + tag + "|%")));
                 break;
-            case NotContains:
+            case NotEqual:
                 tags.forEach(tag -> predicates.add(cb.notLike(tagsExp, "%|" + tag + "|%")));
                 break;
         }
