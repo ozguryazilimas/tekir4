@@ -71,22 +71,23 @@ public abstract class ApplicantRepository extends
 
     private void buildViewModelSelect(CriteriaQuery<ApplicantViewModel> criteriaQuery, Root<? extends Applicant> from) {
         criteriaQuery.multiselect(
-                from.get(Contact_.id),
-                from.get(Contact_.code),
-                from.get(Contact_.name),
-                from.get("skills"),
-                from.get("classifications"),
-                from.get(Applicant_.rating),
-                from.get(Applicant_.married),
-                from.get(Contact_.info),
-                from.get(Contact_.active),
-                from.type(),
-                from.get(Contact_.primaryMobile).get(ContactInformation_.id),
-                from.get(Contact_.primaryMobile).get(ContactInformation_.address),
-                from.get(Contact_.primaryPhone).get(ContactInformation_.id),
-                from.get(Contact_.primaryPhone).get(ContactInformation_.address),
-                from.get(Contact_.primaryEmail).get(ContactInformation_.id),
-                from.get(Contact_.primaryEmail).get(ContactInformation_.address)    
+            from.get(Contact_.id),
+            from.get(Contact_.code),
+            from.get(Contact_.name),
+            from.get("skills"),
+            from.get("classifications"),
+            from.get(Applicant_.rating),
+            from.get(Applicant_.married),
+            from.get(Contact_.info),
+            from.get(Contact_.active),
+            from.type(),
+            from.get(Contact_.primaryMobile).get(ContactInformation_.id),
+            from.get(Contact_.primaryMobile).get(ContactInformation_.address),
+            from.get(Contact_.primaryPhone).get(ContactInformation_.id),
+            from.get(Contact_.primaryPhone).get(ContactInformation_.address),
+            from.get(Contact_.primaryEmail).get(ContactInformation_.id),
+            from.get(Contact_.primaryEmail).get(ContactInformation_.address),
+            from.get("tags")
         );
     }
 

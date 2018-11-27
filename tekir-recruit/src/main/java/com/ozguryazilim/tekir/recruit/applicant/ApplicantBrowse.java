@@ -46,7 +46,8 @@ public class ApplicantBrowse extends BrowseBase<Applicant, ApplicantViewModel>{
                 .addFilter(new TagFilter<>("skills", "Applicant.label.Skills", "Applicant::skills"))
                 .addFilter(new TagFilter<>("classifications", "Applicant.label.Classifications", "Applicant::classifications"))
                 .addFilter(new BooleanFilter<>(Applicant_.married, "Applicant.label.Married", "Applicant.Married."))
-                .addFilter(new RatingFilter<>(Applicant_.rating, "Applicant.label.Rating", 0, ratingLength));
+                .addFilter(new RatingFilter<>(Applicant_.rating, "Applicant.label.Rating", 0, ratingLength))
+                .addFilter(new TagFilter<>("tags", "general.label.Tag", "Applicant"));
         queryDefinition
                 .addColumn(new LinkColumn<>(Contact_.code, "general.label.Code"), true)
                 .addColumn(new LinkColumn<>(Contact_.name, "general.label.Name"), true)

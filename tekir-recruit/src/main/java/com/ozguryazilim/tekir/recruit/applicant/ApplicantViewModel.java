@@ -17,8 +17,10 @@ public class ApplicantViewModel extends ContactViewModel {
 
     public ApplicantViewModel(Long id, String code, String name, List<String> skills, List<String> classifications,
                               Integer rating, Boolean married, String info, Boolean active, Class<? extends Contact> type, Long pmMobileId,
-                              String primaryMobileaddress, Long pmPhoneId, String primaryPhoneaddress, Long pmEmailId, String primaryEmailaddress) {
-        super(id, code, name, info, active, type, pmMobileId, primaryMobileaddress, pmPhoneId, primaryPhoneaddress, pmEmailId, primaryEmailaddress);
+        String primaryMobileaddress, Long pmPhoneId, String primaryPhoneaddress, Long pmEmailId,
+        String primaryEmailaddress, List<String> tags) {
+        super(id, code, name, info, active, type, pmMobileId, primaryMobileaddress, pmPhoneId, primaryPhoneaddress,
+            pmEmailId, primaryEmailaddress, tags);
         this.skills = skills;
         this.classifications = classifications;
         this.rating = rating;

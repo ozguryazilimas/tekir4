@@ -49,6 +49,14 @@
         <div class="row">
             <t:inputTextarea label="#{messages['Applicant.label.Info']}" value="#{applicantHome.entity.info}" columnClass="col-md-12" />
         </div>
+
+        <div class="row">
+            <t:inputTag label="general.label.Tag"
+                        value="#{applicantHome.entity.tags}"
+                        key="Applicant"
+                        columnClass="col-md-12"/>
+        </div>
+
     </div>
 
     <div class="col-md-12 row" style="margin-top: 15px;">

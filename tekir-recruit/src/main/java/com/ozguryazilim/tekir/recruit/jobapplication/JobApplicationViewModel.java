@@ -5,6 +5,7 @@ import com.ozguryazilim.tekir.entities.JobAdvert;
 import com.ozguryazilim.telve.entities.ViewModel;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -19,6 +20,7 @@ public class JobApplicationViewModel implements ViewModel, Serializable {
     private String info;
     private JobAdvert advert;
     private Applicant applicant;
+    private List<String> tags;
 
     public JobApplicationViewModel(
             Long id,
@@ -27,7 +29,8 @@ public class JobApplicationViewModel implements ViewModel, Serializable {
             String state,
             String info,
             JobAdvert advert,
-            Applicant applicant) {
+            Applicant applicant,
+            List<String> tags) {
         this.id = id;
         this.date = date;
         this.owner = owner;
@@ -35,6 +38,15 @@ public class JobApplicationViewModel implements ViewModel, Serializable {
         this.info = info;
         this.advert = advert;
         this.applicant = applicant;
+        this.tags = tags;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 
     @Override

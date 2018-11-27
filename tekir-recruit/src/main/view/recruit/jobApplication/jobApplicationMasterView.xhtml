@@ -62,7 +62,11 @@
                     <ui:param name="featurePointer" value="#{jobApplicationHome.featurePointer}" />
                     <ui:param name="payload" value="#{jobApplicationHome.entity.applicant}" />
                 </ui:include>
-                    </div>
+
+                    <t:outputTag label="general.label.Tag"
+                                 value="#{jobApplicationHome.entity.tags}"
+                                 columnClass="col-xs-12"/>
+                </div>
             </div>
 
         </div>
