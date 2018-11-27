@@ -21,7 +21,7 @@ public class InputTagComponent extends UINamingContainer{
         List<String> valueList = getTagsAsString();
 
         if (valueList == null) {
-            return null;
+            return new ArrayList<>();
         }
 
         return valueList.stream().map(TagResult::new).collect(Collectors.toList());
@@ -30,10 +30,10 @@ public class InputTagComponent extends UINamingContainer{
 
     public List<String> getTagsAsString() {
         ValueExpression ve = getValueExpression("value");
-        List<String> valueList = (List<String>) ve.getValue(FacesContext.getCurrentInstance().getELContext());
+        List<String> valueList = (List<String   >) ve.getValue(FacesContext.getCurrentInstance().getELContext());
 
         if (valueList == null) {
-            return null;
+            return new ArrayList<>();
         }
 
         return valueList;
