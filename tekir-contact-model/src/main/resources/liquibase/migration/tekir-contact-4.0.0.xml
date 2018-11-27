@@ -358,4 +358,9 @@
     <changeSet author="ercan" id="1541447028-6">
         <modifyDataType tableName="TCC_ACCOUNT_TXN" columnName="TAGS" newDataType="VARCHAR(2000)" />
     </changeSet>
+    <changeSet author="scirit" id="181127-31183-1">
+        <addColumn tableName="TCC_CONTACT">
+            <column name="TAGS" type="VARCHAR(2000)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
