@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -73,8 +75,9 @@ public class ApplicantWorkHistory extends AuditBase{
      * Buradaki bilgiler suggestion'dan alınarak getirilebilir.
      * STAJ, İş, Gönüllü v.b.
      */
+    @Enumerated(EnumType.STRING)
     @Column( name = "WORK_TYPE")
-    private String type;
+    private ApplicantWorkType type;
     
     public Long getId() {
         return id;
@@ -140,11 +143,11 @@ public class ApplicantWorkHistory extends AuditBase{
         this.endDate = endDate;
     }
 
-    public String getType() {
+    public ApplicantWorkType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(ApplicantWorkType type) {
         this.type = type;
     }
 

@@ -19,7 +19,7 @@
             <t:inputText label="ApplicantWorkHistory.label.Job" value="#{bean.entity.job}"/>
         </div>
         <div class="row">
-            <t:inputSuggestion label="ApplicantWorkHistory.label.Type" value="#{bean.entity.type}" required="true" group="#{applicantWorkHistoryEditor.entity.class.simpleName}" listener="applicantWorkHistoryEditor.entity.type"/>
+            <t:inputEnum label="ApplicantWorkHistory.label.Type" value="#{bean.entity.type}" itemLabel="applicantWork.type." hasNullValue="false" required="true"/>
         </div>
         <div class="row">
             <t:inputDate label="general.label.StartDate" value="#{bean.entity.startDate}"/>
