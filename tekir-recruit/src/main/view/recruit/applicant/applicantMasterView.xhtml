@@ -42,23 +42,37 @@
         </style>
         <div class="row">
             <div class="col-lg-4 col-md-12">
-                <t:accordion icon="fa fa-stack-exchange" label="general.label.Summary" columnClass="col-xs-12">
-                    <div class="row">
-                        <t:outputText label="general.label.FirstName" value="#{applicantHome.entity.firstName}"
-                                      columnClass="col-xs-12"/>
-                        <t:outputText label="general.label.LastName" value="#{applicantHome.entity.lastName}"
-                                      columnClass="col-xs-12"/>
-                        <t:outputDate label="general.label.BirthDate" value="#{applicantHome.entity.birthDate}"
-                                      columnClass="col-xs-12"/>
-                        <t:outputEnum label="contact.label.Gender" itemLabel="gender."
-                                      value="#{applicantHome.entity.gender}" columnClass="col-xs-12"/>
-                        <t:outputBoolean label="Applicant.label.Married" itemLabel="Applicant.Married."
-                                         value="#{applicantHome.entity.married}" columnClass="col-xs-12"/>
-                        <t:outputText label="contact.label.JobTitle" value="#{applicantHome.entity.jobTitle}"
-                                      columnClass="col-xs-12"/>
-                        <t:outputTag label="Applicant.label.Skills" value="#{applicantHome.entity.skills}"
-                                     columnClass="col-xs-12"/>
+                <t:accordion icon="fa fa-stack-exchange" label="general.label.Summary" columnClass="">
+
+                    <ui:fragment rendered="#{true}">
+                        <ui:include src="/fiw/featureImageWidget.xhtml">
+                            <ui:param name="columnClass" value="col-md-4 col-xs-12" />
+                            <ui:param name="featurePointer" value="#{applicantHome.featurePointer}" />
+                            <ui:param name="placeholder" value="avatar-#{applicantHome.entity.gender}" />
+                        </ui:include>
+                    </ui:fragment>
+
+                    <div class="col-md-8 col-xs-12">
+                        <div class="row">
+                            <t:outputText label="general.label.FirstName" value="#{applicantHome.entity.firstName}"
+                                          columnClass="col-md-6 col-xs-12"/>
+                            <t:outputText label="general.label.LastName" value="#{applicantHome.entity.lastName}"
+                                          columnClass="col-md-6 col-xs-12"/>
+                            <t:outputDate label="general.label.BirthDate" value="#{applicantHome.entity.birthDate}"
+                                          columnClass="col-md-6 col-xs-12"/>
+                            <t:outputEnum label="contact.label.Gender" itemLabel="gender."
+                                          value="#{applicantHome.entity.gender}" columnClass="col-md-6 col-xs-12"/>
+                            <t:outputBoolean label="Applicant.label.Married" itemLabel="Applicant.Married."
+                                     value="#{applicantHome.entity.married}" columnClass="col-xs-12"/>
+                        </div>
                     </div>
+
+                    
+                    <t:outputText label="contact.label.JobTitle" value="#{applicantHome.entity.jobTitle}"
+                                  columnClass="col-xs-12"/>
+                    <t:outputTag label="Applicant.label.Skills" value="#{applicantHome.entity.skills}"
+                                 columnClass="col-xs-12"/>
+
                 </t:accordion>
             </div>
 
@@ -69,7 +83,7 @@
                         <ui:param name="applicant" value="#{applicantHome.entity}" />
                         <ui:param name="pageType" value="MASTER_VIEW" />
                     </ui:include>
-                    
+
                     <ui:include src="/recruit/applicant/applicantWorkHistoryWidget.xhtml">
                         <ui:param name="columnClass" value="col-xs-12" />
                         <ui:param name="applicant" value="#{applicantHome.entity}" />

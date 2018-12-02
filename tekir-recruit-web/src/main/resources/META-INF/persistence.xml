@@ -6,6 +6,7 @@
         <shared-cache-mode>DISABLE_SELECTIVE</shared-cache-mode>
         <jar-file>lib/telve-core-model-${version.telve}.jar</jar-file>
         <jar-file>lib/telve-idm-model-${version.telve}.jar</jar-file>
+        <jar-file>lib/telve-image-jpa-model-${version.telve}.jar</jar-file>
         <jar-file>lib/tekir-core-model-${version.tekir}.jar</jar-file>
         <jar-file>lib/tekir-contact-model-${version.tekir}.jar</jar-file>
         <jar-file>lib/tekir-activity-model-${version.tekir}.jar</jar-file>
