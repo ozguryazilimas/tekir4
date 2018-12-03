@@ -1,0 +1,7 @@
+{
+  "realm": "tekir",
+  "auth-server-url": "http://localhost:8180/auth",
+  "ssl-required": "external",
+  "resource": "tekir",
+  "public-client": true
+}

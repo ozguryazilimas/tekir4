@@ -79,6 +79,7 @@
         <module>tekir-core</module>
         <module>tekir-core-model</module>
         <module>tekir-web</module>
+        <module>tekir-recruit-web</module>
         <module>tekir-contact-model</module>
         <module>tekir-activity-model</module>
         <module>tekir-contact</module>
@@ -112,6 +113,8 @@
         <module>tekir-lead-opportunity-linker</module>
         <module>tekir-hr-model</module>
         <module>tekir-hr</module>
+        <module>tekir-recruit-model</module>
+        <module>tekir-recruit</module>
     </modules>
     
     

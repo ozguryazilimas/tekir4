@@ -1,0 +1,160 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"               
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                template="/layout/masterViewBase.xhtml" >
+
+    <ui:define name="content">     
+        <style>
+            .ui-datatable table {
+                table-layout: auto;
+            }
+
+            .ui-datatable thead th {
+                text-align: unset;
+                border-width: 0px;
+            }
+
+            .ui-datatable tbody td {
+                border-style: unset;
+            }
+
+            .ui-datatable-odd {
+                background-color: transparent;
+            }
+
+            th.ui-state-default {
+                background-color: transparent;
+            }
+
+            .ui-paginator .ui-paginator-page,
+            .ui-paginator .ui-paginator-pages,
+            .ui-paginator .ui-paginator-next,
+            .ui-paginator .ui-paginator-last,
+            .ui-paginator .ui-paginator-first,
+            .ui-paginator .ui-paginator-prev,
+            .ui-paginator .ui-paginator-current {
+                display: inline-flex;
+            }
+        </style>
+        <div class="row">
+            <div class="col-lg-4 col-md-12">
+                <t:accordion icon="fa fa-stack-exchange" label="general.label.Summary" columnClass="">
+
+                    <ui:fragment rendered="#{true}">
+                        <ui:include src="/fiw/featureImageWidget.xhtml">
+                            <ui:param name="columnClass" value="col-md-4 col-xs-12" />
+                            <ui:param name="featurePointer" value="#{applicantHome.featurePointer}" />
+                            <ui:param name="placeholder" value="avatar-#{applicantHome.entity.gender}" />
+                        </ui:include>
+                    </ui:fragment>
+
+                    <div class="col-md-8 col-xs-12">
+                        <div class="row">
+                            <t:outputText label="general.label.FirstName" value="#{applicantHome.entity.firstName}"
+                                          columnClass="col-md-6 col-xs-12"/>
+                            <t:outputText label="general.label.LastName" value="#{applicantHome.entity.lastName}"
+                                          columnClass="col-md-6 col-xs-12"/>
+                            <t:outputDate label="general.label.BirthDate" value="#{applicantHome.entity.birthDate}"
+                                          columnClass="col-md-6 col-xs-12"/>
+                            <t:outputEnum label="contact.label.Gender" itemLabel="gender."
+                                          value="#{applicantHome.entity.gender}" columnClass="col-md-6 col-xs-12"/>
+                            <t:outputBoolean label="Applicant.label.Married" itemLabel="Applicant.Married."
+                                     value="#{applicantHome.entity.married}" columnClass="col-xs-12"/>
+                            <t:outputText label="contact.label.JobTitle" value="#{applicantHome.entity.jobTitle}"
+                                      columnClass="col-xs-12"/>
+                            <t:outputTag label="Applicant.label.Skills" value="#{applicantHome.entity.skills}"
+                                     columnClass="col-xs-12"/>
+                            <t:outputTag label="general.label.Tag"
+                                     value="#{applicantHome.entity.tags}"
+                                     columnClass="col-xs-12"/>
+                        </div>
+                    </div>
+
+                    
+                    <t:outputText label="contact.label.JobTitle" value="#{applicantHome.entity.jobTitle}"
+                                  columnClass="col-xs-12"/>
+                    <t:outputTag label="Applicant.label.Skills" value="#{applicantHome.entity.skills}"
+                                 columnClass="col-xs-12"/>
+
+                </t:accordion>
+            </div>
+
+            <div class="col-lg-4 col-md-12">
+                <div class="row">
+                    <ui:include src="/recruit/applicant/applicantEducationWidget.xhtml">
+                        <ui:param name="columnClass" value="col-xs-12" />
+                        <ui:param name="applicant" value="#{applicantHome.entity}" />
+                        <ui:param name="pageType" value="MASTER_VIEW" />
+                    </ui:include>
+
+                    <ui:include src="/recruit/applicant/applicantWorkHistoryWidget.xhtml">
+                        <ui:param name="columnClass" value="col-xs-12" />
+                        <ui:param name="applicant" value="#{applicantHome.entity}" />
+                        <ui:param name="pageType" value="MASTER_VIEW" />
+                    </ui:include>
+
+                    <p:outputPanel id="militaryServicePanel">
+                        <h:panelGroup rendered="#{applicantHome.entity.gender eq 'MALE'}">
+                            <ui:include src="/recruit/applicant/applicantMilitaryServiceWidget.xhtml">
+                                <ui:param name="columnClass" value="col-xs-12"/>
+                                <ui:param name="applicant" value="#{applicantHome.entity}"/>
+                                <ui:param name="pageType" value="MASTER_VIEW"/>
+                            </ui:include>
+                        </h:panelGroup>
+                    </p:outputPanel>
+
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-12"> 
+                <ui:include src="/attachment/simpleAttachmentWidget.xhtml">
+                    <ui:param name="columnClass" value="col-xs-12" />
+                    <ui:param name="featurePointer" value="#{applicantHome.featurePointer}" />
+                    <ui:param name="payload" value="#{applicantHome.entity}" />
+                </ui:include>
+
+                <ui:include src="/notes/noteWidget.xhtml">
+                    <ui:param name="columnClass" value="col-xs-12" />
+                    <ui:param name="featurePointer" value="#{applicantHome.featurePointer}" />
+                </ui:include>
+
+                <ui:include src="/contact/contactInfosFragment.xhtml">
+                    <ui:param name="columnClass" value="col-xs-12" />
+                    <ui:param name="contact" value="#{applicantHome.entity}" />
+                    <ui:param name="contactInformations" value="#{applicantHome.contactInformations}" />
+                </ui:include>
+
+                <ui:include src="/activities/activityWidget.xhtml">
+                    <ui:param name="columnClass" value="col-xs-12" />
+                    <ui:param name="person" value="#{applicantHome.entity}" />
+                    <ui:param name="corporation" value="#{applicantHome.entity.corporation}" />
+                    <ui:param name="feature" value="#{null}" />
+                    <ui:param name="attached" value="Person" />
+                </ui:include>
+
+                <t:accordion icon="fa fa-file" label="Applicant.label.JobApplications" columnClass="col-xs-12">
+                    <div class="table-responsive no-padding">
+                        <p:dataTable var="ja" value="#{applicantHome.jobApplications}" tableStyleClass="table table-condensed table-hover"
+                                     paginator="true" rows="5"
+                                     paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                     paginatorPosition="bottom" 
+                                     paginatorAlwaysVisible="false" >
+                            <p:column headerText="#{messages['contact.class.JobApplication']}">
+                                <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(applicantHome.getAllFeaturePointer(ja))}" columnClass="col-xs-12"/>
+                            </p:column>
+                            <p:column headerText="#{messages['JobApplication.label.State']}">
+                                <h:outputText value="#{ja.state}" styleClass="label label-primary"/>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </t:accordion>
+            </div>
+        </div>
+
+    </ui:define>
+
+</ui:composition>

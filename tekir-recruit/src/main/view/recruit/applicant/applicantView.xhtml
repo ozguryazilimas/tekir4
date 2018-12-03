@@ -1,0 +1,58 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:p="http://primefaces.org/ui"
+                template="/layout/containerViewTabBase.xhtml">
+
+    <ui:param name="bean" value="#{applicantHome}" />
+    <ui:param name="entityName" value="applicant" />
+    <ui:param name="viewIdentifier" value="[#{applicantHome.entity.code}]"/>
+    <ui:param name="showCaption" value="true"/>
+    <ui:param name="dontShowContentHeader" value="true" />
+
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="eid" value="#{applicantHome.id}" />
+            <f:viewAction action="#{applicantHome.initData()}" />
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="customHeader">
+        <section class="content-header">
+            <p:outputPanel id="states">
+                <ul class="states pull-right">
+                    <li role="presentation">
+                        <div style="font-weight: bold;">#{messages['JobAdvert.label.Owner']}</div>
+                        <div>
+                            #{userLookup.getUserName(applicantHome.entity.owner)}
+                        </div>
+                    </li>
+                    <li role="presentation">
+                        <div style="font-weight: bold;"> #{messages['general.label.Status']} </div>
+                        <div>
+                            <t:cellOutputBoolean itemLabel="general.boolean.active." value="#{applicantHome.entity.active}" />
+                        </div>
+                    </li>
+                </ul>
+            </p:outputPanel>
+            <i class="fa fa-3x #{messages['feature.icon.'.concat(bean.feature.name)]} pull-left" />
+            <small class="text-muted">#{ messages[pageTitleResolver.pageTitle] }</small>
+            <h1>#{messages['contact.class.'.concat(applicantHome.entity.class.simpleName)]}<small>#{ viewIdentifier }</small> </h1> 
+        </section>
+    </ui:define>
+
+    <ui:define name="caption">
+        <ul class="caption-states">
+            <t:stateOutputText label="general.label.Name" value="#{applicantHome.entity.name}"/>
+            <t:stateOutputEnum label="contact.label.Gender" itemLabel="gender." value="#{applicantHome.entity.gender}"/>
+            <t:stateOutputDate label="general.label.BirthDate" value="#{applicantHome.entity.birthDate}"/>
+            <t:stateOutputText label="contact.label.JobTitle" value="#{applicantHome.entity.jobTitle}"/>
+        </ul>            
+        <ui:fragment rendered="#{applicantHome.entity.info ne ''}">
+            <p><i class="fa fa-info"/> #{applicantHome.entity.info}</p>
+        </ui:fragment>
+    </ui:define>
+
+</ui:composition>

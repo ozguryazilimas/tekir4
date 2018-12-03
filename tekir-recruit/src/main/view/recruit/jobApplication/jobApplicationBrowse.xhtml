@@ -1,0 +1,78 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/layout/browseBase.xhtml">
+
+    <ui:param name="bean" value="#{jobApplicationBrowse}" />
+    <ui:param name="advanceEnabled" value="true" />
+    <ui:param name="saveEnabled" value="true" />
+    <ui:param name="filterEnabled" value="true" />
+    <ui:param name="permission" value="jobApplication" />
+    <ui:param name="showQuickSearch" value="true" />
+    <ui:param name="showDetailPanel" value="true" />
+
+    <ui:define name="beforeColumns">
+        <p:column styleClass="actionColumn">
+            <i class="fa fa-black-tie" />
+        </p:column>
+    </ui:define>
+
+    <ui:define name="detailBar">
+        <div class="row">
+            <t:outputText label="JobAdvert.label.Topic" value="#{jobApplicationBrowse.jobApplication.advert.topic}"
+                          columnClass="col-xs-12"
+                          rendered="#{not empty jobApplicationBrowse.jobApplication.advert.topic}"/>
+            <t:outputText label="general.label.Date" value="#{jobApplicationBrowse.jobApplication.date}"
+                          columnClass="col-xs-12" rendered="#{not empty jobApplicationBrowse.jobApplication.date}"/>
+            <t:outputText label="JobAdvert.label.startDate"
+                          value="#{jobApplicationBrowse.jobApplication.advert.startDate}" columnClass="col-xs-12"
+                          rendered="#{not empty jobApplicationBrowse.jobApplication.advert.startDate}"/>
+            <t:outputText label="JobAdvert.label.endDate" value="#{jobApplicationBrowse.jobApplication.advert.endDate}"
+                          columnClass="col-xs-12"
+                          rendered="#{not empty jobApplicationBrowse.jobApplication.advert.endDate}"/>
+            <t:outputTag label="JobAdvert.label.Skills"
+                         value="#{jobApplicationBrowse.jobApplication.advert.skills}"
+                         columnClass="col-xs-12"
+                         rendered="#{not empty jobApplicationBrowse.jobApplication.advert.skills}"/>
+            <t:outputText label="JobAdvert.label.Status" value="#{jobApplicationBrowse.jobApplication.advert.status}"
+                          columnClass="col-xs-12"
+                          rendered="#{not empty jobApplicationBrowse.jobApplication.advert.status}"/>
+        </div>
+        <div class="row">
+            <t:outputText label="Applicant.label.FirstName" value="#{jobApplicationBrowse.jobApplication.applicant.firstName}" columnClass="col-xs-12" rendered="#{not empty jobApplicationBrowse.jobApplication.applicant.firstName}"/>
+            <t:outputText label="Applicant.label.LastName" value="#{jobApplicationBrowse.jobApplication.applicant.lastName}" columnClass="col-xs-12" rendered="#{not empty jobApplicationBrowse.jobApplication.applicant.lastName}"/>
+            <t:outputTag label="Applicant.label.Skills" value="#{jobApplicationBrowse.jobApplication.applicant.skills}" columnClass="col-xs-12" rendered="#{not empty jobApplicationBrowse.jobApplication.applicant.skills}"/>
+        </div>
+        <div class="row">
+            <t:outputText label="JobApplication.label.State" value="#{jobApplicationBrowse.jobApplication.state}" columnClass="col-xs-12" rendered="#{not empty jobApplicationBrowse.jobApplication.state}"/>
+            <t:outputText label="general.label.Info" value="#{jobApplicationBrowse.jobApplication.advert.info}" columnClass="col-xs-12" rendered="#{not empty jobApplicationBrowse.jobApplication.advert.info}"/>
+        </div>
+    </ui:define>
+
+    <ui:define name="context-menu">
+        <li>
+            <h:link outcome="#{jobApplicationBrowse.getEditViewId()}"
+                    styleClass="context-command"
+                    rendered="#{jobApplicationBrowse.hasInsertPermission()}">
+                <i class="fa fa-plus-circle"/>
+                <h:outputText value=" #{messages['general.button.Add']}"/>
+                <f:param name="eid" value="0"/>
+            </h:link>
+        </li>
+        <li>
+            <h:link outcome="/recruit/jobApplication/quickJobApplication.xhtml"
+                    styleClass="context-command"
+                    rendered="#{jobApplicationBrowse.hasInsertPermission() and applicantBrowse.hasInsertPermission()}">
+                <i class="fa fa-plus-circle"/>
+                <h:outputText value=" #{messages['applicant.button.QuickAdd']}"/>
+                <f:param name="eid" value="0"/>
+                <f:param name="isQuick" value="true"/>
+            </h:link>
+        </li>
+    </ui:define>
+
+</ui:composition>
+

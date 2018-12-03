@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<permissions>
+    <permissionGroup name="Recruit" order="16">
+        <permission name="applicant" >
+            <entityActions scope="owner,group"/>
+        </permission>
+        <permission name="jobAdvert" >
+            <entityActions scope="owner,group"/>
+        </permission>
+        <permission name="jobApplication" >
+            <entityActions scope="owner,group"/>
+        </permission>
+        <permission name="applicantDocument" >
+            <entityActions scope="owner,group"/>
+        </permission>
+    </permissionGroup>
+</permissions>

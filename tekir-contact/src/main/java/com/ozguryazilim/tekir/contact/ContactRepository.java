@@ -9,7 +9,6 @@ import com.ozguryazilim.tekir.entities.AbstractPerson;
 import com.ozguryazilim.tekir.entities.ContactCategory_;
 import com.ozguryazilim.tekir.entities.Corporation_;
 import com.ozguryazilim.tekir.entities.Industry_;
-import org.apache.deltaspike.data.api.QueryParam;
 import org.apache.deltaspike.data.api.Repository;
 
 import javax.enterprise.context.Dependent;
@@ -262,9 +261,10 @@ public abstract class ContactRepository
                 //from.get(Contact_.primaryFax).get(ContactInformation_.id),
                 //from.get(Contact_.primaryFax).get(ContactInformation_.address),
                 from.get(Contact_.primaryEmail).get(ContactInformation_.id),
-                from.get(Contact_.primaryEmail).get(ContactInformation_.address)
+                from.get(Contact_.primaryEmail).get(ContactInformation_.address),
                 //from.get(Contact_.primaryAddress).get(ContactInformation_.id),
                 //from.get(Contact_.primaryAddress).get(ContactInformation_.address)
+                from.get("tags")
         );
     }
 

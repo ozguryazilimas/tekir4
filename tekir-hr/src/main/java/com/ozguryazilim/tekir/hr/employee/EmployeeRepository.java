@@ -238,9 +238,10 @@ public abstract class EmployeeRepository extends
                 //from.get(Contact_.primaryFax).get(ContactInformation_.id),
                 //from.get(Contact_.primaryFax).get(ContactInformation_.address),
                 from.get(Contact_.primaryEmail).get(ContactInformation_.id),
-                from.get(Contact_.primaryEmail).get(ContactInformation_.address)
+                from.get(Contact_.primaryEmail).get(ContactInformation_.address),
                 //from.get(Contact_.primaryAddress).get(ContactInformation_.id),
                 //from.get(Contact_.primaryAddress).get(ContactInformation_.address)
+                from.get("tags")
         );
     }
 

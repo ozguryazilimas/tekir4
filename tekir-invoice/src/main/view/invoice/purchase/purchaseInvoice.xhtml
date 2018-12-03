@@ -49,7 +49,7 @@
                     
                     <t:inputLookupDialog label="voucher.label.Group" value="#{purchaseInvoiceHome.entity.group}" caption="topic" lookupBean="#{voucherGroupLookup}" lookupListener="purchaseInvoiceHome.entity.group" placeholder="#{messages['general.info.VoucherGroup']}" />
                     
-                    <t:inputTag label="general.label.Tag" value="#{purchaseInvoiceHome.entity.tags}" key="PurchaseInvoice" />
+                    <t:inputTag label="general.label.Tag" value="#{purchaseInvoiceHome.entity.tags}" key="#{purchaseInvoiceHome.tagKey}" />
                     <t:inputTime label="invoice.label.InvoiceTime"
                                  value="#{purchaseInvoiceHome.entity.time}"/>
                     <t:inputTextarea label="general.label.Info" value="#{purchaseInvoiceHome.entity.info}" columnClass="col-xs-12"/>

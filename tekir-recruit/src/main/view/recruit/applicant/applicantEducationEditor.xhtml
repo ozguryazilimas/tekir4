@@ -1,0 +1,27 @@
+    <ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
+                template="/recruit/applicant/applicantInformationEditor.xhtml">
+
+    <ui:param name="title" value="applicantEducationEditor.label.Title" />
+    <ui:param name="bean" value="#{applicantEducationEditor}" />
+
+    <ui:define name="editorContent">
+        <div class="row">
+            <t:inputText label="ApplicantEducation.label.Name" value="#{bean.entity.name}" required="true"/>
+        </div>
+        <div class="row">
+            <t:inputSuggestion label="ApplicantEducation.label.Type" value="#{bean.entity.type}" required="true" group="#{applicantEducationEditor.entity.class.simpleName}" listener="applicantEducationEditor.entity.type"/>
+        </div>
+        <div class="row">
+            <t:inputDate label="general.label.StartDate" value="#{bean.entity.startDate}"/>
+            <t:inputDate label="general.label.EndDate" value="#{bean.entity.endDate}"/>
+        </div>
+        <div class="row">
+            <t:inputTextarea label="ApplicantEducation.label.Info" value="#{bean.entity.info}"/>
+        </div>
+    </ui:define>
+
+</ui:composition>

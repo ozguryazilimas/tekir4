@@ -18,12 +18,25 @@ public class InputTagComponent extends UINamingContainer{
     private TagSuggestionService suggestionService;
 
     public List<TagResult> getTags() {
-        ValueExpression ve = getValueExpression("value");
-        List<String> valueList = (List<String>) ve.getValue(FacesContext.getCurrentInstance().getELContext());
+        List<String> valueList = getTagsAsString();
+
         if (valueList == null) {
-            return null;
+            return new ArrayList<>();
         }
+
         return valueList.stream().map(TagResult::new).collect(Collectors.toList());
+
+    }
+
+    public List<String> getTagsAsString() {
+        ValueExpression ve = getValueExpression("value");
+        List<String> valueList = (List<String   >) ve.getValue(FacesContext.getCurrentInstance().getELContext());
+
+        if (valueList == null) {
+            return new ArrayList<>();
+        }
+
+        return valueList;
     }
 
 
@@ -44,14 +57,18 @@ public class InputTagComponent extends UINamingContainer{
 
     public List<TagResult> completeTag(String query) {
         List<String> suggestions = getSuggestionService().getSuggestions(getKey());
+        List<String> tagsAsString = getTagsAsString();
+        suggestions.removeAll(tagsAsString);
         List<TagResult> resultList = suggestions.stream()
                 .filter(s -> s.contains(query))
                 .map(TagResult::new)
                 .collect(Collectors.toList());
-
-        if (!suggestions.contains(query)) {
+        tagsAsString.replaceAll(String::trim);
+        if (!suggestions.contains(query) && !tagsAsString.contains(query.trim())) {
             resultList.add(0, new TagResult(query, true));
         }
+
+
 
         return resultList;
     }
@@ -61,9 +78,11 @@ public class InputTagComponent extends UINamingContainer{
         TagSuggestionService service = getSuggestionService();
         String key = getKey();
         List<String> suggestions = service.getSuggestions(key);
+
         if (!suggestions.contains(tag)) {
             service.saveSuggestion(key, tag);
         }
+
     }
 
     private String getKey() {

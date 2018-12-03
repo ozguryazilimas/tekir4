@@ -6,6 +6,7 @@
         <shared-cache-mode>DISABLE_SELECTIVE</shared-cache-mode>
         <jar-file>lib/telve-core-model-${version.telve}.jar</jar-file>
         <jar-file>lib/telve-idm-model-${version.telve}.jar</jar-file>
+        <jar-file>lib/telve-image-jpa-model-${version.telve}.jar</jar-file>
         <jar-file>lib/tekir-feed-model-${version.tekir}.jar</jar-file>
         <jar-file>lib/tekir-core-model-${version.tekir}.jar</jar-file>
         <jar-file>lib/tekir-contact-model-${version.tekir}.jar</jar-file>
@@ -21,7 +22,7 @@
         <jar-file>lib/tekir-finance-model-${version.tekir}.jar</jar-file>
         <jar-file>lib/tekir-lead-model-${version.tekir}.jar</jar-file>
         <jar-file>lib/tekir-hr-model-${version.tekir}.jar</jar-file>
-    
+        <jar-file>lib/tekir-recruit-model-${version.tekir}.jar</jar-file>
         <properties>
             <!-- Properties for Hibernate -->
             

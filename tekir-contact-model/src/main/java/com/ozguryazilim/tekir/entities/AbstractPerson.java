@@ -5,11 +5,14 @@
  */
 package com.ozguryazilim.tekir.entities;
 
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * Gerçek Kişi
@@ -66,6 +69,10 @@ public abstract class AbstractPerson extends Contact{
     
     @Column(name = "GENDER")
     private Gender gender = Gender.UNKNOWN;
+    
+    @Column(name = "BIRTH_DATE")
+    @Temporal(TemporalType.DATE)
+    private Date birthDate;
 
     public String getFirstName() {
         return firstName;
@@ -141,6 +148,14 @@ public abstract class AbstractPerson extends Contact{
     
     public Contact getPrimaryContact(){
         return this;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
     
 }
