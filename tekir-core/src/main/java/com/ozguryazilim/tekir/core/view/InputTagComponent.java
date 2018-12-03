@@ -63,8 +63,8 @@ public class InputTagComponent extends UINamingContainer{
                 .filter(s -> s.contains(query))
                 .map(TagResult::new)
                 .collect(Collectors.toList());
-
-        if (!suggestions.contains(query) && !tagsAsString.contains(query)) {
+        tagsAsString.replaceAll(String::trim);
+        if (!suggestions.contains(query) && !tagsAsString.contains(query.trim())) {
             resultList.add(0, new TagResult(query, true));
         }
 
