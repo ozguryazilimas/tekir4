@@ -24,30 +24,36 @@
 					<t:outputText label="lead.label.RelatedCompanyName"
 						value="#{leadHome.entity.relatedCompanyName}"
 						columnClass="col-xs-12" />
-					<t:outputText label="lead.label.RelatedPhone"
-						value="#{leadHome.entity.relatedPhone}" columnClass="col-xs-6" />
-					<t:outputText label="lead.label.RelatedEmail"
-						value="#{leadHome.entity.relatedEmail}" columnClass="col-xs-6" />
+                    <t:outputText label="lead.label.RelatedPhone"
+                                  value="#{leadHome.entity.relatedPhone}"
+                                  columnClass="col-xs-12 col-sm-6"/>
+                    <t:outputText label="lead.label.RelatedEmail"
+                                  value="#{leadHome.entity.relatedEmail}"
+                                  columnClass="col-xs-12 col-sm-6"/>
 					<t:outputText label="lead.label.RelatedAddress"
 						value="#{leadHome.entity.relatedAddress}" columnClass="col-xs-12" />
 					<t:outputText label="lead.label.Territory"
 						value="#{leadHome.entity.territory.name}" columnClass="col-xs-12" />
-					<t:outputText label="lead.label.Location"
-						value="#{leadHome.entity.location.name}" columnClass="col-xs-6" />
-					<t:outputText label="lead.label.Industry"
-						value="#{leadHome.entity.industry.name}" columnClass="col-xs-6" />
+                    <t:outputText label="lead.label.Location"
+                                  value="#{leadHome.entity.location.name}"
+                                  columnClass="col-xs-12 col-sm-6"/>
+                    <t:outputText label="lead.label.Industry"
+                                  value="#{leadHome.entity.industry.name}"
+                                  columnClass="col-xs-12 col-sm-6"/>
 				</t:accordion>
 
 				<t:accordion icon="fa fa-file-text" label="general.label.Voucher"
 					columnClass="col-xs-12">
 					<t:outputText label="voucher.label.VoucherNo"
-						value="#{leadHome.entity.voucherNo}" columnClass="col-xs-6" />
+                                  value="#{leadHome.entity.voucherNo}"
+                                  columnClass="col-xs-12 col-sm-6"/>
 					<t:outputText label="voucher.label.ReferenceNo"
-						value="#{leadHome.entity.referenceNo}" columnClass="col-xs-6" />
-					<t:outputText label="voucher.label.Owner"
-						value="#{leadHome.entity.owner}" columnClass="col-xs-6" />
-					<t:outputTag label="general.label.Tag"
-						value="#{leadHome.entity.tags}" columnClass="col-xs-6" />
+                                  value="#{leadHome.entity.referenceNo}"
+                                  columnClass="col-xs-12 col-sm-6"/>
+                    <t:outputText label="voucher.label.Owner" value="#{leadHome.entity.owner}"
+                                  columnClass="col-xs-12 col-sm-6"/>
+                    <t:outputTag label="general.label.Tag" value="#{leadHome.entity.tags}"
+                                 columnClass="col-xs-12 col-sm-6"/>
 					<t:outputText label="general.label.Info"
 						value="#{leadHome.entity.info}" columnClass="col-xs-12" />
 					<t:outputDate label="voucher.label.Date"
