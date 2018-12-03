@@ -9,6 +9,7 @@ import java.util.Date;
 
 import com.ozguryazilim.tekir.contact.ContactViewModel;
 import com.ozguryazilim.tekir.entities.Contact;
+import java.util.List;
 
 /**
  * Employee View Model.
@@ -26,8 +27,8 @@ public class EmployeeViewModel extends ContactViewModel{
     
     public EmployeeViewModel(Long id, String code, String name,String employeeNo,String sgkNo,Date recruitmentDate,
     		Date terminationDate,String info, Boolean active, Class<? extends Contact> type, Long pmMobileId, 
-    		String pmMobile, Long pmPhoneId, String pmPhone, Long pmEmailId, String pmEmail) {
-        super(id, code, name, info, active, type, pmMobileId, pmMobile, pmPhoneId, pmPhone, pmEmailId, pmEmail);
+    		String pmMobile, Long pmPhoneId, String pmPhone, Long pmEmailId, String pmEmail, List<String> tags) {
+        super(id, code, name, info, active, type, pmMobileId, pmMobile, pmPhoneId, pmPhone, pmEmailId, pmEmail, tags);
         
         this.employeeNo=employeeNo;
         this.sgkNo=sgkNo;

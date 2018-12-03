@@ -8,6 +8,7 @@ import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.Person;
 import com.ozguryazilim.telve.entities.ViewModel;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * View Model Class
@@ -27,6 +28,7 @@ public class ContactViewModel implements ViewModel, Serializable {
     private ContactPhone primaryFax;
     private ContactEMail primaryEmail;
     private ContactAddress primaryAddress;
+    private List<String> tags;
 
     public ContactViewModel(Long id, 
             String code, 
@@ -34,9 +36,10 @@ public class ContactViewModel implements ViewModel, Serializable {
             String info, 
             Boolean active, 
             Class<? extends Contact> type, 
-            Long pmMobileId, String pmMobile, 
-            Long pmPhoneId, String pmPhone, 
-            Long pmEmailId, String pmEmail
+            Long pmMobileId, String pmMobile,
+        Long pmPhoneId, String pmPhone,
+        Long pmEmailId, String pmEmail,
+        List<String> tags
             ) {
         this.id = id;
         this.code = code;
@@ -68,10 +71,18 @@ public class ContactViewModel implements ViewModel, Serializable {
         this.primaryAddress.setId(pmAddressId);
         this.primaryAddress.setAddress(pmAddress);
         */
+
+        this.tags = tags;
     }
 
-    
-    
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
     public Long getId() {
         return this.id;
     }

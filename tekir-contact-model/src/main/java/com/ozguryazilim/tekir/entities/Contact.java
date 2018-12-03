@@ -6,6 +6,7 @@
 package com.ozguryazilim.tekir.entities;
 
 import com.ozguryazilim.tekir.entites.converters.StringListConverter;
+import com.ozguryazilim.tekir.entites.converters.TagListConverter;
 import com.ozguryazilim.telve.annotations.BizKey;
 import com.ozguryazilim.telve.entities.AuditBase;
 import com.ozguryazilim.telve.entities.FeaturePointer;
@@ -285,7 +286,19 @@ public abstract class Contact extends AuditBase{
         @AttributeOverride(name = "businessKey", column = @Column(name = "SOURCE_BK")),
     })
     private FeaturePointer sourcePointer = new FeaturePointer();
-    
+
+    @Column(name = "TAGS", length = 2000)
+    @Convert(converter = TagListConverter.class)
+    private List<String> tags;
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
     @Override
     public Long getId() {
         return id;

@@ -5,10 +5,13 @@
  */
 package com.ozguryazilim.tekir.entities;
 
+import com.ozguryazilim.tekir.entites.converters.TagListConverter;
 import com.ozguryazilim.telve.annotations.BizKey;
 import com.ozguryazilim.telve.entities.AuditBase;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
@@ -74,11 +77,22 @@ public class JobApplication extends AuditBase{
      */
     @Column(name = "STATE")
     private String state;
-    
+
+    @Column(name = "TAGS", length = 2000)
+    @Convert(converter = TagListConverter.class)
+    private List<String> tags;
+
     public static final String SUGGESTIONSTATUSGROUP="Recruit";
     public static final String SUGGESTIONSTATUSKEY="JobApplication.State";
 
-    
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
     @Override
     public Long getId() {
         return id;

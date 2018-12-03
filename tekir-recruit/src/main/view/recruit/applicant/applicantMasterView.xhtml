@@ -64,6 +64,13 @@
                                           value="#{applicantHome.entity.gender}" columnClass="col-md-6 col-xs-12"/>
                             <t:outputBoolean label="Applicant.label.Married" itemLabel="Applicant.Married."
                                      value="#{applicantHome.entity.married}" columnClass="col-xs-12"/>
+                            <t:outputText label="contact.label.JobTitle" value="#{applicantHome.entity.jobTitle}"
+                                      columnClass="col-xs-12"/>
+                            <t:outputTag label="Applicant.label.Skills" value="#{applicantHome.entity.skills}"
+                                     columnClass="col-xs-12"/>
+                            <t:outputTag label="general.label.Tag"
+                                     value="#{applicantHome.entity.tags}"
+                                     columnClass="col-xs-12"/>
                         </div>
                     </div>
 

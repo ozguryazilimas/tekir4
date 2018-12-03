@@ -97,7 +97,8 @@ public abstract class JobApplicationRepository
                 from.get(JobApplication_.state),
                 from.get(JobApplication_.info),
                 from.get(JobApplication_.advert),
-                from.get(JobApplication_.applicant)
+                from.get(JobApplication_.applicant),
+                from.get("tags")
         );
     }
 

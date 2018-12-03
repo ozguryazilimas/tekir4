@@ -1,5 +1,6 @@
 package com.ozguryazilim.tekir.recruit.jobapplication;
 
+import com.ozguryazilim.tekir.core.query.filter.TagFilter;
 import com.ozguryazilim.tekir.entities.Applicant_;
 import com.ozguryazilim.tekir.entities.JobAdvert_;
 import com.ozguryazilim.tekir.entities.JobApplication;
@@ -59,8 +60,9 @@ public class JobApplicationBrowse extends BrowseBase<JobApplication, JobApplicat
                 .addFilter(new SubDateFilter<>(JobApplication_.advert,JobAdvert_.endDate,"JobAdvert.label.endDate",FilterOperand.All, DateValueType.LastMonth))
                 .addFilter(new SubStringFilter<>(JobApplication_.applicant,Applicant_.name,"general.label.Name"))
                 .addFilter(new UserFilter<>(JobApplication_.owner, "JobAdvert.label.Owner"))
-                .addFilter(new StringListFilter<>(JobApplication_.state,suggestionList,"JobApplication.label.State",""));
-        
+                .addFilter(new StringListFilter<>(JobApplication_.state, suggestionList, "JobApplication.label.State", ""))
+                .addFilter(new TagFilter<>("tags", "general.label.Tag", "JobApplication"));
+
         queryDefinition
                 .addColumn(new SubLinkColumn<>(JobApplication_.advert, JobAdvert_.code, "JobAdvert.label.Serial"), true)
                 .addColumn(new SubLinkColumn<>(JobApplication_.applicant, Applicant_.name, "general.label.Name"), true)

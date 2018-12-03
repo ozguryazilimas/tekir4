@@ -187,7 +187,8 @@ public class LeadOpportunityLinker implements VoucherRedirectHandler {
             opportunityHome.getEntity().setGroup(leadHome.getEntity().getGroup());
 
             //FIXME: Summary ve Detail mesajları farklılaşmalı.
-            FacesMessages.info(Messages.getMessage("lead-opportunity-linker.messages.WON", leadHome.getEntity().getVoucherNo()));
+            //FIXED.
+            FacesMessages.info(Messages.getMessage("lead-opportunity-linker.messages.WON"),Messages.getMessage("lead-opportunity-linker.messages.WonDetail", leadHome.getEntity().getVoucherNo()));
 
             return result;
         }

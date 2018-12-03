@@ -190,4 +190,9 @@
     <changeSet id="ercan" author="1540279012-5">
         <dropColumn tableName="TCC_CONTACT" columnName="MILITARY_DUTY" />
     </changeSet>
+    <changeSet author="scirit" id="181127-31183-2">
+        <addColumn tableName="TRC_APPLICATION">
+            <column name="TAGS" type="VARCHAR(2000)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
