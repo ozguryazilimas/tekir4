@@ -58,6 +58,12 @@
             <version>${version.telve}</version>
             <type>ejb</type>
         </dependency>
+        <dependency>
+            <groupId>com.ozguryazilim.mutfak</groupId>
+            <artifactId>telve-image-jpa</artifactId>
+            <version>${version.telve}</version>
+            <type>ejb</type>
+        </dependency>
 <!--         <dependency>
             <groupId>com.ozguryazilim.mutfak</groupId>
             <artifactId>telve-keycloak</artifactId>

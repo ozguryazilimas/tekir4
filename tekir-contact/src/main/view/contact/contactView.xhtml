@@ -51,6 +51,7 @@
     </ui:define>
 
     <ui:define name="caption">
+        
         <ul class="caption-states">
             <ui:fragment rendered="#{contactHome.entity.class.simpleName eq 'Person'}">
                 <t:stateOutputFeatureLink label="general.label.Corporation" value="#{featureController.getFeatureLink(contactHome.getAllFeaturePointer(contactHome.entity.corporation))}" />

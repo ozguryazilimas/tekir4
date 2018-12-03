@@ -13,14 +13,29 @@
 
             <t:accordion icon="fa fa-stack-exchange" label="JobApplication.label.ApplicantInformations" columnClass="col-md-4 col-xs-12">
 
-                <t:outputFeatureLink label="module.caption.Applicant" value="#{featureController.getFeatureLink(jobApplicationHome.getAllFeaturePointer(jobApplicationHome.entity.applicant))}" columnClass="col-xs-12"/>
+                <ui:fragment rendered="#{true}">
+                    <ui:include src="/fiw/featureImageWidget.xhtml">
+                        <ui:param name="columnClass" value="col-md-4 col-xs-12" />
+                        <ui:param name="featurePointer" value="#{jobApplicationHome.getAllFeaturePointer(jobApplicationHome.entity.applicant)}" />
+                        <ui:param name="placeholder" value="avatar-#{jobApplicationHome.entity.applicant.gender}" />
+                    </ui:include>
+                </ui:fragment>
 
-                <t:outputText label="general.label.Name" value="#{jobApplicationHome.entity.applicant.name}"
-                              columnClass="col-xs-12"/>
-                <t:outputText label="contact.label.JobTitle" value="#{jobApplicationHome.entity.applicant.jobTitle}"
-                              columnClass="col-xs-12"/>
+                <div class="col-md-8 col-xs-12">
+                    <div class="row">
+                        <t:outputFeatureLink label="module.caption.Applicant" value="#{featureController.getFeatureLink(jobApplicationHome.getAllFeaturePointer(jobApplicationHome.entity.applicant))}" columnClass="col-xs-12"/>
+
+                        <ui:remove>
+                        <t:outputText label="general.label.Name" value="#{jobApplicationHome.entity.applicant.name}"
+                                      columnClass="col-xs-12"/>
+                        </ui:remove>
+                        <t:outputText label="contact.label.JobTitle" value="#{jobApplicationHome.entity.applicant.jobTitle}"
+                                      columnClass="col-xs-12"/>
+                        
+                    </div>
+                </div>
                 <t:outputText label="Applicant.label.Info" value="#{jobApplicationHome.entity.applicant.info}"
-                              columnClass="col-xs-12"/>
+                                      columnClass="col-xs-12"/>
                 <t:outputBoolean label="Applicant.label.Married" itemLabel="Applicant.Married."
                                  value="#{jobApplicationHome.entity.applicant.married}" columnClass="col-xs-12"/>
                 <t:outputTag label="Applicant.label.Skills" value="#{jobApplicationHome.entity.applicant.skills}"
@@ -45,11 +60,11 @@
 
             <div class="col-md-4 col-xs-12">
                 <div class="row">
-                <ui:include src="/notes/noteWidget.xhtml">
-                    <ui:param name="featurePointer" value="#{jobApplicationHome.featurePointer}" />
-                </ui:include>
+                    <ui:include src="/notes/noteWidget.xhtml">
+                        <ui:param name="featurePointer" value="#{jobApplicationHome.featurePointer}" />
+                    </ui:include>
 
-                <ui:include src="/activities/activityWidget.xhtml">
+                    <ui:include src="/activities/activityWidget.xhtml">
                         <ui:param name="columnClass" value="col-lg-12 col-md-6" />
                         <ui:param name="person" value="#{jobApplicationHome.entity.applicant}" />
                         <ui:param name="corporation" value="#{null}" />
