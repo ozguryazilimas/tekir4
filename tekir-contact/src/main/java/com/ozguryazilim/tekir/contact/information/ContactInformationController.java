@@ -5,9 +5,12 @@
  */
 package com.ozguryazilim.tekir.contact.information;
 
+import com.ozguryazilim.tekir.entities.ContactAddress;
 import com.ozguryazilim.tekir.entities.ContactInformation;
+import com.ozguryazilim.telve.auth.Identity;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import org.apache.deltaspike.jpa.api.transaction.Transactional;
 
@@ -19,6 +22,9 @@ import org.apache.deltaspike.jpa.api.transaction.Transactional;
 @Named
 @SessionScoped
 public class ContactInformationController implements Serializable {
+    
+    @Inject
+    private Identity identity;
 
     /**
      * Verilen info için hangi Icon'ın kullanılabileceğini belirler.
@@ -67,5 +73,19 @@ public class ContactInformationController implements Serializable {
     
     public boolean isPrimary( ContactInformation info ){
         return info.getRoles().contains(ContactInformationConsts.Roles.PRIMARY);
+    }
+    
+        //Kullanıcının PrimaryAddress girişleri üzerindeki yetkisi kontrol edilir
+    public boolean hasContactInfoPermission(ContactInformation contactInfo, String action,String owner) {
+        if (contactInfo instanceof ContactAddress) {
+            boolean valid = identity.isPermitted("contactAddresses" + ":" + action + ":" + owner);
+            //Fatura adresi olarak kullanılan adres üzerinde islem yapabilmek
+            //için fatura adresi düzenleme yetkisine sahip olunması gerekir.
+            if (contactInfo.getSubTypes().contains("INVOICE") && (action.equals("update") || action.equals("delete"))) {
+                return valid && identity.isPermitted("contactAddresses" + ":contactInvoiceAddress:" + owner);
+            }
+            return valid;
+        }
+        return true;
     }
 }
