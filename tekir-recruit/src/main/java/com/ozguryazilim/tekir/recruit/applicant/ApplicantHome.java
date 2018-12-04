@@ -73,9 +73,7 @@ public class ApplicantHome extends FormBase<Applicant, Long> {
      */
     @Override
     public boolean onAfterLoad() {
-        if (age != null) {
-            age = null;
-        }
+        age = null;
         return true;
     }
 
@@ -86,9 +84,7 @@ public class ApplicantHome extends FormBase<Applicant, Long> {
      */
     @Override
     public boolean onAfterSave() {
-        if (age != null) {
-            age = null;
-        }
+        age = null;
         return true;
     }
     
