@@ -48,6 +48,7 @@
             <t:stateOutputText label="general.label.Name" value="#{applicantHome.entity.name}"/>
             <t:stateOutputEnum label="contact.label.Gender" itemLabel="gender." value="#{applicantHome.entity.gender}"/>
             <t:stateOutputDate label="general.label.BirthDate" value="#{applicantHome.entity.birthDate}"/>
+            <t:stateOutputText label="Applicant.label.age" value="#{applicantHome.age}"/>
             <t:stateOutputText label="contact.label.JobTitle" value="#{applicantHome.entity.jobTitle}"/>
         </ul>            
         <ui:fragment rendered="#{applicantHome.entity.info ne ''}">
