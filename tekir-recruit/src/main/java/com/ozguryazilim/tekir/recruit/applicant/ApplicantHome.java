@@ -17,6 +17,9 @@ import com.ozguryazilim.telve.forms.FormBase;
 import com.ozguryazilim.telve.forms.FormEdit;
 import java.util.List;
 import javax.inject.Inject;
+import org.joda.time.LocalDate;
+import org.joda.time.Period;
+import org.joda.time.PeriodType;
 
 /**
  *
@@ -40,6 +43,8 @@ public class ApplicantHome extends FormBase<Applicant, Long> {
     
     @Inject
     private Identity identity;
+    
+    private Integer age;
 
     @Override
     protected RepositoryBase<Applicant, ApplicantViewModel> getRepository() {
@@ -59,7 +64,48 @@ public class ApplicantHome extends FormBase<Applicant, Long> {
 
         return super.onBeforeSave();
     }
+        
+    /**
+     * Yüklendikten sonra age değişkenini boşaltıyoruz
+     *
+     *
+     * @return
+     */
+    @Override
+    public boolean onAfterLoad() {
+        age = null;
+        return true;
+    }
+
+    /**
+     * Değişiklik yapıldıktan sonra age değişkenini boşaltıyoruz.
+     *
+     * @return
+     */
+    @Override
+    public boolean onAfterSave() {
+        age = null;
+        return true;
+    }
     
+    /**
+     * Yaş bilgisini tekrar edilmemesi için global bir değişkende saklayarak
+     * dönüyoruz.
+     *
+     * @return
+     */
+    public Integer getAge() {
+        if (age == null) {
+            if (getEntity().getBirthDate() != null) {
+                LocalDate birthdate = new LocalDate(getEntity().getBirthDate());
+                LocalDate now = new LocalDate();
+                Period period = new Period(birthdate, now, PeriodType.yearMonthDay());
+                age = period.getYears();
+            }
+        }
+        return age;
+    }
+
     /**
      * Geriye ilgili Başvuran Adayına ait iletişim bilgilerini döndürür.
      *
