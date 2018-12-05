@@ -16,15 +16,15 @@
     </ui:define>
 
     <ui:define name="customHeader">
-    <section class="content-header">
-    <ui:fragment rendered="#{viewState ne ''}" >
-    <div class="pull-right">
-    #{viewState}
-    </div>
-    </ui:fragment>
-    <small class="text-muted">#{ messages[pageTitleResolver.pageTitle] }</small>
-    <h1>#{messages['contact.class.FastApplication']}</h1>
-    </section>
+        <section class="content-header">
+            <ui:fragment rendered="#{viewState ne ''}" >
+                <div class="pull-right">
+                    #{viewState}
+                </div>
+            </ui:fragment>
+            <small class="text-muted">#{ messages[pageTitleResolver.pageTitle] }</small>
+            <h1>#{messages['contact.class.FastApplication']}</h1>
+        </section>
     </ui:define>
 
     <ui:define name="form">
