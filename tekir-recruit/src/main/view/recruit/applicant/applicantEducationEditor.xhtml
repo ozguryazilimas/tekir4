@@ -10,7 +10,7 @@
 
     <ui:define name="editorContent">
         <div class="row">
-            <t:inputText label="ApplicantEducation.label.Name" value="#{bean.entity.name}" required="true"/>
+            <t:inputSuggestion label="ApplicantEducation.label.Name" value="#{bean.entity.name}" required="true" group="schoolName" listener="applicantEducationEditor.entity.name"/>
         </div>
         <div class="row">
             <t:inputSuggestion label="ApplicantEducation.label.Type" value="#{bean.entity.type}" required="true" group="#{applicantEducationEditor.entity.class.simpleName}" listener="applicantEducationEditor.entity.type"/>
