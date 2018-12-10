@@ -8,8 +8,11 @@ import com.ozguryazilim.tekir.entities.JobApplication_;
 import com.ozguryazilim.telve.data.RepositoryBase;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.filters.Filter;
-import java.util.ArrayList;
-import java.util.List;
+import org.apache.deltaspike.data.api.Query;
+import org.apache.deltaspike.data.api.Repository;
+import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
+import org.apache.deltaspike.jpa.api.transaction.Transactional;
+
 import javax.enterprise.context.Dependent;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -18,13 +21,10 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import org.apache.deltaspike.data.api.Query;
-import org.apache.deltaspike.data.api.Repository;
-import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
-import org.apache.deltaspike.jpa.api.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- *
  * @author Erdem Uslu
  */
 @Dependent
@@ -32,26 +32,28 @@ import org.apache.deltaspike.jpa.api.transaction.Transactional;
 @Transactional
 public abstract class JobApplicationRepository
         extends RepositoryBase<JobApplication, JobApplicationViewModel>
-        implements CriteriaSupport<JobApplication> {
+        implements CriteriaSupport<JobApplication>{
 
     /**
      * Verilen İş İlanına'a ait tüm iş başvurularını döndürür.
-     * 
+     *
      * @param advert
-     * @return 
+     * @return
      */
     @Query("select c from JobApplication c where advert = ?1")
     public abstract List<JobApplication> findByJobAdvert(JobAdvert advert);
-    
+
     /**
      * Verilen Başvuru Adayına ait tüm iş başvurularını döndürür.
-     * 
+     *
      * @param applicant
-     * @return 
+     * @return
      */
     @Query("select c from JobApplication c where applicant = ?1")
     public abstract List<JobApplication> findByApplicant(Applicant applicant);
-    
+
+    public abstract JobApplication findByCode(String code);
+
     @Override
     public List<JobApplicationViewModel> browseQuery(QueryDefinition queryDefinition) {
         List<Filter<JobApplication, ?, ?>> filters = queryDefinition.getFilters();
@@ -78,7 +80,7 @@ public abstract class JobApplicationRepository
         } else {
             criteriaQuery.orderBy(decorateSorts(queryDefinition.getSorters(), criteriaBuilder, from));
         }
-        
+
         TypedQuery<JobApplicationViewModel> typedQuery = entityManager().createQuery(criteriaQuery);
         typedQuery.setMaxResults(queryDefinition.getResultLimit());
         List<JobApplicationViewModel> resultList = typedQuery.getResultList();
