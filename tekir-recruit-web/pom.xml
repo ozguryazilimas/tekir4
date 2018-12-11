@@ -4,12 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>tekir-parent</artifactId>
-        <groupId>com.ozguryazilim.mutfak</groupId>
-        <version>4.0.0-SNAPSHOT</version>
+        <groupId>com.ozguryazilim.tekir</groupId>
+        <version>${revision}${changelist}</version>
     </parent>
 
     <artifactId>Tekir-Recruit-Web</artifactId>
-    <version>4.0.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <name>Tekir-Recruit</name>
@@ -32,63 +31,49 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-web</artifactId>
             <version>${version.telve}</version>
             <type>war</type>
         </dependency>
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-idm</artifactId>
             <version>${version.telve}</version>
             <type>ejb</type>
         </dependency>
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-note</artifactId>
             <version>${version.telve}</version>
             <type>ejb</type>
         </dependency>
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-attachment</artifactId>
             <version>${version.telve}</version>
             <type>ejb</type>
         </dependency>
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-attachment-modeshape</artifactId>
             <version>${version.telve}</version>
             <type>ejb</type>
         </dependency>
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-image</artifactId>
             <version>${version.telve}</version>
             <type>ejb</type>
         </dependency>
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-image-jpa</artifactId>
             <version>${version.telve}</version>
             <type>ejb</type>
         </dependency>
-        <!--         <dependency>
-                    <groupId>com.ozguryazilim.mutfak</groupId>
-                    <artifactId>telve-keycloak</artifactId>
-                    <version>${version.telve}</version>
-                    <type>ejb</type>
-                </dependency> -->
-        <!--
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
-            <artifactId>telve-jcr</artifactId>
-            <version>${version.telve}</version>
-            <type>ejb</type>
-        </dependency>
-        -->
-        <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.tekir</groupId>
             <artifactId>tekir-core</artifactId>
             <version>${version.tekir}</version>
         </dependency>
@@ -109,13 +94,13 @@
         </dependency>
 
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.tekir</groupId>
             <artifactId>tekir-activity</artifactId>
             <version>${version.tekir}</version>
         </dependency>
 
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.tekir</groupId>
             <artifactId>tekir-recruit</artifactId>
             <version>${version.tekir}</version>
         </dependency>

@@ -4,10 +4,9 @@
 
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.ozguryazilim.mutfak</groupId>
+        <groupId>com.ozguryazilim.tekir</groupId>
         <artifactId>tekir-parent</artifactId>
-        <version>4.0.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
+        <version>${revision}${changelist}</version>
     </parent>
     <artifactId>tekir-recruit</artifactId>
     <packaging>ejb</packaging>
@@ -32,13 +31,13 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-core</artifactId>
             <version>${version.telve}</version>
         </dependency>
         
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-dynamicreports</artifactId>
             <version>${version.telve}</version>
         </dependency>
@@ -74,44 +73,6 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.arquillian.universe</groupId>
-            <artifactId>arquillian-junit</artifactId>
-            <scope>test</scope>
-            <type>pom</type>
-        </dependency>
-        <dependency>
-            <groupId>org.arquillian.universe</groupId>
-            <artifactId>arquillian-chameleon</artifactId>
-            <scope>test</scope>
-            <type>pom</type>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.shrinkwrap.resolver</groupId>
-            <artifactId>shrinkwrap-resolver-api</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.shrinkwrap.resolver</groupId>
-            <artifactId>shrinkwrap-resolver-api-maven</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!--
-        <dependency>
-            <groupId>org.wildfly.arquillian</groupId>
-            <artifactId>wildfly-arquillian-container-managed</artifactId>
-            <version>2.0.1.Final</version>
-            <scope>test</scope>
-        </dependency>
-        
-        
-        <dependency>
-            <groupId>org.jboss</groupId>
-            <artifactId>jandex</artifactId>
-            <version>2.0.1.Final</version>
-            <scope>test</scope>
-        </dependency>
-        -->
    </dependencies>
 </project>
  

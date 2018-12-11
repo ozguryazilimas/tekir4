@@ -2,9 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.ozguryazilim.mutfak</groupId>
+        <groupId>com.ozguryazilim.tekir</groupId>
         <artifactId>tekir-parent</artifactId>
-        <version>4.0.0-SNAPSHOT</version>
+        <version>${revision}${changelist}</version>
     </parent>
     <artifactId>tekir-recruit-model</artifactId>
     <packaging>jar</packaging>
@@ -22,12 +22,6 @@
             <artifactId>tekir-contact-model</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <type>jar</type>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
     
     <build>
@@ -35,28 +29,6 @@
             <plugin>
                 <groupId>org.bsc.maven</groupId>
                 <artifactId>maven-processor-plugin</artifactId>
-                <version>${version.maven-processor-plugin}</version>
-                <executions>
-                    <execution>
-                        <id>process</id>
-                        <goals>
-                            <goal>process</goal>
-                        </goals>
-                        <phase>generate-sources</phase>
-                        <configuration>
-                            <processors>
-                                <processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
-                            </processors>
-                        </configuration>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.hibernate</groupId>
-                        <artifactId>hibernate-jpamodelgen</artifactId>
-                        <version>${version.hibernate-jpamodelgen}</version>
-                    </dependency>
-                </dependencies>
             </plugin>
         </plugins>
     </build>
@@ -75,84 +47,13 @@
                 </resources>
                 <plugins>
                     <plugin>
-                        
                         <groupId>org.liquibase</groupId>
                         <artifactId>liquibase-maven-plugin</artifactId>
-                        <version>${version.liquibase-maven-plugin}</version>
                         <configuration>
                             <changeLogFile>src/main/resources/liquibase/tekir-recruit.xml</changeLogFile>
-                            <diffChangeLogFile>src/main/resources/liquibase/migration/changelog-${maven.build.timestamp}.xml</diffChangeLogFile>
-                            <driver>${liquibase.driver}</driver>
-                            <url>${liquibase.url}</url>
-                            <defaultSchemaName>${liquibase.schema}</defaultSchemaName>
-                            <username>${liquibase.username}</username>
-                            <password>${liquibase.password}</password>
                             <referenceUrl>hibernate:ejb3:tekirCore</referenceUrl>
-                            <verbose>true</verbose>
-                            <logging>debug</logging>
                             <diffIncludeObjects>table:TRC_.*</diffIncludeObjects>
                         </configuration>
-                        <dependencies>
-                            <dependency>
-                                <groupId>org.liquibase.ext</groupId>
-                                <artifactId>liquibase-hibernate4</artifactId>
-                                <version>${version.liquibase-hibernate4}</version>
-                                <exclusions>
-                                    <exclusion>
-                                        <groupId>org.hibernate</groupId>
-                                        <artifactId>hibernate-core</artifactId>
-                                    </exclusion>
-                                    <exclusion>
-                                        <groupId>org.hibernate</groupId>
-                                        <artifactId>hibernate-entitymanager</artifactId>
-                                    </exclusion>
-                                    <exclusion>
-                                        <groupId>org.hibernate</groupId>
-                                        <artifactId>hibernate-envers</artifactId>
-                                    </exclusion>
-                                    <exclusion>
-                                        <groupId>org.hibernate.javax.persistence</groupId>
-                                        <artifactId>hibernate-jpa-2.0-api</artifactId>
-                                    </exclusion>
-                                </exclusions>
-                            </dependency>
-                            <dependency>
-                                <groupId>mysql</groupId>
-                                <artifactId>mysql-connector-java</artifactId>
-                                <version>${version.mysql-connector-java}</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>org.postgresql</groupId>
-                                <artifactId>postgresql</artifactId>
-                                <version>42.2.2</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>org.hibernate</groupId>
-                                <artifactId>hibernate-core</artifactId>
-                                <version>${version.hibernate}</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>org.hibernate</groupId>
-                                <artifactId>hibernate-entitymanager</artifactId>
-                                <version>${version.hibernate}</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>org.hibernate</groupId>
-                                <artifactId>hibernate-envers</artifactId>
-                                <version>${version.hibernate}</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>${project.groupId}</groupId>
-                                <artifactId>tekir-core-model</artifactId>
-                                <version>${project.version}</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>${project.groupId}</groupId>
-                                <artifactId>tekir-contact-model</artifactId>
-                                <version>${project.version}</version>
-                            </dependency>
-                        </dependencies>
-                        
                     </plugin>
                 </plugins>
             </build>
