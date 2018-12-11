@@ -1,0 +1,7 @@
+= Tekir 4 
+
+== Nasıl Derlenir
+
+Telve'nin derlenebilmesi için sisteminizde JDK ( 1.8 )  ve Apache Maven ( minimum 3.5.4 ) sürümü kurulu olmalıdır.
+
+Proje ana klasörü içerisinde `mvn clean install` komutunu çalıştırmanız yeterli olacaktır.
