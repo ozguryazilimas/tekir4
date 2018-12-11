@@ -53,7 +53,7 @@
             <t:stateOutputDate label="general.label.Date" value="#{jobApplicationHome.entity.date}" /> 
         </ul>
         <ui:fragment rendered="#{not empty jobApplicationHome.entity.info}">
-            <p><i class="fa fa-info"/> #{jobApplicationHome.entity.info}</p>
+            <p style="white-space: pre-wrap;"><i class="fa fa-info"/> #{jobApplicationHome.entity.info}</p>
         </ui:fragment>
     </ui:define>
 
