@@ -23,8 +23,10 @@
         <div class="row">
             <t:outputText label="JobAdvert.label.Topic" value="#{jobAdvertBrowse.jobAdvert.topic}" columnClass="col-xs-12" rendered="#{not empty jobAdvertBrowse.jobAdvert.topic}"/>
             <t:outputText label="JobAdvert.label.Info" value="#{jobAdvertBrowse.jobAdvert.info}" columnClass="col-xs-12" rendered="#{not empty jobAdvertBrowse.jobAdvert.info}"/>
-            <t:outputText label="JobAdvert.label.startDate" value="#{jobAdvertBrowse.jobAdvert.startDate}" columnClass="col-xs-12" rendered="#{not empty jobAdvertBrowse.jobAdvert.startDate}"/>
-            <t:outputText label="JobAdvert.label.endDate" value="#{jobAdvertBrowse.jobAdvert.endDate}" columnClass="col-xs-12" rendered="#{not empty jobAdvertBrowse.jobAdvert.endDate}"/>         
+            <t:outputDate label="JobAdvert.label.startDate" value="#{jobAdvertBrowse.jobAdvert.startDate}"
+                          columnClass="col-xs-12" rendered="#{not empty jobAdvertBrowse.jobAdvert.startDate}"/>
+            <t:outputDate label="JobAdvert.label.endDate" value="#{jobAdvertBrowse.jobAdvert.endDate}"
+                          columnClass="col-xs-12" rendered="#{not empty jobAdvertBrowse.jobAdvert.endDate}"/>
             <t:outputText label="JobAdvert.label.Owner" value="#{jobAdvertBrowse.jobAdvert.owner}" columnClass="col-xs-12" rendered="#{not empty jobAdvertBrowse.jobAdvert.owner}"/>
             <t:outputTag label="JobAdvert.label.Skills" value="#{jobAdvertBrowse.jobAdvert.skills}" columnClass="col-xs-12" rendered="#{not empty jobAdvertBrowse.jobAdvert.skills}"/>
             <t:outputText label="JobAdvert.label.Status" value="#{jobAdvertBrowse.jobAdvert.status}" columnClass="col-xs-12" rendered="#{not empty jobAdvertBrowse.jobAdvert.status}"/>
