@@ -29,37 +29,31 @@
         <dependency>
             <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-web</artifactId>
-            <version>${version.telve}</version>
             <type>war</type>
         </dependency>
         <dependency>
             <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-idm</artifactId>
-            <version>${version.telve}</version>
             <type>ejb</type>
         </dependency>
         <dependency>
             <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-note</artifactId>
-            <version>${version.telve}</version>
             <type>ejb</type>
         </dependency>
         <dependency>
             <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-attachment</artifactId>
-            <version>${version.telve}</version>
             <type>ejb</type>
         </dependency>
         <dependency>
             <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-attachment-modeshape</artifactId>
-            <version>${version.telve}</version>
             <type>ejb</type>
         </dependency>
         <dependency>
             <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-image-jpa</artifactId>
-            <version>${version.telve}</version>
             <type>ejb</type>
         </dependency>
 
