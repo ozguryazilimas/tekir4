@@ -60,7 +60,7 @@ public class InputTagComponent extends UINamingContainer{
         List<String> tagsAsString = getTagsAsString();
         suggestions.removeAll(tagsAsString);
         List<TagResult> resultList = suggestions.stream()
-                .filter(s -> s.contains(query))
+                .filter(s -> s.toLowerCase().contains(query.toLowerCase()))
                 .map(TagResult::new)
                 .collect(Collectors.toList());
         tagsAsString.replaceAll(String::trim);
