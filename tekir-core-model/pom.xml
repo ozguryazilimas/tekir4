@@ -4,29 +4,23 @@
 
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.ozguryazilim.mutfak</groupId>
+        <groupId>com.ozguryazilim.tekir</groupId>
         <artifactId>tekir-parent</artifactId>
-        <version>4.0.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
+        <version>${revision}${changelist}</version>
     </parent>
     <artifactId>tekir-core-model</artifactId>
     <packaging>jar</packaging>
   
     <dependencies>
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-core-model</artifactId>
             <version>${version.telve}</version>
         </dependency>
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-unit</artifactId>
             <version>${version.telve}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <type>jar</type>
         </dependency>
     </dependencies>
   
@@ -35,28 +29,6 @@
             <plugin>
                 <groupId>org.bsc.maven</groupId>
                 <artifactId>maven-processor-plugin</artifactId>
-                <version>${version.maven-processor-plugin}</version>
-                <executions>
-                    <execution>
-                        <id>process</id>
-                        <goals>
-                            <goal>process</goal>
-                        </goals>
-                        <phase>generate-sources</phase>
-                        <configuration>
-                            <processors>
-                                <processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
-                            </processors>
-                        </configuration>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.hibernate</groupId>
-                        <artifactId>hibernate-jpamodelgen</artifactId>
-                        <version>${version.hibernate-jpamodelgen}</version>
-                    </dependency>
-                </dependencies>
             </plugin>
         </plugins>
     </build>
@@ -78,9 +50,12 @@
                         
                         <groupId>org.liquibase</groupId>
                         <artifactId>liquibase-maven-plugin</artifactId>
+                        <!--
                         <version>${version.liquibase-maven-plugin}</version>
+                        -->
                         <configuration>
                             <changeLogFile>src/main/resources/liquibase/tekir-core.xml</changeLogFile>
+                            <!--
                             <diffChangeLogFile>src/main/resources/liquibase/migration/changelog-${maven.build.timestamp}.xml</diffChangeLogFile>
                             <driver>${liquibase.driver}</driver>
                             <url>${liquibase.url}</url>
@@ -90,8 +65,11 @@
                             <referenceUrl>hibernate:ejb3:tekirCore</referenceUrl>
                             <verbose>true</verbose>
                             <logging>debug</logging>
+                            -->
+                            <referenceUrl>hibernate:ejb3:tekirCore</referenceUrl>
                             <diffIncludeObjects>table:TCO_.*</diffIncludeObjects>
                         </configuration>
+                        <!--
                         <dependencies>
                             <dependency>
                                 <groupId>org.liquibase.ext</groupId>
@@ -137,7 +115,7 @@
                                 <version>${version.hibernate}</version>
                             </dependency>
                         </dependencies>
-                        
+                        -->
                     </plugin>
                 </plugins>
             </build>

@@ -2,15 +2,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-	
+
     <parent>
-        <groupId>com.ozguryazilim.mutfak</groupId>
-        <artifactId>telve-parent</artifactId>
-        <version>4.0.0.Beta6-SNAPSHOT</version>
+        <groupId>com.ozguryazilim.telve</groupId>
+        <artifactId>telve-app-parent</artifactId>
+        <version>4.0.0-Beta-7</version>
     </parent>
-    <groupId>com.ozguryazilim.mutfak</groupId>
+
+    <groupId>com.ozguryazilim.tekir</groupId>
     <artifactId>tekir-parent</artifactId>
-    <version>4.0.0-SNAPSHOT</version> 
+    <version>${revision}${changelist}</version> 
     <name>${project.groupId} : ${project.artifactId} : ${project.version}</name>
     <description>Tekir Parent POM</description>
     <url>http://www.ozguryazilim.com.tr/</url>
@@ -18,33 +19,41 @@
 
 
     <properties>
-        <version.telve>4.0.0.Beta6-SNAPSHOT</version.telve>
-        <version.tekir>4.0.0-SNAPSHOT</version.tekir>
+        
+        <buildNumber>SNAPSHOT</buildNumber>
+        <revision>4.0.0</revision>
+        <changelist>-${buildNumber}</changelist>
+
+        <version.tekir>${revision}${changelist}</version.tekir>
+        <version.money-api>1.0</version.money-api>
+        <version.moneta>1.1</version.moneta>
+
+        <!--
         <version.hibernate>4.3.11.Final</version.hibernate>
         <version.liquibase-hibernate4>3.5</version.liquibase-hibernate4>
         <version.mysql-connector-java>5.1.26</version.mysql-connector-java>
         <version.maven-processor-plugin>2.0.5</version.maven-processor-plugin>
         <version.liquibase-maven-plugin>3.4.2</version.liquibase-maven-plugin>
         <version.hibernate-jpamodelgen>5.2.1.Final</version.hibernate-jpamodelgen>
-        <version.money-api>1.0</version.money-api>
-        <version.moneta>1.1</version.moneta>
+        
         <version.wildfly-arquillian>8.1.0.Final</version.wildfly-arquillian>
         <version.shrinkwrap-resolver>2.1.1</version.shrinkwrap-resolver>
         <version.slf4j-simple>1.6.4</version.slf4j-simple>
         <version.dom4j>1.6.1</version.dom4j>
         <version.junit>4.12</version.junit>
         <version.hamcrest-core>1.3</version.hamcrest-core>
+        -->
     </properties>
-    
+        
     <issueManagement>
         <system>Redmine</system>
-        <url>https://islergucler.ozguryazilim.com.tr/projects/mutfak</url>
+        <url>https://islergucler.ozguryazilim.com.tr/projects/tekir-4</url>
     </issueManagement>
 	
     <scm>
-        <connection>scm:git:ssh://git@lab.ozguryazilim.com.tr/telveng</connection>
-        <developerConnection>scm:git:ssh://git@lab.ozguryazilim.com.tr/telveng</developerConnection>
-        <url>http://cgit.ozguryazilim.com.tr/cezve/</url>
+        <connection>scm:git:https://lab.ozguryazilim.com.tr:tekir/tekir4</connection>
+        <developerConnection>scm:git:https://lab.ozguryazilim.com.tr:tekir/tekir4</developerConnection>
+        <url>https://lab.ozguryazilim.com.tr:tekir/tekir4</url>
     </scm>
 	 
     <organization>
@@ -62,29 +71,26 @@
 
     <developers>
         <developer>
-            <id>hakan.uygun@ozguryazilim.com.tr#no</id>
-            <name>Hakan Uygun</name>
-            <email>hakan.uygun@ozguryazilim.com.tr#no</email>
+            <id>ozguryazilim.com.tr#no</id>
             <organization>Özgür Yazılım A.Ş.</organization>
             <organizationUrl>http://www.ozguryazilim.com.tr</organizationUrl>
-            <roles>
-                <role>Developer</role>
-            </roles>
             <timezone>GMT +2</timezone>
         </developer>
     </developers>
     
-    
+
     <modules>
         <module>tekir-core</module>
         <module>tekir-core-model</module>
+        <module>tekir-feed-model</module>
+        <module>tekir-feed</module>
+    
+
         <module>tekir-web</module>
         <module>tekir-recruit-web</module>
         <module>tekir-contact-model</module>
         <module>tekir-activity-model</module>
         <module>tekir-contact</module>
-        <module>tekir-feed-model</module>
-        <module>tekir-feed</module>
         <module>tekir-activity</module>
         <module>tekir-voucher-model</module>
         <module>tekir-opportunity-model</module>
@@ -115,17 +121,40 @@
         <module>tekir-hr</module>
         <module>tekir-recruit-model</module>
         <module>tekir-recruit</module>
+
     </modules>
     
     
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <configuration>
+                    <updatePomFile>true</updatePomFile>
+                    <flattenMode>oss</flattenMode>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    
+
+    <repositories>
+        <repository>
+            <id>ozguryazilim</id>
+            <name>Özgür Yazılım A.Ş. Nexus Reporsitory</name>
+            <url>http://nexus.ozguryazilim.com.tr/repository/maven-public</url>
+        </repository>
+    </repositories>
+    
     <distributionManagement>
         <repository>
-            <id>nexus</id>
-            <name>Özgür Yazılım A.Ş. Nexus Reporsiyory</name>
+            <id>ozguryazilim</id>
+            <name>Özgür Yazılım A.Ş. Nexus Reporsitory</name>
             <url>http://nexus.ozguryazilim.com.tr/content/repositories/releases/</url>
         </repository>
         <snapshotRepository>
-            <id>nexus</id>
+            <id>ozguryazilim</id>
             <name>Özgür Yazılım A.Ş. Nexus Snapshots Reporsiyory</name>
             <url>http://nexus.ozguryazilim.com.tr/content/repositories/snapshots/</url>
         </snapshotRepository>

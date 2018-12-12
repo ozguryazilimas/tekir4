@@ -3,13 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>tekir-parent</artifactId>
-        <groupId>com.ozguryazilim.mutfak</groupId>
-        <version>4.0.0-SNAPSHOT</version>
+        <groupId>com.ozguryazilim.tekir</groupId>
+        <version>${revision}${changelist}</version>
     </parent>
 
-    <groupId>com.ozguryazilim.mutfak</groupId>
     <artifactId>Tekir-Web</artifactId>
-    <version>4.0.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <name>Tekir</name>
@@ -29,147 +27,128 @@
     
     <dependencies>
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-web</artifactId>
-            <version>${version.telve}</version>
             <type>war</type>
         </dependency>
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-idm</artifactId>
-            <version>${version.telve}</version>
             <type>ejb</type>
         </dependency>
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-note</artifactId>
-            <version>${version.telve}</version>
             <type>ejb</type>
         </dependency>
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-attachment</artifactId>
-            <version>${version.telve}</version>
             <type>ejb</type>
         </dependency>
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-attachment-modeshape</artifactId>
-            <version>${version.telve}</version>
             <type>ejb</type>
         </dependency>
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-image-jpa</artifactId>
-            <version>${version.telve}</version>
             <type>ejb</type>
         </dependency>
-<!--         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
-            <artifactId>telve-keycloak</artifactId>
-            <version>${version.telve}</version>
-            <type>ejb</type>
-        </dependency> -->
-        <!--
+
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
-            <artifactId>telve-jcr</artifactId>
-            <version>${version.telve}</version>
-            <type>ejb</type>
-        </dependency>
-        -->
-        <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.tekir</groupId>
             <artifactId>tekir-core</artifactId>
             <version>${version.tekir}</version>
         </dependency>
         
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.tekir</groupId>
             <artifactId>tekir-contact</artifactId>
             <version>${version.tekir}</version>
         </dependency>
         
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.tekir</groupId>
             <artifactId>tekir-activity</artifactId>
             <version>${version.tekir}</version>
         </dependency>
         
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.tekir</groupId>
             <artifactId>tekir-commodity</artifactId>
             <version>${version.tekir}</version>
         </dependency>
         
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.tekir</groupId>
             <artifactId>tekir-finance</artifactId>
             <version>${version.tekir}</version>
         </dependency>
         
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.tekir</groupId>
             <artifactId>tekir-opportunity</artifactId>
             <version>${version.tekir}</version>
         </dependency>
         
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.tekir</groupId>
             <artifactId>tekir-account-notes</artifactId>
             <version>${version.tekir}</version>
         </dependency>
         
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.tekir</groupId>
             <artifactId>tekir-quote</artifactId>
             <version>${version.tekir}</version>
         </dependency>
         
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.tekir</groupId>
             <artifactId>tekir-order</artifactId>
             <version>${version.tekir}</version>
         </dependency>
         
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.tekir</groupId>
             <artifactId>tekir-invoice</artifactId>
             <version>${version.tekir}</version>
         </dependency>
         
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.tekir</groupId>
             <artifactId>tekir-payment</artifactId>
             <version>${version.tekir}</version>
         </dependency>
         
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.tekir</groupId>
             <artifactId>tekir-hr</artifactId>
             <version>${version.tekir}</version>
         </dependency>
         
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.tekir</groupId>
             <artifactId>tekir-opportunity-quote-linker</artifactId>
             <version>${version.tekir}</version>
         </dependency>
         
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.tekir</groupId>
             <artifactId>tekir-quote-order-linker</artifactId>
             <version>${version.tekir}</version>
         </dependency>
         
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.tekir</groupId>
             <artifactId>tekir-order-invoice-linker</artifactId>
             <version>${version.tekir}</version>
         </dependency>
         
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.tekir</groupId>
             <artifactId>tekir-invoice-payment-linker</artifactId>
             <version>${version.tekir}</version>
         </dependency>
@@ -190,19 +169,19 @@
         </dependency>
         
         <dependency>
-        	<groupId>com.ozguryazilim.mutfak</groupId>
+        	<groupId>com.ozguryazilim.tekir</groupId>
         	<artifactId>tekir-lead</artifactId>
         	<version>${version.tekir}</version>
         </dependency>
 
         <dependency>
-        	<groupId>com.ozguryazilim.mutfak</groupId>
+        	<groupId>com.ozguryazilim.tekir</groupId>
         	<artifactId>tekir-lead-opportunity-linker</artifactId>
         	<version>${version.tekir}</version>
         </dependency>
         
         <dependency>
-        	<groupId>com.ozguryazilim.mutfak</groupId>
+        	<groupId>com.ozguryazilim.tekir</groupId>
         	<artifactId>tekir-recruit</artifactId>
         	<version>${version.tekir}</version>
         </dependency>

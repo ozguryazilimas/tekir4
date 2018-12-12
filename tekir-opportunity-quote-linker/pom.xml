@@ -3,8 +3,8 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>tekir-parent</artifactId>
-        <groupId>com.ozguryazilim.mutfak</groupId>
-        <version>4.0.0-SNAPSHOT</version>
+        <groupId>com.ozguryazilim.tekir</groupId>
+        <version>${revision}${changelist}</version>
     </parent>
 
     <artifactId>tekir-opportunity-quote-linker</artifactId>
@@ -26,7 +26,7 @@
 
         <dependencies>
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-core</artifactId>
             <version>${version.telve}</version>
         </dependency>
