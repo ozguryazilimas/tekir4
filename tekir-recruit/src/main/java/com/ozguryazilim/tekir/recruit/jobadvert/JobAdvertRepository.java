@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author deniz
  */
 @Repository
@@ -29,24 +28,24 @@ import java.util.List;
 public abstract class JobAdvertRepository extends
         RepositoryBase<JobAdvert, JobAdvertViewModel>
         implements
-        CriteriaSupport<JobAdvert> {
+        CriteriaSupport<JobAdvert>{
 
     @Override
     public List<JobAdvertViewModel> browseQuery(QueryDefinition queryDefinition) {
         List<Filter<JobAdvert, ?, ?>> filters = queryDefinition.getFilters();
-        
+
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
         CriteriaQuery<JobAdvertViewModel> criteriaQuery = criteriaBuilder.createQuery(JobAdvertViewModel.class);
-        
+
         Root<JobAdvert> from = criteriaQuery.from(JobAdvert.class);
 
         buildViewModelSelect(criteriaQuery, from);
-        
+
         List<Predicate> predicates = new ArrayList<>();
         decorateFilters(filters, predicates, criteriaBuilder, from);
-        
+
         buildSearchTextControl(queryDefinition.getSearchText(), criteriaBuilder, predicates, from);
-        
+
         //TODO satır bazlı yetki kontrolü yapılmadı (owner,group,all)
         criteriaQuery.where(predicates.toArray(new Predicate[]{}));
 
@@ -59,7 +58,7 @@ public abstract class JobAdvertRepository extends
         TypedQuery<JobAdvertViewModel> typedQuery = entityManager().createQuery(criteriaQuery);
         typedQuery.setMaxResults(queryDefinition.getResultLimit());
         List<JobAdvertViewModel> resultList = typedQuery.getResultList();
-        
+
         return resultList;
     }
 
@@ -86,14 +85,13 @@ public abstract class JobAdvertRepository extends
                     criteriaBuilder.like(from.get(JobAdvert_.status), "%" + searchText + "%")));
         }
     }
-    
+
     /**
-     *
      * JobAdvertLookup Dialog için lookupQuery metodu.
-     *
+     * <p>
      * Aranan text e bagli olarak sorgu olusur ve dialog da gosterilir.
      * Bos text aramasi tum jobAdvert lari getirir.
-     * 
+     *
      * @param searchText JobAdvert arama-dialog içinde arama yapılacak text
      * @return JobAdvert sonuc listesi
      */
@@ -101,21 +99,39 @@ public abstract class JobAdvertRepository extends
     public List<JobAdvertViewModel> lookupQuery(String searchText) {
         CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
         CriteriaQuery<JobAdvertViewModel> criteriaQuery = criteriaBuilder.createQuery(JobAdvertViewModel.class);
-        
+
         Root<JobAdvert> from = criteriaQuery.from(JobAdvert.class);
-        
+
         buildViewModelSelect(criteriaQuery, from);
-        
+
         List<Predicate> predicates = new ArrayList<>();
 
         buildSearchTextControl(searchText, criteriaBuilder, predicates, from);
-        
+
         criteriaQuery.where(predicates.toArray(new Predicate[]{}));
         criteriaQuery.orderBy(criteriaBuilder.asc(from.get(JobAdvert_.topic)));
-        
+
         TypedQuery<JobAdvertViewModel> typedQuery = entityManager().createQuery(criteriaQuery);
         List<JobAdvertViewModel> resultList = typedQuery.getResultList();
-        
+
+        return resultList;
+    }
+
+    public List<JobAdvertViewModel> findActives() {
+        CriteriaBuilder criteriaBuilder = entityManager().getCriteriaBuilder();
+        CriteriaQuery<JobAdvertViewModel> criteriaQuery = criteriaBuilder.createQuery(JobAdvertViewModel.class);
+
+        Root<JobAdvert> from = criteriaQuery.from(JobAdvert.class);
+
+        buildViewModelSelect(criteriaQuery, from);
+
+        Predicate active = criteriaBuilder.notEqual(from.get(JobAdvert_.status), "CLOSED");
+        criteriaQuery.where(active);
+        criteriaQuery.orderBy(criteriaBuilder.asc(from.get(JobAdvert_.topic)));
+
+        TypedQuery<JobAdvertViewModel> typedQuery = entityManager().createQuery(criteriaQuery);
+        List<JobAdvertViewModel> resultList = typedQuery.getResultList();
+
         return resultList;
     }
 }
