@@ -22,20 +22,20 @@
     <ui:define name="customHeader">
         <section class="content-header">
             <p:outputPanel id="states">
-            <ul class="states pull-right">
-                <li role="presentation">
-                    <div style="font-weight: bold;">#{messages['JobAdvert.label.AdvertOwner']} </div>
-                    <div>
-                        #{userLookup.getUserName(jobAdvertHome.entity.owner)}
-                    </div>
-                </li>
-                <li role="presentation">
-                    <div style="font-weight: bold;"> #{messages['general.label.Status']} </div>
-                    <div>
-                        #{jobAdvertHome.entity.status}
-                    </div>
-                </li>
-            </ul>
+                <ul class="states pull-right">
+                    <li role="presentation">
+                        <div style="font-weight: bold;">#{messages['JobAdvert.label.AdvertOwner']} </div>
+                        <div>
+                            #{userLookup.getUserName(jobAdvertHome.entity.owner)}
+                        </div>
+                    </li>
+                    <li role="presentation">
+                        <div style="font-weight: bold;"> #{messages['general.label.Status']} </div>
+                        <div>
+                            #{jobAdvertHome.entity.status}
+                        </div>
+                    </li>
+                </ul>
             </p:outputPanel>
             <i class="fa fa-3x #{messages['feature.icon.'.concat(bean.feature.name)]} pull-left" />
             <small class="text-muted">#{ messages[pageTitleResolver.pageTitle] }</small>
@@ -53,6 +53,11 @@
         <ui:fragment rendered="#{jobAdvertHome.entity.info ne ''}">
             <p><i class="fa fa-info"/> #{jobAdvertHome.entity.info}</p>
         </ui:fragment>
+        <p:separator />
+        <p:outputPanel>
+            <h3>#{messages['JobAdvert.label.Requirement']} :</h3>
+            <h:outputText value="#{jobAdvertHome.entity.requirement}" escape="false" />
+        </p:outputPanel>
     </ui:define>
 
 </ui:composition>
