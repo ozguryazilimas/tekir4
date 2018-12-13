@@ -49,6 +49,9 @@
                         <p:column headerText="#{messages['contact.class.Applicant']}">
                             <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(jobAdvertHome.getAllFeaturePointer(ja.applicant))}" columnClass="col-xs-12"/>
                         </p:column>
+                        <p:column headerText="#{messages['contact.class.JobApplication']}">
+                            <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(jobAdvertHome.getAllFeaturePointer(ja))}"/>
+                        </p:column>
                         <p:column headerText="#{messages['Applicant.label.Rating']}">
                             <p:rating value="#{ja.applicant.rating}" stars="5" readonly="true"/>
                         </p:column>
