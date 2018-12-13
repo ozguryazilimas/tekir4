@@ -23,12 +23,14 @@ import com.ozguryazilim.tekir.entities.ContactPhone;
 import com.ozguryazilim.tekir.entities.Contact_;
 import com.ozguryazilim.tekir.entities.Corporation;
 import com.ozguryazilim.tekir.entities.Person;
+import com.ozguryazilim.telve.config.LocaleSelector;
 import com.ozguryazilim.telve.query.QueryDefinition;
 import com.ozguryazilim.telve.query.filters.Filter;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -270,9 +272,10 @@ public abstract class ContactRepository
 
     private void buildSearchTextControl(String searchText, CriteriaBuilder criteriaBuilder, List<Predicate> predicates, Root<? extends Contact> from) {
         if (!Strings.isNullOrEmpty(searchText)) {
+            searchText = searchText.toLowerCase(LocaleSelector.instance().getLocale());
             predicates.add(criteriaBuilder.or(criteriaBuilder.like(from.get(Contact_.code), "%" + searchText + "%"),
-                    criteriaBuilder.like(criteriaBuilder.lower(from.get(Contact_.name)), "%" + searchText.toLowerCase() + "%"),
-                    criteriaBuilder.like(criteriaBuilder.lower(from.get("tags").as(String.class)), "%" + searchText.toLowerCase() + "%")
+                    criteriaBuilder.like(criteriaBuilder.lower(from.get(Contact_.name)), "%" + searchText + "%"),
+                    criteriaBuilder.like(criteriaBuilder.lower(from.get("tags").as(String.class)), "%" + searchText + "%")
             ));
         }
     }
