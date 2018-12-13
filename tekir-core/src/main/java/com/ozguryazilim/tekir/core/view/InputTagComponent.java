@@ -1,6 +1,7 @@
 package com.ozguryazilim.tekir.core.view;
 
 import com.ozguryazilim.tekir.core.query.filter.TagSuggestionService;
+import com.ozguryazilim.telve.config.LocaleSelector;
 import org.apache.deltaspike.core.api.provider.BeanProvider;
 import org.primefaces.event.SelectEvent;
 
@@ -60,7 +61,7 @@ public class InputTagComponent extends UINamingContainer{
         List<String> tagsAsString = getTagsAsString();
         suggestions.removeAll(tagsAsString);
         List<TagResult> resultList = suggestions.stream()
-                .filter(s -> s.toLowerCase().contains(query.toLowerCase()))
+                .filter(s -> s.toLowerCase(LocaleSelector.instance().getLocale()).contains(query.toLowerCase(LocaleSelector.instance().getLocale())))
                 .map(TagResult::new)
                 .collect(Collectors.toList());
         tagsAsString.replaceAll(String::trim);
