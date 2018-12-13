@@ -4,10 +4,9 @@
 
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.ozguryazilim.mutfak</groupId>
+        <groupId>com.ozguryazilim.tekir</groupId>
         <artifactId>tekir-parent</artifactId>
-        <version>4.0.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
+        <version>${revision}${changelist}</version>
     </parent>
     <artifactId>tekir-core</artifactId>
     <packaging>ejb</packaging>
@@ -32,47 +31,47 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-core</artifactId>
             <version>${version.telve}</version>
         </dependency>
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-jasperreports</artifactId>
             <version>${version.telve}</version>
         </dependency>
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-dynamicreports</artifactId>
             <version>${version.telve}</version>
         </dependency>
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-admin-reports</artifactId>
             <version>${version.telve}</version>
         </dependency>
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-idm-reports</artifactId>
             <version>${version.telve}</version>
         </dependency>
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-calendar</artifactId>
             <version>${version.telve}</version>
         </dependency>
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-unit</artifactId>
             <version>${version.telve}</version>
         </dependency>
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-attachment</artifactId>
             <version>${version.telve}</version>
         </dependency>
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-attachment-ui</artifactId>
             <version>${version.telve}</version>
         </dependency>
@@ -129,6 +128,7 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
+        <!--
         <dependency>
             <groupId>org.jboss.arquillian.junit</groupId>
             <artifactId>arquillian-junit-container</artifactId>
@@ -152,18 +152,20 @@
             <artifactId>jboss-transaction-api_1.2_spec</artifactId>
             <scope>test</scope>
         </dependency>
+        
         <dependency>
             <groupId>dom4j</groupId>
             <artifactId>dom4j</artifactId>
             <version>${version.dom4j}</version>
         </dependency>
+        
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>${version.slf4j-simple}</version>
             <scope>test</scope>
         </dependency>
-
+        -->
     </dependencies>
 </project>
  

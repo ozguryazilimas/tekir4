@@ -4,10 +4,9 @@
 
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.ozguryazilim.mutfak</groupId>
+        <groupId>com.ozguryazilim.tekir</groupId>
         <artifactId>tekir-parent</artifactId>
-        <version>4.0.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
+        <version>${revision}${changelist}</version>
     </parent>
     <artifactId>tekir-feed</artifactId>
     <packaging>ejb</packaging>
@@ -32,12 +31,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-core</artifactId>
             <version>${version.telve}</version>
         </dependency>
         <dependency>
-            <groupId>com.ozguryazilim.mutfak</groupId>
+            <groupId>com.ozguryazilim.telve</groupId>
             <artifactId>telve-dashboard</artifactId>
             <version>${version.telve}</version>
         </dependency>
@@ -78,6 +77,7 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
+        <!--
         <dependency>
             <groupId>org.jboss.arquillian.junit</groupId>
             <artifactId>arquillian-junit-container</artifactId>
@@ -107,7 +107,7 @@
             <version>${version.slf4j-simple}</version>
             <scope>test</scope>
         </dependency>
-
+        -->
     </dependencies>
 </project>
  

@@ -1,0 +1,57 @@
+= Tekir 4.0 
+
+WARNING: Henüz erken geliştirme aşamasındadır. 
+
+Tekir, Küçük/Orta Ölçekli işletmeler için müşteri yönetimi ve ön muhasebe işlemlerini yapmak üzere tasarlanmış, özgür yazılım bir web uygulamasıdır.
+
+== Özellikler
+
+Bağlantı / Müşteri Tanımları::
+* Kişi ve Kurum Takibi
+* Müşteri, Tedarikçi, Çözüm Ortağı, Rakip gibi faklı bağlantı türleri
+* İletişim bilgileri ve iletişim süreci takibi
+* Bağlantı ile ile yapılan bütün etkileşimi tek bir arayüzden görme imkanı
+
+Satış Süreci::
+* Fırsat takibi
+* Teklif takibi
+* Sipariş ve Sözleşme Takibi
+* Fatura takibi ve E-Fatura desteği
+* Tahsilat ve borç takibi
+* Süreçlerin tek sayfadan izlenebilmesi
+
+Alış Süreci::
+* Sipariş takibi
+* Fatura takibi ve E-Fatura desteği
+* Ödeme ve borç takibi
+* Süreçlerin tek sayfadan izlenebilmesi
+
+Finans Takibi::
+* Kasa, Banka ve Kredi Kartı hesap takibi
+* Farklı finansal hesaplar arasında hareket takibi
+
+Yetkilendirme::
+* Rol bazlı kullanıcı yetkilendirme
+* İstenilen kadar rol oluşturabilme
+* Kayıtların kullanıcı ya da gruba bağlı olarak yetkilendirilmesi
+* Kullanıcı davranış izleme ve raporlama
+
+Diğer::
+* Kullanıcı seçimli Yönetim Konsolu ( Dashboard )
+* Takvim bileşeni ( Yapılacak iş ve Görevlerin takvim üzerinde sunumu )
+* Zamanlanmış görevler
+    ** İçeriye E-Posta aktarımı
+    ** Hatırlatma mesajları ( Fırsat, Teklif, Fatura v.b. )
+    ** Merkez Bankası Kur Alımı
+    ** Veri düzenleme işlemleri
+* Zamanlanmış Raporlar
+    ** İstenilen raporların belirlenen zamanlarda otomatik hazırlanması ve gönderimi
+* Türkçe ve İngilizce temel pakette hazır olmak üzere çoklu dil seçeneği
+
+
+
+== Nasıl Derlenir
+
+Telve'nin derlenebilmesi için sisteminizde JDK ( 1.8 )  ve Apache Maven ( minimum 3.5.4 ) sürümü kurulu olmalıdır.
+
+Proje ana klasörü içerisinde `mvn clean install` komutunu çalıştırmanız yeterli olacaktır.
