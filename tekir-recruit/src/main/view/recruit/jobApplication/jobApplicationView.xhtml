@@ -57,7 +57,7 @@
         </ui:fragment>
     </ui:define>
 
-    <ui:define name="context-menu" id="contextMenu"> 
+    <ui:define name="context-menu"> 
         <li>
             <p:commandLink action="#{jobApplicationHome.create()}" styleClass="context-command" ajax="false" >
                 <i class="fa fa-plus-circle"></i>
@@ -75,14 +75,15 @@
             <p:commandLink action="#{evaluationNoteEditor.create()}" styleClass="context-command" rendered="#{jobApplicationHome.canEvaluate}" ajax="true">
                 <i class="fa fa-star"></i>
                 <h:outputText value=" #{messages['EvaluationNote.button.add']}"/>
-                <f:ajax event="dialogReturn" render="@all" />
+                <p:ajax event="dialogReturn" update=":cmb" partialSubmit="true" process="@this" oncomplete="updateEvaluationNotes()"/>
             </p:commandLink>
 
             <p:commandLink action="#{evaluationNoteEditor.editEvaluation()}" styleClass="context-command" rendered="#{!jobApplicationHome.canEvaluate}" ajax="true">
                 <i class="fa fa-edit"></i>
                 <h:outputText value=" #{messages['EvaluationNote.button.edit']}"/>
-                <f:ajax event="dialogReturn" render="@all" />
+                <p:ajax event="dialogReturn" update=":cmb" partialSubmit="true" process="@this" oncomplete="updateEvaluationNotes()"/>
             </p:commandLink>
+            <p:remoteCommand name="updateEvaluationNotes" update="evaluationNotes" />
         </li>
     </ui:define>
 
