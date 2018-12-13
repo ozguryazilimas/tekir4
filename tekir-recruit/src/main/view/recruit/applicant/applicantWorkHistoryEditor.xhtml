@@ -10,10 +10,10 @@
 
     <ui:define name="editorContent">
         <div class="row">
-            <t:inputText label="ApplicantWorkHistory.label.Name" value="#{bean.entity.name}" required="true"/>
+            <t:inputSuggestion label="ApplicantWorkHistory.label.Name" value="#{bean.entity.name}" required="true" group="#{applicantWorkHistoryEditor.entity.class.simpleName}" listener="applicantWorkHistoryEditor.entity.name"/>
         </div>
         <div class="row">
-            <t:inputText label="ApplicantWorkHistory.label.Title" value="#{bean.entity.title}"/>
+            <t:inputSuggestion label="ApplicantWorkHistory.label.Title" value="#{bean.entity.title}" group="workTitle" listener="applicantWorkHistoryEditor.entity.title"/>
         </div>
         <div class="row">
             <t:inputText label="ApplicantWorkHistory.label.Job" value="#{bean.entity.job}"/>
