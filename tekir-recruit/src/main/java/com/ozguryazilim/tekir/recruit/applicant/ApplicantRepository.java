@@ -95,11 +95,10 @@ public abstract class ApplicantRepository extends
 
     private void buildSearchTextControl(String searchText, CriteriaBuilder criteriaBuilder, List<Predicate> predicates, Root<? extends Applicant> from) {
         if (!Strings.isNullOrEmpty(searchText)) {
-            searchText = searchText.toLowerCase(LocaleSelector.instance().getLocale());
             predicates.add(criteriaBuilder.or(
                     criteriaBuilder.like(criteriaBuilder.lower(from.get(Contact_.code)), "%" + searchText + "%"),
-                    criteriaBuilder.like(criteriaBuilder.lower(from.get(Contact_.name)), "%" + searchText + "%"),
-                    criteriaBuilder.like(criteriaBuilder.lower(from.get("tags").as(String.class)), "%" + searchText + "%")                
+                    criteriaBuilder.like(criteriaBuilder.lower(from.get(Contact_.name)), criteriaBuilder.literal("%" + searchText + "%")),
+                    criteriaBuilder.like(criteriaBuilder.lower(from.get("tags").as(String.class)), criteriaBuilder.literal("%" + searchText + "%"))               
             ));
         }
     }
