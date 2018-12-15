@@ -25,14 +25,14 @@
     </ui:define>
 
     <ui:define name="custom-actions">
-        <p:commandLink action="#{activityQuickRecord.closeSuccess()}" ajax="true" process="@form" 
-                       oncomplete="if (!args.validationFailed){quickPanelToogle();}" update="quickPanelContent"
+        <p:commandLink action="#{activityQuickRecord.closeSuccess()}" ajax="true" 
+                       oncomplete="if (!args.validationFailed){quickPanelToogle();}" update=":actW quickPanelContent"
                        validateClient="true" styleClass="btn btn-success">
             <i class="fa fa-check"></i> #{messages['activity.button.Success']}
         </p:commandLink>
         
-        <p:commandLink action="#{activityQuickRecord.closePlanned()}" ajax="true" process="@form" 
-                       oncomplete="if (!args.validationFailed){quickPanelToogle();}" update="quickPanelContent"
+        <p:commandLink action="#{activityQuickRecord.closePlanned()}" ajax="true" 
+                       oncomplete="if (!args.validationFailed){quickPanelToogle();}" update=":actW quickPanelContent"
                        validateClient="true" styleClass="btn btn-primary">
             <i class="fa fa-save"></i> #{messages['general.button.Save']}
         </p:commandLink>

@@ -5,7 +5,6 @@
                 xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
                 xmlns:p="http://primefaces.org/ui">
 
-
     #{activityWidget.init(person, corporation, feature, attached)}
 
     <t:accordion icon="fa fa-comments" id="actW" label="general.label.Activities" columnClass="#{columnClass}" contentClass="">
@@ -46,66 +45,66 @@
             </div>
 
             <ui:fragment rendered="#{readonly ne 'true'}">
-            <div class="dropdown pull-right" >
-                <button id="actDropMenu1" class="btn btn-box-tool dropdown-toogle" data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-plus"/>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-right" arai-labeledby="actDropMenu1" style="z-index: 5000">
-                    <ui:repeat value="#{activityWidget.addableActivities}" var="act">
-                        <li>
-                            <p:commandLink action="#{activityWidget.createNewQuickRecord(act)}" process="@this" oncomplete="quickPanelToogle();" update="quickPanelContent">
-                                <i class="#{messages['activity.button.icon.'.concat(act)]}" /> #{messages['activity.button.label.'.concat(act)]}
-                            </p:commandLink>
-                        </li>
-                    </ui:repeat>
-                </ul>
-            </div>
+                <div class="dropdown pull-right" >
+                    <button id="actDropMenu1" class="btn btn-box-tool dropdown-toogle" data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-plus"/>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right" arai-labeledby="actDropMenu1" style="z-index: 5000">
+                        <ui:repeat value="#{activityWidget.addableActivities}" var="act">
+                            <li>
+                                <p:commandLink action="#{activityWidget.createNewQuickRecord(act)}" process="@this" oncomplete="quickPanelToogle();" update="quickPanelContent">
+                                    <i class="#{messages['activity.button.icon.'.concat(act)]}" /> #{messages['activity.button.label.'.concat(act)]}
+                                </p:commandLink>
+                            </li>
+                        </ui:repeat>
+                    </ul>
+                </div>
             </ui:fragment>
         </f:facet>
 
-
-        <p:outputPanel id="actWL" layout="block" class="box-body no-padding">
-            <ul class="products-list product-list-in-box ">
-                <ui:repeat value="#{activityWidget.activityList}" var="act">
-                    <li class="item">
-                        <div class="product-img" style="vertical-align: top">
-                            <span class="fa-stack" style="color: #999;">
-                                <i class="#{messages['activity.button.icon.'.concat(act.class.simpleName)]} fa-border fa-2x" style="width: 45px;"/> 
-                                <ui:fragment rendered="#{act.direction ne 'NONE'}">
-                                <i class="fa fa-circle fa-inverse overlay-base" />
-                                <i class="fa #{messages['activity.direction.icon.'.concat(act.direction)]} overlay-icon" />
-                                </ui:fragment>
-                                <i class="fa #{messages['activity.status.icon.'.concat(act.status)]} overlay-icon2" 
-                                   title="#{messages['activity.status.'.concat(act.status)]}"/>
-                            </span>
-                        </div>
-                        <div class="product-info">
-                            <div class="box-tools pull-right">
-                                <h:link value="" outcome="/activities/activityView.xhtml?eid=#{act.id}" styleClass="btn btn-box-tool">
-                                    <i class="fa fa-external-link-square"></i>
-                                </h:link>
+        <f:facet name="content">
+            <p:outputPanel id="actWL" layout="block" class="box-body no-padding" deferred="true">
+                <ul class="products-list product-list-in-box ">
+                    <ui:repeat value="#{activityWidget.activityList}" var="act">
+                        <li class="item">
+                            <div class="product-img" style="vertical-align: top">
+                                <span class="fa-stack" style="color: #999;">
+                                    <i class="#{messages['activity.button.icon.'.concat(act.class.simpleName)]} fa-border fa-2x" style="width: 45px;"/> 
+                                    <ui:fragment rendered="#{act.direction ne 'NONE'}">
+                                        <i class="fa fa-circle fa-inverse overlay-base" />
+                                        <i class="fa #{messages['activity.direction.icon.'.concat(act.direction)]} overlay-icon" />
+                                    </ui:fragment>
+                                    <i class="fa #{messages['activity.status.icon.'.concat(act.status)]} overlay-icon2" 
+                                       title="#{messages['activity.status.'.concat(act.status)]}"/>
+                                </span>
                             </div>
-                            <ui:remove>
-                                <span class="label #{ act.status eq 'SCHEDULED' ? 'label-default' : act.status eq 'SUCCESS' ? 'label-success' : 'label-danger' }  pull-right"><i class="fa #{ act.status eq 'SCHEDULED' ? 'fa-calendar' : act.status eq 'SUCCESS' ? 'fa-check' : 'fa-ban' }" title="#{messages['activity.status.'.concat(act.status)]}"/> </span>
-                            </ui:remove>
-                            <span class="product-title">#{act.subject}</span>
-                            <span class="product-description">
-                                #{act.body}
-                            </span>
-                            
-                            <span class="product-description text-sm">
-                                <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(act.regarding)}" rendered="#{activityWidget.attached ne 'Feature'}"/>
-                            </span>
-                            <span class="product-description text-sm" style="color:silver">
-                                <i class="fa fa-user margin-r-5"/>#{userLookup.getUserName(act.assignee)} 
-                                <i class="fa  fa-clock-o margin-r-5"/><t:cellOutputPrettyTime value="#{act.dueDate}"/></span>
-                        </div>
-                    </li>
-                </ui:repeat>
-            </ul>
+                            <div class="product-info">
+                                <div class="box-tools pull-right">
+                                    <h:link value="" outcome="/activities/activityView.xhtml?eid=#{act.id}" styleClass="btn btn-box-tool">
+                                        <i class="fa fa-external-link-square"></i>
+                                    </h:link>
+                                </div>
+                                <ui:remove>
+                                    <span class="label #{ act.status eq 'SCHEDULED' ? 'label-default' : act.status eq 'SUCCESS' ? 'label-success' : 'label-danger' }  pull-right"><i class="fa #{ act.status eq 'SCHEDULED' ? 'fa-calendar' : act.status eq 'SUCCESS' ? 'fa-check' : 'fa-ban' }" title="#{messages['activity.status.'.concat(act.status)]}"/> </span>
+                                </ui:remove>
+                                <span class="product-title">#{act.subject}</span>
+                                <span class="product-description">
+                                    #{act.body}
+                                </span>
 
-        </p:outputPanel>
+                                <span class="product-description text-sm">
+                                    <t:cellOutputFeatureLink value="#{featureController.getFeatureLink(act.regarding)}" rendered="#{activityWidget.attached ne 'Feature'}"/>
+                                </span>
+                                <span class="product-description text-sm" style="color:silver">
+                                    <i class="fa fa-user margin-r-5"/>#{userLookup.getUserName(act.assignee)} 
+                                    <i class="fa  fa-clock-o margin-r-5"/><t:cellOutputPrettyTime value="#{act.dueDate}"/></span>
+                            </div>
+                        </li>
+                    </ui:repeat>
+                </ul>
 
+            </p:outputPanel>
+        </f:facet>
     </t:accordion>
 
 </ui:composition>
