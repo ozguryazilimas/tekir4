@@ -81,7 +81,7 @@
                         <t:outputText label="general.label.Category" value="#{contactHome.entity.category.name}" columnClass="col-lg-12 col-md-6"/>
                         <t:outputText label="general.label.Industry" value="#{contactHome.entity.industry.name}" columnClass="col-lg-12 col-md-6"/>
                         <t:outputText label="general.label.Territory" value="#{contactHome.entity.territory.name}" columnClass="col-lg-12 col-md-6"/>
-
+                        <t:outputTag label="general.label.Tag" value="#{contactHome.entity.tags}" columnClass="col-lg-12 col-md-6"/>
                     </t:accordion>
                     <ui:fragment rendered="#{contactHome.isAccount}">
                         <t:accordion icon="fa fa-file-text" label="contact.label.Account" >

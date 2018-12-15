@@ -108,6 +108,10 @@
                 <div class="row">
                     <t:inputTextarea label="general.label.Info" value="#{contactHome.entity.info}" columnClass="col-xs-12"/>
                 </div>
+                
+                <div class="row">
+                    <t:inputTag label="general.label.Tag" value="#{contactHome.entity.tags}" key="#{contactHome.entity.class.simpleName}" columnClass="col-xs-12"/>
+                </div>
 
                 <ui:fragment rendered="#{contactHome.isAccount}">
                     <div class="row">

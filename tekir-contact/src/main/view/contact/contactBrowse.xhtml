@@ -55,6 +55,7 @@
                 <t:outputText label="contact.label.CorporationName" value="#{contactBrowse.contact.corporationName}" rendered="#{not empty contactBrowse.contact.corporation}" columnClass="col-xs-12"/>
                 <t:outputFeatureLink label="general.label.Corporation" value="#{featureController.getFeatureLink(contactBrowse.getAllFeaturePointer(contactBrowse.contact.corporation))}" rendered="#{not empty contactBrowse.contact.corporation}" columnClass="col-xs-12"/>                
                 <t:outputText label="contact.label.SSN" value="#{contactBrowse.contact.ssn}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.ssn}"/>
+                <t:outputTag label="general.label.Tag" value="#{contactBrowse.contact.tags}" columnClass="col-xs-12" rendered="#{not empty contactBrowse.contact.tags}"/>
             </div>            
         </ui:fragment>
 

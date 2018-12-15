@@ -25,7 +25,10 @@
                 <t:inputLookupDialog label="contact.label.ParentCorparation" value="#{newCorporationDialog.contact.parentCorporation}" lookupBean="#{contactLookup}" lookupListener="newCorporationDialog.contact.parentCorporation" placeholder="#{messages['contact.info.ParentCorporation']}" lookupProfile="T:Corporation"/>
                 
                 <t:inputTextarea label="general.label.Info" value="#{bean.contact.info}" columnClass="col-xs-12"/>
-            </div>  
+            </div>
+            <div class="row">
+                <t:inputTag label="general.label.Tag" value="#{bean.contact.tags}" key="Corporation" columnClass="col-xs-12"/>
+            </div>
             
             <h:panelGroup styleClass="row actionButtons" layout="block" >
                 <ui:insert name="actionButtons" />

@@ -18,23 +18,24 @@
                                              rendered="#{feature.caption ne null}" columnClass="col-xs-12"/>
                     </div>
 
-                    
-                        <div class="row">
-                            <t:outputText label="general.label.FirstName" value="#{employeeHome.entity.firstName}" columnClass="col-xs-12"/>
-                            <t:outputText label="general.label.LastName" value="#{employeeHome.entity.lastName}" columnClass="col-xs-12"/>
-                            <t:outputText value="#{employeeHome.entity.useName}" label="contact.label.UseName" columnClass="col-xs-12"/>
-                            <t:outputText value="#{messages['gender.'.concat(employeeHome.entity.gender)]}" label="contact.label.Gender" columnClass="col-xs-12"/>
-                            <t:outputText label="contact.label.JobTitle" value="#{employeeHome.entity.jobTitle}" columnClass="col-xs-12"/>
-                            <t:outputText label="contact.label.SSN" value="#{employeeHome.entity.ssn}" columnClass="col-xs-12"/>
-                        </div>            
+
+                    <div class="row">
+                        <t:outputText label="general.label.FirstName" value="#{employeeHome.entity.firstName}" columnClass="col-xs-12"/>
+                        <t:outputText label="general.label.LastName" value="#{employeeHome.entity.lastName}" columnClass="col-xs-12"/>
+                        <t:outputText value="#{employeeHome.entity.useName}" label="contact.label.UseName" columnClass="col-xs-12"/>
+                        <t:outputText value="#{messages['gender.'.concat(employeeHome.entity.gender)]}" label="contact.label.Gender" columnClass="col-xs-12"/>
+                        <t:outputText label="contact.label.JobTitle" value="#{employeeHome.entity.jobTitle}" columnClass="col-xs-12"/>
+                        <t:outputText label="contact.label.SSN" value="#{employeeHome.entity.ssn}" columnClass="col-xs-12"/>
+                    </div>            
 
                     <div class="row">
                         <t:outputText label="general.label.Category" value="#{employeeHome.entity.category.name}" columnClass="col-xs-12"/>
                         <t:outputText label="general.label.Industry" value="#{employeeHome.entity.industry.name}" columnClass="col-xs-12"/>
                         <t:outputText label="general.label.Territory" value="#{employeeHome.entity.territory.name}" columnClass="col-xs-12"/>
+                        <t:outputTag label="general.label.Tag" value="#{employeeHome.entity.tags}" columnClass="col-xs-12"/>
                     </div>
                 </t:accordion>
-                
+
             </div>
 
             <div class="col-md-4 col-xs-12">
@@ -42,7 +43,7 @@
                 <ui:include src="/notes/noteWidget.xhtml">
                     <ui:param name="featurePointer" value="#{employeeHome.featurePointer}" />
                 </ui:include>
-                
+
                 <ui:include src="/feeds/feedWidget.xhtml">
                     <ui:param name="feature" value="#{employeeHome.featureClass.simpleName}" />
                     <ui:param name="pk" value="#{employeeHome.entity.id}" />
@@ -59,11 +60,11 @@
 
                     <ui:remove>
                         //TODO: Çalışanlar için related contact yapısına ihtiyaç var mı?
-                    <ui:include src="/contact/relatedContactFragment.xhtml">
-                        <ui:param name="contact" value="#{employeeHome.entity}" />
-                        <ui:param name="relatedContacts" value="#{employeeHome.relatedContacts}" />
-                        <ui:param name="relatedContactsRevers" value="#{employeeHome.relatedContactsRevers}" />
-                    </ui:include>
+                        <ui:include src="/contact/relatedContactFragment.xhtml">
+                            <ui:param name="contact" value="#{employeeHome.entity}" />
+                            <ui:param name="relatedContacts" value="#{employeeHome.relatedContacts}" />
+                            <ui:param name="relatedContactsRevers" value="#{employeeHome.relatedContactsRevers}" />
+                        </ui:include>
                     </ui:remove>
 
                     <t:accordion icon="fa fa-file" id="cx" label="general.label.RelatedVouchers" columnClass="col-xs-12">
