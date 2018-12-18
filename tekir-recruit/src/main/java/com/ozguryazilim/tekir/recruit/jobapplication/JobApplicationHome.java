@@ -8,6 +8,7 @@ import com.ozguryazilim.tekir.entities.ContactEMail;
 import com.ozguryazilim.tekir.entities.ContactPhone;
 import com.ozguryazilim.tekir.entities.JobApplication;
 import com.ozguryazilim.tekir.recruit.applicant.ApplicantHome;
+import com.ozguryazilim.tekir.recruit.config.RecruitPages;
 import com.ozguryazilim.tekir.recruit.jobapplication.evaluationnotes.EvaluationNoteRepository;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.data.RepositoryBase;
@@ -19,7 +20,8 @@ import com.ozguryazilim.telve.forms.FormEdit;
 import com.ozguryazilim.telve.quick.QuickRecordController;
 import java.util.Collections;
 import javax.inject.Inject;
-import org.omnifaces.cdi.Param;
+import org.apache.deltaspike.core.api.config.view.ViewConfig;
+import org.apache.deltaspike.core.api.config.view.navigation.NavigationParameterContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,8 +44,6 @@ public class JobApplicationHome extends FormBase<JobApplication, Long> {
     @Inject
     private ApplicantHome applicantHome;
 
-    @Inject
-    @Param
     private Boolean isQuick;
 
     @Inject
@@ -57,6 +57,9 @@ public class JobApplicationHome extends FormBase<JobApplication, Long> {
 
     @Inject
     private EvaluationNoteRepository evaluationNoteRepository;
+    
+    @Inject
+    private NavigationParameterContext navigationParameterContext;
 
     private String quickEmail;
     private String quickPhone;
@@ -93,6 +96,31 @@ public class JobApplicationHome extends FormBase<JobApplication, Long> {
             applicantHome.createNew();
             getEntity().setApplicant(applicantHome.getEntity());
         }
+    }
+    
+    /**
+     * Normal kayıt oluştururken isQuick değişkenini temizliyoruz.
+     *
+     * @return
+     */
+    @Override
+    public Class<? extends ViewConfig> create() {
+        isQuick = null;
+        createNew();
+        return super.create();
+    }
+
+    /**
+     * Hızlı kayıt oluştururken isQuick değişkenini true yapıp sayfa
+     * yönlendirmemizi bu method yapıyor.
+     *
+     * @return
+     */
+    public Class<? extends ViewConfig> createFastRecord() {
+        isQuick = true;
+        createNew();
+        navigationParameterContext.addPageParameter("eid", 0);
+        return RecruitPages.JobApplicationPages.QuickJobApplication.class;
     }
 
     /**

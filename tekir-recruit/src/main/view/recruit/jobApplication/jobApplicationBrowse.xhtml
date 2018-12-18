@@ -54,23 +54,18 @@
 
     <ui:define name="context-menu">
         <li>
-            <h:link outcome="#{jobApplicationBrowse.getEditViewId()}"
-                    styleClass="context-command"
-                    rendered="#{jobApplicationBrowse.hasInsertPermission()}">
-                <i class="fa fa-plus-circle"/>
-                <h:outputText value=" #{messages['general.button.Add']}"/>
-                <f:param name="eid" value="0"/>
-            </h:link>
+            <p:commandLink action="#{jobApplicationHome.create()}" styleClass="context-command" ajax="false" 
+                           rendered="#{jobApplicationBrowse.hasInsertPermission()}">
+                <i class="fa fa-plus-circle"></i>
+                <h:outputText value=" #{messages['general.button.Add']}" />
+            </p:commandLink>
         </li>
         <li>
-            <h:link outcome="/recruit/jobApplication/quickJobApplication.xhtml"
-                    styleClass="context-command"
-                    rendered="#{jobApplicationBrowse.hasInsertPermission() and applicantBrowse.hasInsertPermission()}">
-                <i class="fa fa-plus-circle"/>
-                <h:outputText value=" #{messages['applicant.button.QuickAdd']}"/>
-                <f:param name="eid" value="0"/>
-                <f:param name="isQuick" value="true"/>
-            </h:link>
+            <p:commandLink action="#{jobApplicationHome.createFastRecord()}" styleClass="context-command" ajax="false" 
+                           rendered="#{jobApplicationBrowse.hasInsertPermission() and applicantBrowse.hasInsertPermission()}">
+                <i class="fa fa-plus-circle"></i>
+                <h:outputText value=" #{messages['applicant.button.QuickAdd']}" />
+            </p:commandLink>
         </li>
     </ui:define>
 

@@ -59,9 +59,18 @@
 
     <ui:define name="context-menu"> 
         <li>
-            <p:commandLink action="#{jobApplicationHome.create()}" styleClass="context-command" ajax="false" >
+            <p:commandLink action="#{jobApplicationHome.create()}" styleClass="context-command" ajax="false" 
+                           rendered="#{jobApplicationBrowse.hasInsertPermission()}">
                 <i class="fa fa-plus-circle"></i>
                 <h:outputText value=" #{messages['general.button.Add']}" />
+            </p:commandLink>
+        </li>
+        
+        <li>
+            <p:commandLink action="#{jobApplicationHome.createFastRecord()}" styleClass="context-command" ajax="false" 
+                           rendered="#{jobApplicationBrowse.hasInsertPermission() and applicantBrowse.hasInsertPermission()}">
+                <i class="fa fa-plus-circle"></i>
+                <h:outputText value=" #{messages['applicant.button.QuickAdd']}" />
             </p:commandLink>
         </li>
 
