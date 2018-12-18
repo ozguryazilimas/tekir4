@@ -251,8 +251,8 @@ public abstract class EmployeeRepository extends
             predicates.add(criteriaBuilder.or(criteriaBuilder.like(from.get(Contact_.code), "%" + searchText + "%"),
                     criteriaBuilder.like(from.get(Employee_.employeeNo), "%" + searchText + "%"),
                     criteriaBuilder.like(from.get(Employee_.sgkNo), "%" + searchText + "%"),
-                    criteriaBuilder.like(criteriaBuilder.lower(from.get(Contact_.name)), criteriaBuilder.literal("%" + searchText + "%")),
-                    criteriaBuilder.like(criteriaBuilder.lower(from.get("tags").as(String.class)), criteriaBuilder.literal("%" + searchText + "%"))
+                    criteriaBuilder.like(criteriaBuilder.lower(from.get(Contact_.name)), criteriaBuilder.lower(criteriaBuilder.literal("%" + searchText + "%"))),
+                    criteriaBuilder.like(criteriaBuilder.lower(from.get("tags").as(String.class)), criteriaBuilder.lower(criteriaBuilder.literal("%" + searchText + "%")))
             ));
         }
     }
