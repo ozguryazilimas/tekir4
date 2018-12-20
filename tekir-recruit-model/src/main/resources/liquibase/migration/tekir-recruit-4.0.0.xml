@@ -195,4 +195,9 @@
             <column name="TAGS" type="VARCHAR(2000)"/>
         </addColumn>
     </changeSet>
+    <changeSet author="serdar" id="1545324668120-1">
+        <addUniqueConstraint
+            tableName="TRC_ADVERT"
+            columnNames="CODE"/>
+    </changeSet>
 </databaseChangeLog>

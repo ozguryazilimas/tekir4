@@ -16,6 +16,7 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -31,7 +32,7 @@ public class JobAdvert extends AuditBase{
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "CODE")
+    @Column(name = "CODE",unique = true)
     @BizKey @NotNull
     private String code;
     
