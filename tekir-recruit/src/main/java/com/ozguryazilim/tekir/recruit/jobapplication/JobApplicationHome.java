@@ -147,4 +147,16 @@ public class JobApplicationHome extends FormBase<JobApplication, Long> {
         }
         return super.onBeforeSave();
     }
+
+    /**
+     * Hızlı kayıt eklenirken applicantHome.save()'den gelen bir success mesajı
+     * olduğu için ikinci defa aynı mesajı yazdırmak yerine yoksayıyoruz.
+     */
+    @Override
+    public void showSuccessMessage() {
+        if (isQuick == null || !isQuick) {
+            super.showSuccessMessage();
+        }
+    }
+
 }
