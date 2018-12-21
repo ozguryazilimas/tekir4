@@ -65,11 +65,11 @@ public class JobApplicationBrowse extends BrowseBase<JobApplication, JobApplicat
 
         queryDefinition
                 .addColumn(new SubLinkColumn<>(JobApplication_.advert, JobAdvert_.code, "JobAdvert.label.Serial"), true)
-                .addColumn(new SubLinkColumn<>(JobApplication_.applicant, Applicant_.name, "general.label.Name"), true)
+                .addColumn(new SubLinkColumn<>(JobApplication_.applicant, Applicant_.name, "JobApplication.label.Applicant"), true)
                 .addColumn(new SubTextColumn<>(JobApplication_.advert, JobAdvert_.topic, "JobAdvert.label.Topic"), true)
                 .addColumn(new SubDateColumn<>(JobApplication_.advert, JobAdvert_.startDate, "JobAdvert.label.startDate"), true)
                 .addColumn(new SubDateColumn<>(JobApplication_.advert, JobAdvert_.endDate, "JobAdvert.label.endDate"), true)
-                .addColumn(new DateColumn<>(JobApplication_.date, "general.label.Date"), true)
+                .addColumn(new DateColumn<>(JobApplication_.date, "JobApplication.label.Date"), true)
                 .addColumn(new TextColumn<>(JobApplication_.state, "JobApplication.label.State"), true);
                 
     }
