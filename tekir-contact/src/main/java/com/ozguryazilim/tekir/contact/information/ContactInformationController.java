@@ -2,6 +2,9 @@ package com.ozguryazilim.tekir.contact.information;
 
 import com.ozguryazilim.tekir.entities.ContactInformation;
 import java.io.Serializable;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import org.apache.deltaspike.jpa.api.transaction.Transactional;
@@ -62,5 +65,14 @@ public class ContactInformationController implements Serializable {
     
     public boolean isPrimary( ContactInformation info ){
         return info.getRoles().contains(ContactInformationConsts.Roles.PRIMARY);
+    }
+
+    public boolean isLink(String address) {
+        try {
+            new URL(address).toURI();
+            return true;
+        } catch (MalformedURLException | URISyntaxException e) {
+            return false;
+        }
     }
 }
