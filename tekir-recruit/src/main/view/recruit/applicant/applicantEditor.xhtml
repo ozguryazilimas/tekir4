@@ -12,7 +12,7 @@
             <t:inputEnum itemLabel="gender." hasNullValue="false" value="#{applicantHome.entity.gender}"
                          label="contact.label.Gender" columnClass="col-md-12 col-lg-6">
 
-                <p:ajax event="change" listener="#{applicantHome.isMale(applicantHome.entity)}"/>
+                <p:ajax event="change" listener="#{applicantHome.isMale(applicantHome.entity)}" update="@form:militaryServicePanel"/>
             </t:inputEnum>
         </div>
         <div class="row">
@@ -78,13 +78,13 @@
             <ui:param name="pageType" value="EDIT"/>
         </ui:include>
 
-        <p:outputPanel id="militaryServicePanel" autoUpdate="true">
+        <p:outputPanel id="militaryServicePanel">
             <h:panelGroup rendered="#{applicantHome.isMale(applicantHome.entity)}">
-                <ui:include src="/recruit/applicant/applicantMilitaryServiceWidget.xhtml">
-                    <ui:param name="columnClass" value="col-xs-12"/>
-                    <ui:param name="applicant" value="#{applicantHome.entity}"/>
-                    <ui:param name="pageType" value="EDIT"/>
-                </ui:include>
+            <ui:include src="/recruit/applicant/applicantMilitaryServiceWidget.xhtml">
+                <ui:param name="columnClass" value="col-xs-12"/>
+                <ui:param name="applicant" value="#{applicantHome.entity}"/>
+                <ui:param name="pageType" value="EDIT"/>
+            </ui:include>
             </h:panelGroup>
         </p:outputPanel>
     </div>

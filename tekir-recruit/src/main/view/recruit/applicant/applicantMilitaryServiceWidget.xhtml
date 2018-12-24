@@ -48,12 +48,12 @@
                                                icon="fa fa-2x fa-exclamation-triangle btn-delete"/>
                                 </p:commandLink>
                             </div>
-                            <span class="product-title">#{md.status}</span>
+                            <span class="product-title">#{messages['militaryService.status.'.concat(md.status)]}</span>
                             <ui:fragment rendered="#{md.info ne ''}">
                                 <span class="product-description"><i class="fa fa-info-circle fa-fw"/>#{md.info}</span>
                             </ui:fragment>
                             <span class="product-description text-sm">
-                                <i class="fa fa-tag fa-fw"/> #{md.status}
+                                <i class="fa fa-tag fa-fw"/> #{messages['militaryService.status.'.concat(md.status)]}
                                 <ui:fragment rendered="#{md.postponedTo ne null}">
                                     <i class="fa fa-calendar fa-fw"/><t:cellOutputDate value="#{md.postponedTo}"/>
                                 </ui:fragment>
