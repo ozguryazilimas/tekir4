@@ -1,7 +1,6 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:t="http://java.sun.com/jsf/composite/telveComponents"
                 xmlns:p="http://primefaces.org/ui">
 
@@ -66,7 +65,14 @@
                                     <p:confirm header="#{messages['general.caption.Confirm']}" message="#{messages['general.message.confirm.Delete']}" icon="fa fa-2x fa-exclamation-triangle btn-delete" />
                                 </p:commandLink>
                             </div>
-                            <span class="product-title">#{ci.caption}</span>
+                            <span class="product-title">
+                            <ui:fragment rendered="#{contactInformationController.isLink(ci.address)}">
+                                <a href="#{ci.address}" target="_blank">#{ci.address}</a>
+                            </ui:fragment>
+                            <ui:fragment rendered="#{!contactInformationController.isLink(ci.address)}">
+                                #{ci.address}
+                            </ui:fragment>
+                            </span>
                             <span class="product-description text-sm">#{ci.info}</span>
                             <span class="product-description text-sm">
                                 <ul class="list-inline">
