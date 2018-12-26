@@ -23,6 +23,7 @@ then
     rm -rf WEB-INF/lib/telve-attachment-modeshape-4.0.0-SNAPSHOT.jar
     rm -rf WEB-INF/lib/telve-image-4.0.0-SNAPSHOT.jar
     rm -rf WEB-INF/lib/telve-uploader-4.0.0-SNAPSHOT.jar
+    rm -rf WEB-INF/lib/telve-uppy-webjar-4.0.0-SNAPSHOT.jar
 fi
 
 rm -rf WEB-INF/lib/tekir-core-4.0.0-SNAPSHOT.jar
@@ -46,22 +47,23 @@ rm -rf WEB-INF/lib/tekir-recruit-4.0.0-SNAPSHOT.jar
 #Telve Devel Mode
 if [ "$1" = "telve" ] 
 then
-    ln -s ~/git/telve4/telve-core/target/classes/ WEB-INF/lib/telve-core-4.0.0-SNAPSHOT.jar
-    #ln -s ~/git/telve4/telve-core-model/target/classes/ WEB-INF/lib/telve-core-model-4.0.0-SNAPSHOT.jar
-    #ln -s ~/git/telve4/telve-idm-model/target/classes/ WEB-INF/lib/telve-idm-model-4.0.0-SNAPSHOT.jar
-    ln -s ~/git/telve4/telve-idm/target/classes/ WEB-INF/lib/telve-idm-4.0.0-SNAPSHOT.jar
-    ln -s ~/git/telve4/telve-layout/target/classes/ WEB-INF/lib/telve-layout-4.0.0-SNAPSHOT.jar
-    #ln -s ~/git/telve4/telve-keycloak/target/classes/ WEB-INF/lib/telve-keycloak-4.0.0-SNAPSHOT.jar
-    #ln -s ~/git/telve4/telve-bpm/target/classes/ WEB-INF/lib/telve-bpm-4.0.0-SNAPSHOT.jar
-    #ln -s ~/git/telve4/telve-jcr/target/classes/ WEB-INF/lib/telve-jcr-4.0.0-SNAPSHOT.jar
-    #ln -s ~/git/telve4/telve-dynaform/target/classes/ WEB-INF/lib/telve-dynaform-4.0.0-SNAPSHOT.jar
-    #ln -s ~/git/telve4/telve-gallery/target/classes/ WEB-INF/lib/telve-gallery-4.0.0-SNAPSHOT.jar
-    ln -s ~/git/telve4/telve-note/target/classes/ WEB-INF/lib/telve-note-4.0.0-SNAPSHOT.jar
-    ln -s ~/git/telve4/telve-image/target/classes/ WEB-INF/lib/telve-image-4.0.0-SNAPSHOT.jar
-    ln -s ~/git/telve4/telve-uploader/target/classes/ WEB-INF/lib/telve-uploader-4.0.0-SNAPSHOT.jar
-    ln -s ~/git/telve4/telve-attachment/target/classes/ WEB-INF/lib/telve-attachment-4.0.0-SNAPSHOT.jar
-    ln -s ~/git/telve4/telve-attachment-ui/target/classes/ WEB-INF/lib/telve-attachment-ui-4.0.0-SNAPSHOT.jar
-    ln -s ~/git/telve4/telve-attachment-modeshape/target/classes/ WEB-INF/lib/telve-attachment-modeshape-4.0.0-SNAPSHOT.jar
+    ln -s ~/git/telve4/modules/telve-core/target/classes/ WEB-INF/lib/telve-core-4.0.0-SNAPSHOT.jar
+    #ln -s ~/git/telve4/modules/telve-core-model/target/classes/ WEB-INF/lib/telve-core-model-4.0.0-SNAPSHOT.jar
+    #ln -s ~/git/telve4/modules/telve-idm-model/target/classes/ WEB-INF/lib/telve-idm-model-4.0.0-SNAPSHOT.jar
+    ln -s ~/git/telve4/modules/telve-idm/target/classes/ WEB-INF/lib/telve-idm-4.0.0-SNAPSHOT.jar
+    ln -s ~/git/telve4/modules/telve-layout/target/classes/ WEB-INF/lib/telve-layout-4.0.0-SNAPSHOT.jar
+    #ln -s ~/git/telve4/modules/telve-keycloak/target/classes/ WEB-INF/lib/telve-keycloak-4.0.0-SNAPSHOT.jar
+    #ln -s ~/git/telve4/modules/telve-bpm/target/classes/ WEB-INF/lib/telve-bpm-4.0.0-SNAPSHOT.jar
+    #ln -s ~/git/telve4/modules/telve-jcr/target/classes/ WEB-INF/lib/telve-jcr-4.0.0-SNAPSHOT.jar
+    #ln -s ~/git/telve4/modules/telve-dynaform/target/classes/ WEB-INF/lib/telve-dynaform-4.0.0-SNAPSHOT.jar
+    #ln -s ~/git/telve4/modules/telve-gallery/target/classes/ WEB-INF/lib/telve-gallery-4.0.0-SNAPSHOT.jar
+    ln -s ~/git/telve4/modules/telve-note/target/classes/ WEB-INF/lib/telve-note-4.0.0-SNAPSHOT.jar
+    ln -s ~/git/telve4/modules/telve-image/target/classes/ WEB-INF/lib/telve-image-4.0.0-SNAPSHOT.jar
+    ln -s ~/git/telve4/modules/telve-uploader/target/classes/ WEB-INF/lib/telve-uploader-4.0.0-SNAPSHOT.jar
+    ln -s ~/git/telve4/modules/telve-attachment/target/classes/ WEB-INF/lib/telve-attachment-4.0.0-SNAPSHOT.jar
+    ln -s ~/git/telve4/modules/telve-attachment-ui/target/classes/ WEB-INF/lib/telve-attachment-ui-4.0.0-SNAPSHOT.jar
+    ln -s ~/git/telve4/modules/telve-attachment-modeshape/target/classes/ WEB-INF/lib/telve-attachment-modeshape-4.0.0-SNAPSHOT.jar
+    ln -s ~/git/telve4/modules/telve-uppy-webjar/target/classes/ WEB-INF/lib/telve-uppy-webjar-4.0.0-SNAPSHOT.jar
 fi
 
 ln -s ~/git/tekir4/tekir-core/target/classes/ WEB-INF/lib/tekir-core-4.0.0-SNAPSHOT.jar
