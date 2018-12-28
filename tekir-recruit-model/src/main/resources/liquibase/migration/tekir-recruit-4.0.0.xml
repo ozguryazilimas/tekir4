@@ -195,4 +195,7 @@
             <column name="TAGS" type="VARCHAR(2000)"/>
         </addColumn>
     </changeSet>
+    <changeSet author="adilcan" id="1540278012-10">
+        <modifyDataType tableName="TRC_ADVERT" columnName="INFO" newDataType="VARCHAR(2000)" />
+    </changeSet>
 </databaseChangeLog>

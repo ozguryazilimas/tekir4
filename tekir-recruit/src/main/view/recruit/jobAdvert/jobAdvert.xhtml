@@ -50,9 +50,11 @@
                         key="JobAdvert::skills"
                         value="#{jobAdvertHome.entity.skills}"
                         columnClass="col-md-12" />
-            <t:inputTextarea label="#{messages['JobAdvert.label.JobDescription']}" value="#{jobAdvertHome.entity.info}" columnClass="col-md-12" /> 
+            <t:inputAny label="#{messages['JobAdvert.label.JobDescription']}" columnClass="col-md-12">
+                <p:inputTextarea rows="10" maxlength="2000" value="#{jobAdvertHome.entity.info}" />
+            </t:inputAny>
             <t:inputAny label="#{messages['JobAdvert.label.Requirement']}" columnClass="col-md-12">
-                <p:textEditor widgetVar="requirement" value="#{jobAdvertHome.entity.requirement}">
+                <p:textEditor height="200" widgetVar="requirement" value="#{jobAdvertHome.entity.requirement}">
                     <f:facet name="toolbar">
                         <span class="ql-formats">
                             <button class="ql-bold"></button>

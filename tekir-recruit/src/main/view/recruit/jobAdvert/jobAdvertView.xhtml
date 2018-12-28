@@ -51,7 +51,10 @@
             <t:stateOutputDate label="general.label.EndDate" value="#{jobAdvertHome.entity.endDate}"/>
         </ul>
         <ui:fragment rendered="#{jobAdvertHome.entity.info ne ''}">
-            <p><i class="fa fa-info"/> #{jobAdvertHome.entity.info}</p>
+            <i class="fa fa-info"/>
+            <p:outputPanel>
+                <h:outputText value ="#{jobAdvertHome.entity.info}" />
+            </p:outputPanel>    
         </ui:fragment>
         <p:separator />
         <p:outputPanel>
