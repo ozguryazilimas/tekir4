@@ -5,6 +5,7 @@ import com.ozguryazilim.tekir.core.code.AutoCodeService;
 import com.ozguryazilim.tekir.entities.Applicant;
 import com.ozguryazilim.tekir.entities.JobAdvert;
 import com.ozguryazilim.tekir.entities.JobApplication;
+import com.ozguryazilim.tekir.recruit.applicant.ApplicantRepository;
 import com.ozguryazilim.tekir.recruit.jobadvert.JobAdvertRepository;
 import com.ozguryazilim.tekir.recruit.jobadvert.JobAdvertViewModel;
 import com.ozguryazilim.tekir.recruit.jobapplication.JobApplicationRepository;
@@ -58,6 +59,9 @@ public class RecruitResourceService{
     private JobApplicationRepository jobApplicationRepository;
 
     @Inject
+    private ApplicantRepository applicantRepository;
+
+    @Inject
     private EntityManager entityManager;
 
     @Inject
@@ -92,11 +96,16 @@ public class RecruitResourceService{
             throw new Exception("JobAdvert not forund with id [" + request.getAdvertId() + "}");
         }
 
-        saveApplicant(request);
+
+        Applicant applicant = applicantRepository.findAnyBySsn(request.getApplicant().getSsn());
+        if (applicant == null) {
+            saveApplicant(request);
+            applicant = request.getApplicant();
+        }
 
         JobApplication application = new JobApplication();
         application.setAdvert(advert);
-        application.setApplicant(request.getApplicant());
+        application.setApplicant(applicant);
         application.setOwner(identity.getLoginName());
         application.setCode(codeService.getNewSerialNumber(JobApplication.class.getSimpleName()));
         application.setDate(new Date());
