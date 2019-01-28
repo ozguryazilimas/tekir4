@@ -137,4 +137,6 @@ public abstract class ApplicantRepository extends
         
         return resultList;
     }
+
+    public abstract Applicant findAnyBySsn(String ssn);
 }
