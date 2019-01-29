@@ -1,6 +1,7 @@
 package com.ozguryazilim.tekir.recruit.rest;
 
 
+import com.google.common.base.Strings;
 import com.ozguryazilim.tekir.core.code.AutoCodeService;
 import com.ozguryazilim.tekir.entities.Applicant;
 import com.ozguryazilim.tekir.entities.JobAdvert;
@@ -101,6 +102,10 @@ public class RecruitResourceService{
         if (applicant == null) {
             saveApplicant(request);
             applicant = request.getApplicant();
+        }
+
+        if (!Strings.isNullOrEmpty(applicant.getJobTitle())) {
+            applicant.setJobTitle("-");
         }
 
         JobApplication application = new JobApplication();
