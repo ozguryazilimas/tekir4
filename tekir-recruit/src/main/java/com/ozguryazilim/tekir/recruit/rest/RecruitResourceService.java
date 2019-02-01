@@ -24,6 +24,7 @@ import com.ozguryazilim.telve.attachment.qualifiers.FileStore;
 import com.ozguryazilim.telve.auth.Identity;
 import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureUtils;
+import com.ozguryazilim.telve.image.ImageService;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -94,7 +95,7 @@ public class RecruitResourceService{
     public JobApplicationResponse applyToJob(JobApplicationRequest request) throws Exception {
         JobAdvert advert = jobAdvertRepository.findBy(request.getAdvertId());
         if (advert == null) {
-            throw new Exception("JobAdvert not forund with id [" + request.getAdvertId() + "}");
+            throw new Exception("JobAdvert not found with id [" + request.getAdvertId() + "}");
         }
 
 
@@ -109,6 +110,7 @@ public class RecruitResourceService{
         }
 
         JobApplication application = new JobApplication();
+        application.setTags(request.getJobTags());
         application.setAdvert(advert);
         application.setApplicant(applicant);
         application.setOwner(identity.getLoginName());
