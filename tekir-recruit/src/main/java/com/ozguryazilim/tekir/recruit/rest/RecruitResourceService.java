@@ -26,6 +26,7 @@ import com.ozguryazilim.telve.entities.FeaturePointer;
 import com.ozguryazilim.telve.feature.FeatureUtils;
 import com.ozguryazilim.telve.image.ImageService;
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
@@ -79,6 +80,8 @@ public class RecruitResourceService{
     @Inject
     private AttacmentContextProviderSelector providerSelector;
 
+    @Inject
+    private ImageService imageService;
 
     @GET
     @Path("/jobadvert")
@@ -169,9 +172,7 @@ public class RecruitResourceService{
 
         Applicant applicant = application.getApplicant();
 
-        DiskFileItemFactory factory = new DiskFileItemFactory(MAX_SIZE, getRepository());
-        ServletFileUpload fileUpload = new ServletFileUpload(factory);
-        List<FileItem> files = fileUpload.parseRequest(request);
+        List<FileItem> files = getFiles(request);
 
         for (FileItem item : files) {
             if ("file".equals(item.getFieldName())) {
@@ -197,5 +198,25 @@ public class RecruitResourceService{
             repository.mkdir();
         }
         return repository;
+    }
+
+    private List<FileItem> getFiles(HttpServletRequest request) throws FileUploadException {
+        DiskFileItemFactory factory = new DiskFileItemFactory(MAX_SIZE, getRepository());
+        ServletFileUpload fileUpload = new ServletFileUpload(factory);
+        return fileUpload.parseRequest(request);
+    }
+
+    @POST
+    @Path("/picture/{token}")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public void addPicture(@PathParam("token") String token, @Context HttpServletRequest request) throws FileUploadException, IOException {
+        JobApplication application = jobApplicationRepository.findByCode(token);
+        Applicant applicant = application.getApplicant();
+        FeaturePointer fp = FeatureUtils.getFeaturePointer(applicant, applicant.getCode(), applicant.getId());
+        List<FileItem> files = getFiles(request);
+        if (files.size() > 1) {
+            throw new RuntimeException("Can't upload more than 1 profile picture");
+        }
+        imageService.saveImage(fp, files.get(0).getInputStream(), files.get(0).getContentType(), files.get(0).getName());
     }
 }
