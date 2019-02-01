@@ -18,6 +18,7 @@ public class JobApplicationRequest implements Serializable{
     private List<ApplicantEducation> education;
     private List<ApplicantWorkHistory> workHistory;
     private List<ApplicantCertificate> certificates;
+    private List<String> jobTags;
 
     public Long getAdvertId() {
         return advertId;
@@ -65,5 +66,13 @@ public class JobApplicationRequest implements Serializable{
 
     public void setCertificates(List<ApplicantCertificate> certificates) {
         this.certificates = certificates;
+    }
+
+    public List<String> getJobTags() {
+        return jobTags;
+    }
+
+    public void setJobTags(List<String> jobTags) {
+        this.jobTags = jobTags;
     }
 }
