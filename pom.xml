@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.ozguryazilim.telve</groupId>
         <artifactId>telve-app-parent</artifactId>
-        <version>4.0.0-Beta-11</version>
+        <version>4.0.0-Beta-22</version>
     </parent>
 
     <groupId>com.ozguryazilim.tekir</groupId>

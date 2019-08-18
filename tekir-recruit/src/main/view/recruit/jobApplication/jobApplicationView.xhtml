@@ -78,12 +78,15 @@
                 <p:ajax event="dialogReturn" update=":cmb" partialSubmit="true" process="@this" oncomplete="updateEvaluationNotes()"/>
             </p:commandLink>
 
+            <ui:remove>
+                FIXME:  Yetki tanımları ile düzeltilince açılacaklar.
             <p:commandLink action="#{evaluationNoteEditor.editEvaluation()}" styleClass="context-command" rendered="#{!jobApplicationHome.canEvaluate}" ajax="true">
                 <i class="fa fa-edit"></i>
                 <h:outputText value=" #{messages['EvaluationNote.button.edit']}"/>
                 <p:ajax event="dialogReturn" update=":cmb" partialSubmit="true" process="@this" oncomplete="updateEvaluationNotes()"/>
             </p:commandLink>
             <p:remoteCommand name="updateEvaluationNotes" update="evaluationNotes" />
+            </ui:remove>
         </li>
     </ui:define>
 

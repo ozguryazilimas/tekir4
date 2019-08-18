@@ -66,6 +66,8 @@
                         <ui:param name="featurePointer" value="#{jobApplicationHome.featurePointer}" />
                     </ui:include>
 
+                    <ui:remove>
+                        FIXME:  Yetki tanımları ile düzeltilince açılacaklar.
                     <ui:include src="/activities/activityWidget.xhtml">
                         <ui:param name="columnClass" value="col-lg-12 col-md-6" />
                         <ui:param name="person" value="#{jobApplicationHome.entity.applicant}" />
@@ -73,6 +75,7 @@
                         <ui:param name="feature" value="#{jobApplicationHome.featurePointer}" />
                         <ui:param name="attached" value="Feature" />
                     </ui:include>
+                        </ui:remove>
                     
                 <ui:include src="/attachment/simpleAttachmentWidget.xhtml">
                     <ui:param name="columnClass" value="col-xs-12" />
@@ -87,13 +90,16 @@
             </div>
 
         </div>
+        <ui:remove>
         <div class="row">
+            FIXME:  Yetki tanımları ile düzeltilince açılacaklar.
             <ui:include src="/recruit/jobApplication/evaluationNotesWidget.xhtml">
                 <ui:param name="columnClass" value="col-xs-12" />
                 <ui:param name="jobApplication" value="#{jobApplicationHome.entity}" />
                 <ui:param name="pageType" value="MASTER_VIEW" />
             </ui:include>
         </div>
+            </ui:remove>
 
     </ui:define>
 

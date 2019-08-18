@@ -128,6 +128,8 @@
                     <ui:param name="contactInformations" value="#{applicantHome.contactInformations}" />
                 </ui:include>
 
+                <ui:remove>
+                       FIXME:  Yetki tanımları ile düzeltilince açılacaklar.
                 <ui:include src="/activities/activityWidget.xhtml">
                     <ui:param name="columnClass" value="col-xs-12" />
                     <ui:param name="person" value="#{applicantHome.entity}" />
@@ -135,6 +137,7 @@
                     <ui:param name="feature" value="#{null}" />
                     <ui:param name="attached" value="Person" />
                 </ui:include>
+                </ui:remove>
 
                 <t:accordion icon="fa fa-file" label="Applicant.label.JobApplications" columnClass="col-xs-12">
                     <div class="table-responsive no-padding">
