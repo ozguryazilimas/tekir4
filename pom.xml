@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.ozguryazilim.telve</groupId>
         <artifactId>telve-app-parent</artifactId>
-        <version>4.0.0-Beta-22</version>
+        <version>4.0.0-Beta-31</version>
     </parent>
 
     <groupId>com.ozguryazilim.tekir</groupId>
@@ -21,7 +21,8 @@
     <properties>
         
         <buildNumber>SNAPSHOT</buildNumber>
-        <revision>4.0.0</revision>
+        <minorNumber>0</minorNumber>
+        <revision>4.1.${minorNumber}</revision>
         <changelist>-${buildNumber}</changelist>
 
         <version.tekir>${revision}${changelist}</version.tekir>
