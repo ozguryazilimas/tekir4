@@ -18,7 +18,7 @@
         <version.maven-processor-plugin>3.3.3</version.maven-processor-plugin>
         <version.liquibase-maven-plugin>3.6.2</version.liquibase-maven-plugin>
         <version.hibernate-jpamodelgen>5.2.1.Final</version.hibernate-jpamodelgen>
-        <version.hibernate>4.3.11.Final</version.hibernate>
+        <version.hibernate>5.3.38.Final</version.hibernate>
         <!-- Bunlar aslında BOM'a alınabilir sanki -->
         <junit.version>4.12</junit.version>
         <liquibase.version>3.5.5</liquibase.version>
