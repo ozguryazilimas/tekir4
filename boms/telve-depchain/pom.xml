@@ -19,7 +19,7 @@
         <primeface.version>6.2</primeface.version>
         <primefaces-ext.version>6.2</primefaces-ext.version>
         <omnifaces.version>2.7</omnifaces.version>
-        <liquibase.version>3.5.5</liquibase.version>
+        <liquibase.version>4.8.0</liquibase.version>
         <liquibase-slf4j.version>2.0.0</liquibase-slf4j.version>
         <prettytime.version>4.0.0.Final</prettytime.version>
         
